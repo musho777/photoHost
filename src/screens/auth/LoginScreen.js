@@ -23,14 +23,14 @@ export const LoginScreen = ({navigation}) => {
           setPass={(e) => setLogin({...password,pass:e})}
         />
       <View style={[Styles.flexSpaceBetween]}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.navigate('RecoveryPassword')}>
           <Text style={Styles.darkMedium12}>Забыли пароль?</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity  onPress={()=>navigation.navigate('RegisterScreen')} >
          <Text style={Styles.darkMedium12}>Регистрация</Text>
         </TouchableOpacity>
       </View>
-      <Button  onPress={()=>navigation.navigate('RegisterScreen')} marginV = {30} title={'Войти'} />
+      <Button marginV = {30} title={'Войти'} />
     </View>
   );
 };

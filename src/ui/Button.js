@@ -10,7 +10,7 @@ export const Button = ({title,marginV,disabled,onPress}) =>{
 
 const styles = StyleSheet.create({
     button:{
-        width:230,
+        width:200,
         paddingVertical:15,
         justifyContent:'center',
         alignItems:'center',
