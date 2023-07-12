@@ -4,8 +4,7 @@ import { Eye } from '../assets/svg/Svgs';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 
-export const Input = ({marginBottom,marginTop,marginV,marginH,width = '100%',placeholder,error,data,pass = false}) =>{
-    console.log(pass)
+export const Input = ({marginBottom,marginTop,marginV,marginH,width = '100%',placeholder,error,data,pass = false,onChange}) =>{
     const [currentData,setCurrentData] = useState(data)
     const [securyty,setSecuryty] = useState(pass)
     return <View style = {{
@@ -17,11 +16,12 @@ export const Input = ({marginBottom,marginTop,marginV,marginH,width = '100%',pla
             }}>
         <TextInput 
             style = {[
-                styles.Input,{paddingRight:pass && 45}
+                styles.Input,{paddingRight:pass ? 45:0}
             ]}
             placeholder = {placeholder}
             placeholderTextColor={AppColors.BaliHai_Color}
             secureTextEntry = { pass && securyty}
+            onChangeText = {(e)=>onChange(e)}
         />
         {pass && <TouchableOpacity style = {styles.eye} onPress = {()=>setSecuryty(!securyty)}>
             <Eye />

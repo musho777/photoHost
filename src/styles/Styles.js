@@ -4,7 +4,7 @@ import { AppColors } from './AppColors';
 export const Styles = StyleSheet.create({
     authScreen:{
         flex:1,
-        marginTop:80,
+        marginTop:20,
         alignItems:'center',
         paddingHorizontal:45
     },
@@ -28,5 +28,10 @@ export const Styles = StyleSheet.create({
         fontFamily:'Montserrat-Medium',
         fontSize:10,
         color:AppColors.Tomato_Color,
-    }
+    },
+    balihaiMedium13:{
+        fontFamily:'Montserrat-Medium',
+        fontSize:13,
+        color:AppColors.BaliHai_Color, 
+    },
 })

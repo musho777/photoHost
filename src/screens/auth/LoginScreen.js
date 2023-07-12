@@ -4,11 +4,11 @@ import {Styles} from '../../styles/Styles';
 import { Button } from '../../ui/Button';
 import {Input} from '../../ui/Input';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({navigation}) => {
     const [login,setLogin] = useState({error:'',value:''})
     const [password,setPasswod] = useState({error:'',value:''})
   return (
-    <View style={Styles.authScreen}>
+    <View style={[Styles.authScreen,{marginTop:80}]}>
       <Text style={[Styles.darkMedium22, {marginBottom: 30}]}>Вход</Text>
         <Input
           placeholder={'Введите пароль'}
@@ -30,7 +30,7 @@ export const LoginScreen = () => {
          <Text style={Styles.darkMedium12}>Регистрация</Text>
         </TouchableOpacity>
       </View>
-      <Button marginV = {30} title={'Войти'} />
+      <Button  onPress={()=>navigation.navigate('RegisterScreen')} marginV = {30} title={'Войти'} />
     </View>
   );
 };
