@@ -18,7 +18,7 @@ const windowWidth = Dimensions.get('window').width;
 export const Post = ({userImg}) => {
   const data = [{}, {}, {}];
   return (
-    <Shadow style={{width: '100%'}} startColor={'#00000010'}>
+    <Shadow style={{width: '100%',marginBottom:20}} startColor={'#00000010'}>
       <View style={styles.block}>
         <View style={[Styles.flexSpaceBetween, {padding: 15}]}>
           <View style={Styles.flexAlignItems}>

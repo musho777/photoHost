@@ -1,14 +1,32 @@
-import { useState } from "react"
-import { View } from "react-native"
-import { Post } from "../../components/Post"
+import {useState} from 'react';
+import {View, ScrollView} from 'react-native';
+import {Post} from '../../components/Post';
 
-export const HomeScreen = () =>{
-    const [post,setPost] = useState([
-        {
-            userImg:require('../../assets/img/MaskGroup.png')
-        }
-    ])
-    return <View style = {{paddingHorizontal:10}}>
-        <Post userImg = {post[0].userImg}/>
-    </View>
-}
+export const HomeScreen = () => {
+  const [post, setPost] = useState([
+    {
+      userImg: require('../../assets/img/MaskGroup.png'),
+    },
+    {
+      userImg: require('../../assets/img/MaskGroup.png'),
+    },
+    {
+      userImg: require('../../assets/img/MaskGroup.png'),
+    },
+  ]);
+  return (
+    <ScrollView style={{}}>
+      <View
+        style={{
+          backfaceVisibility: 'visible',
+          backgroundColor: 'transparent',
+          paddingHorizontal: 10,
+          marginVertical:10,
+        }}>
+        {post.map((elm, i) => (
+          <Post userImg={elm.userImg} key={i} />
+        ))}
+      </View>
+    </ScrollView>
+  );
+};
