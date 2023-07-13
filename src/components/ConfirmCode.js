@@ -28,6 +28,11 @@ export const ConfirmCode = () =>{
                   ref1.current.focus()  
               }
             }}
+            onKeyPress = {({nativeEvent})=>{
+                if(nativeEvent.key === 'Backspace'){
+                  setData({...data,value:''})
+                }
+            }}  
         />
         <TextInput 
             style = {styles.input}
@@ -42,6 +47,7 @@ export const ConfirmCode = () =>{
             }}  
             onKeyPress = {({nativeEvent})=>{
                 if(nativeEvent.key === 'Backspace'){
+                    setData({...data,value1:''})
                     if(data.value1 === ''){
                         ref.current.focus() 
                     }
@@ -61,6 +67,7 @@ export const ConfirmCode = () =>{
             }}
             onKeyPress = {({nativeEvent})=>{
                 if(nativeEvent.key === 'Backspace'){
+                    setData({...data,value2:''})
                     if(data.value2 ===''){
                         ref1.current.focus()  
                     }
@@ -81,6 +88,7 @@ export const ConfirmCode = () =>{
             onKeyPress = {({nativeEvent})=>{
                 console.log(data.value3)
                 if(nativeEvent.key === 'Backspace'){
+                    setData({...data,value3:''})
                     if(data.value3 ===''){
                         ref2.current.focus()  
                     }
@@ -100,6 +108,7 @@ export const ConfirmCode = () =>{
             }}
             onKeyPress = {({nativeEvent})=>{
                 if(nativeEvent.key === 'Backspace'){
+                    setData({...data,value4:''})
                     if(data.value4 ===''){
                         ref3.current.focus()  
                     }

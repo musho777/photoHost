@@ -11,10 +11,11 @@ export const RecoveryPassword = ({navigation}) => {
       <View style={[Styles.authScreen,{marginTop:80,paddingHorizontal:35}]}>
         <Text style={[ Styles.darkMedium22,{marginBottom: 30, textAlign: 'center'},]}>Восстановление пароля</Text>
         <Input
-          placeholder={'Введите пароль'}
+          placeholder={'Введите эл. почту'}
           error={email.error}
           value={email.value}
           width = {'95%'}
+          onChange = {(e)=>setEmail({...email,value:e})}
         />
         <View style = {{alignItems:'center'}}>
             <Text style={[Styles.balihaiMedium13, {textAlign: 'center'}]}>
