@@ -31,7 +31,7 @@ export const LoginScreen = ({navigation}) => {
          <Text style={Styles.darkMedium12}>Регистрация</Text>
         </TouchableOpacity>
       </View>
-      <Button marginV = {30} title={'Войти'} />
+      <Button onPress={()=>navigation.navigate('TabNavigation')} marginV = {30} title={'Войти'} />
     </View>
   );
 };
