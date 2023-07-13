@@ -32,6 +32,7 @@
 		6EE77E92F458472F989A5634 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19A06B69E0CB4C569F4ABC03 /* Montserrat-SemiBoldItalic.ttf */; };
 		1FA0A02A2F884E2984AABDB3 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88EDB973F9EE4069812F8090 /* Montserrat-Thin.ttf */; };
 		28C82D299BEB4CEBA06E1340 /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD9E7D9A5EDC4341BA840452 /* Montserrat-ThinItalic.ttf */; };
+		BCD43EA7D22E4A3B96BAFC0B /* RussoOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C64E8B3CBBB245C09B4E206C /* RussoOne-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		19A06B69E0CB4C569F4ABC03 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "Montserrat-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		88EDB973F9EE4069812F8090 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		BD9E7D9A5EDC4341BA840452 /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Montserrat-ThinItalic.ttf"; path = "../src/assets/fonts/Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C64E8B3CBBB245C09B4E206C /* RussoOne-Regular.ttf */ = {isa = PBXFileReference; name = "RussoOne-Regular.ttf"; path = "../src/assets/fonts/RussoOne-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 				19A06B69E0CB4C569F4ABC03 /* Montserrat-SemiBoldItalic.ttf */,
 				88EDB973F9EE4069812F8090 /* Montserrat-Thin.ttf */,
 				BD9E7D9A5EDC4341BA840452 /* Montserrat-ThinItalic.ttf */,
+				C64E8B3CBBB245C09B4E206C /* RussoOne-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				6EE77E92F458472F989A5634 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				1FA0A02A2F884E2984AABDB3 /* Montserrat-Thin.ttf in Resources */,
 				28C82D299BEB4CEBA06E1340 /* Montserrat-ThinItalic.ttf in Resources */,
+				BCD43EA7D22E4A3B96BAFC0B /* RussoOne-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,7 @@ import { NewPassword } from '../screens/auth/NewPassword';
 import { RecoveryPassword } from '../screens/auth/RecoveryPassword';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { AppColors } from '../styles/AppColors';
+import { TabNavigation } from './TabNavigation';
 
 export default Navigation = () => {
   const Stack = createStackNavigator();
@@ -19,7 +20,7 @@ export default Navigation = () => {
   };
   return (
     <NavigationContainer theme={MyTheme} >
-      <Stack.Navigator initialRouteName={'LoginScreen'} >
+      <Stack.Navigator initialRouteName={'TabNavigation'} >
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
@@ -45,6 +46,13 @@ export default Navigation = () => {
         <Stack.Screen
           name="NewPassword"
           component={NewPassword}
+          options = {{
+            headerShown:false,
+          }}
+        />
+        <Stack.Screen
+          name="TabNavigation"
+          component={TabNavigation}
           options = {{
             headerShown:false,
           }}
