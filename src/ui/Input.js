@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { StyleSheet,View,TextInput,TouchableOpacity,Text } from 'react-native';
-import { Eye } from '../assets/svg/Svgs';
+import { Eye, SearchInputSvg } from '../assets/svg/Svgs';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 
-export const Input = ({marginBottom,marginTop,marginV,marginH,width = '100%',placeholder,error,data,pass = false,onChange}) =>{
+export const Input = ({marginBottom,marginTop,marginV,marginH,width = '100%',placeholder,error,data,pass = false,onChange,search}) =>{
     const [currentData,setCurrentData] = useState(data)
     const [securyty,setSecuryty] = useState(pass)
     return <View style = {{
@@ -25,6 +25,9 @@ export const Input = ({marginBottom,marginTop,marginV,marginH,width = '100%',pla
         />
         {pass && <TouchableOpacity style = {styles.eye} onPress = {()=>setSecuryty(!securyty)}>
             <Eye />
+        </TouchableOpacity>}
+        {search && <TouchableOpacity style = {styles.eye} onPress = {()=>setSecuryty(!securyty)}>
+            <SearchInputSvg />
         </TouchableOpacity>}
         <Text style = {[[Styles.tomatoMedium10,{marginBottom:5}]]}>{error}</Text>
     </View>

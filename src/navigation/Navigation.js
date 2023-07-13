@@ -53,6 +53,7 @@ export default Navigation = () => {
         <Stack.Screen
           name="TabNavigation"
           component={TabNavigation}
+          
           options = {{
             headerShown:false,
           }}

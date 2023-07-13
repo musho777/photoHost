@@ -15,7 +15,7 @@ export const HomeScreen = () => {
     },
   ]);
   return (
-    <ScrollView style={{}}>
+    <ScrollView>
       <View
         style={{
           backfaceVisibility: 'visible',

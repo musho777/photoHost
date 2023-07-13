@@ -32,3 +32,19 @@ export const BackArrow = () =>{
   />
 </Svg>
 }
+export const SearchInputSvg = () =>{
+  return (
+    <Svg
+    width={17}
+    height={17}
+    viewBox="0 0 17 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path
+      d="M16.801 15.8l-4.224-4.224a7.09 7.09 0 10-1.001 1l4.225 4.225a.707.707 0 001-1zm-9.7-3.038A5.662 5.662 0 1112.761 7.1 5.669 5.669 0 017.1 12.762z"
+      fill="#B1BAC3"
+    />
+  </Svg>
+  )
+}
