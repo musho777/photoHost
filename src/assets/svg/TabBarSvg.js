@@ -56,7 +56,6 @@ export const HomeSvg = ({focused}) =>{
 }
 
 export const SearchSvg = ({focused}) =>{
-  console.log(focused)
     if(!focused){
         return <Svg
         width={31}

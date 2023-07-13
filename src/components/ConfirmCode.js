@@ -86,7 +86,6 @@ export const ConfirmCode = () =>{
                 }
             }} 
             onKeyPress = {({nativeEvent})=>{
-                console.log(data.value3)
                 if(nativeEvent.key === 'Backspace'){
                     setData({...data,value3:''})
                     if(data.value3 ===''){
