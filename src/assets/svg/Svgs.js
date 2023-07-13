@@ -1,4 +1,4 @@
-import Svg, { Path } from "react-native-svg"
+import Svg, { Circle, Path } from "react-native-svg"
 
 export const Eye = () =>{
     return <Svg
@@ -29,6 +29,76 @@ export const BackArrow = () =>{
     strokeWidth={1.8}
     strokeLinecap="round"
     strokeLinejoin="round"
+  />
+</Svg>
+}
+export const SearchInputSvg = () =>{
+  return (
+    <Svg
+    width={17}
+    height={17}
+    viewBox="0 0 17 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path
+      d="M16.801 15.8l-4.224-4.224a7.09 7.09 0 10-1.001 1l4.225 4.225a.707.707 0 001-1zm-9.7-3.038A5.662 5.662 0 1112.761 7.1 5.669 5.669 0 017.1 12.762z"
+      fill="#B1BAC3"
+    />
+  </Svg>
+  )
+}
+
+export const ChatSeenSvg = ({seen}) =>{
+  if(seen){
+    return <Svg
+      width={18}
+      height={12}
+      viewBox="0 0 18 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <Path
+        d="M2 4.91L7.444 10 16 2"
+        stroke="#FFC24B"
+        strokeWidth={2.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  }
+  return <Svg
+  width={18}
+  height={12}
+  viewBox="0 0 18 12"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    d="M2 4.91L7.444 10 16 2"
+    stroke="#D7E1EB"
+    strokeWidth={2.2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</Svg>
+}
+
+export const OnlineSvg = () =>{
+  return <Svg
+  width={12}
+  height={12}
+  viewBox="0 0 12 12"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Circle
+    cx={6}
+    cy={6}
+    r={5}
+    fill="#75D779"
+    stroke="#fff"
+    strokeWidth={1.4}
   />
 </Svg>
 }

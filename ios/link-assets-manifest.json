@@ -72,6 +72,10 @@
     {
       "path": "src/assets/fonts/Montserrat-ThinItalic.ttf",
       "sha1": "f7d887fc6b50157081fd60082d20339c433f9955"
+    },
+    {
+      "path": "src/assets/fonts/RussoOne-Regular.ttf",
+      "sha1": "4a12533ad9ee3d6c83da4ac659d78ef9fb702ab4"
     }
   ]
 }

@@ -11,18 +11,19 @@ export const LoginScreen = ({navigation}) => {
     <View style={[Styles.authScreen,{marginTop:80}]}>
       <Text style={[Styles.darkMedium22, {marginBottom: 30}]}>Вход</Text>
         <Input
-          placeholder={'Введите пароль'}
+          placeholder={'Введите логин'}
           error={login.error}
           value={login.value}
+          onChange = {(e)=>setLogin({...login,value:e})}
         />
         <Input
           placeholder={'Введите пароль'}
           error={password.error}
           pass={true}
           value={password.value}
-          setPass={(e) => setLogin({...password,pass:e})}
+          onChange = {(e)=>setPasswod({...password,value:e})}
         />
-      <View style={[Styles.flexSpaceBetween]}>
+      <View style={[[Styles.flexSpaceBetween,{paddingHorizontal:10}]]}>
         <TouchableOpacity onPress={()=>navigation.navigate('RecoveryPassword')}>
           <Text style={Styles.darkMedium12}>Забыли пароль?</Text>
         </TouchableOpacity>
@@ -30,7 +31,7 @@ export const LoginScreen = ({navigation}) => {
          <Text style={Styles.darkMedium12}>Регистрация</Text>
         </TouchableOpacity>
       </View>
-      <Button marginV = {30} title={'Войти'} />
+      <Button onPress={()=>navigation.navigate('TabNavigation')} marginV = {30} title={'Войти'} />
     </View>
   );
 };
