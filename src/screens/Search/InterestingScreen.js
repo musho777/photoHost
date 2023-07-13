@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {View, ScrollView} from 'react-native';
 import {Post} from '../../components/Post';
+import { Styles } from '../../styles/Styles';
 
 export const InterestingScreen = () => {
   const [post, setPost] = useState([
@@ -15,7 +16,7 @@ export const InterestingScreen = () => {
     },
   ]);
   return (
-    <ScrollView>
+    <ScrollView style = {Styles.bg}>
       <View
         style={{
           backfaceVisibility: 'visible',

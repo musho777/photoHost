@@ -19,8 +19,8 @@ export const SearchNAvigation = () => {
         name="InterestingScreen"
         component={InterestingScreen}
         options={{
-            header:()=>{
-                return <HeaderWhiteTitle title={'Интересное'}/> 
+            header:({navigation})=>{
+                return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Интересное'}/> 
             }
         }}
       />

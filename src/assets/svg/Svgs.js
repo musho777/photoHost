@@ -1,4 +1,4 @@
-import Svg, { Path } from "react-native-svg"
+import Svg, { Circle, Path } from "react-native-svg"
 
 export const Eye = () =>{
     return <Svg
@@ -47,4 +47,58 @@ export const SearchInputSvg = () =>{
     />
   </Svg>
   )
+}
+
+export const ChatSeenSvg = ({seen}) =>{
+  if(seen){
+    return <Svg
+      width={18}
+      height={12}
+      viewBox="0 0 18 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <Path
+        d="M2 4.91L7.444 10 16 2"
+        stroke="#FFC24B"
+        strokeWidth={2.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  }
+  return <Svg
+  width={18}
+  height={12}
+  viewBox="0 0 18 12"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    d="M2 4.91L7.444 10 16 2"
+    stroke="#D7E1EB"
+    strokeWidth={2.2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</Svg>
+}
+
+export const OnlineSvg = () =>{
+  return <Svg
+  width={12}
+  height={12}
+  viewBox="0 0 12 12"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Circle
+    cx={6}
+    cy={6}
+    r={5}
+    fill="#75D779"
+    stroke="#fff"
+    strokeWidth={1.4}
+  />
+</Svg>
 }

@@ -53,6 +53,11 @@ export const Styles = StyleSheet.create({
         fontSize:14,
         color:AppColors.BaliHai_Color, 
     },
+    darkRegular14:{
+        fontFamily:'Montserrat-Regular',
+        fontSize:14,
+        color:AppColors.Blcak_Color, 
+    },
     balihaiMedium9:{
         fontFamily:'Montserrat-Medium',
         fontSize:9,
@@ -63,9 +68,17 @@ export const Styles = StyleSheet.create({
         fontSize:13,
         color:AppColors.Eclipse_Color, 
     },
+    whiteSemiBold10:{
+        fontFamily:'Montserrat-SemiBold',
+        fontSize:10,
+        color:'#fff', 
+    },
     homeTitle:{
         fontFamily:'RussoOne-Regular',
         fontSize:18,
         color:AppColors.Charcoal_Color, 
+    },
+    bg:{
+        backgroundColor:AppColors.AliceBlue_Bg
     }
 })

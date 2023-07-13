@@ -1,3 +1,4 @@
+import {useCallback, useMemo, useRef} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,13 +13,21 @@ import {Shadow} from 'react-native-shadow-2';
 import {Comment, Heart, MenuSvg, Share, ViewSvg} from '../assets/svg/TabBarSvg';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
+import {BootomModal} from './BootomSheet';
 import {Slider} from './Slider';
 
 const windowWidth = Dimensions.get('window').width;
 export const Post = ({userImg}) => {
   const data = [{}, {}, {}];
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ['25%'], []);
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetRef.current?.present();
+  }, []);
   return (
-    <Shadow style={{width: '100%',marginBottom:20}} startColor={'#00000010'}>
+    <Shadow
+      style={{width: '100%', marginBottom: 20, borderRadius: 10}}
+      startColor={'#00000010'}>
       <View style={styles.block}>
         <View style={[Styles.flexSpaceBetween, {padding: 15}]}>
           <View style={Styles.flexAlignItems}>
@@ -28,7 +37,9 @@ export const Post = ({userImg}) => {
               <Text style={Styles.balihaiMedium9}>3 часа назад</Text>
             </View>
           </View>
-          <TouchableOpacity style={{marginTop: -5}}>
+          <TouchableOpacity
+            onPress={() => handlePresentModalPress()}
+            style={{marginTop: -5}}>
             <MenuSvg />
           </TouchableOpacity>
         </View>
@@ -72,6 +83,21 @@ export const Post = ({userImg}) => {
             </View>
           </View>
         </View>
+      </View>
+      <View style={{position: 'absolute'}}>
+        <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
+          <View style={{paddingHorizontal: 20}}>
+            <TouchableOpacity style = {{marginBottom:20,marginTop:20}}>
+              <Text style = {Styles.darkRegular14}>В закладки</Text>
+            </TouchableOpacity>
+            <TouchableOpacity  style = {{marginBottom:20}}>
+              <Text style = {Styles.darkRegular14}>Подписаться</Text>
+            </TouchableOpacity>
+            <TouchableOpacity  style = {{marginBottom:20}}>
+              <Text style = {Styles.darkRegular14}>В чёрный список</Text>
+            </TouchableOpacity>
+          </View>
+        </BootomModal>
       </View>
     </Shadow>
   );

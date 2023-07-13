@@ -11,16 +11,17 @@ import {HomeHeader} from '../headers/HomeHeader';
 import {HomeScreen} from '../screens/Home/HomeScreen';
 import {SearchScreen} from '../screens/Search/SearchScreen';
 import { AppColors } from '../styles/AppColors';
+import { ChatNavigation } from './ChatNavigation';
 import { SearchNAvigation } from './SearchScreen';
 
 export const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
-      sceneContainerStyle={{
-        primary: AppColors.AliceBlue_Bg,
-        background:  AppColors.AliceBlue_Bg,
-        border:  AppColors.AliceBlue_Bg,
+      sceneContainerStyle ={{
+        primary: '#fff',
+        background:  '#fff',
+        border:  '#fff',
       }}
       screenOptions={({route}) => ({
         tabBarShowLabel: false,
@@ -60,10 +61,11 @@ export const TabNavigation = () => {
       />
       <Tab.Screen
         options={() => ({
+          headerShown:false,
           tabBarIcon: ({focused}) => <ChatSvg focused={focused} />,
         })}
-        name="Home3"
-        component={HomeScreen}
+        name="ChatNavigation"
+        component={ChatNavigation}
       />
       <Tab.Screen
         options={() => ({

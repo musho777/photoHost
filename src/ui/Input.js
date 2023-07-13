@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     Input:{
         backgroundColor:AppColors.AliceBlue_Color,
         borderRadius:50,
-        padding:10,
+        padding:7,
         paddingHorizontal:20,
         color:AppColors.Blcak_Color,
         position:'relative',

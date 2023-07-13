@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {} from 'react-native-svg';
+import { Styles } from '../../styles/Styles';
 import {Input} from '../../ui/Input';
 
 const itemWidth = Dimensions.get('window').width / 3.3;
@@ -26,7 +27,7 @@ export const SearchScreen = ({navigation}) => {
           placeholder={'Поиск'}
         />
       </View>
-      <ScrollView showsVerticalScrollIndicator = {false}>
+      <ScrollView showsVerticalScrollIndicator = {false} style = {Styles.bg}>
         <View style={styles.imgWrapper}>
           {img.map((elm, i) => (
             <TouchableOpacity key={i} onPress={()=>navigation.navigate('InterestingScreen')}>
