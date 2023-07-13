@@ -13,9 +13,7 @@ import {Input} from '../../ui/Input';
 
 const itemWidth = Dimensions.get('window').width / 3.3;
 
-console.log(Dimensions.get('window').width/3.3*3,Dimensions.get('window').width / 3.3);
-
-export const SearchScreen = () => {
+export const SearchScreen = ({navigation}) => {
   const [data, setData] = useState('');
   const [img, setImg] = useState([{}, {}, {}, {}, {}, {}, {}, {},{},{},{},{},{},{},{},{},{}]);
   return (
@@ -28,10 +26,10 @@ export const SearchScreen = () => {
           placeholder={'Поиск'}
         />
       </View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator = {false}>
         <View style={styles.imgWrapper}>
           {img.map((elm, i) => (
-            <TouchableOpacity>
+            <TouchableOpacity key={i} onPress={()=>navigation.navigate('InterestingScreen')}>
               <Image
                 resizeMode={'cover'}
                 style={styles.img}

@@ -11,6 +11,7 @@ import {HomeHeader} from '../headers/HomeHeader';
 import {HomeScreen} from '../screens/Home/HomeScreen';
 import {SearchScreen} from '../screens/Search/SearchScreen';
 import { AppColors } from '../styles/AppColors';
+import { SearchNAvigation } from './SearchScreen';
 
 export const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
@@ -44,11 +45,11 @@ export const TabNavigation = () => {
       />
       <Tab.Screen
         options={() => ({
-          headerShown: false,
+          headerShown:false,
           tabBarIcon: ({focused}) => <SearchSvg focused={focused} />,
         })}
-        name="SearchScreen"
-        component={SearchScreen}
+        name="SearchNavigation"
+        component={SearchNAvigation}
       />
       <Tab.Screen
         options={() => ({
