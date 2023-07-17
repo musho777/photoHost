@@ -33,6 +33,11 @@ export const Styles = StyleSheet.create({
         fontSize:14,
         color:AppColors.Blcak_Color,
     },
+    darkRegular16:{
+        fontFamily:'Montserrat-Regular',
+        fontSize:16,
+        color:AppColors.Blcak_Color,
+    },
     heatherRegular14:{
         fontFamily:'Montserrat-Regular',
         fontSize:14,

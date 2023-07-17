@@ -14,6 +14,7 @@ import {Styles} from '../../styles/Styles';
 import {Albom} from '../../components/Albom';
 import {AppColors} from '../../styles/AppColors';
 import {MenuSvg2} from '../../assets/svg/Svgs';
+import { Menu } from '../../components/Menu';
 
 export const ProfileScreen = ({navigation}) => {
   const renderScene = SceneMap({
@@ -28,6 +29,8 @@ export const ProfileScreen = ({navigation}) => {
     {key: 'third', title: 'Контакты'},
   ]);
   const layout = useWindowDimensions();
+  const [openMenu,setOpenMenu] = useState(false)
+
   const renderTabBar = props => {
     return (
       <TabBar
@@ -61,7 +64,7 @@ export const ProfileScreen = ({navigation}) => {
   return (
     <View style={{flex:1, marginTop: 10,paddingHorizontal:15}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <TouchableOpacity style={{marginVertical: 25}}>
+        <TouchableOpacity onPress={()=>setOpenMenu(true)} style={{marginVertical: 25}}>
           <MenuSvg2 />
         </TouchableOpacity>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -97,6 +100,7 @@ export const ProfileScreen = ({navigation}) => {
           initialLayout={{width: layout.width}}
         />
       </ScrollView>
+      <Menu close = {()=>setOpenMenu(false)} visible={openMenu} />
     </View>
   );
 };
