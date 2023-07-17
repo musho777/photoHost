@@ -13,6 +13,8 @@ import {SearchScreen} from '../screens/Search/SearchScreen';
 import { AppColors } from '../styles/AppColors';
 import { ChatNavigation } from './ChatNavigation';
 import { SearchNAvigation } from './SearchScreen';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+
 
 export const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
@@ -26,6 +28,13 @@ export const TabNavigation = () => {
       screenOptions={({route}) => ({
         tabBarShowLabel: false,
         tabBarStyle: (() => {
+          const routeName = getFocusedRouteNameFromRoute(route) ?? ''
+
+          if(routeName === 'ChatScreen'){
+            return {
+              display:'none'
+            }
+          }
           return {
             height: 80,
             backgroundColor: '#FFF',

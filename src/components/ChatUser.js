@@ -1,18 +1,20 @@
-import {View,Image,StyleSheet,Text} from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import {View,Image,StyleSheet,Text,TouchableOpacity} from 'react-native'
 import { ChatSeenSvg, OnlineSvg } from '../assets/svg/Svgs'
 import { AppColors } from '../styles/AppColors'
 import { Styles } from '../styles/Styles'
-export const ChatUser = ({seen,online,msg,sendWhiteMe}) =>{
-    return <View style = {[Styles.flexSpaceBetween,{marginVertical:20}]}>
+export const ChatUser = ({seen,online,msg,sendWhiteMe,img,username,name}) =>{
+    const navigation = useNavigation()
+    return <TouchableOpacity onPress={()=>navigation.navigate('ChatScreen',{name:name,username:username})} style = {[Styles.flexSpaceBetween,{marginVertical:20}]}>
         <View style = {Styles.flexAlignItems}>
             <View>
-                <Image style = {styles.img} source={require('../assets/img/MaskGroup.png')}/>
+                <Image style = {styles.img} source={img}/>
                 {online && <View style = {{position:'absolute',bottom:0,right:0}}>
                     <OnlineSvg />
                 </View>}
             </View>
             <View style = {{marginHorizontal:10}}>
-                <Text style = {Styles.darkMedium14}>Настя</Text>
+                <Text style = {Styles.darkMedium14}>{name}</Text>
                 <Text style = {Styles.balihaiMedium13}>Текст последнего сообщения</Text>
             </View>
         </View>
@@ -24,7 +26,7 @@ export const ChatUser = ({seen,online,msg,sendWhiteMe}) =>{
             <ChatSeenSvg seen={seen} />
             }
         </View>}
-    </View>
+    </TouchableOpacity>
 }
 
 const styles = StyleSheet.create({

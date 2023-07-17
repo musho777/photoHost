@@ -1,4 +1,4 @@
-import Svg, { Circle, Path } from "react-native-svg"
+import Svg, { Circle, Path, Rect } from "react-native-svg"
 
 export const Eye = () =>{
     return <Svg
@@ -99,6 +99,64 @@ export const OnlineSvg = () =>{
     fill="#75D779"
     stroke="#fff"
     strokeWidth={1.4}
+  />
+</Svg>
+}
+
+export const FotoSvg = () =>{
+  return <Svg
+  width={42}
+  height={42}
+  viewBox="0 0 42 42"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Rect width={42} height={42} rx={21} fill="#FFD953" />
+  <Path
+    d="M28 12h-.508l-2.184-2.832A3.024 3.024 0 0022.932 8h-3.864a3.023 3.023 0 00-2.376 1.168L14.508 12H14a5.006 5.006 0 00-5 5v10a5.006 5.006 0 005 5h14a5.006 5.006 0 005-5V17a5.006 5.006 0 00-5-5zm-9.724-1.61a1.007 1.007 0 01.792-.39h3.864a1.008 1.008 0 01.792.39L24.966 12h-7.932l1.242-1.61zM31 27a3 3 0 01-3 3H14a3 3 0 01-3-3V17a3 3 0 013-3h14a3 3 0 013 3v10z"
+    fill="#fff"
+  />
+  <Path
+    d="M21 16a6 6 0 100 12 6 6 0 000-12zm0 10a4 4 0 110-8 4 4 0 010 8z"
+    fill="#fff"
+  />
+</Svg>
+}
+
+export const VoiceSvg = () =>{
+  return <Svg
+  width={24}
+  height={24}
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    d="M12 20a8.009 8.009 0 008-8V8A8 8 0 004 8v4a8.009 8.009 0 008 8zm0-18a6.006 6.006 0 015.91 5H15a1 1 0 100 2h3v2h-3a1 1 0 000 2h2.91a5.993 5.993 0 01-11.82 0H9a1 1 0 000-2H6V9h3a1 1 0 000-2H6.09A6.006 6.006 0 0112 2z"
+    fill="#4D4D4D"
+  />
+  <Path
+    d="M23 12a1 1 0 00-1 1 9.01 9.01 0 01-9 9h-2a9.011 9.011 0 01-9-9 1 1 0 10-2 0 11.013 11.013 0 0011 11h2a11.013 11.013 0 0011-11 1 1 0 00-1-1z"
+    fill="#4D4D4D"
+  />
+</Svg>
+}
+
+export const SendImgSvg = () =>{
+  return <Svg
+  width={24}
+  height={24}
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    d="M19 0H5a5.006 5.006 0 00-5 5v14a5.006 5.006 0 005 5h14a5.006 5.006 0 005-5V5a5.006 5.006 0 00-5-5zM5 2h14a3 3 0 013 3v14a2.95 2.95 0 01-.3 1.285l-9.163-9.163a5.001 5.001 0 00-7.072 0L2 14.586V5a3 3 0 013-3zm0 20a3 3 0 01-3-3v-1.586l4.878-4.878a3 3 0 014.244 0l9.163 9.164c-.4.196-.84.298-1.285.3H5z"
+    fill="#444"
+  />
+  <Path
+    d="M16 10.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm0-5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"
+    fill="#444"
   />
 </Svg>
 }

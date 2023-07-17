@@ -78,6 +78,11 @@ export const Styles = StyleSheet.create({
         fontSize:18,
         color:AppColors.Charcoal_Color, 
     },
+    CharcoalMedium14:{
+        fontFamily:'Montserrat-Medium',
+        fontSize:14,
+        color:AppColors.Charcoal_Color, 
+    },
     bg:{
         backgroundColor:AppColors.AliceBlue_Bg
     }
