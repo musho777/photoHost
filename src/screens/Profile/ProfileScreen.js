@@ -15,7 +15,7 @@ import {Albom} from '../../components/Albom';
 import {AppColors} from '../../styles/AppColors';
 import {MenuSvg2} from '../../assets/svg/Svgs';
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({navigation}) => {
   const renderScene = SceneMap({
     first: Albom,
     second: Albom,
@@ -59,7 +59,7 @@ export const ProfileScreen = () => {
     );
   };
   return (
-    <View style={{flex:1, marginTop: StatusBar.currentHeight,paddingHorizontal:15}}>
+    <View style={{flex:1, marginTop: 10,paddingHorizontal:15}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <TouchableOpacity style={{marginVertical: 25}}>
           <MenuSvg2 />
@@ -76,15 +76,15 @@ export const ProfileScreen = () => {
           <Text style={Styles.darkRegular14}>Student from Guinea 🇬🇳</Text>
         </View>
         <View style={[{marginVertical: 20,paddingHorizontal:15}, Styles.flexSpaceBetween]}>
-          <TouchableOpacity style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center'}}>
             <Text style={Styles.darkSemiBold16}>24</Text>
             <Text style={Styles.balihaiRegular12}>Публикаций</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{alignItems: 'center'}}>
+          </View>
+          <TouchableOpacity onPress={()=>navigation.navigate('FollowersScreen',{index:0})} style={{alignItems: 'center'}}>
             <Text style={Styles.darkSemiBold16}>230</Text>
             <Text style={Styles.balihaiRegular12}>Подписчиков</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{alignItems: 'center'}}>
+          <TouchableOpacity onPress={()=>navigation.navigate('FollowersScreen',{index:1})} style={{alignItems: 'center'}}>
             <Text style={Styles.darkSemiBold16}>348</Text>
             <Text style={Styles.balihaiRegular12}>Подписок</Text>
           </TouchableOpacity>

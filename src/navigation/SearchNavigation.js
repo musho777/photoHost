@@ -3,7 +3,7 @@ import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
 import {InterestingScreen} from '../screens/Search/InterestingScreen';
 import {SearchScreen} from '../screens/Search/SearchScreen';
 
-export const SearchNAvigation = () => {
+export const SearchNavigation = () => {
   const Stack = createStackNavigator();
 
   return (

@@ -13,5 +13,6 @@ export const AppColors ={
     GoldenTainoi_Color:'#FFC24B',
     SweetCorn_Color:'#FFDF6C',
     Solitude_Color:'#E7EEF5',
-    Heather_Color:'#B1BAC3'
+    Heather_Color:'#B1BAC3',
+    PattensBlue_Color:'#D3DEE7'
 }
