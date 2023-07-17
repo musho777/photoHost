@@ -178,3 +178,66 @@ export const MenuSvg2 = () =>{
   />
 </Svg>
 }
+
+export const EditAvaterSvg = () =>{
+  return <Svg
+  width={28}
+  height={28}
+  viewBox="0 0 28 28"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Rect
+    x={0.5}
+    y={0.5}
+    width={27}
+    height={27}
+    rx={13.5}
+    fill="#D4DEE7"
+    stroke="#fff"
+  />
+  <Path
+    d="M18.083 8.667h-.296l-1.274-1.652a1.764 1.764 0 00-1.386-.682h-2.254a1.764 1.764 0 00-1.386.682l-1.274 1.652h-.296A2.92 2.92 0 007 11.583v5.834a2.92 2.92 0 002.917 2.916h8.166A2.92 2.92 0 0021 17.417v-5.834a2.92 2.92 0 00-2.917-2.916zm-5.672-.94a.587.587 0 01.462-.227h2.254a.588.588 0 01.462.228l.725.939h-4.627l.724-.94zm7.422 9.69a1.75 1.75 0 01-1.75 1.75H9.917a1.75 1.75 0 01-1.75-1.75v-5.834a1.75 1.75 0 011.75-1.75h8.166a1.75 1.75 0 011.75 1.75v5.834z"
+    fill="#fff"
+  />
+  <Path
+    d="M14 11a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm0 5.833a2.334 2.334 0 110-4.667 2.334 2.334 0 010 4.667z"
+    fill="#fff"
+  />
+</Svg>
+}
+
+export const CheckMarkSvg = () =>{
+  return <Svg
+  width={26}
+  height={19}
+  viewBox="0 0 26 19"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    d="M2 9l7.5 7.5L24 2"
+    stroke="#FFC24B"
+    strokeWidth={2.2}
+    strokeLinecap="round"
+  />
+</Svg>
+}
+
+export const ArrowSvg = () =>{
+  return <Svg
+  width={11}
+  height={19}
+  viewBox="0 0 11 19"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    d="M1 1l8.273 8.273L1 17.546"
+    stroke="#404040"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</Svg>
+}

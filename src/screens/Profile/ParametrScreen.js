@@ -1,0 +1,25 @@
+import {
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+    Image,
+  } from 'react-native';
+import { ArrowSvg } from '../../assets/svg/Svgs';
+import { AppColors } from '../../styles/AppColors';
+import { Styles } from '../../styles/Styles';
+export const ParametrScreen = () =>{
+    return <View >
+      <View style = { [Styles.flexSpaceBetween,{paddingVertical:20,borderBottomWidth:1,borderBottomColor:AppColors.Solitude_Color,paddingRight:15}]}>
+        <Text style = {[Styles.darkMedium14,{paddingHorizontal:15}]}>Изменить пароль</Text>
+        <ArrowSvg />
+      </View>
+      <View style = { [Styles.flexSpaceBetween,{paddingVertical:20,borderBottomWidth:1,borderBottomColor:AppColors.Solitude_Color,paddingRight:15}]}>
+        <View style = {Styles.flexAlignItems}>
+          <Text style = {[Styles.darkMedium14,{paddingHorizontal:15}]}>Изменить почту</Text>
+          <Text style = {[Styles.balihaiMedium13,]}>big_fish@mail.ru</Text>
+        </View>
+        <ArrowSvg />
+      </View>
+    </View>
+}

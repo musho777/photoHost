@@ -1,6 +1,8 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
+import { EditProfilScreen } from '../screens/Profile/EditProfilScreen';
 import { FollowersScreen } from '../screens/Profile/FollowersScreen';
+import { ParametrScreen } from '../screens/Profile/ParametrScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { UserProfileScreen } from '../screens/Profile/userProfileScreen';
 
@@ -33,6 +35,25 @@ export const ProfileNavigation = () => {
           }
       }}
       />
+      <Stack.Screen
+        name="EditProfilScreen"
+        component={EditProfilScreen}
+        options={{
+          header:({navigation})=>{
+              return <HeaderWhiteTitle check onPress={()=>navigation.goBack()} title={'Редактировать профиль'}/> 
+          }
+      }}
+      />
+      <Stack.Screen
+        name="ParametrScreen"
+        component={ParametrScreen}
+        options={{
+          header:({navigation})=>{
+              return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Параметры аккаунта'}/> 
+          }
+      }}
+      />
     </Stack.Navigator>
   );
 };
+// EditProfilScree
