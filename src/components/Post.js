@@ -39,7 +39,7 @@ export const Post = ({userImg}) => {
           </View>
           <TouchableOpacity
             onPress={() => handlePresentModalPress()}
-            style={{marginTop: -5}}>
+            style={{marginTop: -5,paddingLeft:15}}>
             <MenuSvg />
           </TouchableOpacity>
         </View>

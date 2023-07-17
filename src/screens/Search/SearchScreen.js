@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   imgWrapper: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 12.6,
     marginVertical: 10,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    rowGap: Dimensions.get('window').width - itemWidth * 3-27.4,
-    columnGap: Dimensions.get('window').width - itemWidth * 3-27.4,
+    rowGap: Dimensions.get('window').width - itemWidth * 3-29,
+    columnGap: Dimensions.get('window').width - itemWidth * 3-29,
     marginBottom:90
   },
 });

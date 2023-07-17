@@ -24,7 +24,6 @@ export const Input = ({
   search,
   msg,
 }) => {
-  const [currentData, setCurrentData] = useState(data);
   const [securyty, setSecuryty] = useState(pass);
   return (
     <View
@@ -36,7 +35,7 @@ export const Input = ({
         marginHorizontal: marginH,
       }}>
       <TextInput
-        style={[styles.Input, {paddingRight: pass? 45 : 0},{paddingRight: msg? 80 : 0}]}
+        style={[styles.Input, {paddingRight: pass? 45 : 7},{paddingRight: msg? 80 : 7}]}
         placeholder={placeholder}
         placeholderTextColor={AppColors.BaliHai_Color}
         secureTextEntry={pass && securyty}
