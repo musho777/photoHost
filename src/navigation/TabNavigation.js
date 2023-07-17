@@ -14,6 +14,10 @@ import { AppColors } from '../styles/AppColors';
 import { ChatNavigation } from './ChatNavigation';
 import { SearchNAvigation } from './SearchScreen';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { ProfileNavigation } from './ProfileNavigation';
+import { SwipeTabProfileNavigation } from './SwipeTabProfileNavigation';
+import { ProfileScreen } from '../screens/Profile/ProfileScreen';
+import { ProflHeader } from '../headers/ProfileHeader';
 
 
 export const TabNavigation = () => {
@@ -78,10 +82,11 @@ export const TabNavigation = () => {
       />
       <Tab.Screen
         options={() => ({
+          headerShown: false,
           tabBarIcon: ({focused}) => <UserSvg focused={focused} />,
         })}
-        name="Home4"
-        component={HomeScreen}
+        name="ProfileScreen"
+        component={ProfileScreen}
       />
     </Tab.Navigator>
   );

@@ -160,3 +160,21 @@ export const SendImgSvg = () =>{
   />
 </Svg>
 }
+
+export const MenuSvg2 = () =>{
+  return <Svg
+  width={32}
+  height={12}
+  viewBox="0 0 32 12"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path stroke="#444" strokeWidth={2} strokeLinecap="round" d="M1 1L31 1" />
+  <Path
+    stroke="#444"
+    strokeWidth={2}
+    strokeLinecap="round"
+    d="M1 11L19.4074 11"
+  />
+</Svg>
+}

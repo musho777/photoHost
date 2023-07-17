@@ -28,6 +28,16 @@ export const Styles = StyleSheet.create({
         fontSize:14,
         color:AppColors.Blcak_Color,
     },
+    darkRegular14:{
+        fontFamily:'Montserrat-Regular',
+        fontSize:14,
+        color:AppColors.Blcak_Color,
+    },
+    heatherRegular14:{
+        fontFamily:'Montserrat-Regular',
+        fontSize:14,
+        color:AppColors.Heather_Color,
+    },
     darkMedium16:{
         fontFamily:'Montserrat-Medium',
         fontSize:16,
@@ -53,6 +63,11 @@ export const Styles = StyleSheet.create({
         fontSize:14,
         color:AppColors.BaliHai_Color, 
     },
+    balihaiRegular12:{
+        fontFamily:'Montserrat-Regular',
+        fontSize:12,
+        color:AppColors.BaliHai_Color, 
+    },
     darkRegular14:{
         fontFamily:'Montserrat-Regular',
         fontSize:14,
@@ -72,6 +87,11 @@ export const Styles = StyleSheet.create({
         fontFamily:'Montserrat-SemiBold',
         fontSize:10,
         color:'#fff', 
+    },
+    darkSemiBold16:{
+        fontFamily:'Montserrat-SemiBold',
+        fontSize:16,
+        color:AppColors.Charcoal_Color, 
     },
     homeTitle:{
         fontFamily:'RussoOne-Regular',
