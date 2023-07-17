@@ -51,16 +51,6 @@ export const ChatScreen = ({navigation, route}) => {
           <MenuSvg />
         </TouchableOpacity>
       </View>
-      <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
-        <View style={{paddingHorizontal: 20}}>
-          <TouchableOpacity style={{marginBottom: 20, marginTop: 20}}>
-            <Text style={Styles.darkRegular14}>Удалить переписку</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{marginBottom: 20}}>
-            <Text style={Styles.darkRegular14}>В черный список</Text>
-          </TouchableOpacity>
-        </View>
-      </BootomModal>
       <FlatList
       showsVerticalScrollIndicator = {false}
         data={data}
@@ -95,6 +85,16 @@ export const ChatScreen = ({navigation, route}) => {
           />
         </View>
       </View>
+      <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
+        <View style={{paddingHorizontal: 20}}>
+          <TouchableOpacity style={{marginBottom: 20, marginTop: 20}}>
+            <Text style={Styles.darkRegular14}>Удалить переписку</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{marginBottom: 20}}>
+            <Text style={Styles.darkRegular14}>В черный список</Text>
+          </TouchableOpacity>
+        </View>
+      </BootomModal>
     </SafeAreaView>
   );
 };
