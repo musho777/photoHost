@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {Modal, View, Text, TouchableOpacity, Image} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
@@ -8,15 +7,14 @@ import {Styles} from '../styles/Styles';
 import {CommentBlock} from './CommentBlock';
 import {Input} from '../ui/Input';
 
-export const Comments = ({visible}) => {
-  const navigation = useNavigation();
+export const Comments = ({visible,close}) => {
   const [showAnswrs, setShowAnswers] = useState(false);
   const [sendComment, setSendCommet] = useState('');
   return (
     <View>
       <Modal animationType="slide" visible={visible}>
         <HeaderWhiteTitle
-          onPress={() => navigation.goBack()}
+          onPress={() => close()}
           title={'Комментарии'}
         />
         <View style={{paddingHorizontal: 15, height: '90%'}}>

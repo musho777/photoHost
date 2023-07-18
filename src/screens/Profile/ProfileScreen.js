@@ -73,7 +73,7 @@ export const ProfileScreen = ({navigation,profile}) => {
             style={styles.img}
             source={require('../../assets/img/user.png')}
           />
-          <View style={{marginVertical: 15, alignItems: 'center'}}>
+          <View style={{marginTop:7,marginBottom:15, alignItems: 'center'}}>
             <Text style={Styles.darkMedium16}>Иван Смит</Text>
             <Text style={Styles.balihaiRegular12}>@ivan_smith</Text>
           </View>

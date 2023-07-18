@@ -8,10 +8,17 @@ export const MsgBlock = ({msg, data, from}) => {
         styles.block,
         from
           ? {alignSelf: 'flex-start'}
-          : {alignSelf: 'flex-end', backgroundColor: AppColors.SweetCorn_Color,borderBottomEndRadius:0,borderBottomStartRadius:20
-        },
+          : {
+              alignSelf: 'flex-end',
+              backgroundColor: AppColors.SweetCorn_Color,
+              borderBottomEndRadius: 0,
+              borderBottomStartRadius: 20,
+            },
       ]}>
       <Text style={Styles.CharcoalMedium14}>{msg}</Text>
+      <View style = {from ?{position:'absolute',right:-20,bottom:-5}:{position:'absolute',left:-20,bottom:-5}}>
+        <Text style={Styles.balihaiMedium10}>12:20</Text>
+      </View>
     </View>
   );
 };

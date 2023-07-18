@@ -101,7 +101,7 @@ export const Post = ({userImg}) => {
           </View>
         </BootomModal>
       </View>
-      <Comments visible={comment}/>
+      <Comments visible={comment} close = {()=>setComment(false)}/>
     </Shadow>
   );
 };

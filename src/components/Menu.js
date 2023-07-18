@@ -3,7 +3,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  Image,
   Text,
   Modal,
   SafeAreaView,
@@ -23,7 +22,7 @@ export const Menu = ({visible, close}) => {
           <View style={styles.menu}>
             <TouchableOpacity
               onPress={() => close()}
-              style={{marginBottom: 10, marginTop: 20}}>
+              style={{marginTop: 20}}>
               <BackArrow />
             </TouchableOpacity>
             <TouchableOpacity
@@ -31,7 +30,7 @@ export const Menu = ({visible, close}) => {
                 close();
                 navigation.navigate('EditProfilScreen');
               }}>
-              <Text style={[Styles.darkRegular16, {marginTop: 30}]}>
+              <Text style={[Styles.darkRegular16, {marginTop: 25}]}>
                 Редактировать профиль
               </Text>
             </TouchableOpacity>
