@@ -28,6 +28,16 @@ export const Styles = StyleSheet.create({
         fontSize:14,
         color:AppColors.Blcak_Color,
     },
+    darkMedium13:{
+        fontFamily:'Montserrat-Medium',
+        fontSize:13,
+        color:AppColors.Blcak_Color,
+    },
+    neonMedium13:{
+        fontFamily:'Montserrat-Medium',
+        fontSize:13,
+        color:AppColors.NeonBlue_Color,
+    },
     darkRegular14:{
         fontFamily:'Montserrat-Regular',
         fontSize:14,
@@ -93,9 +103,19 @@ export const Styles = StyleSheet.create({
         fontSize:9,
         color:AppColors.BaliHai_Color, 
     },
+    balihaiMedium10:{
+        fontFamily:'Montserrat-Medium',
+        fontSize:10,
+        color:AppColors.BaliHai_Color, 
+    },
     eslipesMedium13:{
         fontFamily:'Montserrat-Medium',
         fontSize:13,
+        color:AppColors.Eclipse_Color, 
+    },
+    eslipesMedium10:{
+        fontFamily:'Montserrat-Medium',
+        fontSize:10,
         color:AppColors.Eclipse_Color, 
     },
     whiteSemiBold10:{

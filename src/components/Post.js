@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useRef} from 'react';
+import {useCallback, useMemo, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -14,6 +14,7 @@ import {Comment, Heart, MenuSvg, Share, ViewSvg} from '../assets/svg/TabBarSvg';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 import {BootomModal} from './BootomSheet';
+import { Comments } from './Comment';
 import {Slider} from './Slider';
 
 const windowWidth = Dimensions.get('window').width;
@@ -24,6 +25,7 @@ export const Post = ({userImg}) => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
+  const [comment,setComment] = useState(false)
   return (
     <Shadow
       style={{width: '100%', marginBottom: 20, borderRadius: 10}}
@@ -62,7 +64,7 @@ export const Post = ({userImg}) => {
               <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>262</Text>
             </View>
             <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=>setComment(true)}>
                 <Comment />
               </TouchableOpacity>
               <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>24</Text>
@@ -99,6 +101,7 @@ export const Post = ({userImg}) => {
           </View>
         </BootomModal>
       </View>
+      <Comments visible={comment}/>
     </Shadow>
   );
 };

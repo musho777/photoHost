@@ -14,5 +14,6 @@ export const AppColors ={
     SweetCorn_Color:'#FFDF6C',
     Solitude_Color:'#E7EEF5',
     Heather_Color:'#B1BAC3',
-    PattensBlue_Color:'#D3DEE7'
+    PattensBlue_Color:'#D3DEE7',
+    NeonBlue_Color:'#4541F3'
 }

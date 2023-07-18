@@ -6,7 +6,13 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {Eye, SearchInputSvg, SendImgSvg, VoiceSvg} from '../assets/svg/Svgs';
+import {
+  Eye,
+  SearchInputSvg,
+  SendImgSvg,
+  SendSvg,
+  VoiceSvg,
+} from '../assets/svg/Svgs';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 
@@ -23,6 +29,7 @@ export const Input = ({
   onChange,
   search,
   msg,
+  send,
 }) => {
   const [securyty, setSecuryty] = useState(pass);
   return (
@@ -35,7 +42,12 @@ export const Input = ({
         marginHorizontal: marginH,
       }}>
       <TextInput
-        style={[styles.Input, {paddingRight: pass? 45 : 7},{paddingRight: msg? 80 : 7}]}
+        style={[
+          styles.Input,
+          {paddingRight: pass ? 45 : 7},
+          {paddingRight: msg  ? 80 : 7},
+          {paddingRight: send ? 50 : 7},
+        ]}
         placeholder={placeholder}
         placeholderTextColor={AppColors.BaliHai_Color}
         secureTextEntry={pass && securyty}
@@ -56,16 +68,27 @@ export const Input = ({
         </TouchableOpacity>
       )}
       {msg && (
-        <View style = {[Styles.flexAlignItems,styles.eye,{height:'100%'}]}>
-          <TouchableOpacity >
+        <View style={[Styles.flexAlignItems, styles.eye, {height: '100%'}]}>
+          <TouchableOpacity>
             <VoiceSvg />
           </TouchableOpacity>
-          <TouchableOpacity style = {{marginLeft:10}}>
+          <TouchableOpacity style={{marginLeft: 10}}>
             <SendImgSvg />
           </TouchableOpacity>
         </View>
       )}
-      {!msg  &&<Text style={[[Styles.tomatoMedium10, {marginBottom: 5}]]}>{error}</Text>}
+      {send && (
+        <View style={[Styles.flexAlignItems, styles.eye, {height: '100%'}]}>
+          <TouchableOpacity>
+            <SendSvg />
+          </TouchableOpacity>
+        </View>
+      )}
+      {!msg && !send && (
+        <Text style={[[Styles.tomatoMedium10, {marginBottom: 5}]]}>
+          {error}
+        </Text>
+      )}
     </View>
   );
 };
