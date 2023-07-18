@@ -23,9 +23,9 @@ export const RegisterScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={Styles.authScreen}>
-        <Text style={[Styles.darkMedium22, {marginBottom: 30}]}>Регистрация</Text>
+        <Text style={[Styles.darkSemiBold22, {marginBottom: 30}]}>Регистрация</Text>
         <Input
-          placeholder={'Введите username'}
+          placeholder={'ФИО/Название канала'}
           error={userName.error}
           value={userName.value}
           onChange = {(e)=>setUsername({...userName,value:e})}

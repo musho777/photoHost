@@ -35,7 +35,7 @@ export const Post = ({userImg}) => {
           <View style={Styles.flexAlignItems}>
             <Image style={styles.userImg} source={userImg} />
             <View>
-              <Text style={Styles.darkMedium14}>alexander</Text>
+              <Text style={Styles.darkSemiBold14}>alexander</Text>
               <Text style={Styles.balihaiMedium9}>3 часа назад</Text>
             </View>
           </View>

@@ -9,7 +9,7 @@ export const NewPassword = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = useState({error: '', value: ''});
   return (
       <View style={[Styles.authScreen,{marginTop:80}]}>
-        <Text style={[ Styles.darkMedium22,{marginBottom: 30, textAlign: 'center'},]}>big_fish</Text>
+        <Text style={[ Styles.darkSemiBold22,{marginBottom: 30, textAlign: 'center'},]}>big_fish</Text>
         <Input
           placeholder={'Придумайте пароль'}
           error={password.error}

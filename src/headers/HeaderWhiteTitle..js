@@ -7,7 +7,7 @@ export const HeaderWhiteTitle = ({onPress,title,transparent,check}) =>{
         <TouchableOpacity onPress ={onPress}>
             <BackArrow /> 
         </TouchableOpacity>
-        <Text style = {[Styles.darkMedium16,{marginHorizontal:15}]}>{title}</Text>
+        <Text style = {[Styles.darkSemiBold16,{marginHorizontal:15}]}>{title}</Text>
         {check && 
             <TouchableOpacity style = {{position:'absolute',right:10}}>
                 <CheckMarkSvg />

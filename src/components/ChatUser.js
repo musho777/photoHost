@@ -14,7 +14,7 @@ export const ChatUser = ({seen,online,msg,sendWhiteMe,img,username,name}) =>{
                 </View>}
             </View>
             <View style = {{marginHorizontal:10}}>
-                <Text style = {Styles.darkMedium14}>{name}</Text>
+                <Text style = {Styles.darkSemiBold14}>{name}</Text>
                 <Text style = {Styles.balihaiMedium13}>Текст последнего сообщения</Text>
             </View>
         </View>

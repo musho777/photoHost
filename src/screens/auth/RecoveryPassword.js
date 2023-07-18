@@ -9,7 +9,7 @@ export const RecoveryPassword = ({navigation}) => {
   const [email, setEmail] = useState({error: '', value: ''});
   return (
       <View style={[Styles.authScreen,{marginTop:80,paddingHorizontal:35}]}>
-        <Text style={[ Styles.darkMedium22,{marginBottom: 30, textAlign: 'center'},]}>Восстановление пароля</Text>
+        <Text style={[ Styles.darkSemiBold22,{marginBottom: 30, textAlign: 'center'},]}>Восстановление пароля</Text>
         <Input
           placeholder={'Введите эл. почту'}
           error={email.error}

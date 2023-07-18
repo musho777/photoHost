@@ -128,6 +128,26 @@ export const Styles = StyleSheet.create({
         fontSize:16,
         color:AppColors.Charcoal_Color, 
     },
+    darkSemiBold14:{
+        fontFamily:'Montserrat-SemiBold',
+        fontSize:14,
+        color:AppColors.Charcoal_Color, 
+    },
+    darkSemiBold12:{
+        fontFamily:'Montserrat-SemiBold',
+        fontSize:12,
+        color:AppColors.Charcoal_Color, 
+    },
+    darkSemiBold10:{
+        fontFamily:'Montserrat-SemiBold',
+        fontSize:10,
+        color:AppColors.Charcoal_Color, 
+    },
+    darkSemiBold22:{
+        fontFamily:'Montserrat-SemiBold',
+        fontSize:22,
+        color:AppColors.Charcoal_Color, 
+    },
     homeTitle:{
         fontFamily:'RussoOne-Regular',
         fontSize:18,

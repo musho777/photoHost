@@ -8,12 +8,12 @@ export const FollowingsBlock = ({name,username,img,type}) =>{
         <View style = {Styles.flexAlignItems}>
             <Image style = {styles.img} source={img}></Image>
             <View>
-                <Text style = {Styles.darkMedium14}>{name}</Text>
+                <Text style = {Styles.darkSemiBold14}>{name}</Text>
                 <Text style = {Styles.balihaiRegular12}>{username}</Text>
             </View>
         </View>
         <TouchableOpacity style = {styles.button}>
-            <Text style = {Styles.darkMedium10}>{type}</Text>
+            <Text style = {Styles.darkSemiBold10}>{type}</Text>
         </TouchableOpacity>
     </TouchableOpacity>
 }

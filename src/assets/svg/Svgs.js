@@ -292,3 +292,19 @@ export const SendSvg = () =>{
   />
 </Svg>
 }
+export const SendMsgSvg = () =>{
+  return <Svg
+  width={26}
+  height={24}
+  viewBox="0 0 26 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    fillRule="evenodd"
+    clipRule="evenodd"
+    d="M1.417.09A1 1 0 00.035 1.264L2.964 12 .035 22.737a1 1 0 001.382 1.172l23.986-10.994a1.003 1.003 0 00.553-1.21.998.998 0 00-.553-.62L1.417.09zM20.418 11L2.528 2.8 4.764 11h15.654zM4.764 13h15.654l-17.89 8.2L4.764 13z"
+    fill="#444"
+  />
+</Svg>
+}

@@ -10,6 +10,7 @@ import {
   Eye,
   SearchInputSvg,
   SendImgSvg,
+  SendMsgSvg,
   SendSvg,
   VoiceSvg,
 } from '../assets/svg/Svgs';
@@ -72,9 +73,13 @@ export const Input = ({
           <TouchableOpacity>
             <VoiceSvg />
           </TouchableOpacity>
+          {data.length ?
+          <TouchableOpacity style={{marginLeft: 10}}>
+              <SendMsgSvg />
+          </TouchableOpacity>:
           <TouchableOpacity style={{marginLeft: 10}}>
             <SendImgSvg />
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
       )}
       {send && (

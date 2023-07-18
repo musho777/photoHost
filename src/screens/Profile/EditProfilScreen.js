@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -5,10 +6,16 @@ import {
     TouchableOpacity,
     Image,
   } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import { EditAvaterSvg } from '../../assets/svg/Svgs';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 export const EditProfilScreen = () =>{
+  const [username,setUsername] = useState({value:'@big_fish'})
+  const [name,setName] = useState({value:'@Иван Смит'})
+  const [discription,setDiscription] = useState({value:''})
+  const [contact,setContact] = useState({value:''})
+
     return <View>
         <View style = {{ alignItems:'center',marginBottom:40}}>
           <View style >
@@ -19,16 +26,16 @@ export const EditProfilScreen = () =>{
           </View>
         </View>
         <View style = {styles.textWrapper}>
-          <Text style = {Styles.darkMedium14}>@big_fish</Text>
+          <TextInput value={username.value} onChange = {(e)=>setUsername({...username,value:e})} style = {Styles.darkMedium14} />
         </View>
         <View style = {styles.textWrapper}>
-          <Text style = {Styles.darkMedium14}>Иван Смит</Text>
+          <TextInput value={name.value} onChange = {(e)=>setName({...name,value:e})}  style = {Styles.darkMedium14} />
         </View>
         <View style = {styles.textWrapper}>
-          <Text style = {Styles.balihaiMedium14}>Описание</Text>
+          <TextInput placeholder='Описание' placeholderTextColor={'#8C9CAB'} value={discription.value} onChange = {(e)=>setDiscription({...discription,value:e})}  style = {Styles.balihaiMedium14}></TextInput>
         </View>
         <View style = {styles.textWrapper}>
-          <Text style = {Styles.balihaiMedium14}>Контакты</Text>
+          <TextInput  placeholder='Описание' placeholderTextColor={'#8C9CAB'} value={contact.value} onChange = {(e)=>setContact({...contact,value:e})} style = {Styles.balihaiMedium14}></TextInput>
         </View>
     </View>
 }
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({
   },
   textWrapper:{
     paddingHorizontal:15,
-    paddingVertical:20,
+    paddingVertical:10,
     borderBottomColor:AppColors.Solitude_Color,
     borderBottomWidth:1
   }

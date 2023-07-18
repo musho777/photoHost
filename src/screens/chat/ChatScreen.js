@@ -25,8 +25,6 @@ export const ChatScreen = ({navigation, route}) => {
     {from: false, msg: 'Привет, после 6 свободен', date: '12:20'},
     {from: true, msg: 'На 8 столик, буду ждать', date: '12:20'},
     {from: false, msg: 'Окей', date: '12:20'},
-    {from: false, msg: 'Окей', date: '12:20'},
-    {from: false, msg: 'Окей', date: '12:20'},
   ]);
   const [sendMSg, setSendMsg] = useState('');
   return (

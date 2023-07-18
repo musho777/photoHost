@@ -9,7 +9,7 @@ export const LoginScreen = ({navigation}) => {
     const [password,setPasswod] = useState({error:'',value:''})
   return (
     <View style={[Styles.authScreen,{marginTop:80}]}>
-      <Text style={[Styles.darkMedium22, {marginBottom: 30}]}>Вход</Text>
+      <Text style={[Styles.darkSemiBold22, {marginBottom: 30}]}>Вход</Text>
         <Input
           placeholder={'Введите логин'}
           error={login.error}
@@ -25,10 +25,10 @@ export const LoginScreen = ({navigation}) => {
         />
       <View style={[[Styles.flexSpaceBetween,{paddingHorizontal:10}]]}>
         <TouchableOpacity onPress={()=>navigation.navigate('RecoveryPassword')}>
-          <Text style={Styles.darkMedium12}>Забыли пароль?</Text>
+          <Text style={Styles.darkSemiBold12}>Забыли пароль?</Text>
         </TouchableOpacity>
         <TouchableOpacity  onPress={()=>navigation.navigate('RegisterScreen')} >
-         <Text style={Styles.darkMedium12}>Регистрация</Text>
+         <Text style={Styles.darkSemiBold12}>Регистрация</Text>
         </TouchableOpacity>
       </View>
       <Button onPress={()=>navigation.navigate('TabNavigation')} marginV = {30} title={'Войти'} />
