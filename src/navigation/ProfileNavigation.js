@@ -1,5 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
+import { ChangeMailScreen } from '../screens/Profile/ChangeMailScreen';
+import { ChangePasswordScreen } from '../screens/Profile/ChangePasswordScreen';
 import { EditProfilScreen } from '../screens/Profile/EditProfilScreen';
 import { FollowersScreen } from '../screens/Profile/FollowersScreen';
 import { ParametrScreen } from '../screens/Profile/ParametrScreen';
@@ -53,7 +55,24 @@ export const ProfileNavigation = () => {
           }
       }}
       />
+      <Stack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+        options={{
+          header:({navigation})=>{
+              return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Изменить пароль'}/> 
+          }
+      }}
+      />
+      <Stack.Screen
+        name="ChangeMailScreen"
+        component={ChangeMailScreen}
+        options={{
+          header:({navigation})=>{
+              return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Изменить почту'}/> 
+          }
+      }}
+      />
     </Stack.Navigator>
   );
 };
-// EditProfilScree
