@@ -15,8 +15,9 @@ import {Albom} from '../../components/Albom';
 import {AppColors} from '../../styles/AppColors';
 import {MenuSvg2} from '../../assets/svg/Svgs';
 import { Menu } from '../../components/Menu';
+import { Button } from '../../ui/Button';
 
-export const ProfileScreen = ({navigation}) => {
+export const ProfileScreen = ({navigation,profile}) => {
   const renderScene = SceneMap({
     first: Albom,
     second: Albom,
@@ -92,6 +93,10 @@ export const ProfileScreen = ({navigation}) => {
             <Text style={Styles.balihaiRegular12}>Подписок</Text>
           </TouchableOpacity>
         </View>
+        {profile && <View style = {[Styles.flexSpaceBetween,{paddingHorizontal:15,marginVertical:10}]}>
+            <Button paddingV={10} title={'Подписаться'} width ='48%'/>
+            <Button bg paddingV={10} title={'Сообщение'} width ='48%' />
+        </View>}
         <TabView
           renderTabBar={renderTabBar}
           navigationState={{index, routes}}

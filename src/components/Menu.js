@@ -44,7 +44,11 @@ export const Menu = ({visible, close}) => {
                 Параметры аккаунта
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                close();
+                navigation.navigate('BlackListScreen');
+              }}>
               <Text style={[Styles.darkRegular16, {marginTop: 30}]}>
                 Черный список
               </Text>

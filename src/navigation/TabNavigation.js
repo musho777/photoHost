@@ -34,7 +34,7 @@ export const TabNavigation = () => {
         tabBarStyle: (() => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? ''
 
-          if(routeName === 'ChatScreen'||routeName === 'FollowersScreen'||routeName === 'ParametrScreen'||routeName === 'EditProfilScreen'||routeName === 'ChangePasswordScreen'|| routeName === 'ChangeMailScreen'){
+          if(routeName === 'ChatScreen'||routeName === 'FollowersScreen'||routeName === 'ParametrScreen'||routeName === 'EditProfilScreen'||routeName === 'ChangePasswordScreen'|| routeName === 'ChangeMailScreen'||routeName === 'BlackListScreen'){
             return {
               display:'none'
             }
