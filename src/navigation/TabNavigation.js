@@ -18,6 +18,8 @@ import { ProfileNavigation } from './ProfileNavigation';
 import { SwipeTabProfileNavigation } from './SwipeTabProfileNavigation';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { ProflHeader } from '../headers/ProfileHeader';
+import { AddImg } from '../screens/AddImg/AddImg';
+import { ImageHeader } from '../headers/ImageHeader';
 
 
 export const TabNavigation = () => {
@@ -67,10 +69,11 @@ export const TabNavigation = () => {
       />
       <Tab.Screen
         options={() => ({
+          headerShown:false,
           tabBarIcon: ({focused}) => <AddSvg focused={focused} />,
         })}
-        name="Home2"
-        component={HomeScreen}
+        name="AddImg"
+        component={AddImg}
       />
       <Tab.Screen
         options={() => ({

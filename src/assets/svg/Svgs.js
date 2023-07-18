@@ -308,3 +308,38 @@ export const SendMsgSvg = () =>{
   />
 </Svg>
 }
+
+export const CloseSvg = () =>{
+  return <Svg
+  width={17}
+  height={17}
+  viewBox="0 0 17 17"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    d="M16 1L1 16M1 1l15 15"
+    stroke="#404040"
+    strokeWidth={1.8}
+    strokeLinecap="round"
+  />
+</Svg>
+}
+
+export const ImgArrow = () =>{
+  return <Svg
+  width={23}
+  height={19}
+  viewBox="0 0 23 19"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <Path
+    d="M1 9.273h20.364M13.727 1L22 9.273l-8.273 8.273"
+    stroke="#404040"
+    strokeWidth={1.8}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</Svg>
+}
