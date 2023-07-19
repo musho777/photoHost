@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  ErrorChangeProfile,
   ErrorConfirmRegisterCode,
   ErrorForgotPassword,
   ErrorGetUserData,
@@ -9,6 +10,7 @@ import {
   ErrorValidationForgotPassword,
 } from './errorAction';
 import {
+  StartChangeData,
   StartConfirmRegisterCode,
   StartForgotPassword,
   StartGetUserData,
@@ -18,6 +20,7 @@ import {
   StartValidationForgotPassword,
 } from './startAction';
 import {
+  SuccessChangeProfil,
   SuccessConfirmRegisterCode,
   SuccessForgotPassword,
   SuccessGetUserData,
@@ -195,6 +198,7 @@ export const getUserInfoAction = (token) => {
       })
       .then(r => {
         if (r.data.status) {
+          console.log(r.data)
           dispatch(SuccessGetUserData(r.data.data))
         }
         else {
@@ -206,3 +210,28 @@ export const getUserInfoAction = (token) => {
       });
   };
 };
+
+export const chnageUserProfil = (data,token)=>{
+  return dispatch => {
+    dispatch(StartChangeData())
+    axios.post(`${Api}/update_profile`,data, {headers: {Authorization: `Bearer ${token}`}})
+      .then(r => {
+        if (r.data.status) {
+          dispatch(SuccessChangeProfil())
+        }
+        else {
+          dispatch(ErrorChangeProfile())
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorChangeProfile())
+      });
+  };
+}
+
+export const setToken = (token) =>{
+  return {
+    type:'setToken',
+    token
+  }
+}

@@ -14,13 +14,14 @@ import {TabNavigation} from './TabNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUserInfoAction } from '../store/action/action';
+import { getUserInfoAction, setToken } from '../store/action/action';
 
 export default Navigation = () => {
   const dispatch = useDispatch();
   async function getData() {
     const token = await AsyncStorage.getItem('token');
     dispatch(getUserInfoAction(token));
+    dispatch(setToken(token))
   }
   useEffect(() => {
     getData();

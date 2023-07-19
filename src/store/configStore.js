@@ -7,6 +7,7 @@ import GetUserDataReducer from './reducers/getUserDataReducer';
 import LoginReducer from './reducers/loginReducer';
 import NewPasswordReducer from './reducers/newPasswordReducer';
 import RegisterReducer from './reducers/registerReducer';
+import StaticReducer from './reducers/staticReducer';
 
 const rootReducer = combineReducers({
     register:RegisterReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     confirmForgotPassword:ConfirmForgotPasswordReducer,
     newPassword:NewPasswordReducer,
     userData:GetUserDataReducer,
+    static:StaticReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );

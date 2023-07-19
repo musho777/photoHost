@@ -42,9 +42,10 @@ export const ProfileNavigation = () => {
         name="EditProfilScreen"
         component={EditProfilScreen}
         options={{
-          header:({navigation})=>{
-              return <HeaderWhiteTitle check onPress={()=>navigation.goBack()} title={'Редактировать профиль'}/> 
-          }
+          headerShown:false,
+          // header:({navigation})=>{
+          //     return <HeaderWhiteTitle check onPress={()=>navigation.goBack()} title={'Редактировать профиль'}/> 
+          // }
       }}
       />
       <Stack.Screen

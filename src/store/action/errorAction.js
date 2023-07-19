@@ -46,3 +46,10 @@ export const ErrorGetUserData = (data) =>{
         data
     }
 }
+
+export const ErrorChangeProfile = (data) =>{
+    return {
+        type:'ErrorChangeProfile',
+        data
+    }
+}

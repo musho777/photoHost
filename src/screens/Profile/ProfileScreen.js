@@ -76,8 +76,8 @@ export const ProfileScreen = ({navigation,profile}) => {
             source={{uri:`https://chamba.justcode.am/uploads/${user.data.avatar}`}}
           />
           <View style={{marginTop:7,marginBottom:15, alignItems: 'center'}}>
-            <Text style={Styles.darkMedium16}>{user.data.nickname}</Text>
-            <Text style={Styles.balihaiRegular12}>{user.data.nickname}</Text>
+            <Text style={Styles.darkMedium16}>{user.data.name}</Text>
+            <Text style={Styles.balihaiRegular12}>@{user.data.nickname}</Text>
           </View>
           {user.data.description && <Text style={Styles.darkRegular14}>{user.data.description}</Text>}
         </View>

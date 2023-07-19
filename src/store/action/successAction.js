@@ -42,3 +42,9 @@ export const SuccessGetUserData = (data) =>{
         data
     }
 }
+export const SuccessChangeProfil = (data) =>{
+    return {
+        type:'SuccessChangeProfil',
+        data
+    }
+}

@@ -38,3 +38,9 @@ export const StartGetUserData = () =>{
         type:'StartGetUserData'
     }
 }
+
+export const StartChangeData = () =>{
+    return {
+        type:'StartChangeData'
+    }
+}
