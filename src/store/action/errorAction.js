@@ -25,3 +25,17 @@ export const ErrorForgotPassword = (data) =>{
         data
     }
 }
+
+export const ErrorValidationForgotPassword = (data) =>{
+    return {
+        type:'ErrorValidationForgotPassword',
+        data
+    }
+}
+
+export const ErrorNewPassword = (data) =>{
+    return {
+        type:'ErrorNewPassword',
+        data
+    }
+}

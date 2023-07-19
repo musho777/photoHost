@@ -1,20 +1,27 @@
+import axios from 'axios';
 import {
   ErrorConfirmRegisterCode,
   ErrorForgotPassword,
   ErrorLogin,
+  ErrorNewPassword,
   ErrorRegister,
+  ErrorValidationForgotPassword,
 } from './errorAction';
 import {
   StartConfirmRegisterCode,
   StartForgotPassword,
   StartLogin,
+  StartNewPassword,
   StartRegister,
+  StartValidationForgotPassword,
 } from './startAction';
 import {
   SuccessConfirmRegisterCode,
   SuccessForgotPassword,
   SuccessLogin,
+  SuccessNewPassword,
   SuccessRegister,
+  SuccessValidForgotPassowrd,
 } from './successAction';
 
 const Api = 'https://chamba.justcode.am/api';
@@ -110,7 +117,7 @@ export const ClearLoginAction = () => {
   };
 };
 
-export const ForgotPasswordAction = (data) => {
+export const ForgotPasswordAction = data => {
   return dispatch => {
     dispatch(StartForgotPassword());
     fetch(`${Api}/send_code_from_forgot_password`, {
@@ -121,7 +128,6 @@ export const ForgotPasswordAction = (data) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          console.log(r)
           dispatch(SuccessForgotPassword(r));
         } else {
           dispatch(ErrorForgotPassword('такой пользователь не существует'));
@@ -132,3 +138,50 @@ export const ForgotPasswordAction = (data) => {
       });
   };
 };
+
+export const ValidationForogtPasswordAction = data => {
+  return dispatch => {
+    dispatch(StartValidationForgotPassword());
+    fetch(`${Api}/validation_forgot_code`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessValidForgotPassowrd(r));
+        } else {
+          dispatch(ErrorValidationForgotPassword('код не совпадают'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorValidationForgotPassword('код не совпадают'));
+      });
+  };
+};
+
+export const NewPasswordAction = (data) =>{
+  return (dispatch) =>{
+    dispatch(StartNewPassword());
+    fetch(`${Api}/validation_forgot_code`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if (r.status) {
+          console.log(r);
+          dispatch(SuccessNewPassword(r));
+        } else {
+          dispatch(ErrorNewPassword(''));
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch(ErrorNewPassword(''));
+      });
+  }
+}

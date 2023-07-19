@@ -3,3 +3,14 @@ export const ClearForGotPassword = () =>{
         type:'ClearForGotPassword'
     }
 }
+export const ClearValidationForgotPassword = () =>{
+    return {
+        type:'ClearValidationForgotPassword'
+    }
+}
+
+export const CleanNewPassword = ()=>{
+    return {
+        type:'CleanNewPassword'
+    }
+}

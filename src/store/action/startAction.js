@@ -21,3 +21,14 @@ export const StartForgotPassword = () =>{
         type:'StartForgotPassword'
     }
 }
+export const StartValidationForgotPassword = () =>{
+    return {
+        type:'StartValidationForgotPassword'
+    }
+}
+
+export const StartNewPassword = () =>{
+    return {
+        type:'StartNewPassword'
+    }
+}

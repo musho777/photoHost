@@ -22,3 +22,17 @@ export const SuccessForgotPassword = (data) =>{
         data
     }
 }
+
+export const SuccessValidForgotPassowrd = (data) =>{
+    return {
+        type:'SuccessValidForgotPassowrd',
+        data
+    }
+}
+
+export const SuccessNewPassword = (data) =>{
+    return {
+        type:'SuccessNewPassword',
+        data
+    }
+}
