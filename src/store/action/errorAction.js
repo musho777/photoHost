@@ -39,3 +39,10 @@ export const ErrorNewPassword = (data) =>{
         data
     }
 }
+
+export const ErrorGetUserData = (data) =>{
+    return {
+        type:'ErrorGetUserData',
+        data
+    }
+}

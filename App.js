@@ -5,6 +5,7 @@ import {Provider} from 'react-redux';
 import { store } from './src/store/configStore';
 
 export default App = () => {
+  
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{flex: 1}}>

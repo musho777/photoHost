@@ -16,6 +16,7 @@ import {AppColors} from '../../styles/AppColors';
 import {MenuSvg2} from '../../assets/svg/Svgs';
 import { Menu } from '../../components/Menu';
 import { Button } from '../../ui/Button';
+import { useSelector } from 'react-redux';
 
 export const ProfileScreen = ({navigation,profile}) => {
   const renderScene = SceneMap({
@@ -27,10 +28,11 @@ export const ProfileScreen = ({navigation,profile}) => {
   const [routes] = useState([
     {key: 'first', title: 'Альбом'},
     {key: 'second', title: 'Закладки'},
-    {key: 'third', title: 'Контакты'},
+    // {key: 'third', title: 'Контакты'},
   ]);
   const layout = useWindowDimensions();
   const [openMenu,setOpenMenu] = useState(false)
+  const user = useSelector(st => st.userData);
 
   const renderTabBar = props => {
     return (
@@ -71,13 +73,13 @@ export const ProfileScreen = ({navigation,profile}) => {
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Image
             style={styles.img}
-            source={require('../../assets/img/user.png')}
+            source={{uri:`https://chamba.justcode.am/uploads/${user.data.avatar}`}}
           />
           <View style={{marginTop:7,marginBottom:15, alignItems: 'center'}}>
-            <Text style={Styles.darkMedium16}>Иван Смит</Text>
-            <Text style={Styles.balihaiRegular12}>@ivan_smith</Text>
+            <Text style={Styles.darkMedium16}>{user.data.nickname}</Text>
+            <Text style={Styles.balihaiRegular12}>{user.data.nickname}</Text>
           </View>
-          <Text style={Styles.darkRegular14}>Student from Guinea 🇬🇳</Text>
+          {user.data.description && <Text style={Styles.darkRegular14}>{user.data.description}</Text>}
         </View>
         <View style={[{marginVertical: 20,paddingHorizontal:15}, Styles.flexSpaceBetween]}>
           <View style={{alignItems: 'center'}}>

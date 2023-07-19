@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   ErrorConfirmRegisterCode,
   ErrorForgotPassword,
+  ErrorGetUserData,
   ErrorLogin,
   ErrorNewPassword,
   ErrorRegister,
@@ -10,6 +11,7 @@ import {
 import {
   StartConfirmRegisterCode,
   StartForgotPassword,
+  StartGetUserData,
   StartLogin,
   StartNewPassword,
   StartRegister,
@@ -18,6 +20,7 @@ import {
 import {
   SuccessConfirmRegisterCode,
   SuccessForgotPassword,
+  SuccessGetUserData,
   SuccessLogin,
   SuccessNewPassword,
   SuccessRegister,
@@ -161,8 +164,8 @@ export const ValidationForogtPasswordAction = data => {
   };
 };
 
-export const NewPasswordAction = (data) =>{
-  return (dispatch) =>{
+export const NewPasswordAction = data => {
+  return dispatch => {
     dispatch(StartNewPassword());
     fetch(`${Api}/validation_forgot_code`, {
       method: 'POST',
@@ -171,17 +174,35 @@ export const NewPasswordAction = (data) =>{
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
-          console.log(r);
           dispatch(SuccessNewPassword(r));
         } else {
           dispatch(ErrorNewPassword(''));
         }
       })
       .catch(error => {
-        console.log(error);
         dispatch(ErrorNewPassword(''));
       });
-  }
-}
+  };
+};
+
+export const getUserInfoAction = (token) => {
+  return dispatch => {
+    dispatch(StartGetUserData())
+    axios
+      .get(`${Api}/auth_user_info`, {
+        headers: {Authorization: `Bearer ${token}`},
+      })
+      .then(r => {
+        if (r.data.status) {
+          dispatch(SuccessGetUserData(r.data.data))
+        }
+        else {
+          dispatch(ErrorGetUserData())
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetUserData())
+      });
+  };
+};

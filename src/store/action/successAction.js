@@ -36,3 +36,9 @@ export const SuccessNewPassword = (data) =>{
         data
     }
 }
+export const SuccessGetUserData = (data) =>{
+    return {
+        type:'SuccessGetUserData',
+        data
+    }
+}

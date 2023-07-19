@@ -32,3 +32,9 @@ export const StartNewPassword = () =>{
         type:'StartNewPassword'
     }
 }
+
+export const StartGetUserData = () =>{
+    return {
+        type:'StartGetUserData'
+    }
+}
