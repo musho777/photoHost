@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 
@@ -10,24 +10,27 @@ export const Button = ({
   width = 220,
   paddingV = 15,
   bg,
+  loading
 }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || loading}
       style={[
         styles.button,
         {marginVertical: marginV, width: width, paddingVertical: paddingV},
         disabled && {backgroundColor: AppColors.PattenseBlue_Color},
         bg && {backgroundColor: AppColors.PattensBlue_Color}
       ]}>
-      <Text
+      {!loading ?<Text
         style={[
           Styles.darkMedium12,
           disabled && {color: AppColors.White_Color},
         ]}>
         {title}
-      </Text>
+      </Text>:
+      <ActivityIndicator size="small" color="#fff" />
+      }
     </TouchableOpacity>
   );
 };
