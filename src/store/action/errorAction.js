@@ -11,3 +11,10 @@ export const ErrorConfirmRegisterCode = (data) =>{
         data
     }
 }
+
+export const ErrorLogin = (data) =>{
+    return {
+        type:'ErrorLogin',
+        data
+    }
+}

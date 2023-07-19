@@ -9,7 +9,6 @@ const RegisterReducer = (state = initialState, action) => {
   let item = {...state};
   switch (action.type) {
     case 'StartRegister':
-      console.log('StartRegister')
       item.status = false
       item.error =''
       item.code = null

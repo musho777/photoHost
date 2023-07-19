@@ -29,7 +29,7 @@ export const Button = ({
         ]}>
         {title}
       </Text>:
-      <ActivityIndicator size="small" color="#fff" />
+      <ActivityIndicator size={15} color="#fff" />
       }
     </TouchableOpacity>
   );

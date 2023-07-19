@@ -2,37 +2,43 @@ const initialState = {
     error: '',
     status:false,
     message:'',
-    loading:false
+    loading:false,
+    token:''
   };
-  const ConfirmRegisetReducer = (state = initialState, action) => {
+  const LoginReducer = (state = initialState, action) => {
     let item = {...state};
     switch (action.type) {
-      case 'StartConfirmRegisterCode':
+      case 'StartLogin':
         item.status = false
         item.error =''
         item.message = '',
         item.loading = true
+        item.token = ''
         break
-      case 'SuccessConfirmRegisterCode':
+      case 'SuccessLogin':
         item.status = true
         item.error =''
         item.message = action.data?.message,
         item.loading = false
+        item.token = action.data.token
         break
-      case 'ErrorConfirmRegisterCode':
+      case 'ErrorLogin':
         item.error = action.data
         item.loading = false
         item.status = false
+        item.message = ''
+        item.token = ''
         break;
-      case 'ClearConfirmPasswordAction':
-        item.error = ''
-        item.loading = false
+      case 'ClearLoginAction':
         item.status = false
-        break
+        item.error =''
+        item.message = '',
+        item.loading = false
+        item.token = ''
       default:
         break;
     }
     return item;
   };
-  export default ConfirmRegisetReducer;
+  export default LoginReducer;
   

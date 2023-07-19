@@ -9,3 +9,9 @@ export const StartConfirmRegisterCode = () =>{
         type:'StartConfirmRegisterCode'
     }
 }
+
+export const StartLogin = () =>{
+    return {
+        type:'StartLogin'
+    }
+}

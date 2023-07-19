@@ -1,5 +1,4 @@
 export const SuccessRegister = (data) =>{
-    console.log(data,2)
     return {
         type:'SuccessRegister',
         data,
@@ -8,5 +7,12 @@ export const SuccessRegister = (data) =>{
 export const SuccessConfirmRegisterCode = () =>{
     return {
         type:'SuccessConfirmRegisterCode'
+    }
+}
+
+export const SuccessLogin = (data) =>{
+    return {
+        type:'SuccessLogin',
+        data
     }
 }

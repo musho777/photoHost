@@ -20,7 +20,6 @@ export const ConfirmCode = ({code, clear}) => {
       Keyboard.dismiss();
       let item =
         data.value + data.value1 + data.value2 + data.value3 + data.value4;
-      console.log(item);
       code(item);
     }
   }, [data]);

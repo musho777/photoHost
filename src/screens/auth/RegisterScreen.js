@@ -1,5 +1,5 @@
 import {useState,useEffect} from 'react';
-import {ScrollView, Text, View,Keyboard} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {ConfirmCode} from '../../components/ConfirmCode';
 import {Styles} from '../../styles/Styles';
 import {Button} from '../../ui/Button';

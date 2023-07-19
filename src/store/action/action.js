@@ -1,6 +1,6 @@
-import {ErrorConfirmRegisterCode, ErrorRegister} from './errorAction';
-import {StartConfirmRegisterCode, StartRegister} from './startAction';
-import {SuccessConfirmRegisterCode, SuccessRegister} from './successAction';
+import {ErrorConfirmRegisterCode, ErrorLogin, ErrorRegister} from './errorAction';
+import {StartConfirmRegisterCode, StartLogin, StartRegister} from './startAction';
+import {SuccessConfirmRegisterCode, SuccessLogin, SuccessRegister} from './successAction';
 
 const Api = 'https://chamba.justcode.am/api';
 
@@ -17,16 +17,20 @@ export const RegisterAction = data => {
         if (r.status) {
           dispatch(SuccessRegister(r));
         } else {
-          console.log(r.message,555555555)
-          dispatch(ErrorRegister({
-            email:r.message.email ?'Этот эл. адрес уже зарегистрирован':'',
-            username:r.message?.nickname?'Такое имя пользователя уже существует.':''
-          }));
+          dispatch(
+            ErrorRegister({
+              email: r.message.email
+                ? 'Этот эл. адрес уже зарегистрирован'
+                : '',
+              username: r.message?.nickname
+                ? 'Такое имя пользователя уже существует.'
+                : '',
+            }),
+          );
         }
       })
-      .catch((error) => {
-        console.log(error,555555)
-        dispatch(ErrorRegister({server:'server'}));
+      .catch(error => {
+        dispatch(ErrorRegister({server: 'server'}));
       });
   };
 };
@@ -36,29 +40,57 @@ export const ClearRegisterAction = () => {
   };
 };
 
-export const ConfirmRegisterCode = (data) =>{
-    return (dispatch) =>{
-        dispatch(StartConfirmRegisterCode())
-        fetch(`${Api}/confirm_register`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data),
-          })
-            .then(response => response.json())
-            .then(r => {
-              if (r.status) {
-                dispatch(SuccessConfirmRegisterCode(r));
-              } else {
-                dispatch(ErrorConfirmRegisterCode( 'код не совпадают'));
-              }
-            })
-            .catch(error => {
-              dispatch(ErrorConfirmRegisterCode( 'код не совпадают'));
-            });
-        };
-    } 
+export const ConfirmRegisterCode = data => {
+  return dispatch => {
+    dispatch(StartConfirmRegisterCode());
+    fetch(`${Api}/confirm_register`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessConfirmRegisterCode(r));
+        } else {
+          dispatch(ErrorConfirmRegisterCode('код не совпадают'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorConfirmRegisterCode('код не совпадают'));
+      });
+  };
+};
 export const ClearConfirmPasswordAction = () => {
-    return {
-        type:'ClearConfirmPasswordAction'
-    }
+  return {
+    type: 'ClearConfirmPasswordAction',
+  };
+};
+
+export const LoginAction = (data) =>{
+  return (dispatch) =>{
+    dispatch(StartLogin());
+    fetch(`${Api}/login`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessLogin(r));
+        } else {
+          dispatch(ErrorLogin('wrong email or password'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorLogin('server error'));
+      });
+  }
+}
+
+export const ClearLoginAction = () =>{
+  return {
+    type:'ClearLoginAction'
+  }
 }
