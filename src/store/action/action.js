@@ -1,6 +1,21 @@
-import {ErrorConfirmRegisterCode, ErrorLogin, ErrorRegister} from './errorAction';
-import {StartConfirmRegisterCode, StartLogin, StartRegister} from './startAction';
-import {SuccessConfirmRegisterCode, SuccessLogin, SuccessRegister} from './successAction';
+import {
+  ErrorConfirmRegisterCode,
+  ErrorForgotPassword,
+  ErrorLogin,
+  ErrorRegister,
+} from './errorAction';
+import {
+  StartConfirmRegisterCode,
+  StartForgotPassword,
+  StartLogin,
+  StartRegister,
+} from './startAction';
+import {
+  SuccessConfirmRegisterCode,
+  SuccessForgotPassword,
+  SuccessLogin,
+  SuccessRegister,
+} from './successAction';
 
 const Api = 'https://chamba.justcode.am/api';
 
@@ -67,8 +82,8 @@ export const ClearConfirmPasswordAction = () => {
   };
 };
 
-export const LoginAction = (data) =>{
-  return (dispatch) =>{
+export const LoginAction = data => {
+  return dispatch => {
     dispatch(StartLogin());
     fetch(`${Api}/login`, {
       method: 'POST',
@@ -86,11 +101,34 @@ export const LoginAction = (data) =>{
       .catch(error => {
         dispatch(ErrorLogin('server error'));
       });
-  }
-}
+  };
+};
 
-export const ClearLoginAction = () =>{
+export const ClearLoginAction = () => {
   return {
-    type:'ClearLoginAction'
-  }
-}
+    type: 'ClearLoginAction',
+  };
+};
+
+export const ForgotPasswordAction = (data) => {
+  return dispatch => {
+    dispatch(StartForgotPassword());
+    fetch(`${Api}/send_code_from_forgot_password`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          console.log(r)
+          dispatch(SuccessForgotPassword(r));
+        } else {
+          dispatch(ErrorForgotPassword('такой пользователь не существует'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorForgotPassword('server error'));
+      });
+  };
+};

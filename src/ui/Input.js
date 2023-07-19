@@ -31,6 +31,7 @@ export const Input = ({
   search,
   msg,
   send,
+  disable
 }) => {
   const [securyty, setSecuryty] = useState(pass);
   return (
@@ -43,6 +44,7 @@ export const Input = ({
         marginHorizontal: marginH,
       }}>
       <TextInput
+        editable = {disable}
         style={[
           styles.Input,
           {paddingRight: pass ? 45 : 7},

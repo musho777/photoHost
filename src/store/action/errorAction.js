@@ -18,3 +18,10 @@ export const ErrorLogin = (data) =>{
         data
     }
 }
+
+export const ErrorForgotPassword = (data) =>{
+    return {
+        type:'ErrorForgotPassword',
+        data
+    }
+}

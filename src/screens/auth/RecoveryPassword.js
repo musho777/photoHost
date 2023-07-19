@@ -1,29 +1,73 @@
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { ConfirmCode } from '../../components/ConfirmCode';
+import { ForgotPasswordAction } from '../../store/action/action';
+import { ClearForGotPassword } from '../../store/action/clearAction';
 import {Styles} from '../../styles/Styles';
 import {Button} from '../../ui/Button';
 import {Input} from '../../ui/Input';
 
 export const RecoveryPassword = ({navigation}) => {
   const [email, setEmail] = useState({error: '', value: ''});
+  const [send,setSend] = useState(false)
+  const [disable,setDisable] = useState(true)
+  const dispatch = useDispatch()
+  const forgotPassword = useSelector((st)=>st.forgotPassword)
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      setSend(false)
+      setDisable(true)
+      dispatch(ClearForGotPassword())
+    });
+    return unsubscribe;
+  }, [navigation]);
+  useEffect(()=>{
+    if(forgotPassword.status){
+      setSend(true)
+    }
+  },[forgotPassword.status])
+  useEffect(()=>{
+    if(email.value){
+      setDisable(false)
+    }
+  },[email])
+  function ValidateEmail(mail) 
+  {
+   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+    {
+      return (true)
+    }
+      return (false)
+  }
+  const sendForgotPassword = () =>{
+    setEmail({...email,error:''})
+    if(ValidateEmail(email.value)){
+      dispatch(ForgotPasswordAction({email:email.value}))
+    }
+    else {
+      setEmail({...email,error:'Введите корректный адрес эл. почты'})
+    }
+  }
   return (
       <View style={[Styles.authScreen,{marginTop:80,paddingHorizontal:35}]}>
         <Text style={[ Styles.darkSemiBold22,{marginBottom: 30, textAlign: 'center'},]}>Восстановление пароля</Text>
         <Input
           placeholder={'Введите эл. почту'}
-          error={email.error}
+          error={email.error||forgotPassword.error}
           value={email.value}
           width = {'95%'}
           onChange = {(e)=>setEmail({...email,value:e})}
+          disable = {!send}
         />
-        <View style = {{alignItems:'center'}}>
+        {!send &&<Button loading={forgotPassword.loading} disabled={disable} marginV={10} onPress = {()=>sendForgotPassword()} title={'Далее'} />}
+        {send  &&<View style = {{alignItems:'center',marginTop:15}}>
             <Text style={[Styles.balihaiMedium13, {textAlign: 'center'}]}>
               Мы отправили вам на почту комбинацию цифр, впишите её ниже.
             </Text>
             <ConfirmCode />
-          </View>
-        <Button marginV={20} onPress = {()=>navigation.navigate('NewPassword')} title={'Далее'} />
+          </View>}
       </View>
   );
 };
+// navigation.navigate('NewPassword')

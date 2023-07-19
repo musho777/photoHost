@@ -16,3 +16,9 @@ export const SuccessLogin = (data) =>{
         data
     }
 }
+export const SuccessForgotPassword = (data) =>{
+    return {
+        type:'SuccessForgotPassword',
+        data
+    }
+}
