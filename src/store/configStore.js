@@ -1,5 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from "redux-thunk" 
+import ChangeAvatarReducer from './reducers/ChangeAvatarReducer';
 import ChangeEmailReducer from './reducers/changeEmailReducer';
 import ChangePasswordReducer from './reducers/changePasswordReducer';
 import ChangeUserProfilReducer from './reducers/changeUserProfilReducer';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
     changeUserProfil:ChangeUserProfilReducer,
     changePassword:ChangePasswordReducer,
     changeEmail:ChangeEmailReducer,
+    changeAvatar:ChangeAvatarReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );

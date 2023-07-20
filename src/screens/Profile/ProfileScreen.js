@@ -73,7 +73,7 @@ export const ProfileScreen = ({navigation,profile}) => {
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Image
             style={styles.img}
-            source={{uri:`https://chamba.justcode.am/uploads/${user.data.avatar}`}}
+            source={{uri:`https://chamba.justcode.am/uploads/${user.avatar}`}}
           />
           <View style={{marginTop:7,marginBottom:15, alignItems: 'center'}}>
             <Text style={Styles.darkMedium16}>{user.name}</Text>

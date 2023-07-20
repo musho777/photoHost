@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  ErrorChangeAvatar,
   ErrorChangeEmail,
   ErrorChangeEmailCode,
   ErrorChangeEmailPassword,
@@ -26,8 +27,10 @@ import {
   StartNewPassword,
   StartRegister,
   StartValidationForgotPassword,
+  StartChangeAvatar
 } from './startAction';
 import {
+  SuccessChangeAvatar,
   SuccessChangeEmail,
   SuccessChangeEmailCode,
   SuccessChangeEmailPassword,
@@ -336,8 +339,12 @@ export const ChangeEmailAction = (data, token) => {
         if (r.status) {
           dispatch(SuccessChangeEmail(r.data));
         } else {
-          if(r.message.email)
-          dispatch(ErrorChangeEmail({email:'указанный адрес электронной почты, уже существует.'}));
+          if (r.message.email)
+            dispatch(
+              ErrorChangeEmail({
+                email: 'указанный адрес электронной почты, уже существует.',
+              }),
+            );
         }
       })
       .catch(error => {
@@ -346,7 +353,7 @@ export const ChangeEmailAction = (data, token) => {
   };
 };
 
-export const sednEmailChangeCodeAction = (data,token,email) =>{
+export const sednEmailChangeCodeAction = (data, token, email) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -363,7 +370,7 @@ export const sednEmailChangeCodeAction = (data,token,email) =>{
       .then(r => {
         if (r.status) {
           dispatch(SuccessChangeEmailCode(r.data));
-          dispatch(ChangeMail(email))
+          dispatch(ChangeMail(email));
         } else {
           dispatch(ErrorChangeEmailCode({server: 'код не совпадает'}));
         }
@@ -371,12 +378,60 @@ export const sednEmailChangeCodeAction = (data,token,email) =>{
       .catch(error => {
         dispatch(ErrorChangeEmailCode({server: 'server error'}));
       });
-  }; 
-}
+  };
+};
 
-export const ChangeMail = (email) =>{
+export const ChangeMail = email => {
   return {
-    type:'ChangeMail',
-    email
+    type: 'ChangeMail',
+    email,
+  };
+};
+
+export const chnageAvatarAction = (url, token) => {
+  return dispatch => {
+    dispatch(StartChangeAvatar())
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'multipart/form-data');
+    myHeaders.append('otherHeader', 'foo');
+    myHeaders.append('Authorization', `Bearer ${token}`);
+
+    let body = new FormData();
+    body.append('photo', {
+      uri: url,
+      name: 'photo.png',
+      filename: 'imageName.png',
+      type: 'image/png',
+    });
+    body.append('Content-Type', 'image/png');
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: body,
+    };
+
+    fetch(
+      'https://chamba.justcode.am/api/user_update_profile_photo',
+      requestOptions,
+    )
+      .then(response => response.json())
+      .then(r => {
+        if(r.status){
+          dispatch(SuccessChangeAvatar())
+          dispatch(ChangeAvatar(r.avatar))
+        }
+        else {
+          dispatch(ErrorChangeAvatar())
+        }
+      })
+      .catch(error => {
+          dispatch(ErrorChangeAvatar())
+      });
+  };
+};
+export const ChangeAvatar = (data) =>{
+  return {
+    type:'ChangeAvatar',
+    data
   }
 }

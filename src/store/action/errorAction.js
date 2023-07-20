@@ -81,3 +81,10 @@ export const ErrorChangeEmailCode = (data) =>{
         data
     }
 }
+
+export const ErrorChangeAvatar  = (data) =>{
+    return {
+        type:'ErrorChangeAvatar',
+        data
+    }
+}

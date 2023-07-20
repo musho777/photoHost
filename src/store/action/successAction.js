@@ -74,3 +74,10 @@ export const SuccessChangeEmailCode = (data) =>{
         data
     }
 }
+
+export const SuccessChangeAvatar = (data) =>{
+    return {
+        type:'SuccessChangeAvatar',
+        data
+    }
+}

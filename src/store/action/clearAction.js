@@ -31,3 +31,8 @@ export const ClearEmailChange = () =>{
         type:'ClearEmailChange'
     }
 }
+export const ClearChangeAvatar = () =>{
+    return{
+        type:'ClearChangeAvatar'
+    }
+}

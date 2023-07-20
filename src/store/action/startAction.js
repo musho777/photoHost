@@ -67,3 +67,9 @@ export const StartChangeEmailCode = () =>{
         type:'StartChangeEmailCode'
     }
 }
+
+export const StartChangeAvatar = () =>{
+    return {
+        type:'StartChangeAvatar'
+    }
+}
