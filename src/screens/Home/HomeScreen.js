@@ -20,7 +20,7 @@ export const HomeScreen = () => {
   if (user.loading) {
     return (
       <View style={Styles.loading}>
-        <ActivityIndicator size="large" color="#00ff00" />
+        <ActivityIndicator size="large" color="#FFC24B" />
       </View>
     );
   }

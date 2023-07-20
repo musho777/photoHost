@@ -31,7 +31,10 @@ export const Input = ({
   search,
   msg,
   send,
-  disable
+  disable,
+  onFocus,
+  onBlur,
+  autoFocus
 }) => {
   const [securyty, setSecuryty] = useState(pass);
   return (
@@ -44,7 +47,10 @@ export const Input = ({
         marginHorizontal: marginH,
       }}>
       <TextInput
+        autoFocus = {autoFocus}
         editable = {disable}
+        onFocus = {onFocus}
+        onBlur = {onBlur}
         style={[
           styles.Input,
           {paddingRight: pass ? 45 : 7},

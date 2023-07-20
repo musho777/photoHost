@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,25 +7,41 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  Text
 } from 'react-native';
 import {} from 'react-native-svg';
+import { SearchInputSvg } from '../../assets/svg/Svgs';
+import { SearchSvg } from '../../assets/svg/TabBarSvg';
+import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import {Input} from '../../ui/Input';
+import { SearchBlock } from './SearchBlock';
 
 const itemWidth = Dimensions.get('window').width / 3.3;
 
 export const SearchScreen = ({navigation}) => {
   const [data, setData] = useState('');
   const [img, setImg] = useState([{}, {}, {}, {}, {}, {}, {}, {},{},{},{},{},{},{},{},{},{}]);
+  const [focuse,setFocuse] = useState(false)
+  useEffect(()=>{
+    console.log(focuse)
+  },[focuse])
   return (
     <SafeAreaView >
       <View style={styles.header}>
-        <Input
+        {/* <Input
           data={data}
           onChange={e => setData(e)}
           search
           placeholder={'Поиск'}
-        />
+          // onFocus = {()=>setFocuse(true)}
+          // onBlur = {()=>setFocuse(false)}
+          disable = {true}
+        /> */}
+        <TouchableOpacity style = {styles.Input} onPress = {()=>setFocuse(true)}>
+          <Text style = {Styles.balihaiRegular12}>Поиск</Text>
+          <SearchInputSvg />
+        </TouchableOpacity>
       </View>
       <ScrollView showsVerticalScrollIndicator = {false} style = {Styles.bg}>
         <View style={styles.imgWrapper}>
@@ -39,11 +55,23 @@ export const SearchScreen = ({navigation}) => {
           ))}
         </View>
       </ScrollView>
+      <SearchBlock modalVisible={focuse}/>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  Input: {
+    backgroundColor: AppColors.AliceBlue_Color,
+    borderRadius: 50,
+    paddingHorizontal: 20,
+    paddingVertical:10,
+    color: AppColors.Blcak_Color,
+    position: 'relative',
+    justifyContent:'space-between',
+    flexDirection:'row',
+    alignItems:'center'
+  },
   header: {
     backgroundColor: '#fff',
     paddingHorizontal: 10,
