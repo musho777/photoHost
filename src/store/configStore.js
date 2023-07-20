@@ -1,6 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from "redux-thunk" 
-import ChangeAvatarReducer from './reducers/ChangeAvatarReducer';
+import ChangeAvatarReducer from './reducers/changeAvatarReducer';
 import ChangeEmailReducer from './reducers/changeEmailReducer';
 import ChangePasswordReducer from './reducers/changePasswordReducer';
 import ChangeUserProfilReducer from './reducers/changeUserProfilReducer';
