@@ -20,3 +20,9 @@ export const ClearChangeProfile = () =>{
         type:'ClearChangeProfile'
     }
 }
+
+export const clearChangePassword = () =>{
+    return {
+        type:'clearChangePassword'
+    }
+}

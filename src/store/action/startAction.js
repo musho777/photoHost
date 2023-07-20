@@ -44,3 +44,9 @@ export const StartChangeData = () =>{
         type:'StartChangeData'
     }
 }
+
+export const StartChangeUserPassword = () =>{
+    return {
+        type:'StartChangeUserPassword'
+    }
+}

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   ErrorChangeProfile,
+  ErrorChangeUserPassowrd,
   ErrorConfirmRegisterCode,
   ErrorForgotPassword,
   ErrorGetUserData,
@@ -11,6 +12,7 @@ import {
 } from './errorAction';
 import {
   StartChangeData,
+  StartChangeUserPassword,
   StartConfirmRegisterCode,
   StartForgotPassword,
   StartGetUserData,
@@ -21,6 +23,7 @@ import {
 } from './startAction';
 import {
   SuccessChangeProfil,
+  SuccessChangeUserPassword,
   SuccessConfirmRegisterCode,
   SuccessForgotPassword,
   SuccessGetUserData,
@@ -105,7 +108,6 @@ export const LoginAction = data => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessLogin(r));
         } else {
@@ -190,57 +192,90 @@ export const NewPasswordAction = data => {
   };
 };
 
-export const getUserInfoAction = (token) => {
+export const getUserInfoAction = token => {
   return dispatch => {
-    dispatch(StartGetUserData())
+    dispatch(StartGetUserData());
     axios
       .get(`${Api}/auth_user_info`, {
         headers: {Authorization: `Bearer ${token}`},
       })
       .then(r => {
         if (r.data.status) {
-          console.log(r.data)
-          dispatch(SuccessGetUserData(r.data.data))
-        }
-        else {
-          dispatch(ErrorGetUserData())
+          dispatch(SuccessGetUserData(r.data.data));
+        } else {
+          dispatch(ErrorGetUserData());
         }
       })
       .catch(error => {
-        dispatch(ErrorGetUserData())
+        dispatch(ErrorGetUserData());
       });
   };
 };
 
-export const chnageUserProfil = (data,token)=>{
+export const chnageUserProfil = (data, token) => {
   return dispatch => {
-    dispatch(StartChangeData())
-    axios.post(`${Api}/update_profile`,data, {headers: {Authorization: `Bearer ${token}`}})
+    dispatch(StartChangeData());
+    axios
+      .post(`${Api}/update_profile`, data, {
+        headers: {Authorization: `Bearer ${token}`},
+      })
       .then(r => {
         if (r.data.status) {
-          dispatch(SuccessChangeProfil())
-          dispatch(changeUserData(data))
-        }
-        else {
-          dispatch(ErrorChangeProfile())
+          dispatch(SuccessChangeProfil(r.data));
+          dispatch(changeUserData(data));
+        } else {
+          dispatch(ErrorChangeProfile());
         }
       })
       .catch(error => {
-        dispatch(ErrorChangeProfile())
+        dispatch(ErrorChangeProfile());
       });
   };
-}
+};
 
-export const changeUserData = (data) =>{
+export const changeUserData = data => {
   return {
-    type:'changeUserData',
-    data
-  }
-}
+    type: 'changeUserData',
+    data,
+  };
+};
 
-export const setToken = (token) =>{
+export const setToken = token => {
   return {
-    type:'setToken',
-    token
-  }
-}
+    type: 'setToken',
+    token,
+  };
+};
+
+export const changeUserPassword = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartChangeUserPassword());
+    fetch('https://chamba.justcode.am/api/update_password', requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessChangeUserPassword(r.data));
+        }
+        else {
+          if(r.message.includes('wrong old password')){
+            dispatch(ErrorChangeUserPassowrd({email: 'неверны старый пароль'}));
+          }
+          else{
+            dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
+          }
+        }
+      })
+      .catch(error => {
+          dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
+      });
+  };
+};

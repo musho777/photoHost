@@ -1,29 +1,78 @@
 import {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeUserPassword} from '../../store/action/action';
+import { clearChangePassword } from '../../store/action/clearAction';
 import {Styles} from '../../styles/Styles';
 import {Button} from '../../ui/Button';
 import {Input} from '../../ui/Input';
 
-export const ChangePasswordScreen = () => {
+export const ChangePasswordScreen = ({navigation}) => {
   const [oldPassword, setOldPasswrd] = useState({value: '', error: ''});
   const [newPassword, setNewPassword] = useState({value: '', error: ''});
-  const [disabled,setDisabled] = useState(true)
+  const [confirmPassword, setConfirmPassword] = useState({
+    value: '',
+    error: '',
+  });
+  const changePassword = useSelector(st => st.changePassword);
+  const staticdata = useSelector(st => st.static);
+  const [disabled, setDisabled] = useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (
+      oldPassword.value !== '' &&
+      newPassword.value !== '' &&
+      confirmPassword.value
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [oldPassword, newPassword, confirmPassword]);
+  const sendData = () => {
+    let item = true;
+    if (newPassword.value.length < 8) {
+      item = false;
+      setNewPassword({
+        ...newPassword,
+        error: 'Пароль должен содержать не менее 8-ти символов.',
+      });
+    } else {
+      setNewPassword({...newPassword, error: ''});
+    }
+    if (confirmPassword.value !== newPassword.value) {
+      setConfirmPassword({...confirmPassword, error: 'Пароли не совпадают'});
+      item = false;
+    } else {
+      setConfirmPassword({...confirmPassword, error: ''});
+    }
+    if (item) {
+      dispatch(
+        changeUserPassword(
+          {
+            old_password: oldPassword.value,
+            password: newPassword.value,
+            password_confirmation: confirmPassword.value,
+          },
+          staticdata.token,
+        ),
+      );
+    }
+  };
   useEffect(()=>{
-    if(oldPassword.value!=='' && newPassword.value !=='   '){
-        setDisabled(false)
+    if(changePassword.status){
+      navigation.navigate('ProfileScreen')
+      dispatch(clearChangePassword())
     }
-    else {
-        setDisabled(true)
-    }
-  },[])
+  },[changePassword.status])
   return (
     <View style={{alignItems: 'center', marginTop: 30}}>
       <Input
         placeholder={'Старый пароль'}
         pass
-        error={oldPassword.error}
+        error={oldPassword.error || changePassword.error.email}
         value={oldPassword.value}
-        onChange={e => setOldPasswrd(e)}
+        onChange={e => setOldPasswrd({...oldPassword, value: e})}
         width={'80%'}
       />
       <Input
@@ -31,16 +80,32 @@ export const ChangePasswordScreen = () => {
         pass
         error={newPassword.error}
         value={newPassword.value}
-        onChange={e => setNewPassword(e)}
+        onChange={e => setNewPassword({...newPassword, value: e})}
+        width={'80%'}
+      />
+      <Input
+        placeholder={'Повтарйте Новый пароль'}
+        pass
+        error={confirmPassword.error}
+        value={confirmPassword.value}
+        onChange={e => setConfirmPassword({...confirmPassword, value: e})}
         width={'80%'}
         marginBottom={20}
       />
-      <Button disabled = {disabled} title={'Подтвердить'} />
+      <Button
+        onPress={() => sendData()}
+        loading={changePassword.loading}
+        disabled={disabled}
+        title={'Подтвердить'}
+      />
       <TouchableOpacity>
-        <Text style={[Styles.darkMedium12, {marginVertical: 15}]}>
+        {/* <Text style={[Styles.darkMedium12, {marginVertical: 15}]}>
           Забыли пароль?
-        </Text>
+        </Text> */}
       </TouchableOpacity>
+      <Text style={[[Styles.tomatoMedium10]]}>
+        {changePassword.error?.server}
+      </Text>
     </View>
   );
 };

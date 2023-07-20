@@ -1,5 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from "redux-thunk" 
+import ChangePasswordReducer from './reducers/changePasswordReducer';
 import ChangeUserProfilReducer from './reducers/changeUserProfilReducer';
 import ConfirmForgotPasswordReducer from './reducers/confirmForgotPasswordReducer';
 import ConfirmRegisetReducer from './reducers/confirmRegisetReducer';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     userData:GetUserDataReducer,
     static:StaticReducer,
     changeUserProfil:ChangeUserProfilReducer,
+    changePassword:ChangePasswordReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );

@@ -53,3 +53,10 @@ export const ErrorChangeProfile = (data) =>{
         data
     }
 }
+
+export const ErrorChangeUserPassowrd = (data) =>{
+    return {
+        type:'ErrorChangeUserPassowrd',
+        data
+    }
+}

@@ -48,3 +48,10 @@ export const SuccessChangeProfil = (data) =>{
         data
     }
 }
+
+export const SuccessChangeUserPassword = (data) =>{
+    return {
+        type:'SuccessChangeUserPassword',
+        data
+    }
+} 

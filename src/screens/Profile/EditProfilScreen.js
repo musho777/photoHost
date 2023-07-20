@@ -37,7 +37,6 @@ export const EditProfilScreen = ({navigation}) =>{
       navigation.goBack()
     }
     if(username === ''){
-      console.log('ssss')
       setError('Введите корректный  ФИО/Название канала')
     }
     else if(name === ''){

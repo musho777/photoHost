@@ -25,7 +25,6 @@ const initialState = {
         item.status = false;
         break;
       case 'ClearChangeProfile':
-        console.log(8888)
         item.error = '';
         item.loading = false;
         item.status = false;
