@@ -96,6 +96,7 @@ export const ClearConfirmPasswordAction = () => {
 };
 
 export const LoginAction = data => {
+  console.log(data)
   return dispatch => {
     dispatch(StartLogin());
     fetch(`${Api}/login`, {
@@ -105,6 +106,7 @@ export const LoginAction = data => {
     })
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessLogin(r));
         } else {
@@ -218,6 +220,7 @@ export const chnageUserProfil = (data,token)=>{
       .then(r => {
         if (r.data.status) {
           dispatch(SuccessChangeProfil())
+          dispatch(changeUserData(data))
         }
         else {
           dispatch(ErrorChangeProfile())
@@ -227,6 +230,13 @@ export const chnageUserProfil = (data,token)=>{
         dispatch(ErrorChangeProfile())
       });
   };
+}
+
+export const changeUserData = (data) =>{
+  return {
+    type:'changeUserData',
+    data
+  }
 }
 
 export const setToken = (token) =>{

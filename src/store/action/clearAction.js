@@ -14,3 +14,9 @@ export const CleanNewPassword = ()=>{
         type:'CleanNewPassword'
     }
 }
+
+export const ClearChangeProfile = () =>{
+    return {
+        type:'ClearChangeProfile'
+    }
+}

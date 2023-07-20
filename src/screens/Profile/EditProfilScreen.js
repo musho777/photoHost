@@ -14,6 +14,7 @@ import { Styles } from '../../styles/Styles';
 import React, {useEffect} from 'react';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { chnageUserProfil } from '../../store/action/action';
+import { ClearChangeProfile } from '../../store/action/clearAction';
 
 export const EditProfilScreen = ({navigation}) =>{
   const [username,setUsername] = useState('')
@@ -22,10 +23,13 @@ export const EditProfilScreen = ({navigation}) =>{
   const [error,setError] = useState('')
   const user = useSelector(st => st.userData);
   const staticdata = useSelector(st=>st.static)
+  const changeProfil = useSelector((st)=>st.changeUserProfil)
   useEffect(()=>{
-    setUsername(user.data.nickname)
-    setName(user.data.name)
-    setDiscription(user.data.description)
+    if(!name){
+      setUsername(user.username)
+      setName(user.name)
+      setDiscription(user.description)
+    }
   },[user])
   const dispatch = useDispatch()
   const chnageProfil = () =>{
@@ -50,8 +54,20 @@ export const EditProfilScreen = ({navigation}) =>{
       },staticdata.token))
     }
   }
+  useEffect(()=>{
+    if(changeProfil.status){
+      navigation.navigate('ProfileScreen')
+      dispatch(ClearChangeProfile())
+    }
+  },[changeProfil.status])
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', async () => {
+  //     dispatch(ClearChangeProfile())
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
     return <View>
-      <HeaderWhiteTitle onCheck = {()=>chnageProfil()} check onPress={()=>navigation.goBack()} title={'Редактировать профиль'}/> 
+      <HeaderWhiteTitle loading = {changeProfil.loading} onCheck = {()=>chnageProfil()} check onPress={()=>navigation.goBack()} title={'Редактировать профиль'}/> 
         <View style = {{ alignItems:'center',marginVertical:40,}}>
           <View style >
             <Image style = {styles.img}
