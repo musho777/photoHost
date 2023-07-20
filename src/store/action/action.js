@@ -96,7 +96,6 @@ export const ClearConfirmPasswordAction = () => {
 };
 
 export const LoginAction = data => {
-  console.log(data)
   return dispatch => {
     dispatch(StartLogin());
     fetch(`${Api}/login`, {
@@ -172,7 +171,7 @@ export const ValidationForogtPasswordAction = data => {
 export const NewPasswordAction = data => {
   return dispatch => {
     dispatch(StartNewPassword());
-    fetch(`${Api}/validation_forgot_code`, {
+    fetch(`${Api}/add_password_from_forgot`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data),

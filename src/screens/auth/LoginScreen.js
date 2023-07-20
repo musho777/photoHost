@@ -4,7 +4,7 @@ import {Styles} from '../../styles/Styles';
 import {Button} from '../../ui/Button';
 import {Input} from '../../ui/Input';
 import {useDispatch, useSelector} from 'react-redux';
-import {ClearLoginAction, LoginAction} from '../../store/action/action';
+import {ClearConfirmPasswordAction, ClearLoginAction, LoginAction} from '../../store/action/action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LoginScreen = ({navigation}) => {
@@ -30,6 +30,7 @@ export const LoginScreen = ({navigation}) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(ClearLoginAction())
+      dispatch(ClearConfirmPasswordAction())
     });
     return unsubscribe;
   }, [navigation]);
