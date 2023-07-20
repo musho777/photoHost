@@ -7,6 +7,7 @@ const initialState = {
     username:'',
     name:'',
     description:'',
+    email:''
   };
   const GetUserDataReducer = (state = initialState, action) => {
     let item = {...state};
@@ -20,6 +21,7 @@ const initialState = {
         item.username = '',
         item.name = '',
         item.description = ''
+        item.email = ''
         break
       case 'SuccessGetUserData':
         item.status = true
@@ -30,6 +32,7 @@ const initialState = {
         item.username = action.data.nickname,
         item.name = action.data.name,
         item.description = action.data.description
+        item.email = action.data.email
         break
       case 'ErrorGetUserData':
         item.error = action.data
@@ -41,6 +44,10 @@ const initialState = {
         item.username = action.data.nickname,
         item.name = action.data.name,
         item.description = action.data.description
+        break
+      case 'ChangeMail':
+        item.email = action.email
+        break
       default:
         break;
     }

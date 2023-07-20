@@ -60,3 +60,24 @@ export const ErrorChangeUserPassowrd = (data) =>{
         data
     }
 }
+
+export const ErrorChangeEmail = (data) =>{
+    return {
+        type:'ErrorChangeEmail',
+        data
+    }
+}
+
+export const ErrorChangeEmailPassword = (data)=>{
+    return {
+        type:'ErrorChangeEmailPassword',
+        data
+    }
+}
+
+export const ErrorChangeEmailCode = (data) =>{
+    return {
+        type:'ErrorChangeEmailCode',
+        data
+    }
+}

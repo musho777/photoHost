@@ -50,3 +50,20 @@ export const StartChangeUserPassword = () =>{
         type:'StartChangeUserPassword'
     }
 }
+
+export const StartChangeEmailPassword = () =>{
+    return {
+        type:'StartChangeEmailPassword'
+    }
+}
+export const StartChangeEmail = () =>{
+    return {
+        type:'StartChangeEmail'
+    }
+}
+
+export const StartChangeEmailCode = () =>{
+    return {
+        type:'StartChangeEmailCode'
+    }
+}

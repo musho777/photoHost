@@ -55,3 +55,22 @@ export const SuccessChangeUserPassword = (data) =>{
         data
     }
 } 
+export const SuccessChangeEmail = (data) =>{
+    return {
+        type:'SuccessChangeEmail',
+        data
+    }
+}
+
+export const SuccessChangeEmailPassword = (data) =>{
+    return {
+        type:'SuccessChangeEmailPassword'
+    }
+}
+
+export const SuccessChangeEmailCode = (data) =>{
+    return {
+        type:'SuccessChangeEmailCode',
+        data
+    }
+}

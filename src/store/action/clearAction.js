@@ -26,3 +26,8 @@ export const clearChangePassword = () =>{
         type:'clearChangePassword'
     }
 }
+export const ClearEmailChange = () =>{
+    return {
+        type:'ClearEmailChange'
+    }
+}

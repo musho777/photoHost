@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  ErrorChangeEmail,
+  ErrorChangeEmailCode,
+  ErrorChangeEmailPassword,
   ErrorChangeProfile,
   ErrorChangeUserPassowrd,
   ErrorConfirmRegisterCode,
@@ -12,6 +15,9 @@ import {
 } from './errorAction';
 import {
   StartChangeData,
+  StartChangeEmail,
+  StartChangeEmailCode,
+  StartChangeEmailPassword,
   StartChangeUserPassword,
   StartConfirmRegisterCode,
   StartForgotPassword,
@@ -22,6 +28,9 @@ import {
   StartValidationForgotPassword,
 } from './startAction';
 import {
+  SuccessChangeEmail,
+  SuccessChangeEmailCode,
+  SuccessChangeEmailPassword,
   SuccessChangeProfil,
   SuccessChangeUserPassword,
   SuccessConfirmRegisterCode,
@@ -259,23 +268,115 @@ export const changeUserPassword = (data, token) => {
   };
   return dispatch => {
     dispatch(StartChangeUserPassword());
-    fetch('https://chamba.justcode.am/api/update_password', requestOptions)
+    fetch(`${Api}/update_password`, requestOptions)
       .then(response => response.json())
       .then(r => {
         if (r.status) {
           dispatch(SuccessChangeUserPassword(r.data));
-        }
-        else {
-          if(r.message.includes('wrong old password')){
+        } else {
+          if (r.message.includes('wrong old password')) {
             dispatch(ErrorChangeUserPassowrd({email: 'неверны старый пароль'}));
-          }
-          else{
+          } else {
             dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
           }
         }
       })
       .catch(error => {
-          dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
+        dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
       });
   };
 };
+
+export const ChangeEmailFirstAction = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartChangeEmailPassword());
+    fetch(`${Api}/validation_password_from_email`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessChangeEmailPassword(r.data));
+        } else {
+          if (r.message.includes('Mo Valid password')) {
+            dispatch(ErrorChangeEmailPassword({email: 'неверный пароль'}));
+          } else {
+            dispatch(ErrorChangeEmailPassword({server: 'server error'}));
+          }
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorChangeEmailPassword({server: 'server error'}));
+      });
+  };
+};
+
+export const ChangeEmailAction = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartChangeEmail());
+    fetch(`${Api}/update_email_send_code`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessChangeEmail(r.data));
+        } else {
+          if(r.message.email)
+          dispatch(ErrorChangeEmail({email:'указанный адрес электронной почты, уже существует.'}));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorChangeEmail({server: 'server error'}));
+      });
+  };
+};
+
+export const sednEmailChangeCodeAction = (data,token,email) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartChangeEmailCode());
+    fetch(`${Api}/validation_update_email_send_code`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessChangeEmailCode(r.data));
+          dispatch(ChangeMail(email))
+        } else {
+          dispatch(ErrorChangeEmailCode({server: 'код не совпадает'}));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorChangeEmailCode({server: 'server error'}));
+      });
+  }; 
+}
+
+export const ChangeMail = (email) =>{
+  return {
+    type:'ChangeMail',
+    email
+  }
+}

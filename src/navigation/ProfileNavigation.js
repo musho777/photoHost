@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { BlackListScreen } from '../screens/Profile/BlackListScreen';
+import { ChangeMailFirtScreen } from '../screens/Profile/ChangeMailFirtScreen';
 import { ChangeMailScreen } from '../screens/Profile/ChangeMailScreen';
 import { ChangePasswordScreen } from '../screens/Profile/ChangePasswordScreen';
 import { EditProfilScreen } from '../screens/Profile/EditProfilScreen';
@@ -69,6 +70,15 @@ export const ProfileNavigation = () => {
       <Stack.Screen
         name="ChangeMailScreen"
         component={ChangeMailScreen}
+        options={{
+          header:({navigation})=>{
+              return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Изменить почту'}/> 
+          }
+      }}
+      />
+      <Stack.Screen
+        name="ChangeMailFirtScreen"
+        component={ChangeMailFirtScreen}
         options={{
           header:({navigation})=>{
               return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Изменить почту'}/> 
