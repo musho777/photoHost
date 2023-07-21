@@ -131,7 +131,7 @@ export const EditProfilScreen = ({navigation}) => {
         </View> */}
       <Text
         style={[[Styles.tomatoMedium10, {textAlign: 'center', marginTop: 10}]]}>
-        {error}
+        {error||changeProfil.error}
       </Text>
     </View>
   );

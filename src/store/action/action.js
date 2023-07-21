@@ -246,7 +246,7 @@ export const chnageUserProfil = (data, token) => {
         }
       })
       .catch(error => {
-        dispatch(ErrorChangeProfile());
+        dispatch(ErrorChangeProfile('такой пользователь уже авторизован'));
       });
   };
 };

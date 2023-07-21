@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -13,11 +13,11 @@ import {Styles} from '../../styles/Styles';
 import {Albom} from '../../components/Albom';
 import {AppColors} from '../../styles/AppColors';
 import {MenuSvg2} from '../../assets/svg/Svgs';
-import { Menu } from '../../components/Menu';
-import { Button } from '../../ui/Button';
-import { useSelector } from 'react-redux';
+import {Menu} from '../../components/Menu';
+import {Button} from '../../ui/Button';
+import { useSelector} from 'react-redux';
 
-export const ProfileScreen = ({navigation,profile}) => {
+export const ProfileScreen = ({navigation, profile}) => {
   const renderScene = SceneMap({
     first: Albom,
     second: Albom,
@@ -63,40 +63,58 @@ export const ProfileScreen = ({navigation,profile}) => {
     );
   };
   return (
-    <View style={{flex:1, marginTop: 10,paddingHorizontal:15}}>
+    <View style={{flex: 1, marginTop: 10, paddingHorizontal: 15}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <TouchableOpacity onPress={()=>setOpenMenu(true)} style={{marginVertical: 25}}>
+        <TouchableOpacity
+          onPress={() => setOpenMenu(true)}
+          style={{marginVertical: 25}}>
           <MenuSvg2 />
         </TouchableOpacity>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Image
             style={styles.img}
-            source={{uri:`https://chamba.justcode.am/uploads/${user.avatar}`}}
+            source={{uri: `https://chamba.justcode.am/uploads/${user.avatar}`}}
           />
-          <View style={{marginTop:7,marginBottom:15, alignItems: 'center'}}>
+          <View style={{marginTop: 7, marginBottom: 15, alignItems: 'center'}}>
             <Text style={Styles.darkMedium16}>{user.name}</Text>
             <Text style={Styles.balihaiRegular12}>@{user.username}</Text>
           </View>
-          {user.data.description && <Text style={Styles.darkRegular14}>{user.description}</Text>}
+          {user.data.description && (
+            <Text style={Styles.darkRegular14}>{user.description}</Text>
+          )}
         </View>
-        <View style={[{marginVertical: 20,paddingHorizontal:15}, Styles.flexSpaceBetween]}>
+        <View
+          style={[
+            {marginVertical: 20, paddingHorizontal: 15},
+            Styles.flexSpaceBetween,
+          ]}>
           <View style={{alignItems: 'center'}}>
             <Text style={Styles.darkSemiBold16}>24</Text>
             <Text style={Styles.balihaiRegular12}>Публикаций</Text>
           </View>
-          <TouchableOpacity onPress={()=>navigation.navigate('FollowersScreen',{index:0})} style={{alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('FollowersScreen', {index: 0})}
+            style={{alignItems: 'center'}}>
             <Text style={Styles.darkSemiBold16}>230</Text>
             <Text style={Styles.balihaiRegular12}>Подписчиков</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>navigation.navigate('FollowersScreen',{index:1})} style={{alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('FollowersScreen', {index: 1})}
+            style={{alignItems: 'center'}}>
             <Text style={Styles.darkSemiBold16}>348</Text>
             <Text style={Styles.balihaiRegular12}>Подписок</Text>
           </TouchableOpacity>
         </View>
-        {profile && <View style = {[Styles.flexSpaceBetween,{paddingHorizontal:15,marginVertical:10}]}>
-            <Button paddingV={10} title={'Подписаться'} width ='48%'/>
-            <Button bg paddingV={10} title={'Сообщение'} width ='48%' />
-        </View>}
+        {profile && (
+          <View
+            style={[
+              Styles.flexSpaceBetween,
+              {paddingHorizontal: 15, marginVertical: 10},
+            ]}>
+            <Button paddingV={10} title={'Подписаться'} width="48%" />
+            <Button bg paddingV={10} title={'Сообщение'} width="48%" />
+          </View>
+        )}
         <TabView
           renderTabBar={renderTabBar}
           navigationState={{index, routes}}
@@ -105,7 +123,7 @@ export const ProfileScreen = ({navigation,profile}) => {
           initialLayout={{width: layout.width}}
         />
       </ScrollView>
-      <Menu close = {()=>setOpenMenu(false)} visible={openMenu} />
+      <Menu close={() => setOpenMenu(false)} visible={openMenu} />
     </View>
   );
 };
