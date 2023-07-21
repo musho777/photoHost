@@ -9,7 +9,6 @@ import {useNavigation} from '@react-navigation/native';
 
 
 export const Followings = ({id}) => {
-  console.log(id)
   const navigation = useNavigation()
   const [data, setData] = useState();
   const [followers, setFollowers] = useState([]);
@@ -19,14 +18,23 @@ export const Followings = ({id}) => {
   const dispatch = useDispatch()
   useEffect(()=>{
     setFollowers(getFollowers.data)
-  },[getFollowers])
-  console.log(id)
+  },[getFollowers.data])
   useEffect(()=>{
       dispatch(clearGetFollowersAction());
       dispatch(GetFollowersAction({search:data,user_id:id},staticdata.token,page))
   },[data])
 
+  const deletClick = (id) =>{
+      let item = [...followers]
+      item.map((elm,i)=>{
+        if(elm.followers.id === id){
+          item.splice(i,1); 
+        }
+      })
+      setFollowers(item)
+  }
   const renderItem = ({item}) => {
+  
     return (
       <View style={{marginHorizontal: 15}}>
         <FollowingsBlock
@@ -40,7 +48,9 @@ export const Followings = ({id}) => {
           username={item.followers.nickname}
           img={item.followers.avatar}
           type1={'Удалить'}
+          type2 = {id?true:false}
           userId = {item.followers.id}
+          deletClick = {()=>deletClick(item.followers.id)}
           // addClick = {()=>addDeletData(itemfollowers.id)}
         />
       </View>

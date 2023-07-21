@@ -1,6 +1,6 @@
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {AddDeleteFollowAction} from '../store/action/action';
+import {AddDeleteFollowAction, DeleteOtherPeople} from '../store/action/action';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 export const FollowingsBlock = ({
@@ -12,12 +12,18 @@ export const FollowingsBlock = ({
   userId,
   addClick,
   type1,
+  deletClick,
+  type2,
 }) => {
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch();
   const addFollow = () => {
     dispatch(AddDeleteFollowAction({user_id: userId}, staticdata.token));
     addClick();
+  };
+  const deleteData = () => {
+    dispatch(DeleteOtherPeople({user_id: userId}, staticdata.token));
+    deletClick();
   };
   return (
     <TouchableOpacity
@@ -34,40 +40,50 @@ export const FollowingsBlock = ({
           <Text style={Styles.balihaiRegular12}>{username}</Text>
         </View>
       </View>
-      {type1 ? (
-        <View>
-          <TouchableOpacity
-              // onPress={() => {
-              //   addFollow();
-              // }}
-              style={styles.button}>
-              <Text style={Styles.darkSemiBold10}>Удалить</Text>
-            </TouchableOpacity>
-        </View>
+      {type2 ? (
+        <View></View>
       ) : (
         <View>
-          {type ? (
-            <TouchableOpacity
-              onPress={() => {
-                addFollow();
-              }}
-              style={styles.button}>
-              <Text style={Styles.darkSemiBold10}>Отписаться</Text>
-            </TouchableOpacity>
+          {type1 ? (
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  // addFollow();
+                  deleteData();
+                }}
+                style={styles.button}>
+                <Text style={Styles.darkSemiBold10}>Удалить</Text>
+              </TouchableOpacity>
+            </View>
           ) : (
-            <TouchableOpacity
-              onPress={() => {
-                addFollow();
-              }}
-              style={[
-                styles.button,
-                {backgroundColor: AppColors.GoldenTainoi_Color},
-              ]}>
-              <Text
-                style={[Styles.darkSemiBold10, {color: AppColors.White_Color}]}>
-                подписаться
-              </Text>
-            </TouchableOpacity>
+            <View>
+              {type ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    addFollow();
+                  }}
+                  style={styles.button}>
+                  <Text style={Styles.darkSemiBold10}>Отписаться</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    addFollow();
+                  }}
+                  style={[
+                    styles.button,
+                    {backgroundColor: AppColors.GoldenTainoi_Color},
+                  ]}>
+                  <Text
+                    style={[
+                      Styles.darkSemiBold10,
+                      {color: AppColors.White_Color},
+                    ]}>
+                    подписаться
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
           )}
         </View>
       )}

@@ -8,6 +8,7 @@ import {
   ErrorChangeProfile,
   ErrorChangeUserPassowrd,
   ErrorConfirmRegisterCode,
+  ErrorDeleteOtherPople,
   ErrorForgotPassword,
   ErrorGetFollowersAction,
   ErrorGetSinglPage,
@@ -36,6 +37,7 @@ import {
   StarGetSinglUser,
   StartAddDeleteFollow,
   StartGetFollowersAction,
+  StartDeleteOtherPople,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -46,6 +48,7 @@ import {
   SuccessChangeProfil,
   SuccessChangeUserPassword,
   SuccessConfirmRegisterCode,
+  SuccessDeleteOtherPople,
   SuccessForgotPassword,
   SuccessGetSinglPage,
   SuccessGetUserData,
@@ -553,5 +556,29 @@ export const GetFollowersAction = (data,token,page) =>{
         dispatch(ErrorGetFollowersAction('server error'))
       });
   };
+}
 
+export const DeleteOtherPeople = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartDeleteOtherPople())
+    fetch(`${Api}/delete_other_people_in_my_followers`, {
+      method: 'POST',
+      headers:myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessDeleteOtherPople(r))
+        } else {
+          dispatch(ErrorDeleteOtherPople('server error'))
+        }
+      })
+      .catch(error => {
+          dispatch(ErrorDeleteOtherPople('server error'))
+      });
+  };
 }

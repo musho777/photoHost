@@ -98,3 +98,8 @@ export const StartGetFollowersAction = () =>{
         type:'StartGetFollowersAction'
     }
 }
+export const StartDeleteOtherPople = () =>{
+    return {
+        type:'StartDeleteOtherPople'
+    }
+}

@@ -114,3 +114,10 @@ export const ErrorGetFollowersAction = (data) =>{
         data
     }
 }
+
+export const ErrorDeleteOtherPople = (data) =>{
+    return {
+        type:'ErrorDeleteOtherPople',
+        data
+    }
+}

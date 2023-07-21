@@ -108,3 +108,10 @@ export const SucessGetFollowersAction = (data) =>{
         data
     }
 }
+
+export const SuccessDeleteOtherPople = (data) =>{
+    return{
+        type:'SuccessDeleteOtherPople',
+        data
+    }
+}

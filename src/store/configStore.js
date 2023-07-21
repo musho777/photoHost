@@ -7,6 +7,7 @@ import ChangePasswordReducer from './reducers/changePasswordReducer';
 import ChangeUserProfilReducer from './reducers/changeUserProfilReducer';
 import ConfirmForgotPasswordReducer from './reducers/confirmForgotPasswordReducer';
 import ConfirmRegisetReducer from './reducers/confirmRegisetReducer';
+import DeletOtherPeopleReducer from './reducers/deletOtherPeopleReducer';
 import ForgotPasswordReducer from './reducers/forgotPasswordReducer';
 import GetFollowersReducer from './reducers/getFollowersReducer';
 import GetSinglPage from './reducers/getSinglPage';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
     singlPage:GetSinglPage,
     addDeleteFollow:AddDeleteFollowReducer,
     getFollowers:GetFollowersReducer,
+    delete:DeletOtherPeopleReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );
