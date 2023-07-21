@@ -42,3 +42,9 @@ export const clearSearchData = () =>{
         type:'clearSearchData'
     }
 }
+
+export const clearGetFollowersAction = () =>{
+    return {
+        type:'clearGetFollowersAction'
+    }
+}

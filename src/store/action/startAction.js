@@ -91,3 +91,10 @@ export const StartAddDeleteFollow = () =>{
         type:'StartAddDeleteFollow'
     }
 }
+
+
+export const StartGetFollowersAction = () =>{
+    return {
+        type:'StartGetFollowersAction'
+    }
+}

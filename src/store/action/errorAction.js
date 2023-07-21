@@ -108,3 +108,9 @@ export const ErrorAddDeleteFollow = (data) =>{
         data
     }
 }
+export const ErrorGetFollowersAction = (data) =>{
+    return {
+        type:'ErrorGetFollowersAction',
+        data
+    }
+}

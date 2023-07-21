@@ -9,6 +9,7 @@ import {
   ErrorChangeUserPassowrd,
   ErrorConfirmRegisterCode,
   ErrorForgotPassword,
+  ErrorGetFollowersAction,
   ErrorGetSinglPage,
   ErrorGetUserData,
   ErrorLogin,
@@ -34,6 +35,7 @@ import {
   StartSearch,
   StarGetSinglUser,
   StartAddDeleteFollow,
+  StartGetFollowersAction,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -52,6 +54,7 @@ import {
   SuccessRegister,
   SuccessSearch,
   SuccessValidForgotPassowrd,
+  SucessGetFollowersAction,
 } from './successAction';
 
 const Api = 'https://chamba.justcode.am/api';
@@ -525,4 +528,30 @@ export const AddDeletFollow = (id) =>{
     type:'AddDeletFollow',
     id
   }
+}
+
+export const GetFollowersAction = (data,token,page) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartGetFollowersAction())
+    fetch(`${Api}/get_followers?page=${page}`, {
+      method: 'POST',
+      headers:myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SucessGetFollowersAction(r));
+        } else {
+          dispatch(ErrorGetFollowersAction('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetFollowersAction('server error'))
+      });
+  };
+
 }

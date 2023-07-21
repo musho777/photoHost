@@ -102,3 +102,9 @@ export const SuccessAddDeleteFollow = (data) =>{
         data
     }
 }
+export const SucessGetFollowersAction = (data) =>{
+    return {
+        type:'SucessGetFollowersAction',
+        data
+    }
+}

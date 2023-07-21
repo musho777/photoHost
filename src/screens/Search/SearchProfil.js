@@ -16,7 +16,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AddDeleteFollowAction, AddDeletFollow, GetSinglPageAction} from '../../store/action/action';
 
 export const SearchProfil = ({navigation, route}) => {
-
   const singlPage = useSelector(st => st.singlPage);
   const staticdata = useSelector(st => st.static);
 
@@ -68,7 +67,7 @@ export const SearchProfil = ({navigation, route}) => {
                 <Text style={Styles.balihaiRegular12}>Публикаций</Text>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate('FollowersScreen', {index: 0})}
+                onPress={() => navigation.navigate('FollowersScreen', {index: 0,id:singlPage.data.id})}
                 style={{alignItems: 'center'}}>
                 <Text style={Styles.darkSemiBold16}>230</Text>
                 <Text style={Styles.balihaiRegular12}>Подписчиков</Text>

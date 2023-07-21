@@ -8,7 +8,7 @@ import { Followers } from '../../components/Followers';
 
 export const FollowersScreen = ({route}) => {
   const renderScene = SceneMap({
-    first: Followings,
+    first: () => <Followings id={route.params.id} />,
     second: Followers,
   });
   const [index, setIndex] = useState(route.params.index);
