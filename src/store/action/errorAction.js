@@ -101,3 +101,10 @@ export const ErrorGetSinglPage = (data) =>{
         data
     }
 }
+
+export const ErrorAddDeleteFollow = (data) =>{
+    return {
+        type:'ErrorAddDeleteFollow',
+        data
+    }
+}

@@ -1,5 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from "redux-thunk" 
+import AddDeleteFollowReducer from './reducers/addDeleteFollowReducer';
 import ChangeAvatarReducer from './reducers/changeAvatarReducer';
 import ChangeEmailReducer from './reducers/changeEmailReducer';
 import ChangePasswordReducer from './reducers/changePasswordReducer';
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
     changeAvatar:ChangeAvatarReducer,
     search:SearchReducer,
     singlPage:GetSinglPage,
+    addDeleteFollow:AddDeleteFollowReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );

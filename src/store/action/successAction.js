@@ -95,3 +95,10 @@ export const SuccessGetSinglPage = (data) =>{
         data
     }
 }
+
+export const SuccessAddDeleteFollow = (data) =>{
+    return {
+        type:'SuccessAddDeleteFollow',
+        data
+    }
+}

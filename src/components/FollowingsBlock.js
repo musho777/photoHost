@@ -1,7 +1,15 @@
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddDeleteFollowAction } from '../store/action/action';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
-export const FollowingsBlock = ({name, username, img, type, onPress}) => {
+export const FollowingsBlock = ({name, username, img, type, onPress,userId,addClick}) => {
+  const staticdata = useSelector(st => st.static);
+  const dispatch = useDispatch()
+  const addFollow = () =>{
+    dispatch(AddDeleteFollowAction({user_id:userId},staticdata.token))
+    addClick()
+  }
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -18,11 +26,12 @@ export const FollowingsBlock = ({name, username, img, type, onPress}) => {
         </View>
       </View>
       {type ? (
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={()=>{addFollow()}} style={styles.button}>
           <Text style={Styles.darkSemiBold10}>Удалить</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
+          onPress={()=>{addFollow()}}
           style={[
             styles.button,
             {backgroundColor: AppColors.GoldenTainoi_Color},

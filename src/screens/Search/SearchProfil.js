@@ -13,7 +13,7 @@ import {Albom} from '../../components/Albom';
 import {BackArrow, MenuSvg2} from '../../assets/svg/Svgs';
 import {Button} from '../../ui/Button';
 import {useDispatch, useSelector} from 'react-redux';
-import {GetSinglPageAction} from '../../store/action/action';
+import {AddDeleteFollowAction, AddDeletFollow, GetSinglPageAction} from '../../store/action/action';
 
 export const SearchProfil = ({navigation, route}) => {
 
@@ -85,8 +85,14 @@ export const SearchProfil = ({navigation, route}) => {
                 Styles.flexSpaceBetween,
                 {paddingHorizontal: 15, marginVertical: 10},
               ]}>
-               {!singlPage.data?.follow_status_sender?.length ? <Button paddingV={10} title={'Подписаться'} width="48%" />:
-               <Button bg paddingV={10} title={'Отписаться'} width="48%" />
+               {!singlPage.data?.follow_status_sender?.length ? <Button onPress={()=>{
+                dispatch(AddDeleteFollowAction({user_id:singlPage.data.id},staticdata.token))
+                dispatch(AddDeletFollow(singlPage.data?.id))
+               }} paddingV={10} title={'Подписаться'} width="48%" />:
+               <Button bg onPress={()=>{
+                dispatch(AddDeleteFollowAction({user_id:singlPage.data.id},staticdata.token))
+                dispatch(AddDeletFollow(singlPage.data?.id))
+               }} paddingV={10} title={'Отписаться'} width="48%" />
                }
               <Button bg paddingV={10} title={'Сообщение'} width="48%" />
             </View>

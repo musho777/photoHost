@@ -4,7 +4,7 @@ import {FlatList, RefreshControl} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {SearchInputSvg} from '../../assets/svg/Svgs';
 import {FollowingsBlock} from '../../components/FollowingsBlock';
-import {SearchAction} from '../../store/action/action';
+import { SearchAction} from '../../store/action/action';
 import {clearSearchData} from '../../store/action/clearAction';
 import {AppColors} from '../../styles/AppColors';
 import {useNavigation} from '@react-navigation/native';
@@ -20,7 +20,12 @@ export const SearchBlock = ({modalVisible,close}) => {
   const search = useSelector(st => st.search);
   const staticdata = useSelector(st => st.static);
   const navigation = useNavigation();
+  const addDeleteFollow = useSelector((st)=>st.addDeleteFollow)
+  const [serchData,setSearchData] = useState([])
 
+  useEffect(()=>{
+    setSearchData(search.data)
+  },[search.data])
   useEffect(() => {
     if (data) {
       dispatch(clearSearchData());
@@ -34,7 +39,7 @@ export const SearchBlock = ({modalVisible,close}) => {
     if (search.nextPage !== null) {
       setPage(page + 1);
     }
-    if (!search.data) {
+    if (!serchData) {
       setNodata(true);
     }
   }, [search]);
@@ -44,6 +49,7 @@ export const SearchBlock = ({modalVisible,close}) => {
         <FollowingsBlock
           onPress = {()=>{
             navigation.navigate('SearchProfil',{id:item.id})
+            setData('')
             close()
           }}
           key={item.id}
@@ -51,10 +57,30 @@ export const SearchBlock = ({modalVisible,close}) => {
           username={item.nickname}
           img={item.avatar}
           type={item.follow_status_sender.length}
+          userId = {item.id}
+          addClick = {()=>addDeletData(item.id)}
         />
       </View>
     );
   };
+
+  const addDeletData = (id) =>{
+      let item = [...serchData]
+      item.map((elm,i)=>{
+        if(elm.id === id){
+          if(elm.follow_status_sender.length){
+            elm.follow_status_sender = []
+            return 
+          }
+          else {
+            elm.follow_status_sender = [{}]
+            return 
+          }
+        }
+      })
+      setSearchData(item)
+  }
+
   return (
     <View style={styles.centeredView}>
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
@@ -84,7 +110,7 @@ export const SearchBlock = ({modalVisible,close}) => {
               }}
             />
           }
-          data={search.data}
+          data={serchData}
           enableEmptySections={true}
           ListEmptyComponent={() => {
             if (noData) {

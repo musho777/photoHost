@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  ErrorAddDeleteFollow,
   ErrorChangeAvatar,
   ErrorChangeEmail,
   ErrorChangeEmailCode,
@@ -32,8 +33,10 @@ import {
   StartChangeAvatar,
   StartSearch,
   StarGetSinglUser,
+  StartAddDeleteFollow,
 } from './startAction';
 import {
+  SuccessAddDeleteFollow,
   SuccessChangeAvatar,
   SuccessChangeEmail,
   SuccessChangeEmailCode,
@@ -480,7 +483,6 @@ export const GetSinglPageAction = (data,token) =>{
       })
         .then(response => response.json())
         .then(r => {
-          console.log(r)
           if (r.status) {
             dispatch(SuccessGetSinglPage(r))
           } else {
@@ -491,4 +493,36 @@ export const GetSinglPageAction = (data,token) =>{
             dispatch(ErrorGetSinglPage('server error'))
         });
     };
+}
+
+export const AddDeleteFollowAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartAddDeleteFollow())
+    fetch(`${Api}/add_new_follow_or_delete_follow_request_and_follow`, {
+      method: 'POST',
+      headers:myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessAddDeleteFollow(r))
+        } else {
+          dispatch(ErrorAddDeleteFollow('server error'))
+        }
+      })
+      .catch(error => {
+          dispatch(ErrorAddDeleteFollow('server error'))
+      });
+  };
+}
+
+export const AddDeletFollow = (id) =>{
+  return {
+    type:'AddDeletFollow',
+    id
+  }
 }

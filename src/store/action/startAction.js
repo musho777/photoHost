@@ -85,3 +85,9 @@ export const StarGetSinglUser = () =>{
         type:'StarGetSinglUser'
     }
 }
+
+export const StartAddDeleteFollow = () =>{
+    return{
+        type:'StartAddDeleteFollow'
+    }
+}
