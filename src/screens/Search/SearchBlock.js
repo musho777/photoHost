@@ -26,15 +26,17 @@ export const SearchBlock = ({modalVisible,close}) => {
   useEffect(()=>{
     setSearchData(search.data)
   },[search.data])
-  useEffect(() => {
-    if (data) {
-      dispatch(clearSearchData());
-      dispatch(SearchAction({search: data}, (url = 1), staticdata.token));
-    } else {
-      dispatch(clearSearchData());
-      setNodata(false);
-    }
-  }, [data]);
+
+  const sendData = () =>{
+      if (data) {
+        dispatch(clearSearchData());
+        dispatch(SearchAction({search: data}, (url = 1), staticdata.token));
+      } else {
+        dispatch(clearSearchData());
+        setNodata(false);
+      }
+  }
+
   useEffect(() => {
     if (search.nextPage !== null) {
       setPage(page + 1);
@@ -43,6 +45,13 @@ export const SearchBlock = ({modalVisible,close}) => {
       setNodata(true);
     }
   }, [search]);
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      sendData()
+    }, 200)
+
+    return () => clearTimeout(delayDebounceFn)
+  }, [data])
   const renderItem = ({item}) => {
     return (
       <View style={{marginHorizontal: 15}}>
@@ -102,14 +111,15 @@ export const SearchBlock = ({modalVisible,close}) => {
           refreshControl={
             <RefreshControl
               refreshing={search.loading}
-              onRefresh={() => {
-                dispatch(clearSearchData());
-                dispatch(
-                  SearchAction({search: data}, (url = page), staticdata.token),
-                );
-              }}
+              // onRefresh={() => {
+              //   dispatch(clearSearchData());
+              //   dispatch(
+              //     SearchAction({search: data}, (url = page), staticdata.token),
+              //   );
+              // }}
             />
           }
+          keyExtractor={item => item.id.toString()}
           data={serchData}
           enableEmptySections={true}
           ListEmptyComponent={() => {
