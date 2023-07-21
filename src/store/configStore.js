@@ -11,6 +11,7 @@ import GetUserDataReducer from './reducers/getUserDataReducer';
 import LoginReducer from './reducers/loginReducer';
 import NewPasswordReducer from './reducers/newPasswordReducer';
 import RegisterReducer from './reducers/registerReducer';
+import SearchReducer from './reducers/searchReducer';
 import StaticReducer from './reducers/staticReducer';
 
 const rootReducer = combineReducers({
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     changeUserProfil:ChangeUserProfilReducer,
     changePassword:ChangePasswordReducer,
     changeEmail:ChangeEmailReducer,
-    changeAvatar:ChangeAvatarReducer
+    changeAvatar:ChangeAvatarReducer,
+    search:SearchReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );

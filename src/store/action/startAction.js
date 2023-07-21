@@ -73,3 +73,9 @@ export const StartChangeAvatar = () =>{
         type:'StartChangeAvatar'
     }
 }
+
+export const StartSearch = () =>{
+    return {
+        type:'StartSearch'
+    }
+}

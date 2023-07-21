@@ -36,3 +36,9 @@ export const ClearChangeAvatar = () =>{
         type:'ClearChangeAvatar'
     }
 }
+
+export const clearSearchData = () =>{
+    return {
+        type:'clearSearchData'
+    }
+}

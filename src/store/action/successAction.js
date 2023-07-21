@@ -81,3 +81,10 @@ export const SuccessChangeAvatar = (data) =>{
         data
     }
 }
+
+export const SuccessSearch = (data) =>{
+    return {
+        type:'SuccessSearch',
+        data
+    }
+}

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,35 +9,19 @@ import {
   Dimensions,
   Text
 } from 'react-native';
-import {} from 'react-native-svg';
 import { SearchInputSvg } from '../../assets/svg/Svgs';
-import { SearchSvg } from '../../assets/svg/TabBarSvg';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
-import {Input} from '../../ui/Input';
 import { SearchBlock } from './SearchBlock';
 
 const itemWidth = Dimensions.get('window').width / 3.3;
 
 export const SearchScreen = ({navigation}) => {
-  const [data, setData] = useState('');
   const [img, setImg] = useState([{}, {}, {}, {}, {}, {}, {}, {},{},{},{},{},{},{},{},{},{}]);
   const [focuse,setFocuse] = useState(false)
-  useEffect(()=>{
-    console.log(focuse)
-  },[focuse])
   return (
     <SafeAreaView >
       <View style={styles.header}>
-        {/* <Input
-          data={data}
-          onChange={e => setData(e)}
-          search
-          placeholder={'Поиск'}
-          // onFocus = {()=>setFocuse(true)}
-          // onBlur = {()=>setFocuse(false)}
-          disable = {true}
-        /> */}
         <TouchableOpacity style = {styles.Input} onPress = {()=>setFocuse(true)}>
           <Text style = {Styles.balihaiRegular12}>Поиск</Text>
           <SearchInputSvg />

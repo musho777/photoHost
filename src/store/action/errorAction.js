@@ -88,3 +88,9 @@ export const ErrorChangeAvatar  = (data) =>{
         data
     }
 }
+export const ErrorSearch = (data) =>{
+    return {
+        type:'ErrorSearch',
+        data
+    }
+}

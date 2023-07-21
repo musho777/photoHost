@@ -39,7 +39,7 @@ export default Navigation = () => {
   return (
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
-        <Stack.Navigator initialRouteName={'LoginScreen'}>
+        <Stack.Navigator initialRouteName={'TabNavigation'}>
           <Stack.Screen
             name="LoginScreen"
             component={LoginScreen}

@@ -12,6 +12,7 @@ import {
   ErrorLogin,
   ErrorNewPassword,
   ErrorRegister,
+  ErrorSearch,
   ErrorValidationForgotPassword,
 } from './errorAction';
 import {
@@ -27,7 +28,8 @@ import {
   StartNewPassword,
   StartRegister,
   StartValidationForgotPassword,
-  StartChangeAvatar
+  StartChangeAvatar,
+  StartSearch,
 } from './startAction';
 import {
   SuccessChangeAvatar,
@@ -42,6 +44,7 @@ import {
   SuccessLogin,
   SuccessNewPassword,
   SuccessRegister,
+  SuccessSearch,
   SuccessValidForgotPassowrd,
 } from './successAction';
 
@@ -390,7 +393,7 @@ export const ChangeMail = email => {
 
 export const chnageAvatarAction = (url, token) => {
   return dispatch => {
-    dispatch(StartChangeAvatar())
+    dispatch(StartChangeAvatar());
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'multipart/form-data');
     myHeaders.append('otherHeader', 'foo');
@@ -416,22 +419,46 @@ export const chnageAvatarAction = (url, token) => {
     )
       .then(response => response.json())
       .then(r => {
-        if(r.status){
-          dispatch(SuccessChangeAvatar())
-          dispatch(ChangeAvatar(r.avatar))
-        }
-        else {
-          dispatch(ErrorChangeAvatar())
+        if (r.status) {
+          dispatch(SuccessChangeAvatar());
+          dispatch(ChangeAvatar(r.avatar));
+        } else {
+          dispatch(ErrorChangeAvatar());
         }
       })
       .catch(error => {
-          dispatch(ErrorChangeAvatar())
+        dispatch(ErrorChangeAvatar());
       });
   };
 };
-export const ChangeAvatar = (data) =>{
+export const ChangeAvatar = data => {
   return {
-    type:'ChangeAvatar',
-    data
-  }
-}
+    type: 'ChangeAvatar',
+    data,
+  };
+};
+
+export const SearchAction = (data,page,token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartSearch())
+    fetch(`${Api}/search_user?page=${page}`, {
+      method: 'POST',
+      headers:myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessSearch(r));
+        } else {
+          dispatch(ErrorSearch('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorSearch('server error'))
+      });
+  };
+};
