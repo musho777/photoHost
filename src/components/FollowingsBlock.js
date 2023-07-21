@@ -1,12 +1,11 @@
-import {useNavigation} from '@react-navigation/native';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
-export const FollowingsBlock = ({name, username, img, type}) => {
-  const navigation = useNavigation();
+export const FollowingsBlock = ({name, username, img, type, onPress}) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('UserProfileScreen')}
+      onPress={onPress}
+      // onPress={() => navigation.navigate('UserProfileScreen')}
       style={[{marginBottom: 20}, Styles.flexSpaceBetween]}>
       <View style={Styles.flexAlignItems}>
         <Image
@@ -23,8 +22,14 @@ export const FollowingsBlock = ({name, username, img, type}) => {
           <Text style={Styles.darkSemiBold10}>Удалить</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={[styles.button,{backgroundColor:AppColors.GoldenTainoi_Color}]}>
-          <Text style={[Styles.darkSemiBold10,{color:AppColors.White_Color}]}>подписаться</Text>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {backgroundColor: AppColors.GoldenTainoi_Color},
+          ]}>
+          <Text style={[Styles.darkSemiBold10, {color: AppColors.White_Color}]}>
+            подписаться
+          </Text>
         </TouchableOpacity>
       )}
     </TouchableOpacity>

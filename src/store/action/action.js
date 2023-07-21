@@ -8,6 +8,7 @@ import {
   ErrorChangeUserPassowrd,
   ErrorConfirmRegisterCode,
   ErrorForgotPassword,
+  ErrorGetSinglPage,
   ErrorGetUserData,
   ErrorLogin,
   ErrorNewPassword,
@@ -30,6 +31,7 @@ import {
   StartValidationForgotPassword,
   StartChangeAvatar,
   StartSearch,
+  StarGetSinglUser,
 } from './startAction';
 import {
   SuccessChangeAvatar,
@@ -40,6 +42,7 @@ import {
   SuccessChangeUserPassword,
   SuccessConfirmRegisterCode,
   SuccessForgotPassword,
+  SuccessGetSinglPage,
   SuccessGetUserData,
   SuccessLogin,
   SuccessNewPassword,
@@ -462,3 +465,30 @@ export const SearchAction = (data,page,token) => {
       });
   };
 };
+
+
+export const GetSinglPageAction = (data,token) =>{
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${token}`);
+    return dispatch => {
+      dispatch(StarGetSinglUser())
+      fetch(`${Api}/single_page_user`, {
+        method: 'POST',
+        headers:myHeaders,
+        body: JSON.stringify(data),
+      })
+        .then(response => response.json())
+        .then(r => {
+          console.log(r)
+          if (r.status) {
+            dispatch(SuccessGetSinglPage(r))
+          } else {
+            dispatch(ErrorGetSinglPage('server error'))
+          }
+        })
+        .catch(error => {
+            dispatch(ErrorGetSinglPage('server error'))
+        });
+    };
+}

@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
 import {InterestingScreen} from '../screens/Search/InterestingScreen';
+import { SearchProfil } from '../screens/Search/SearchProfil';
 import {SearchScreen} from '../screens/Search/SearchScreen';
 
 export const SearchNavigation = () => {
@@ -22,6 +23,13 @@ export const SearchNavigation = () => {
             header:({navigation})=>{
                 return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Интересное'}/> 
             }
+        }}
+      />
+      <Stack.Screen
+        name="SearchProfil"
+        component={SearchProfil}
+        options={{
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

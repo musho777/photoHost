@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  StatusBar
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {Styles} from '../../styles/Styles';
@@ -28,7 +27,6 @@ export const ProfileScreen = ({navigation,profile}) => {
   const [routes] = useState([
     {key: 'first', title: 'Альбом'},
     {key: 'second', title: 'Закладки'},
-    // {key: 'third', title: 'Контакты'},
   ]);
   const layout = useWindowDimensions();
   const [openMenu,setOpenMenu] = useState(false)

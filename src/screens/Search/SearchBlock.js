@@ -7,8 +7,10 @@ import {FollowingsBlock} from '../../components/FollowingsBlock';
 import {SearchAction} from '../../store/action/action';
 import {clearSearchData} from '../../store/action/clearAction';
 import {AppColors} from '../../styles/AppColors';
+import {useNavigation} from '@react-navigation/native';
 
-export const SearchBlock = ({modalVisible}) => {
+
+export const SearchBlock = ({modalVisible,close}) => {
   const [data, setData] = useState('');
   const [noData, setNodata] = useState(false);
   const [focuse, setFocuse] = useState(false);
@@ -17,6 +19,7 @@ export const SearchBlock = ({modalVisible}) => {
   const dispatch = useDispatch();
   const search = useSelector(st => st.search);
   const staticdata = useSelector(st => st.static);
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (data) {
@@ -39,6 +42,10 @@ export const SearchBlock = ({modalVisible}) => {
     return (
       <View style={{marginHorizontal: 15}}>
         <FollowingsBlock
+          onPress = {()=>{
+            navigation.navigate('SearchProfil',{id:item.id})
+            close()
+          }}
           key={item.id}
           name={item.name}
           username={item.nickname}
@@ -91,7 +98,6 @@ export const SearchBlock = ({modalVisible}) => {
             }
           }}
         />
-        {/* <View style={styles.centeredView}></View> */}
       </Modal>
     </View>
   );

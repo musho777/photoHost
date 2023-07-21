@@ -88,3 +88,10 @@ export const SuccessSearch = (data) =>{
         data
     }
 }
+
+export const SuccessGetSinglPage = (data) =>{
+    return {
+        type:'SuccessGetSinglPage',
+        data
+    }
+}

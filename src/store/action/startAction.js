@@ -79,3 +79,9 @@ export const StartSearch = () =>{
         type:'StartSearch'
     }
 }
+
+export const StarGetSinglUser = () =>{
+    return {
+        type:'StarGetSinglUser'
+    }
+}

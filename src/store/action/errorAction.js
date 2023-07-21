@@ -94,3 +94,10 @@ export const ErrorSearch = (data) =>{
         data
     }
 }
+
+export const ErrorGetSinglPage = (data) =>{
+    return {
+        type:'ErrorGetSinglPage',
+        data
+    }
+}

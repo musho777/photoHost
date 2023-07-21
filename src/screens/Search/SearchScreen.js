@@ -39,7 +39,7 @@ export const SearchScreen = ({navigation}) => {
           ))}
         </View>
       </ScrollView>
-      <SearchBlock modalVisible={focuse}/>
+      <SearchBlock close={()=>setFocuse(false)} modalVisible={focuse}/>
     </SafeAreaView>
   );
 };
