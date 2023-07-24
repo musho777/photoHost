@@ -14,7 +14,13 @@ import {TabNavigation} from './TabNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUserInfoAction, setToken } from '../store/action/action';
+import { AddMsgAction, getUserInfoAction, setToken } from '../store/action/action';
+import {
+  Pusher,
+  PusherMember,
+  PusherChannel,
+  PusherEvent,
+} from '@pusher/pusher-websocket-react-native';
 
 export default Navigation = () => {
   const dispatch = useDispatch();
@@ -23,7 +29,27 @@ export default Navigation = () => {
     dispatch(getUserInfoAction(token));
     dispatch(setToken(token))
   }
+
+
+  const Pushers = async () => {
+    const pusher = Pusher.getInstance();
+    await pusher.init({
+      apiKey: 'e0a82fc848e8facbc238',
+      cluster: 'ap2',
+    });
+    await pusher.connect();
+    await pusher.subscribe({
+      channelName: 'NewMessage',
+      onEvent: event => {
+        dispatch(AddMsgAction({
+          message: JSON.parse(event.data)?.message?.message,
+          receiver_id:  JSON.parse(event.data)?.message?.receiver_id,
+        }))
+      },
+    });
+  };
   useEffect(() => {
+    Pushers();
     getData();
   }, []);
 

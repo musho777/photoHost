@@ -16,6 +16,7 @@ import {
   ErrorGetSinglPage,
   ErrorGetUserData,
   ErrorLogin,
+  ErrorNewMessageAction,
   ErrorNewPassword,
   ErrorRegister,
   ErrorSearch,
@@ -42,6 +43,7 @@ import {
   StartDeleteOtherPople,
   StartGetFollower,
   StartGetSinglePageChat,
+  StartNewMessageAction,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -59,6 +61,7 @@ import {
   SuccessGetSinglPage,
   SuccessGetUserData,
   SuccessLogin,
+  SuccessNewMessageAction,
   SuccessNewPassword,
   SuccessRegister,
   SuccessSearch,
@@ -234,7 +237,14 @@ export const getUserInfoAction = token => {
       })
       .then(r => {
         if (r.data.status) {
-          dispatch(SuccessGetUserData(r.data.data,r.data.follower_count,r.data.followers_count,r.data.post_count));
+          dispatch(
+            SuccessGetUserData(
+              r.data.data,
+              r.data.follower_count,
+              r.data.followers_count,
+              r.data.post_count,
+            ),
+          );
         } else {
           dispatch(ErrorGetUserData());
         }
@@ -456,15 +466,15 @@ export const ChangeAvatar = data => {
   };
 };
 
-export const SearchAction = (data,page,token) => {
+export const SearchAction = (data, page, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartSearch())
+    dispatch(StartSearch());
     fetch(`${Api}/search_user?page=${page}`, {
       method: 'POST',
-      headers:myHeaders,
+      headers: myHeaders,
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -472,82 +482,81 @@ export const SearchAction = (data,page,token) => {
         if (r.status) {
           dispatch(SuccessSearch(r));
         } else {
-          dispatch(ErrorSearch('server error'))
+          dispatch(ErrorSearch('server error'));
         }
       })
       .catch(error => {
-        dispatch(ErrorSearch('server error'))
+        dispatch(ErrorSearch('server error'));
       });
   };
 };
 
-
-export const GetSinglPageAction = (data,token) =>{
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('Authorization', `Bearer ${token}`);
-    return dispatch => {
-      dispatch(StarGetSinglUser())
-      fetch(`${Api}/single_page_user`, {
-        method: 'POST',
-        headers:myHeaders,
-        body: JSON.stringify(data),
-      })
-        .then(response => response.json())
-        .then(r => {
-          if (r.status) {
-            dispatch(SuccessGetSinglPage(r))
-          } else {
-            dispatch(ErrorGetSinglPage('server error'))
-          }
-        })
-        .catch(error => {
-            dispatch(ErrorGetSinglPage('server error'))
-        });
-    };
-}
-
-export const AddDeleteFollowAction = (data,token) =>{
+export const GetSinglPageAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartAddDeleteFollow())
-    fetch(`${Api}/add_new_follow_or_delete_follow_request_and_follow`, {
+    dispatch(StarGetSinglUser());
+    fetch(`${Api}/single_page_user`, {
       method: 'POST',
-      headers:myHeaders,
+      headers: myHeaders,
       body: JSON.stringify(data),
     })
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(SuccessAddDeleteFollow(r))
+          dispatch(SuccessGetSinglPage(r));
         } else {
-          dispatch(ErrorAddDeleteFollow('server error'))
+          dispatch(ErrorGetSinglPage('server error'));
         }
       })
       .catch(error => {
-          dispatch(ErrorAddDeleteFollow('server error'))
+        dispatch(ErrorGetSinglPage('server error'));
       });
   };
-}
+};
 
-export const AddDeletFollow = (id) =>{
-  return {
-    type:'AddDeletFollow',
-    id
-  }
-}
-
-export const GetFollowersAction = (data,token,page) =>{
+export const AddDeleteFollowAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartGetFollowersAction())
+    dispatch(StartAddDeleteFollow());
+    fetch(`${Api}/add_new_follow_or_delete_follow_request_and_follow`, {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessAddDeleteFollow(r));
+        } else {
+          dispatch(ErrorAddDeleteFollow('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorAddDeleteFollow('server error'));
+      });
+  };
+};
+
+export const AddDeletFollow = id => {
+  return {
+    type: 'AddDeletFollow',
+    id,
+  };
+};
+
+export const GetFollowersAction = (data, token, page) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartGetFollowersAction());
     fetch(`${Api}/get_followers?page=${page}`, {
       method: 'POST',
-      headers:myHeaders,
+      headers: myHeaders,
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -555,49 +564,49 @@ export const GetFollowersAction = (data,token,page) =>{
         if (r.status) {
           dispatch(SucessGetFollowersAction(r));
         } else {
-          dispatch(ErrorGetFollowersAction('server error'))
+          dispatch(ErrorGetFollowersAction('server error'));
         }
       })
       .catch(error => {
-        dispatch(ErrorGetFollowersAction('server error'))
+        dispatch(ErrorGetFollowersAction('server error'));
       });
   };
-}
+};
 
-export const DeleteOtherPeople = (data,token) =>{
+export const DeleteOtherPeople = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartDeleteOtherPople())
+    dispatch(StartDeleteOtherPople());
     fetch(`${Api}/delete_other_people_in_my_followers`, {
       method: 'POST',
-      headers:myHeaders,
+      headers: myHeaders,
       body: JSON.stringify(data),
     })
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(SuccessDeleteOtherPople(r))
+          dispatch(SuccessDeleteOtherPople(r));
         } else {
-          dispatch(ErrorDeleteOtherPople('server error'))
+          dispatch(ErrorDeleteOtherPople('server error'));
         }
       })
       .catch(error => {
-          dispatch(ErrorDeleteOtherPople('server error'))
+        dispatch(ErrorDeleteOtherPople('server error'));
       });
   };
-}
+};
 
-export const GetFollowerAction = (data,token,page) =>{
+export const GetFollowerAction = (data, token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartGetFollower())
+    dispatch(StartGetFollower());
     fetch(`${Api}/get_follower?page=${page}`, {
       method: 'POST',
-      headers:myHeaders,
+      headers: myHeaders,
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -605,36 +614,70 @@ export const GetFollowerAction = (data,token,page) =>{
         if (r.status) {
           dispatch(SuccessGetFollower(r));
         } else {
-          dispatch(ErrorGetFollower('server error'))
+          dispatch(ErrorGetFollower('server error'));
         }
       })
       .catch(error => {
-        dispatch(ErrorGetFollower('server error'))
+        dispatch(ErrorGetFollower('server error'));
       });
   };
-} 
+};
 
-export const GetSinglePageChatAction = (data,token) =>{
+export const GetSinglePageChatAction = (data, token,page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartGetSinglePageChat())
-    fetch(`${Api}/single_page_chat`, {
+    dispatch(StartGetSinglePageChat());
+    fetch(`${Api}/single_page_chat?page=${page}`, {
       method: 'POST',
-      headers:myHeaders,
+      headers: myHeaders,
       body: JSON.stringify(data),
     })
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(SuccessGetSinglePageChat(r))
+          dispatch(SuccessGetSinglePageChat(r));
         } else {
-          dispatch(ErrorGetSinglePageChat('server error'))
+          dispatch(ErrorGetSinglePageChat('server error'));
         }
       })
       .catch(error => {
-          dispatch(ErrorGetSinglePageChat('server error'))
+        dispatch(ErrorGetSinglePageChat('server error'));
       });
   };
+};
+
+export const newMessageAction = (data,token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartNewMessageAction());
+    fetch(`${Api}/new_message`, {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        console.log(r,888888)
+        if (r.status) {
+          dispatch(SuccessNewMessageAction(r));
+        } else {
+          dispatch(ErrorNewMessageAction('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorNewMessageAction('server error'));
+      });
+  };
+};
+
+
+export const AddMsgAction = (data) =>{
+  return {
+    type:'AddMsgAction',
+    data
+  }
 }

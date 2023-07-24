@@ -7,41 +7,76 @@ import {
   SafeAreaView,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {BackArrow, FotoSvg} from '../../assets/svg/Svgs';
 import {MenuSvg} from '../../assets/svg/TabBarSvg';
 import {BootomModal} from '../../components/BootomSheet';
 import {MsgBlock} from '../../components/MsgBlock';
-import { GetSinglePageChatAction } from '../../store/action/action';
+import {
+  GetSinglePageChatAction,
+  newMessageAction,
+} from '../../store/action/action';
 import {Styles} from '../../styles/Styles';
 import {Input} from '../../ui/Input';
+
 export const ChatScreen = ({navigation, route}) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
-  const getSinglePageChat = useSelector(st=>st.getSinglePageChat)
+  const getSinglePageChat = useSelector(st => st.getSinglePageChat);
+  const user = useSelector(st => st.userData);
+
   const snapPoints = useMemo(() => ['18%'], []);
+  const [page, setPage] = useState(1);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
-  const [data, setData] = useState([
-    {from: true, msg: 'Привет, пойдешь в бар?', date: '12:20'},
-    {from: false, msg: 'Привет, после 6 свободен', date: '12:20'},
-    {from: true, msg: 'На 8 столик, буду ждать', date: '12:20'},
-    {from: false, msg: 'Окей', date: '12:20'},
-  ]);
+  const [data, setData] = useState([]);
   const [sendMSg, setSendMsg] = useState('');
 
-  useEffect(()=>{
-    dispatch(GetSinglePageChatAction({
-      receiver_id:route.params.id
-    },staticdata.token))
-  },[])
-  console.log(getSinglePageChat.data,89)
+  useEffect(() => {
+    setData(getSinglePageChat?.message);
+  }, [getSinglePageChat.message]);
+
+  const sendMsgFunction = () => {
+    let item = [...data];
+    item.unshift({
+      sender_id:user.data.id,
+      message: sendMSg,
+    });
+    setData(item);
+    // setSendMsg('')   
+    dispatch(
+      newMessageAction(
+        {
+          message: sendMSg,
+          receiver_id: route.params.id,
+        },
+        staticdata.token,
+      ),
+    );
+  };
+
+  useEffect(() => {
+      dispatch(
+        GetSinglePageChatAction(
+          {
+            receiver_id: route.params.id,
+          },
+          staticdata.token,
+          page,
+        ),
+      );
+  }, [page]);
   return (
     <SafeAreaView style={{paddingHorizontal: 15, height: '100%'}}>
-      <View style={[Styles.flexSpaceBetween, {marginVertical: 20,marginBottom:30}]}>
+      <View
+        style={[
+          Styles.flexSpaceBetween,
+          {marginVertical: 20, marginBottom: 30},
+        ]}>
         <View style={Styles.flexAlignItems}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <BackArrow />
@@ -49,11 +84,17 @@ export const ChatScreen = ({navigation, route}) => {
           <View style={[{marginHorizontal: 20}, Styles.flexAlignItems]}>
             <Image
               style={styles.img}
-              source={{uri: `https://chamba.justcode.am/uploads/${getSinglePageChat.data.avatar}`}}
+              source={{
+                uri: `https://chamba.justcode.am/uploads/${getSinglePageChat.data.avatar}`,
+              }}
             />
             <View style={{marginHorizontal: 20}}>
-              <Text style={Styles.darkMedium14}>{getSinglePageChat.data.name}</Text>
-              <Text style={Styles.balihaiMedium13}>@{getSinglePageChat.data.nickname}</Text>
+              <Text style={Styles.darkMedium14}>
+                {getSinglePageChat.data.name}
+              </Text>
+              <Text style={Styles.balihaiMedium13}>
+                @{getSinglePageChat.data.nickname}
+              </Text>
             </View>
           </View>
         </View>
@@ -62,12 +103,23 @@ export const ChatScreen = ({navigation, route}) => {
         </TouchableOpacity>
       </View>
       <FlatList
-      showsVerticalScrollIndicator = {false}
+        inverted={true}
+        showsVerticalScrollIndicator={false}
         data={data}
+        style={{marginBottom: 60}}
+        refreshControl={
+          <RefreshControl refreshing={getSinglePageChat.loading} />
+        }
+        onEndReached={() => {
+          if (getSinglePageChat.nextPage) {
+            setPage(page + 1);
+          }
+        }}
         renderItem={({item}) => {
+          console.log(item.sender_id,user.data.id)
           return (
             <View>
-              <MsgBlock msg={item.msg} from={item.from} date={item.data} />
+              <MsgBlock msg={item.message} from={item.sender_id != user.data.id} />
             </View>
           );
         }}
@@ -92,6 +144,7 @@ export const ChatScreen = ({navigation, route}) => {
             data={sendMSg}
             onChange={e => setSendMsg(e)}
             width={'83%'}
+            sendMsg={() => sendMsgFunction()}
           />
         </View>
       </View>
@@ -113,6 +166,6 @@ const styles = StyleSheet.create({
   img: {
     width: 36,
     height: 36,
-    borderRadius:50
+    borderRadius: 50,
   },
 });

@@ -34,7 +34,8 @@ export const Input = ({
   disable,
   onFocus,
   onBlur,
-  autoFocus
+  autoFocus,
+  sendMsg
 }) => {
   const [securyty, setSecuryty] = useState(pass);
   return (
@@ -78,16 +79,12 @@ export const Input = ({
       )}
       {msg && (
         <View style={[Styles.flexAlignItems, styles.eye, {height: '100%'}]}>
-          <TouchableOpacity>
-            <VoiceSvg />
-          </TouchableOpacity>
-          {data.length ?
-          <TouchableOpacity style={{marginLeft: 10}}>
+
+          {data.length>0 &&
+          <TouchableOpacity onPress={sendMsg} style={{marginLeft: 10}}>
               <SendMsgSvg />
-          </TouchableOpacity>:
-          <TouchableOpacity style={{marginLeft: 10}}>
-            <SendImgSvg />
-          </TouchableOpacity>}
+          </TouchableOpacity>
+          }
         </View>
       )}
       {send && (

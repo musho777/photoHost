@@ -115,3 +115,10 @@ export const StartGetSinglePageChat = () =>{
         type:'StartGetSinglePageChat'
     }
 }
+
+export const StartNewMessageAction = (data) =>{
+    return {
+        type:'StartNewMessageAction',
+        data
+    }
+}

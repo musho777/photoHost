@@ -135,3 +135,10 @@ export const ErrorGetSinglePageChat = (data) =>{
         data
     }
 }
+
+export const ErrorNewMessageAction = (data) =>{
+    return {
+        type:"ErrorNewMessageAction",
+        data
+    }
+}

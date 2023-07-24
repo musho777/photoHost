@@ -1,9 +1,10 @@
 const initialState = {
     error: '',
     status: false,
-    message: '',
     loading: false,
-    data:{}
+    data:{},
+    message:[],
+    nextPage: null,
   };
   const GetSinglePageChatReducer = (state = initialState, action) => {
     let item = {...state};
@@ -11,16 +12,16 @@ const initialState = {
       case 'StartGetSinglePageChat':
         item.status = false;
         item.error = '';
-        item.message = '', 
+        // item.message = '', 
         item.loading = true;
-        item.data = {}
-        console.log(9998)
+        // item.data = {}
         break;
       case 'SuccessGetSinglePageChat':
-        console.log(action.data.receiver_user,9999)
         item.status = true;
         item.error = '';
-        item.message = action.data?.message,
+        item.message = [...item.message, ...action.data.data.data];
+        console.log(item.message.length)
+        item.nextPage = action.data.data.next_page_url
         item.loading = false;
         item.data = action.data.receiver_user
         break;
@@ -28,8 +29,12 @@ const initialState = {
         item.error = action.data;
         item.loading = false;
         item.status = false;
-        item.data = {}
+        // item.data = {}
         break;
+      case 'AddMsgAction':
+        item.message.unshift(action.data)
+        console.log(action.data)
+        break
       default:
         break;
     }

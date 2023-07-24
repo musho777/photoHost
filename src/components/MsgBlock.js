@@ -2,6 +2,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 export const MsgBlock = ({msg, data, from}) => {
+  console.log(from)
   return (
     <View
       style={[
