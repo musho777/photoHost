@@ -10,6 +10,7 @@ import {
   ErrorConfirmRegisterCode,
   ErrorDeleteOtherPople,
   ErrorForgotPassword,
+  ErrorGetFollower,
   ErrorGetFollowersAction,
   ErrorGetSinglPage,
   ErrorGetUserData,
@@ -38,6 +39,7 @@ import {
   StartAddDeleteFollow,
   StartGetFollowersAction,
   StartDeleteOtherPople,
+  StartGetFollower,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -50,6 +52,7 @@ import {
   SuccessConfirmRegisterCode,
   SuccessDeleteOtherPople,
   SuccessForgotPassword,
+  SuccessGetFollower,
   SuccessGetSinglPage,
   SuccessGetUserData,
   SuccessLogin,
@@ -227,8 +230,9 @@ export const getUserInfoAction = token => {
         headers: {Authorization: `Bearer ${token}`},
       })
       .then(r => {
+        console.log(r.data)
         if (r.data.status) {
-          dispatch(SuccessGetUserData(r.data.data));
+          dispatch(SuccessGetUserData(r.data.data,r.data.follower_count,r.data.followers_count,r.data.post_count));
         } else {
           dispatch(ErrorGetUserData());
         }
@@ -582,3 +586,29 @@ export const DeleteOtherPeople = (data,token) =>{
       });
   };
 }
+
+export const GetFollowerAction = (data,token,page) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartGetFollower())
+    fetch(`${Api}/get_follower?page=${page}`, {
+      method: 'POST',
+      headers:myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        // console.log(r)
+        if (r.status) {
+          dispatch(SuccessGetFollower(r));
+        } else {
+          dispatch(ErrorGetFollower('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetFollower('server error'))
+      });
+  };
+} 

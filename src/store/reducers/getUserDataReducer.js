@@ -8,7 +8,10 @@ const initialState = {
     name:'',
     description:'',
     email:'',
-    avatar:''
+    avatar:'',
+    followerCount:0,
+    followersCount:0,
+    postCount:0
   };
   const GetUserDataReducer = (state = initialState, action) => {
     let item = {...state};
@@ -24,6 +27,9 @@ const initialState = {
         item.description = ''
         item.email = ''
         item.avatar = ''
+        item.followerCount =0,
+        item.followersCount = 0,
+        item.postCount = 0
         break
       case 'SuccessGetUserData':
         item.status = true
@@ -36,6 +42,9 @@ const initialState = {
         item.description = action.data.description
         item.email = action.data.email
         item.avatar = action.data.avatar
+        item.followerCount =action.follower_count,
+        item.followersCount = action.followers_count,
+        item.postCount = action.post_count
         break
       case 'ErrorGetUserData':
         item.error = action.data

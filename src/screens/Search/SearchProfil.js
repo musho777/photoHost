@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Styles} from '../../styles/Styles';
 import {Albom} from '../../components/Albom';
-import {BackArrow, MenuSvg2} from '../../assets/svg/Svgs';
+import {BackArrow} from '../../assets/svg/Svgs';
 import {Button} from '../../ui/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {AddDeleteFollowAction, AddDeletFollow, GetSinglPageAction} from '../../store/action/action';

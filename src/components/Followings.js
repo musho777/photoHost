@@ -17,8 +17,8 @@ export const Followings = ({id}) => {
   const [page,setPage] = useState('')
   const dispatch = useDispatch()
   useEffect(()=>{
-    setFollowers(getFollowers.data)
-  },[getFollowers.data])
+    setFollowers(getFollowers?.data)
+  },[getFollowers?.data])
   useEffect(()=>{
       dispatch(clearGetFollowersAction());
       dispatch(GetFollowersAction({search:data,user_id:id},staticdata.token,page))
@@ -34,14 +34,13 @@ export const Followings = ({id}) => {
       setFollowers(item)
   }
   const renderItem = ({item}) => {
-  
     return (
       <View style={{marginHorizontal: 15}}>
         <FollowingsBlock
           onPress = {()=>{
             navigation.navigate('SearchProfil',{id:item.id})
             setData('')
-            close()
+            // close()
           }}
           key={item.followers.id}
           name={item.followers.name}
@@ -68,7 +67,7 @@ export const Followings = ({id}) => {
       <FlatList
           refreshControl={
             <RefreshControl
-              refreshing={getFollowers.loading}
+              refreshing={getFollowers?.loading}
               onRefresh={() => {
                 dispatch(clearGetFollowersAction());
                 dispatch(GetFollowersAction({search:data,user_id:id},staticdata.token,page))
@@ -84,7 +83,7 @@ export const Followings = ({id}) => {
           // }}
           renderItem={renderItem}
           onEndReached={() => {
-            if (getFollowers.nextPage) {
+            if (getFollowers?.nextPage) {
               dispatch(GetFollowersAction({search:data,user_id:id},staticdata.token,page))
             }
           }}

@@ -121,3 +121,10 @@ export const ErrorDeleteOtherPople = (data) =>{
         data
     }
 }
+
+export const ErrorGetFollower = (data) =>{
+    return{
+        type:'ErrorGetFollower',
+        data
+    }
+}

@@ -22,7 +22,13 @@ export const FollowingsBlock = ({
     addClick();
   };
   const deleteData = () => {
-    dispatch(DeleteOtherPeople({user_id: userId}, staticdata.token));
+    if(type1 === 'Удалить'){
+      dispatch(DeleteOtherPeople({user_id: userId}, staticdata.token));
+    }
+    else {
+      console.log(userId)
+      dispatch(AddDeleteFollowAction({user_id: userId}, staticdata.token))
+    }
     deletClick();
   };
   return (
@@ -52,7 +58,7 @@ export const FollowingsBlock = ({
                   deleteData();
                 }}
                 style={styles.button}>
-                <Text style={Styles.darkSemiBold10}>Удалить</Text>
+                <Text style={Styles.darkSemiBold10}>{type1}</Text>
               </TouchableOpacity>
             </View>
           ) : (

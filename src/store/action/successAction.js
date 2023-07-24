@@ -36,10 +36,13 @@ export const SuccessNewPassword = (data) =>{
         data
     }
 }
-export const SuccessGetUserData = (data) =>{
+export const SuccessGetUserData = (data,follower_count,followers_count,post_count) =>{
     return {
         type:'SuccessGetUserData',
-        data
+        data,
+        follower_count,
+        followers_count,
+        post_count
     }
 }
 export const SuccessChangeProfil = (data) =>{
@@ -112,6 +115,13 @@ export const SucessGetFollowersAction = (data) =>{
 export const SuccessDeleteOtherPople = (data) =>{
     return{
         type:'SuccessDeleteOtherPople',
+        data
+    }
+}
+
+export const SuccessGetFollower = (data) =>{
+    return {
+        type:'SuccessGetFollower',
         data
     }
 }

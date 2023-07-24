@@ -103,3 +103,9 @@ export const StartDeleteOtherPople = () =>{
         type:'StartDeleteOtherPople'
     }
 }
+
+export const StartGetFollower = () =>{
+    return {
+        type:'StartGetFollower'
+    }
+}
