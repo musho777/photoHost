@@ -12,6 +12,7 @@ import {
   ErrorForgotPassword,
   ErrorGetFollower,
   ErrorGetFollowersAction,
+  ErrorGetSinglePageChat,
   ErrorGetSinglPage,
   ErrorGetUserData,
   ErrorLogin,
@@ -40,6 +41,7 @@ import {
   StartGetFollowersAction,
   StartDeleteOtherPople,
   StartGetFollower,
+  StartGetSinglePageChat,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -53,6 +55,7 @@ import {
   SuccessDeleteOtherPople,
   SuccessForgotPassword,
   SuccessGetFollower,
+  SuccessGetSinglePageChat,
   SuccessGetSinglPage,
   SuccessGetUserData,
   SuccessLogin,
@@ -230,7 +233,6 @@ export const getUserInfoAction = token => {
         headers: {Authorization: `Bearer ${token}`},
       })
       .then(r => {
-        console.log(r.data)
         if (r.data.status) {
           dispatch(SuccessGetUserData(r.data.data,r.data.follower_count,r.data.followers_count,r.data.post_count));
         } else {
@@ -600,7 +602,6 @@ export const GetFollowerAction = (data,token,page) =>{
     })
       .then(response => response.json())
       .then(r => {
-        // console.log(r)
         if (r.status) {
           dispatch(SuccessGetFollower(r));
         } else {
@@ -612,3 +613,28 @@ export const GetFollowerAction = (data,token,page) =>{
       });
   };
 } 
+
+export const GetSinglePageChatAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartGetSinglePageChat())
+    fetch(`${Api}/single_page_chat`, {
+      method: 'POST',
+      headers:myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetSinglePageChat(r))
+        } else {
+          dispatch(ErrorGetSinglePageChat('server error'))
+        }
+      })
+      .catch(error => {
+          dispatch(ErrorGetSinglePageChat('server error'))
+      });
+  };
+}

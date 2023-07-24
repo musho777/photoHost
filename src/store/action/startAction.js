@@ -109,3 +109,9 @@ export const StartGetFollower = () =>{
         type:'StartGetFollower'
     }
 }
+
+export const StartGetSinglePageChat = () =>{
+    return {
+        type:'StartGetSinglePageChat'
+    }
+}

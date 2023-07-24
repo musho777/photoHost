@@ -13,12 +13,11 @@ import {Albom} from '../../components/Albom';
 import {BackArrow} from '../../assets/svg/Svgs';
 import {Button} from '../../ui/Button';
 import {useDispatch, useSelector} from 'react-redux';
-import {AddDeleteFollowAction, AddDeletFollow, GetSinglPageAction} from '../../store/action/action';
+import {AddDeleteFollowAction, AddDeletFollow, GetSinglePageChatAction, GetSinglPageAction} from '../../store/action/action';
 
 export const SearchProfil = ({navigation, route}) => {
   const singlPage = useSelector(st => st.singlPage);
   const staticdata = useSelector(st => st.static);
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
@@ -30,6 +29,12 @@ export const SearchProfil = ({navigation, route}) => {
       ),
     );
   }, []);
+
+  const sendMsg = () =>{
+    navigation.navigate('ChatScreen',{id:singlPage.data.id})
+    // dispatch(GetSinglePageChatAction())
+  }
+
   if(singlPage.loading){
     return <View style = {{flex:1,justifyContent:'center',alignItems:'center'}}>
          <ActivityIndicator size="large" color={'#FFC24B'} />
@@ -93,7 +98,7 @@ export const SearchProfil = ({navigation, route}) => {
                 dispatch(AddDeletFollow(singlPage.data?.id))
                }} paddingV={10} title={'Отписаться'} width="48%" />
                }
-              <Button bg paddingV={10} title={'Сообщение'} width="48%" />
+              <Button onPress={()=>sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
             </View>
             <Albom />
           </ScrollView>

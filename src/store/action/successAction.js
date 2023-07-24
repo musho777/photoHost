@@ -125,3 +125,10 @@ export const SuccessGetFollower = (data) =>{
         data
     }
 }
+
+export const SuccessGetSinglePageChat = (data) =>{
+    return {
+        type:'SuccessGetSinglePageChat',
+        data
+    }
+}

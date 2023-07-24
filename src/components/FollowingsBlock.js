@@ -26,7 +26,6 @@ export const FollowingsBlock = ({
       dispatch(DeleteOtherPeople({user_id: userId}, staticdata.token));
     }
     else {
-      console.log(userId)
       dispatch(AddDeleteFollowAction({user_id: userId}, staticdata.token))
     }
     deletClick();

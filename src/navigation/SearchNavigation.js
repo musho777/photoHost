@@ -1,5 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
+import { ChatScreen } from '../screens/chat/ChatScreen';
 import { FollowersScreen } from '../screens/Profile/FollowersScreen';
 import {InterestingScreen} from '../screens/Search/InterestingScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
@@ -41,6 +42,13 @@ export const SearchNavigation = () => {
               return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Интересное'}/> 
           }
       }}
+      />
+      <Stack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack.Navigator>
   );

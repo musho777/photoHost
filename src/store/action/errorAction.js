@@ -128,3 +128,10 @@ export const ErrorGetFollower = (data) =>{
         data
     }
 }
+
+export const ErrorGetSinglePageChat = (data) =>{
+    return {
+        type:'ErrorGetSinglePageChat',
+        data
+    }
+}
