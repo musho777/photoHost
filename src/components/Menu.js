@@ -7,11 +7,24 @@ import {
   Modal,
   SafeAreaView,
 } from 'react-native';
+import {useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {BackArrow} from '../assets/svg/Svgs';
+import { LogoutAction } from '../store/action/action';
 import {Styles} from '../styles/Styles';
 
 export const Menu = ({visible, close}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const staticdata = useSelector(st => st.static);
+  const login = useSelector(st=>st.login)
+  useEffect(()=>{
+    console.log(login.logoutStatus)
+    if(login.logoutStatus){
+      navigation.navigate('LoginScreen')
+      close()
+    }
+  },[login.logoutStatus])
   return (
     <SafeAreaView>
       <Modal animationType="slide" visible={visible} transparent={true}>
@@ -52,7 +65,7 @@ export const Menu = ({visible, close}) => {
                 Черный список
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>dispatch(LogoutAction(staticdata.token))}>
               <Text style={[Styles.darkRegular16, {marginTop: 30}]}>Выйти</Text>
             </TouchableOpacity>
           </View>

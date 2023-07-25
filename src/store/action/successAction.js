@@ -146,3 +146,9 @@ export const SuccessGetMyChatRoom = (data) =>{
         data
     }
 }
+
+export const SuccessLogout = () =>{
+    return {
+        type:'SuccessLogout'
+    }
+}

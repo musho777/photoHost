@@ -128,3 +128,9 @@ export const StartGetMyChatRoom = () =>{
         type:'StartGetMyChatRoom',
     }
 }
+
+export const StartLogout = () =>{
+    return{
+        type:'StartLogout'
+    }
+}

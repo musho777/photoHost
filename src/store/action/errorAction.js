@@ -149,3 +149,9 @@ export const ErrorGetMyChatRoom = (data) =>{
         data
     }
 }
+
+export const ErrorLogout = () =>{
+    return{
+        type:'ErrorLogout'
+    }
+}

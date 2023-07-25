@@ -35,7 +35,8 @@ export const Input = ({
   onFocus,
   onBlur,
   autoFocus,
-  sendMsg
+  sendMsg,
+  value
 }) => {
   const [securyty, setSecuryty] = useState(pass);
   return (
@@ -62,6 +63,7 @@ export const Input = ({
         placeholderTextColor={AppColors.BaliHai_Color}
         secureTextEntry={pass && securyty}
         onChangeText={e => onChange(e)}
+        value = {value}
       />
       {pass && (
         <TouchableOpacity

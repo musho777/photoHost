@@ -17,6 +17,7 @@ import {
   ErrorGetSinglPage,
   ErrorGetUserData,
   ErrorLogin,
+  ErrorLogout,
   ErrorNewMessageAction,
   ErrorNewPassword,
   ErrorRegister,
@@ -46,6 +47,7 @@ import {
   StartGetSinglePageChat,
   StartNewMessageAction,
   StartGetMyChatRoom,
+  StartLogout,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -64,6 +66,7 @@ import {
   SuccessGetSinglPage,
   SuccessGetUserData,
   SuccessLogin,
+  SuccessLogout,
   SuccessNewMessageAction,
   SuccessNewPassword,
   SuccessRegister,
@@ -715,4 +718,28 @@ export const NewMsgAction = (data) =>{
     type:'NewMsgAction',
     data
   }
+}
+
+export const LogoutAction = (token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartLogout());
+    fetch(`${Api}/logout`, {
+      method: 'POST',
+      headers: myHeaders,
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessLogout(r));
+        } else {
+          dispatch(ErrorLogout('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorLogout('server error'));
+      });
+  };
 }

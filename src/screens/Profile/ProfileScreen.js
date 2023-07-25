@@ -42,6 +42,7 @@ export const ProfileScreen = ({navigation, profile}) => {
   const layout = useWindowDimensions();
   const [openMenu,setOpenMenu] = useState(false)
   const user = useSelector(st => st.userData);
+  const login = useSelector((st)=>st.login)
   const renderTabBar = props => {
     return (
       <TabBar
@@ -72,7 +73,7 @@ export const ProfileScreen = ({navigation, profile}) => {
       />
     );
   };
-  if (user.loading) {
+  if (user.loading || login.logoutLoading) {
     return (
       <View style={Styles.loading}>
         <ActivityIndicator size="large" color="#FFC24B" />

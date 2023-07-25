@@ -38,11 +38,14 @@ export const LoginScreen = ({navigation}) => {
   useEffect(()=>{
     if(loginData.status){
       navigation.navigate('TabNavigation')
+      setLogin({error: '', value: ''})
+      setPasswod({error: '', value: ''})
       setToken()
     }
   },[loginData.status])
   async function setToken() {
     const data = await AsyncStorage.setItem('token',loginData.token)
+
   }
   return (
     <View style={[Styles.authScreen, {marginTop: 80}]}>

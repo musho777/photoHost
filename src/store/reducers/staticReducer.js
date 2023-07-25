@@ -7,6 +7,9 @@ const initialState = {
       case 'setToken':
         item.token = action.token
         break
+      case 'SuccessLogout':
+        item.token = ''
+        break
       default:
         break;
     }
