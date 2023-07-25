@@ -37,7 +37,10 @@ export const ChatScreen = ({navigation, route}) => {
   const [sendMSg, setSendMsg] = useState('');
 
   useEffect(() => {
-    setData(getSinglePageChat?.message);
+    console.log('888')
+    if(!getSinglePageChat.loading){
+      setData(getSinglePageChat?.message);
+    }
   }, [getSinglePageChat.message]);
 
   const sendMsgFunction = () => {
@@ -47,7 +50,6 @@ export const ChatScreen = ({navigation, route}) => {
       message: sendMSg,
     });
     setData(item);
-    // setSendMsg('')
     dispatch(
       newMessageAction(
         {
@@ -60,6 +62,7 @@ export const ChatScreen = ({navigation, route}) => {
   };
 
   useEffect(() => {
+    console.log('8888')
     dispatch(
       GetSinglePageChatAction(
         {

@@ -4,7 +4,7 @@ const initialState = {
     loading: false,
     data:{},
     message:[],
-    nextPage: null,
+    nextPage: '',
   };
   const GetSinglePageChatReducer = (state = initialState, action) => {
     let item = {...state};
@@ -19,7 +19,9 @@ const initialState = {
       case 'SuccessGetSinglePageChat':
         item.status = true;
         item.error = '';
-        item.message = [...item.message, ...action.data.data.data.reverse()];
+        if( item.nextPage !=action.data.data.next_page_url ){
+          item.message = [...item.message, ...action.data.data.data.reverse()];
+        }
         item.nextPage = action.data.data.next_page_url
         item.loading = false;
         item.data = action.data.receiver_user

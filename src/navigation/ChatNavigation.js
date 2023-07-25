@@ -14,13 +14,13 @@ export const ChatNavigation = () => {
           headerShown: false,
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ChatScreen"
         component={ChatScreen}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

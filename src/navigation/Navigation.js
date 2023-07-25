@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -14,23 +14,28 @@ import {TabNavigation} from './TabNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AddMsgAction, getUserInfoAction, NewMsgAction, setToken } from '../store/action/action';
+import {
+  AddMsgAction,
+  getUserInfoAction,
+  NewMsgAction,
+  setToken,
+} from '../store/action/action';
 import {
   Pusher,
   PusherMember,
   PusherChannel,
   PusherEvent,
 } from '@pusher/pusher-websocket-react-native';
+import {ChatScreen} from '../screens/chat/ChatScreen';
 
 export default Navigation = () => {
   const dispatch = useDispatch();
   async function getData() {
     const token = await AsyncStorage.getItem('token');
     dispatch(getUserInfoAction(token));
-    dispatch(setToken(token))
+    dispatch(setToken(token));
   }
 
-  
   const Pushers = async () => {
     const pusher = Pusher.getInstance();
     await pusher.init({
@@ -41,13 +46,17 @@ export default Navigation = () => {
     await pusher.subscribe({
       channelName: 'NewMessage',
       onEvent: event => {
-        dispatch(NewMsgAction({
-          data:JSON.parse(event.data)?.message
-        }))
-        dispatch(AddMsgAction({
-          message: JSON.parse(event.data)?.message?.message,
-          receiver_id:  JSON.parse(event.data)?.message?.receiver_id,
-        }))
+        dispatch(
+          NewMsgAction({
+            data: JSON.parse(event.data)?.message,
+          }),
+        );
+        dispatch(
+          AddMsgAction({
+            message: JSON.parse(event.data)?.message?.message,
+            receiver_id: JSON.parse(event.data)?.message?.receiver_id,
+          }),
+        );
       },
     });
   };
@@ -68,7 +77,7 @@ export default Navigation = () => {
   return (
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
-        <Stack.Navigator initialRouteName={'LoginScreen'}>
+        <Stack.Navigator initialRouteName={'TabNavigation'}>
           <Stack.Screen
             name="LoginScreen"
             component={LoginScreen}
@@ -102,6 +111,13 @@ export default Navigation = () => {
           <Stack.Screen
             name="TabNavigation"
             component={TabNavigation}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ChatScreen"
+            component={ChatScreen}
             options={{
               headerShown: false,
             }}
