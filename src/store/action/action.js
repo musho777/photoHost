@@ -148,6 +148,7 @@ export const LoginAction = data => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          dispatch(setToken(r.token))
           dispatch(SuccessLogin(r));
         } else {
           dispatch(ErrorLogin('wrong email or password'));

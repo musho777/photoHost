@@ -30,7 +30,7 @@ export default Navigation = () => {
     dispatch(setToken(token))
   }
 
-
+  
   const Pushers = async () => {
     const pusher = Pusher.getInstance();
     await pusher.init({
@@ -68,7 +68,7 @@ export default Navigation = () => {
   return (
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
-        <Stack.Navigator initialRouteName={'TabNavigation'}>
+        <Stack.Navigator initialRouteName={'LoginScreen'}>
           <Stack.Screen
             name="LoginScreen"
             component={LoginScreen}
