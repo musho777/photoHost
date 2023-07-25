@@ -1,30 +1,79 @@
-import {useState} from 'react'
-import {ScrollView,SafeAreaView} from 'react-native'
-import { ChatUser } from '../../components/ChatUser'
-import { Input } from '../../ui/Input'
-export const ChatUsersScreen = () =>{
-    const [data,setData] = useState([
-        {msg:3,seen:false,sendWhiteMe:false,online:true,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:true,sendWhiteMe:false,online:false,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:false,sendWhiteMe:true,online:false,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:true,sendWhiteMe:false,online:true,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:7,seen:false,sendWhiteMe:false,online:true,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:2,seen:false,sendWhiteMe:false,online:true,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:false,sendWhiteMe:false,online:false,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:false,sendWhiteMe:false,online:true,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:false,sendWhiteMe:false,online:false,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:false,sendWhiteMe:false,online:false,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:false,sendWhiteMe:false,online:true,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:0,seen:false,sendWhiteMe:false,online:false,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-        {msg:4,seen:false,sendWhiteMe:false,online:false,img:require('../../assets/img/MaskGroup.png'),username:'@alexsei_ivanov',name:'Леха'},
-    ])
-    const [search,setSearch] = useState('')
-    return <SafeAreaView style = {{padding:10,marginTop:10}}>
-        <Input placeholder={'Поиск   '} search data={search} onChange = {(e)=>setSearch(e)}/>
-        <ScrollView style = {{marginBottom:50}} showsVerticalScrollIndicator = {false}>
-            {data.map((elm,i)=>(
-                <ChatUser username = {elm.username} name = {elm.name} img = {elm.img} sendWhiteMe = {elm.sendWhiteMe} seen={elm.seen} online = {elm.online} msg = {elm.msg} key={i} />
-            ))}
-        </ScrollView>
-    </SafeAreaView>
-}
+import {useState, useEffect} from 'react';
+import {View, SafeAreaView, FlatList, ActivityIndicator} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {ChatUser} from '../../components/ChatUser';
+import {GetMyChatRoom} from '../../store/action/action';
+import {Styles} from '../../styles/Styles';
+import {Input} from '../../ui/Input';
+export const ChatUsersScreen = ({navigation}) => {
+  const [data, setData] = useState([]);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const staticdata = useSelector(st => st.static);
+  const getMyChatRoom = useSelector(st => st.getMyChatRoom);
+  const user = useSelector(st => st.userData);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!getMyChatRoom.loading && page !==1) {
+      dispatch(GetMyChatRoom({string: data}, staticdata.token, page));
+    }
+  }, [page]);
+  useEffect(() => {
+    if (!getMyChatRoom.loading) {
+      setData(getMyChatRoom.data);
+    }
+  }, [getMyChatRoom.data]);
+  useEffect(() => {
+    setPage(1)
+    const unsubscribe = navigation.addListener('focus', async () => {
+      dispatch(GetMyChatRoom({string: data}, staticdata.token, page));
+    });
+    return unsubscribe;
+  }, [navigation]);
+  const renderItem = ({item}) => {
+    return (
+      <ChatUser
+        username={item.sender?.nickname}
+        name={item.sender?.name}
+        img={`https://chamba.justcode.am/uploads/${item?.sender?.avatar}`}
+        sendWhiteMe={item.sendWhiteMe}
+        sendr_id={item.latest_sender}
+        user_id={user.data.id}
+        seen={item.status}
+        text={item.message}
+        // online={elm.online}
+        otherUserId={item.sender?.id}
+        msg={item.message_sum}
+      />
+    );
+  };
+
+  if (getMyChatRoom.loading) {
+    return (
+      <View style={Styles.loading}>
+        <ActivityIndicator size="large" color="#FFC24B" />
+      </View>
+    );
+  } else {
+    return (
+      <SafeAreaView style={{padding: 10, marginTop: 10}}>
+        <Input
+          placeholder={'Поиск   '}
+          search
+          data={search}
+          onChange={e => setSearch(e)}
+        />
+        <FlatList
+          data={data}
+          enableEmptySections={true}
+          renderItem={renderItem}
+          onEndReached={() => {
+            if (getMyChatRoom.nextPage) {
+              setPage(page + 1);
+            }
+          }}
+        />
+      </SafeAreaView>
+    );
+  }
+};

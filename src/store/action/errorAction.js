@@ -142,3 +142,10 @@ export const ErrorNewMessageAction = (data) =>{
         data
     }
 }
+
+export const ErrorGetMyChatRoom = (data) =>{
+    return{
+        type:'ErrorGetMyChatRoom',
+        data
+    }
+}

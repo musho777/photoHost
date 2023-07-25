@@ -139,3 +139,10 @@ export const SuccessNewMessageAction = (data) =>{
         data
     }
 }
+
+export const SuccessGetMyChatRoom = (data) =>{
+    return{
+        type:'SuccessGetMyChatRoom',
+        data
+    }
+}

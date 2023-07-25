@@ -63,6 +63,8 @@ const initialState = {
       case 'ChangeAvatar':
         item.avatar = action.data
         break
+      // case 'NewMsgAction':
+      //   break
       default:
         break;
     }

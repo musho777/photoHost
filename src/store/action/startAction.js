@@ -122,3 +122,9 @@ export const StartNewMessageAction = (data) =>{
         data
     }
 }
+
+export const StartGetMyChatRoom = () =>{
+    return{
+        type:'StartGetMyChatRoom',
+    }
+}

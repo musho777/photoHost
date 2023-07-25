@@ -12,6 +12,7 @@ import {
   ErrorForgotPassword,
   ErrorGetFollower,
   ErrorGetFollowersAction,
+  ErrorGetMyChatRoom,
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
   ErrorGetUserData,
@@ -44,6 +45,7 @@ import {
   StartGetFollower,
   StartGetSinglePageChat,
   StartNewMessageAction,
+  StartGetMyChatRoom,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -57,6 +59,7 @@ import {
   SuccessDeleteOtherPople,
   SuccessForgotPassword,
   SuccessGetFollower,
+  SuccessGetMyChatRoom,
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
   SuccessGetUserData,
@@ -677,6 +680,38 @@ export const newMessageAction = (data,token) => {
 export const AddMsgAction = (data) =>{
   return {
     type:'AddMsgAction',
+    data
+  }
+}
+
+export const GetMyChatRoom = (data,token,page) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartGetMyChatRoom());
+    fetch(`${Api}/get_my_chat_rooms?page=${page}`, {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetMyChatRoom(r));
+        } else {
+          dispatch(ErrorGetMyChatRoom('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetMyChatRoom('server error'));
+      });
+  };
+}
+
+export const NewMsgAction = (data) =>{
+  return{
+    type:'NewMsgAction',
     data
   }
 }

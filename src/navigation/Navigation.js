@@ -14,7 +14,7 @@ import {TabNavigation} from './TabNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AddMsgAction, getUserInfoAction, setToken } from '../store/action/action';
+import { AddMsgAction, getUserInfoAction, NewMsgAction, setToken } from '../store/action/action';
 import {
   Pusher,
   PusherMember,
@@ -41,6 +41,9 @@ export default Navigation = () => {
     await pusher.subscribe({
       channelName: 'NewMessage',
       onEvent: event => {
+        dispatch(NewMsgAction({
+          data:JSON.parse(event.data)?.message
+        }))
         dispatch(AddMsgAction({
           message: JSON.parse(event.data)?.message?.message,
           receiver_id:  JSON.parse(event.data)?.message?.receiver_id,
