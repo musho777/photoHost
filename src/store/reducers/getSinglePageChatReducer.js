@@ -19,8 +19,7 @@ const initialState = {
       case 'SuccessGetSinglePageChat':
         item.status = true;
         item.error = '';
-        item.message = [...item.message, ...action.data.data.data];
-        console.log(item.message.length)
+        item.message = [...item.message, ...action.data.data.data.reverse()];
         item.nextPage = action.data.data.next_page_url
         item.loading = false;
         item.data = action.data.receiver_user
@@ -33,7 +32,6 @@ const initialState = {
         break;
       case 'AddMsgAction':
         item.message.unshift(action.data)
-        console.log(action.data)
         break
       default:
         break;

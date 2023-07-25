@@ -47,7 +47,7 @@ export const ChatScreen = ({navigation, route}) => {
       message: sendMSg,
     });
     setData(item);
-    // setSendMsg('')   
+    // setSendMsg('')
     dispatch(
       newMessageAction(
         {
@@ -60,15 +60,15 @@ export const ChatScreen = ({navigation, route}) => {
   };
 
   useEffect(() => {
-      dispatch(
-        GetSinglePageChatAction(
-          {
-            receiver_id: route.params.id,
-          },
-          staticdata.token,
-          page,
-        ),
-      );
+    dispatch(
+      GetSinglePageChatAction(
+        {
+          receiver_id: route.params.id,
+        },
+        staticdata.token,
+        page,
+      ),
+    );
   }, [page]);
   return (
     <SafeAreaView style={{paddingHorizontal: 15, height: '100%'}}>
@@ -103,23 +103,23 @@ export const ChatScreen = ({navigation, route}) => {
         </TouchableOpacity>
       </View>
       <FlatList
+        snapToEnd
         inverted={true}
         showsVerticalScrollIndicator={false}
         data={data}
         style={{marginBottom: 60}}
-        refreshControl={
-          <RefreshControl refreshing={getSinglePageChat.loading} />
-        }
         onEndReached={() => {
-          if (getSinglePageChat.nextPage) {
+          if (getSinglePageChat.nextPage && !getSinglePageChat.loading) {
             setPage(page + 1);
           }
         }}
         renderItem={({item}) => {
-          console.log(item.sender_id,user.data.id)
           return (
             <View>
-              <MsgBlock msg={item.message} from={item.sender_id != user.data.id} />
+              <MsgBlock
+                msg={item.message}
+                from={item.sender_id != user.data.id}
+              />
             </View>
           );
         }}
@@ -141,7 +141,7 @@ export const ChatScreen = ({navigation, route}) => {
           <Input
             msg
             placeholder={'Введите текст'}
-            data={sendMSg}
+            data={getSinglePageChat?.message}
             onChange={e => setSendMsg(e)}
             width={'83%'}
             sendMsg={() => sendMsgFunction()}

@@ -661,7 +661,6 @@ export const newMessageAction = (data,token) => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r,888888)
         if (r.status) {
           dispatch(SuccessNewMessageAction(r));
         } else {

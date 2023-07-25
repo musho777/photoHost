@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.photohost"
+    namespace "com.justCode.photohost"
     defaultConfig {
-        applicationId "com.photohost"
+        applicationId "com.justCode.photohost"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
