@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -28,14 +28,12 @@ import {
 } from '@pusher/pusher-websocket-react-native';
 import {ChatScreen} from '../screens/chat/ChatScreen';
 
-export default Navigation = () => {
+export default Navigation = ({token, initialRouteName}) => {
   const dispatch = useDispatch();
   async function getData() {
-    const token = await AsyncStorage.getItem('token');
     dispatch(getUserInfoAction(token));
     dispatch(setToken(token));
   }
-
   const Pushers = async () => {
     const pusher = Pusher.getInstance();
     await pusher.init({
@@ -63,7 +61,7 @@ export default Navigation = () => {
   useEffect(() => {
     Pushers();
     getData();
-  }, []);
+  }, [token]);
 
   const Stack = createStackNavigator();
   const MyTheme = {
@@ -77,7 +75,7 @@ export default Navigation = () => {
   return (
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
-        <Stack.Navigator initialRouteName={'LoginScreen'}>
+        <Stack.Navigator initialRouteName={initialRouteName}>
           <Stack.Screen
             name="LoginScreen"
             component={LoginScreen}
