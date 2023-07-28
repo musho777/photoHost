@@ -38,7 +38,7 @@ export const Followings = ({id}) => {
       <View style={{marginHorizontal: 15}}>
         <FollowingsBlock
           onPress = {()=>{
-            navigation.navigate('SearchProfil',{id:item.id})
+            navigation.navigate('SearchProfil',{id:item.followers.id})
             setData('')
             // close()
           }}

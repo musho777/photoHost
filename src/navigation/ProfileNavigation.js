@@ -9,6 +9,7 @@ import { FollowersScreen } from '../screens/Profile/FollowersScreen';
 import { ParametrScreen } from '../screens/Profile/ParametrScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { UserProfileScreen } from '../screens/Profile/userProfileScreen';
+import { SearchProfil } from '../screens/Search/SearchProfil';
 
 export const ProfileNavigation = () => {
   const Stack = createStackNavigator();
@@ -93,6 +94,13 @@ export const ProfileNavigation = () => {
               return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Черный список'}/> 
           }
       }}
+      />
+      <Stack.Screen
+        name="SearchProfil"
+        component={SearchProfil}
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack.Navigator>
   );

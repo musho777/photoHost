@@ -7,7 +7,7 @@ import ChangePasswordReducer from './reducers/changePasswordReducer';
 import ChangeUserProfilReducer from './reducers/changeUserProfilReducer';
 import ConfirmForgotPasswordReducer from './reducers/confirmForgotPasswordReducer';
 import ConfirmRegisetReducer from './reducers/confirmRegisetReducer';
-import CreatePostReducer from './reducers/CreatePostReducer';
+import CreatePostReducer from './reducers/createPostReducer';
 import DeletOtherPeopleReducer from './reducers/deletOtherPeopleReducer';
 import ForgotPasswordReducer from './reducers/forgotPasswordReducer';
 import GetFollowerReducer from './reducers/getFollowerReducer';
