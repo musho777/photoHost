@@ -48,3 +48,9 @@ export const clearGetFollowersAction = () =>{
         type:'clearGetFollowersAction'
     }
 }
+
+export const ClearCreatPost = () =>{
+    return{
+        type:'clearCreatPost'
+    }
+}

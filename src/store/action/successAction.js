@@ -152,3 +152,10 @@ export const SuccessLogout = () =>{
         type:'SuccessLogout'
     }
 }
+
+export const SuccessCreatePost = (data) =>{
+    return {
+        type:'SuccessCreatePost',
+        data
+    }
+}

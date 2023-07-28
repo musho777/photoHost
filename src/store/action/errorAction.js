@@ -150,8 +150,16 @@ export const ErrorGetMyChatRoom = (data) =>{
     }
 }
 
-export const ErrorLogout = () =>{
+export const ErrorLogout = (data) =>{
     return{
-        type:'ErrorLogout'
+        type:'ErrorLogout',
+        data
+    }
+}
+
+export const ErrorCreatePost = (data) =>{
+    return {
+        type:'ErrorCreatePost',
+        data
     }
 }

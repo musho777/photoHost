@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {ContinousBaseGesture} from 'react-native-gesture-handler/lib/typescript/handlers/gestures/gesture';
 import {
   ErrorAddDeleteFollow,
   ErrorChangeAvatar,
@@ -48,6 +49,7 @@ import {
   StartNewMessageAction,
   StartGetMyChatRoom,
   StartLogout,
+  StartCreatePost,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -58,6 +60,7 @@ import {
   SuccessChangeProfil,
   SuccessChangeUserPassword,
   SuccessConfirmRegisterCode,
+  SuccessCreatePost,
   SuccessDeleteOtherPople,
   SuccessForgotPassword,
   SuccessGetFollower,
@@ -151,7 +154,7 @@ export const LoginAction = data => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(setToken(r.token))
+          dispatch(setToken(r.token));
           dispatch(SuccessLogin(r));
         } else {
           dispatch(ErrorLogin('wrong email or password'));
@@ -630,7 +633,7 @@ export const GetFollowerAction = (data, token, page) => {
   };
 };
 
-export const GetSinglePageChatAction = (data, token,page) => {
+export const GetSinglePageChatAction = (data, token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -655,7 +658,7 @@ export const GetSinglePageChatAction = (data, token,page) => {
   };
 };
 
-export const newMessageAction = (data,token) => {
+export const newMessageAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -680,15 +683,14 @@ export const newMessageAction = (data,token) => {
   };
 };
 
-
-export const AddMsgAction = (data) =>{
+export const AddMsgAction = data => {
   return {
-    type:'AddMsgAction',
-    data
-  }
-}
+    type: 'AddMsgAction',
+    data,
+  };
+};
 
-export const GetMyChatRoom = (data,token,page) =>{
+export const GetMyChatRoom = (data, token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -711,16 +713,16 @@ export const GetMyChatRoom = (data,token,page) =>{
         dispatch(ErrorGetMyChatRoom('server error'));
       });
   };
-}
+};
 
-export const NewMsgAction = (data) =>{
-  return{
-    type:'NewMsgAction',
-    data
-  }
-}
+export const NewMsgAction = data => {
+  return {
+    type: 'NewMsgAction',
+    data,
+  };
+};
 
-export const LogoutAction = (token) =>{
+export const LogoutAction = token => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -742,4 +744,31 @@ export const LogoutAction = (token) =>{
         dispatch(ErrorLogout('server error'));
       });
   };
-}
+};
+
+export const CreatPostAction = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'multipart/form-data');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: data,
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartCreatePost());
+    fetch(`${Api}/add_new_post`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessCreatePost(r));
+        } else {
+          dispatch(ErrorCreatePost(error));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorCreatePost(error));
+      });
+  };
+};

@@ -134,3 +134,9 @@ export const StartLogout = () =>{
         type:'StartLogout'
     }
 }
+
+export const StartCreatePost = () =>{
+    return {
+        type:'StartCreatePost'
+    }
+}

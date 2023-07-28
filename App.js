@@ -9,8 +9,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default App = () => {
   const [initialRouteName, setInitialRouteName] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const  [token,setToken] = useState('')
   async function getData() {
     const token = await AsyncStorage.getItem('token')
+    setToken(token)
     if (token) {
       setInitialRouteName('TabNavigation');
     } 
@@ -26,7 +28,7 @@ export default App = () => {
    return (
      <Provider store={store}>
        <GestureHandlerRootView style={{flex: 1}}>
-         <Navigation initialRouteName = {initialRouteName}/>
+         <Navigation initialRouteName = {initialRouteName} token = {token}/>
        </GestureHandlerRootView>
      </Provider>
    );

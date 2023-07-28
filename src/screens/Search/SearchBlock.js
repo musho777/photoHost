@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {View, Modal, StyleSheet, TextInput, Text} from 'react-native';
+import {View, Modal, StyleSheet, TextInput, Text, TouchableOpacity} from 'react-native';
 import {FlatList, RefreshControl} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {SearchInputSvg} from '../../assets/svg/Svgs';
@@ -8,6 +8,7 @@ import { SearchAction} from '../../store/action/action';
 import {clearSearchData} from '../../store/action/clearAction';
 import {AppColors} from '../../styles/AppColors';
 import {useNavigation} from '@react-navigation/native';
+import { Styles } from '../../styles/Styles';
 
 
 export const SearchBlock = ({modalVisible,close}) => {
@@ -94,7 +95,7 @@ export const SearchBlock = ({modalVisible,close}) => {
     <View style={styles.centeredView}>
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
         <View style={[styles.header, {marginBottom: 20}]}>
-          <View style={{marginBottom: 10}}>
+          <View style={{marginBottom: 10,width:'80%'}}>
             <TextInput
               onChangeText={e => setData(e)}
               value={data}
@@ -106,6 +107,9 @@ export const SearchBlock = ({modalVisible,close}) => {
               <SearchInputSvg />
             </View>
           </View>
+          <TouchableOpacity onPress={()=>close()} style = {{marginTop:10,marginLeft:10}}>
+            <Text style  = {Styles.darkMedium12}>отменить</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
           refreshControl={
@@ -195,6 +199,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 15,
     elevation: 1,
+    flexDirection:'row',
   },
   eye: {
     position: 'absolute',
