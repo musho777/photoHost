@@ -3,16 +3,13 @@ import {
   StyleSheet,
   View,
   Text,
-  useWindowDimensions,
   TouchableOpacity,
   Image,
   ScrollView,
   ActivityIndicator
 } from 'react-native';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {Styles} from '../../styles/Styles';
 import {Albom} from '../../components/Albom';
-import {AppColors} from '../../styles/AppColors';
 import {MenuSvg2} from '../../assets/svg/Svgs';
 import {Menu} from '../../components/Menu';
 import {Button} from '../../ui/Button';
@@ -20,11 +17,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { getUserInfoAction } from '../../store/action/action';
 
 export const ProfileScreen = ({navigation, profile}) => {
-  const renderScene = SceneMap({
-    first: Albom,
-    second: Albom,
-    third: Albom,
-  });
+
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
 
@@ -34,45 +27,10 @@ export const ProfileScreen = ({navigation, profile}) => {
     });
     return unsubscribe;
   }, [navigation]);
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    {key: 'first', title: 'Альбом'},
-    {key: 'second', title: 'Закладки'},
-  ]);
-  const layout = useWindowDimensions();
+
   const [openMenu,setOpenMenu] = useState(false)
   const user = useSelector(st => st.userData);
   const login = useSelector((st)=>st.login)
-  const renderTabBar = props => {
-    return (
-      <TabBar
-        {...props}
-        indicatorStyle={{
-          backgroundColor: AppColors.Charcoal_Color,
-          height: 2,
-          borderRadius: 10,
-        }}
-        style={{
-          backgroundColor: '#FFF',
-          elevation: 0,
-          borderBottomWidth: 1,
-          borderColor: AppColors.Solitude_Color,
-          borderRadius: 10,
-        }}
-        renderLabel={a => (
-          <Text
-            style={[
-              a.focused ? Styles.darkRegular14 : Styles.heatherRegular14,
-            ]}>
-            {a.route.title}
-          </Text>
-        )}
-        labelStyle={Styles.blueSemiBold14}
-        pressOpacity={0}
-        pressColor="white"
-      />
-    );
-  };
   if (user.loading || login.logoutLoading) {
     return (
       <View style={Styles.loading}>
@@ -83,7 +41,7 @@ export const ProfileScreen = ({navigation, profile}) => {
   else {
     return (
       <View style={{flex: 1, marginTop: 10, paddingHorizontal: 15}}>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator = {false}>
           <TouchableOpacity
             onPress={() => setOpenMenu(true)}
             style={{marginVertical: 25}}>
@@ -134,13 +92,7 @@ export const ProfileScreen = ({navigation, profile}) => {
               <Button bg paddingV={10} title={'Сообщение'} width="48%" />
             </View>
           )}
-          <TabView
-            renderTabBar={renderTabBar}
-            navigationState={{index, routes}}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{width: layout.width}}
-          />
+        <Albom />
         </ScrollView>
         <Menu close={() => setOpenMenu(false)} visible={openMenu} />
       </View>
