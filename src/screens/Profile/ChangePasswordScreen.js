@@ -35,7 +35,7 @@ export const ChangePasswordScreen = ({navigation}) => {
       item = false;
       setNewPassword({
         ...newPassword,
-        error: 'Пароль должен содержать не менее 8-ти символов.',
+        error: 'Пароль должен содержать не менее 8-ми символов.',
       });
     } else {
       setNewPassword({...newPassword, error: ''});

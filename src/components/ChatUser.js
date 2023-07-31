@@ -14,7 +14,6 @@ export const ChatUser = ({
   user_id,
   otherUserId
 }) => {
-  console.log(msg)
   const navigation = useNavigation();
   return (
     <TouchableOpacity

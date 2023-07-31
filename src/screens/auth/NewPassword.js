@@ -26,7 +26,7 @@ export const NewPassword = ({navigation}) => {
   const snedNewPassword = () =>{
     let send = true
     if(password.value.length<8){
-      setPassword({...password,error:'Пароль должен содержать не менее 8-ти символов.'})
+      setPassword({...password,error:'Пароль должен содержать не менее 8-ми символов.'})
       send = false
     }
     else {

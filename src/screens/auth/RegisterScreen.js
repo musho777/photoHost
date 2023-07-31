@@ -39,7 +39,7 @@ export const RegisterScreen = ({navigation}) => {
     let item = true
     if(password.value.length<8){
       item = false
-      setPassword({...password,error:'Пароль должен содержать не менее 8-ти символов.'})
+      setPassword({...password,error:'Пароль должен содержать не менее 8-ми символов.'})
     }
     else {
       setPassword({...password,error:''})

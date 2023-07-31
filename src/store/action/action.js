@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {ContinousBaseGesture} from 'react-native-gesture-handler/lib/typescript/handlers/gestures/gesture';
 import {
   ErrorAddDeleteFollow,
   ErrorChangeAvatar,
@@ -129,11 +128,11 @@ export const ConfirmRegisterCode = data => {
         if (r.status) {
           dispatch(SuccessConfirmRegisterCode(r));
         } else {
-          dispatch(ErrorConfirmRegisterCode('код не совпадают'));
+          dispatch(ErrorConfirmRegisterCode('Неверный код'));
         }
       })
       .catch(error => {
-        dispatch(ErrorConfirmRegisterCode('код не совпадают'));
+        dispatch(ErrorConfirmRegisterCode('Неверный код'));
       });
   };
 };
@@ -207,11 +206,11 @@ export const ValidationForogtPasswordAction = data => {
         if (r.status) {
           dispatch(SuccessValidForgotPassowrd(r));
         } else {
-          dispatch(ErrorValidationForgotPassword('код не совпадают'));
+          dispatch(ErrorValidationForgotPassword('Неверный код'));
         }
       })
       .catch(error => {
-        dispatch(ErrorValidationForgotPassword('код не совпадают'));
+        dispatch(ErrorValidationForgotPassword('Неверный код'));
       });
   };
 };
