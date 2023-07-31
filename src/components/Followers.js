@@ -1,15 +1,16 @@
 import {useEffect, useState} from 'react';
-import {View, FlatList, RefreshControl} from 'react-native';
+import {View, FlatList, RefreshControl,Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {GetFollowerAction, GetFollowersAction} from '../store/action/action';
 import {clearGetFollowersAction} from '../store/action/clearAction';
 import {Input} from '../ui/Input';
 import {FollowingsBlock} from './FollowingsBlock';
 import {useNavigation} from '@react-navigation/native';
+import { Styles } from '../styles/Styles';
 
 export const Followers = ({id}) => {
   const navigation = useNavigation();
-  const [data, setData] = useState();
+  const [data, setData] = useState('');
   const [followers, setFollowers] = useState([]);
   const getFollowers = useSelector(st => st.getFollower);
   const staticdata = useSelector(st => st.static);
@@ -81,13 +82,11 @@ export const Followers = ({id}) => {
             }}
           />
         }
+        ListEmptyComponent = {()=>
+           <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>{data?'Не найдено':'У Вас нет подписок'}</Text>
+        }
         data={followers}
         enableEmptySections={true}
-        // ListEmptyComponent={() => {
-        //   if () {
-        //     return <Text>no data</Text>;
-        //   }
-        // }}
         renderItem={renderItem}
         onEndReached={() => {
           if (getFollowers?.nextPage) {

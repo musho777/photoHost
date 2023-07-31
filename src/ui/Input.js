@@ -63,7 +63,7 @@ export const Input = ({
         placeholderTextColor={AppColors.BaliHai_Color}
         secureTextEntry={pass && securyty}
         onChangeText={e => onChange(e)}
-        value = {value}
+        value = {value?value:data}
       />
       {pass && (
         <TouchableOpacity

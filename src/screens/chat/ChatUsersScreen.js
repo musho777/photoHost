@@ -1,5 +1,12 @@
 import {useState, useEffect} from 'react';
-import {View, SafeAreaView, FlatList, ActivityIndicator} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  FlatList,
+  ActivityIndicator,
+  Text,
+  StyleSheet
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {ChatUser} from '../../components/ChatUser';
 import {GetMyChatRoom} from '../../store/action/action';
@@ -14,8 +21,8 @@ export const ChatUsersScreen = ({navigation}) => {
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!getMyChatRoom.loading && page !==1) {
-      dispatch(GetMyChatRoom({string: data}, staticdata.token, page));
+    if (!getMyChatRoom.loading && page !== 1) {
+      dispatch(GetMyChatRoom({search: search}, staticdata.token, page));
     }
   }, [page]);
   useEffect(() => {
@@ -23,13 +30,19 @@ export const ChatUsersScreen = ({navigation}) => {
       setData(getMyChatRoom.data);
     }
   }, [getMyChatRoom.data]);
+
   useEffect(() => {
-    setPage(1)
+    setPage(1);
     const unsubscribe = navigation.addListener('focus', async () => {
-      dispatch(GetMyChatRoom({string: data}, staticdata.token, page));
+      dispatch(GetMyChatRoom({search: search}, staticdata.token, page));
     });
     return unsubscribe;
   }, [navigation]);
+
+  const searchData = e => {
+    dispatch(GetMyChatRoom({search: e}, staticdata.token, page));
+  };
+
   const renderItem = ({item}) => {
     return (
       <ChatUser
@@ -48,7 +61,7 @@ export const ChatUsersScreen = ({navigation}) => {
     );
   };
 
-  if (getMyChatRoom.loading) {
+  if (false) {
     return (
       <View style={Styles.loading}>
         <ActivityIndicator size="large" color="#FFC24B" />
@@ -57,11 +70,16 @@ export const ChatUsersScreen = ({navigation}) => {
   } else {
     return (
       <SafeAreaView style={{padding: 10, marginTop: 10}}>
+        {getMyChatRoom.loading && (
+          <View style={styles.loading}>
+            <ActivityIndicator size="large" color="#FFC24B" />
+          </View>
+        )}
         <Input
           placeholder={'Поиск   '}
           search
           data={search}
-          onChange={e => setSearch(e)}
+          onChange={e => searchData(e)}
         />
         <FlatList
           data={data}
@@ -72,8 +90,29 @@ export const ChatUsersScreen = ({navigation}) => {
               setPage(page + 1);
             }
           }}
+          ListEmptyComponent={() => (
+            !getMyChatRoom.loading &&
+            <Text
+              style={[
+                Styles.darkMedium16,
+                {marginTop: 40, textAlign: 'center'},
+              ]}>
+              У вас нет сообщений
+            </Text>
+          )}
         />
       </SafeAreaView>
     );
   }
 };
+
+const styles = StyleSheet.create({
+  loading:{
+    position:'absolute',
+    zIndex:1,
+    top:60,
+    justifyContent:'center',
+    alignItems:'center',
+    width:'100%',
+  }
+})

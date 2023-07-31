@@ -1,8 +1,7 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
-  GestureHandlerRefContext,
 } from '@react-navigation/stack';
 import {Header} from '../headers/Header';
 import {LoginScreen} from '../screens/auth/LoginScreen';
@@ -13,7 +12,6 @@ import {AppColors} from '../styles/AppColors';
 import {TabNavigation} from './TabNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {useDispatch} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   AddMsgAction,
   getUserInfoAction,
@@ -27,6 +25,8 @@ import {
   PusherEvent,
 } from '@pusher/pusher-websocket-react-native';
 import {ChatScreen} from '../screens/chat/ChatScreen';
+import { FollowersScreen } from '../screens/Profile/FollowersScreen';
+import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 
 export default Navigation = ({token, initialRouteName}) => {
   const dispatch = useDispatch();
@@ -118,6 +118,20 @@ export default Navigation = ({token, initialRouteName}) => {
             component={ChatScreen}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="FollowersScreen"
+            component={FollowersScreen}
+            options={{
+              header: ({navigation}) => {
+                return (
+                  <HeaderWhiteTitle
+                    onPress={() => navigation.goBack()}
+                    title={'Интересное'}
+                  />
+                );
+              },
             }}
           />
         </Stack.Navigator>

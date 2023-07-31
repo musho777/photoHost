@@ -1,5 +1,4 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import { ChatScreen } from '../screens/chat/ChatScreen';
 import { ChatUsersScreen } from '../screens/chat/ChatUsersScreen';
 
 export const ChatNavigation = () => {
@@ -14,13 +13,6 @@ export const ChatNavigation = () => {
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
-        options={{
-          headerShown: false,
-        }}
-      /> */}
     </Stack.Navigator>
   );
 };

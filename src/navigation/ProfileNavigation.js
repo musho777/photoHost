@@ -5,7 +5,6 @@ import { ChangeMailFirtScreen } from '../screens/Profile/ChangeMailFirtScreen';
 import { ChangeMailScreen } from '../screens/Profile/ChangeMailScreen';
 import { ChangePasswordScreen } from '../screens/Profile/ChangePasswordScreen';
 import { EditProfilScreen } from '../screens/Profile/EditProfilScreen';
-import { FollowersScreen } from '../screens/Profile/FollowersScreen';
 import { ParametrScreen } from '../screens/Profile/ParametrScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { UserProfileScreen } from '../screens/Profile/userProfileScreen';
@@ -23,15 +22,6 @@ export const ProfileNavigation = () => {
         }}
       />
       <Stack.Screen
-        name="FollowersScreen"
-        component={FollowersScreen}
-        options={{
-          header:({navigation})=>{
-              return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Интересное'}/> 
-          }
-      }}
-      />
-      <Stack.Screen
         name="UserProfileScreen"
         component={UserProfileScreen}
         options={{
@@ -45,9 +35,6 @@ export const ProfileNavigation = () => {
         component={EditProfilScreen}
         options={{
           headerShown:false,
-          // header:({navigation})=>{
-          //     return <HeaderWhiteTitle check onPress={()=>navigation.goBack()} title={'Редактировать профиль'}/> 
-          // }
       }}
       />
       <Stack.Screen

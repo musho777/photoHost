@@ -703,6 +703,7 @@ export const GetMyChatRoom = (data, token, page) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          console.log(r)
           dispatch(SuccessGetMyChatRoom(r));
         } else {
           dispatch(ErrorGetMyChatRoom('server error'));

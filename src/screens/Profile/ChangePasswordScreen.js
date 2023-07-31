@@ -84,7 +84,7 @@ export const ChangePasswordScreen = ({navigation}) => {
         width={'80%'}
       />
       <Input
-        placeholder={'Повтарйте Новый пароль'}
+        placeholder={'Повторите новый пароль'}
         pass
         error={confirmPassword.error}
         value={confirmPassword.value}
