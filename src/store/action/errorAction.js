@@ -170,3 +170,10 @@ export const ErrorGetPosts = (data) =>{
         data
     }
 }
+
+export const ErrorGetLents = (data) =>{
+    return {
+        type:'ErrorGetLents',
+        data
+    }
+}

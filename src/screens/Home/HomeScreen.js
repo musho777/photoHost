@@ -2,27 +2,23 @@ import {useState, useEffect} from 'react';
 import {View, FlatList, ActivityIndicator, RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Post} from '../../components/Post';
-import {GetPostsAction} from '../../store/action/action';
+import {GetLentsAction, GetPostsAction} from '../../store/action/action';
 import {Styles} from '../../styles/Styles';
 
 export const HomeScreen = () => {
-  const [post, setPost] = useState([
-    {
-      userImg: require('../../assets/img/MaskGroup.png'),
-    },
-    {
-      userImg: require('../../assets/img/MaskGroup.png'),
-    },
-    {
-      userImg: require('../../assets/img/MaskGroup.png'),
-    },
-  ]);
-
-  const disabled = useDispatch();
+  const dispatch = useDispatch();
   const user = useSelector(st => st.userData);
   const staticdata = useSelector(st => st.static);
-  const getPosts = useSelector(st => st.getPosts);
+  const getLents = useSelector(st => st.getLents);
+  const [page,setPage] =useState(1)
 
+  useEffect(()=>{
+    if(staticdata.token){
+      dispatch(GetLentsAction(staticdata.token))
+    }
+  },[staticdata.token])
+
+  
 
   const renderItem = ({item, index}) => {
     return (
@@ -47,7 +43,7 @@ export const HomeScreen = () => {
     );
   };
 
-  if (getPosts.loading) {
+  if (getLents?.loading) {
     return (
       <View style={Styles.loading}>
         <ActivityIndicator size="large" color="#FFC24B" />
@@ -57,6 +53,7 @@ export const HomeScreen = () => {
 
   return (
     <FlatList
+      showsVerticalScrollIndicator = {false}
       style={Styles.bg}
       refreshControl={
         <RefreshControl
@@ -73,22 +70,24 @@ export const HomeScreen = () => {
           }}
         />
       }
-      data={getPosts.data}
+      data={getLents?.data}
       enableEmptySections={true}
       // ListEmptyComponent = {()=>(
       //   !getFollowers?.loading && <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>{data?"Не найдено":'У Вас нет подписчиков'}</Text>
       // )}
       renderItem={renderItem}
       onEndReached={() => {
-        // if (getFollowers?.nextPage) {
-        //   dispatch(
-        //     GetFollowersAction(
-        //       {search: data, user_id: id},
-        //       staticdata.token,
-        //       page,
-        //     ),
-        //   );
-        // }
+        if (getLents?.nextPage) {
+          let p = page +1
+          dispatch(
+            GetLentsAction(
+              {search: data, user_id: id},
+              staticdata.token,
+              p,
+            ),
+          );
+          setPage(p)
+        }
       }}
     />
   );

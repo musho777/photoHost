@@ -12,6 +12,7 @@ import DeletOtherPeopleReducer from './reducers/deletOtherPeopleReducer';
 import ForgotPasswordReducer from './reducers/forgotPasswordReducer';
 import GetFollowerReducer from './reducers/getFollowerReducer';
 import GetFollowersReducer from './reducers/getFollowersReducer';
+import GetLentsReducer from './reducers/getLentsReducer';
 import GetMyChatRoomReducer from './reducers/getMyChatRoomReducer';
 import GetPostsReducer from './reducers/getPostsReducer';
 import GetSinglePageChatReducer from './reducers/getSinglePageChatReducer';
@@ -45,7 +46,8 @@ const rootReducer = combineReducers({
     getSinglePageChat:GetSinglePageChatReducer,
     getMyChatRoom:GetMyChatRoomReducer,
     createPost:CreatePostReducer,
-    getPosts:GetPostsReducer
+    getPosts:GetPostsReducer,
+    getLents:GetLentsReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );

@@ -24,7 +24,6 @@ export const ProfileScreen = ({navigation, profile}) => {
   const [page,setPage] = useState(1)
   const user = useSelector(st => st.userData);
 
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(getUserInfoAction(staticdata.token))

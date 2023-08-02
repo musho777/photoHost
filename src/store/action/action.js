@@ -12,6 +12,7 @@ import {
   ErrorForgotPassword,
   ErrorGetFollower,
   ErrorGetFollowersAction,
+  ErrorGetLents,
   ErrorGetMyChatRoom,
   ErrorGetPosts,
   ErrorGetSinglePageChat,
@@ -51,6 +52,7 @@ import {
   StartLogout,
   StartCreatePost,
   StartGetPosts,
+  StartGetLents,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -65,6 +67,7 @@ import {
   SuccessDeleteOtherPople,
   SuccessForgotPassword,
   SuccessGetFollower,
+  SuccessGetLents,
   SuccessGetMyChatRoom,
   SuccessGetPosts,
   SuccessGetSinglePageChat,
@@ -796,6 +799,32 @@ export const GetPostsAction = (data, token, page) => {
       })
       .catch(error => {
         dispatch(ErrorGetPosts('server error'));
+      });
+  };
+};
+
+export const GetLentsAction = (token,page) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartGetLents());
+    fetch(`${Api}/lents?page=${page}`, {
+      method: 'GET',
+      headers: myHeaders,
+      // body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if (r.status) {
+          dispatch(SuccessGetLents(r));
+        } else {
+          dispatch(ErrorGetLents('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetLents('server error'));
       });
   };
 };

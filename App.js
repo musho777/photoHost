@@ -82,7 +82,7 @@ export default App = () => {
       setInitialRouteName('TabNavigation');
     } 
     else {
-      setInitialRouteName('RegisterScreen')
+      setInitialRouteName('LoginScreen')
     }
     setIsLoading(false)
   }

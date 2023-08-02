@@ -146,3 +146,9 @@ export const StartGetPosts = () =>{
         type:"StartGetPosts"
     }
 }
+
+export const StartGetLents = () =>{
+    return {
+        type:'StartGetLents'
+    }
+}

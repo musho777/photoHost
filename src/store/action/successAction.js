@@ -166,3 +166,10 @@ export const SuccessGetPosts = (data) =>{
         data
     }
 } 
+
+export const SuccessGetLents = (data) =>{
+    return {
+        type:'SuccessGetLents',
+        data
+    }
+}

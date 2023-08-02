@@ -13,11 +13,13 @@ import {Albom} from '../../components/Albom';
 import {BackArrow} from '../../assets/svg/Svgs';
 import {Button} from '../../ui/Button';
 import {useDispatch, useSelector} from 'react-redux';
-import {AddDeleteFollowAction, AddDeletFollow, GetSinglePageChatAction, GetSinglPageAction} from '../../store/action/action';
+import {AddDeleteFollowAction, AddDeletFollow, GetPostsAction, GetSinglePageChatAction, GetSinglPageAction} from '../../store/action/action';
 
 export const SearchProfil = ({navigation, route}) => {
   const singlPage = useSelector(st => st.singlPage);
   const staticdata = useSelector(st => st.static);
+  const getPosts = useSelector(st => st.getPosts);
+  const [page,setPage] = useState(1)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
@@ -28,12 +30,21 @@ export const SearchProfil = ({navigation, route}) => {
         staticdata.token,
       ),
     );
+    dispatch(GetPostsAction({user_id: route.params.id}, staticdata.token, 1));
+
   }, []);
 
   const sendMsg = () =>{
     navigation.navigate('ChatScreen',{id:singlPage.data.id})
     // dispatch(GetSinglePageChatAction())
   }
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
+
 
   if(singlPage.loading){
     return <View style = {{flex:1,justifyContent:'center',alignItems:'center'}}>
@@ -43,7 +54,21 @@ export const SearchProfil = ({navigation, route}) => {
   else {
       return (
         <View style={{flex: 1, marginTop: 10, paddingHorizontal: 15}}>
-          <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator = {false}>
+          <ScrollView 
+            contentContainerStyle={{flexGrow: 1}} 
+            showsVerticalScrollIndicator = {false}
+            onScroll={({nativeEvent}) => {
+              if (isCloseToBottom(nativeEvent)) {
+                if(getPosts.nextPage){
+                  let pages = page
+                  pages=page+1 
+                  dispatch(GetPostsAction({user_id: user.data.id}, staticdata.token, page));
+                  setPage(page)
+                }
+                // enableSomeButton();
+              }
+            }}
+            >
             <TouchableOpacity
               onPress={() => navigation.goBack()}
               style={{marginVertical: 25}}>
@@ -100,7 +125,7 @@ export const SearchProfil = ({navigation, route}) => {
                }
               <Button onPress={()=>sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
             </View>
-            <Albom />
+            <Albom data = {getPosts.data}/>
           </ScrollView>
         </View>
       );

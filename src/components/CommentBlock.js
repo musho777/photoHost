@@ -6,6 +6,7 @@ import {Styles} from '../styles/Styles';
 
 export const CommentBlock = ({img, text, heshtegs, name, owner, ansswer}) => {
   const [liked, setLiked] = useState(false);
+  const [likeCount,setLikeCount] = useState(10)
   return (
     <View
       style={[
@@ -42,14 +43,25 @@ export const CommentBlock = ({img, text, heshtegs, name, owner, ansswer}) => {
       </View>
       {!owner && (
         <View style={[styles.like]}>
-          <TouchableOpacity onPress={() => setLiked(!liked)}>
+          <TouchableOpacity onPress={() => 
+          {
+            if(liked){
+              setLikeCount(likeCount-1)
+              setLiked(false)
+            }
+            else {
+              setLikeCount(likeCount+1)
+              setLiked(true)
+            }
+          }
+            }>
             <CommentLikeSvg liked={liked} />
           </TouchableOpacity>
           <Text
             style={[
               [Styles.eslipesMedium10, {textAlign: 'center', marginTop: -5}],
             ]}>
-            10
+            {likeCount}
           </Text>
         </View>
       )}
