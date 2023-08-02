@@ -17,6 +17,9 @@ export const LoginScreen = ({navigation}) => {
     if (login.value && password.value) {
       setSend(false);
     }
+    else {
+      setSend(true);
+    }
   }, [login, password]);
 
   const loginUser = () => {

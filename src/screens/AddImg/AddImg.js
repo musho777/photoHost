@@ -22,6 +22,8 @@ export const AddImg = ({navigation}) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    setUri([])
+    setDescription('')
     const unsubscribe = navigation.addListener('focus', async () => {
       ImagePicker.openPicker({
         width: 300,
@@ -37,6 +39,8 @@ export const AddImg = ({navigation}) => {
 
   useEffect(() => {
     if (createPost.status) {
+      setUri([])
+      setDescription('')
       navigation.navigate('Home');
     }
   }, [createPost.status]);
@@ -68,6 +72,7 @@ export const AddImg = ({navigation}) => {
         onCheck={() => creatPost()}
         check
         onPress={() => navigation.goBack()}
+        disabled = {uri.length ===0}
         title={'Новая публикация'}
       />
       <View style={styles.wrapper}>

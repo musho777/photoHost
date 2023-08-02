@@ -80,7 +80,7 @@ export default Navigation = ({token, initialRouteName}) => {
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
       
-        {<CheckBlack token = {token} />}
+        {/* {<CheckBlack token = {token} />} */}
         <Stack.Navigator initialRouteName={i}>
           <Stack.Screen
             name="LoginScreen"

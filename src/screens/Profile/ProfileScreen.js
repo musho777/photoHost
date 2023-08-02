@@ -70,7 +70,7 @@ export const ProfileScreen = ({navigation, profile}) => {
                 let pages = page
                 pages=page+1 
                 dispatch(GetPostsAction({user_id: user.data.id}, staticdata.token, page));
-                setPage(page)
+                setPage(pages)
               }
               // enableSomeButton();
             }

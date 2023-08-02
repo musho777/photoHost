@@ -9,6 +9,7 @@ export const HeaderWhiteTitle = ({
   check,
   onCheck,
   loading,
+  disabled
 }) => {
   return (
     <View
@@ -17,7 +18,7 @@ export const HeaderWhiteTitle = ({
         {height: 70, paddingHorizontal: 10, backgroundColor: '#FFF'},
         transparent && {backgroundColor: 'transparent'},
       ]}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} disabled = {disabled}>
         <BackArrow />
       </TouchableOpacity>
       <Text style={[Styles.darkSemiBold16, {marginHorizontal: 15}]}>

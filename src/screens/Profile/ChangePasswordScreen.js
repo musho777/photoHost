@@ -63,7 +63,7 @@ export const ChangePasswordScreen = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-      disabled(clearChangePassword())
+      dispatch(clearChangePassword())
     });
     return unsubscribe;
   }, [navigation]);
