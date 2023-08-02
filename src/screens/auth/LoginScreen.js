@@ -31,6 +31,8 @@ export const LoginScreen = ({navigation}) => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(ClearLoginAction())
       dispatch(ClearConfirmPasswordAction())
+      setLogin({error: '', value: ''})
+      setPasswod({error: '', value: ''})
     });
     return unsubscribe;
   }, [navigation]);
@@ -40,13 +42,12 @@ export const LoginScreen = ({navigation}) => {
       navigation.navigate('TabNavigation')
       setLogin({error: '', value: ''})
       setPasswod({error: '', value: ''})
-      setToken()
+      // setToken()
     }
   },[loginData.status])
-  async function setToken() {
-    const data = await AsyncStorage.setItem('token',loginData.token)
-
-  }
+  // async function setToken() {
+  //   const data = await AsyncStorage.setItem('token',loginData.token)
+  // }
   return (
     <View style={[Styles.authScreen, {marginTop: 80}]}>
       <Text style={[Styles.darkSemiBold22, {marginBottom: 30}]}>Вход</Text>

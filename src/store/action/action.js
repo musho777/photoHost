@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {
   ErrorAddDeleteFollow,
@@ -161,8 +162,14 @@ export const LoginAction = data => {
         if (r.status) {
           dispatch(setToken(r.token));
           dispatch(SuccessLogin(r));
+          setTokenSorage(r.token)
         } else {
-          dispatch(ErrorLogin('wrong email or password'));
+          if(r.message.includes('Your account is blocked')){
+            dispatch(ErrorLogin('ваш аккаунт заблокирован'));
+          }
+          else {
+            dispatch(ErrorLogin('Неверный логин или пароль'));
+          }
         }
       })
       .catch(error => {
@@ -170,6 +177,10 @@ export const LoginAction = data => {
       });
   };
 };
+
+async function setTokenSorage(token) {
+  const data = await AsyncStorage.setItem('token',token)
+}
 
 export const ClearLoginAction = () => {
   return {
@@ -324,7 +335,7 @@ export const changeUserPassword = (data, token) => {
           dispatch(SuccessChangeUserPassword(r.data));
         } else {
           if (r.message.includes('wrong old password')) {
-            dispatch(ErrorChangeUserPassowrd({email: 'неверны старый пароль'}));
+            dispatch(ErrorChangeUserPassowrd({email: 'Неверный старый пароль'}));
           } else {
             dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
           }
@@ -812,11 +823,9 @@ export const GetLentsAction = (token,page) => {
     fetch(`${Api}/lents?page=${page}`, {
       method: 'GET',
       headers: myHeaders,
-      // body: JSON.stringify(data),
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessGetLents(r));
         } else {

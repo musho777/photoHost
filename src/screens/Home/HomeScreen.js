@@ -5,20 +5,26 @@ import {Post} from '../../components/Post';
 import {GetLentsAction, GetPostsAction} from '../../store/action/action';
 import {Styles} from '../../styles/Styles';
 
-export const HomeScreen = () => {
+export const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const user = useSelector(st => st.userData);
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents);
   const [page,setPage] =useState(1)
-
   useEffect(()=>{
-    if(staticdata.token){
+    if(staticdata.token && !getLents.length){
       dispatch(GetLentsAction(staticdata.token))
     }
   },[staticdata.token])
 
-  
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      if(staticdata.token){
+        dispatch(GetLentsAction(staticdata.token))
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const renderItem = ({item, index}) => {
     return (
@@ -57,16 +63,9 @@ export const HomeScreen = () => {
       style={Styles.bg}
       refreshControl={
         <RefreshControl
-          // refreshing={getFollowers?.loading}
+          refreshing={getLents?.loading}
           onRefresh={() => {
-            // dispatch(clearGetFollowersAction());
-            // dispatch(
-            //   GetFollowersAction(
-            //     {search: data, user_id: id},
-            //     staticdata.token,
-            //     page,
-            //   ),
-            // );
+            dispatch(GetLentsAction(staticdata.token))
           }}
         />
       }

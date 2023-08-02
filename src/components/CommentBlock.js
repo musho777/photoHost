@@ -65,7 +65,6 @@ export const CommentBlock = ({img, text, heshtegs, name, owner, ansswer}) => {
           </Text>
         </View>
       )}
-      {ansswer && <Text>sss</Text>}
     </View>
   );
 };

@@ -63,7 +63,7 @@ export const Comments = ({visible,close}) => {
               />
               <Input
                 send
-                data={'sendComment'}
+                value={sendComment}
                 onChange={e => setSendCommet(e)}
                 width={'80%'}
                 placeholder="Введите текст"

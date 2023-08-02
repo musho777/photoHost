@@ -40,6 +40,7 @@ export const ChatUsersScreen = ({navigation}) => {
   }, [navigation]);
 
   const searchData = e => {
+    setSearch(e)
     dispatch(GetMyChatRoom({search: e}, staticdata.token, page));
   };
 
@@ -60,7 +61,6 @@ export const ChatUsersScreen = ({navigation}) => {
       />
     );
   };
-
   if (false) {
     return (
       <View style={Styles.loading}>
@@ -76,9 +76,9 @@ export const ChatUsersScreen = ({navigation}) => {
           </View>
         )}
         <Input
-          placeholder={'Поиск   '}
+          placeholder={'Поиск'}
           search
-          data={search}
+          value={search}
           onChange={e => searchData(e)}
         />
         <FlatList
@@ -97,7 +97,7 @@ export const ChatUsersScreen = ({navigation}) => {
                 Styles.darkMedium16,
                 {marginTop: 40, textAlign: 'center'},
               ]}>
-              У вас нет сообщений
+              {!search?'У вас нет сообщений':'Не найдено'}
             </Text>
           )}
         />

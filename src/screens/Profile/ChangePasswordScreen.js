@@ -59,6 +59,14 @@ export const ChangePasswordScreen = ({navigation}) => {
       );
     }
   };
+
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      disabled(clearChangePassword())
+    });
+    return unsubscribe;
+  }, [navigation]);
   useEffect(()=>{
     if(changePassword.status){
       navigation.navigate('ProfileScreen')

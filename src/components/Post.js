@@ -22,6 +22,12 @@ const windowWidth = Dimensions.get('window').width;
 
 
 export const Post = ({userImg,userName,description,like,commentCount,view,photo}) => {
+
+  const [likedCount,setLikedCount] = useState(like)
+
+
+
+
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['25%'], []);
   const handlePresentModalPress = useCallback(() => {
@@ -64,7 +70,7 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo}
               <TouchableOpacity>
                 <Heart />
               </TouchableOpacity>
-              <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>{like}</Text>
+              <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>{likedCount}</Text>
             </View>
             <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
               <TouchableOpacity onPress={()=>setComment(true)}>

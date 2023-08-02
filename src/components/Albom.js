@@ -1,8 +1,14 @@
-import {View, Dimensions, Image, StyleSheet} from 'react-native';
+import {View, Dimensions, Image, StyleSheet,Text,ActivityIndicator} from 'react-native';
+import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Albom = ({data}) => {
+export const Albom = ({data,user,loading}) => {
+  if(loading){
+    return <View style={Styles.loading}>
+    <ActivityIndicator size="large" color="#FFC24B" />
+  </View>
+  }
   return (
     <View style={{marginTop: 20, flex: 1}}>
       <View
@@ -24,6 +30,14 @@ export const Albom = ({data}) => {
             />
           );
         })}
+        {data.length === 0 &&
+          <View style = {Styles.flexAlignItems}>
+            {user?
+              <Text style = {Styles.darkMedium16}>нет публикаций</Text>:
+              <Text style = {Styles.darkMedium16}>У Вас нет публикаций</Text>
+            }
+          </View>
+        }
       </View>
     </View>
   );

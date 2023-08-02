@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { View } from "react-native"
+import { View,Text } from "react-native"
 import { FollowingsBlock } from "../../components/FollowingsBlock"
+import { Styles } from "../../styles/Styles"
 
 export const BlackListScreen = () =>{
     const [data,setData] = useState([
@@ -12,5 +13,6 @@ export const BlackListScreen = () =>{
         {data.map((elm,i)=>(
             <FollowingsBlock key={i} name={elm.name} img = {elm.img} username = {elm.username} type = "Помиловать" /> 
         ))}
+        <Text style = {Styles.darkMedium16}>Черный список пуст</Text>
     </View>
 }

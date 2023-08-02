@@ -125,7 +125,7 @@ export const SearchProfil = ({navigation, route}) => {
                }
               <Button onPress={()=>sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
             </View>
-            <Albom data = {getPosts.data}/>
+            <Albom user  data = {getPosts.data}/>
           </ScrollView>
         </View>
       );

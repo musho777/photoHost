@@ -28,6 +28,7 @@ const initialState = {
         item.loading = false
         item.token = action.data.token
         item.logoutStatus = false
+        
         break
       case 'ErrorLogin':
         item.error = action.data

@@ -126,7 +126,7 @@ export const ProfileScreen = ({navigation, profile}) => {
               <Button bg paddingV={10} title={'Сообщение'} width="48%" />
             </View>
           )}
-        <Albom data = {getPosts.data} />
+      <Albom loading={getPosts.loading}  data = {getPosts.data} />
         </ScrollView>
         <Menu close={() => setOpenMenu(false)} visible={openMenu} />
       </View>

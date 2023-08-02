@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {BackArrow} from '../assets/svg/Svgs';
 import { LogoutAction } from '../store/action/action';
 import {Styles} from '../styles/Styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Menu = ({visible, close}) => {
   const navigation = useNavigation();
