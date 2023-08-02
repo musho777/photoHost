@@ -159,3 +159,10 @@ export const SuccessCreatePost = (data) =>{
         data
     }
 }
+
+export const SuccessGetPosts = (data) =>{
+    return {
+        type:'SuccessGetPosts',
+        data
+    }
+} 

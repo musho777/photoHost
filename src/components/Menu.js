@@ -19,7 +19,6 @@ export const Menu = ({visible, close}) => {
   const staticdata = useSelector(st => st.static);
   const login = useSelector(st=>st.login)
   useEffect(()=>{
-    console.log(login.logoutStatus)
     if(login.logoutStatus){
       navigation.navigate('LoginScreen')
       close()

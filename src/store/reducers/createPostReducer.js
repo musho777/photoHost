@@ -8,7 +8,6 @@ const initialState = {
     let item = {...state};
     switch (action.type) {
       case 'StartCreatePost':
-        console.log('9999')
         item.status = false
         item.error =''
         item.message = '',

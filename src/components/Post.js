@@ -18,8 +18,10 @@ import { Comments } from './Comment';
 import {Slider} from './Slider';
 
 const windowWidth = Dimensions.get('window').width;
-export const Post = ({userImg}) => {
-  const data = [{}, {}, {}];
+
+
+
+export const Post = ({userImg,userName,description,like,commentCount,view,photo}) => {
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['25%'], []);
   const handlePresentModalPress = useCallback(() => {
@@ -33,9 +35,10 @@ export const Post = ({userImg}) => {
       <View style={styles.block}>
         <View style={[Styles.flexSpaceBetween, {padding: 15}]}>
           <View style={Styles.flexAlignItems}>
-            <Image style={styles.userImg} source={userImg} />
+            <Image style={styles.userImg}
+            source={{uri: `https://chamba.justcode.am/uploads/${userImg}`}}/>
             <View>
-              <Text style={Styles.darkSemiBold14}>alexander</Text>
+              <Text style={Styles.darkSemiBold14}>{userName}</Text>
               <Text style={Styles.balihaiMedium9}>3 часа назад</Text>
             </View>
           </View>
@@ -47,10 +50,10 @@ export const Post = ({userImg}) => {
         </View>
         <View style={{paddingHorizontal: 15}}>
           <Text style={Styles.eslipesMedium13}>
-            Некий заголовок под фото и еще пара слов
+            {description}
           </Text>
         </View>
-        <Slider />
+        <Slider photo = {photo} />
         <View
           style={[
             {paddingHorizontal: 15, marginBottom: 15},
@@ -61,26 +64,20 @@ export const Post = ({userImg}) => {
               <TouchableOpacity>
                 <Heart />
               </TouchableOpacity>
-              <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>262</Text>
+              <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>{like}</Text>
             </View>
             <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
               <TouchableOpacity onPress={()=>setComment(true)}>
                 <Comment />
               </TouchableOpacity>
-              <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>24</Text>
-            </View>
-            <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
-              <TouchableOpacity>
-                <Share />
-              </TouchableOpacity>
-              <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>12</Text>
+              <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>{commentCount}</Text>
             </View>
           </View>
           <View>
             <View style={Styles.flexAlignItems}>
               <ViewSvg />
               <Text style={[Styles.balihaiRegular14, {marginLeft: 5}]}>
-                564
+                {view}
               </Text>
             </View>
           </View>
@@ -115,6 +112,7 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     marginRight: 10,
+    borderRadius:50,
   },
   img: {
     height: 300,

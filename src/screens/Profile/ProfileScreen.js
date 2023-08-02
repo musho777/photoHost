@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import {Styles} from '../../styles/Styles';
 import {Albom} from '../../components/Albom';
@@ -14,23 +14,44 @@ import {MenuSvg2} from '../../assets/svg/Svgs';
 import {Menu} from '../../components/Menu';
 import {Button} from '../../ui/Button';
 import { useDispatch, useSelector} from 'react-redux';
-import { getUserInfoAction } from '../../store/action/action';
+import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
 
 export const ProfileScreen = ({navigation, profile}) => {
 
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
+  const getPosts = useSelector(st => st.getPosts);
+  const [page,setPage] = useState(1)
+  const user = useSelector(st => st.userData);
+
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(getUserInfoAction(staticdata.token))
+      dispatch(GetPostsAction({user_id: user.data.id}, staticdata.token, 1));
     });
     return unsubscribe;
   }, [navigation]);
 
+
+  useEffect(() => {
+    if (user.data.id) {
+      dispatch(GetPostsAction({user_id: user.data.id}, staticdata.token, 1));
+    }
+  }, [user.data.id]);
+
   const [openMenu,setOpenMenu] = useState(false)
-  const user = useSelector(st => st.userData);
   const login = useSelector((st)=>st.login)
+
+
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
+
+
   if (user.loading || login.logoutLoading) {
     return (
       <View style={Styles.loading}>
@@ -41,7 +62,21 @@ export const ProfileScreen = ({navigation, profile}) => {
   else {
     return (
       <View style={{flex: 1, marginTop: 10, paddingHorizontal: 15}}>
-        <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator = {false}>
+        <ScrollView 
+          contentContainerStyle={{flexGrow: 1}} 
+          showsVerticalScrollIndicator = {false}
+          onScroll={({nativeEvent}) => {
+            if (isCloseToBottom(nativeEvent)) {
+              if(getPosts.nextPage){
+                let pages = page
+                pages=page+1 
+                dispatch(GetPostsAction({user_id: user.data.id}, staticdata.token, page));
+                setPage(page)
+              }
+              // enableSomeButton();
+            }
+          }}
+          >
           <TouchableOpacity
             onPress={() => setOpenMenu(true)}
             style={{marginVertical: 25}}>
@@ -92,7 +127,7 @@ export const ProfileScreen = ({navigation, profile}) => {
               <Button bg paddingV={10} title={'Сообщение'} width="48%" />
             </View>
           )}
-        <Albom />
+        <Albom data = {getPosts.data} />
         </ScrollView>
         <Menu close={() => setOpenMenu(false)} visible={openMenu} />
       </View>

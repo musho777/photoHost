@@ -13,6 +13,7 @@ import {
   ErrorGetFollower,
   ErrorGetFollowersAction,
   ErrorGetMyChatRoom,
+  ErrorGetPosts,
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
   ErrorGetUserData,
@@ -49,6 +50,7 @@ import {
   StartGetMyChatRoom,
   StartLogout,
   StartCreatePost,
+  StartGetPosts,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -64,6 +66,7 @@ import {
   SuccessForgotPassword,
   SuccessGetFollower,
   SuccessGetMyChatRoom,
+  SuccessGetPosts,
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
   SuccessGetUserData,
@@ -703,7 +706,6 @@ export const GetMyChatRoom = (data, token, page) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          console.log(r)
           dispatch(SuccessGetMyChatRoom(r));
         } else {
           dispatch(ErrorGetMyChatRoom('server error'));
@@ -769,6 +771,31 @@ export const CreatPostAction = (data, token) => {
       })
       .catch(error => {
         dispatch(ErrorCreatePost(error));
+      });
+  };
+};
+
+export const GetPostsAction = (data, token, page) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    dispatch(StartGetPosts());
+    fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetPosts(r));
+        } else {
+          dispatch(ErrorGetPosts('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetPosts('server error'));
       });
   };
 };

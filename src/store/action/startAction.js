@@ -140,3 +140,9 @@ export const StartCreatePost = () =>{
         type:'StartCreatePost'
     }
 }
+
+export const StartGetPosts = () =>{
+    return {
+        type:"StartGetPosts"
+    }
+}

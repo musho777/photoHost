@@ -36,7 +36,6 @@ export const AddImg = ({navigation}) => {
   }, [navigation]);
 
   useEffect(() => {
-    console.log(createPost)
     if (createPost.status) {
       navigation.navigate('Home');
     }
@@ -69,11 +68,10 @@ export const AddImg = ({navigation}) => {
         onCheck={() => creatPost()}
         check
         onPress={() => navigation.goBack()}
-        title={'Редактировать профиль'}
+        title={'Новая публикация'}
       />
       <View style={styles.wrapper}>
         {uri.map((elm, i) => {
-          console.log(elm.path);
           return (
             <View key={i} style={styles.imgWrapper}>
               <Image

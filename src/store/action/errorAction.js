@@ -163,3 +163,10 @@ export const ErrorCreatePost = (data) =>{
         data
     }
 }
+
+export const ErrorGetPosts = (data) =>{
+    return {
+        type:'ErrorGetPosts',
+        data
+    }
+}

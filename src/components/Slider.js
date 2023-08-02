@@ -9,7 +9,7 @@ import {
 import {AppColors} from '../styles/AppColors';
 
 const windowWidth = Dimensions.get('window').width;
-export const Slider = () => {
+export const Slider = ({photo}) => {
   const data = [{}, {}, {}];
   const [active, setActive] = useState(0);
   return (
@@ -19,7 +19,7 @@ export const Slider = () => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
-        data={data}
+        data={photo}
         onMomentumScrollEnd={event => {
           const index = Math.floor(
             Math.floor(event.nativeEvent.contentOffset.x) /
@@ -34,7 +34,8 @@ export const Slider = () => {
                 style={[
                   {marginVertical: 10, width: '100%', height: '100%'},
                 ]}
-                source={require('../assets/img/1.png')}
+                // source={require('../assets/img/1.png')}
+                source={{uri: `https://chamba.justcode.am/uploads/${item.photo}`}}
                 resizeMode={'cover'}
               />
             </View>
@@ -48,7 +49,7 @@ export const Slider = () => {
           justifyContent: 'center',
           marginVertical:10,
         }}>
-        {data.map((elm, i) => (
+        {photo?.map((elm, i) => (
           <View
             key={i}
             style={[
