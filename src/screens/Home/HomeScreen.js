@@ -10,9 +10,11 @@ export const HomeScreen = ({navigation}) => {
   const user = useSelector(st => st.userData);
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents);
+  const [first,setFires] = useState(true)
   const [page,setPage] =useState(1)
   useEffect(()=>{
-    if(staticdata.token && !getLents.length){
+    if(staticdata.token){
+      setFires(false)
       dispatch(GetLentsAction(staticdata.token))
     }
   },[staticdata.token])

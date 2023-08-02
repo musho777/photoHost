@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect,useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -11,10 +11,11 @@ import {RegisterScreen} from '../screens/auth/RegisterScreen';
 import {AppColors} from '../styles/AppColors';
 import {TabNavigation} from './TabNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   AddMsgAction,
   getUserInfoAction,
+  LogoutAction,
   NewMsgAction,
   setToken,
 } from '../store/action/action';
@@ -27,10 +28,12 @@ import {
 import {ChatScreen} from '../screens/chat/ChatScreen';
 import { FollowersScreen } from '../screens/Profile/FollowersScreen';
 import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
+import { CheckBlack } from '../../CheckBlack';
 
 export default Navigation = ({token, initialRouteName}) => {
   const dispatch = useDispatch();
-  async function getData() {
+  const [i,setI] = useState(initialRouteName)
+  function getData() {
     dispatch(getUserInfoAction(token));
     dispatch(setToken(token));
   }
@@ -72,10 +75,13 @@ export default Navigation = ({token, initialRouteName}) => {
       border: AppColors.White_Color,
     },
   };
+
   return (
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
-        <Stack.Navigator initialRouteName={initialRouteName}>
+      
+        {<CheckBlack token = {token} />}
+        <Stack.Navigator initialRouteName={i}>
           <Stack.Screen
             name="LoginScreen"
             component={LoginScreen}
@@ -96,7 +102,9 @@ export default Navigation = ({token, initialRouteName}) => {
             name="RecoveryPassword"
             component={RecoveryPassword}
             options={{
-              headerShown: false,
+              header: ({navigation}) => (
+                <Header onPress={() => navigation.goBack()} />
+              ),
             }}
           />
           <Stack.Screen

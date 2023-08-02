@@ -64,7 +64,7 @@ export const RecoveryPassword = ({navigation}) => {
     }
   }, [confirm.status]);
   return (
-    <View style={[Styles.authScreen, {marginTop: 80, paddingHorizontal: 35}]}>
+    <View style={[Styles.authScreen, {marginTop: 30, paddingHorizontal: 35}]}>
       <Text
         style={[
           Styles.darkSemiBold22,

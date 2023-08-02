@@ -31,10 +31,10 @@ export const Albom = ({data,user,loading}) => {
           );
         })}
         {data.length === 0 &&
-          <View style = {Styles.flexAlignItems}>
+          <View style = {{justifyContent:'center',alignItems:'center',width:'100%'}}>
             {user?
               <Text style = {Styles.darkMedium16}>нет публикаций</Text>:
-              <Text style = {Styles.darkMedium16}>У Вас нет публикаций</Text>
+              <Text style = {[Styles.darkMedium16,{textAlign:'center'}]}>У Вас нет публикаций</Text>
             }
           </View>
         }

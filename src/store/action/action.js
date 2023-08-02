@@ -98,6 +98,7 @@ export const RegisterAction = data => {
       .then(r => {
         if (r.status) {
           dispatch(SuccessRegister(r));
+          setTokenSorage(r.token)
         } else {
           dispatch(
             ErrorRegister({
@@ -179,7 +180,7 @@ export const LoginAction = data => {
 };
 
 async function setTokenSorage(token) {
-  const data = await AsyncStorage.setItem('token',token)
+  await AsyncStorage.setItem('token',token)
 }
 
 export const ClearLoginAction = () => {
@@ -751,6 +752,7 @@ export const LogoutAction = token => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          DeleteTokenSorage()
           dispatch(SuccessLogout(r));
         } else {
           dispatch(ErrorLogout('server error'));
@@ -761,6 +763,11 @@ export const LogoutAction = token => {
       });
   };
 };
+
+async function DeleteTokenSorage() {
+  await AsyncStorage.removeItem('token')
+}
+
 
 export const CreatPostAction = (data, token) => {
   var myHeaders = new Headers();

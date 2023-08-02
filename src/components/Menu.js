@@ -22,13 +22,13 @@ export const Menu = ({visible, close}) => {
   useEffect(()=>{
     if(login.logoutStatus){
       navigation.navigate('LoginScreen')
-      removeToken()
+      // removeToken()
       close()
     }
   },[login.logoutStatus])
-  const removeToken = async() =>{
-    await AsyncStorage.removeItem('token');
-  }
+  // const removeToken = async() =>{
+  //   await AsyncStorage.removeItem('token');
+  // }
   return (
     <SafeAreaView>
       <Modal animationType="slide" visible={visible} transparent={true}>

@@ -56,25 +56,10 @@ export default App = () => {
 
 
 // console.log(DeviceInfo)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const [initialRouteName, setInitialRouteName] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const  [token,setToken] = useState('')
+  const [permission,setPermission] = useState(false)
   async function getData() {
     const token = await AsyncStorage.getItem('token')
     setToken(token)
@@ -89,11 +74,17 @@ export default App = () => {
  useEffect(()=>{
     getData()
  },[])
+
+
+
+
+
+
  if(!isLoading){
    return (
      <Provider store={store}>
        <GestureHandlerRootView style={{flex: 1}}>
-         <Navigation initialRouteName = {initialRouteName} token = {token}/>
+         <Navigation initialRouteName = {initialRouteName} token = {token} />
        </GestureHandlerRootView>
      </Provider>
    );
