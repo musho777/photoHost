@@ -212,3 +212,10 @@ export const ErrorGetMyBooks = (data) =>{
         data
     }
 }
+
+export const ErrorGetNotification = (data) =>{
+    return {
+        type:"ErrorGetNotification",
+        data
+    }
+}

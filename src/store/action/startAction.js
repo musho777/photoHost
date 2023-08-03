@@ -182,3 +182,9 @@ export const StartGetMyBooks = () =>{
         type:'StartGetMyBooks'
     }
 }
+
+export const StartGetNotification = () =>{
+    return {
+        type:"StartGetNotification"
+    }
+}

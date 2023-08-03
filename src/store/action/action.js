@@ -20,6 +20,7 @@ import {
   ErrorGetLents,
   ErrorGetMyBooks,
   ErrorGetMyChatRoom,
+  ErrorGetNotification,
   ErrorGetPosts,
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
@@ -65,6 +66,7 @@ import {
   StartGetBlackList,
   StartAddInBook,
   StartGetMyBooks,
+  StartGetNotification,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -85,6 +87,7 @@ import {
   SuccessGetLents,
   SuccessGetMyBooks,
   SuccessGetMyChatRoom,
+  SuccessGetNotification,
   SuccessGetPosts,
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
@@ -284,6 +287,7 @@ export const getUserInfoAction = token => {
               r.data.follower_count,
               r.data.followers_count,
               r.data.post_count,
+              r.data
             ),
           );
         } else {
@@ -1019,3 +1023,29 @@ export const AddPostViewCount = (data,token) => {
       });
   };
 };
+
+export const GetNotificationAction = (token,page) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    if (page == 1 || !page) {
+      dispatch(StartGetNotification());
+    }
+    fetch(`${Api}/my_notification?page=${page}`, {
+      method: 'GET',
+      headers: myHeaders,
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetNotification(r));
+        } else {
+          dispatch(ErrorGetNotification('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetNotification('server error'));
+      });
+  }; 
+}

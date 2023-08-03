@@ -20,6 +20,7 @@ import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { ProflHeader } from '../headers/ProfileHeader';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { ImageHeader } from '../headers/ImageHeader';
+import { HomeNavigation } from './HomeNavigation';
 
 
 export const TabNavigation = () => {
@@ -51,13 +52,12 @@ export const TabNavigation = () => {
       })}>
       <Tab.Screen
         options={() => ({
-          header: ({navigation}) => {
-            return <HomeHeader />;
-          },
+          headerShown:false,
+
           tabBarIcon: ({focused}) => <HomeSvg focused={focused} />,
         })}
         name="Home"
-        component={HomeScreen}
+        component={HomeNavigation}
       />
       <Tab.Screen
         options={() => ({

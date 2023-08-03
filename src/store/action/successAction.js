@@ -36,13 +36,14 @@ export const SuccessNewPassword = (data) =>{
         data
     }
 }
-export const SuccessGetUserData = (data,follower_count,followers_count,post_count) =>{
+export const SuccessGetUserData = (data,follower_count,followers_count,post_count,allData) =>{
     return {
         type:'SuccessGetUserData',
         data,
         follower_count,
         followers_count,
-        post_count
+        post_count,
+        allData
     }
 }
 export const SuccessChangeProfil = (data) =>{
@@ -205,6 +206,13 @@ export const SuccessAddInBook = (data) =>{
 export const SuccessGetMyBooks = (data) =>{
     return {
         type:'SuccessGetMyBooks',
+        data
+    }
+}
+
+export const SuccessGetNotification = (data) =>{
+    return {
+        type:'SuccessGetNotification',
         data
     }
 }
