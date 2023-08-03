@@ -11,7 +11,7 @@ import {Shadow} from 'react-native-shadow-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckMarkUserSvg, NotLineSvg } from '../assets/svg/Svgs';
 import {Comment, Heart, MenuSvg, Share, ViewSvg} from '../assets/svg/TabBarSvg';
-import { AddBlackListAction, LikePostAction } from '../store/action/action';
+import { AddBlackListAction, AddInBookAction, LikePostAction } from '../store/action/action';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 import {BootomModal} from './BootomSheet';
@@ -22,7 +22,7 @@ const windowWidth = Dimensions.get('window').width;
 
 
 
-export const Post = ({userImg,userName,description,like,commentCount,view,photo,liked,id,star,userId,addToblack}) => {
+export const Post = ({userImg,userName,description,like,commentCount,view,photo,liked,id,star,userId,addToblack,isBook}) => {
   const [likedCount,setLikedCount] = useState(+like)
   const [isLiked,setIsLiked] = useState(liked)
 
@@ -30,10 +30,9 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
 
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['25%'], []);
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetRef.current?.present();
-  }, []);
+  const handlePresentModalPress = useCallback(() => {bottomSheetRef.current?.present();}, []);
   const [comment,setComment] = useState(false)
+  const [book,setBook] = useState(isBook)
   const dispatch = useDispatch()
   const LikePost = () =>{
     if(isLiked){
@@ -53,7 +52,17 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
 
   const addToBlackList = () =>{
     addToblack(userId)
+    bottomSheetRef.current?.close();
     dispatch(AddBlackListAction({'user_id':userId},staticdata.token))
+  }
+
+
+  const addToBook = () =>{
+    // let item =  [...book]
+    // item.push()
+    bottomSheetRef.current?.close();
+    dispatch(AddInBookAction({'post_id':id},staticdata.token))
+    setBook(!book)
   }
 
   return (
@@ -117,8 +126,8 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
       <View style={{position: 'absolute'}}>
         <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
           <View style={{paddingHorizontal: 20}}>
-            <TouchableOpacity style = {{marginBottom:20,marginTop:20}}>
-              <Text style = {Styles.darkRegular14}>В закладки</Text>
+            <TouchableOpacity style = {{marginBottom:20,marginTop:20}} onPress = {()=>addToBook()}>
+              <Text style = {Styles.darkRegular14}>{book ?'Удалить из закладок':'В закладки'}</Text>
             </TouchableOpacity>
             <TouchableOpacity  style = {{marginBottom:20}}>
               <Text style = {Styles.darkRegular14}>Подписаться</Text>
@@ -133,6 +142,7 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
     </Shadow>
   );
 };
+// AddInBook
 const styles = StyleSheet.create({
   block: {
     shadowColor: '#7E9DB5',

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   ErrorAddBlackList,
   ErrorAddDeleteFollow,
+  ErrorAddInBook,
   ErrorChangeAvatar,
   ErrorChangeEmail,
   ErrorChangeEmailCode,
@@ -61,10 +62,12 @@ import {
   StartLikePost,
   StartAddBlackList,
   StartGetBlackList,
+  StartAddInBook,
 } from './startAction';
 import {
   SuccessAddBlackList,
   SuccessAddDeleteFollow,
+  SuccessAddInBook,
   SuccessChangeAvatar,
   SuccessChangeEmail,
   SuccessChangeEmailCode,
@@ -938,3 +941,31 @@ export const GetBlackListAction = (token,page) => {
       });
   };
 };
+
+export const AddInBookAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartAddInBook());
+    fetch(`${Api}/add_post_in_book`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if (r.status) {
+          dispatch(SuccessAddInBook(r));
+        } else {
+          dispatch(ErrorAddInBook(error));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorAddInBook(error));
+      });
+  };
+}

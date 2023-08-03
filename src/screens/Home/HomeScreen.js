@@ -52,6 +52,7 @@ export const HomeScreen = ({navigation}) => {
             liked = {item.like_auth_user.length}
             id = {item.id}
             star = {item.user.star}
+            isBook = {item.auth_user_book.length>0}
             addToblack = {(e)=>{
               let item = [...blackList]
               item.push(e)

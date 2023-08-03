@@ -194,3 +194,10 @@ export const SuccessGetBlackList = (data) =>{
         data
     }
 }
+
+export const SuccessAddInBook = (data) =>{
+    return {
+        type:'SuccessAddInBook',
+        data
+    }
+}

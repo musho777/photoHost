@@ -69,6 +69,15 @@ export const Menu = ({visible, close}) => {
                 Черный список
               </Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                close();
+                navigation.navigate('ParametrScreen');
+              }}>
+              <Text style={[Styles.darkRegular16, {marginTop: 30}]}>
+                Закладки
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={()=>dispatch(LogoutAction(staticdata.token))}>
               <Text style={[Styles.darkRegular16, {marginTop: 30}]}>Выйти</Text>
             </TouchableOpacity>

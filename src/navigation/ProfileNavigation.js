@@ -7,6 +7,7 @@ import { ChangePasswordScreen } from '../screens/Profile/ChangePasswordScreen';
 import { EditProfilScreen } from '../screens/Profile/EditProfilScreen';
 import { ParametrScreen } from '../screens/Profile/ParametrScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
+import { SavedPostScreen } from '../screens/Profile/SavedPostScreen';
 import { UserProfileScreen } from '../screens/Profile/userProfileScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
 
@@ -83,6 +84,15 @@ export const ProfileNavigation = () => {
       }}
       />
       <Stack.Screen
+        name="SavedPostScreen"
+        component={SavedPostScreen}
+        options={{
+          header:({navigation})=>{
+              return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Закладки'}/> 
+          }
+      }}
+      />
+      <Stack.Screen
         name="SearchProfil"
         component={SearchProfil}
         options={{
@@ -92,3 +102,4 @@ export const ProfileNavigation = () => {
     </Stack.Navigator>
   );
 };
+// SavedPostScreen

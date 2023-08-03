@@ -198,3 +198,10 @@ export const ErrorGetBlackList = (data) =>{
         data
     }
 }
+
+export const ErrorAddInBook = (data) =>{
+    return {
+        type:'ErrorAddInBook',
+        data
+    }
+}

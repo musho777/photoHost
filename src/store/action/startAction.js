@@ -170,3 +170,9 @@ export const StartGetBlackList = () =>{
         type:'StartGetBlackList'
     }
 }
+
+export const StartAddInBook = () =>{
+    return {
+        type:'StartAddInBook'
+    }
+}
