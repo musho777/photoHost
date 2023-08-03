@@ -191,3 +191,10 @@ export const ErrorAddBlackList = (data) =>{
         data
     }
 }
+
+export const ErrorGetBlackList = (data) =>{
+    return {
+        type:'ErrorGetBlackList',
+        data
+    }
+}

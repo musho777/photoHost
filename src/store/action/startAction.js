@@ -164,3 +164,9 @@ export const StartAddBlackList = () =>{
         type:'StartAddBlackList'
     }
 }
+
+export const StartGetBlackList = () =>{
+    return {
+        type:'StartGetBlackList'
+    }
+}

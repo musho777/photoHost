@@ -187,3 +187,10 @@ export const SuccessAddBlackList = (data) =>{
         data
     }
 }
+
+export const SuccessGetBlackList = (data) =>{
+    return {
+        type:'SuccessGetBlackList',
+        data
+    }
+}

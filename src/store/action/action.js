@@ -13,6 +13,7 @@ import {
   ErrorCreatePost,
   ErrorDeleteOtherPople,
   ErrorForgotPassword,
+  ErrorGetBlackList,
   ErrorGetFollower,
   ErrorGetFollowersAction,
   ErrorGetLents,
@@ -59,6 +60,7 @@ import {
   StartGetLents,
   StartLikePost,
   StartAddBlackList,
+  StartGetBlackList,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -73,6 +75,7 @@ import {
   SuccessCreatePost,
   SuccessDeleteOtherPople,
   SuccessForgotPassword,
+  SuccessGetBlackList,
   SuccessGetFollower,
   SuccessGetLents,
   SuccessGetMyChatRoom,
@@ -909,3 +912,29 @@ export const AddBlackListAction = (data,token) =>{
       });
   };
 }
+
+export const GetBlackListAction = (token,page) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    if(page ==1 || !page){
+        dispatch(StartGetBlackList());
+    }
+    fetch(`${Api}/get_my_black_list_users?page=${page}`, {
+      method: 'GET',
+      headers: myHeaders,
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetBlackList(r));
+        } else {
+          dispatch(ErrorGetBlackList('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetBlackList('server error'));
+      });
+  };
+};

@@ -10,6 +10,7 @@ import ConfirmRegisetReducer from './reducers/confirmRegisetReducer';
 import CreatePostReducer from './reducers/createPostReducer';
 import DeletOtherPeopleReducer from './reducers/deletOtherPeopleReducer';
 import ForgotPasswordReducer from './reducers/forgotPasswordReducer';
+import GetBlackListReducer from './reducers/getBlackListReducer';
 import GetFollowerReducer from './reducers/getFollowerReducer';
 import GetFollowersReducer from './reducers/getFollowersReducer';
 import GetLentsReducer from './reducers/getLentsReducer';
@@ -50,6 +51,7 @@ const rootReducer = combineReducers({
     getPosts:GetPostsReducer,
     getLents:GetLentsReducer,
     like:LikePostReducer,
+    blackList:GetBlackListReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );
