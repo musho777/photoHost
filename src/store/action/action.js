@@ -113,7 +113,7 @@ export const RegisterAction = data => {
       .then(r => {
         if (r.status) {
           dispatch(SuccessRegister(r));
-          setTokenSorage(r.token)
+          setTokenSorage(r.token);
         } else {
           dispatch(
             ErrorRegister({
@@ -178,12 +178,11 @@ export const LoginAction = data => {
         if (r.status) {
           dispatch(setToken(r.token));
           dispatch(SuccessLogin(r));
-          setTokenSorage(r.token)
+          setTokenSorage(r.token);
         } else {
-          if(r.message.includes('Your account is blocked')){
+          if (r.message.includes('Your account is blocked')) {
             dispatch(ErrorLogin('ваш аккаунт заблокирован'));
-          }
-          else {
+          } else {
             dispatch(ErrorLogin('Неверный логин или пароль'));
           }
         }
@@ -195,7 +194,7 @@ export const LoginAction = data => {
 };
 
 async function setTokenSorage(token) {
-  await AsyncStorage.setItem('token',token)
+  await AsyncStorage.setItem('token', token);
 }
 
 export const ClearLoginAction = () => {
@@ -351,7 +350,9 @@ export const changeUserPassword = (data, token) => {
           dispatch(SuccessChangeUserPassword(r.data));
         } else {
           if (r.message.includes('wrong old password')) {
-            dispatch(ErrorChangeUserPassowrd({email: 'Неверный старый пароль'}));
+            dispatch(
+              ErrorChangeUserPassowrd({email: 'Неверный старый пароль'}),
+            );
           } else {
             dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
           }
@@ -767,7 +768,7 @@ export const LogoutAction = token => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          DeleteTokenSorage()
+          DeleteTokenSorage();
           dispatch(SuccessLogout(r));
         } else {
           dispatch(ErrorLogout('server error'));
@@ -780,9 +781,8 @@ export const LogoutAction = token => {
 };
 
 async function DeleteTokenSorage() {
-  await AsyncStorage.removeItem('token')
+  await AsyncStorage.removeItem('token');
 }
-
 
 export const CreatPostAction = (data, token) => {
   var myHeaders = new Headers();
@@ -812,12 +812,12 @@ export const CreatPostAction = (data, token) => {
 };
 
 export const GetPostsAction = (data, token, page) => {
-  console.log(page)
+  console.log(page);
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    if(page ==1 || !page){
+    if (page == 1 || !page) {
       dispatch(StartGetPosts());
     }
     fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
@@ -839,13 +839,13 @@ export const GetPostsAction = (data, token, page) => {
   };
 };
 
-export const GetLentsAction = (token,page) => {
+export const GetLentsAction = (token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    if(page ==1 || !page){
-        dispatch(StartGetLents());
+    if (page == 1 || !page) {
+      dispatch(StartGetLents());
     }
     fetch(`${Api}/lents?page=${page}`, {
       method: 'GET',
@@ -865,7 +865,7 @@ export const GetLentsAction = (token,page) => {
   };
 };
 
-export const LikePostAction = (data,token) =>{
+export const LikePostAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -890,9 +890,9 @@ export const LikePostAction = (data,token) =>{
         dispatch(ErrorLikePost(error));
       });
   };
-}
+};
 
-export const AddBlackListAction = (data,token) =>{
+export const AddBlackListAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -917,15 +917,15 @@ export const AddBlackListAction = (data,token) =>{
         dispatch(ErrorAddBlackList(error));
       });
   };
-}
+};
 
-export const GetBlackListAction = (token,page) => {
+export const GetBlackListAction = (token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    if(page ==1 || !page){
-        dispatch(StartGetBlackList());
+    if (page == 1 || !page) {
+      dispatch(StartGetBlackList());
     }
     fetch(`${Api}/get_my_black_list_users?page=${page}`, {
       method: 'GET',
@@ -945,7 +945,7 @@ export const GetBlackListAction = (token,page) => {
   };
 };
 
-export const AddInBookAction = (data,token) =>{
+export const AddInBookAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -960,7 +960,7 @@ export const AddInBookAction = (data,token) =>{
     fetch(`${Api}/add_post_in_book`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
+        console.log(r);
         if (r.status) {
           dispatch(SuccessAddInBook(r));
         } else {
@@ -971,16 +971,15 @@ export const AddInBookAction = (data,token) =>{
         dispatch(ErrorAddInBook(error));
       });
   };
-}
+};
 
-export const GetMyBooksAction = (token,page) => {
-  console.log(token)
+export const GetMyBooksAction = (token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    if(page ==1 || !page){
-        dispatch(StartGetMyBooks());
+    if (page == 1 || !page) {
+      dispatch(StartGetMyBooks());
     }
     fetch(`${Api}/get_my_books?page=${page}`, {
       method: 'GET',
@@ -988,7 +987,7 @@ export const GetMyBooksAction = (token,page) => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
+        console.log(r);
         if (r.status) {
           dispatch(SuccessGetMyBooks(r));
         } else {
@@ -996,8 +995,31 @@ export const GetMyBooksAction = (token,page) => {
         }
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
         dispatch(ErrorGetMyBooks('server error'));
+      });
+  };
+};
+
+export const AddPostViewCount = (data,token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartAddInBook());
+    fetch(`${Api}/view_post_count`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+      })
+      .catch(error => {
+        console.log(error)
       });
   };
 };

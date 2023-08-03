@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {View, FlatList, ActivityIndicator, RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Post} from '../../components/Post';
-import {GetLentsAction} from '../../store/action/action';
+import {AddPostViewCount, GetLentsAction} from '../../store/action/action';
 import {Styles} from '../../styles/Styles';
 
 export const HomeScreen = ({navigation}) => {
@@ -10,27 +10,43 @@ export const HomeScreen = ({navigation}) => {
   const user = useSelector(st => st.userData);
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents);
-  const [first,setFires] = useState(true)
-  const [page,setPage] =useState(1)
-  const [blackList,setBlackList] = useState([])
-  useEffect(()=>{
-    if(staticdata.token){
-      setFires(false)
-      dispatch(GetLentsAction(staticdata.token))
+  const [first, setFires] = useState(true);
+  const [page, setPage] = useState(1);
+  const [blackList, setBlackList] = useState([]);
+  const [index, setIndex] = useState(0);
+  const flatListRef = useRef(null);
+  useEffect(() => {
+    if (staticdata.token) {
+      setFires(false);
+      dispatch(GetLentsAction(staticdata.token));
     }
-  },[staticdata.token])
+  }, [staticdata.token]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-      if(staticdata.token){
-        dispatch(GetLentsAction(staticdata.token))
+      if (staticdata.token) {
+        dispatch(GetLentsAction(staticdata.token));
       }
     });
     return unsubscribe;
   }, [navigation]);
 
+  useEffect(() => {
+    console.log(index)
+    if (index) {
+      dispatch(
+        AddPostViewCount(
+          {
+            post_id: getLents?.data[index]?.id,
+          },
+          staticdata.token,
+        ),
+      );
+    }
+  }, [index]);
+
   const renderItem = ({item, index}) => {
-    if(!blackList.includes(item.user.id)){
+    if (!blackList.includes(item.user.id)) {
       return (
         <View
           key={index}
@@ -43,26 +59,32 @@ export const HomeScreen = ({navigation}) => {
           <Post
             userImg={item.user.avatar}
             userName={item.user.name}
-            userId = {item.user.id}
+            userId={item.user.id}
             description={item.description}
-            like = {item.like_count}
-            commentCount = {item.comment_count}
-            view = {item.view_count}
-            photo = {item.photo}
-            liked = {item.like_auth_user.length}
-            id = {item.id}
-            star = {item.user.star}
-            isBook = {item.auth_user_book.length>0}
-            addToblack = {(e)=>{
-              let item = [...blackList]
-              item.push(e)
-              setBlackList(item)
-            }
-            }
+            like={item.like_count}
+            commentCount={item.comment_count}
+            view={item.view_count}
+            photo={item.photo}
+            liked={item.like_auth_user.length}
+            id={item.id}
+            star={item.user.star}
+            isBook={item.auth_user_book.length > 0}
+            addToblack={e => {
+              let item = [...blackList];
+              item.push(e);
+              setBlackList(item);
+            }}
           />
         </View>
       );
     }
+  };
+
+  const handleScroll = event => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const itemHeight = 400;
+    const index = Math.floor(offsetY / itemHeight);
+    setIndex(index);
   };
 
   if (getLents?.loading) {
@@ -74,13 +96,15 @@ export const HomeScreen = ({navigation}) => {
   }
   return (
     <FlatList
-      showsVerticalScrollIndicator = {false}
+      showsVerticalScrollIndicator={false}
       style={Styles.bg}
+      ref={flatListRef}
+      onScroll={handleScroll}
       refreshControl={
         <RefreshControl
           refreshing={getLents?.loading}
           onRefresh={() => {
-            dispatch(GetLentsAction(staticdata.token))
+            dispatch(GetLentsAction(staticdata.token));
           }}
         />
       }
@@ -92,14 +116,9 @@ export const HomeScreen = ({navigation}) => {
       renderItem={renderItem}
       onEndReached={() => {
         if (getLents?.nextPage) {
-          let p = page +1
-          dispatch(
-            GetLentsAction(
-              staticdata.token,
-              p,
-            ),
-          );
-          setPage(p)
+          let p = page + 1;
+          dispatch(GetLentsAction(staticdata.token, p));
+          setPage(p);
         }
       }}
     />
