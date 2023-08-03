@@ -12,6 +12,7 @@ export const HomeScreen = ({navigation}) => {
   const getLents = useSelector(st => st.getLents);
   const [first,setFires] = useState(true)
   const [page,setPage] =useState(1)
+  const [blackList,setBlackList] = useState([])
   useEffect(()=>{
     if(staticdata.token){
       setFires(false)
@@ -29,29 +30,38 @@ export const HomeScreen = ({navigation}) => {
   }, [navigation]);
 
   const renderItem = ({item, index}) => {
-    return (
-      <View
-        key={index}
-        style={{
-          backfaceVisibility: 'visible',
-          backgroundColor: 'transparent',
-          paddingHorizontal: 10,
-          marginVertical: 10,
-        }}>
-        <Post
-          userImg={item.user.avatar}
-          userName={item.user.name}
-          description={item.description}
-          like = {item.like_count}
-          commentCount = {item.comment_count}
-          view = {item.view_count}
-          photo = {item.photo}
-          liked = {item.like_auth_user.length}
-          id = {item.id}
-          star = {item.user.star}
-        />
-      </View>
-    );
+    if(!blackList.includes(item.user.id)){
+      return (
+        <View
+          key={index}
+          style={{
+            backfaceVisibility: 'visible',
+            backgroundColor: 'transparent',
+            paddingHorizontal: 10,
+            marginVertical: 10,
+          }}>
+          <Post
+            userImg={item.user.avatar}
+            userName={item.user.name}
+            userId = {item.user.id}
+            description={item.description}
+            like = {item.like_count}
+            commentCount = {item.comment_count}
+            view = {item.view_count}
+            photo = {item.photo}
+            liked = {item.like_auth_user.length}
+            id = {item.id}
+            star = {item.user.star}
+            addToblack = {(e)=>{
+              let item = [...blackList]
+              item.push(e)
+              setBlackList(item)
+            }
+            }
+          />
+        </View>
+      );
+    }
   };
 
   if (getLents?.loading) {

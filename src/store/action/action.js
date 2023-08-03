@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {
+  ErrorAddBlackList,
   ErrorAddDeleteFollow,
   ErrorChangeAvatar,
   ErrorChangeEmail,
@@ -57,8 +58,10 @@ import {
   StartGetPosts,
   StartGetLents,
   StartLikePost,
+  StartAddBlackList,
 } from './startAction';
 import {
+  SuccessAddBlackList,
   SuccessAddDeleteFollow,
   SuccessChangeAvatar,
   SuccessChangeEmail,
@@ -876,6 +879,33 @@ export const LikePostAction = (data,token) =>{
       })
       .catch(error => {
         dispatch(ErrorLikePost(error));
+      });
+  };
+}
+
+export const AddBlackListAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartAddBlackList());
+    fetch(`${Api}/add_user_in_black_list`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessAddBlackList(r));
+        } else {
+          dispatch(ErrorAddBlackList(error));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorAddBlackList(error));
       });
   };
 }

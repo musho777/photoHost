@@ -180,3 +180,10 @@ export const SuccessLikePost = (data) =>{
         data
     }
 }
+
+export const SuccessAddBlackList = (data) =>{
+    return {
+        type:'SuccessAddBlackList',
+        data
+    }
+}

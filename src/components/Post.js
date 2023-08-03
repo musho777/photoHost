@@ -11,7 +11,7 @@ import {Shadow} from 'react-native-shadow-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckMarkUserSvg, NotLineSvg } from '../assets/svg/Svgs';
 import {Comment, Heart, MenuSvg, Share, ViewSvg} from '../assets/svg/TabBarSvg';
-import { LikePostAction } from '../store/action/action';
+import { AddBlackListAction, LikePostAction } from '../store/action/action';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 import {BootomModal} from './BootomSheet';
@@ -22,7 +22,7 @@ const windowWidth = Dimensions.get('window').width;
 
 
 
-export const Post = ({userImg,userName,description,like,commentCount,view,photo,liked,id,star}) => {
+export const Post = ({userImg,userName,description,like,commentCount,view,photo,liked,id,star,userId,addToblack}) => {
   const [likedCount,setLikedCount] = useState(+like)
   const [isLiked,setIsLiked] = useState(liked)
 
@@ -49,6 +49,13 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
     staticdata.token
     ))
   }
+
+
+  const addToBlackList = () =>{
+    addToblack(userId)
+    dispatch(AddBlackListAction({'user_id':userId},staticdata.token))
+  }
+
   return (
     <Shadow
       style={{width: '100%', marginBottom: 20, borderRadius: 10}}
@@ -116,7 +123,7 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
             <TouchableOpacity  style = {{marginBottom:20}}>
               <Text style = {Styles.darkRegular14}>Подписаться</Text>
             </TouchableOpacity>
-            <TouchableOpacity  style = {{marginBottom:20}}>
+            <TouchableOpacity  style = {{marginBottom:20}} onPress = {()=>addToBlackList()}>
               <Text style = {Styles.darkRegular14}>В чёрный список</Text>
             </TouchableOpacity>
           </View>

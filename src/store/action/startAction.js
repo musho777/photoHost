@@ -158,3 +158,9 @@ export const StartLikePost = () =>{
         type:'StartLikePost'
     }
 }
+
+export const StartAddBlackList = () =>{
+    return {
+        type:'StartAddBlackList'
+    }
+}

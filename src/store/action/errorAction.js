@@ -184,3 +184,10 @@ export const ErrorLikePost = (data) =>{
         data
     }
 }
+
+export const ErrorAddBlackList = (data) =>{
+    return {
+        type:'ErrorAddBlackList',
+        data
+    }
+}
