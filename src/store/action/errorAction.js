@@ -205,3 +205,10 @@ export const ErrorAddInBook = (data) =>{
         data
     }
 }
+
+export const ErrorGetMyBooks = (data) =>{
+    return {
+        type:'ErrorGetMyBooks',
+        data
+    }
+}

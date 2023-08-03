@@ -176,3 +176,9 @@ export const StartAddInBook = () =>{
         type:'StartAddInBook'
     }
 }
+
+export const StartGetMyBooks = () =>{
+    return {
+        type:'StartGetMyBooks'
+    }
+}

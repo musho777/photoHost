@@ -72,7 +72,7 @@ export const Menu = ({visible, close}) => {
             <TouchableOpacity
               onPress={() => {
                 close();
-                navigation.navigate('ParametrScreen');
+                navigation.navigate('SavedPostScreen');
               }}>
               <Text style={[Styles.darkRegular16, {marginTop: 30}]}>
                 Закладки

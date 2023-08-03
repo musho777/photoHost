@@ -201,3 +201,10 @@ export const SuccessAddInBook = (data) =>{
         data
     }
 }
+
+export const SuccessGetMyBooks = (data) =>{
+    return {
+        type:'SuccessGetMyBooks',
+        data
+    }
+}

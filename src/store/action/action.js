@@ -18,6 +18,7 @@ import {
   ErrorGetFollower,
   ErrorGetFollowersAction,
   ErrorGetLents,
+  ErrorGetMyBooks,
   ErrorGetMyChatRoom,
   ErrorGetPosts,
   ErrorGetSinglePageChat,
@@ -63,6 +64,7 @@ import {
   StartAddBlackList,
   StartGetBlackList,
   StartAddInBook,
+  StartGetMyBooks,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -81,6 +83,7 @@ import {
   SuccessGetBlackList,
   SuccessGetFollower,
   SuccessGetLents,
+  SuccessGetMyBooks,
   SuccessGetMyChatRoom,
   SuccessGetPosts,
   SuccessGetSinglePageChat,
@@ -969,3 +972,32 @@ export const AddInBookAction = (data,token) =>{
       });
   };
 }
+
+export const GetMyBooksAction = (token,page) => {
+  console.log(token)
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    if(page ==1 || !page){
+        dispatch(StartGetMyBooks());
+    }
+    fetch(`${Api}/get_my_books?page=${page}`, {
+      method: 'GET',
+      headers: myHeaders,
+    })
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if (r.status) {
+          dispatch(SuccessGetMyBooks(r));
+        } else {
+          dispatch(ErrorGetMyBooks('server error'));
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        dispatch(ErrorGetMyBooks('server error'));
+      });
+  };
+};

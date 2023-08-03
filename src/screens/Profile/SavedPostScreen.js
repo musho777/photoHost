@@ -1,57 +1,95 @@
-import { useState,useEffect } from "react"
-import { View,Text, RefreshControl, FlatList} from "react-native"
-import { useDispatch, useSelector } from "react-redux"
-import { BlackListBlock } from "../../components/blackListBlock"
-import { AddBlackListAction, GetBlackListAction } from "../../store/action/action"
-import { Styles } from "../../styles/Styles"
+import {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  RefreshControl,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {Albom} from '../../components/Albom';
 
-export const SavedPostScreen = () =>{
-    const dispatch = useDispatch()
-    const staticdata = useSelector(st => st.static);
-    const blackList = useSelector((st)=>st.blackList)
-    const [data,setData] = useState([])
-    const [page,setPage] = useState(1)
-    useEffect(()=>{
-        dispatch(GetBlackListAction(staticdata.token,1))
-    },[])
-    useEffect(()=>{
-        setData(blackList.data)
-    },[blackList.data])
+import {BlackListBlock} from '../../components/blackListBlock';
+import {Post} from '../../components/Post';
+import {
+  AddBlackListAction,
+  GetBlackListAction,
+  GetMyBooksAction,
+} from '../../store/action/action';
+import {Styles} from '../../styles/Styles';
 
-    const RemoveFromBlackList = (id,index) =>{
-        console.log(id)
-        dispatch(AddBlackListAction({user_id:id},staticdata.token))
-        let item = [...data]
-        item.splice(index,1)
-        setData(item)
-    }
+const windowWidth = Dimensions.get('window').width;
 
-    const renderItem = ({item,index}) =>{
-        return <BlackListBlock onPress1 = {()=>RemoveFromBlackList(item.receiver.id,index)} key={index} name={item.receiver.name} img = {item.receiver.avatar} username = {item.receiver.nickname} type = "Помиловать" /> 
-    }
-    return <View style = {{marginTop:30,alignItems:'center',paddingHorizontal:15}}>
-        <FlatList
-          refreshControl={
-            <RefreshControl
-              refreshing={blackList?.loading}
-              onRefresh={() => {
-                dispatch(GetBlackListAction(staticdata.token,1))
-              }}
-            />
-          }
-          data={data}
-          enableEmptySections={true}
-          ListEmptyComponent = {()=>(
-            !blackList?.loading && <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>Черный список пуст</Text>
-          )}
-          renderItem={renderItem}
-          onEndReached={() => {
-            if (blackList?.nextPage) {
-                let p = page+1
-                dispatch(GetBlackListAction(staticdata.token,p))
-                setPage(p)
-            }
+export const SavedPostScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  const staticdata = useSelector(st => st.static);
+  const books = useSelector(st => st.books);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [blackList, setBlackList] = useState([]);
+
+  useEffect(() => {
+    setData(books.data);
+  }, [books.data]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      dispatch(GetMyBooksAction(staticdata.token, 1));
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const renderItem = ({item, index}) => {
+    return (
+      <TouchableOpacity>
+        <Image
+          style={styles.img}
+          source={{
+            uri: `https://chamba.justcode.am/uploads/${item.post.photo[0].photo}`,
           }}
+          key={index}
         />
+      </TouchableOpacity>
+    );
+  };
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
+  };
+
+  return (
+    <View style={{marginTop: 10, alignItems: 'center', paddingHorizontal: 15}}>
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}
+        onScroll={({nativeEvent}) => {
+          if (isCloseToBottom(nativeEvent)) {
+            if (books.nextPage) {
+              let pages = page + 1;
+              dispatch(GetMyBooksAction(staticdata.token, pages));
+              setPage(pages);
+            }
+          }
+        }}>
+        <Albom seved data={books.data} />
+      </ScrollView>
     </View>
-}
+  );
+};
+
+const styles = StyleSheet.create({
+  img: {
+    width: windowWidth / 2 - 17,
+    height: windowWidth / 2 - 17,
+    marginBottom: 4,
+    borderRadius: 15,
+  },
+});
