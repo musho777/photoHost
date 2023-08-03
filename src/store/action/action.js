@@ -800,11 +800,14 @@ export const CreatPostAction = (data, token) => {
 };
 
 export const GetPostsAction = (data, token, page) => {
+  console.log(page)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartGetPosts());
+    if(page ==1 || !page){
+      dispatch(StartGetPosts());
+    }
     fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
       method: 'POST',
       headers: myHeaders,

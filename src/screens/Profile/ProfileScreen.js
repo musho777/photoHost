@@ -49,6 +49,7 @@ export const ProfileScreen = ({navigation, profile}) => {
     return layoutMeasurement.height + contentOffset.y >=
       contentSize.height - paddingToBottom;
   };
+
   if (user.loading || login.logoutLoading) {
     return (
       <View style={Styles.loading}>
@@ -65,9 +66,8 @@ export const ProfileScreen = ({navigation, profile}) => {
           onScroll={({nativeEvent}) => {
             if (isCloseToBottom(nativeEvent)) {
               if(getPosts.nextPage){
-                let pages = page
-                pages=page+1 
-                dispatch(GetPostsAction({user_id: user.data.id}, staticdata.token, page));
+                let pages = page+1
+                dispatch(GetPostsAction({user_id: user.data.id}, staticdata.token, pages));
                 setPage(pages)
               }
               // enableSomeButton();
@@ -84,7 +84,7 @@ export const ProfileScreen = ({navigation, profile}) => {
               style={styles.img}
               source={{uri: `https://chamba.justcode.am/uploads/${user.avatar}`}}
             />
-            <View style={{marginTop: 7, marginBottom: 15, alignItems: 'center'}}>
+            <View style={{marginTop: 7, marginBottom: 15, alignItems: 'center',marginLeft:10}}>
               <View style = {Styles.flexAlignItems}>
                 <Text style={[Styles.darkMedium16,{marginRight:5}]}>{user.name}</Text>
                 {user.data.star >0 &&
