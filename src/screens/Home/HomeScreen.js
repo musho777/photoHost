@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {View, FlatList, ActivityIndicator, RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Post} from '../../components/Post';
-import {GetLentsAction, GetPostsAction} from '../../store/action/action';
+import {GetLentsAction} from '../../store/action/action';
 import {Styles} from '../../styles/Styles';
 
 export const HomeScreen = ({navigation}) => {
@@ -46,6 +46,9 @@ export const HomeScreen = ({navigation}) => {
           commentCount = {item.comment_count}
           view = {item.view_count}
           photo = {item.photo}
+          liked = {item.like_auth_user.length}
+          id = {item.id}
+          star = {item.user.star}
         />
       </View>
     );
@@ -58,7 +61,6 @@ export const HomeScreen = ({navigation}) => {
       </View>
     );
   }
-
   return (
     <FlatList
       showsVerticalScrollIndicator = {false}
@@ -82,7 +84,6 @@ export const HomeScreen = ({navigation}) => {
           let p = page +1
           dispatch(
             GetLentsAction(
-              {search: data, user_id: id},
               staticdata.token,
               p,
             ),

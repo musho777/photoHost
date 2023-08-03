@@ -344,7 +344,7 @@ export const ImgArrow = () =>{
 </Svg>
 }
 
-export const notLineSvg = () =>{
+export const NotLineSvg = () =>{
   return <Svg
   width={26}
   height={23}
@@ -360,3 +360,20 @@ export const notLineSvg = () =>{
   />
 </Svg>
 } 
+
+export const  CheckMarkUserSvg =() =>{
+  return <Svg
+      width={13}
+      height={14}
+      viewBox="0 0 13 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.06.3a2 2 0 00-2.11 0L3.039 1.488 1.056 2.55A2 2 0 00.001 4.376l.072 2.249-.072 2.248A2 2 0 001.056 10.7l1.983 1.062 1.911 1.186a2 2 0 002.11 0l1.91-1.186 1.984-1.062a2 2 0 001.055-1.827l-.072-2.248.072-2.249a2 2 0 00-1.055-1.827L8.97 1.487 7.06.301zm2.3 5.038a.64.64 0 10-.894-.916L5.314 7.495 3.523 5.898a.64.64 0 10-.852.955l2.682 2.39L9.36 5.339z"
+        fill="#FFC24B"
+      />
+    </Svg>
+}

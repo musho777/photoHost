@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Styles} from '../../styles/Styles';
 import {Albom} from '../../components/Albom';
-import {MenuSvg2} from '../../assets/svg/Svgs';
+import {CheckMarkUserSvg, MenuSvg2} from '../../assets/svg/Svgs';
 import {Menu} from '../../components/Menu';
 import {Button} from '../../ui/Button';
 import { useDispatch, useSelector} from 'react-redux';
@@ -49,8 +49,6 @@ export const ProfileScreen = ({navigation, profile}) => {
     return layoutMeasurement.height + contentOffset.y >=
       contentSize.height - paddingToBottom;
   };
-
-
   if (user.loading || login.logoutLoading) {
     return (
       <View style={Styles.loading}>
@@ -87,8 +85,13 @@ export const ProfileScreen = ({navigation, profile}) => {
               source={{uri: `https://chamba.justcode.am/uploads/${user.avatar}`}}
             />
             <View style={{marginTop: 7, marginBottom: 15, alignItems: 'center'}}>
-              <Text style={Styles.darkMedium16}>{user.name}</Text>
-              <Text style={Styles.balihaiRegular12}>@{user.username}</Text>
+              <View style = {Styles.flexAlignItems}>
+                <Text style={[Styles.darkMedium16,{marginRight:5}]}>{user.name}</Text>
+                {user.data.star >0 &&
+                <CheckMarkUserSvg />
+                }
+              </View>
+              <Text style={[Styles.balihaiRegular12,{marginLeft:-17}]}>@{user.username}</Text>
             </View>
             {user.data.description && (
               <Text style={Styles.darkRegular14}>{user.description}</Text>

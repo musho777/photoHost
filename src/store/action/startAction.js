@@ -152,3 +152,9 @@ export const StartGetLents = () =>{
         type:'StartGetLents'
     }
 }
+
+export const StartLikePost = () =>{
+    return {
+        type:'StartLikePost'
+    }
+}

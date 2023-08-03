@@ -9,6 +9,7 @@ import {
   ErrorChangeProfile,
   ErrorChangeUserPassowrd,
   ErrorConfirmRegisterCode,
+  ErrorCreatePost,
   ErrorDeleteOtherPople,
   ErrorForgotPassword,
   ErrorGetFollower,
@@ -19,6 +20,7 @@ import {
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
   ErrorGetUserData,
+  ErrorLikePost,
   ErrorLogin,
   ErrorLogout,
   ErrorNewMessageAction,
@@ -54,6 +56,7 @@ import {
   StartCreatePost,
   StartGetPosts,
   StartGetLents,
+  StartLikePost,
 } from './startAction';
 import {
   SuccessAddDeleteFollow,
@@ -826,7 +829,9 @@ export const GetLentsAction = (token,page) => {
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartGetLents());
+    if(page ==1 || !page){
+        dispatch(StartGetLents());
+    }
     fetch(`${Api}/lents?page=${page}`, {
       method: 'GET',
       headers: myHeaders,
@@ -844,3 +849,30 @@ export const GetLentsAction = (token,page) => {
       });
   };
 };
+
+export const LikePostAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartLikePost());
+    fetch(`${Api}/post_like`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessCreatePost(r));
+        } else {
+          dispatch(ErrorLikePost(error));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorLikePost(error));
+      });
+  };
+}

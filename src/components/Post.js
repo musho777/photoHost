@@ -5,12 +5,13 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  FlatList,
   Dimensions,
-  Touchable,
 } from 'react-native';
 import {Shadow} from 'react-native-shadow-2';
+import { useDispatch, useSelector } from 'react-redux';
+import { CheckMarkUserSvg, NotLineSvg } from '../assets/svg/Svgs';
 import {Comment, Heart, MenuSvg, Share, ViewSvg} from '../assets/svg/TabBarSvg';
+import { LikePostAction } from '../store/action/action';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 import {BootomModal} from './BootomSheet';
@@ -21,12 +22,11 @@ const windowWidth = Dimensions.get('window').width;
 
 
 
-export const Post = ({userImg,userName,description,like,commentCount,view,photo}) => {
+export const Post = ({userImg,userName,description,like,commentCount,view,photo,liked,id,star}) => {
+  const [likedCount,setLikedCount] = useState(+like)
+  const [isLiked,setIsLiked] = useState(liked)
 
-  const [likedCount,setLikedCount] = useState(like)
-
-
-
+  const staticdata = useSelector(st => st.static);
 
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['25%'], []);
@@ -34,6 +34,21 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo}
     bottomSheetRef.current?.present();
   }, []);
   const [comment,setComment] = useState(false)
+  const dispatch = useDispatch()
+  const LikePost = () =>{
+    if(isLiked){
+      setLikedCount(likedCount-1)
+    }
+    else {
+      setLikedCount(likedCount+1)
+    }
+    setIsLiked(!isLiked)
+    dispatch(LikePostAction({
+      'post_id':id
+    },
+    staticdata.token
+    ))
+  }
   return (
     <Shadow
       style={{width: '100%', marginBottom: 20, borderRadius: 10}}
@@ -44,7 +59,10 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo}
             <Image style={styles.userImg}
             source={{uri: `https://chamba.justcode.am/uploads/${userImg}`}}/>
             <View>
-              <Text style={Styles.darkSemiBold14}>{userName}</Text>
+              <View style = {Styles.flexAlignItems}>
+                <Text Text style={[Styles.darkSemiBold14,{marginRight:5}]}>{userName}</Text>
+                {star>0 && <CheckMarkUserSvg />}
+              </View>
               <Text style={Styles.balihaiMedium9}>3 часа назад</Text>
             </View>
           </View>
@@ -67,8 +85,8 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo}
           ]}>
           <View style={Styles.flexAlignItems}>
             <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
-              <TouchableOpacity>
-                <Heart />
+              <TouchableOpacity onPress={()=>{LikePost()}}>
+                {isLiked ?<Heart />:<NotLineSvg />}
               </TouchableOpacity>
               <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>{likedCount}</Text>
             </View>

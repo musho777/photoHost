@@ -177,3 +177,10 @@ export const ErrorGetLents = (data) =>{
         data
     }
 }
+
+export const ErrorLikePost = (data) =>{
+    return {
+        type:'ErrorLikePost',
+        data
+    }
+}

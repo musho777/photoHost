@@ -173,3 +173,10 @@ export const SuccessGetLents = (data) =>{
         data
     }
 }
+
+export const SuccessLikePost = (data) =>{
+    return {
+        type:'SuccessLikePost',
+        data
+    }
+}
