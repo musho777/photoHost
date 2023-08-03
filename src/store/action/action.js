@@ -812,7 +812,6 @@ export const CreatPostAction = (data, token) => {
 };
 
 export const GetPostsAction = (data, token, page) => {
-  console.log(page);
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -960,7 +959,6 @@ export const AddInBookAction = (data, token) => {
     fetch(`${Api}/add_post_in_book`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r);
         if (r.status) {
           dispatch(SuccessAddInBook(r));
         } else {
@@ -987,7 +985,6 @@ export const GetMyBooksAction = (token, page) => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r);
         if (r.status) {
           dispatch(SuccessGetMyBooks(r));
         } else {
@@ -995,7 +992,6 @@ export const GetMyBooksAction = (token, page) => {
         }
       })
       .catch(error => {
-        console.log(error);
         dispatch(ErrorGetMyBooks('server error'));
       });
   };

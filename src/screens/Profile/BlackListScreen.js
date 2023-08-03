@@ -19,7 +19,6 @@ export const BlackListScreen = () =>{
     },[blackList.data])
 
     const RemoveFromBlackList = (id,index) =>{
-        console.log(id)
         dispatch(AddBlackListAction({user_id:id},staticdata.token))
         let item = [...data]
         item.splice(index,1)
@@ -27,7 +26,6 @@ export const BlackListScreen = () =>{
     }
 
     const renderItem = ({item,index}) =>{
-        console.log(item)
         return <BlackListBlock onPress1 = {()=>RemoveFromBlackList(item.receiver.id,index)} key={index} name={item.receiver.name} img = {item.receiver.avatar} username = {item.receiver.nickname} type = "Помиловать" /> 
     }
     return <View style = {{marginTop:30,alignItems:'center',paddingHorizontal:15}}>

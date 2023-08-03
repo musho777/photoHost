@@ -32,7 +32,6 @@ export const HomeScreen = ({navigation}) => {
   }, [navigation]);
 
   useEffect(() => {
-    console.log(index)
     if (index) {
       dispatch(
         AddPostViewCount(
