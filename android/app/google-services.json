@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "466085629676",
+    "project_id": "chamba-14cb6",
+    "storage_bucket": "chamba-14cb6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466085629676:android:871c6a8144e627f9e19fc9",
+        "android_client_info": {
+          "package_name": "com.photohost"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466085629676-mogcgt4bon7f9iii4a6c092qleiove0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMGvRsLvF4W6Wyn-KTgmmsWoHv949J9fE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466085629676-mogcgt4bon7f9iii4a6c092qleiove0m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

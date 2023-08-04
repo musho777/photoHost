@@ -36,7 +36,8 @@ export const Input = ({
   onBlur,
   autoFocus,
   sendMsg,
-  value
+  value,
+  sendCom
 }) => {
   const [securyty, setSecuryty] = useState(pass);
   return (
@@ -91,7 +92,7 @@ export const Input = ({
       )}
       {send && (
         <View style={[Styles.flexAlignItems, styles.eye, {height: '100%'}]}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={sendCom}>
             <SendSvg />
           </TouchableOpacity>
         </View>

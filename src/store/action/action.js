@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {
   ErrorAddBlackList,
+  ErrorAddComment,
   ErrorAddDeleteFollow,
   ErrorAddInBook,
   ErrorChangeAvatar,
@@ -67,9 +68,11 @@ import {
   StartAddInBook,
   StartGetMyBooks,
   StartGetNotification,
+  StartAddComment,
 } from './startAction';
 import {
   SuccessAddBlackList,
+  SuccessAddComment,
   SuccessAddDeleteFollow,
   SuccessAddInBook,
   SuccessChangeAvatar,
@@ -1048,4 +1051,35 @@ export const GetNotificationAction = (token,page) =>{
         dispatch(ErrorGetNotification('server error'));
       });
   }; 
+}
+
+export const AddCommentAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartAddComment());
+    fetch(`${Api}/add_comment`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if(r.status){
+
+          dispatch(SuccessAddComment())
+        }
+        else {
+          dispatch(ErrorAddComment('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorAddComment('server error'))
+        console.log(error)
+      });
+  };
 }

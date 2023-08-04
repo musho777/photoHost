@@ -219,3 +219,10 @@ export const ErrorGetNotification = (data) =>{
         data
     }
 }
+
+export const ErrorAddComment = (data) =>{
+    return {
+        type:'ErrorAddComment',
+        data
+    }
+} 

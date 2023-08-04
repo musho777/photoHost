@@ -5,57 +5,57 @@ import {Provider} from 'react-redux';
 import {store} from './src/store/configStore';
 import { useState,useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import DeviceInfo from 'react-native-device-info';
-
-// import messaging from '@react-native-firebase/messaging';
-
-// Request permission for notifications (optional, but recommended)
-// async function requestNotificationPermission() {
-//   const authStatus = await messaging().requestPermission();
-//   const enabled =
-//     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-//     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-//   if (enabled) {
-//     console.log('Notification permission granted');
-//   } else {
-//     console.log('Notification permission denied');
-//   }
-// }
-
-// // Get the device registration token for FCM
-// async function getFCMToken() {
-//   const token = await messaging().getToken();
-//   console.log('FCM Token:', token);
-// }
-
-// // Handle incoming messages (notifications and data messages)
-// messaging().onMessage(async remoteMessage => {
-//   console.log('Received FCM message:', remoteMessage);
-// });
-
-// // Handle background notifications (optional)
-// messaging().setBackgroundMessageHandler(async remoteMessage => {
-//   console.log('Received background FCM message:', remoteMessage);
-// });
-
-// // Handle FCM token refresh
-// messaging().onTokenRefresh(token => {
-//   console.log('Refreshed FCM Token:', token);
-// });
-
-// // Request notification permission and get the FCM token
-// requestNotificationPermission();
-// getFCMToken();
-
-
+import DeviceInfo from 'react-native-device-info';
+import messaging from '@react-native-firebase/messaging';
+import firebase from '@react-native-firebase/app';
+import { LocalNotification } from './src/utils/LocalPushController';
+import { NotificationLister, requestUserPermission } from './src/utils/pushnotification_helper';
 export default App = () => {
 
+  const firebaseConfig = {
+    apiKey:"AIzaSyDeqDpmN8h9Zr2EkzcMlyZr-ddq_HkRZAc",
+    authDomain: "https://chamba-f5697-default-rtdb.firebaseio.com",
+    projectId: "chamba-f5697",
+    storageBucket: "chamba-f5697.appspot.com",
+    messagingSenderId: "367713203754-hucu51o3k2ncalafcphonmn0oakjaqgh.apps.googleusercontent.com",
+    appId: "1:367713203754:android:bafcbbdf09844800447553",
+    databaseURL:"https://chamba-f5697-default-rtdb.firebaseio.com"
+  };
+  
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+    useEffect(() => {
+      // LocalNotification.register();
+      // LocalNotification()
+      requestUserPermission()
+      NotificationLister()
+      if (firebase.app()) {
+        const unsubscribe = messaging().onMessage(async remoteMessage => {
+          console.log('Received a notification in the foreground:', remoteMessage);
+        });
+  
+        return () => {
+          unsubscribe();
+        };
+      }
+    }, []);
+  
 
 
+  const getDeviceId = async () => {
+    const deviceId = await DeviceInfo.getUniqueId();
+  };
+
+  useEffect(()=>{
+    // LocalNotification()
+
+    getDeviceId();
+  },[])
 
 
-// console.log(DeviceInfo)
   const [initialRouteName, setInitialRouteName] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const  [token,setToken] = useState('')
@@ -73,11 +73,9 @@ export default App = () => {
   }
  useEffect(()=>{
     getData()
+    // requestUserPermission()
+    // NotificationLister()
  },[])
-
-
-
-
 
 
  if(!isLoading){

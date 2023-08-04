@@ -6,10 +6,16 @@ import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 import {CommentBlock} from './CommentBlock';
 import {Input} from '../ui/Input';
+import { useDispatch } from 'react-redux';
 
 export const Comments = ({visible,close}) => {
   const [showAnswrs, setShowAnswers] = useState(false);
   const [sendComment, setSendCommet] = useState('');
+  const dispatch = useDispatch()
+  const sendCommentFunction = () =>{
+    console.log(sendComment)
+    // dispatch() 
+  }
   return (
     <View>
       <Modal animationType="slide" visible={visible}>
@@ -51,7 +57,7 @@ export const Comments = ({visible,close}) => {
             <View
               style={{
                 position: 'absolute',
-                bottom: 20,
+                bottom: 30,
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -63,6 +69,7 @@ export const Comments = ({visible,close}) => {
               />
               <Input
                 send
+                sendCom = {()=>sendCommentFunction()}
                 value={sendComment}
                 onChange={e => setSendCommet(e)}
                 width={'80%'}

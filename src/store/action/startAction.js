@@ -188,3 +188,9 @@ export const StartGetNotification = () =>{
         type:"StartGetNotification"
     }
 }
+
+export const StartAddComment = () =>{
+    return {
+        type:'StartAddComment'
+    }
+}

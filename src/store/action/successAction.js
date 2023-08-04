@@ -216,3 +216,10 @@ export const SuccessGetNotification = (data) =>{
         data
     }
 }
+
+export const SuccessAddComment = (data) =>{
+    return {
+        type:"SuccessAddComment",
+        data
+    }
+}
