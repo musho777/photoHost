@@ -22,6 +22,7 @@ import {
   ErrorGetMyBooks,
   ErrorGetMyChatRoom,
   ErrorGetNotification,
+  ErrorGetPostComment,
   ErrorGetPosts,
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
@@ -69,6 +70,7 @@ import {
   StartGetMyBooks,
   StartGetNotification,
   StartAddComment,
+  StartGetPostComment,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -91,6 +93,7 @@ import {
   SuccessGetMyBooks,
   SuccessGetMyChatRoom,
   SuccessGetNotification,
+  SuccessGetPostComment,
   SuccessGetPosts,
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
@@ -1079,6 +1082,58 @@ export const AddCommentAction = (data,token) =>{
       })
       .catch(error => {
         dispatch(ErrorAddComment('server error'))
+        console.log(error)
+      });
+  };
+}
+
+export const GelPostCommentsAction = (data,token,page) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartGetPostComment());
+    fetch(`${Api}/get_post_comment?page=${page}`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if(r.status){
+          dispatch(SuccessGetPostComment(r))
+        }
+        else {
+          dispatch(ErrorGetPostComment('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetPostComment('server error'))
+        console.log(error)
+      });
+  };
+}
+
+export const LikeCommentAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartAddComment());
+    fetch(`${Api}/comment_like`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+      })
+      .catch(error => {
         console.log(error)
       });
   };

@@ -138,7 +138,14 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
           </View>
         </BootomModal>
       </View>
-      <Comments visible={comment} close = {()=>setComment(false)}/>
+      <Comments 
+        userImg = {userImg}
+        userName = {userName}
+        description = {description}
+        parentId= {id} 
+        visible={comment} 
+        close = {()=>setComment(false)}
+      />
     </Shadow>
   );
 };

@@ -8,7 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
-import { LocalNotification } from './src/utils/LocalPushController';
 import { NotificationLister, requestUserPermission } from './src/utils/pushnotification_helper';
 export default App = () => {
 
@@ -21,15 +20,10 @@ export default App = () => {
     appId: "1:367713203754:android:bafcbbdf09844800447553",
     databaseURL:"https://chamba-f5697-default-rtdb.firebaseio.com"
   };
-  
-
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
-
     useEffect(() => {
-      // LocalNotification.register();
-      // LocalNotification()
       requestUserPermission()
       NotificationLister()
       if (firebase.app()) {
@@ -42,24 +36,13 @@ export default App = () => {
         };
       }
     }, []);
-  
-
 
   const getDeviceId = async () => {
     const deviceId = await DeviceInfo.getUniqueId();
   };
-
-  useEffect(()=>{
-    // LocalNotification()
-
-    getDeviceId();
-  },[])
-
-
   const [initialRouteName, setInitialRouteName] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const  [token,setToken] = useState('')
-  const [permission,setPermission] = useState(false)
   async function getData() {
     const token = await AsyncStorage.getItem('token')
     setToken(token)
@@ -73,8 +56,7 @@ export default App = () => {
   }
  useEffect(()=>{
     getData()
-    // requestUserPermission()
-    // NotificationLister()
+    getDeviceId();
  },[])
 
 

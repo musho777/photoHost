@@ -1,12 +1,16 @@
 import {useState} from 'react';
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
+import { useDispatch } from 'react-redux';
 import {CommentLikeSvg} from '../assets/svg/Svgs';
+import { LikeCommentAction } from '../store/action/action';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 
-export const CommentBlock = ({img, text, heshtegs, name, owner, ansswer}) => {
-  const [liked, setLiked] = useState(false);
-  const [likeCount,setLikeCount] = useState(10)
+export const CommentBlock = ({text, heshtegs, isLiked, owner, ansswer,user,like_count,id,token,ownerName,userImg}) => {
+  const [liked, setLiked] = useState(isLiked);
+  const [likeCount,setLikeCount] = useState(+like_count)
+  const dispatch = useDispatch()
+  console.log(owner)
   return (
     <View
       style={[
@@ -17,12 +21,12 @@ export const CommentBlock = ({img, text, heshtegs, name, owner, ansswer}) => {
       <View style={owner && styles.imgBlock}>
         <Image
           style={ansswer ? styles.answerImg : styles.img}
-          source={require('../assets/img/user.png')}
+          source={{uri: `https://chamba.justcode.am/uploads/${owner ?userImg:user?.avatar}`}}
         />
       </View>
       <View style={[{marginLeft: 10}, owner ? {width: '80%'} : {width: '75%'}]}>
         <Text style={Styles.eslipesMedium13}>
-          <Text style={Styles.darkMedium13}>alexander: </Text>
+          <Text style={Styles.darkMedium13}>{owner?ownerName:user?.name}: </Text>
           {text}
         </Text>
         <View style={Styles.flexAlignItems}>
@@ -48,11 +52,13 @@ export const CommentBlock = ({img, text, heshtegs, name, owner, ansswer}) => {
             if(liked){
               setLikeCount(likeCount-1)
               setLiked(false)
+              
             }
             else {
               setLikeCount(likeCount+1)
               setLiked(true)
             }
+            dispatch(LikeCommentAction({comment_id:id},token))
           }
             }>
             <CommentLikeSvg liked={liked} />

@@ -194,3 +194,9 @@ export const StartAddComment = () =>{
         type:'StartAddComment'
     }
 }
+
+export const StartGetPostComment = () =>{
+    return {
+        type:''
+    }
+}

@@ -223,3 +223,10 @@ export const SuccessAddComment = (data) =>{
         data
     }
 }
+
+export const SuccessGetPostComment = (data) =>{
+    return {
+        type:'SuccessGetPostComment',
+        data
+    }
+}

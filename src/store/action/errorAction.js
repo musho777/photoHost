@@ -226,3 +226,9 @@ export const ErrorAddComment = (data) =>{
         data
     }
 } 
+export const ErrorGetPostComment = (data) =>{
+    return {
+        type:'ErrorGetPostComment',
+        data
+    }
+}
