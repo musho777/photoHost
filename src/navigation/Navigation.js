@@ -10,8 +10,11 @@ import {AppColors} from '../styles/AppColors';
 import {TabNavigation} from './TabNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {useDispatch, useSelector} from 'react-redux';
+import DeviceInfo from 'react-native-device-info';
+
 import {
   AddMsgAction,
+  DeviceIdAction,
   getUserInfoAction,
   LogoutAction,
   NewMsgAction,
@@ -31,6 +34,7 @@ import {SinglPageScreen} from '../screens/SinglePage/SinglPage';
 import {EditProfilScreen} from '../screens/Profile/EditProfilScreen';
 import {EditPostScreen} from '../screens/SinglePage/EditPostScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default Navigation = ({token, initialRouteName}) => {
   const dispatch = useDispatch();
@@ -67,6 +71,25 @@ export default Navigation = ({token, initialRouteName}) => {
     Pushers();
     getData();
   }, [token]);
+
+
+  const getNotificationToken= async () => {
+    const fcmtoken = await  AsyncStorage.getItem('fcmtoken')
+    const deviceId = await DeviceInfo.getUniqueId();
+    dispatch(DeviceIdAction({
+      device_id:fcmtoken,
+      phone_code:deviceId,
+    },token))
+  };
+  
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getNotificationToken()
+    }, 15 * 60 * 1000 );
+    return () => clearInterval(interval);
+  }, []);
+  
 
   const Stack = createStackNavigator();
   const MyTheme = {

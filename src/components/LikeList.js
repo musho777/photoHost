@@ -22,7 +22,6 @@ export const LikeList = forwardRef(
     const [page, setPage] = useState(1);
     const dispatch = useDispatch();
     useEffect(() => {
-      console.log(openLike);
       if (openLike && !getPostLike.data.length) {
         dispatch(GetPostLikeAction({post_id: id}, token, 1));
       }

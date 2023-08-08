@@ -1203,7 +1203,6 @@ export const EditPostAction = (data,token) =>{
 }
 
 export const GetPostLikeAction = (data,token,page) =>{
-  console.log('889')
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1220,7 +1219,6 @@ export const GetPostLikeAction = (data,token,page) =>{
     fetch(`${Api}/get_user_liked_post?page=${page}`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if(r.status){
           dispatch(SuccessGetPostLike(r))
         }
@@ -1235,6 +1233,7 @@ export const GetPostLikeAction = (data,token,page) =>{
 }
 
 export const DeviceIdAction = (data,token) =>{
+  console.log(data)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);

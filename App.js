@@ -5,12 +5,10 @@ import {Provider} from 'react-redux';
 import {store} from './src/store/configStore';
 import { useState,useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DeviceInfo from 'react-native-device-info';
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
 import { NotificationLister, requestUserPermission } from './src/utils/pushnotification_helper';
 export default App = () => {
-
   const firebaseConfig = {
     apiKey:"AIzaSyDeqDpmN8h9Zr2EkzcMlyZr-ddq_HkRZAc",
     authDomain: "https://chamba-f5697-default-rtdb.firebaseio.com",
@@ -37,12 +35,15 @@ export default App = () => {
       }
     }, []);
 
-  const getDeviceId = async () => {
-    const deviceId = await DeviceInfo.getUniqueId();
-  };
+  
+
+
+
   const [initialRouteName, setInitialRouteName] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const  [token,setToken] = useState('')
+  const [token,setToken] = useState('')
+
+
   async function getData() {
     const token = await AsyncStorage.getItem('token')
     setToken(token)
@@ -54,10 +55,17 @@ export default App = () => {
     }
     setIsLoading(false)
   }
+
+
+
+
+
+
  useEffect(()=>{
     getData()
-    getDeviceId();
  },[])
+
+
 
 
  if(!isLoading){
