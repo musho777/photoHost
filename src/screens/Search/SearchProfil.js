@@ -33,7 +33,7 @@ export const SearchProfil = ({navigation, route}) => {
     dispatch(GetPostsAction({user_id: route.params.id}, staticdata.token, 1));
 
   }, []);
-
+  console.log( route.params.id)
   const sendMsg = () =>{
     navigation.navigate('ChatScreen',{id:singlPage.data.id})
     // dispatch(GetSinglePageChatAction())

@@ -28,8 +28,9 @@ import {FollowersScreen} from '../screens/Profile/FollowersScreen';
 import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
 import {CheckBlack} from '../../CheckBlack';
 import {SinglPageScreen} from '../screens/SinglePage/SinglPage';
-import { EditProfilScreen } from '../screens/Profile/EditProfilScreen';
-import { EditPostScreen } from '../screens/SinglePage/EditPostScreen';
+import {EditProfilScreen} from '../screens/Profile/EditProfilScreen';
+import {EditPostScreen} from '../screens/SinglePage/EditPostScreen';
+import { SearchProfil } from '../screens/Search/SearchProfil';
 
 export default Navigation = ({token, initialRouteName}) => {
   const dispatch = useDispatch();
@@ -152,6 +153,13 @@ export default Navigation = ({token, initialRouteName}) => {
           <Stack.Screen
             name="EditPostScreen"
             component={EditPostScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="SearchProfil"
+            component={SearchProfil}
             options={{
               headerShown: false,
             }}

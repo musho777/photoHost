@@ -1,5 +1,4 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
 import {
   AddSvg,
   ChatSvg,
@@ -7,19 +6,12 @@ import {
   SearchSvg,
   UserSvg,
 } from '../assets/svg/TabBarSvg';
-import {HomeHeader} from '../headers/HomeHeader';
-import {HomeScreen} from '../screens/Home/HomeScreen';
-import {SearchScreen} from '../screens/Search/SearchScreen';
-import { AppColors } from '../styles/AppColors';
+
 import { ChatNavigation } from './ChatNavigation';
 import { SearchNavigation } from './SearchNavigation';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { ProfileNavigation } from './ProfileNavigation';
-import { SwipeTabProfileNavigation } from './SwipeTabProfileNavigation';
-import { ProfileScreen } from '../screens/Profile/ProfileScreen';
-import { ProflHeader } from '../headers/ProfileHeader';
 import { AddImg } from '../screens/AddImg/AddImg';
-import { ImageHeader } from '../headers/ImageHeader';
 import { HomeNavigation } from './HomeNavigation';
 
 

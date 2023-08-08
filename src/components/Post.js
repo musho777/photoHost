@@ -1,3 +1,4 @@
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import {useCallback, useMemo, useRef, useState} from 'react';
 import {
   View,
@@ -16,6 +17,7 @@ import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 import {BootomModal} from './BootomSheet';
 import { Comments } from './Comment';
+import { LikeList } from './LikeList';
 import {Slider} from './Slider';
 
 const windowWidth = Dimensions.get('window').width;
@@ -29,8 +31,15 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
   const staticdata = useSelector(st => st.static);
 
   const bottomSheetRef = useRef(null);
+  const likeRef = useRef(null)
+  const snapPointsLike = useMemo(() => ['50%'], []);
+
   const snapPoints = useMemo(() => ['25%'], []);
   const handlePresentModalPress = useCallback(() => {bottomSheetRef.current?.present();}, []);
+  const handlePresentModalPressLike = useCallback(() => {
+    likeRef.current?.present();
+  }, []);
+  const [openLike,setOpenLike] = useState(false)
   const [comment,setComment] = useState(false)
   const [book,setBook] = useState(isBook)
   const dispatch = useDispatch()
@@ -58,13 +67,14 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
 
 
   const addToBook = () =>{
-    // let item =  [...book]
-    // item.push()
     bottomSheetRef.current?.close();
     dispatch(AddInBookAction({'post_id':id},staticdata.token))
     setBook(!book)
   }
-
+  const CloseLike = () =>{
+    likeRef.current?.close();
+    setOpenLike(false)
+  }
   return (
     <Shadow
       style={{width: '100%', marginBottom: 20, borderRadius: 10}}
@@ -104,7 +114,13 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
               <TouchableOpacity onPress={()=>{LikePost()}}>
                 {isLiked ?<Heart />:<NotLineSvg />}
               </TouchableOpacity>
-              <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>{likedCount}</Text>
+              <TouchableOpacity onPress={() =>{
+                setOpenLike(true)
+                handlePresentModalPressLike()
+              } 
+              }>
+              <Text style={[Styles.darkMedium14, {marginLeft: 15}]}>{likedCount}</Text>
+              </TouchableOpacity>
             </View>
             <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
               <TouchableOpacity onPress={()=>setComment(true)}>
@@ -137,15 +153,17 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
             </TouchableOpacity>
           </View>
         </BootomModal>
+
       </View>
-      <Comments 
-        userImg = {userImg}
-        userName = {userName}
-        description = {description}
-        parentId= {id} 
-        visible={comment} 
-        close = {()=>setComment(false)}
-      />
+      <LikeList close = {()=>CloseLike()} count = {likedCount} openLike = {openLike} token = {staticdata.token} id = {id} ref={likeRef} snapPoints = {snapPointsLike} />
+        <Comments 
+          userImg = {userImg}
+          userName = {userName}
+          description = {description}
+          parentId= {id} 
+          visible={comment} 
+          close = {()=>setComment(false)}
+        />
     </Shadow>
   );
 };
