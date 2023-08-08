@@ -197,6 +197,6 @@ export const StartAddComment = () =>{
 
 export const StartGetPostComment = () =>{
     return {
-        type:''
+        type:'StartGetPostComment'
     }
 }

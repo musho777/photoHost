@@ -1,75 +1,89 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {CommentLikeSvg} from '../assets/svg/Svgs';
-import { LikeCommentAction } from '../store/action/action';
+import {LikeCommentAction} from '../store/action/action';
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
+import {CommentItem} from './CommentItem';
 
-export const CommentBlock = ({text, heshtegs, isLiked, owner, ansswer,user,like_count,id,token,ownerName,userImg}) => {
+export const CommentBlock = ({
+  text,
+  isLiked,
+  owner,
+  ansswer,
+  user,
+  like_count,
+  id,
+  token,
+  ownerName,
+  userImg,
+  onPressAnsswer,
+  replay,
+  replay_count
+}) => {
   const [liked, setLiked] = useState(isLiked);
-  const [likeCount,setLikeCount] = useState(+like_count)
-  const dispatch = useDispatch()
-  console.log(owner)
+  const [likeCount, setLikeCount] = useState(+like_count);
+  const dispatch = useDispatch();
+  const [comentReplay, setComentReplay] = useState([]);
+  const [showAnswrs, setShowAnswers] = useState(false);
+  const staticdata = useSelector(st => st.static);
+
+  const ShowComment = (data, count) => {
+    let item = [...comentReplay];
+    data?.map((elm, i) => {
+      item.push({replay: elm, count: count});
+      setComentReplay(item);
+    });
+    data?.map((elm, i) => {
+      if (elm?.replay?.length) {
+        ShowComment(data.replay, count++);
+      }
+    });
+  };
+  useEffect(() => {
+    ShowComment(replay, 1);
+  }, []);
   return (
-    <View
-      style={[
-        Styles.flexAlignItems,
-        {alignItems: 'flex-start', marginTop: 20},
-        ansswer && {marginLeft: 30},
-      ]}>
-      <View style={owner && styles.imgBlock}>
-        <Image
-          style={ansswer ? styles.answerImg : styles.img}
-          source={{uri: `https://chamba.justcode.am/uploads/${owner ?userImg:user?.avatar}`}}
-        />
-      </View>
-      <View style={[{marginLeft: 10}, owner ? {width: '80%'} : {width: '75%'}]}>
-        <Text style={Styles.eslipesMedium13}>
-          <Text style={Styles.darkMedium13}>{owner?ownerName:user?.name}: </Text>
-          {text}
-        </Text>
-        <View style={Styles.flexAlignItems}>
-          {heshtegs?.map((elm, i) => (
-            <Text key={i} style={[Styles.neonMedium13, {marginRight: 5}]}>
-              {elm}
-            </Text>
-          ))}
-        </View>
-        {!owner && (
-          <View style={{flexDirection: 'row', marginTop: 5}}>
-            <Text style={{marginRight: 30}}>4 ч.</Text>
-            <TouchableOpacity>
-              <Text>Ответить</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+    <View>
+      <CommentItem
+        text={text}
+        isLiked={isLiked}
+        owner={owner}
+        ansswer={ansswer}
+        user={user}
+        like_count={like_count}
+        id={id}
+        token={token}
+        ownerName={ownerName}
+        userImg={userImg}
+        onPressAnsswer={onPressAnsswer}
+        replay={replay}
+      />
+      {showAnswrs &&
+        comentReplay.map((elm, i) => {
+          return (
+            <CommentItem
+              key={i}
+              text={elm.replay.comment}
+              owner={false}
+              ansswer={true}
+              replay={elm.replay.replay}
+              user={elm.replay.user}
+              like_count={elm.replay.likes_count}
+              isLiked={elm.replay.like_auth_user.length}
+              id={elm.replay.id}
+              token={staticdata.token}
+            />
+          );
+        })}
       {!owner && (
-        <View style={[styles.like]}>
-          <TouchableOpacity onPress={() => 
-          {
-            if(liked){
-              setLikeCount(likeCount-1)
-              setLiked(false)
-              
-            }
-            else {
-              setLikeCount(likeCount+1)
-              setLiked(true)
-            }
-            dispatch(LikeCommentAction({comment_id:id},token))
-          }
-            }>
-            <CommentLikeSvg liked={liked} />
-          </TouchableOpacity>
-          <Text
-            style={[
-              [Styles.eslipesMedium10, {textAlign: 'center', marginTop: -5}],
-            ]}>
-            {likeCount}
-          </Text>
-        </View>
+        <TouchableOpacity onPress={() => setShowAnswers(!showAnswrs)}>
+         {replay_count !=0  &&<Text
+            style={[Styles.balihaiMedium9, {marginLeft: 70, marginTop: 20}]}>
+            {showAnswrs ? 'Скрыть ответы' : `Смотреть ещё ${replay_count} ответа`}
+          </Text>}
+        </TouchableOpacity>
       )}
     </View>
   );

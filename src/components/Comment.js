@@ -23,11 +23,11 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState(1);
+  const [senderName,setSenderNAme ] = useState('')
   const getComments = useSelector(st => st.getComments);
   const [data, setData] = useState([]);
-  const user = useSelector(st => st.user);
+  const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (visible) {
       dispatch(GelPostCommentsAction({post_id: parentId}, staticdata.token, 1));
@@ -35,21 +35,40 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
   }, [visible]);
 
   const sendCommentFunction = () => {
+    let item = [...data]
+    let send = sendComment
+    if(senderName){
+      let regex = new RegExp(senderName, "gi");
+      send = originalString.replace(regex, "");
+    }
     dispatch(
       AddCommentAction(
         {
-          comment: sendComment,
+          comment: send,
           parent_id: parenId,
           post_id: parentId,
         },
         staticdata.token,
       ),
     );
+    setData(item)
+    setParentId(null)
+    dispatch(GelPostCommentsAction({post_id: parentId}, staticdata.token, page));
+    setSendCommet('')
   };
-  console.log(getComments.data);
+
+
   useEffect(() => {
     setData(getComments.data);
   }, [getComments.data]);
+
+
+  const Answer = (e) =>{
+    setParentId(e.id)
+    senderName(e.name+":")
+    setSenderNAme(e.name+":")
+  }
+
   const renderItem = ({item, index}) => {
     return (
       <View style={{marginVertical: 20}}>
@@ -62,14 +81,12 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
           id = {item.id}
           token = {staticdata.token}
           owner = {false}
+          replay_count = {item.replay_count}
+          onPressAnsswer = {(e)=>{
+            Answer(e)
+          }}
         />
-        {showAnswrs && <CommentBlock ansswer text={'☺'} />}
-        <TouchableOpacity onPress={() => setShowAnswers(!showAnswrs)}>
-          <Text
-            style={[Styles.balihaiMedium9, {marginLeft: 70, marginTop: 20}]}>
-            {showAnswrs ? 'Скрыть ответы' : 'Смотреть ещё 1 ответа'}
-          </Text>
-        </TouchableOpacity>
+      
       </View>
     );
   };
@@ -91,74 +108,77 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
               userImg = {userImg}
             />
           </View>
-          <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={getComments?.loading}
-                onRefresh={() => {
-                  dispatch(
-                    GelPostCommentsAction(
-                      {post_id: parentId},
-                      staticdata.token,
-                      1,
-                    ),
-                  );
+          <View style = {{height:'70%'}}>
+              <FlatList
+              showsVerticalScrollIndicator = {false}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={getComments?.loading}
+                    onRefresh={() => {
+                      dispatch(
+                        GelPostCommentsAction(
+                          {post_id: parentId},
+                          staticdata.token,
+                          1,
+                        ),
+                      );
+                    }}
+                  />
+                }
+                data={data}
+                enableEmptySections={true}
+                ListEmptyComponent={() =>
+                  !getComments?.loading && (
+                    <Text
+                      style={[
+                        Styles.darkMedium16,
+                        {marginTop: 40, textAlign: 'center'},
+                      ]}>
+                      Черный список пуст
+                    </Text>
+                  )
+                }
+                renderItem={renderItem}
+                onEndReached={() => {
+                  if (getComments?.nextPage) {
+                    let p = page + 1;
+                    dispatch(
+                      GelPostCommentsAction(
+                        {post_id: parentId},
+                        staticdata.token,
+                        p,
+                      ),
+                    );
+                    setPage(p);
+                  }
                 }}
               />
-            }
-            data={data}
-            enableEmptySections={true}
-            ListEmptyComponent={() =>
-              !getComments?.loading && (
-                <Text
-                  style={[
-                    Styles.darkMedium16,
-                    {marginTop: 40, textAlign: 'center'},
-                  ]}>
-                  Черный список пуст
-                </Text>
-              )
-            }
-            renderItem={renderItem}
-            onEndReached={() => {
-              if (getComments?.nextPage) {
-                let p = page + 1;
-                dispatch(
-                  GelPostCommentsAction(
-                    {post_id: parentId},
-                    staticdata.token,
-                    p,
-                  ),
-                );
-                setPage(p);
-              }
-            }}
-          />
-          <View>
+          </View>
             <View
               style={{
                 position: 'absolute',
                 bottom: 30,
                 width: '100%',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                justifyContent: 'center',
                 flexDirection: 'row',
               }}>
-              <Image
-                style={{width: 40, height: 40, borderRadius: 50}}
-                source={require('../assets/img/user.png')}
-              />
-              <Input
-                send
-                sendCom={() => sendCommentFunction()}
-                value={sendComment}
-                onChange={e => setSendCommet(e)}
-                width={'80%'}
-                placeholder="Введите текст"
-              />
+                <Image
+                  style={{width: 40, height: 40, borderRadius: 50,marginHorizontal:20}}
+                  source={{
+                    uri: `https://chamba.justcode.am/uploads/${user.data.avatar}`,
+                  }}
+                />
+                <Input
+                  send
+                  sendCom={() => sendCommentFunction()}
+                  value={sendComment}
+                  onChange={e => setSendCommet(e)}
+                  width={'80%'}
+                  placeholder="Введите текст"
+                />
             </View>
           </View>
-        </View>
       </Modal>
     </View>
   );

@@ -1071,9 +1071,7 @@ export const AddCommentAction = (data,token) =>{
     fetch(`${Api}/add_comment`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if(r.status){
-
           dispatch(SuccessAddComment())
         }
         else {
@@ -1082,7 +1080,6 @@ export const AddCommentAction = (data,token) =>{
       })
       .catch(error => {
         dispatch(ErrorAddComment('server error'))
-        console.log(error)
       });
   };
 }
@@ -1111,7 +1108,6 @@ export const GelPostCommentsAction = (data,token,page) =>{
       })
       .catch(error => {
         dispatch(ErrorGetPostComment('server error'))
-        console.log(error)
       });
   };
 }
