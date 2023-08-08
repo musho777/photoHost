@@ -232,3 +232,9 @@ export const ErrorGetPostComment = (data) =>{
         data
     }
 }
+export const ErrorGetSinglPost = (data) =>{
+    return {
+        type:'ErrorGetSinglPost',
+        data
+    }
+}

@@ -9,8 +9,7 @@ import {
 import {AppColors} from '../styles/AppColors';
 
 const windowWidth = Dimensions.get('window').width;
-export const Slider = ({photo}) => {
-  const data = [{}, {}, {}];
+export const Slider = ({photo,single}) => {
   const [active, setActive] = useState(0);
   return (
     <View>
@@ -29,7 +28,7 @@ export const Slider = ({photo}) => {
         }}
         renderItem={({item, index}) => {
           return (
-            <View style={styles.img}>
+            <View style={!single ?styles.img:{...styles.img,width:windowWidth,height:350}}>
               <Image
                 style={[
                   {marginVertical: 10, width: '100%', height: '100%'},

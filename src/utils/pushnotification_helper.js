@@ -8,7 +8,6 @@ export async function requestUserPermission() {
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
   if (enabled) {
-    console.log('Authorization status:', authStatus);
     GetFCMToke()
   }
 }
@@ -18,7 +17,6 @@ async function GetFCMToke(){
     try {
         let fcmtoken = await messaging().getToken()
         if(fcmtoken){
-          console.log(fcmtoken)
             AsyncStorage.setItem('fcmtoken',fcmtoken)
         }else {
 
@@ -41,7 +39,6 @@ export const NotificationLister = () =>{
     messaging()
     .getInitialNotification()
     .then(remoteMessage => {
-      console.log(remoteMessage,'remoteMessage')
       if (remoteMessage) {
         console.log(
           'Notification caused app to open from quit state:',

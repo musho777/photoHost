@@ -230,3 +230,10 @@ export const SuccessGetPostComment = (data) =>{
         data
     }
 }
+
+export const SuccessGetSinglPost = (data) =>{
+    return {
+        type:"SuccessGetSinglPost",
+        data
+    }
+}

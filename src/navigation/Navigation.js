@@ -1,8 +1,6 @@
-import {useEffect,useState} from 'react';
+import {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  createStackNavigator,
-} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {Header} from '../headers/Header';
 import {LoginScreen} from '../screens/auth/LoginScreen';
 import {NewPassword} from '../screens/auth/NewPassword';
@@ -26,13 +24,14 @@ import {
   PusherEvent,
 } from '@pusher/pusher-websocket-react-native';
 import {ChatScreen} from '../screens/chat/ChatScreen';
-import { FollowersScreen } from '../screens/Profile/FollowersScreen';
-import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
-import { CheckBlack } from '../../CheckBlack';
+import {FollowersScreen} from '../screens/Profile/FollowersScreen';
+import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
+import {CheckBlack} from '../../CheckBlack';
+import {SinglPageScreen} from '../screens/SinglePage/SinglPage';
 
 export default Navigation = ({token, initialRouteName}) => {
   const dispatch = useDispatch();
-  const [i,setI] = useState(initialRouteName)
+  const [i, setI] = useState(initialRouteName);
   function getData() {
     dispatch(getUserInfoAction(token));
     dispatch(setToken(token));
@@ -79,7 +78,6 @@ export default Navigation = ({token, initialRouteName}) => {
   return (
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
-      
         {/* {<CheckBlack token = {token} />} */}
         <Stack.Navigator initialRouteName={i}>
           <Stack.Screen
@@ -142,8 +140,17 @@ export default Navigation = ({token, initialRouteName}) => {
               },
             }}
           />
+          <Stack.Screen
+            name="SinglPageScreen"
+            component={SinglPageScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </BottomSheetModalProvider>
   );
 };
+
+// SinglPageScreen

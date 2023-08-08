@@ -1,9 +1,12 @@
+import { useNavigation } from "@react-navigation/native"
+
 import {View, Dimensions, Image, StyleSheet,Text,ActivityIndicator,TouchableOpacity} from 'react-native';
 import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
 export const Albom = ({data,user,loading,seved}) => {
+  const navigation = useNavigation()
   if(loading){
     return <View style={Styles.loading}>
     <ActivityIndicator size="large" color="#FFC24B" />
@@ -22,7 +25,7 @@ export const Albom = ({data,user,loading,seved}) => {
         {data?.map((elm, i) => {
           if(seved){
             return (
-              <TouchableOpacity>
+              <TouchableOpacity key={i} onPress={()=>navigation.navigate('SinglPageScreen',{id:elm.id})}>
               <Image
                 style={[styles.img,{
                   width: windowWidth / 2 - 25,
@@ -32,20 +35,20 @@ export const Albom = ({data,user,loading,seved}) => {
                 source={{
                   uri: `https://chamba.justcode.am/uploads/${elm.post.photo[0].photo}`,
                 }}
-                key={i}
               />
               </TouchableOpacity>
             );
           }
           else{
             return (
-              <Image
-                style={styles.img}
-                source={{
-                  uri: `https://chamba.justcode.am/uploads/${elm.photo[0].photo}`,
-                }}
-                key={i}
-              />
+              <TouchableOpacity key={i} onPress={()=>navigation.navigate('SinglPageScreen',{id:elm.id})}>
+                  <Image
+                    style={styles.img}
+                    source={{
+                      uri: `https://chamba.justcode.am/uploads/${elm.photo[0].photo}`,
+                    }}
+                  />
+              </TouchableOpacity>
             );
           }
         })}

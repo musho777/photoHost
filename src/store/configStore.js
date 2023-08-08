@@ -21,6 +21,7 @@ import GetPostCommentsReducer from './reducers/getPostCommentsReducer';
 import GetPostsReducer from './reducers/getPostsReducer';
 import GetSinglePageChatReducer from './reducers/getSinglePageChatReducer';
 import GetSinglPage from './reducers/getSinglPage';
+import GetSinglPostReducer from './reducers/getSinglPostReducer';
 import GetUserDataReducer from './reducers/getUserDataReducer';
 import LikePostReducer from './reducers/likePostReducer';
 import LoginReducer from './reducers/loginReducer';
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
     books:GetMyBooksReducer,
     notification:GetNotificationReducer,
     getComments:GetPostCommentsReducer,
+    getSinglPage:GetSinglPostReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );

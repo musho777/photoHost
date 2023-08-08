@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { compose } from 'redux';
 import {
   ErrorAddBlackList,
   ErrorAddComment,
@@ -26,6 +27,7 @@ import {
   ErrorGetPosts,
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
+  ErrorGetSinglPost,
   ErrorGetUserData,
   ErrorLikePost,
   ErrorLogin,
@@ -71,6 +73,7 @@ import {
   StartGetNotification,
   StartAddComment,
   StartGetPostComment,
+  StartGetSingLPost,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -97,6 +100,7 @@ import {
   SuccessGetPosts,
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
+  SuccessGetSinglPost,
   SuccessGetUserData,
   SuccessLogin,
   SuccessLogout,
@@ -1131,6 +1135,35 @@ export const LikeCommentAction = (data,token) =>{
       })
       .catch(error => {
         console.log(error)
+      });
+  };
+}
+
+export const GetSinglPostAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartGetSingLPost());
+    fetch(`${Api}/single_page_post`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if(r.status){
+          dispatch(SuccessGetSinglPost(r.data))
+        }
+        else {
+          dispatch(ErrorGetSinglPost('server error'))
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        dispatch(ErrorGetSinglPost('server error'))
       });
   };
 }

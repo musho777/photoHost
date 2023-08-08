@@ -200,3 +200,9 @@ export const StartGetPostComment = () =>{
         type:'StartGetPostComment'
     }
 }
+
+export const StartGetSingLPost = () =>{
+    return {
+        type:'StartGetSingLPost'
+    }
+}
