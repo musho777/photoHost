@@ -9,6 +9,7 @@ import ConfirmForgotPasswordReducer from './reducers/confirmForgotPasswordReduce
 import ConfirmRegisetReducer from './reducers/confirmRegisetReducer';
 import CreatePostReducer from './reducers/createPostReducer';
 import DeletOtherPeopleReducer from './reducers/deletOtherPeopleReducer';
+import EditPostReducer from './reducers/editPostReducer';
 import ForgotPasswordReducer from './reducers/forgotPasswordReducer';
 import GetBlackListReducer from './reducers/getBlackListReducer';
 import GetFollowerReducer from './reducers/getFollowerReducer';
@@ -18,6 +19,7 @@ import GetMyBooksReducer from './reducers/getMyBooksReducer';
 import GetMyChatRoomReducer from './reducers/getMyChatRoomReducer';
 import GetNotificationReducer from './reducers/getNotificationReducer';
 import GetPostCommentsReducer from './reducers/getPostCommentsReducer';
+import GetPostLikeReducer from './reducers/getPostLikeReducer';
 import GetPostsReducer from './reducers/getPostsReducer';
 import GetSinglePageChatReducer from './reducers/getSinglePageChatReducer';
 import GetSinglPage from './reducers/getSinglPage';
@@ -60,6 +62,8 @@ const rootReducer = combineReducers({
     notification:GetNotificationReducer,
     getComments:GetPostCommentsReducer,
     getSinglPage:GetSinglPostReducer,
+    editPost:EditPostReducer,
+    getPostLike:GetPostLikeReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk) );

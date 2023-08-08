@@ -238,3 +238,17 @@ export const ErrorGetSinglPost = (data) =>{
         data
     }
 }
+
+export const ErrorEditPost = (data) =>{
+    return {
+        type:'ErrorEditPost',
+        data
+    }
+} 
+
+export const ErrorGetPostLike = (data) =>{
+    return {
+        type:'ErrorGetPostLike',
+        data
+    }
+}

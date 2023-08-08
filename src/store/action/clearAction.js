@@ -54,3 +54,9 @@ export const ClearCreatPost = () =>{
         type:'clearCreatPost'
     }
 }
+
+export const ClearEditPost = () =>{
+    return {
+        type:'ClearEditPost'
+    }
+}

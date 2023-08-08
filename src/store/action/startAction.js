@@ -206,3 +206,15 @@ export const StartGetSingLPost = () =>{
         type:'StartGetSingLPost'
     }
 }
+
+export const StartEditPost = () =>{
+    return {
+        type:"StartEditPost"
+    }
+}
+
+export const StartGetPostLike = () =>{
+    return {
+        type:"StartGetPostLike"
+    }
+}

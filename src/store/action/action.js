@@ -15,6 +15,7 @@ import {
   ErrorConfirmRegisterCode,
   ErrorCreatePost,
   ErrorDeleteOtherPople,
+  ErrorEditPost,
   ErrorForgotPassword,
   ErrorGetBlackList,
   ErrorGetFollower,
@@ -24,6 +25,7 @@ import {
   ErrorGetMyChatRoom,
   ErrorGetNotification,
   ErrorGetPostComment,
+  ErrorGetPostLike,
   ErrorGetPosts,
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
@@ -74,6 +76,8 @@ import {
   StartAddComment,
   StartGetPostComment,
   StartGetSingLPost,
+  StartEditPost,
+  StartGetPostLike,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -89,6 +93,7 @@ import {
   SuccessConfirmRegisterCode,
   SuccessCreatePost,
   SuccessDeleteOtherPople,
+  SuccessEditPost,
   SuccessForgotPassword,
   SuccessGetBlackList,
   SuccessGetFollower,
@@ -97,6 +102,7 @@ import {
   SuccessGetMyChatRoom,
   SuccessGetNotification,
   SuccessGetPostComment,
+  SuccessGetPostLike,
   SuccessGetPosts,
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
@@ -1166,4 +1172,82 @@ export const GetSinglPostAction = (data,token) =>{
         dispatch(ErrorGetSinglPost('server error'))
       });
   };
+}
+
+export const EditPostAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartEditPost());
+    fetch(`${Api}/edit_post`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if(r.status){
+          dispatch(SuccessEditPost(r.data))
+        }
+        else {
+          dispatch(ErrorEditPost('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorEditPost('server error'))
+      });
+  }; 
+}
+
+export const GetPostLikeAction = (data,token,page) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartGetPostLike());
+    fetch(`${Api}/get_user_liked_post?page=${page}`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if(r.status){
+          dispatch(SuccessGetPostLike(r))
+        }
+        else {
+          dispatch(ErrorGetPostLike('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetPostLike('server error'))
+      });
+  };
+}
+
+export const DeviceIdAction = (data,token) =>{
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    fetch(`${Api}/add_device_id`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  }; 
 }

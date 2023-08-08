@@ -237,3 +237,17 @@ export const SuccessGetSinglPost = (data) =>{
         data
     }
 }
+
+export const SuccessEditPost = (data) =>{
+    return {
+        type:'SuccessEditPost',
+        data
+    }
+} 
+
+export const SuccessGetPostLike = (data) =>{
+    return {
+        type:'SuccessGetPostLike',
+        data
+    }
+}

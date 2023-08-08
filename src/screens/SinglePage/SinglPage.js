@@ -27,6 +27,7 @@ import { Comments } from '../../components/Comment';
 export const SinglPageScreen = ({route, navigation}) => {
   const staticdata = useSelector(st => st.static);
   const singlData = useSelector(st => st.getSinglPage);
+  const user = useSelector((st)=>st.userData)
   const [book, setBook] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
@@ -34,13 +35,11 @@ export const SinglPageScreen = ({route, navigation}) => {
 
   const id = route.params.id;
   const bottomSheetRef = useRef(null);
-
   const getComments = useSelector(st => st.getComments);
-
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
-  const snapPoints = useMemo(() => ['25%'], []);
+  const snapPoints = useMemo(() => ['30%'], []);
 
   const LikePost = () => {
     if (isLiked) {
@@ -58,11 +57,10 @@ export const SinglPageScreen = ({route, navigation}) => {
       ),
     );
   };
-
   const addToBlackList = () => {
-    addToblack(userId);
+    addToblack(user.data.id);
     bottomSheetRef.current?.close();
-    dispatch(AddBlackListAction({user_id: userId}, staticdata.token));
+    dispatch(AddBlackListAction({user_id: user.data.id}, staticdata.token));
   };
 
   const addToBook = () => {
@@ -203,6 +201,14 @@ export const SinglPageScreen = ({route, navigation}) => {
                 onPress={() => addToBlackList()}>
                 <Text style={Styles.darkRegular14}>В чёрный список</Text>
               </TouchableOpacity>
+              {user?.data?.id == singlData?.data?.user?.id && <TouchableOpacity
+                style={{marginBottom: 20}}
+                onPress={() => {
+                  bottomSheetRef.current?.close();
+                  navigation.navigate('EditPostScreen',{description:singlData.data.description,id:singlData.data.id})
+                }}>
+                <Text style={Styles.darkRegular14}>Редактировать</Text>
+              </TouchableOpacity>}
             </View>
           </BootomModal>
         </View>
@@ -210,3 +216,5 @@ export const SinglPageScreen = ({route, navigation}) => {
     </SafeAreaView>
   );
 };
+
+// Редактировать

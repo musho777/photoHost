@@ -31,7 +31,7 @@ export const HeaderWhiteTitle = ({
       ) : (
         <View style={{position: 'absolute', right: 10}}>
           {check && (
-            <TouchableOpacity onPress={onCheck}>
+            <TouchableOpacity disabled = {loading} onPress={onCheck}>
               <CheckMarkSvg />
             </TouchableOpacity>
           )}
