@@ -19,12 +19,14 @@ const initialState = {
       case 'SuccessGetSinglePageChat':
         item.status = true;
         item.error = '';
-        if( item.nextPage !=action.data.data.next_page_url ){
-          item.message = [...item.message, ...action.data.data.data.reverse()];
+        if(action.data.data.length){
+          if( item.nextPage !=action.data?.data?.next_page_url ){
+            item.message = [...item.message, ...action.data?.data?.data?.reverse()];
+          }
+          item.nextPage = action.data?.data?.next_page_url
         }
-        item.nextPage = action.data.data.next_page_url
         item.loading = false;
-        item.data = action.data.receiver_user
+        item.data = action?.data?.receiver_user
         break;
       case 'ErrorGetSinglePageChat':
         item.error = action.data;

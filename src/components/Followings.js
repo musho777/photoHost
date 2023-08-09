@@ -78,7 +78,7 @@ export const Followings = ({id}) => {
           data={followers}
           enableEmptySections={true}
           ListEmptyComponent = {()=>(
-            !getFollowers?.loading && <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>{data?"Не найдено":'У Вас нет подписчиков'}</Text>
+            !getFollowers?.loading && <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>{data?"Не найдено":'Нет подписчиков'}</Text>
           )}
           renderItem={renderItem}
           onEndReached={() => {

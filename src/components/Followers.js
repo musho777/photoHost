@@ -84,7 +84,7 @@ export const Followers = ({id}) => {
           />
         }
         ListEmptyComponent = {()=>
-           <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>{data?'Не найдено':'У Вас нет подписок'}</Text>
+           <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>{data?'Не найдено':'Нет подписок'}</Text>
         }
         data={followers}
         enableEmptySections={true}

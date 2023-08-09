@@ -15,6 +15,7 @@ import {MenuSvg} from '../../assets/svg/TabBarSvg';
 import {BootomModal} from '../../components/BootomSheet';
 import {MsgBlock} from '../../components/MsgBlock';
 import {
+  AddBlackListAction,
   GetSinglePageChatAction,
   newMessageAction,
 } from '../../store/action/action';
@@ -26,6 +27,7 @@ export const ChatScreen = ({navigation, route}) => {
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
+  const [addToblackList,setAddToBlackList] = useState('В черный список')
   const user = useSelector(st => st.userData);
 
   const snapPoints = useMemo(() => ['18%'], []);
@@ -41,7 +43,6 @@ export const ChatScreen = ({navigation, route}) => {
       setData(getSinglePageChat?.message);
     }
   }, [getSinglePageChat.message]);
-
   const sendMsgFunction = () => {
     let item = [...data];
     item.unshift({
@@ -72,6 +73,11 @@ export const ChatScreen = ({navigation, route}) => {
       ),
     );
   }, [page]);
+  const addToBlackList = () =>{
+    bottomSheetRef.current?.close();
+    dispatch(AddBlackListAction({'user_id':getSinglePageChat.data.id},staticdata.token))
+    setAddToBlackList('Добавлен в черный список')
+  }
   return (
     <SafeAreaView style={{paddingHorizontal: 15, height: '100%'}}>
       <View
@@ -143,11 +149,11 @@ export const ChatScreen = ({navigation, route}) => {
           <Input
             msg
             placeholder={'Введите текст'}
-            data={getSinglePageChat?.message}
+            data={sendMSg}
             onChange={e => setSendMsg(e)}
             width={'83%'}
             sendMsg={() => sendMsgFunction()}
-            value = {sendMSg}
+            // value = {sendMSg}
           />
         </View>
       </View>
@@ -156,8 +162,8 @@ export const ChatScreen = ({navigation, route}) => {
           <TouchableOpacity style={{marginBottom: 20, marginTop: 20}}>
             <Text style={Styles.darkRegular14}>Удалить переписку</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{marginBottom: 20}}>
-            <Text style={Styles.darkRegular14}>В черный список</Text>
+          <TouchableOpacity style={{marginBottom: 20}} onPress = {()=>addToBlackList()}>
+            <Text style={Styles.darkRegular14}>{addToblackList}</Text>
           </TouchableOpacity>
         </View>
       </BootomModal>

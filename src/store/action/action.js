@@ -707,7 +707,7 @@ export const GetSinglePageChatAction = (data, token, page) => {
       })
       .catch(error => {
         dispatch(ErrorGetSinglePageChat('server error'));
-      });
+      }); 
   };
 };
 
@@ -1168,7 +1168,6 @@ export const GetSinglPostAction = (data,token) =>{
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorGetSinglPost('server error'))
       });
   };
@@ -1233,7 +1232,6 @@ export const GetPostLikeAction = (data,token,page) =>{
 }
 
 export const DeviceIdAction = (data,token) =>{
-  console.log(data)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);

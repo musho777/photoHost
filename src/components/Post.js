@@ -1,4 +1,3 @@
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import {useCallback, useMemo, useRef, useState} from 'react';
 import {
   View,
@@ -41,6 +40,7 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
   const [openLike,setOpenLike] = useState(false)
   const [comment,setComment] = useState(false)
   const [book,setBook] = useState(isBook)
+  const [follow,setFollow] = useState('')
   const dispatch = useDispatch()
   const LikePost = () =>{
     if(isLiked){
@@ -74,6 +74,7 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
     likeRef.current?.close();
     setOpenLike(false)
   }
+
   return (
     <Shadow
       style={{width: '100%', marginBottom: 20, borderRadius: 10}}

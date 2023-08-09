@@ -60,7 +60,6 @@ export const SearchBlock = ({modalVisible,close}) => {
           onPress = {()=>{
             navigation.navigate('SearchProfil',{id:item.id})
             setData('')
-            close()
           }}
           key={item.id}
           name={item.name}

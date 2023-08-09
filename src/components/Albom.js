@@ -25,7 +25,7 @@ export const Albom = ({data,user,loading,seved}) => {
         {data?.map((elm, i) => {
           if(seved){
             return (
-              <TouchableOpacity key={i} onPress={()=>navigation.navigate('SinglPageScreen',{id:elm.id})}>
+              <TouchableOpacity key={i} onPress={()=>navigation.navigate('SinglPageScreen',{id:elm.post?.photo[0]?.post_id})}>
               <Image
                 style={[styles.img,{
                   width: windowWidth / 2 - 25,

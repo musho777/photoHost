@@ -31,7 +31,7 @@ export const SinglPageScreen = ({route, navigation}) => {
   const staticdata = useSelector(st => st.static);
   const singlData = useSelector(st => st.getSinglPage);
   const user = useSelector(st => st.userData);
-  const [book, setBook] = useState(false);
+  const [book, setBook] = useState();
   const [isLiked, setIsLiked] = useState();
   const dispatch = useDispatch();
   const [comment, setComment] = useState(false);
@@ -71,8 +71,8 @@ export const SinglPageScreen = ({route, navigation}) => {
     addToblack(user.data.id);
     bottomSheetRef.current?.close();
     dispatch(AddBlackListAction({user_id: user.data.id}, staticdata.token));
+    navigation.navigate('TabNavigation')
   };
-
   const addToBook = () => {
     bottomSheetRef.current?.close();
     dispatch(AddInBookAction({post_id: id}, staticdata.token));
@@ -91,8 +91,10 @@ export const SinglPageScreen = ({route, navigation}) => {
       );
       setIsLiked(foundElement);
     }
+    setBook()
     setLikeCount(singlData?.data.like_auth_user?.length);
   }, [singlData.data]);
+
 
   if (singlData.loading) {
     return (
@@ -103,7 +105,6 @@ export const SinglPageScreen = ({route, navigation}) => {
   }
 
   const Answer = e => {
-    console.log(e.name,'sss')
     setParentId(e.id);
     setSendCommet(e.name + ':');
     setSenderNAme(e.name + ':');
