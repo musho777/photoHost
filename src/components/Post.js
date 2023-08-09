@@ -29,12 +29,11 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
   const [isLiked,setIsLiked] = useState(liked)
 
   const staticdata = useSelector(st => st.static);
-
+  const user = useSelector((st)=>st.userData)
   const bottomSheetRef = useRef(null);
   const likeRef = useRef(null)
   const snapPointsLike = useMemo(() => ['50%'], []);
-
-  const snapPoints = useMemo(() => ['25%'], []);
+  const snapPoints = useMemo(() => [user.data.id !== userId ?'25%':'15%'], []);
   const handlePresentModalPress = useCallback(() => {bottomSheetRef.current?.present();}, []);
   const handlePresentModalPressLike = useCallback(() => {
     likeRef.current?.present();
@@ -145,12 +144,12 @@ export const Post = ({userImg,userName,description,like,commentCount,view,photo,
             <TouchableOpacity style = {{marginBottom:20,marginTop:20}} onPress = {()=>addToBook()}>
               <Text style = {Styles.darkRegular14}>{book ?'Удалить из закладок':'В закладки'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity  style = {{marginBottom:20}}>
+            {user.data.id !== userId &&<TouchableOpacity  style = {{marginBottom:20}}>
               <Text style = {Styles.darkRegular14}>Подписаться</Text>
-            </TouchableOpacity>
-            <TouchableOpacity  style = {{marginBottom:20}} onPress = {()=>addToBlackList()}>
+            </TouchableOpacity>}
+            {user.data.id !== userId && <TouchableOpacity  style = {{marginBottom:20}} onPress = {()=>addToBlackList()}>
               <Text style = {Styles.darkRegular14}>В чёрный список</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
           </View>
         </BootomModal>
 

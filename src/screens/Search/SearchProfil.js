@@ -13,7 +13,7 @@ import {Albom} from '../../components/Albom';
 import {BackArrow} from '../../assets/svg/Svgs';
 import {Button} from '../../ui/Button';
 import {useDispatch, useSelector} from 'react-redux';
-import {AddDeleteFollowAction, AddDeletFollow, GetPostsAction, GetSinglePageChatAction, GetSinglPageAction} from '../../store/action/action';
+import {AddDeleteFollowAction, AddDeletFollow, GetPostsAction, GetSinglPageAction} from '../../store/action/action';
 
 export const SearchProfil = ({navigation, route}) => {
   const singlPage = useSelector(st => st.singlPage);
@@ -33,7 +33,6 @@ export const SearchProfil = ({navigation, route}) => {
     dispatch(GetPostsAction({user_id: route.params.id}, staticdata.token, 1));
 
   }, []);
-  console.log( route.params.id)
   const sendMsg = () =>{
     navigation.navigate('ChatScreen',{id:singlPage.data.id})
     // dispatch(GetSinglePageChatAction())

@@ -13,6 +13,7 @@ import {HeaderWhiteTitle} from '../../headers/HeaderWhiteTitle.';
 import {CreatPostAction} from '../../store/action/action';
 import {AppColors} from '../../styles/AppColors';
 import {Styles} from '../../styles/Styles';
+import { Button } from '../../ui/Button';
 
 export const AddImg = ({navigation}) => {
   const [uri, setUri] = useState([]);
@@ -60,6 +61,21 @@ export const AddImg = ({navigation}) => {
     dispatch(CreatPostAction(form, staticData.token));
   };
 
+  const addPhoto = () =>{
+      ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+        multiple: true,
+      }).then(image => {
+        let item = [...uri]
+        item = item.concat(image);
+        setUri(item);
+      });
+  }
+
+
+
   const delateFoto = index => {
     let item = [...uri];
     item.splice(index, 1);
@@ -71,7 +87,9 @@ export const AddImg = ({navigation}) => {
         loading={createPost.loading}
         onCheck={() => creatPost()}
         check
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          navigation.navigate('Home')
+        }}
         disabled = {uri.length ===0}
         title={'Новая публикация'}
       />
@@ -94,6 +112,7 @@ export const AddImg = ({navigation}) => {
           );
         })}
       </View>
+
       <View style={styles.textWrapper}>
         <TextInput
           value={description}
@@ -102,6 +121,9 @@ export const AddImg = ({navigation}) => {
           placeholder="Добавить описание"
           placeholderTextColor={'#8C9CAB'}
         />
+      </View>
+      <View style = {{margin:20}}>
+        <Button onPress={()=>addPhoto()} title={'добавить фото'} width={120} />
       </View>
     </View>
   );
@@ -139,4 +161,9 @@ const styles = StyleSheet.create({
     top: -15,
     right: 0,
   },
+  addImgButton:{
+    width:'22%',
+    height:85,
+    borderWidth:1
+  }
 });

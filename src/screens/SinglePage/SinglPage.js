@@ -29,9 +29,10 @@ export const SinglPageScreen = ({route, navigation}) => {
   const singlData = useSelector(st => st.getSinglPage);
   const user = useSelector((st)=>st.userData)
   const [book, setBook] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState();
   const dispatch = useDispatch();
   const [comment,setComment] = useState(false)
+  const [likeCount, setLikeCount] = useState();
 
   const id = route.params.id;
   const bottomSheetRef = useRef(null);
@@ -39,13 +40,13 @@ export const SinglPageScreen = ({route, navigation}) => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
-  const snapPoints = useMemo(() => ['30%'], []);
+  const snapPoints = useMemo(() => [user?.data?.id != singlData?.data?.user?.id?'30%':'20%'], []);
 
   const LikePost = () => {
     if (isLiked) {
-      setLikedCount(likedCount - 1);
+      setLikeCount(likeCount - 1);
     } else {
-      setLikedCount(likedCount + 1);
+      setLikeCount(likeCount + 1);
     }
     setIsLiked(!isLiked);
     dispatch(
@@ -76,9 +77,11 @@ export const SinglPageScreen = ({route, navigation}) => {
 
   useEffect(()=>{
     if(singlData.data){
-        setIsLiked(singlData.data.like_auth_user)
+      const foundElement = singlData?.data.like_auth_user?.find(item => item?.user_id == user?.data?.id);
+        setIsLiked(foundElement)
     }
-  },[singlData])
+    setLikeCount(singlData?.data.like_auth_user?.length)
+  },[singlData.data])
 
   if (singlData.loading) {
     return (
@@ -118,7 +121,7 @@ export const SinglPageScreen = ({route, navigation}) => {
                     {isLiked ? <Heart /> : <NotLineSvg />}
                   </TouchableOpacity>
                   <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>
-                    {singlData.data.like_count}
+                    {likeCount}
                   </Text>
                 </View>
                 <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
@@ -193,14 +196,14 @@ export const SinglPageScreen = ({route, navigation}) => {
                   {book ? 'Удалить из закладок' : 'В закладки'}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={{marginBottom: 20}}>
+              {user?.data?.id != singlData?.data?.user?.id && <TouchableOpacity style={{marginBottom: 20}}>
                 <Text style={Styles.darkRegular14}>Подписаться</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </TouchableOpacity>}
+              {user?.data?.id != singlData?.data?.user?.id && <TouchableOpacity
                 style={{marginBottom: 20}}
                 onPress={() => addToBlackList()}>
                 <Text style={Styles.darkRegular14}>В чёрный список</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>}
               {user?.data?.id == singlData?.data?.user?.id && <TouchableOpacity
                 style={{marginBottom: 20}}
                 onPress={() => {

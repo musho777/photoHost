@@ -24,8 +24,10 @@ export const Followers = ({id}) => {
     setFollowers(item);
   }, [getFollowers?.data]);
   useEffect(() => {
-    dispatch(clearGetFollowersAction());
-    dispatch(GetFollowerAction({search: data, user_id: id}, staticdata.token, page));
+    if(data){
+      dispatch(GetFollowerAction({search: data, user_id: id}, staticdata.token, page));
+      dispatch(clearGetFollowersAction());
+    }
   }, [data]);
 
   const addClick = id => {
@@ -44,7 +46,6 @@ export const Followers = ({id}) => {
           onPress={() => {
             navigation.navigate('SearchProfil', {id: item.followers.id});
             setData('');
-            // close();ss
           }}
           key={item.follower?.id}
           name={item.follower?.name}
