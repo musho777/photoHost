@@ -29,9 +29,7 @@ import {
 import {ChatScreen} from '../screens/chat/ChatScreen';
 import {FollowersScreen} from '../screens/Profile/FollowersScreen';
 import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
-import {CheckBlack} from '../../CheckBlack';
 import {SinglPageScreen} from '../screens/SinglePage/SinglPage';
-import {EditProfilScreen} from '../screens/Profile/EditProfilScreen';
 import {EditPostScreen} from '../screens/SinglePage/EditPostScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
 import AsyncStorage from '@react-native-async-storage/async-storage';

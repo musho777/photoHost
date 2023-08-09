@@ -5,7 +5,6 @@ import {Button} from '../../ui/Button';
 import {Input} from '../../ui/Input';
 import {useDispatch, useSelector} from 'react-redux';
 import {ClearConfirmPasswordAction, ClearLoginAction, LoginAction} from '../../store/action/action';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LoginScreen = ({navigation}) => {
   const [login, setLogin] = useState({error: '', value: ''});
@@ -45,12 +44,8 @@ export const LoginScreen = ({navigation}) => {
       navigation.navigate('TabNavigation')
       setLogin({error: '', value: ''})
       setPasswod({error: '', value: ''})
-      // setToken()
     }
   },[loginData.status])
-  // async function setToken() {
-  //   const data = await AsyncStorage.setItem('token',loginData.token)
-  // }
   return (
     <View style={[Styles.authScreen, {marginTop: 80}]}>
       <Text style={[Styles.darkSemiBold22, {marginBottom: 30}]}>Вход</Text>

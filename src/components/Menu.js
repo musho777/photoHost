@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {BackArrow} from '../assets/svg/Svgs';
 import { LogoutAction } from '../store/action/action';
 import {Styles} from '../styles/Styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Menu = ({visible, close}) => {
   const navigation = useNavigation();
@@ -22,13 +21,9 @@ export const Menu = ({visible, close}) => {
   useEffect(()=>{
     if(login.logoutStatus){
       navigation.navigate('LoginScreen')
-      // removeToken()
       close()
     }
   },[login.logoutStatus])
-  // const removeToken = async() =>{
-  //   await AsyncStorage.removeItem('token');
-  // }
   return (
     <SafeAreaView>
       <Modal animationType="slide" visible={visible} transparent={true}>

@@ -32,6 +32,12 @@ export const ProfileScreen = ({navigation, profile}) => {
     return unsubscribe;
   }, [navigation]);
 
+  useEffect(()=>{
+    if(Object.keys(user.data).length && staticdata.token){
+      dispatch(GetPostsAction({user_id: user.data.id}, staticdata.token, 1));
+      dispatch(getUserInfoAction(staticdata.token))
+    }
+  },[staticdata.token])
 
   useEffect(() => {
     if (user.data.id) {

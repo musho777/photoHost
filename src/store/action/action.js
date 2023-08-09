@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { compose } from 'redux';
 import {
   ErrorAddBlackList,
   ErrorAddComment,
@@ -132,7 +131,6 @@ export const RegisterAction = data => {
       .then(r => {
         if (r.status) {
           dispatch(SuccessRegister(r));
-          setTokenSorage(r.token);
         } else {
           dispatch(
             ErrorRegister({
@@ -167,7 +165,9 @@ export const ConfirmRegisterCode = data => {
     })
       .then(response => response.json())
       .then(r => {
+        setTokenSorage(r.token);
         if (r.status) {
+          dispatch(setToken(r.token));
           dispatch(SuccessConfirmRegisterCode(r));
         } else {
           dispatch(ErrorConfirmRegisterCode('Неверный код'));
@@ -872,6 +872,7 @@ export const GetLentsAction = (token, page) => {
     })
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessGetLents(r));
         } else {
