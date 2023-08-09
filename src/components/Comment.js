@@ -134,7 +134,7 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
                         Styles.darkMedium16,
                         {marginTop: 40, textAlign: 'center'},
                       ]}>
-                      Черный список пуст
+                      Нет комментариев
                     </Text>
                   )
                 }

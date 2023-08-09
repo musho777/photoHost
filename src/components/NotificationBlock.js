@@ -6,7 +6,7 @@ const { width, height } = Dimensions.get('window');
 
 export const NotificationBlock = ({description, id, itemId, avatar, name,photo}) => {
   return (
-    <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
+    <View style={{flexDirection: 'row',justifyContent:'space-between',marginVertical:10}}>
       <Image
         style={styles.userImg}
         source={{

@@ -93,7 +93,6 @@ export const SearchBlock = ({modalVisible,close}) => {
 
   return (
     <View style={styles.centeredView}>
-      <Modal animationType="slide" transparent={false} visible={modalVisible}>
         <View style={[styles.header, {marginBottom: 20}]}>
           <View style={{marginBottom: 10,width:'80%'}}>
             <TextInput
@@ -107,8 +106,13 @@ export const SearchBlock = ({modalVisible,close}) => {
               <SearchInputSvg />
             </View>
           </View>
-          <TouchableOpacity onPress={()=>close()} style = {{marginTop:10,marginLeft:10}}>
-            <Text style  = {Styles.darkMedium12}>отменить</Text>
+          <TouchableOpacity onPress={()=>{
+            dispatch(clearSearchData())
+            setData('')
+            navigation.goBack()
+          }
+            } style = {{marginTop:10,marginLeft:10}}>
+            <Text style  = {Styles.darkMedium12} >отменить</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -127,8 +131,8 @@ export const SearchBlock = ({modalVisible,close}) => {
           data={serchData}
           enableEmptySections={true}
           ListEmptyComponent={() => {
-            if (noData) {
-              return <Text>no data</Text>;
+            if(data){
+              return <Text style = {[Styles.darkMedium14,{textAlign:'center'}]}>не найдено</Text>;
             }
           }}
           renderItem={renderItem}
@@ -138,7 +142,6 @@ export const SearchBlock = ({modalVisible,close}) => {
             }
           }}
         />
-      </Modal>
     </View>
   );
 };
@@ -152,10 +155,9 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   centeredView: {
-    width: '90%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
     backgroundColor: 'white',
   },
   modalView: {

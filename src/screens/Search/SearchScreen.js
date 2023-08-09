@@ -21,25 +21,7 @@ export const SearchScreen = ({navigation}) => {
   const [focuse,setFocuse] = useState(false)
   return (
     <SafeAreaView >
-      <View style={styles.header}>
-        <TouchableOpacity style = {styles.Input} onPress = {()=>setFocuse(true)}>
-          <Text style = {Styles.balihaiRegular12}>Поиск</Text>
-          <SearchInputSvg />
-        </TouchableOpacity>
-      </View>
-      <ScrollView showsVerticalScrollIndicator = {false} style = {Styles.bg}>
-        <View style={styles.imgWrapper}>
-          {img.map((elm, i) => (
-            <TouchableOpacity key={i} onPress={()=>navigation.navigate('InterestingScreen')}>
-              <Image
-                resizeMode={'cover'}
-                style={styles.img}
-                source={require('../../assets/img/2.png')}></Image>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
-      <SearchBlock close={()=>setFocuse(false)} modalVisible={focuse}/>
+      <SearchBlock />
     </SafeAreaView>
   );
 };
