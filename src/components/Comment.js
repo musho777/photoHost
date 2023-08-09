@@ -1,9 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect,useRef} from 'react';
 import {
   Modal,
   View,
   Text,
-  TouchableOpacity,
   Image,
   FlatList,
   RefreshControl,
@@ -14,17 +13,17 @@ import {Styles} from '../styles/Styles';
 import {CommentBlock} from './CommentBlock';
 import {Input} from '../ui/Input';
 import {useDispatch, useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
 import {AddCommentAction, GelPostCommentsAction} from '../store/action/action';
 
 export const Comments = ({visible, close, parentId,userImg,userName,description}) => {
-  const [showAnswrs, setShowAnswers] = useState(false);
   const [sendComment, setSendCommet] = useState('');
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState(1);
   const [senderName,setSenderNAme ] = useState('')
   const getComments = useSelector(st => st.getComments);
+  const textInputRef = useRef(null);
+
   const [data, setData] = useState([]);
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
@@ -65,8 +64,11 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
 
   const Answer = (e) =>{
     setParentId(e.id)
-    senderName(e.name+":")
+    setSendCommet(e.name+":")
     setSenderNAme(e.name+":")
+    if (textInputRef.current) {
+      textInputRef.current.focus();
+    }
   }
 
   const renderItem = ({item, index}) => {
@@ -170,6 +172,7 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
                   }}
                 />
                 <Input
+                  ref = {textInputRef}
                   send
                   sendCom={() => sendCommentFunction()}
                   value={sendComment}

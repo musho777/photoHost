@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState,forwardRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,7 +17,8 @@ import {
 import {AppColors} from '../styles/AppColors';
 import {Styles} from '../styles/Styles';
 
-export const Input = ({
+export const Input = forwardRef(
+  ({
   marginBottom,
   marginTop,
   marginV,
@@ -38,7 +39,7 @@ export const Input = ({
   sendMsg,
   value,
   sendCom
-}) => {
+},ref) => {
   const [securyty, setSecuryty] = useState(pass);
   return (
     <View
@@ -50,6 +51,7 @@ export const Input = ({
         marginHorizontal: marginH,
       }}>
       <TextInput
+        ref={ref}
         autoFocus = {autoFocus}
         editable = {disable}
         onFocus = {onFocus}
@@ -104,7 +106,7 @@ export const Input = ({
       )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   Input: {
