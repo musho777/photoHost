@@ -33,6 +33,7 @@ import {SinglPageScreen} from '../screens/SinglePage/SinglPage';
 import {EditPostScreen} from '../screens/SinglePage/EditPostScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CheckBlack } from '../../CheckBlack';
 
 export default Navigation = ({token, initialRouteName}) => {
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ export default Navigation = ({token, initialRouteName}) => {
   return (
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
-        {/* {<CheckBlack token = {token} />} */}
+        {<CheckBlack token = {token} />}
         <Stack.Navigator initialRouteName={i}>
           <Stack.Screen
             name="LoginScreen"

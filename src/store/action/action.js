@@ -117,7 +117,7 @@ import {
   SucessGetFollowersAction,
 } from './successAction';
 
-const Api = 'https://chamba.justcode.am/api';
+export const Api = 'https://chamba.justcode.am/api';
 
 export const RegisterAction = data => {
   return dispatch => {
@@ -872,7 +872,6 @@ export const GetLentsAction = (token, page) => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessGetLents(r));
         } else {

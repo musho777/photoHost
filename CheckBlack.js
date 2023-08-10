@@ -1,24 +1,35 @@
-import { useNavigation } from "@react-navigation/native"
-import { useEffect } from "react"
-import { View } from "react-native"
-import { useDispatch, useSelector } from "react-redux"
-import { getUserInfoAction, LogoutAction } from "./src/store/action/action"
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+import {useEffect} from 'react';
+import {View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {Api, getUserInfoAction, LogoutAction} from './src/store/action/action';
 
-export const CheckBlack = ({token}) =>{
-    const navigation = useNavigation()
-    const dispatch = useDispatch()
+export const CheckBlack = ({token}) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const user = useSelector(st => st.userData);
 
-      useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(getUserInfoAction(token))
-      if(Object.keys(user.data).length === 0||user.data.black_list_status == 1){
-        dispatch(LogoutAction(token))
-        navigation.navigate('LoginScreen')
-      }
-    }, 120000);
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Authorization', `Bearer ${token}`);
+      fetch(`${Api}/auth_user_info`, {
+        method: 'GET',
+        headers: myHeaders,
+      })
+      .then(response => response.json())
+        .then(r => {
+          console.log(r);
+          if (r.data.black_list_status ||!r.status) {
+            dispatch(LogoutAction(token));
+            navigation.navigate('LoginScreen');
+          }
+        })
+    }, 180000);
 
     return () => clearInterval(interval);
   }, []);
-    return <View></View>
-}
+  return <View></View>;
+};
