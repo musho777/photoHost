@@ -124,7 +124,7 @@ export const RegisterAction = data => {
     dispatch(StartRegister());
     fetch(`${Api}/register`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -145,7 +145,7 @@ export const RegisterAction = data => {
         }
       })
       .catch(error => {
-        dispatch(ErrorRegister({server: 'server'}));
+        dispatch(ErrorRegister({ server: 'server' }));
       });
   };
 };
@@ -160,7 +160,7 @@ export const ConfirmRegisterCode = data => {
     dispatch(StartConfirmRegisterCode());
     fetch(`${Api}/confirm_register`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -189,7 +189,7 @@ export const LoginAction = data => {
     dispatch(StartLogin());
     fetch(`${Api}/login`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -227,7 +227,7 @@ export const ForgotPasswordAction = data => {
     dispatch(StartForgotPassword());
     fetch(`${Api}/send_code_from_forgot_password`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -249,7 +249,7 @@ export const ValidationForogtPasswordAction = data => {
     dispatch(StartValidationForgotPassword());
     fetch(`${Api}/validation_forgot_code`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -271,7 +271,7 @@ export const NewPasswordAction = data => {
     dispatch(StartNewPassword());
     fetch(`${Api}/add_password_from_forgot`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -293,7 +293,7 @@ export const getUserInfoAction = token => {
     dispatch(StartGetUserData());
     axios
       .get(`${Api}/auth_user_info`, {
-        headers: {Authorization: `Bearer ${token}`},
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(r => {
         if (r.data.status) {
@@ -321,7 +321,7 @@ export const chnageUserProfil = (data, token) => {
     dispatch(StartChangeData());
     axios
       .post(`${Api}/update_profile`, data, {
-        headers: {Authorization: `Bearer ${token}`},
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(r => {
         if (r.data.status) {
@@ -371,15 +371,15 @@ export const changeUserPassword = (data, token) => {
         } else {
           if (r.message.includes('wrong old password')) {
             dispatch(
-              ErrorChangeUserPassowrd({email: 'Неверный старый пароль'}),
+              ErrorChangeUserPassowrd({ email: 'Неверный старый пароль' }),
             );
           } else {
-            dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
+            dispatch(ErrorChangeUserPassowrd({ server: 'server error' }));
           }
         }
       })
       .catch(error => {
-        dispatch(ErrorChangeUserPassowrd({server: 'server error'}));
+        dispatch(ErrorChangeUserPassowrd({ server: 'server error' }));
       });
   };
 };
@@ -403,14 +403,14 @@ export const ChangeEmailFirstAction = (data, token) => {
           dispatch(SuccessChangeEmailPassword(r.data));
         } else {
           if (r.message.includes('Mo Valid password')) {
-            dispatch(ErrorChangeEmailPassword({email: 'неверный пароль'}));
+            dispatch(ErrorChangeEmailPassword({ email: 'неверный пароль' }));
           } else {
-            dispatch(ErrorChangeEmailPassword({server: 'server error'}));
+            dispatch(ErrorChangeEmailPassword({ server: 'server error' }));
           }
         }
       })
       .catch(error => {
-        dispatch(ErrorChangeEmailPassword({server: 'server error'}));
+        dispatch(ErrorChangeEmailPassword({ server: 'server error' }));
       });
   };
 };
@@ -442,7 +442,7 @@ export const ChangeEmailAction = (data, token) => {
         }
       })
       .catch(error => {
-        dispatch(ErrorChangeEmail({server: 'server error'}));
+        dispatch(ErrorChangeEmail({ server: 'server error' }));
       });
   };
 };
@@ -466,11 +466,11 @@ export const sednEmailChangeCodeAction = (data, token, email) => {
           dispatch(SuccessChangeEmailCode(r.data));
           dispatch(ChangeMail(email));
         } else {
-          dispatch(ErrorChangeEmailCode({server: 'код не совпадает'}));
+          dispatch(ErrorChangeEmailCode({ server: 'код не совпадает' }));
         }
       })
       .catch(error => {
-        dispatch(ErrorChangeEmailCode({server: 'server error'}));
+        dispatch(ErrorChangeEmailCode({ server: 'server error' }));
       });
   };
 };
@@ -707,7 +707,7 @@ export const GetSinglePageChatAction = (data, token, page) => {
       })
       .catch(error => {
         dispatch(ErrorGetSinglePageChat('server error'));
-      }); 
+      });
   };
 };
 
@@ -1017,7 +1017,7 @@ export const GetMyBooksAction = (token, page) => {
   };
 };
 
-export const AddPostViewCount = (data,token) => {
+export const AddPostViewCount = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1040,7 +1040,7 @@ export const AddPostViewCount = (data,token) => {
   };
 };
 
-export const GetNotificationAction = (token,page) =>{
+export const GetNotificationAction = (token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1063,10 +1063,10 @@ export const GetNotificationAction = (token,page) =>{
       .catch(error => {
         dispatch(ErrorGetNotification('server error'));
       });
-  }; 
+  };
 }
 
-export const AddCommentAction = (data,token) =>{
+export const AddCommentAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1081,7 +1081,7 @@ export const AddCommentAction = (data,token) =>{
     fetch(`${Api}/add_comment`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        if(r.status){
+        if (r.status) {
           dispatch(SuccessAddComment())
         }
         else {
@@ -1094,7 +1094,7 @@ export const AddCommentAction = (data,token) =>{
   };
 }
 
-export const GelPostCommentsAction = (data,token,page) =>{
+export const GelPostCommentsAction = (data, token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1109,7 +1109,7 @@ export const GelPostCommentsAction = (data,token,page) =>{
     fetch(`${Api}/get_post_comment?page=${page}`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        if(r.status){
+        if (r.status) {
           dispatch(SuccessGetPostComment(r))
         }
         else {
@@ -1122,7 +1122,7 @@ export const GelPostCommentsAction = (data,token,page) =>{
   };
 }
 
-export const LikeCommentAction = (data,token) =>{
+export const LikeCommentAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1145,7 +1145,7 @@ export const LikeCommentAction = (data,token) =>{
   };
 }
 
-export const GetSinglPostAction = (data,token) =>{
+export const GetSinglPostAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1160,7 +1160,7 @@ export const GetSinglPostAction = (data,token) =>{
     fetch(`${Api}/single_page_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        if(r.status){
+        if (r.status) {
           dispatch(SuccessGetSinglPost(r.data))
         }
         else {
@@ -1173,7 +1173,7 @@ export const GetSinglPostAction = (data,token) =>{
   };
 }
 
-export const EditPostAction = (data,token) =>{
+export const EditPostAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1188,7 +1188,7 @@ export const EditPostAction = (data,token) =>{
     fetch(`${Api}/edit_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        if(r.status){
+        if (r.status) {
           dispatch(SuccessEditPost(r.data))
         }
         else {
@@ -1198,10 +1198,10 @@ export const EditPostAction = (data,token) =>{
       .catch(error => {
         dispatch(ErrorEditPost('server error'))
       });
-  }; 
+  };
 }
 
-export const GetPostLikeAction = (data,token,page) =>{
+export const GetPostLikeAction = (data, token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1212,13 +1212,13 @@ export const GetPostLikeAction = (data,token,page) =>{
     redirect: 'follow',
   };
   return dispatch => {
-    if(page == 1){
+    if (page == 1) {
       dispatch(StartGetPostLike());
     }
     fetch(`${Api}/get_user_liked_post?page=${page}`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        if(r.status){
+        if (r.status) {
           dispatch(SuccessGetPostLike(r))
         }
         else {
@@ -1231,7 +1231,7 @@ export const GetPostLikeAction = (data,token,page) =>{
   };
 }
 
-export const DeviceIdAction = (data,token) =>{
+export const DeviceIdAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1250,5 +1250,5 @@ export const DeviceIdAction = (data,token) =>{
       .catch(error => {
         console.log(error)
       });
-  }; 
+  };
 }
