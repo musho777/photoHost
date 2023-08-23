@@ -32,13 +32,12 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
       dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
     }
   }, [visible]);
-
   const sendCommentFunction = () => {
     let item = [...data]
     let send = sendComment
     if (senderName) {
       let regex = new RegExp(senderName, "gi");
-      send = originalString.replace(regex, "");
+      send = send.replace(regex, "");
     }
     dispatch(
       AddCommentAction(
@@ -195,6 +194,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
             />
             <Input
               ref={textInputRef}
+              pdR={50}
               send
               sendCom={() => sendCommentFunction()}
               value={sendComment}

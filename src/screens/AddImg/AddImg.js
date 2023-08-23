@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -7,15 +7,15 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
-import {useDispatch, useSelector} from 'react-redux';
-import {HeaderWhiteTitle} from '../../headers/HeaderWhiteTitle.';
-import {CreatPostAction} from '../../store/action/action';
-import {AppColors} from '../../styles/AppColors';
-import {Styles} from '../../styles/Styles';
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
+import { CreatPostAction } from '../../store/action/action';
+import { AppColors } from '../../styles/AppColors';
+import { Styles } from '../../styles/Styles';
 import { Button } from '../../ui/Button';
 
-export const AddImg = ({navigation}) => {
+export const AddImg = ({ navigation }) => {
   const [uri, setUri] = useState([]);
   const [description, setDescription] = useState('');
   const createPost = useSelector(st => st.createPost);
@@ -23,9 +23,10 @@ export const AddImg = ({navigation}) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    setUri([])
-    setDescription('')
+
     const unsubscribe = navigation.addListener('focus', async () => {
+      setUri([])
+      setDescription('')
       ImagePicker.openPicker({
         width: 300,
         height: 400,
@@ -61,17 +62,17 @@ export const AddImg = ({navigation}) => {
     dispatch(CreatPostAction(form, staticData.token));
   };
 
-  const addPhoto = () =>{
-      ImagePicker.openPicker({
-        width: 300,
-        height: 400,
-        cropping: true,
-        multiple: true,
-      }).then(image => {
-        let item = [...uri]
-        item = item.concat(image);
-        setUri(item);
-      });
+  const addPhoto = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      multiple: true,
+    }).then(image => {
+      let item = [...uri]
+      item = item.concat(image);
+      setUri(item);
+    });
   }
 
 
@@ -90,7 +91,7 @@ export const AddImg = ({navigation}) => {
         onPress={() => {
           navigation.navigate('Home')
         }}
-        disabled = {uri.length ===0}
+        disabled={uri.length === 0}
         title={'Новая публикация'}
       />
       <View style={styles.wrapper}>
@@ -106,7 +107,7 @@ export const AddImg = ({navigation}) => {
               <TouchableOpacity
                 onPress={() => delateFoto(i)}
                 style={styles.close}>
-                <Text style={{color: 'red', fontSize: 20}}>x</Text>
+                <Text style={{ color: 'red', fontSize: 20 }}>x</Text>
               </TouchableOpacity>
             </View>
           );
@@ -122,8 +123,8 @@ export const AddImg = ({navigation}) => {
           placeholderTextColor={'#8C9CAB'}
         />
       </View>
-      <View style = {{margin:20}}>
-        <Button onPress={()=>addPhoto()} title={'добавить фото'} width={120} />
+      <View style={{ margin: 20 }}>
+        <Button onPress={() => addPhoto()} title={'добавить фото'} width={120} />
       </View>
     </View>
   );
@@ -161,9 +162,9 @@ const styles = StyleSheet.create({
     top: -15,
     right: 0,
   },
-  addImgButton:{
-    width:'22%',
-    height:85,
-    borderWidth:1
+  addImgButton: {
+    width: '22%',
+    height: 85,
+    borderWidth: 1
   }
 });

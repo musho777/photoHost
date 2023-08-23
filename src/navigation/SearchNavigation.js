@@ -1,10 +1,10 @@
-import {createStackNavigator} from '@react-navigation/stack';
-import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
+import { createStackNavigator } from '@react-navigation/stack';
+import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { ChatScreen } from '../screens/chat/ChatScreen';
 import { FollowersScreen } from '../screens/Profile/FollowersScreen';
-import {InterestingScreen} from '../screens/Search/InterestingScreen';
+import { InterestingScreen } from '../screens/Search/InterestingScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
-import {SearchScreen} from '../screens/Search/SearchScreen';
+import { SearchScreen } from '../screens/Search/SearchScreen';
 
 export const SearchNavigation = () => {
   const Stack = createStackNavigator();
@@ -22,9 +22,9 @@ export const SearchNavigation = () => {
         name="InterestingScreen"
         component={InterestingScreen}
         options={{
-            header:({navigation})=>{
-                return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Интересное'}/> 
-            }
+          header: ({ navigation }) => {
+            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={'Интересное'} />
+          }
         }}
       />
       <Stack.Screen
@@ -34,22 +34,22 @@ export const SearchNavigation = () => {
           headerShown: false,
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="FollowersScreen"
         component={FollowersScreen}
         options={{
-          header:({navigation})=>{
-              return <HeaderWhiteTitle onPress={()=>navigation.goBack()} title={'Интересное'}/> 
+          header: ({ navigation }) => {
+            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={'Интересное'} />
           }
-      }}
-      />
-      <Stack.Screen
+        }}
+      /> */}
+      {/* <Stack.Screen
         name="ChatScreen"
         component={ChatScreen}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

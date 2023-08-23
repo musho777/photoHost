@@ -23,9 +23,6 @@ export const CommentBlock = ({
   replay_count,
   daysAgo
 }) => {
-  const [liked, setLiked] = useState(isLiked);
-  const [likeCount, setLikeCount] = useState(+like_count);
-  const dispatch = useDispatch();
   const [comentReplay, setComentReplay] = useState([]);
   const [showAnswrs, setShowAnswers] = useState(false);
   const staticdata = useSelector(st => st.static);
@@ -87,6 +84,8 @@ export const CommentBlock = ({
               id={elm.replay.id}
               token={staticdata.token}
               daysAgo={daysAgo}
+              onPressAnsswer={onPressAnsswer}
+
             />
           );
         })}

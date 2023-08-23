@@ -7,8 +7,8 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native';
-import {useState, useEffect, useCallback, useRef, useMemo} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AddBlackListAction,
   AddCommentAction,
@@ -17,17 +17,17 @@ import {
   GetSinglPostAction,
   LikePostAction,
 } from '../../store/action/action';
-import {Styles} from '../../styles/Styles';
-import {BootomModal} from '../../components/BootomSheet';
-import {BackArrow, NotLineSvg} from '../../assets/svg/Svgs';
-import {Comment, Heart, MenuSvg, ViewSvg} from '../../assets/svg/TabBarSvg';
-import {Slider} from '../../components/Slider';
-import {CommentItem} from '../../components/CommentItem';
-import {CommentBlock} from '../../components/CommentBlock';
-import {Comments} from '../../components/Comment';
-import {Input} from '../../ui/Input';
+import { Styles } from '../../styles/Styles';
+import { BootomModal } from '../../components/BootomSheet';
+import { BackArrow, NotLineSvg } from '../../assets/svg/Svgs';
+import { Comment, Heart, MenuSvg, ViewSvg } from '../../assets/svg/TabBarSvg';
+import { Slider } from '../../components/Slider';
+import { CommentItem } from '../../components/CommentItem';
+import { CommentBlock } from '../../components/CommentBlock';
+import { Comments } from '../../components/Comment';
+import { Input } from '../../ui/Input';
 
-export const SinglPageScreen = ({route, navigation}) => {
+export const SinglPageScreen = ({ route, navigation }) => {
   const staticdata = useSelector(st => st.static);
   const singlData = useSelector(st => st.getSinglPage);
   const user = useSelector(st => st.userData);
@@ -37,13 +37,15 @@ export const SinglPageScreen = ({route, navigation}) => {
   const [comment, setComment] = useState(false);
   const [likeCount, setLikeCount] = useState();
   const [parenId, setParentId] = useState(null);
-  const [senderName,setSenderNAme ] = useState('')
+  const [senderName, setSenderNAme] = useState('')
 
   const [sendComment, setSendCommet] = useState('');
   const textInputRef = useRef(null);
   const id = route.params.id;
   const bottomSheetRef = useRef(null);
   const getComments = useSelector(st => st.getComments);
+  const [follow, setFollow] = useState()
+  console.log(singlData)
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
@@ -70,18 +72,18 @@ export const SinglPageScreen = ({route, navigation}) => {
   const addToBlackList = () => {
     addToblack(user.data.id);
     bottomSheetRef.current?.close();
-    dispatch(AddBlackListAction({user_id: user.data.id}, staticdata.token));
+    dispatch(AddBlackListAction({ user_id: user.data.id }, staticdata.token));
     navigation.navigate('TabNavigation')
   };
   const addToBook = () => {
     bottomSheetRef.current?.close();
-    dispatch(AddInBookAction({post_id: id}, staticdata.token));
+    dispatch(AddInBookAction({ post_id: id }, staticdata.token));
     setBook(!book);
   };
 
   useEffect(() => {
-    dispatch(GelPostCommentsAction({post_id: id}, staticdata.token));
-    dispatch(GetSinglPostAction({post_id: id}, staticdata.token));
+    dispatch(GelPostCommentsAction({ post_id: id }, staticdata.token));
+    dispatch(GetSinglPostAction({ post_id: id }, staticdata.token));
   }, []);
 
   useEffect(() => {
@@ -133,49 +135,49 @@ export const SinglPageScreen = ({route, navigation}) => {
     // setData(item);
     setParentId(null);
     dispatch(
-      GelPostCommentsAction({post_id: singlData.data.id}, staticdata.token),
+      GelPostCommentsAction({ post_id: singlData.data.id }, staticdata.token),
     );
     setSendCommet('');
   };
 
   return (
     <SafeAreaView>
-      <ScrollView style = {{height:'90%'}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ height: '90%' }} showsVerticalScrollIndicator={false}>
         <View
           style={[
             Styles.flexSpaceBetween,
-            {paddingHorizontal: 20, marginTop: 20},
+            { paddingHorizontal: 20, marginTop: 20 },
           ]}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <BackArrow />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => handlePresentModalPress()}
-            style={{marginTop: -5, paddingLeft: 15}}>
+            style={{ marginTop: -5, paddingLeft: 15 }}>
             <MenuSvg />
           </TouchableOpacity>
         </View>
         <View>
           <Slider single photo={singlData.data.photo} />
-          <View style={{paddingHorizontal: 20}}>
+          <View style={{ paddingHorizontal: 20 }}>
             <View style={Styles.flexSpaceBetween}>
               <View style={Styles.flexAlignItems}>
-                <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
+                <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>
                   <TouchableOpacity
                     onPress={() => {
                       LikePost();
                     }}>
                     {isLiked ? <Heart /> : <NotLineSvg />}
                   </TouchableOpacity>
-                  <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>
+                  <Text style={[Styles.darkMedium14, { marginLeft: 5 }]}>
                     {likeCount}
                   </Text>
                 </View>
-                <View style={[Styles.flexAlignItems, {marginRight: 15}]}>
+                <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>
                   <TouchableOpacity onPress={() => setComment(true)}>
                     <Comment />
                   </TouchableOpacity>
-                  <Text style={[Styles.darkMedium14, {marginLeft: 5}]}>
+                  <Text style={[Styles.darkMedium14, { marginLeft: 5 }]}>
                     {singlData.data.comment_count}
                   </Text>
                 </View>
@@ -183,7 +185,7 @@ export const SinglPageScreen = ({route, navigation}) => {
               <View>
                 <View style={Styles.flexAlignItems}>
                   <ViewSvg />
-                  <Text style={[Styles.balihaiRegular14, {marginLeft: 5}]}>
+                  <Text style={[Styles.balihaiRegular14, { marginLeft: 5 }]}>
                     {singlData.data.view_count}
                   </Text>
                 </View>
@@ -204,7 +206,7 @@ export const SinglPageScreen = ({route, navigation}) => {
               />
             </View>
             {getComments.data.length > 0 && (
-              <View style={{marginVertical: 20}}>
+              <View style={{ marginVertical: 20 }}>
                 <CommentBlock
                   text={getComments.data[0]?.comment}
                   replay={getComments.data[0]?.replay}
@@ -233,31 +235,31 @@ export const SinglPageScreen = ({route, navigation}) => {
           close={() => setComment(false)}
         />
 
-        <View style={{position: 'absolute'}}>
+        <View style={{ position: 'absolute' }}>
           <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
-            <View style={{paddingHorizontal: 20}}>
+            <View style={{ paddingHorizontal: 20 }}>
               <TouchableOpacity
-                style={{marginBottom: 20, marginTop: 20}}
+                style={{ marginBottom: 20, marginTop: 20 }}
                 onPress={() => addToBook()}>
                 <Text style={Styles.darkRegular14}>
                   {book ? 'Удалить из закладок' : 'В закладки'}
                 </Text>
               </TouchableOpacity>
               {user?.data?.id != singlData?.data?.user?.id && (
-                <TouchableOpacity style={{marginBottom: 20}}>
+                <TouchableOpacity style={{ marginBottom: 20 }}>
                   <Text style={Styles.darkRegular14}>Подписаться</Text>
                 </TouchableOpacity>
               )}
               {user?.data?.id != singlData?.data?.user?.id && (
                 <TouchableOpacity
-                  style={{marginBottom: 20}}
+                  style={{ marginBottom: 20 }}
                   onPress={() => addToBlackList()}>
                   <Text style={Styles.darkRegular14}>В чёрный список</Text>
                 </TouchableOpacity>
               )}
               {user?.data?.id == singlData?.data?.user?.id && (
                 <TouchableOpacity
-                  style={{marginBottom: 20}}
+                  style={{ marginBottom: 20 }}
                   onPress={() => {
                     bottomSheetRef.current?.close();
                     navigation.navigate('EditPostScreen', {
@@ -276,7 +278,7 @@ export const SinglPageScreen = ({route, navigation}) => {
         style={{
           position: 'absolute',
           bottom: -40,
-          
+
           width: '100%',
           alignItems: 'center',
           justifyContent: 'center',
@@ -294,7 +296,7 @@ export const SinglPageScreen = ({route, navigation}) => {
           }}
         />
         <Input
-          ref = {textInputRef}
+          ref={textInputRef}
           send
           sendCom={() => sendCommentFunction()}
           value={sendComment}
