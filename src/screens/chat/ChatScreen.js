@@ -168,16 +168,16 @@ export const ChatScreen = ({ navigation, route }) => {
             width: '100%',
             alignItems: 'center',
           }}>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <FotoSvg />
-          </TouchableOpacity>
-          <View></View>
+          </TouchableOpacity> */}
+          {/* <View></View> */}
           <Input
             msg
             placeholder={'Введите текст'}
             data={sendMSg}
             onChange={e => setSendMsg(e)}
-            width={'83%'}
+            width={'100%'}
             sendMsg={() => sendMsgFunction()}
           // value = {sendMSg}
           />

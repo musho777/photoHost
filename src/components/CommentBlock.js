@@ -64,7 +64,6 @@ export const CommentBlock = ({
       />
       {showAnswrs &&
         comentReplay.map((elm, i) => {
-          console.log(elm.created_at, 'sss')
           const givenDate = new Date(elm.created_at);
           const currentDate = new Date();
           const timeDifference = currentDate - givenDate;
@@ -75,7 +74,6 @@ export const CommentBlock = ({
               daysAgo = daysAgo * 60 + 'минут назад'
             }
           }
-          console.log(daysAgo, 'daysAgo')
           return (
             <CommentItem
               key={i}

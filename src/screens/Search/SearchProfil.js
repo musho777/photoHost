@@ -97,13 +97,14 @@ export const SearchProfil = ({ navigation, route }) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('FollowersScreen', { index: 0, id: singlPage.data.id })}
               style={{ alignItems: 'center' }}>
-              <Text style={Styles.darkSemiBold16}>{singlPage.followerCount}</Text>
+              <Text style={Styles.darkSemiBold16}>{singlPage.followersCount}</Text>
               <Text style={Styles.balihaiRegular12}>Подписчиков</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('FollowersScreen', { index: 1, id: singlPage.data.id })}
               style={{ alignItems: 'center' }}>
-              <Text style={Styles.darkSemiBold16}>{singlPage.followersCount}</Text>
+              <Text style={Styles.darkSemiBold16}>{singlPage.followerCount}</Text>
+              {/* followerCount */}
               <Text style={Styles.balihaiRegular12}>Подписок</Text>
             </TouchableOpacity>
           </View>

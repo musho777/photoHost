@@ -21,7 +21,7 @@ export const CheckBlack = ({ token }) => {
       })
         .then(response => response.json())
         .then(r => {
-          if (r.data.black_list_status || !r.status) {
+          if (r.data?.black_list_status || !r.status) {
             dispatch(LogoutAction(token));
             navigation.navigate('LoginScreen');
           }

@@ -82,7 +82,6 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
     const timeDifference = currentDate - givenDate;
     let daysAgo = (timeDifference / (1000 * 60 * 60 * 24))
     if (+daysAgo < 1) {
-      console.log('sss')
       daysAgo = daysAgo * 24
       if (daysAgo <= 1) {
         daysAgo = Math.floor(daysAgo * 60) + 'минут назад'

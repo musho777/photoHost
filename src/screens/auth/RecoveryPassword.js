@@ -1,19 +1,19 @@
-import {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {ConfirmCode} from '../../components/ConfirmCode';
+import { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { ConfirmCode } from '../../components/ConfirmCode';
 import {
   ClearConfirmPasswordAction,
   ForgotPasswordAction,
   ValidationForogtPasswordAction,
 } from '../../store/action/action';
-import {ClearForGotPassword} from '../../store/action/clearAction';
-import {Styles} from '../../styles/Styles';
-import {Button} from '../../ui/Button';
-import {Input} from '../../ui/Input';
+import { ClearForGotPassword, ClearValidationForgotPassword } from '../../store/action/clearAction';
+import { Styles } from '../../styles/Styles';
+import { Button } from '../../ui/Button';
+import { Input } from '../../ui/Input';
 
-export const RecoveryPassword = ({navigation}) => {
-  const [email, setEmail] = useState({error: '', value: ''});
+export const RecoveryPassword = ({ navigation }) => {
+  const [email, setEmail] = useState({ error: '', value: '' });
   const [send, setSend] = useState(false);
   const [disable, setDisable] = useState(true);
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ export const RecoveryPassword = ({navigation}) => {
       setDisable(true);
       dispatch(ClearForGotPassword());
       dispatch(ClearConfirmPasswordAction())
+      dispatch(ClearValidationForgotPassword())
     });
     return unsubscribe;
   }, [navigation]);
@@ -46,16 +47,16 @@ export const RecoveryPassword = ({navigation}) => {
     return false;
   }
   const sendForgotPassword = () => {
-    setEmail({...email, error: ''});
+    setEmail({ ...email, error: '' });
     if (ValidateEmail(email.value)) {
-      dispatch(ForgotPasswordAction({email: email.value}));
+      dispatch(ForgotPasswordAction({ email: email.value }));
     } else {
-      setEmail({...email, error: 'Введите корректный адрес эл. почты'});
+      setEmail({ ...email, error: 'Введите корректный адрес эл. почты' });
     }
   };
   useEffect(() => {
     if (code.length === 5) {
-      dispatch(ValidationForogtPasswordAction({email: email.value, code: code}));
+      dispatch(ValidationForogtPasswordAction({ email: email.value, code: code }));
     }
   }, [code]);
   useEffect(() => {
@@ -64,11 +65,11 @@ export const RecoveryPassword = ({navigation}) => {
     }
   }, [confirm.status]);
   return (
-    <View style={[Styles.authScreen, {marginTop: 30, paddingHorizontal: 35}]}>
+    <View style={[Styles.authScreen, { marginTop: 30, paddingHorizontal: 35 }]}>
       <Text
         style={[
           Styles.darkSemiBold22,
-          {marginBottom: 30, textAlign: 'center'},
+          { marginBottom: 30, textAlign: 'center' },
         ]}>
         Восстановление пароля
       </Text>
@@ -77,7 +78,7 @@ export const RecoveryPassword = ({navigation}) => {
         error={email.error || forgotPassword.error}
         value={email.value}
         width={'95%'}
-        onChange={e => setEmail({...email, value: e})}
+        onChange={e => setEmail({ ...email, value: e })}
         disable={!send}
       />
       {!send && (
@@ -90,8 +91,8 @@ export const RecoveryPassword = ({navigation}) => {
         />
       )}
       {send && (
-        <View style={{alignItems: 'center', marginTop: 15}}>
-          <Text style={[Styles.balihaiMedium13, {textAlign: 'center'}]}>
+        <View style={{ alignItems: 'center', marginTop: 15 }}>
+          <Text style={[Styles.balihaiMedium13, { textAlign: 'center' }]}>
             Мы отправили вам на почту комбинацию цифр, впишите её ниже.
           </Text>
           <ConfirmCode clear={confirm.error !== ''} code={e => setCode(e)} />
