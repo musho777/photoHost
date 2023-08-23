@@ -1,11 +1,11 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import {useEffect} from 'react';
-import {View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {Api, getUserInfoAction, LogoutAction} from './src/store/action/action';
+import { useEffect } from 'react';
+import { View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Api, getUserInfoAction, LogoutAction } from './src/store/action/action';
 
-export const CheckBlack = ({token}) => {
+export const CheckBlack = ({ token }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const user = useSelector(st => st.userData);
@@ -19,10 +19,9 @@ export const CheckBlack = ({token}) => {
         method: 'GET',
         headers: myHeaders,
       })
-      .then(response => response.json())
+        .then(response => response.json())
         .then(r => {
-          console.log(r);
-          if (r.data.black_list_status ||!r.status) {
+          if (r.data.black_list_status || !r.status) {
             dispatch(LogoutAction(token));
             navigation.navigate('LoginScreen');
           }

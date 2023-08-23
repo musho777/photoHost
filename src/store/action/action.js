@@ -13,6 +13,7 @@ import {
   ErrorChangeUserPassowrd,
   ErrorConfirmRegisterCode,
   ErrorCreatePost,
+  ErrorDelateChat,
   ErrorDeleteOtherPople,
   ErrorEditPost,
   ErrorForgotPassword,
@@ -77,6 +78,7 @@ import {
   StartGetSingLPost,
   StartEditPost,
   StartGetPostLike,
+  StartDelateChat,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -91,6 +93,7 @@ import {
   SuccessChangeUserPassword,
   SuccessConfirmRegisterCode,
   SuccessCreatePost,
+  SuccessDelateChat,
   SuccessDeleteOtherPople,
   SuccessEditPost,
   SuccessForgotPassword,
@@ -1249,6 +1252,34 @@ export const DeviceIdAction = (data, token) => {
       })
       .catch(error => {
         console.log(error)
+      });
+  };
+}
+
+export const DelateChatAction = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartDelateChat());
+    fetch(`${Api}/delete_chat`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessDelateChat(r.data))
+        }
+        else {
+          dispatch(ErrorDelateChat('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorDelateChat('server error'))
       });
   };
 }

@@ -1,220 +1,226 @@
-export const StartRegister = () =>{
+export const StartRegister = () => {
     return {
-        type:'StartRegister'
+        type: 'StartRegister'
     }
 }
 
-export const StartConfirmRegisterCode = () =>{
+export const StartConfirmRegisterCode = () => {
     return {
-        type:'StartConfirmRegisterCode'
+        type: 'StartConfirmRegisterCode'
     }
 }
 
-export const StartLogin = () =>{
+export const StartLogin = () => {
     return {
-        type:'StartLogin'
+        type: 'StartLogin'
     }
 }
 
-export const StartForgotPassword = () =>{
+export const StartForgotPassword = () => {
     return {
-        type:'StartForgotPassword'
+        type: 'StartForgotPassword'
     }
 }
-export const StartValidationForgotPassword = () =>{
+export const StartValidationForgotPassword = () => {
     return {
-        type:'StartValidationForgotPassword'
-    }
-}
-
-export const StartNewPassword = () =>{
-    return {
-        type:'StartNewPassword'
+        type: 'StartValidationForgotPassword'
     }
 }
 
-export const StartGetUserData = () =>{
+export const StartNewPassword = () => {
     return {
-        type:'StartGetUserData'
+        type: 'StartNewPassword'
     }
 }
 
-export const StartChangeData = () =>{
+export const StartGetUserData = () => {
     return {
-        type:'StartChangeData'
+        type: 'StartGetUserData'
     }
 }
 
-export const StartChangeUserPassword = () =>{
+export const StartChangeData = () => {
     return {
-        type:'StartChangeUserPassword'
+        type: 'StartChangeData'
     }
 }
 
-export const StartChangeEmailPassword = () =>{
+export const StartChangeUserPassword = () => {
     return {
-        type:'StartChangeEmailPassword'
-    }
-}
-export const StartChangeEmail = () =>{
-    return {
-        type:'StartChangeEmail'
+        type: 'StartChangeUserPassword'
     }
 }
 
-export const StartChangeEmailCode = () =>{
+export const StartChangeEmailPassword = () => {
     return {
-        type:'StartChangeEmailCode'
+        type: 'StartChangeEmailPassword'
+    }
+}
+export const StartChangeEmail = () => {
+    return {
+        type: 'StartChangeEmail'
     }
 }
 
-export const StartChangeAvatar = () =>{
+export const StartChangeEmailCode = () => {
     return {
-        type:'StartChangeAvatar'
+        type: 'StartChangeEmailCode'
     }
 }
 
-export const StartSearch = () =>{
+export const StartChangeAvatar = () => {
     return {
-        type:'StartSearch'
+        type: 'StartChangeAvatar'
     }
 }
 
-export const StarGetSinglUser = () =>{
+export const StartSearch = () => {
     return {
-        type:'StarGetSinglUser'
+        type: 'StartSearch'
     }
 }
 
-export const StartAddDeleteFollow = () =>{
-    return{
-        type:'StartAddDeleteFollow'
+export const StarGetSinglUser = () => {
+    return {
+        type: 'StarGetSinglUser'
+    }
+}
+
+export const StartAddDeleteFollow = () => {
+    return {
+        type: 'StartAddDeleteFollow'
     }
 }
 
 
-export const StartGetFollowersAction = () =>{
+export const StartGetFollowersAction = () => {
     return {
-        type:'StartGetFollowersAction'
+        type: 'StartGetFollowersAction'
     }
 }
-export const StartDeleteOtherPople = () =>{
+export const StartDeleteOtherPople = () => {
     return {
-        type:'StartDeleteOtherPople'
-    }
-}
-
-export const StartGetFollower = () =>{
-    return {
-        type:'StartGetFollower'
+        type: 'StartDeleteOtherPople'
     }
 }
 
-export const StartGetSinglePageChat = () =>{
+export const StartGetFollower = () => {
     return {
-        type:'StartGetSinglePageChat'
+        type: 'StartGetFollower'
     }
 }
 
-export const StartNewMessageAction = (data) =>{
+export const StartGetSinglePageChat = () => {
     return {
-        type:'StartNewMessageAction',
+        type: 'StartGetSinglePageChat'
+    }
+}
+
+export const StartNewMessageAction = (data) => {
+    return {
+        type: 'StartNewMessageAction',
         data
     }
 }
 
-export const StartGetMyChatRoom = () =>{
-    return{
-        type:'StartGetMyChatRoom',
-    }
-}
-
-export const StartLogout = () =>{
-    return{
-        type:'StartLogout'
-    }
-}
-
-export const StartCreatePost = () =>{
+export const StartGetMyChatRoom = () => {
     return {
-        type:'StartCreatePost'
+        type: 'StartGetMyChatRoom',
     }
 }
 
-export const StartGetPosts = () =>{
+export const StartLogout = () => {
     return {
-        type:"StartGetPosts"
+        type: 'StartLogout'
     }
 }
 
-export const StartGetLents = () =>{
+export const StartCreatePost = () => {
     return {
-        type:'StartGetLents'
+        type: 'StartCreatePost'
     }
 }
 
-export const StartLikePost = () =>{
+export const StartGetPosts = () => {
     return {
-        type:'StartLikePost'
+        type: "StartGetPosts"
     }
 }
 
-export const StartAddBlackList = () =>{
+export const StartGetLents = () => {
     return {
-        type:'StartAddBlackList'
+        type: 'StartGetLents'
     }
 }
 
-export const StartGetBlackList = () =>{
+export const StartLikePost = () => {
     return {
-        type:'StartGetBlackList'
+        type: 'StartLikePost'
     }
 }
 
-export const StartAddInBook = () =>{
+export const StartAddBlackList = () => {
     return {
-        type:'StartAddInBook'
+        type: 'StartAddBlackList'
     }
 }
 
-export const StartGetMyBooks = () =>{
+export const StartGetBlackList = () => {
     return {
-        type:'StartGetMyBooks'
+        type: 'StartGetBlackList'
     }
 }
 
-export const StartGetNotification = () =>{
+export const StartAddInBook = () => {
     return {
-        type:"StartGetNotification"
+        type: 'StartAddInBook'
     }
 }
 
-export const StartAddComment = () =>{
+export const StartGetMyBooks = () => {
     return {
-        type:'StartAddComment'
+        type: 'StartGetMyBooks'
     }
 }
 
-export const StartGetPostComment = () =>{
+export const StartGetNotification = () => {
     return {
-        type:'StartGetPostComment'
+        type: "StartGetNotification"
     }
 }
 
-export const StartGetSingLPost = () =>{
+export const StartAddComment = () => {
     return {
-        type:'StartGetSingLPost'
+        type: 'StartAddComment'
     }
 }
 
-export const StartEditPost = () =>{
+export const StartGetPostComment = () => {
     return {
-        type:"StartEditPost"
+        type: 'StartGetPostComment'
     }
 }
 
-export const StartGetPostLike = () =>{
+export const StartGetSingLPost = () => {
     return {
-        type:"StartGetPostLike"
+        type: 'StartGetSingLPost'
+    }
+}
+
+export const StartEditPost = () => {
+    return {
+        type: "StartEditPost"
+    }
+}
+
+export const StartGetPostLike = () => {
+    return {
+        type: "StartGetPostLike"
+    }
+}
+
+export const StartDelateChat = () => {
+    return {
+        type: 'StartDelateChat'
     }
 }

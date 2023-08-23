@@ -5,7 +5,9 @@ const initialState = {
   data: {},
   message: [],
   nextPage: '',
-  blackList: null
+  blackList: null,
+  delateChatStatus: false,
+  dleateChatLoading: false,
 };
 const GetSinglePageChatReducer = (state = initialState, action) => {
   let item = { ...state };
@@ -21,7 +23,7 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       item.status = true;
       item.error = '';
       item.blackList = action.data.black_list_status
-      if (action.data.data.data.length) {
+      if (action.data.data.data?.length) {
         if (item.nextPage != action.data?.data?.next_page_url) {
           item.message = [...item.message, ...action.data?.data?.data?.reverse()];
         }
@@ -38,6 +40,22 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       break;
     case 'AddMsgAction':
       item.message.unshift(action.data)
+      break
+    case 'StartDelateChat':
+      item.delateChatStatus = false
+      item.dleateChatLoading = true
+      break
+    case 'SuccessDelateChat':
+      item.delateChatStatus = true
+      item.dleateChatLoading = false
+      break
+    case 'ErrorDelateChat':
+      item.delateChatStatus = false,
+        item.dleateChatLoading = false
+      break
+    case 'ClearDeleteChat':
+      item.delateChatStatus = false,
+        item.dleateChatLoading = false
       break
     default:
       break;

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { BackArrow, FotoSvg } from '../../assets/svg/Svgs';
@@ -16,13 +17,16 @@ import { BootomModal } from '../../components/BootomSheet';
 import { MsgBlock } from '../../components/MsgBlock';
 import {
   AddBlackListAction,
+  DelateChatAction,
   GetSinglePageChatAction,
   newMessageAction,
 } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import { Input } from '../../ui/Input';
+import { ClearDeleteChat } from '../../store/action/clearAction';
 
 export const ChatScreen = ({ navigation, route }) => {
+  console.log(route)
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
@@ -39,13 +43,14 @@ export const ChatScreen = ({ navigation, route }) => {
   const [sendMSg, setSendMsg] = useState('');
 
   useEffect(() => {
+    console.log(getSinglePageChat, 'getSinglePageChat')
     if (!getSinglePageChat.loading) {
       setData(getSinglePageChat?.message);
-      if (getSinglePageChat.blackList == 'No Black List moment') {
-        setAddToBlackList('В черный список')
+      if (getSinglePageChat.blackList == 'You Blocked This User') {
+        setAddToBlackList('Удалит из черного списка')
       }
       else {
-        setAddToBlackList('Удалит из черного списка')
+        setAddToBlackList('В черный список')
       }
     }
   }, [getSinglePageChat.data]);
@@ -67,7 +72,7 @@ export const ChatScreen = ({ navigation, route }) => {
     );
     setSendMsg('')
   };
-
+  console.log(addToblackList)
   useEffect(() => {
     dispatch(
       GetSinglePageChatAction(
@@ -89,6 +94,18 @@ export const ChatScreen = ({ navigation, route }) => {
       setAddToBlackList('В черный список')
 
     }
+  }
+
+  useEffect(() => {
+    if (getSinglePageChat.delateChatStatus) {
+      dispatch(ClearDeleteChat())
+      navigation.navigate('ChatUsersScreen')
+    }
+  }, [getSinglePageChat.delateChatStatus])
+  if (getSinglePageChat.dleateChatLoading) {
+    return <View style={Styles.loading}>
+      <ActivityIndicator size="large" color="#FFC24B" />
+    </View>
   }
   return (
     <SafeAreaView style={{ paddingHorizontal: 15, height: '100%' }}>
@@ -171,7 +188,9 @@ export const ChatScreen = ({ navigation, route }) => {
       </View>
       <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
         <View style={{ paddingHorizontal: 20 }}>
-          <TouchableOpacity style={{ marginBottom: 20, marginTop: 20 }}>
+          <TouchableOpacity
+            onPress={() => dispatch(DelateChatAction({ receiver_id: route.params.id }, staticdata.token))}
+            style={{ marginBottom: 20, marginTop: 20 }}>
             <Text style={Styles.darkRegular14}>Удалить переписку</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => addToBlackList()}>

@@ -1,11 +1,11 @@
-import {useState, useEffect, useRef} from 'react';
-import {View, FlatList, ActivityIndicator, RefreshControl} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {Post} from '../../components/Post';
-import {AddPostViewCount, GetLentsAction} from '../../store/action/action';
-import {Styles} from '../../styles/Styles';
+import { useState, useEffect, useRef } from 'react';
+import { View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Post } from '../../components/Post';
+import { AddPostViewCount, GetLentsAction } from '../../store/action/action';
+import { Styles } from '../../styles/Styles';
 
-export const HomeScreen = ({navigation}) => {
+export const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector(st => st.userData);
   const staticdata = useSelector(st => st.static);
@@ -44,7 +44,8 @@ export const HomeScreen = ({navigation}) => {
     }
   }, [index]);
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item, index }) => {
+    console.log(item.user.follow_status_sender.length)
     if (!blackList.includes(item.user.id)) {
       return (
         <View
@@ -68,6 +69,7 @@ export const HomeScreen = ({navigation}) => {
             id={item.id}
             star={item.user.star}
             isBook={item.auth_user_book.length > 0}
+            isFollow={item.user.follow_status_sender.length}
             addToblack={e => {
               let item = [...blackList];
               item.push(e);

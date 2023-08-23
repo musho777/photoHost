@@ -1,254 +1,261 @@
-export const ErrorRegister = (data) =>{
+export const ErrorRegister = (data) => {
     return {
-        type:'ErrorRegister',
+        type: 'ErrorRegister',
         data
     }
 }
 
-export const ErrorConfirmRegisterCode = (data) =>{
+export const ErrorConfirmRegisterCode = (data) => {
     return {
-        type:'ErrorConfirmRegisterCode',
+        type: 'ErrorConfirmRegisterCode',
         data
     }
 }
 
-export const ErrorLogin = (data) =>{
+export const ErrorLogin = (data) => {
     return {
-        type:'ErrorLogin',
+        type: 'ErrorLogin',
         data
     }
 }
 
-export const ErrorForgotPassword = (data) =>{
+export const ErrorForgotPassword = (data) => {
     return {
-        type:'ErrorForgotPassword',
+        type: 'ErrorForgotPassword',
         data
     }
 }
 
-export const ErrorValidationForgotPassword = (data) =>{
+export const ErrorValidationForgotPassword = (data) => {
     return {
-        type:'ErrorValidationForgotPassword',
+        type: 'ErrorValidationForgotPassword',
         data
     }
 }
 
-export const ErrorNewPassword = (data) =>{
+export const ErrorNewPassword = (data) => {
     return {
-        type:'ErrorNewPassword',
+        type: 'ErrorNewPassword',
         data
     }
 }
 
-export const ErrorGetUserData = (data) =>{
+export const ErrorGetUserData = (data) => {
     return {
-        type:'ErrorGetUserData',
+        type: 'ErrorGetUserData',
         data
     }
 }
 
-export const ErrorChangeProfile = (data) =>{
+export const ErrorChangeProfile = (data) => {
     return {
-        type:'ErrorChangeProfile',
+        type: 'ErrorChangeProfile',
         data
     }
 }
 
-export const ErrorChangeUserPassowrd = (data) =>{
+export const ErrorChangeUserPassowrd = (data) => {
     return {
-        type:'ErrorChangeUserPassowrd',
+        type: 'ErrorChangeUserPassowrd',
         data
     }
 }
 
-export const ErrorChangeEmail = (data) =>{
+export const ErrorChangeEmail = (data) => {
     return {
-        type:'ErrorChangeEmail',
+        type: 'ErrorChangeEmail',
         data
     }
 }
 
-export const ErrorChangeEmailPassword = (data)=>{
+export const ErrorChangeEmailPassword = (data) => {
     return {
-        type:'ErrorChangeEmailPassword',
+        type: 'ErrorChangeEmailPassword',
         data
     }
 }
 
-export const ErrorChangeEmailCode = (data) =>{
+export const ErrorChangeEmailCode = (data) => {
     return {
-        type:'ErrorChangeEmailCode',
+        type: 'ErrorChangeEmailCode',
         data
     }
 }
 
-export const ErrorChangeAvatar  = (data) =>{
+export const ErrorChangeAvatar = (data) => {
     return {
-        type:'ErrorChangeAvatar',
+        type: 'ErrorChangeAvatar',
         data
     }
 }
-export const ErrorSearch = (data) =>{
+export const ErrorSearch = (data) => {
     return {
-        type:'ErrorSearch',
-        data
-    }
-}
-
-export const ErrorGetSinglPage = (data) =>{
-    return {
-        type:'ErrorGetSinglPage',
+        type: 'ErrorSearch',
         data
     }
 }
 
-export const ErrorAddDeleteFollow = (data) =>{
+export const ErrorGetSinglPage = (data) => {
     return {
-        type:'ErrorAddDeleteFollow',
-        data
-    }
-}
-export const ErrorGetFollowersAction = (data) =>{
-    return {
-        type:'ErrorGetFollowersAction',
+        type: 'ErrorGetSinglPage',
         data
     }
 }
 
-export const ErrorDeleteOtherPople = (data) =>{
+export const ErrorAddDeleteFollow = (data) => {
     return {
-        type:'ErrorDeleteOtherPople',
+        type: 'ErrorAddDeleteFollow',
+        data
+    }
+}
+export const ErrorGetFollowersAction = (data) => {
+    return {
+        type: 'ErrorGetFollowersAction',
         data
     }
 }
 
-export const ErrorGetFollower = (data) =>{
-    return{
-        type:'ErrorGetFollower',
+export const ErrorDeleteOtherPople = (data) => {
+    return {
+        type: 'ErrorDeleteOtherPople',
         data
     }
 }
 
-export const ErrorGetSinglePageChat = (data) =>{
+export const ErrorGetFollower = (data) => {
     return {
-        type:'ErrorGetSinglePageChat',
+        type: 'ErrorGetFollower',
         data
     }
 }
 
-export const ErrorNewMessageAction = (data) =>{
+export const ErrorGetSinglePageChat = (data) => {
     return {
-        type:"ErrorNewMessageAction",
+        type: 'ErrorGetSinglePageChat',
         data
     }
 }
 
-export const ErrorGetMyChatRoom = (data) =>{
-    return{
-        type:'ErrorGetMyChatRoom',
+export const ErrorNewMessageAction = (data) => {
+    return {
+        type: "ErrorNewMessageAction",
         data
     }
 }
 
-export const ErrorLogout = (data) =>{
-    return{
-        type:'ErrorLogout',
+export const ErrorGetMyChatRoom = (data) => {
+    return {
+        type: 'ErrorGetMyChatRoom',
         data
     }
 }
 
-export const ErrorCreatePost = (data) =>{
+export const ErrorLogout = (data) => {
     return {
-        type:'ErrorCreatePost',
+        type: 'ErrorLogout',
         data
     }
 }
 
-export const ErrorGetPosts = (data) =>{
+export const ErrorCreatePost = (data) => {
     return {
-        type:'ErrorGetPosts',
+        type: 'ErrorCreatePost',
         data
     }
 }
 
-export const ErrorGetLents = (data) =>{
+export const ErrorGetPosts = (data) => {
     return {
-        type:'ErrorGetLents',
+        type: 'ErrorGetPosts',
         data
     }
 }
 
-export const ErrorLikePost = (data) =>{
+export const ErrorGetLents = (data) => {
     return {
-        type:'ErrorLikePost',
+        type: 'ErrorGetLents',
         data
     }
 }
 
-export const ErrorAddBlackList = (data) =>{
+export const ErrorLikePost = (data) => {
     return {
-        type:'ErrorAddBlackList',
+        type: 'ErrorLikePost',
         data
     }
 }
 
-export const ErrorGetBlackList = (data) =>{
+export const ErrorAddBlackList = (data) => {
     return {
-        type:'ErrorGetBlackList',
+        type: 'ErrorAddBlackList',
         data
     }
 }
 
-export const ErrorAddInBook = (data) =>{
+export const ErrorGetBlackList = (data) => {
     return {
-        type:'ErrorAddInBook',
+        type: 'ErrorGetBlackList',
         data
     }
 }
 
-export const ErrorGetMyBooks = (data) =>{
+export const ErrorAddInBook = (data) => {
     return {
-        type:'ErrorGetMyBooks',
+        type: 'ErrorAddInBook',
         data
     }
 }
 
-export const ErrorGetNotification = (data) =>{
+export const ErrorGetMyBooks = (data) => {
     return {
-        type:"ErrorGetNotification",
+        type: 'ErrorGetMyBooks',
         data
     }
 }
 
-export const ErrorAddComment = (data) =>{
+export const ErrorGetNotification = (data) => {
     return {
-        type:'ErrorAddComment',
-        data
-    }
-} 
-export const ErrorGetPostComment = (data) =>{
-    return {
-        type:'ErrorGetPostComment',
-        data
-    }
-}
-export const ErrorGetSinglPost = (data) =>{
-    return {
-        type:'ErrorGetSinglPost',
+        type: "ErrorGetNotification",
         data
     }
 }
 
-export const ErrorEditPost = (data) =>{
+export const ErrorAddComment = (data) => {
     return {
-        type:'ErrorEditPost',
+        type: 'ErrorAddComment',
         data
     }
-} 
-
-export const ErrorGetPostLike = (data) =>{
+}
+export const ErrorGetPostComment = (data) => {
     return {
-        type:'ErrorGetPostLike',
+        type: 'ErrorGetPostComment',
+        data
+    }
+}
+export const ErrorGetSinglPost = (data) => {
+    return {
+        type: 'ErrorGetSinglPost',
+        data
+    }
+}
+
+export const ErrorEditPost = (data) => {
+    return {
+        type: 'ErrorEditPost',
+        data
+    }
+}
+
+export const ErrorGetPostLike = (data) => {
+    return {
+        type: 'ErrorGetPostLike',
+        data
+    }
+}
+
+export const ErrorDelateChat = (data) => {
+    return {
+        type: 'ErrorDelateChat',
         data
     }
 }

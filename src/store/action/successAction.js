@@ -1,44 +1,44 @@
-export const SuccessRegister = (data) =>{
+export const SuccessRegister = (data) => {
     return {
-        type:'SuccessRegister',
+        type: 'SuccessRegister',
         data,
     }
 }
-export const SuccessConfirmRegisterCode = () =>{
+export const SuccessConfirmRegisterCode = () => {
     return {
-        type:'SuccessConfirmRegisterCode'
+        type: 'SuccessConfirmRegisterCode'
     }
 }
 
-export const SuccessLogin = (data) =>{
+export const SuccessLogin = (data) => {
     return {
-        type:'SuccessLogin',
+        type: 'SuccessLogin',
         data
     }
 }
-export const SuccessForgotPassword = (data) =>{
+export const SuccessForgotPassword = (data) => {
     return {
-        type:'SuccessForgotPassword',
-        data
-    }
-}
-
-export const SuccessValidForgotPassowrd = (data) =>{
-    return {
-        type:'SuccessValidForgotPassowrd',
+        type: 'SuccessForgotPassword',
         data
     }
 }
 
-export const SuccessNewPassword = (data) =>{
+export const SuccessValidForgotPassowrd = (data) => {
     return {
-        type:'SuccessNewPassword',
+        type: 'SuccessValidForgotPassowrd',
         data
     }
 }
-export const SuccessGetUserData = (data,follower_count,followers_count,post_count,allData) =>{
+
+export const SuccessNewPassword = (data) => {
     return {
-        type:'SuccessGetUserData',
+        type: 'SuccessNewPassword',
+        data
+    }
+}
+export const SuccessGetUserData = (data, follower_count, followers_count, post_count, allData) => {
+    return {
+        type: 'SuccessGetUserData',
         data,
         follower_count,
         followers_count,
@@ -46,208 +46,215 @@ export const SuccessGetUserData = (data,follower_count,followers_count,post_coun
         allData
     }
 }
-export const SuccessChangeProfil = (data) =>{
+export const SuccessChangeProfil = (data) => {
     return {
-        type:'SuccessChangeProfil',
+        type: 'SuccessChangeProfil',
         data
     }
 }
 
-export const SuccessChangeUserPassword = (data) =>{
+export const SuccessChangeUserPassword = (data) => {
     return {
-        type:'SuccessChangeUserPassword',
+        type: 'SuccessChangeUserPassword',
         data
     }
-} 
-export const SuccessChangeEmail = (data) =>{
+}
+export const SuccessChangeEmail = (data) => {
     return {
-        type:'SuccessChangeEmail',
+        type: 'SuccessChangeEmail',
         data
     }
 }
 
-export const SuccessChangeEmailPassword = (data) =>{
+export const SuccessChangeEmailPassword = (data) => {
     return {
-        type:'SuccessChangeEmailPassword'
+        type: 'SuccessChangeEmailPassword'
     }
 }
 
-export const SuccessChangeEmailCode = (data) =>{
+export const SuccessChangeEmailCode = (data) => {
     return {
-        type:'SuccessChangeEmailCode',
+        type: 'SuccessChangeEmailCode',
         data
     }
 }
 
-export const SuccessChangeAvatar = (data) =>{
+export const SuccessChangeAvatar = (data) => {
     return {
-        type:'SuccessChangeAvatar',
+        type: 'SuccessChangeAvatar',
         data
     }
 }
 
-export const SuccessSearch = (data) =>{
+export const SuccessSearch = (data) => {
     return {
-        type:'SuccessSearch',
+        type: 'SuccessSearch',
         data
     }
 }
 
-export const SuccessGetSinglPage = (data) =>{
+export const SuccessGetSinglPage = (data) => {
     return {
-        type:'SuccessGetSinglPage',
+        type: 'SuccessGetSinglPage',
         data
     }
 }
 
-export const SuccessAddDeleteFollow = (data) =>{
+export const SuccessAddDeleteFollow = (data) => {
     return {
-        type:'SuccessAddDeleteFollow',
+        type: 'SuccessAddDeleteFollow',
         data
     }
 }
-export const SucessGetFollowersAction = (data) =>{
+export const SucessGetFollowersAction = (data) => {
     return {
-        type:'SucessGetFollowersAction',
-        data
-    }
-}
-
-export const SuccessDeleteOtherPople = (data) =>{
-    return{
-        type:'SuccessDeleteOtherPople',
+        type: 'SucessGetFollowersAction',
         data
     }
 }
 
-export const SuccessGetFollower = (data) =>{
+export const SuccessDeleteOtherPople = (data) => {
     return {
-        type:'SuccessGetFollower',
+        type: 'SuccessDeleteOtherPople',
         data
     }
 }
 
-export const SuccessGetSinglePageChat = (data) =>{
+export const SuccessGetFollower = (data) => {
     return {
-        type:'SuccessGetSinglePageChat',
+        type: 'SuccessGetFollower',
         data
     }
 }
 
-export const SuccessNewMessageAction = (data) =>{
+export const SuccessGetSinglePageChat = (data) => {
     return {
-        type:'SuccessNewMessageAction',
+        type: 'SuccessGetSinglePageChat',
         data
     }
 }
 
-export const SuccessGetMyChatRoom = (data) =>{
-    return{
-        type:'SuccessGetMyChatRoom',
+export const SuccessNewMessageAction = (data) => {
+    return {
+        type: 'SuccessNewMessageAction',
         data
     }
 }
 
-export const SuccessLogout = () =>{
+export const SuccessGetMyChatRoom = (data) => {
     return {
-        type:'SuccessLogout'
-    }
-}
-
-export const SuccessCreatePost = (data) =>{
-    return {
-        type:'SuccessCreatePost',
+        type: 'SuccessGetMyChatRoom',
         data
     }
 }
 
-export const SuccessGetPosts = (data) =>{
+export const SuccessLogout = () => {
     return {
-        type:'SuccessGetPosts',
-        data
+        type: 'SuccessLogout'
     }
-} 
+}
 
-export const SuccessGetLents = (data) =>{
+export const SuccessCreatePost = (data) => {
     return {
-        type:'SuccessGetLents',
+        type: 'SuccessCreatePost',
         data
     }
 }
 
-export const SuccessLikePost = (data) =>{
+export const SuccessGetPosts = (data) => {
     return {
-        type:'SuccessLikePost',
+        type: 'SuccessGetPosts',
         data
     }
 }
 
-export const SuccessAddBlackList = (data) =>{
+export const SuccessGetLents = (data) => {
     return {
-        type:'SuccessAddBlackList',
+        type: 'SuccessGetLents',
         data
     }
 }
 
-export const SuccessGetBlackList = (data) =>{
+export const SuccessLikePost = (data) => {
     return {
-        type:'SuccessGetBlackList',
+        type: 'SuccessLikePost',
         data
     }
 }
 
-export const SuccessAddInBook = (data) =>{
+export const SuccessAddBlackList = (data) => {
     return {
-        type:'SuccessAddInBook',
+        type: 'SuccessAddBlackList',
         data
     }
 }
 
-export const SuccessGetMyBooks = (data) =>{
+export const SuccessGetBlackList = (data) => {
     return {
-        type:'SuccessGetMyBooks',
+        type: 'SuccessGetBlackList',
         data
     }
 }
 
-export const SuccessGetNotification = (data) =>{
+export const SuccessAddInBook = (data) => {
     return {
-        type:'SuccessGetNotification',
+        type: 'SuccessAddInBook',
         data
     }
 }
 
-export const SuccessAddComment = (data) =>{
+export const SuccessGetMyBooks = (data) => {
     return {
-        type:"SuccessAddComment",
+        type: 'SuccessGetMyBooks',
         data
     }
 }
 
-export const SuccessGetPostComment = (data) =>{
+export const SuccessGetNotification = (data) => {
     return {
-        type:'SuccessGetPostComment',
+        type: 'SuccessGetNotification',
         data
     }
 }
 
-export const SuccessGetSinglPost = (data) =>{
+export const SuccessAddComment = (data) => {
     return {
-        type:"SuccessGetSinglPost",
+        type: "SuccessAddComment",
         data
     }
 }
 
-export const SuccessEditPost = (data) =>{
+export const SuccessGetPostComment = (data) => {
     return {
-        type:'SuccessEditPost',
+        type: 'SuccessGetPostComment',
         data
     }
-} 
+}
 
-export const SuccessGetPostLike = (data) =>{
+export const SuccessGetSinglPost = (data) => {
     return {
-        type:'SuccessGetPostLike',
+        type: "SuccessGetSinglPost",
+        data
+    }
+}
+
+export const SuccessEditPost = (data) => {
+    return {
+        type: 'SuccessEditPost',
+        data
+    }
+}
+
+export const SuccessGetPostLike = (data) => {
+    return {
+        type: 'SuccessGetPostLike',
+        data
+    }
+}
+
+export const SuccessDelateChat = (data) => {
+    return {
+        type: 'SuccessDelateChat',
         data
     }
 }

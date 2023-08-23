@@ -1,62 +1,68 @@
-export const ClearForGotPassword = () =>{
+export const ClearForGotPassword = () => {
     return {
-        type:'ClearForGotPassword'
+        type: 'ClearForGotPassword'
     }
 }
-export const ClearValidationForgotPassword = () =>{
+export const ClearValidationForgotPassword = () => {
     return {
-        type:'ClearValidationForgotPassword'
+        type: 'ClearValidationForgotPassword'
     }
 }
 
-export const CleanNewPassword = ()=>{
+export const CleanNewPassword = () => {
     return {
-        type:'CleanNewPassword'
+        type: 'CleanNewPassword'
     }
 }
 
-export const ClearChangeProfile = () =>{
+export const ClearChangeProfile = () => {
     return {
-        type:'ClearChangeProfile'
+        type: 'ClearChangeProfile'
     }
 }
 
-export const clearChangePassword = () =>{
+export const clearChangePassword = () => {
     return {
-        type:'clearChangePassword'
+        type: 'clearChangePassword'
     }
 }
-export const ClearEmailChange = () =>{
+export const ClearEmailChange = () => {
     return {
-        type:'ClearEmailChange'
+        type: 'ClearEmailChange'
     }
 }
-export const ClearChangeAvatar = () =>{
-    return{
-        type:'ClearChangeAvatar'
+export const ClearChangeAvatar = () => {
+    return {
+        type: 'ClearChangeAvatar'
     }
 }
 
-export const clearSearchData = () =>{
+export const clearSearchData = () => {
     return {
-        type:'clearSearchData'
+        type: 'clearSearchData'
     }
 }
 
-export const clearGetFollowersAction = () =>{
+export const clearGetFollowersAction = () => {
     return {
-        type:'clearGetFollowersAction'
+        type: 'clearGetFollowersAction'
     }
 }
 
-export const ClearCreatPost = () =>{
-    return{
-        type:'clearCreatPost'
+export const ClearCreatPost = () => {
+    return {
+        type: 'clearCreatPost'
     }
 }
 
-export const ClearEditPost = () =>{
+export const ClearEditPost = () => {
     return {
-        type:'ClearEditPost'
+        type: 'ClearEditPost'
+    }
+}
+
+export const ClearDeleteChat = () => {
+    return {
+        type: 'ClearDeleteChat'
     }
 }
