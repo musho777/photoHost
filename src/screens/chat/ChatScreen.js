@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   FlatList,
-  RefreshControl,
   ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +25,7 @@ import { Input } from '../../ui/Input';
 import { ClearDeleteChat } from '../../store/action/clearAction';
 
 export const ChatScreen = ({ navigation, route }) => {
+  console.log(route.params.id)
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
@@ -45,7 +45,7 @@ export const ChatScreen = ({ navigation, route }) => {
     if (!getSinglePageChat.loading) {
       setData(getSinglePageChat?.message);
       if (getSinglePageChat.blackList == 'You Blocked This User') {
-        setAddToBlackList('Удалит из черного списка')
+        setAddToBlackList('Удалить из черного списка')
       }
       else {
         setAddToBlackList('В черный список')
@@ -85,7 +85,7 @@ export const ChatScreen = ({ navigation, route }) => {
     bottomSheetRef.current?.close();
     dispatch(AddBlackListAction({ 'user_id': getSinglePageChat.data.id }, staticdata.token))
     if (addToblackList == 'В черный список') {
-      setAddToBlackList('Удалит из черного списка')
+      setAddToBlackList('Удалить из черного списка')
     }
     else {
       setAddToBlackList('В черный список')
@@ -95,8 +95,9 @@ export const ChatScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if (getSinglePageChat.delateChatStatus) {
+      bottomSheetRef.current?.close();
       dispatch(ClearDeleteChat())
-      navigation.navigate('ChatUsersScreen')
+      navigation.goBack()
     }
   }, [getSinglePageChat.delateChatStatus])
   if (getSinglePageChat.dleateChatLoading) {
@@ -168,28 +169,24 @@ export const ChatScreen = ({ navigation, route }) => {
             width: '100%',
             alignItems: 'center',
           }}>
-          {/* <TouchableOpacity>
-            <FotoSvg />
-          </TouchableOpacity> */}
-          {/* <View></View> */}
           <Input
             msg
+            pdR={50}
             placeholder={'Введите текст'}
             data={sendMSg}
             onChange={e => setSendMsg(e)}
             width={'100%'}
             sendMsg={() => sendMsgFunction()}
-          // value = {sendMSg}
           />
         </View>}
       </View>
       <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
         <View style={{ paddingHorizontal: 20 }}>
-          <TouchableOpacity
+          {data.length > 0 && <TouchableOpacity
             onPress={() => dispatch(DelateChatAction({ receiver_id: route.params.id }, staticdata.token))}
             style={{ marginBottom: 20, marginTop: 20 }}>
             <Text style={Styles.darkRegular14}>Удалить переписку</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
           <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => addToBlackList()}>
             <Text style={Styles.darkRegular14}>{addToblackList}</Text>
           </TouchableOpacity>

@@ -1260,6 +1260,7 @@ export const DeviceIdAction = (data, token) => {
 }
 
 export const DelateChatAction = (data, token) => {
+  console.log(data)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1274,6 +1275,7 @@ export const DelateChatAction = (data, token) => {
     fetch(`${Api}/delete_chat`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r, 'ssss')
         if (r.status) {
           dispatch(SuccessDelateChat(r.data))
         }
