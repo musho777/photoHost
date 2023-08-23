@@ -45,7 +45,6 @@ export const HomeScreen = ({ navigation }) => {
   }, [index]);
 
   const renderItem = ({ item, index }) => {
-    console.log(item.user.follow_status_sender.length)
     if (!blackList.includes(item.user.id)) {
       return (
         <View

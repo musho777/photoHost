@@ -1,4 +1,4 @@
-import {useState, useEffect,useRef} from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Modal,
   View,
@@ -7,20 +7,20 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {HeaderWhiteTitle} from '../headers/HeaderWhiteTitle.';
-import {AppColors} from '../styles/AppColors';
-import {Styles} from '../styles/Styles';
-import {CommentBlock} from './CommentBlock';
-import {Input} from '../ui/Input';
-import {useDispatch, useSelector} from 'react-redux';
-import {AddCommentAction, GelPostCommentsAction} from '../store/action/action';
+import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
+import { AppColors } from '../styles/AppColors';
+import { Styles } from '../styles/Styles';
+import { CommentBlock } from './CommentBlock';
+import { Input } from '../ui/Input';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddCommentAction, GelPostCommentsAction } from '../store/action/action';
 
-export const Comments = ({visible, close, parentId,userImg,userName,description}) => {
+export const Comments = ({ visible, close, parentId, userImg, userName, description }) => {
   const [sendComment, setSendCommet] = useState('');
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState(1);
-  const [senderName,setSenderNAme ] = useState('')
+  const [senderName, setSenderNAme] = useState('')
   const getComments = useSelector(st => st.getComments);
   const textInputRef = useRef(null);
 
@@ -29,14 +29,14 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
   const dispatch = useDispatch();
   useEffect(() => {
     if (visible) {
-      dispatch(GelPostCommentsAction({post_id: parentId}, staticdata.token, 1));
+      dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
     }
   }, [visible]);
 
   const sendCommentFunction = () => {
     let item = [...data]
     let send = sendComment
-    if(senderName){
+    if (senderName) {
       let regex = new RegExp(senderName, "gi");
       send = originalString.replace(regex, "");
     }
@@ -50,9 +50,14 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
         staticdata.token,
       ),
     );
-    setData(item)
     setParentId(null)
-    dispatch(GelPostCommentsAction({post_id: parentId}, staticdata.token, page));
+    dispatch(
+      GelPostCommentsAction(
+        { post_id: parentId },
+        staticdata.token,
+        1,
+      ),
+    );
     setSendCommet('')
   };
 
@@ -62,33 +67,33 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
   }, [getComments.data]);
 
 
-  const Answer = (e) =>{
+  const Answer = (e) => {
     setParentId(e.id)
-    setSendCommet(e.name+":")
-    setSenderNAme(e.name+":")
+    setSendCommet(e.name + ":")
+    setSenderNAme(e.name + ":")
     if (textInputRef.current) {
       textInputRef.current.focus();
     }
   }
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item, index }) => {
     return (
-      <View style={{marginVertical: 20}}>
-        <CommentBlock 
-          text={item.comment} 
-          replay = {item.replay} 
-          user = {item.user} 
-          like_count = {item.likes_count}
-          isLiked = {item.like_auth_user.length} 
-          id = {item.id}
-          token = {staticdata.token}
-          owner = {false}
-          replay_count = {item.replay_count}
-          onPressAnsswer = {(e)=>{
+      <View style={{ marginVertical: 20 }}>
+        <CommentBlock
+          text={item.comment}
+          replay={item.replay}
+          user={item.user}
+          like_count={item.likes_count}
+          isLiked={item.like_auth_user.length}
+          id={item.id}
+          token={staticdata.token}
+          owner={false}
+          replay_count={item.replay_count}
+          onPressAnsswer={(e) => {
             Answer(e)
           }}
         />
-      
+
       </View>
     );
   };
@@ -96,7 +101,7 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
     <View>
       <Modal animationType="slide" visible={visible}>
         <HeaderWhiteTitle onPress={() => close()} title={'Комментарии'} />
-        <View style={{paddingHorizontal: 15, height: '90%'}}>
+        <View style={{ paddingHorizontal: 15, height: '90%' }}>
           <View
             style={{
               borderBottomWidth: 1,
@@ -106,82 +111,82 @@ export const Comments = ({visible, close, parentId,userImg,userName,description}
             <CommentBlock
               ownerName={userName}
               text={description}
-              owner = {true}
-              userImg = {userImg}
+              owner={true}
+              userImg={userImg}
             />
           </View>
-          <View style = {{height:'70%'}}>
-              <FlatList
-              showsVerticalScrollIndicator = {false}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={getComments?.loading}
-                    onRefresh={() => {
-                      dispatch(
-                        GelPostCommentsAction(
-                          {post_id: parentId},
-                          staticdata.token,
-                          1,
-                        ),
-                      );
-                    }}
-                  />
-                }
-                data={data}
-                enableEmptySections={true}
-                ListEmptyComponent={() =>
-                  !getComments?.loading && (
-                    <Text
-                      style={[
-                        Styles.darkMedium16,
-                        {marginTop: 40, textAlign: 'center'},
-                      ]}>
-                      Нет комментариев
-                    </Text>
-                  )
-                }
-                renderItem={renderItem}
-                onEndReached={() => {
-                  if (getComments?.nextPage) {
-                    let p = page + 1;
+          <View style={{ height: '70%' }}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl
+                  refreshing={getComments?.loading}
+                  onRefresh={() => {
                     dispatch(
                       GelPostCommentsAction(
-                        {post_id: parentId},
+                        { post_id: parentId },
                         staticdata.token,
-                        p,
+                        1,
                       ),
                     );
-                    setPage(p);
-                  }
-                }}
-              />
-          </View>
-            <View
-              style={{
-                position: 'absolute',
-                bottom: 30,
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}>
-                <Image
-                  style={{width: 40, height: 40, borderRadius: 50,marginHorizontal:20}}
-                  source={{
-                    uri: `https://chamba.justcode.am/uploads/${user.data.avatar}`,
                   }}
                 />
-                <Input
-                  ref = {textInputRef}
-                  send
-                  sendCom={() => sendCommentFunction()}
-                  value={sendComment}
-                  onChange={e => setSendCommet(e)}
-                  width={'80%'}
-                  placeholder="Введите текст"
-                />
-            </View>
+              }
+              data={data}
+              enableEmptySections={true}
+              ListEmptyComponent={() =>
+                !getComments?.loading && (
+                  <Text
+                    style={[
+                      Styles.darkMedium16,
+                      { marginTop: 40, textAlign: 'center' },
+                    ]}>
+                    Нет комментариев
+                  </Text>
+                )
+              }
+              renderItem={renderItem}
+              onEndReached={() => {
+                if (getComments?.nextPage) {
+                  let p = page + 1;
+                  dispatch(
+                    GelPostCommentsAction(
+                      { post_id: parentId },
+                      staticdata.token,
+                      p,
+                    ),
+                  );
+                  setPage(p);
+                }
+              }}
+            />
           </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 30,
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'row',
+            }}>
+            <Image
+              style={{ width: 40, height: 40, borderRadius: 50, marginHorizontal: 20 }}
+              source={{
+                uri: `https://chamba.justcode.am/uploads/${user.data.avatar}`,
+              }}
+            />
+            <Input
+              ref={textInputRef}
+              send
+              sendCom={() => sendCommentFunction()}
+              value={sendComment}
+              onChange={e => setSendCommet(e)}
+              width={'80%'}
+              placeholder="Введите текст"
+            />
+          </View>
+        </View>
       </Modal>
     </View>
   );

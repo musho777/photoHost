@@ -26,7 +26,6 @@ import { Input } from '../../ui/Input';
 import { ClearDeleteChat } from '../../store/action/clearAction';
 
 export const ChatScreen = ({ navigation, route }) => {
-  console.log(route)
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
@@ -43,7 +42,6 @@ export const ChatScreen = ({ navigation, route }) => {
   const [sendMSg, setSendMsg] = useState('');
 
   useEffect(() => {
-    console.log(getSinglePageChat, 'getSinglePageChat')
     if (!getSinglePageChat.loading) {
       setData(getSinglePageChat?.message);
       if (getSinglePageChat.blackList == 'You Blocked This User') {
@@ -72,7 +70,6 @@ export const ChatScreen = ({ navigation, route }) => {
     );
     setSendMsg('')
   };
-  console.log(addToblackList)
   useEffect(() => {
     dispatch(
       GetSinglePageChatAction(
