@@ -91,19 +91,19 @@ export const SearchProfil = ({ navigation, route }) => {
               Styles.flexSpaceBetween,
             ]}>
             <View style={{ alignItems: 'center' }}>
-              <Text style={Styles.darkSemiBold16}>24</Text>
+              <Text style={Styles.darkSemiBold16}>{singlPage.postCount}</Text>
               <Text style={Styles.balihaiRegular12}>Публикаций</Text>
             </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('FollowersScreen', { index: 0, id: singlPage.data.id })}
               style={{ alignItems: 'center' }}>
-              <Text style={Styles.darkSemiBold16}>230</Text>
+              <Text style={Styles.darkSemiBold16}>{singlPage.followerCount}</Text>
               <Text style={Styles.balihaiRegular12}>Подписчиков</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('FollowersScreen', { index: 1, id: singlPage.data.id })}
               style={{ alignItems: 'center' }}>
-              <Text style={Styles.darkSemiBold16}>348</Text>
+              <Text style={Styles.darkSemiBold16}>{singlPage.followersCount}</Text>
               <Text style={Styles.balihaiRegular12}>Подписок</Text>
             </TouchableOpacity>
           </View>
