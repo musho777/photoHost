@@ -1,10 +1,10 @@
-import {useState, useEffect} from 'react';
-import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {CommentLikeSvg} from '../assets/svg/Svgs';
-import {LikeCommentAction} from '../store/action/action';
-import {AppColors} from '../styles/AppColors';
-import {Styles} from '../styles/Styles';
+import { useState, useEffect } from 'react';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { CommentLikeSvg } from '../assets/svg/Svgs';
+import { LikeCommentAction } from '../store/action/action';
+import { AppColors } from '../styles/AppColors';
+import { Styles } from '../styles/Styles';
 
 export const CommentItem = ({
   text,
@@ -18,6 +18,7 @@ export const CommentItem = ({
   ownerName,
   userImg,
   onPressAnsswer,
+  daysAgo
 }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState();
@@ -25,27 +26,26 @@ export const CommentItem = ({
   useEffect(() => {
     setLiked(isLiked);
   }, [isLiked]);
-  useEffect(()=>{
+  useEffect(() => {
     setLikeCount(+like_count)
-  },[like_count])
+  }, [like_count])
   return (
     <View
       style={[
         Styles.flexAlignItems,
-        {alignItems: 'flex-start', marginTop: 20},
-        ansswer && {marginLeft: 30},
+        { alignItems: 'flex-start', marginTop: 20 },
+        ansswer && { marginLeft: 30 },
       ]}>
       <View style={owner && styles.imgBlock}>
         <Image
           style={ansswer ? styles.answerImg : styles.img}
           source={{
-            uri: `https://chamba.justcode.am/uploads/${
-              owner ? userImg : user?.avatar
-            }`,
+            uri: `https://chamba.justcode.am/uploads/${owner ? userImg : user?.avatar
+              }`,
           }}
         />
       </View>
-      <View style={[{marginLeft: 10}, owner ? {width: '80%'} : {width: '75%'}]}>
+      <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>
         <Text style={Styles.eslipesMedium13}>
           <Text style={Styles.darkMedium13}>
             {owner ? ownerName : user?.name}:{' '}
@@ -54,10 +54,10 @@ export const CommentItem = ({
         </Text>
         <View style={Styles.flexAlignItems}></View>
         {!owner && (
-          <View style={{flexDirection: 'row', marginTop: 5}}>
-            <Text style={{marginRight: 30}}>4 ч.</Text>
+          <View style={{ flexDirection: 'row', marginTop: 5 }}>
+            <Text style={{ marginRight: 30 }}>{daysAgo}</Text>
             <TouchableOpacity
-              onPress={() => onPressAnsswer({name: user?.name, id: id})}>
+              onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
               <Text>Ответить</Text>
             </TouchableOpacity>
           </View>
@@ -74,13 +74,13 @@ export const CommentItem = ({
                 setLikeCount(likeCount + 1);
                 setLiked(true);
               }
-              dispatch(LikeCommentAction({comment_id: id}, token));
+              dispatch(LikeCommentAction({ comment_id: id }, token));
             }}>
             <CommentLikeSvg liked={liked} />
           </TouchableOpacity>
           <Text
             style={[
-              [Styles.eslipesMedium10, {textAlign: 'center', marginTop: -5}],
+              [Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5 }],
             ]}>
             {likeCount}
           </Text>

@@ -1,11 +1,11 @@
-import {useEffect, useState} from 'react';
-import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {CommentLikeSvg} from '../assets/svg/Svgs';
-import {LikeCommentAction} from '../store/action/action';
-import {AppColors} from '../styles/AppColors';
-import {Styles} from '../styles/Styles';
-import {CommentItem} from './CommentItem';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { CommentLikeSvg } from '../assets/svg/Svgs';
+import { LikeCommentAction } from '../store/action/action';
+import { AppColors } from '../styles/AppColors';
+import { Styles } from '../styles/Styles';
+import { CommentItem } from './CommentItem';
 
 export const CommentBlock = ({
   text,
@@ -20,7 +20,8 @@ export const CommentBlock = ({
   userImg,
   onPressAnsswer,
   replay,
-  replay_count
+  replay_count,
+  daysAgo
 }) => {
   const [liked, setLiked] = useState(isLiked);
   const [likeCount, setLikeCount] = useState(+like_count);
@@ -32,7 +33,7 @@ export const CommentBlock = ({
   const ShowComment = (data, count) => {
     let item = [...comentReplay];
     data?.map((elm, i) => {
-      item.push({replay: elm, count: count});
+      item.push({ replay: elm, count: count });
       setComentReplay(item);
     });
     data?.map((elm, i) => {
@@ -59,9 +60,22 @@ export const CommentBlock = ({
         userImg={userImg}
         onPressAnsswer={onPressAnsswer}
         replay={replay}
+        daysAgo={daysAgo}
       />
       {showAnswrs &&
         comentReplay.map((elm, i) => {
+          console.log(elm.created_at, 'sss')
+          const givenDate = new Date(elm.created_at);
+          const currentDate = new Date();
+          const timeDifference = currentDate - givenDate;
+          let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
+          if (daysAgo < 0) {
+            daysAgo = daysAgo * 24 + 'часов назад'
+            if (daysAgo < 0) {
+              daysAgo = daysAgo * 60 + 'минут назад'
+            }
+          }
+          console.log(daysAgo, 'daysAgo')
           return (
             <CommentItem
               key={i}
@@ -74,13 +88,14 @@ export const CommentBlock = ({
               isLiked={elm.replay.like_auth_user.length}
               id={elm.replay.id}
               token={staticdata.token}
+              daysAgo={daysAgo}
             />
           );
         })}
       {!owner && (
         <TouchableOpacity onPress={() => setShowAnswers(!showAnswrs)}>
-         {replay_count !=0  &&<Text
-            style={[Styles.balihaiMedium9, {marginLeft: 70, marginTop: 20}]}>
+          {replay_count != 0 && <Text
+            style={[Styles.balihaiMedium9, { marginLeft: 70, marginTop: 20 }]}>
             {showAnswrs ? 'Скрыть ответы' : `Смотреть ещё ${replay_count} ответа`}
           </Text>}
         </TouchableOpacity>

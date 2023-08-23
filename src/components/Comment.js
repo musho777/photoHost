@@ -77,6 +77,23 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
   }
 
   const renderItem = ({ item, index }) => {
+    const givenDate = new Date(item.created_at);
+    const currentDate = new Date();
+    const timeDifference = currentDate - givenDate;
+    let daysAgo = (timeDifference / (1000 * 60 * 60 * 24))
+    if (+daysAgo < 1) {
+      console.log('sss')
+      daysAgo = daysAgo * 24
+      if (daysAgo <= 1) {
+        daysAgo = Math.floor(daysAgo * 60) + 'минут назад'
+      }
+      else {
+        daysAgo = Math.floor(daysAgo) + 'часов назад'
+      }
+    }
+    else {
+      daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
+    }
     return (
       <View style={{ marginVertical: 20 }}>
         <CommentBlock
@@ -88,6 +105,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
           id={item.id}
           token={staticdata.token}
           owner={false}
+          daysAgo={daysAgo}
           replay_count={item.replay_count}
           onPressAnsswer={(e) => {
             Answer(e)

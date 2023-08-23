@@ -7,17 +7,14 @@ import { Styles } from '../../styles/Styles';
 
 export const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const user = useSelector(st => st.userData);
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents);
-  const [first, setFires] = useState(true);
   const [page, setPage] = useState(1);
   const [blackList, setBlackList] = useState([]);
   const [index, setIndex] = useState(0);
   const flatListRef = useRef(null);
   useEffect(() => {
     if (staticdata.token) {
-      setFires(false);
       dispatch(GetLentsAction(staticdata.token));
     }
   }, [staticdata.token]);
@@ -45,6 +42,17 @@ export const HomeScreen = ({ navigation }) => {
   }, [index]);
 
   const renderItem = ({ item, index }) => {
+    const givenDate = new Date(item.created_at);
+    const currentDate = new Date();
+    const timeDifference = currentDate - givenDate;
+    let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
+    if (daysAgo < 0) {
+      daysAgo = daysAgo * 24 + 'часов назад'
+      if (daysAgo < 0) {
+        daysAgo = daysAgo * 60 + 'минут назад'
+      }
+    }
+
     if (!blackList.includes(item.user.id)) {
       return (
         <View
@@ -69,6 +77,7 @@ export const HomeScreen = ({ navigation }) => {
             star={item.user.star}
             isBook={item.auth_user_book.length > 0}
             isFollow={item.user.follow_status_sender.length}
+            daysAgo={daysAgo}
             addToblack={e => {
               let item = [...blackList];
               item.push(e);

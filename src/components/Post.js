@@ -38,6 +38,7 @@ export const Post = ({
   addToblack,
   isBook,
   isFollow,
+  daysAgo
 }) => {
   const [likedCount, setLikedCount] = useState(+like)
   const [isLiked, setIsLiked] = useState(liked)
@@ -103,7 +104,7 @@ export const Post = ({
                 <Text Text style={[Styles.darkSemiBold14, { marginRight: 5 }]}>{userName}</Text>
                 {star > 0 && <CheckMarkUserSvg />}
               </View>
-              <Text style={Styles.balihaiMedium9}>3 часа назад</Text>
+              <Text style={Styles.balihaiMedium9}>{daysAgo} </Text>
             </View>
           </View>
           <TouchableOpacity
