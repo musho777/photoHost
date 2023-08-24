@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { CommentLikeSvg } from '../assets/svg/Svgs';
-import { LikeCommentAction } from '../store/action/action';
+import { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 import { CommentItem } from './CommentItem';
+import CommentComponent from './CommetnComponent';
 
 export const CommentBlock = ({
   text,
@@ -23,25 +22,9 @@ export const CommentBlock = ({
   replay_count,
   daysAgo
 }) => {
-  const [comentReplay, setComentReplay] = useState([]);
   const [showAnswrs, setShowAnswers] = useState(false);
   const staticdata = useSelector(st => st.static);
 
-  const ShowComment = (data, count) => {
-    let item = [...comentReplay];
-    data?.map((elm, i) => {
-      item.push({ replay: elm, count: count });
-      setComentReplay(item);
-    });
-    data?.map((elm, i) => {
-      if (elm?.replay?.length) {
-        ShowComment(data.replay, count++);
-      }
-    });
-  };
-  useEffect(() => {
-    ShowComment(replay, 1);
-  }, []);
   return (
     <View>
       <CommentItem
@@ -60,35 +43,8 @@ export const CommentBlock = ({
         daysAgo={daysAgo}
       />
       {showAnswrs &&
-        comentReplay.map((elm, i) => {
-          const givenDate = new Date(elm.created_at);
-          const currentDate = new Date();
-          const timeDifference = currentDate - givenDate;
-          let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
-          if (daysAgo < 0) {
-            daysAgo = daysAgo * 24 + 'часов назад'
-            if (daysAgo < 0) {
-              daysAgo = daysAgo * 60 + 'минут назад'
-            }
-          }
-          return (
-            <CommentItem
-              key={i}
-              text={elm.replay.comment}
-              owner={false}
-              ansswer={true}
-              replay={elm.replay.replay}
-              user={elm.replay.user}
-              like_count={elm.replay.likes_count}
-              isLiked={elm.replay.like_auth_user.length}
-              id={elm.replay.id}
-              token={staticdata.token}
-              daysAgo={daysAgo}
-              onPressAnsswer={onPressAnsswer}
-
-            />
-          );
-        })}
+        <CommentComponent token={staticdata.token} onPressAnsswer={onPressAnsswer} commentData={replay} />
+      }
       {!owner && (
         <TouchableOpacity onPress={() => setShowAnswers(!showAnswrs)}>
           {replay_count != 0 && <Text

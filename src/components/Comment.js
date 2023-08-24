@@ -33,7 +33,6 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
     }
   }, [visible]);
   const sendCommentFunction = () => {
-    let item = [...data]
     let send = sendComment
     if (senderName) {
       let regex = new RegExp(senderName, "gi");
@@ -76,6 +75,9 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
   }
 
   const renderItem = ({ item, index }) => {
+    if (index == 0) {
+      console.log(item.replay.length)
+    }
     const givenDate = new Date(item.created_at);
     const currentDate = new Date();
     const timeDifference = currentDate - givenDate;
@@ -99,7 +101,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
           replay={item.replay}
           user={item.user}
           like_count={item.likes_count}
-          isLiked={item.like_auth_user.length}
+          isLiked={item.like_auth_user?.length}
           id={item.id}
           token={staticdata.token}
           owner={false}
