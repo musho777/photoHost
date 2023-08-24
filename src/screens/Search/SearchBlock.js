@@ -94,7 +94,7 @@ export const SearchBlock = ({ modalVisible, close }) => {
   return (
     <View style={styles.centeredView}>
       <View style={[styles.header, { marginBottom: 20 }]}>
-        <View style={{ marginBottom: 10, width: '80%' }}>
+        <View style={{ marginBottom: 10, width: '100%' }}>
           <TextInput
             onChangeText={e => setData(e)}
             value={data}
@@ -106,15 +106,10 @@ export const SearchBlock = ({ modalVisible, close }) => {
             <SearchInputSvg />
           </View>
         </View>
-        <TouchableOpacity onPress={() => {
-          dispatch(clearSearchData())
-          setData('')
-          navigation.goBack()
-        }
-        } style={{ marginTop: 10, marginLeft: 10 }}>
-          <Text style={Styles.darkMedium12} >отменить</Text>
-        </TouchableOpacity>
+
       </View>
+      {!data && <Text style={Styles.darkMedium16}>Найдите друзей</Text>}
+
       <FlatList
         refreshControl={
           <RefreshControl

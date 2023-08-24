@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { BackArrow, FotoSvg } from '../../assets/svg/Svgs';
+import { BackArrow } from '../../assets/svg/Svgs';
 import { MenuSvg } from '../../assets/svg/TabBarSvg';
 import { BootomModal } from '../../components/BootomSheet';
 import { MsgBlock } from '../../components/MsgBlock';
@@ -22,17 +22,15 @@ import {
 } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import { Input } from '../../ui/Input';
-import { ClearDeleteChat } from '../../store/action/clearAction';
+import { ClearChat, ClearDeleteChat } from '../../store/action/clearAction';
 
 export const ChatScreen = ({ navigation, route }) => {
-  console.log(route.params.id)
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const [addToblackList, setAddToBlackList] = useState('В черный список')
   const user = useSelector(st => st.userData);
-
   const snapPoints = useMemo(() => ['18%'], []);
   const [page, setPage] = useState(1);
   const handlePresentModalPress = useCallback(() => {
@@ -41,22 +39,43 @@ export const ChatScreen = ({ navigation, route }) => {
   const [data, setData] = useState([]);
   const [sendMSg, setSendMsg] = useState('');
 
+
   useEffect(() => {
-    if (!getSinglePageChat.loading) {
-      setData(getSinglePageChat?.message);
-      if (getSinglePageChat.blackList == 'You Blocked This User') {
-        setAddToBlackList('Удалить из черного списка')
-      }
-      else {
-        setAddToBlackList('В черный список')
-      }
+    setData(getSinglePageChat?.message);
+    if (getSinglePageChat.blackList == 'You Blocked This User') {
+      setAddToBlackList('Удалить из черного списка')
+    }
+    else {
+      setAddToBlackList('В черный список')
     }
   }, [getSinglePageChat.data]);
+  // ClearChat
+  useEffect(() => {
+
+    const unsubscribe = navigation.addListener('focus', async () => {
+      if (page == 1) {
+        dispatch(ClearChat())
+        dispatch(
+          GetSinglePageChatAction(
+            {
+              receiver_id: route.params.id,
+            },
+            staticdata.token,
+            page,
+          ),
+        );
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
   const sendMsgFunction = () => {
     let item = [...data];
+    const today = new Date()
+
     item.unshift({
       sender_id: user.data.id,
       message: sendMSg,
+      created_at: today
     });
     setData(item);
     dispatch(
@@ -71,15 +90,18 @@ export const ChatScreen = ({ navigation, route }) => {
     setSendMsg('')
   };
   useEffect(() => {
-    dispatch(
-      GetSinglePageChatAction(
-        {
-          receiver_id: route.params.id,
-        },
-        staticdata.token,
-        page,
-      ),
-    );
+    if (page != 1) {
+
+      dispatch(
+        GetSinglePageChatAction(
+          {
+            receiver_id: route.params.id,
+          },
+          staticdata.token,
+          page,
+        ),
+      );
+    }
   }, [page]);
   const addToBlackList = () => {
     bottomSheetRef.current?.close();
@@ -120,15 +142,15 @@ export const ChatScreen = ({ navigation, route }) => {
             <Image
               style={styles.img}
               source={{
-                uri: `https://chamba.justcode.am/uploads/${getSinglePageChat.data.avatar}`,
+                uri: `https://chamba.justcode.am/uploads/${getSinglePageChat.resiverUser.avatar}`,
               }}
             />
             <View style={{ marginHorizontal: 20 }}>
               <Text style={Styles.darkMedium14}>
-                {getSinglePageChat.data.name}
+                {getSinglePageChat.resiverUser.name}
               </Text>
               <Text style={Styles.balihaiMedium13}>
-                @{getSinglePageChat.data.nickname}
+                @{getSinglePageChat.resiverUser.nickname}
               </Text>
             </View>
           </View>
@@ -152,6 +174,7 @@ export const ChatScreen = ({ navigation, route }) => {
           return (
             <View>
               <MsgBlock
+                timestamp={item.created_at}
                 msg={item.message}
                 from={item.sender_id != user.data.id}
               />
@@ -183,7 +206,7 @@ export const ChatScreen = ({ navigation, route }) => {
       <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
         <View style={{ paddingHorizontal: 20 }}>
           {data.length > 0 && <TouchableOpacity
-            onPress={() => dispatch(DelateChatAction({ receiver_id: route.params.id }, staticdata.token))}
+            onPress={() => dispatch(DelateChatAction({ receiver_id: 21 }, staticdata.token))}
             style={{ marginBottom: 20, marginTop: 20 }}>
             <Text style={Styles.darkRegular14}>Удалить переписку</Text>
           </TouchableOpacity>}

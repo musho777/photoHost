@@ -1044,7 +1044,6 @@ export const AddPostViewCount = (data, token) => {
 };
 
 export const GetNotificationAction = (token, page) => {
-  console.log(token)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1058,7 +1057,6 @@ export const GetNotificationAction = (token, page) => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessGetNotification(r));
         } else {
@@ -1066,7 +1064,6 @@ export const GetNotificationAction = (token, page) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorGetNotification('server error'));
       });
   };
@@ -1260,7 +1257,6 @@ export const DeviceIdAction = (data, token) => {
 }
 
 export const DelateChatAction = (data, token) => {
-  console.log(data)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1275,7 +1271,6 @@ export const DelateChatAction = (data, token) => {
     fetch(`${Api}/delete_chat`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r, 'ssss')
         if (r.status) {
           dispatch(SuccessDelateChat(r.data))
         }

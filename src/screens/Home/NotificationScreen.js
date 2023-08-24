@@ -15,14 +15,12 @@ export const NotificationScreen = () => {
     dispatch(GetNotificationAction(staticdata.token, 1))
   }, [])
   useEffect(() => {
-    console.log(notification.data)
     setData(notification.data)
   }, [notification.data])
 
 
 
   const renderItem = ({ item, index }) => {
-    console.log(item)
     return <NotificationBlock
       description={item.description}
       id={item.id}
