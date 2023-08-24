@@ -23,6 +23,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
   const [senderName, setSenderNAme] = useState('')
   const getComments = useSelector(st => st.getComments);
   const textInputRef = useRef(null);
+  const flatListRef = useRef(null);
 
   const [data, setData] = useState([]);
   const user = useSelector(st => st.userData);
@@ -56,6 +57,9 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
         1,
       ),
     );
+    if (!parenId) {
+      flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+    }
     setSendCommet('')
   };
 
@@ -135,6 +139,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
           </View>
           <View style={{ height: '70%' }}>
             <FlatList
+              ref={flatListRef}
               showsVerticalScrollIndicator={false}
               refreshControl={
                 <RefreshControl

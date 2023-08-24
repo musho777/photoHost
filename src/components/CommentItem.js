@@ -34,7 +34,7 @@ export const CommentItem = ({
       style={[
         Styles.flexAlignItems,
         { alignItems: 'flex-start', marginTop: 20 },
-        ansswer && { marginLeft: 30 },
+        // ansswer && { marginLeft: 30 },
       ]}>
       <View style={owner && styles.imgBlock}>
         <Image

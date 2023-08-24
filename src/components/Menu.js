@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -7,34 +7,26 @@ import {
   Modal,
   SafeAreaView,
 } from 'react-native';
-import {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {BackArrow} from '../assets/svg/Svgs';
+import { BackArrow } from '../assets/svg/Svgs';
 import { LogoutAction } from '../store/action/action';
-import {Styles} from '../styles/Styles';
+import { Styles } from '../styles/Styles';
 
-export const Menu = ({visible, close}) => {
+export const Menu = ({ visible, close }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
-  const login = useSelector(st=>st.login)
-  useEffect(()=>{
-    if(login.logoutStatus){
-      navigation.navigate('LoginScreen')
-      close()
-    }
-  },[login.logoutStatus])
   return (
     <SafeAreaView>
       <Modal animationType="slide" visible={visible} transparent={true}>
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => close()}
-          style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <View style={styles.menu}>
             <TouchableOpacity
               onPress={() => close()}
-              style={{marginTop: 20}}>
+              style={{ marginTop: 20 }}>
               <BackArrow />
             </TouchableOpacity>
             <TouchableOpacity
@@ -42,7 +34,7 @@ export const Menu = ({visible, close}) => {
                 close();
                 navigation.navigate('EditProfilScreen');
               }}>
-              <Text style={[Styles.darkRegular16, {marginTop: 25}]}>
+              <Text style={[Styles.darkRegular16, { marginTop: 25 }]}>
                 Редактировать профиль
               </Text>
             </TouchableOpacity>
@@ -51,7 +43,7 @@ export const Menu = ({visible, close}) => {
                 close();
                 navigation.navigate('ParametrScreen');
               }}>
-              <Text style={[Styles.darkRegular16, {marginTop: 30}]}>
+              <Text style={[Styles.darkRegular16, { marginTop: 30 }]}>
                 Параметры аккаунта
               </Text>
             </TouchableOpacity>
@@ -60,7 +52,7 @@ export const Menu = ({visible, close}) => {
                 close();
                 navigation.navigate('BlackListScreen');
               }}>
-              <Text style={[Styles.darkRegular16, {marginTop: 30}]}>
+              <Text style={[Styles.darkRegular16, { marginTop: 30 }]}>
                 Черный список
               </Text>
             </TouchableOpacity>
@@ -69,12 +61,16 @@ export const Menu = ({visible, close}) => {
                 close();
                 navigation.navigate('SavedPostScreen');
               }}>
-              <Text style={[Styles.darkRegular16, {marginTop: 30}]}>
+              <Text style={[Styles.darkRegular16, { marginTop: 30 }]}>
                 Закладки
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>dispatch(LogoutAction(staticdata.token))}>
-              <Text style={[Styles.darkRegular16, {marginTop: 30}]}>Выйти</Text>
+            <TouchableOpacity onPress={() => {
+              dispatch(LogoutAction(staticdata.token))
+              navigation.navigate('LoginScreen')
+              close()
+            }}>
+              <Text style={[Styles.darkRegular16, { marginTop: 30 }]}>Выйти</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>

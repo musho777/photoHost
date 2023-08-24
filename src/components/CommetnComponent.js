@@ -3,11 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import { CommentItem } from './CommentItem';
 
 const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token }) => {
-    let a = depth
-    if (a > 3) {
-        a = 3
-    }
-    const margin = 20 + a * 30;
+    const maxMargin = 20;
+    const margin = Math.min(20 + depth * 20, maxMargin);
 
     const renderComment = (comment) => {
         console.log(comment)
@@ -31,7 +28,7 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token }) => 
     };
 
     const renderCommentReview = (review, reviewDepth) => (
-        <View key={review.comment} style={[styles.reviewContainer, { marginLeft: 30 }]}>
+        <View key={review.comment} style={[styles.reviewContainer, { marginLeft: margin }]}>
             {/* <Text>{review.comment}</Text> */}
             <CommentItem
                 text={review.comment}
@@ -67,18 +64,3 @@ const styles = StyleSheet.create({
 });
 
 export default CommentComponent;
-
-{/* <CommentItem
-    key={i}
-    text={elm.replay.comment}
-    owner={false}
-    ansswer={true}
-    replay={elm.replay.replay}
-    user={elm.replay.user}
-    like_count={elm.replay.likes_count}
-    isLiked={elm.replay.like_auth_user?.length}
-    id={elm.replay.id}
-    token={staticdata.token}
-    daysAgo={daysAgo}
-    onPressAnsswer={onPressAnsswer}
-/> */}
