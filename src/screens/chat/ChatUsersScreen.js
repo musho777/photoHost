@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   SafeAreaView,
@@ -7,12 +7,12 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {ChatUser} from '../../components/ChatUser';
-import {GetMyChatRoom} from '../../store/action/action';
-import {Styles} from '../../styles/Styles';
-import {Input} from '../../ui/Input';
-export const ChatUsersScreen = ({navigation}) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { ChatUser } from '../../components/ChatUser';
+import { GetMyChatRoom } from '../../store/action/action';
+import { Styles } from '../../styles/Styles';
+import { Input } from '../../ui/Input';
+export const ChatUsersScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
@@ -22,7 +22,7 @@ export const ChatUsersScreen = ({navigation}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!getMyChatRoom.loading && page !== 1) {
-      dispatch(GetMyChatRoom({search: search}, staticdata.token, page));
+      dispatch(GetMyChatRoom({ search: search }, staticdata.token, page));
     }
   }, [page]);
   useEffect(() => {
@@ -34,17 +34,17 @@ export const ChatUsersScreen = ({navigation}) => {
   useEffect(() => {
     setPage(1);
     const unsubscribe = navigation.addListener('focus', async () => {
-      dispatch(GetMyChatRoom({search: search}, staticdata.token, page));
+      dispatch(GetMyChatRoom({ search: search }, staticdata.token, page));
     });
     return unsubscribe;
   }, [navigation]);
 
   const searchData = e => {
     setSearch(e)
-    dispatch(GetMyChatRoom({search: e}, staticdata.token, page));
+    dispatch(GetMyChatRoom({ search: e }, staticdata.token, page));
   };
-
-  const renderItem = ({item}) => {
+  console.log(getMyChatRoom.loading)
+  const renderItem = ({ item }) => {
     return (
       <ChatUser
         username={item.sender?.nickname}
@@ -61,7 +61,7 @@ export const ChatUsersScreen = ({navigation}) => {
       />
     );
   };
-  if (false) {
+  if (getMyChatRoom.loading) {
     return (
       <View style={Styles.loading}>
         <ActivityIndicator size="large" color="#FFC24B" />
@@ -69,7 +69,7 @@ export const ChatUsersScreen = ({navigation}) => {
     );
   } else {
     return (
-      <SafeAreaView style={{padding: 10, marginTop: 10}}>
+      <SafeAreaView style={{ padding: 10, marginTop: 10 }}>
         {getMyChatRoom.loading && (
           <View style={styles.loading}>
             <ActivityIndicator size="large" color="#FFC24B" />
@@ -95,9 +95,9 @@ export const ChatUsersScreen = ({navigation}) => {
             <Text
               style={[
                 Styles.darkMedium16,
-                {marginTop: 40, textAlign: 'center'},
+                { marginTop: 40, textAlign: 'center' },
               ]}>
-              {!search?'У вас нет сообщений':'Не найдено'}
+              {!search ? 'У вас нет сообщений' : 'Не найдено'}
             </Text>
           )}
         />
@@ -107,12 +107,12 @@ export const ChatUsersScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  loading:{
-    position:'absolute',
-    zIndex:1,
-    top:60,
-    justifyContent:'center',
-    alignItems:'center',
-    width:'100%',
+  loading: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   }
 })
