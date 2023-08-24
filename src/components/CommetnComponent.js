@@ -3,13 +3,24 @@ import { View, Text, StyleSheet } from 'react-native';
 import { CommentItem } from './CommentItem';
 
 const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token }) => {
-    const maxMargin = 20;
-    const margin = Math.min(20 + depth * 20, maxMargin);
-
     const renderComment = (comment) => {
-        console.log(comment)
-        return <View key={comment.comment} style={[styles.commentContainer, { marginLeft: margin }]}>
-            {/* <Text>{comment.comment}</Text> */}
+        const givenDate = new Date(comment.created_at);
+        const currentDate = new Date();
+        const timeDifference = currentDate - givenDate;
+        let daysAgo = (timeDifference / (1000 * 60 * 60 * 24))
+        if (+daysAgo < 1) {
+            daysAgo = daysAgo * 24
+            if (daysAgo <= 1) {
+                daysAgo = Math.floor(daysAgo * 60) + 'минут назад'
+            }
+            else {
+                daysAgo = Math.floor(daysAgo) + 'часов назад'
+            }
+        }
+        else {
+            daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
+        }
+        return <View key={comment.comment} style={[styles.commentContainer]}>
             <CommentItem
                 text={comment.comment}
                 owner={false}
@@ -20,16 +31,33 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token }) => 
                 isLiked={comment.like_auth_user?.length}
                 id={comment.id}
                 token={token}
-                // daysAgo={daysAgo}
+                daysAgo={daysAgo}
                 onPressAnsswer={onPressAnsswer}
             />
-            {comment.replay.map(review => renderCommentReview(review, depth + 1))}
+            <View style={{ marginLeft: 20 }}>
+                {comment.replay.map(review => renderCommentReview(review, depth + 1))}
+            </View>
         </View>
     };
 
-    const renderCommentReview = (review, reviewDepth) => (
-        <View key={review.comment} style={[styles.reviewContainer, { marginLeft: margin }]}>
-            {/* <Text>{review.comment}</Text> */}
+    const renderCommentReview = (review, reviewDepth) => {
+        const givenDate = new Date(review.created_at);
+        const currentDate = new Date();
+        const timeDifference = currentDate - givenDate;
+        let daysAgo = (timeDifference / (1000 * 60 * 60 * 24))
+        if (+daysAgo < 1) {
+            daysAgo = daysAgo * 24
+            if (daysAgo <= 1) {
+                daysAgo = Math.floor(daysAgo * 60) + 'минут назад'
+            }
+            else {
+                daysAgo = Math.floor(daysAgo) + 'часов назад'
+            }
+        }
+        else {
+            daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
+        }
+        return <View key={review.comment} style={[styles.reviewContainer]}>
             <CommentItem
                 text={review.comment}
                 owner={false}
@@ -40,15 +68,15 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token }) => 
                 isLiked={review.like_auth_user?.length}
                 id={review.id}
                 token={token}
-                // daysAgo={daysAgo}
+                daysAgo={daysAgo}
                 onPressAnsswer={onPressAnsswer}
             />
             {review.replay.map(subReview => renderCommentReview(subReview, reviewDepth + 1))}
         </View>
-    );
+    };
 
     return (
-        <View>
+        <View style={{ marginLeft: 20 }}>
             {commentData.map(comment => renderComment(comment))}
         </View>
     );
@@ -60,6 +88,7 @@ const styles = StyleSheet.create({
     },
     reviewContainer: {
         marginBottom: 10,
+        // marginLeft: 20,
     },
 });
 

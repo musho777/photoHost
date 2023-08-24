@@ -79,9 +79,6 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
   }
 
   const renderItem = ({ item, index }) => {
-    if (index == 0) {
-      console.log(item.replay.length)
-    }
     const givenDate = new Date(item.created_at);
     const currentDate = new Date();
     const timeDifference = currentDate - givenDate;
