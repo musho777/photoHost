@@ -43,7 +43,6 @@ export const ChatUsersScreen = ({ navigation }) => {
     setSearch(e)
     dispatch(GetMyChatRoom({ search: e }, staticdata.token, page));
   };
-  console.log(getMyChatRoom.loading)
   const renderItem = ({ item }) => {
     return (
       <ChatUser

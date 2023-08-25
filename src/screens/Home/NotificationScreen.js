@@ -27,7 +27,7 @@ export const NotificationScreen = () => {
       itemId={item.parent_id}
       avatar={item.sender.avatar}
       name={item.sender.name}
-      photo={item.photo[0].photo}
+      photo={item?.photo?.length && item?.photo[0]?.photo}
     />
   }
   return <View style={{ marginTop: 30, paddingHorizontal: 15 }}>

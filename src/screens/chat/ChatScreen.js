@@ -16,6 +16,8 @@ import { BootomModal } from '../../components/BootomSheet';
 import { MsgBlock } from '../../components/MsgBlock';
 import {
   AddBlackListAction,
+  AddMsgAction,
+  AddMyMSgAction,
   DelateChatAction,
   GetSinglePageChatAction,
   newMessageAction,
@@ -41,7 +43,6 @@ export const ChatScreen = ({ navigation, route }) => {
 
 
   useEffect(() => {
-    setData(getSinglePageChat?.message);
     if (getSinglePageChat.blackList == 'You Blocked This User') {
       setAddToBlackList('Удалить из черного списка')
     }
@@ -49,7 +50,13 @@ export const ChatScreen = ({ navigation, route }) => {
       setAddToBlackList('В черный список')
     }
   }, [getSinglePageChat.data]);
-  // ClearChat
+
+  useEffect(() => {
+    setData(getSinglePageChat?.message);
+  }, [getSinglePageChat.message])
+
+
+
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', async () => {
@@ -69,20 +76,20 @@ export const ChatScreen = ({ navigation, route }) => {
     return unsubscribe;
   }, [navigation]);
   const sendMsgFunction = () => {
-    let item = [...data];
     const today = new Date()
-
-    item.unshift({
-      sender_id: user.data.id,
-      message: sendMSg,
-      created_at: today
-    });
-    setData(item);
+    // dispatch(
+    //   AddMyMSgAction({
+    //     message: sendMSg,
+    //     receiver_id: user.data.id,
+    //     created_at: today
+    //   }),
+    // );
     dispatch(
       newMessageAction(
         {
           message: sendMSg,
           receiver_id: route.params.id,
+
         },
         staticdata.token,
       ),
@@ -183,7 +190,7 @@ export const ChatScreen = ({ navigation, route }) => {
         }}
       />
       <View>
-        {addToblackList === 'В черный список' && <View
+        {addToblackList === 'В черный список' ? <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -201,12 +208,16 @@ export const ChatScreen = ({ navigation, route }) => {
             width={'100%'}
             sendMsg={() => sendMsgFunction()}
           />
-        </View>}
+        </View> :
+          <View style={{ marginBottom: 20, justifyContent: 'center' }}>
+            <Text style={[Styles.balihaiMedium14, { textAlign: 'center' }]}>Пользователь в черном списке</Text>
+          </View>
+        }
       </View>
       <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
         <View style={{ paddingHorizontal: 20 }}>
           {data.length > 0 && <TouchableOpacity
-            onPress={() => dispatch(DelateChatAction({ receiver_id: 21 }, staticdata.token))}
+            onPress={() => dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token))}
             style={{ marginBottom: 20, marginTop: 20 }}>
             <Text style={Styles.darkRegular14}>Удалить переписку</Text>
           </TouchableOpacity>}

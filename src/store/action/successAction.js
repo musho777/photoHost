@@ -137,7 +137,7 @@ export const SuccessGetSinglePageChat = (data) => {
 export const SuccessNewMessageAction = (data) => {
     return {
         type: 'SuccessNewMessageAction',
-        data
+        data,
     }
 }
 

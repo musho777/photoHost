@@ -31,7 +31,7 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       item.resiverUser = action.data.receiver_user
       if (action.data.data.data?.length) {
         if (item.nextPage != action.data?.data?.next_page_url) {
-          item.message = [...item.message, ...action.data?.data?.data?.reverse()];
+          item.message = [...item.message, ...action.data?.data?.data];
         }
         item.nextPage = action.data?.data?.next_page_url
       }
@@ -47,6 +47,12 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
     case 'AddMsgAction':
       item.message.unshift(action.data)
       break
+    case 'AddMyMSgAction':
+      item.message.unshift(action.data)
+      break
+    // case 'SuccessNewMessageAction':
+    //   item.message.unshift(action.data)
+    //   break
     case 'StartDelateChat':
       item.delateChatStatus = false
       item.dleateChatLoading = true

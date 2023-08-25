@@ -35,9 +35,10 @@ import { SearchProfil } from '../screens/Search/SearchProfil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CheckBlack } from '../../CheckBlack';
 
-export default Navigation = ({ token, initialRouteName }) => {
+export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
   const [i, setI] = useState(initialRouteName);
+
   function getData() {
     dispatch(getUserInfoAction(token));
     dispatch(setToken(token));
@@ -54,18 +55,31 @@ export default Navigation = ({ token, initialRouteName }) => {
     await pusher.subscribe({
       channelName: 'NewMessage',
       onEvent: event => {
-        dispatch(
-          NewMsgAction({
-            data: JSON.parse(event.data)?.message,
-          }),
-        );
-        dispatch(
-          AddMsgAction({
-            message: JSON.parse(event.data)?.message?.message,
-            receiver_id: JSON.parse(event.data)?.message?.receiver_id,
-            created_at: today
-          }),
-        );
+        if (event.channelName == 'NewMessage') {
+          dispatch(
+            NewMsgAction({
+              data: JSON.parse(event.data)?.message,
+            }),
+          );
+          if (JSON.parse(event.data)?.message?.receiver_id == id) {
+            dispatch(
+              AddMsgAction({
+                message: JSON.parse(event.data)?.message?.message,
+                sender_id: JSON.parse(event.data)?.message?.receiver_id,
+                created_at: today
+              }),
+            );
+          }
+          else {
+            dispatch(
+              AddMsgAction({
+                message: JSON.parse(event.data)?.message?.message,
+                receiver_id: JSON.parse(event.data)?.message?.sender_id,
+                created_at: today
+              }),
+            );
+          }
+        }
       },
     });
   };

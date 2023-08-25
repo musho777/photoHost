@@ -200,7 +200,8 @@ export const LoginAction = data => {
         if (r.status) {
           dispatch(setToken(r.token));
           dispatch(SuccessLogin(r));
-          setTokenSorage(r.token);
+          setTokenSorage(r.token, r.user.id);
+          dispatch(getUserInfoAction(r.token))
         } else {
           if (r.message.includes('Your account is blocked')) {
             dispatch(ErrorLogin('ваш аккаунт заблокирован'));
@@ -215,8 +216,10 @@ export const LoginAction = data => {
   };
 };
 
-async function setTokenSorage(token) {
+async function setTokenSorage(token, id) {
   await AsyncStorage.setItem('token', token);
+  await AsyncStorage.setItem('id', JSON.stringify(id));
+
 }
 
 export const ClearLoginAction = () => {
@@ -714,7 +717,7 @@ export const GetSinglePageChatAction = (data, token, page) => {
   };
 };
 
-export const newMessageAction = (data, token) => {
+export const newMessageAction = (data, token, send) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -745,6 +748,13 @@ export const AddMsgAction = data => {
     data,
   };
 };
+
+export const AddMyMSgAction = (data) => {
+  return {
+    type: 'AddMyMSgAction',
+    data
+  }
+}
 
 export const GetMyChatRoom = (data, token, page) => {
   var myHeaders = new Headers();
