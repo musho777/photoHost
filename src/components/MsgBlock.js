@@ -6,7 +6,7 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
   const date = new Date(timestamp);
 
   const year = date.getFullYear();
-  const month = date.getMonth() + 1; // Months are zero-based, so adding 1
+  const month = date.getMonth() + 1;
   const day = date.getDate();
   const hour = date.getHours();
   const minut = date.getMinutes()
@@ -15,7 +15,7 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
   const today = new Date()
 
   const tyear = today.getFullYear();
-  const tmonth = today.getMonth() + 1; // Months are zero-based, so adding 1
+  const tmonth = today.getMonth() + 1;
   const tday = today.getDate();
   const thour = today.getHours();
   const getData = () => {

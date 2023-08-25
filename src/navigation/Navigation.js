@@ -11,6 +11,7 @@ import { TabNavigation } from './TabNavigation';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
+import Sound from 'react-native-sound';
 
 import {
   AddMsgAction,
@@ -38,6 +39,13 @@ import { CheckBlack } from '../../CheckBlack';
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
   const [i, setI] = useState(initialRouteName);
+
+  const music = new Sound('ding.mp3', Sound.MAIN_BUNDLE, (error) => {
+    if (error) {
+      console.log('Error loading music:', error);
+    }
+  });
+
 
   function getData() {
     dispatch(getUserInfoAction(token));
@@ -78,6 +86,10 @@ export default Navigation = ({ token, initialRouteName, id }) => {
                 created_at: today
               }),
             );
+            music.play()
+            setTimeout(() => {
+              music.stop()
+            }, 5000);
           }
         }
       },
