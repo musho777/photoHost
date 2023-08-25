@@ -61,12 +61,11 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               data: JSON.parse(event.data)?.message,
             }),
           );
-          console.log(JSON.parse(event.data)?.message?.receiver_id == id)
           if (JSON.parse(event.data)?.message?.receiver_id == id) {
             dispatch(
               AddMsgAction({
                 message: JSON.parse(event.data)?.message?.message,
-                sender_id: JSON.parse(event.data)?.message?.receiver_id,
+                sender_id: id,
                 created_at: today
               }),
             );

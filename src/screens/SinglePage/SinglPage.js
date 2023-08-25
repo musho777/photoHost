@@ -44,7 +44,6 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const id = route.params.id;
   const bottomSheetRef = useRef(null);
   const getComments = useSelector(st => st.getComments);
-  const [follow, setFollow] = useState()
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);

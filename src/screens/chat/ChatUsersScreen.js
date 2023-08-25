@@ -17,7 +17,6 @@ export const ChatUsersScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  // const staticdata = useSelector(st => st.static);
   const [token, setToken] = useState('')
   const getMyChatRoom = useSelector(st => st.getMyChatRoom);
   const user = useSelector(st => st.userData);
