@@ -1,17 +1,18 @@
-import {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {Styles} from '../../styles/Styles';
-import {Button} from '../../ui/Button';
-import {Input} from '../../ui/Input';
-import {useDispatch, useSelector} from 'react-redux';
-import {ClearConfirmPasswordAction, ClearLoginAction, LoginAction} from '../../store/action/action';
+import { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Styles } from '../../styles/Styles';
+import { Button } from '../../ui/Button';
+import { Input } from '../../ui/Input';
+import { useDispatch, useSelector } from 'react-redux';
+import { ClearConfirmPasswordAction, ClearLoginAction, LoginAction } from '../../store/action/action';
 
-export const LoginScreen = ({navigation}) => {
-  const [login, setLogin] = useState({error: '', value: ''});
-  const [password, setPasswod] = useState({error: '', value: ''});
+export const LoginScreen = ({ navigation }) => {
+  const [login, setLogin] = useState({ error: '', value: '' });
+  const [password, setPasswod] = useState({ error: '', value: '' });
   const [send, setSend] = useState(true);
   const dispatch = useDispatch();
   const loginData = useSelector(st => st.login);
+  const staticdata = useSelector(st => st.static);
   useEffect(() => {
     if (login.value && password.value) {
       setSend(false);
@@ -33,36 +34,36 @@ export const LoginScreen = ({navigation}) => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(ClearLoginAction())
       dispatch(ClearConfirmPasswordAction())
-      setLogin({error: '', value: ''})
-      setPasswod({error: '', value: ''})
+      setLogin({ error: '', value: '' })
+      setPasswod({ error: '', value: '' })
     });
     return unsubscribe;
   }, [navigation]);
 
-  useEffect(()=>{
-    if(loginData.status){
+  useEffect(() => {
+    if (loginData.status) {
       navigation.navigate('TabNavigation')
-      setLogin({error: '', value: ''})
-      setPasswod({error: '', value: ''})
+      setLogin({ error: '', value: '' })
+      setPasswod({ error: '', value: '' })
     }
-  },[loginData.status])
+  }, [loginData.status])
   return (
-    <View style={[Styles.authScreen, {marginTop: 80}]}>
-      <Text style={[Styles.darkSemiBold22, {marginBottom: 30}]}>Вход</Text>
+    <View style={[Styles.authScreen, { marginTop: 80 }]}>
+      <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>Вход</Text>
       <Input
         placeholder={'Введите логин'}
         error={login.error}
         value={login.value}
-        onChange={e => setLogin({...login, value: e})}
+        onChange={e => setLogin({ ...login, value: e })}
       />
       <Input
         placeholder={'Введите пароль'}
         error={password.error}
         pass={true}
         value={password.value}
-        onChange={e => setPasswod({...password, value: e})}
+        onChange={e => setPasswod({ ...password, value: e })}
       />
-      <View style={[[Styles.flexSpaceBetween, {paddingHorizontal: 10}]]}>
+      <View style={[[Styles.flexSpaceBetween, { paddingHorizontal: 10 }]]}>
         <TouchableOpacity
           onPress={() => navigation.navigate('RecoveryPassword')}>
           <Text style={Styles.darkSemiBold12}>Забыли пароль?</Text>
@@ -71,7 +72,7 @@ export const LoginScreen = ({navigation}) => {
           <Text style={Styles.darkSemiBold12}>Регистрация</Text>
         </TouchableOpacity>
       </View>
-      <Text style={[[Styles.tomatoMedium10,{marginVertical:15}]]}>
+      <Text style={[[Styles.tomatoMedium10, { marginVertical: 15 }]]}>
         {loginData.error}
       </Text>
       <Button

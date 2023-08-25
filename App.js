@@ -47,6 +47,7 @@ export default App = () => {
 
   async function getData() {
     const token = await AsyncStorage.getItem('token')
+    console.log(token)
     const id = await AsyncStorage.getItem('id');
     setID(id)
     setToken(token)

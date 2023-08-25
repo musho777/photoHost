@@ -46,7 +46,6 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
           },
       ]}>
       <Text style={Styles.CharcoalMedium14}>{msg}</Text>
-      {console.log()}
       <View style={from ?
         [
           styles.msgDate,

@@ -41,7 +41,6 @@ export const ChatScreen = ({ navigation, route }) => {
   const [data, setData] = useState([]);
   const [sendMSg, setSendMsg] = useState('');
 
-
   useEffect(() => {
     if (getSinglePageChat.blackList == 'You Blocked This User') {
       setAddToBlackList('Удалить из черного списка')
@@ -171,6 +170,7 @@ export const ChatScreen = ({ navigation, route }) => {
           }
         }}
         renderItem={({ item }) => {
+          console.log(item, user.data.id)
           return (
             <View>
               <MsgBlock

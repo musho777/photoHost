@@ -12,19 +12,32 @@ import { ChatUser } from '../../components/ChatUser';
 import { GetMyChatRoom } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import { Input } from '../../ui/Input';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const ChatUsersScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const staticdata = useSelector(st => st.static);
+  // const staticdata = useSelector(st => st.static);
+  const [token, setToken] = useState('')
   const getMyChatRoom = useSelector(st => st.getMyChatRoom);
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
+
+
+
+  const getToken = async () => {
+    let token = await AsyncStorage.getItem('token')
+    dispatch(GetMyChatRoom({ search: search }, token, page));
+    setToken(token)
+  }
+
   useEffect(() => {
     if (!getMyChatRoom.loading && page !== 1) {
-      dispatch(GetMyChatRoom({ search: search }, staticdata.token, page));
+      dispatch(GetMyChatRoom({ search: search }, token, page));
     }
-  }, [page]);
+  }, [page, token]);
+
+
   useEffect(() => {
     if (!getMyChatRoom.loading) {
       setData(getMyChatRoom.data);
@@ -34,14 +47,14 @@ export const ChatUsersScreen = ({ navigation }) => {
   useEffect(() => {
     setPage(1);
     const unsubscribe = navigation.addListener('focus', async () => {
-      dispatch(GetMyChatRoom({ search: search }, staticdata.token, page));
+      getToken()
     });
     return unsubscribe;
   }, [navigation]);
 
   const searchData = e => {
     setSearch(e)
-    dispatch(GetMyChatRoom({ search: e }, staticdata.token, page));
+    dispatch(GetMyChatRoom({ search: e }, token, page));
   };
   const renderItem = ({ item }) => {
     return (

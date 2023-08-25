@@ -61,6 +61,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               data: JSON.parse(event.data)?.message,
             }),
           );
+          console.log(JSON.parse(event.data)?.message?.receiver_id == id)
           if (JSON.parse(event.data)?.message?.receiver_id == id) {
             dispatch(
               AddMsgAction({

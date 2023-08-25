@@ -1,8 +1,6 @@
-import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {AddDeleteFollowAction, DeleteOtherPeople} from '../store/action/action';
-import {AppColors} from '../styles/AppColors';
-import {Styles} from '../styles/Styles';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { AppColors } from '../styles/AppColors';
+import { Styles } from '../styles/Styles';
 export const BlackListBlock = ({
   name,
   username,
@@ -10,22 +8,16 @@ export const BlackListBlock = ({
   type,
   onPress,
   onPress1,
-  userId,
-  addClick,
-  type1,
-  deletClick,
 }) => {
-  const staticdata = useSelector(st => st.static);
-  const dispatch = useDispatch();
   return (
     <TouchableOpacity
       onPress={onPress}
       // onPress={() => navigation.navigate('UserProfileScreen')}
-      style={[{marginBottom: 20}, Styles.flexSpaceBetween]}>
+      style={[{ marginBottom: 20 }, Styles.flexSpaceBetween]}>
       <View style={Styles.flexAlignItems}>
         <Image
           style={styles.img}
-          source={{uri: `https://chamba.justcode.am/uploads/${img}`}}
+          source={{ uri: `https://chamba.justcode.am/uploads/${img}` }}
         />
         <View>
           <Text style={Styles.darkSemiBold14}>{name}</Text>
