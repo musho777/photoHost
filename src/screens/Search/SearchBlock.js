@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { View, Modal, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, Text } from 'react-native';
 import { FlatList, RefreshControl } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchInputSvg } from '../../assets/svg/Svgs';
@@ -11,17 +11,13 @@ import { useNavigation } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
 
 
-export const SearchBlock = ({ modalVisible, close }) => {
+export const SearchBlock = () => {
   const [data, setData] = useState('');
-  const [noData, setNodata] = useState(false);
-  const [focuse, setFocuse] = useState(false);
   const [page, setPage] = useState(1);
-  const ref = useRef();
   const dispatch = useDispatch();
   const search = useSelector(st => st.search);
   const staticdata = useSelector(st => st.static);
   const navigation = useNavigation();
-  const addDeleteFollow = useSelector((st) => st.addDeleteFollow)
   const [serchData, setSearchData] = useState([])
 
   useEffect(() => {
@@ -34,7 +30,6 @@ export const SearchBlock = ({ modalVisible, close }) => {
       dispatch(SearchAction({ search: data }, (url = 1), staticdata.token));
     } else {
       dispatch(clearSearchData());
-      setNodata(false);
     }
   }
 
@@ -42,14 +37,13 @@ export const SearchBlock = ({ modalVisible, close }) => {
     if (search.nextPage !== null) {
       setPage(page + 1);
     }
-    if (!serchData) {
-      setNodata(true);
-    }
   }, [search]);
   useEffect(() => {
     setSearchData([])
+
     const delayDebounceFn = setTimeout(() => {
       sendData()
+      setData(data)
     }, 400)
 
     return () => clearTimeout(delayDebounceFn)
@@ -60,7 +54,7 @@ export const SearchBlock = ({ modalVisible, close }) => {
         <FollowingsBlock
           onPress={() => {
             navigation.navigate('SearchProfil', { id: item.id })
-            setData('')
+            // setData('')
           }}
           key={item.id}
           name={item.name}
@@ -108,7 +102,7 @@ export const SearchBlock = ({ modalVisible, close }) => {
         </View>
 
       </View>
-      {!data && <Text style={Styles.darkMedium16}>Найдите друзей</Text>}
+      {!data && serchData.length == 0 && <Text style={Styles.darkMedium16}>Найдите друзей</Text>}
 
       <FlatList
         refreshControl={

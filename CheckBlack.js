@@ -1,17 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Api, getUserInfoAction, LogoutAction } from './src/store/action/action';
+import { useDispatch } from 'react-redux';
+import { Api, LogoutAction } from './src/store/action/action';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const CheckBlack = ({ token }) => {
+export const CheckBlack = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const user = useSelector(st => st.userData);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+
+    const interval = setInterval(async () => {
+      const token = await AsyncStorage.getItem('token')
       var myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
       myHeaders.append('Authorization', `Bearer ${token}`);
@@ -26,7 +28,7 @@ export const CheckBlack = ({ token }) => {
             navigation.navigate('LoginScreen');
           }
         })
-    }, 180000);
+    }, 360000);
 
     return () => clearInterval(interval);
   }, []);

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
+import { useState } from 'react';
 export const MsgBlock = ({ msg, from, timestamp }) => {
   const date = new Date(timestamp);
 
@@ -9,6 +10,7 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
   const day = date.getDate();
   const hour = date.getHours();
   const minut = date.getMinutes()
+  const [margin, setMargin] = useState(-20)
 
   const today = new Date()
 
@@ -17,11 +19,17 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
   const tday = today.getDate();
   const thour = today.getHours();
   const getData = () => {
+    let m = minut
+    if (m < 10) {
+      m = '0' + m
+    }
     if (month == tmonth && tday == day) {
-      return `${thour}:${minut}`
+      // setMargin(-20)
+      return `${thour}:${m}`
     }
     else {
-      return `${day}. ${thour}:${minut}`
+      // setMargin(-30)
+      return `${day}. ${thour}:${m}`
     }
   }
   return (
@@ -38,8 +46,18 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
           },
       ]}>
       <Text style={Styles.CharcoalMedium14}>{msg}</Text>
-      <View style={from ? { position: 'absolute', right: -20, bottom: -5 } : { position: 'absolute', left: -20, bottom: -5 }}>
-
+      {console.log()}
+      <View style={from ?
+        [
+          styles.msgDate,
+          JSON.stringify(getData()).length > 7 ? { right: -35 } : { right: -20 }
+        ] :
+        [
+          styles.msgDate,
+          JSON.stringify(getData()).length > 7 ? { left: -35 } : { left: -20 }
+        ]
+      }
+      >
         <Text style={Styles.balihaiMedium10}>{getData()}</Text>
       </View>
     </View>
@@ -55,4 +73,8 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 20,
     marginHorizontal: 20,
   },
+  msgDate: {
+    position: 'absolute',
+    bottom: -5
+  }
 });

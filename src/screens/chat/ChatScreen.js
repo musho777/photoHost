@@ -77,13 +77,6 @@ export const ChatScreen = ({ navigation, route }) => {
   }, [navigation]);
   const sendMsgFunction = () => {
     const today = new Date()
-    // dispatch(
-    //   AddMyMSgAction({
-    //     message: sendMSg,
-    //     receiver_id: user.data.id,
-    //     created_at: today
-    //   }),
-    // );
     dispatch(
       newMessageAction(
         {
