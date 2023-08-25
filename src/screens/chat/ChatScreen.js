@@ -136,7 +136,7 @@ export const ChatScreen = ({ navigation, route }) => {
       navigation.goBack()
     }
   }, [getSinglePageChat.delateChatStatus])
-  if (getSinglePageChat.dleateChatLoading) {
+  if (getSinglePageChat.dleateChatLoading || getSinglePageChat.loading) {
     return <View style={Styles.loading}>
       <ActivityIndicator size="large" color="#FFC24B" />
     </View>
