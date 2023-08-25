@@ -2,12 +2,12 @@ const initialState = {
   error: '',
   status: false,
   message: '',
-  loading: false,
+  loading: true,
   nextPage: null,
   data: [],
 };
 const GetFollowersReducer = (state = initialState, action) => {
-  let item = {...state};
+  let item = { ...state };
   switch (action.type) {
     case 'StartGetFollowersAction':
       item.status = false;
@@ -17,8 +17,8 @@ const GetFollowersReducer = (state = initialState, action) => {
     case 'SucessGetFollowersAction':
       item.status = true;
       item.error = '';
-      item.message = action.data?.message, 
-      item.loading = false;
+      item.message = action.data?.message,
+        item.loading = false;
       if (action.data.data.current_page == 1) {
         item.data = action.data.data.data;
       }
@@ -34,7 +34,7 @@ const GetFollowersReducer = (state = initialState, action) => {
       break;
     case 'clearGetFollowersAction':
       item.data = [];
-    break
+      break
     default:
       break;
   }

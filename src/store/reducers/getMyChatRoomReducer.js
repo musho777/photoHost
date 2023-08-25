@@ -1,13 +1,13 @@
 const initialState = {
   error: '',
   status: false,
-  loading: false,
+  loading: true,
   data: [],
   message: '',
   nextPage: '',
 };
 const GetMyChatRoomReducer = (state = initialState, action) => {
-  let item = {...state};
+  let item = { ...state };
   switch (action.type) {
     case 'StartGetMyChatRoom':
       item.status = false;

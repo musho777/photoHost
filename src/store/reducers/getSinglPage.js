@@ -2,7 +2,7 @@ const initialState = {
   error: '',
   status: false,
   message: '',
-  loading: false,
+  loading: true,
   data: {},
   followerCount: null,
   followersCount: null,
