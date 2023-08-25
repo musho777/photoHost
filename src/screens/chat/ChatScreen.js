@@ -37,6 +37,7 @@ export const ChatScreen = ({ navigation, route }) => {
   const user = useSelector(st => st.userData);
   const snapPoints = useMemo(() => ['18%'], []);
   const [page, setPage] = useState(1);
+  const deletChat = useSelector((st) => st.deletChatPusher)
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
@@ -62,6 +63,15 @@ export const ChatScreen = ({ navigation, route }) => {
     setData(getSinglePageChat?.message);
   }, [getSinglePageChat.message])
 
+
+
+  useEffect(() => {
+    if (Object.keys(deletChat.deletChatPusher).length) {
+      if (deletChat.deletChatPusher.reseiver_id == user.data.id && deletChat.deletChatPusher.sender_id == route.params.id) {
+        navigation.goBack()
+      }
+    }
+  }, [deletChat.deletChatPusher])
 
 
   useEffect(() => {

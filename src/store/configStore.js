@@ -1,5 +1,5 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import thunk from "redux-thunk" 
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from "redux-thunk"
 import AddDeleteFollowReducer from './reducers/addDeleteFollowReducer';
 import ChangeAvatarReducer from './reducers/changeAvatarReducer';
 import ChangeEmailReducer from './reducers/changeEmailReducer';
@@ -31,39 +31,41 @@ import NewPasswordReducer from './reducers/newPasswordReducer';
 import RegisterReducer from './reducers/registerReducer';
 import SearchReducer from './reducers/searchReducer';
 import StaticReducer from './reducers/staticReducer';
+import DeletChatPusherReducer from './reducers/DeletChatPusherReducer';
 
 const rootReducer = combineReducers({
-    register:RegisterReducer,
-    confirmRegister:ConfirmRegisetReducer,
-    login:LoginReducer,
-    forgotPassword:ForgotPasswordReducer,
-    confirmForgotPassword:ConfirmForgotPasswordReducer,
-    newPassword:NewPasswordReducer,
-    userData:GetUserDataReducer,
-    static:StaticReducer,
-    changeUserProfil:ChangeUserProfilReducer,
-    changePassword:ChangePasswordReducer,
-    changeEmail:ChangeEmailReducer,
-    changeAvatar:ChangeAvatarReducer,
-    search:SearchReducer,
-    singlPage:GetSinglPage,
-    addDeleteFollow:AddDeleteFollowReducer,
-    getFollowers:GetFollowersReducer,
-    delete:DeletOtherPeopleReducer,
-    getFollower:GetFollowerReducer,
-    getSinglePageChat:GetSinglePageChatReducer,
-    getMyChatRoom:GetMyChatRoomReducer,
-    createPost:CreatePostReducer,
-    getPosts:GetPostsReducer,
-    getLents:GetLentsReducer,
-    like:LikePostReducer,
-    blackList:GetBlackListReducer,
-    books:GetMyBooksReducer,
-    notification:GetNotificationReducer,
-    getComments:GetPostCommentsReducer,
-    getSinglPage:GetSinglPostReducer,
-    editPost:EditPostReducer,
-    getPostLike:GetPostLikeReducer,
+    register: RegisterReducer,
+    confirmRegister: ConfirmRegisetReducer,
+    login: LoginReducer,
+    forgotPassword: ForgotPasswordReducer,
+    confirmForgotPassword: ConfirmForgotPasswordReducer,
+    newPassword: NewPasswordReducer,
+    userData: GetUserDataReducer,
+    static: StaticReducer,
+    changeUserProfil: ChangeUserProfilReducer,
+    changePassword: ChangePasswordReducer,
+    changeEmail: ChangeEmailReducer,
+    changeAvatar: ChangeAvatarReducer,
+    search: SearchReducer,
+    singlPage: GetSinglPage,
+    addDeleteFollow: AddDeleteFollowReducer,
+    getFollowers: GetFollowersReducer,
+    delete: DeletOtherPeopleReducer,
+    getFollower: GetFollowerReducer,
+    getSinglePageChat: GetSinglePageChatReducer,
+    getMyChatRoom: GetMyChatRoomReducer,
+    createPost: CreatePostReducer,
+    getPosts: GetPostsReducer,
+    getLents: GetLentsReducer,
+    like: LikePostReducer,
+    blackList: GetBlackListReducer,
+    books: GetMyBooksReducer,
+    notification: GetNotificationReducer,
+    getComments: GetPostCommentsReducer,
+    getSinglPage: GetSinglPostReducer,
+    editPost: EditPostReducer,
+    getPostLike: GetPostLikeReducer,
+    deletChatPusher: DeletChatPusherReducer,
 });
 
-export const store = createStore(rootReducer, applyMiddleware(thunk) );
+export const store = createStore(rootReducer, applyMiddleware(thunk));

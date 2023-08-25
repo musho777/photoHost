@@ -5,7 +5,6 @@ const StaticReducer = (state = initialState, action) => {
   let item = { ...state };
   switch (action.type) {
     case 'setToken':
-      console.log(action.token, 'reducer')
       item.token = ''
       item.token = action.token
       break

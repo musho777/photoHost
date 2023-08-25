@@ -15,9 +15,9 @@ import Sound from 'react-native-sound';
 
 import {
   AddMsgAction,
+  DeleteChatPusherAction,
   DeviceIdAction,
   getUserInfoAction,
-  LogoutAction,
   NewMsgAction,
   setToken,
 } from '../store/action/action';
@@ -63,7 +63,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     await pusher.subscribe({
       channelName: 'NewMessage',
       onEvent: event => {
-        if (event.channelName == 'NewMessage') {
+        if (JSON.parse(event.data).message.type == 'new_message') {
           dispatch(
             NewMsgAction({
               data: JSON.parse(event.data)?.message,
@@ -91,6 +91,15 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               music.stop()
             }, 5000);
           }
+        }
+        else if (JSON.parse(event.data).message.type == 'delete_chat') {
+          console.log(event)
+          dispatch(
+            DeleteChatPusherAction({
+              reseiver_id: JSON.parse(event.data)?.message?.receiver_id,
+              sender_id: JSON.parse(event.data)?.message?.sender_id
+            })
+          )
         }
       },
     });

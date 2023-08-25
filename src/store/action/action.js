@@ -1293,3 +1293,10 @@ export const DelateChatAction = (data, token) => {
       });
   };
 }
+
+export const DeleteChatPusherAction = (data) => {
+  return {
+    type: 'DeleteChatPusherAction',
+    data
+  }
+}

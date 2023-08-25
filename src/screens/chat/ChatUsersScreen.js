@@ -19,10 +19,11 @@ export const ChatUsersScreen = ({ navigation }) => {
   const [page, setPage] = useState(1);
   const [token, setToken] = useState('')
   const getMyChatRoom = useSelector(st => st.getMyChatRoom);
+  const deletChat = useSelector((st) => st.deletChatPusher)
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
 
-
+  console.log(deletChat.deletChatPusher)
 
   const getToken = async () => {
     let token = await AsyncStorage.getItem('token')
@@ -55,6 +56,20 @@ export const ChatUsersScreen = ({ navigation }) => {
     setSearch(e)
     dispatch(GetMyChatRoom({ search: e }, token, page));
   };
+
+  useEffect(() => {
+    if (Object.keys(deletChat.deletChatPusher).length) {
+      let item = [...data]
+      data.map((elm, i) => {
+        console.log(deletChat.deletChatPusher.sender_id == elm.sender_id)
+        if (deletChat.deletChatPusher.reseiver_id == user.data.id && deletChat.deletChatPusher.sender_id == elm.sender_id) {
+          item.splice(i, 1)
+        }
+        setData(item)
+      })
+    }
+  }, [deletChat.deletChatPusher])
+
   const renderItem = ({ item }) => {
     return (
       <ChatUser
