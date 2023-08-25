@@ -25,6 +25,8 @@ import {
 import { Styles } from '../../styles/Styles';
 import { Input } from '../../ui/Input';
 import { ClearChat, ClearDeleteChat } from '../../store/action/clearAction';
+import Sound from 'react-native-sound';
+
 
 export const ChatScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -40,6 +42,12 @@ export const ChatScreen = ({ navigation, route }) => {
   }, []);
   const [data, setData] = useState([]);
   const [sendMSg, setSendMsg] = useState('');
+
+  const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => {
+    if (error) {
+      console.log('Error loading music:', error);
+    }
+  });
 
   useEffect(() => {
     if (getSinglePageChat.blackList == 'You Blocked This User') {
@@ -75,6 +83,10 @@ export const ChatScreen = ({ navigation, route }) => {
     return unsubscribe;
   }, [navigation]);
   const sendMsgFunction = () => {
+    music.play()
+    setTimeout(() => {
+      music.stop()
+    }, 2000);
     const today = new Date()
     dispatch(
       newMessageAction(
@@ -87,7 +99,10 @@ export const ChatScreen = ({ navigation, route }) => {
       ),
     );
     setSendMsg('')
+
   };
+
+
   useEffect(() => {
     if (page != 1) {
 
