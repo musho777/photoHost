@@ -14,6 +14,7 @@ import DeviceInfo from 'react-native-device-info';
 import Sound from 'react-native-sound';
 
 import {
+  AddBlackListPusherAction,
   AddMsgAction,
   DeleteChatPusherAction,
   DeviceIdAction,
@@ -93,11 +94,27 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           }
         }
         else if (JSON.parse(event.data).message.type == 'delete_chat') {
-          console.log(event)
           dispatch(
             DeleteChatPusherAction({
               reseiver_id: JSON.parse(event.data)?.message?.receiver_id,
               sender_id: JSON.parse(event.data)?.message?.sender_id
+            })
+          )
+        }
+
+        else if (JSON.parse(event.data).message.type == 'black_list_add') {
+          dispatch(
+            AddBlackListPusherAction({
+              reseiver_id: JSON.parse(event.data)?.message?.receiver_id,
+              sender_id: JSON.parse(event.data)?.message?.sender_id
+            })
+          )
+        }
+        else if (JSON.parse(event.data).message.type == 'black_list_delete') {
+          dispatch(
+            AddBlackListPusherAction({
+              reseiver_id: 'black_list_delete',
+              sender_id: 'black_list_delete'
             })
           )
         }
@@ -109,7 +126,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     getData();
   }, [token]);
 
-
+  // black_list_delete
   const getNotificationToken = async () => {
     const fcmtoken = await AsyncStorage.getItem('fcmtoken')
     const deviceId = await DeviceInfo.getUniqueId();

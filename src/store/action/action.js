@@ -1300,3 +1300,10 @@ export const DeleteChatPusherAction = (data) => {
     data
   }
 }
+
+export const AddBlackListPusherAction = (data) => {
+  return {
+    type: 'AddBlackListPusherAction',
+    data
+  }
+}

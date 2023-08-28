@@ -23,7 +23,6 @@ export const ChatUsersScreen = ({ navigation }) => {
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
 
-  console.log(deletChat.deletChatPusher)
 
   const getToken = async () => {
     let token = await AsyncStorage.getItem('token')
@@ -61,7 +60,6 @@ export const ChatUsersScreen = ({ navigation }) => {
     if (Object.keys(deletChat.deletChatPusher).length) {
       let item = [...data]
       data.map((elm, i) => {
-        console.log(deletChat.deletChatPusher.sender_id == elm.sender_id)
         if (deletChat.deletChatPusher.reseiver_id == user.data.id && deletChat.deletChatPusher.sender_id == elm.sender_id) {
           item.splice(i, 1)
         }

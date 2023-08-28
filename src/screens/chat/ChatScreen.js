@@ -33,7 +33,10 @@ export const ChatScreen = ({ navigation, route }) => {
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
-  const [addToblackList, setAddToBlackList] = useState('В черный список')
+  const addBlackPusher = useSelector(st => st.addBlackPusher)
+  const [addToblackList, setAddToBlackList] = useState('')
+  const [blackList, setBlackList] = useState('')
+  const [showInput, setShopwINput] = useState()
   const user = useSelector(st => st.userData);
   const snapPoints = useMemo(() => ['18%'], []);
   const [page, setPage] = useState(1);
@@ -51,19 +54,30 @@ export const ChatScreen = ({ navigation, route }) => {
   });
 
   useEffect(() => {
+    let a = addBlackPusher.addBlackListPusher?.reseiver_id == user.data.id && addBlackPusher.addBlackListPusher?.sender_id == route.params.id
+    let b = addBlackPusher.addBlackListPusher?.reseiver_id == route.params.id && addBlackPusher.addBlackListPusher?.sender_id == user.data.id
+    if (getSinglePageChat.blackList == 'You Blocked This User' || getSinglePageChat.blackList == 'This User Blocked You' || a || b) {
+      setShopwINput(true)
+    }
+    if (addBlackPusher.addBlackListPusher?.reseiver_id === 'black_list_delete' && addBlackPusher.addBlackListPusher?.sender_id === 'black_list_delete' && addToblackList != 'Удалить из черного списка') {
+      setShopwINput(false)
+    }
+
+  }, [getSinglePageChat.data, addBlackPusher, addToblackList]);
+
+
+  useEffect(() => {
     if (getSinglePageChat.blackList == 'You Blocked This User') {
       setAddToBlackList('Удалить из черного списка')
     }
     else {
       setAddToBlackList('В черный список')
     }
-  }, [getSinglePageChat.data]);
+  }, [getSinglePageChat.data])
 
   useEffect(() => {
     setData(getSinglePageChat?.message);
   }, [getSinglePageChat.message])
-
-
 
   useEffect(() => {
     if (Object.keys(deletChat.deletChatPusher).length) {
@@ -135,7 +149,6 @@ export const ChatScreen = ({ navigation, route }) => {
     }
     else {
       setAddToBlackList('В черный список')
-
     }
   }
 
@@ -195,7 +208,6 @@ export const ChatScreen = ({ navigation, route }) => {
           }
         }}
         renderItem={({ item }) => {
-          console.log(item, user.data.id)
           return (
             <View>
               <MsgBlock
@@ -208,25 +220,26 @@ export const ChatScreen = ({ navigation, route }) => {
         }}
       />
       <View>
-        {addToblackList === 'В черный список' ? <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            position: 'absolute',
-            bottom: 10,
-            width: '100%',
-            alignItems: 'center',
-          }}>
-          <Input
-            msg
-            pdR={50}
-            placeholder={'Введите текст'}
-            data={sendMSg}
-            onChange={e => setSendMsg(e)}
-            width={'100%'}
-            sendMsg={() => sendMsgFunction()}
-          />
-        </View> :
+        {!showInput && addToblackList == 'В черный список'
+          ? <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              position: 'absolute',
+              bottom: 10,
+              width: '100%',
+              alignItems: 'center',
+            }}>
+            <Input
+              msg
+              pdR={50}
+              placeholder={'Введите текст'}
+              data={sendMSg}
+              onChange={e => setSendMsg(e)}
+              width={'100%'}
+              sendMsg={() => sendMsgFunction()}
+            />
+          </View> :
           <View style={{ marginBottom: 20, justifyContent: 'center' }}>
             <Text style={[Styles.balihaiMedium14, { textAlign: 'center' }]}>Пользователь в черном списке</Text>
           </View>
