@@ -20,6 +20,7 @@ import {
   AddMyMSgAction,
   DelateChatAction,
   GetSinglePageChatAction,
+  SinglChatPageId,
   newMessageAction,
 } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
@@ -91,6 +92,7 @@ export const ChatScreen = ({ navigation, route }) => {
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', async () => {
+      dispatch(SinglChatPageId(route.params.id, user.data.id))
       if (page == 1) {
         dispatch(ClearChat())
         dispatch(

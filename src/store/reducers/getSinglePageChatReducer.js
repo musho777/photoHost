@@ -8,11 +8,17 @@ const initialState = {
   blackList: null,
   delateChatStatus: false,
   dleateChatLoading: false,
-  resiverUser: {}
+  resiverUser: {},
+  id: '',
+  myid: ''
 };
 const GetSinglePageChatReducer = (state = initialState, action) => {
   let item = { ...state };
   switch (action.type) {
+    case 'SinglChatPageId':
+      item.id = action.id
+      item.myid = action.myid
+      break
     case 'StartGetSinglePageChat':
       item.status = false;
       item.error = '';
@@ -45,7 +51,13 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       // item.data = {}
       break;
     case 'AddMsgAction':
-      item.message.unshift(action.data)
+      console.log(action.data.sender_id, action.data.receiver_id)
+      if (item.myid == action.data.receiver_id && item.id == action.data.sender_id) {
+        item.message.unshift(action.data)
+      }
+      if (item.myid == action.data.sender_id && item.id == action.data.receiver_id) {
+        item.message.unshift(action.data)
+      }
       break
     case 'AddMyMSgAction':
       item.message.unshift(action.data)

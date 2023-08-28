@@ -75,15 +75,18 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               AddMsgAction({
                 message: JSON.parse(event.data)?.message?.message,
                 sender_id: id,
+                receiver_id: JSON.parse(event.data)?.message?.sender_id,
                 created_at: today
               }),
             );
           }
           else {
+
             dispatch(
               AddMsgAction({
                 message: JSON.parse(event.data)?.message?.message,
                 receiver_id: JSON.parse(event.data)?.message?.sender_id,
+                sender_id: JSON.parse(event.data)?.message?.receiver_id,
                 created_at: today
               }),
             );
@@ -101,7 +104,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             })
           )
         }
-
         else if (JSON.parse(event.data).message.type == 'black_list_add') {
           dispatch(
             AddBlackListPusherAction({

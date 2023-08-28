@@ -757,11 +757,14 @@ export const AddMyMSgAction = (data) => {
 }
 
 export const GetMyChatRoom = (data, token, page) => {
+  console.log(data.search)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartGetMyChatRoom());
+    if (!data.search) {
+      dispatch(StartGetMyChatRoom());
+    }
     fetch(`${Api}/get_my_chat_rooms?page=${page}`, {
       method: 'POST',
       headers: myHeaders,
@@ -1305,5 +1308,13 @@ export const AddBlackListPusherAction = (data) => {
   return {
     type: 'AddBlackListPusherAction',
     data
+  }
+}
+
+export const SinglChatPageId = (id, myid) => {
+  return {
+    type: 'SinglChatPageId',
+    id,
+    myid
   }
 }
