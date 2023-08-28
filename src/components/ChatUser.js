@@ -17,8 +17,9 @@ export const ChatUser = ({
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() =>
+      onPress={() => {
         navigation.navigate('ChatScreen', { id: otherUserId })
+      }
       }
       style={[Styles.flexSpaceBetween, { marginVertical: 20 }]}>
       <View style={Styles.flexAlignItems}>

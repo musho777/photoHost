@@ -757,7 +757,6 @@ export const AddMyMSgAction = (data) => {
 }
 
 export const GetMyChatRoom = (data, token, page) => {
-  console.log(data.search)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);

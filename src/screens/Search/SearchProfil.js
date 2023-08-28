@@ -35,7 +35,6 @@ export const SearchProfil = ({ navigation, route }) => {
   }, []);
   const sendMsg = () => {
     navigation.navigate('ChatScreen', { id: singlPage.data.id })
-    // dispatch(GetSinglePageChatAction())
   }
 
   const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {

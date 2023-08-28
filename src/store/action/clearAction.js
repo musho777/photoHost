@@ -71,3 +71,9 @@ export const ClearChat = () => {
         type: "ClearChat"
     }
 }
+
+export const ClearDeletChat = () => {
+    return {
+        type: 'ClearDeletChat'
+    }
+}

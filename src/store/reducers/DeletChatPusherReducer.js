@@ -9,6 +9,9 @@ const DeletChatPusherReducer = (state = initialState, action) => {
         case "DeleteChatPusherAction":
             item.deletChatPusher = action.data
             break
+        case 'ClearDeletChat':
+            item.deletChatPusher = {}
+            break
         default:
             break;
     }

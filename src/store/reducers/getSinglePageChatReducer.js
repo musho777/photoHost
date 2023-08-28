@@ -51,7 +51,6 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       // item.data = {}
       break;
     case 'AddMsgAction':
-      console.log(action.data.sender_id, action.data.receiver_id)
       if (item.myid == action.data.receiver_id && item.id == action.data.sender_id) {
         item.message.unshift(action.data)
       }

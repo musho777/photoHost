@@ -25,11 +25,12 @@ import {
 } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import { Input } from '../../ui/Input';
-import { ClearChat, ClearDeleteChat } from '../../store/action/clearAction';
+import { ClearChat, ClearDeletChat, ClearDeleteChat } from '../../store/action/clearAction';
 import Sound from 'react-native-sound';
 
 
 export const ChatScreen = ({ navigation, route }) => {
+  console.log('ss')
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
@@ -84,6 +85,7 @@ export const ChatScreen = ({ navigation, route }) => {
     if (Object.keys(deletChat.deletChatPusher).length) {
       if (deletChat.deletChatPusher.reseiver_id == user.data.id && deletChat.deletChatPusher.sender_id == route.params.id) {
         navigation.goBack()
+        dispatch(ClearDeletChat())
       }
     }
   }, [deletChat.deletChatPusher])
@@ -93,6 +95,7 @@ export const ChatScreen = ({ navigation, route }) => {
 
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(SinglChatPageId(route.params.id, user.data.id))
+      dispatch(ClearDeletChat())
       if (page == 1) {
         dispatch(ClearChat())
         dispatch(
