@@ -89,6 +89,9 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
       daysAgo = daysAgo * 24
       if (daysAgo <= 1) {
         daysAgo = Math.floor(daysAgo * 60) + 'минут назад'
+        if (daysAgo == '0минут назад') {
+          daysAgo = 'только что'
+        }
       }
       else {
         daysAgo = Math.floor(daysAgo) + 'часов назад'

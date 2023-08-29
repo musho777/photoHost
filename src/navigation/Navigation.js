@@ -53,8 +53,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     dispatch(setToken(token));
   }
   const Pushers = async () => {
-    // const formattedTime = today.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-    // console.log(formattedTime)
     const pusher = Pusher.getInstance();
     await pusher.init({
       apiKey: 'e0a82fc848e8facbc238',

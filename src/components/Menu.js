@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { BackArrow } from '../assets/svg/Svgs';
-import { LogoutAction } from '../store/action/action';
+import { ClearLoginAction, LogoutAction } from '../store/action/action';
 import { Styles } from '../styles/Styles';
 
 export const Menu = ({ visible, close }) => {
@@ -67,6 +67,7 @@ export const Menu = ({ visible, close }) => {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
               dispatch(LogoutAction(staticdata.token))
+              dispatch(ClearLoginAction())
               navigation.navigate('LoginScreen')
               close()
             }}>

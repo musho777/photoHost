@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   AddBlackListAction,
   AddCommentAction,
+  AddDeleteFollowAction,
   AddInBookAction,
   GelPostCommentsAction,
   GetSinglPostAction,
@@ -26,7 +27,6 @@ import { CommentItem } from '../../components/CommentItem';
 import { CommentBlock } from '../../components/CommentBlock';
 import { Comments } from '../../components/Comment';
 import { Input } from '../../ui/Input';
-import { ClearSinglpAgeComment } from '../../store/action/clearAction';
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const staticdata = useSelector(st => st.static);
@@ -39,6 +39,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [likeCount, setLikeCount] = useState();
   const [parenId, setParentId] = useState(null);
   const [senderName, setSenderNAme] = useState('')
+  const [follow, setFollow] = useState()
 
   const [sendComment, setSendCommet] = useState('');
   const textInputRef = useRef(null);
@@ -96,6 +97,9 @@ export const SinglPageScreen = ({ route, navigation }) => {
     setLikeCount(singlData?.data.like_auth_user?.length);
   }, [singlData.data]);
 
+  useEffect(() => {
+    setFollow(singlData.data?.user?.follow_status_sender?.length)
+  }, [singlData.data?.user])
 
   if (singlData.loading) {
     return (
@@ -249,8 +253,15 @@ export const SinglPageScreen = ({ route, navigation }) => {
                 </Text>
               </TouchableOpacity>
               {user?.data?.id != singlData?.data?.user?.id && (
-                <TouchableOpacity style={{ marginBottom: 20 }}>
-                  <Text style={Styles.darkRegular14}>Подписаться</Text>
+                <TouchableOpacity
+                  style={{ marginBottom: 20 }}
+                  onPress={() => {
+                    setFollow(!follow)
+                    dispatch(AddDeleteFollowAction({ user_id: singlData?.data?.user?.id }, staticdata.token))
+                    bottomSheetRef.current?.close();
+                  }}>
+
+                  <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'Удалить из подписок'}</Text>
                 </TouchableOpacity>
               )}
               {user?.data?.id != singlData?.data?.user?.id && (

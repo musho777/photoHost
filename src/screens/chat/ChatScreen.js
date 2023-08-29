@@ -154,6 +154,7 @@ export const ChatScreen = ({ navigation, route }) => {
     dispatch(AddBlackListAction({ 'user_id': getSinglePageChat.data.id }, staticdata.token))
     if (addToblackList == 'В черный список') {
       setAddToBlackList('Удалить из черного списка')
+      setBlackListStatus('Пользователь в черном списке')
     }
     else {
       setAddToBlackList('В черный список')

@@ -46,9 +46,6 @@ export const ProfileScreen = ({ navigation, profile }) => {
   }, [user.data.id]);
 
   const [openMenu, setOpenMenu] = useState(false)
-  const login = useSelector((st) => st.login)
-
-
 
   const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
     const paddingToBottom = 20;

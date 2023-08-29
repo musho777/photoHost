@@ -2,10 +2,11 @@ import { useState, useEffect } from "react"
 import { View, Text, RefreshControl, FlatList } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import { NotificationBlock } from "../../components/NotificationBlock"
-import { GetNotificationAction } from "../../store/action/action"
+import { GetNotificationAction, getUserInfoAction } from "../../store/action/action"
 import { Styles } from "../../styles/Styles"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-export const NotificationScreen = () => {
+export const NotificationScreen = ({ navigation }) => {
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const notification = useSelector((st) => st.notification)
@@ -14,6 +15,16 @@ export const NotificationScreen = () => {
   useEffect(() => {
     dispatch(GetNotificationAction(staticdata.token, 1))
   }, [])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      if (staticdata.token) {
+        dispatch(getUserInfoAction(staticdata.token))
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   useEffect(() => {
     setData(notification.data)
   }, [notification.data])
