@@ -26,6 +26,7 @@ import { CommentItem } from '../../components/CommentItem';
 import { CommentBlock } from '../../components/CommentBlock';
 import { Comments } from '../../components/Comment';
 import { Input } from '../../ui/Input';
+import { ClearSinglpAgeComment } from '../../store/action/clearAction';
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const staticdata = useSelector(st => st.static);
@@ -146,7 +147,11 @@ export const SinglPageScreen = ({ route, navigation }) => {
             Styles.flexSpaceBetween,
             { paddingHorizontal: 20, marginTop: 20 },
           ]}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => {
+            // dispatch(ClearSinglpAgeComment())
+            navigation.goBack()
+          }}
+          >
             <BackArrow />
           </TouchableOpacity>
           <TouchableOpacity

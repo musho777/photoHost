@@ -77,3 +77,9 @@ export const ClearDeletChat = () => {
         type: 'ClearDeletChat'
     }
 }
+
+export const ClearSinglpAgeComment = () => {
+    return {
+        type: 'ClearSinglpAgeComment'
+    }
+}

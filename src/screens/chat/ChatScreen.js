@@ -35,8 +35,8 @@ export const ChatScreen = ({ navigation, route }) => {
   const staticdata = useSelector(st => st.static);
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const addBlackPusher = useSelector(st => st.addBlackPusher)
+  const [blackListStatus, setBlackListStatus] = useState('')
   const [addToblackList, setAddToBlackList] = useState('')
-  const [blackList, setBlackList] = useState('')
   const [showInput, setShopwINput] = useState()
   const user = useSelector(st => st.userData);
   const snapPoints = useMemo(() => ['18%'], []);
@@ -69,10 +69,15 @@ export const ChatScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if (getSinglePageChat.blackList == 'You Blocked This User') {
+      setBlackListStatus('Пользователь в черном списке')
       setAddToBlackList('Удалить из черного списка')
     }
+    // else if()
     else {
       setAddToBlackList('В черный список')
+    }
+    if (getSinglePageChat.blackList === 'This User Blocked You') {
+      setBlackListStatus('Вы в черном списке')
     }
   }, [getSinglePageChat.data])
 
@@ -115,7 +120,6 @@ export const ChatScreen = ({ navigation, route }) => {
     setTimeout(() => {
       music.stop()
     }, 2000);
-    const today = new Date()
     dispatch(
       newMessageAction(
         {
@@ -245,7 +249,7 @@ export const ChatScreen = ({ navigation, route }) => {
             />
           </View> :
           <View style={{ marginBottom: 20, justifyContent: 'center' }}>
-            <Text style={[Styles.balihaiMedium14, { textAlign: 'center' }]}>Пользователь в черном списке</Text>
+            <Text style={[Styles.balihaiMedium14, { textAlign: 'center' }]}>{blackListStatus}</Text>
           </View>
         }
       </View>

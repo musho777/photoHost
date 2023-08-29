@@ -4,7 +4,7 @@ import { Styles } from '../styles/Styles';
 import { useState } from 'react';
 export const MsgBlock = ({ msg, from, timestamp }) => {
   const date = new Date(timestamp);
-
+  console.log(date)
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -25,6 +25,7 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
     }
     if (month == tmonth && tday == day) {
       // setMargin(-20)
+
       return `${thour}:${m}`
     }
     else {

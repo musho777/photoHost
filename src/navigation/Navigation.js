@@ -53,8 +53,8 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     dispatch(setToken(token));
   }
   const Pushers = async () => {
-    const today = new Date()
-
+    // const formattedTime = today.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    // console.log(formattedTime)
     const pusher = Pusher.getInstance();
     await pusher.init({
       apiKey: 'e0a82fc848e8facbc238',
@@ -65,6 +65,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
       channelName: 'NewMessage',
       onEvent: event => {
         if (JSON.parse(event.data).message.type == 'new_message') {
+          const today = new Date()
           dispatch(
             NewMsgAction({
               data: JSON.parse(event.data)?.message,

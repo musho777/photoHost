@@ -14,6 +14,7 @@ import { CommentBlock } from './CommentBlock';
 import { Input } from '../ui/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddCommentAction, GelPostCommentsAction } from '../store/action/action';
+import { ClearSinglpAgeComment } from '../store/action/clearAction';
 
 export const Comments = ({ visible, close, parentId, userImg, userName, description }) => {
   const [sendComment, setSendCommet] = useState('');
@@ -30,6 +31,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
   const dispatch = useDispatch();
   useEffect(() => {
     if (visible) {
+      dispatch(ClearSinglpAgeComment())
       dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
     }
   }, [visible]);
