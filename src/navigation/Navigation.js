@@ -81,7 +81,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             );
           }
           else {
-
             dispatch(
               AddMsgAction({
                 message: JSON.parse(event.data)?.message?.message,
@@ -90,10 +89,12 @@ export default Navigation = ({ token, initialRouteName, id }) => {
                 created_at: today
               }),
             );
-            music.play()
-            setTimeout(() => {
-              music.stop()
-            }, 5000);
+            if (id == JSON.parse(event.data)?.message?.sender_id) {
+              music.play()
+              setTimeout(() => {
+                music.stop()
+              }, 5000);
+            }
           }
         }
         else if (JSON.parse(event.data).message.type == 'delete_chat') {

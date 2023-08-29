@@ -1,3 +1,4 @@
+
 const initialState = {
   error: '',
   status: false,
@@ -13,6 +14,7 @@ const initialState = {
   myid: ''
 };
 const GetSinglePageChatReducer = (state = initialState, action) => {
+
   let item = { ...state };
   switch (action.type) {
     case 'SinglChatPageId':

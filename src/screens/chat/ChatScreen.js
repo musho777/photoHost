@@ -30,7 +30,6 @@ import Sound from 'react-native-sound';
 
 
 export const ChatScreen = ({ navigation, route }) => {
-  console.log('ss')
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const staticdata = useSelector(st => st.static);
