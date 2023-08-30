@@ -18,6 +18,7 @@ import {
   ErrorEditPost,
   ErrorForgotPassword,
   ErrorGetBlackList,
+  ErrorGetCitys,
   ErrorGetFollower,
   ErrorGetFollowersAction,
   ErrorGetLents,
@@ -79,6 +80,7 @@ import {
   StartEditPost,
   StartGetPostLike,
   StartDelateChat,
+  StartGetCiyts,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -98,6 +100,7 @@ import {
   SuccessEditPost,
   SuccessForgotPassword,
   SuccessGetBlackList,
+  SuccessGetCitys,
   SuccessGetFollower,
   SuccessGetLents,
   SuccessGetMyBooks,
@@ -1316,4 +1319,33 @@ export const SinglChatPageId = (id, myid) => {
     id,
     myid
   }
+}
+
+export const GetCitysAction = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartGetCiyts());
+    fetch(`${Api}/get_city`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetCitys(r.data))
+        }
+        else {
+          dispatch(ErrorGetCitys('server error'))
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        dispatch(ErrorGetCitys('server error'))
+      });
+  };
 }

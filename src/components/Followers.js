@@ -43,7 +43,7 @@ export const Followers = ({ id }) => {
       <View style={{ marginHorizontal: 15 }}>
         <FollowingsBlock
           onPress={() => {
-            navigation.navigate('SearchProfil', { id: item.followers.id });
+            navigation.navigate('SearchProfil', { id: item.follower.id });
             setData('');
           }}
           key={item.follower?.id}

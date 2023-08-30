@@ -224,3 +224,9 @@ export const StartDelateChat = () => {
         type: 'StartDelateChat'
     }
 }
+
+export const StartGetCiyts = () => {
+    return {
+        type: 'StartGetCiyts'
+    }
+}

@@ -174,7 +174,6 @@ export const Post = ({
             </TouchableOpacity>}
           </View>
         </BootomModal>
-
       </View>
       <LikeList close={() => CloseLike()} count={likedCount} openLike={openLike} token={staticdata.token} id={id} ref={likeRef} snapPoints={snapPointsLike} />
       <Comments

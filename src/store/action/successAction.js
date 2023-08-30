@@ -258,3 +258,10 @@ export const SuccessDelateChat = (data) => {
         data
     }
 }
+
+export const SuccessGetCitys = (data) => {
+    return {
+        type: 'SuccessGetCitys',
+        data
+    }
+}

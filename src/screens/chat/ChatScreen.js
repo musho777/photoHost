@@ -151,7 +151,7 @@ export const ChatScreen = ({ navigation, route }) => {
   }, [page]);
   const addToBlackList = () => {
     bottomSheetRef.current?.close();
-    dispatch(AddBlackListAction({ 'user_id': getSinglePageChat.data.id }, staticdata.token))
+    dispatch(AddBlackListAction({ 'user_id': route.params.id }, staticdata.token))
     if (addToblackList == 'В черный список') {
       setAddToBlackList('Удалить из черного списка')
       setBlackListStatus('Пользователь в черном списке')
@@ -165,10 +165,10 @@ export const ChatScreen = ({ navigation, route }) => {
     if (getSinglePageChat.delateChatStatus) {
       bottomSheetRef.current?.close();
       dispatch(ClearDeleteChat())
-      navigation.goBack()
+      // navigation.goBack()
     }
   }, [getSinglePageChat.delateChatStatus])
-  if (getSinglePageChat.dleateChatLoading || getSinglePageChat.loading) {
+  if (getSinglePageChat.loading) {
     return <View style={Styles.loading}>
       <ActivityIndicator size="large" color="#FFC24B" />
     </View>
@@ -257,7 +257,10 @@ export const ChatScreen = ({ navigation, route }) => {
       <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
         <View style={{ paddingHorizontal: 20 }}>
           {data.length > 0 && <TouchableOpacity
-            onPress={() => dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token))}
+            onPress={() => {
+              dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token))
+              navigation.goBack()
+            }}
             style={{ marginBottom: 20, marginTop: 20 }}>
             <Text style={Styles.darkRegular14}>Удалить переписку</Text>
           </TouchableOpacity>}

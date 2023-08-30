@@ -259,3 +259,10 @@ export const ErrorDelateChat = (data) => {
         data
     }
 }
+
+export const ErrorGetCitys = (data) => {
+    return {
+        type: 'ErrorGetCitys',
+        data
+    }
+}
