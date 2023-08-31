@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetCitysAction } from "../store/action/action";
 import { Styles } from "../styles/Styles";
 
-export const CityModal = ({ visible, close }) => {
+export const CityModal = ({ visible, close, onPress }) => {
     const [searchCitys, setSearchCitys] = useState('')
     const getCitys = useSelector((st) => st.getCitys)
     const staticdata = useSelector(st => st.static);
@@ -38,7 +38,13 @@ export const CityModal = ({ visible, close }) => {
 
                         <ScrollView showsVerticalScrollIndicator={false}>
                             {getCitys.data?.map((elm, i) => (
-                                <Text key={i} style={styles.modalText}>{elm.name}</Text>
+                                <TouchableOpacity key={i} onPress={() => {
+                                    onPress(elm.name)
+                                    close()
+                                }}>
+
+                                    <Text key={i} style={styles.modalText}>{elm.name}</Text>
+                                </TouchableOpacity>
                             ))}
                             {!getCitys.loading && getCitys.data.length == 0 &&
                                 <Text style={styles.modalText}>такого города не существует</Text>

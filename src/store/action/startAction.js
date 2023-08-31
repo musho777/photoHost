@@ -230,3 +230,9 @@ export const StartGetCiyts = () => {
         type: 'StartGetCiyts'
     }
 }
+
+export const StartUpdateIkInfo = () => {
+    return {
+        type: 'StartUpdateIkInfo',
+    }
+}

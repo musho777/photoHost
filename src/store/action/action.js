@@ -39,6 +39,7 @@ import {
   ErrorNewPassword,
   ErrorRegister,
   ErrorSearch,
+  ErrorUpdateIKInfor,
   ErrorValidationForgotPassword,
 } from './errorAction';
 import {
@@ -81,6 +82,7 @@ import {
   StartGetPostLike,
   StartDelateChat,
   StartGetCiyts,
+  StartUpdateIkInfo,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -119,6 +121,7 @@ import {
   SuccessNewPassword,
   SuccessRegister,
   SuccessSearch,
+  SuccessUpdateIkinfo,
   SuccessValidForgotPassowrd,
   SucessGetFollowersAction,
 } from './successAction';
@@ -1344,8 +1347,35 @@ export const GetCitysAction = (data, token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorGetCitys('server error'))
+      });
+  };
+}
+
+export const UpdateIkInfoAction = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartUpdateIkInfo());
+    fetch(`${Api}/update_lk_info`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessUpdateIkinfo(r.data))
+        }
+        else {
+          dispatch(ErrorUpdateIKInfor)
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorUpdateIKInfor())
       });
   };
 }

@@ -7,7 +7,7 @@ import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import React, { useEffect } from 'react';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
-import { GetCitysAction, chnageAvatarAction, chnageUserProfil } from '../../store/action/action';
+import { UpdateIkInfoAction, chnageAvatarAction, chnageUserProfil } from '../../store/action/action';
 import { ClearChangeAvatar, ClearChangeProfile } from '../../store/action/clearAction';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import { BootomModal } from '../../components/BootomSheet';
@@ -44,24 +44,29 @@ export const EditProfilScreen = ({ navigation }) => {
   const changeAvatar = useSelector(st => st.changeAvatar);
   const [imgUrl, setImgUrl] = useState('');
   const [imgFile, setImgFile] = useState();
-
   const [data, setDate] = useState([
-    { type: 'button', value: '', svg: <LocationSvg />, placeholder: 'Город' },
-    { type: 'button', value: '', svg: <CakeSvg />, placeholder: 'Дата рождения' },
-    {
-      type: 'button', value: '', svg: <GenderSvg />, placeholder: 'Пол', onpress: () => {
-        handlePresentModalPress()
-      }
-    },
-
-    { type: 'input', value: '', svg: <LocationSvg />, placeholder: 'Пол' },
-    { type: 'input', value: '', svg: <ProfetionsSvg />, placeholder: 'Профессия/Сфера деятельности' },
-    { type: 'input', value: '', svg: <WorkLocation />, placeholder: 'Место работы' },
-    { type: 'input', value: '', svg: <NetWorkSvg />, placeholder: 'Сайт' },
-    { type: 'input', value: '', svg: <EmailSvg />, placeholder: 'Почта' },
-    { type: 'input', value: '', svg: <PhoneSvg />, placeholder: 'Телефон' },
+    { type: 'button', value: '', svg: <LocationSvg />, placeholder: 'Город', disabled: true },
+    { type: 'button', value: '', svg: <CakeSvg />, placeholder: 'Дата рождения', disabled: true },
+    { type: 'button', value: '', svg: <GenderSvg />, placeholder: 'Пол', disabled: true },
+    { type: 'input', value: '', svg: <ProfetionsSvg />, placeholder: 'Профессия/Сфера деятельности', disabled: true },
+    { type: 'input', value: '', svg: <WorkLocation />, placeholder: 'Место работы', disabled: true },
+    { type: 'input', value: '', svg: <NetWorkSvg />, placeholder: 'Сайт', disabled: true },
+    { type: 'input', value: '', svg: <EmailSvg />, placeholder: 'Почта', disabled: false },
+    { type: 'input', value: '', svg: <PhoneSvg />, placeholder: 'Телефон', disabled: true },
   ])
 
+  const SetData = () => {
+    let item = [...data]
+    item[0].value = user?.allData?.data?.city ? user?.allData?.data?.city : ''
+    item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
+    item[2].value = user?.allData?.data?.gender ? user?.allData?.data?.gender : ''
+    item[3].value = user?.allData?.data?.mgu ? user?.allData?.data?.mgu : ''
+    item[4].value = user?.allData?.data?.work_type ? user?.allData?.data?.work_type : ''
+    item[5].value = user?.allData?.data?.web ? user?.allData?.data.web : ''
+    item[6].value = user?.allData?.data?.email ? user?.allData?.data.email : ''
+    item[7].value = user?.allData?.data?.phone ? user?.allData?.data.phone : ''
+    setDate(item)
+  }
 
   useEffect(() => {
     if (!name) {
@@ -69,6 +74,7 @@ export const EditProfilScreen = ({ navigation }) => {
       setName(user.name);
       setDiscription(user.description);
     }
+    SetData()
   }, [user]);
   const changeImg = () => {
     ImagePicker.openPicker({
@@ -81,6 +87,11 @@ export const EditProfilScreen = ({ navigation }) => {
     });
   };
   const dispatch = useDispatch();
+  const hadnelChange = (i, value) => {
+    let item = [...data]
+    item[i].value = value
+    setDate(item)
+  }
   const chnageProfil = () => {
     let send = true
     if (username === user.data.nickname && name === user.data.name && imgUrl === '') {
@@ -111,16 +122,30 @@ export const EditProfilScreen = ({ navigation }) => {
     if (imgUrl) {
       dispatch(chnageAvatarAction(imgUrl, staticdata.token));
     }
+    dispatch(UpdateIkInfoAction({
+      city_id: data[0].value,
+      date_of_birth: data[1].value,
+      gender: data[2].value,
+      mgu: data[3].value,
+      work_type: data[4].value,
+      web: data[5].value,
+      phone: data[6].value,
+    }, staticdata.token))
+    navigation.navigate('ProfileScreen');
+    dispatch(ClearChangeProfile());
+    dispatch(ClearChangeAvatar())
   };
-  useEffect(() => {
-    if (changeProfil.status || changeAvatar.status) {
-      navigation.navigate('ProfileScreen');
-      dispatch(ClearChangeProfile());
-      dispatch(ClearChangeAvatar())
-    }
-  }, [changeProfil.status, changeAvatar.status]);
-
-
+  // useEffect(() => {
+  //   if (changeProfil.status || changeAvatar.status) {
+  //     navigation.navigate('ProfileScreen');
+  //     dispatch(ClearChangeProfile());
+  //     dispatch(ClearChangeAvatar())
+  //   }
+  // }, [changeProfil.status, changeAvatar.status]);
+  const handleConfirm = (date) => {
+    hadnelChange(1, JSON.stringify(date).substring(1, 11))
+    setCalendar(false)
+  };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <HeaderWhiteTitle
@@ -177,10 +202,11 @@ export const EditProfilScreen = ({ navigation }) => {
             return <View key={i} style={styles.textWrapper2}>
               {elm.svg}
               <TextInput
+                editable={elm.disabled}
                 placeholder={elm.placeholder}
                 placeholderTextColor={'#8C9CAB'}
-                value={location}
-                onChangeText={e => setLocation(e)}
+                value={elm.value}
+                onChangeText={e => hadnelChange(i, e)}
                 style={[Styles.balihaiMedium14, { width: '90%' }]}
               />
             </View>
@@ -189,7 +215,7 @@ export const EditProfilScreen = ({ navigation }) => {
             return <TouchableOpacity onPress={() => handelPress(elm.placeholder)} key={i} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
               <View style={{ flexDirection: "row", justifyContent: "center" }}>
                 {elm.svg}
-                <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{elm.placeholder}</Text>
+                <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{elm.value ? elm.value : elm.placeholder}</Text>
               </View>
               <DownArrow />
             </TouchableOpacity>
@@ -203,25 +229,35 @@ export const EditProfilScreen = ({ navigation }) => {
       <DateTimePickerModal
         isVisible={calendar}
         mode="date"
-        onConfirm={() => { }}
+        onConfirm={handleConfirm}
         onCancel={() => { }}
       />
       <View style={{ position: 'absolute' }}>
         <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
           <View style={{ paddingHorizontal: 20 }}>
-            <TouchableOpacity style={{ marginBottom: 20, marginTop: 20 }} onPress={() => addToBook()}>
+            <TouchableOpacity onPress={() => {
+              hadnelChange(2, 'Мужской')
+              bottomSheetRef.current?.close()
+            }} style={{ marginBottom: 20, marginTop: 20 }} >
               <Text style={Styles.darkRegular14}>Мужской</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => addToBook()}>
+            <TouchableOpacity onPress={() => {
+              hadnelChange(2, 'Женский')
+              bottomSheetRef.current?.close()
+
+            }} style={{ marginBottom: 20 }}>
               <Text style={Styles.darkRegular14}>Женский</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => addToBook()}>
+            <TouchableOpacity onPress={() => {
+              hadnelChange(2, 'Не указывать')
+              bottomSheetRef.current?.close()
+            }} style={{ marginBottom: 20 }}>
               <Text style={Styles.darkRegular14}>Не указывать</Text>
             </TouchableOpacity>
           </View>
         </BootomModal>
       </View>
-      {city && <CityModal close={() => setCity(false)} visible={city} />}
+      {city && <CityModal onPress={(e) => hadnelChange(0, e)} close={() => setCity(false)} visible={city} />}
     </ScrollView>
   );
 };

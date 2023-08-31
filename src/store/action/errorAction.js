@@ -266,3 +266,10 @@ export const ErrorGetCitys = (data) => {
         data
     }
 }
+
+export const ErrorUpdateIKInfor = (data) => {
+    return {
+        type: 'ErrorUpdateIKInfor',
+        data
+    }
+} 

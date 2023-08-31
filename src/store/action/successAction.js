@@ -265,3 +265,9 @@ export const SuccessGetCitys = (data) => {
         data
     }
 }
+export const SuccessUpdateIkinfo = (data) => {
+    return {
+        type: 'SuccessUpdateIkinfo',
+        data
+    }
+}
