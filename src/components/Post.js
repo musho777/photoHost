@@ -92,7 +92,7 @@ export const Post = ({
 
   return (
     <Shadow
-      style={{ width: '100%', marginBottom: 20, borderRadius: 10 }}
+      style={{ width: '100%', borderRadius: 10 }}
       startColor={'#00000010'}>
       <View style={styles.block}>
         <View style={[Styles.flexSpaceBetween, { padding: 15 }]}>

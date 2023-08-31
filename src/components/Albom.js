@@ -56,7 +56,7 @@ export const Albom = ({ data, user, loading, seved }) => {
           <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%' }}>
             {user ?
               <Text style={Styles.darkMedium16}>нет публикаций</Text> :
-              <Text style={[Styles.darkMedium16, { textAlign: 'center' }]}>{seved ? 'Список закладок пуст' : 'У Вас нет публикаций'}</Text>
+              <Text style={[Styles.darkMedium16, { textAlign: 'center' }]}>{seved ? 'Список закладок пуст' : 'нет публикаций'}</Text>
             }
           </View>
         }

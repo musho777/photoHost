@@ -44,7 +44,6 @@ export const EditProfilScreen = ({ navigation }) => {
   const changeAvatar = useSelector(st => st.changeAvatar);
   const [imgUrl, setImgUrl] = useState('');
   const [imgFile, setImgFile] = useState();
-  console.log(staticdata)
   const [data, setDate] = useState([
     { type: 'button', value: '', svg: <LocationSvg />, placeholder: 'Город', disabled: true, id: '' },
     { type: 'button', value: '', svg: <CakeSvg />, placeholder: 'Дата рождения', disabled: true },

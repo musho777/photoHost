@@ -1,4 +1,4 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   AddSvg,
   ChatSvg,
@@ -19,23 +19,23 @@ export const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
-      sceneContainerStyle ={{
+      sceneContainerStyle={{
         primary: '#fff',
-        background:  '#fff',
-        border:  '#fff',
+        background: '#fff',
+        border: '#fff',
       }}
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         tabBarStyle: (() => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? ''
 
-          if(routeName === 'ChatScreen'||routeName === 'FollowersScreen'||routeName === 'ChangeMailFirtScreen' ||routeName === 'ParametrScreen'||routeName === 'EditProfilScreen'||routeName === 'ChangePasswordScreen'|| routeName === 'ChangeMailScreen'||routeName === 'BlackListScreen'){
+          if (routeName === 'ChatScreen' || routeName === 'FollowersScreen' || routeName === 'ChangeMailFirtScreen' || routeName === 'ParametrScreen' || routeName === 'EditProfilScreen' || routeName === 'ChangePasswordScreen' || routeName === 'ChangeMailScreen' || routeName === 'BlackListScreen') {
             return {
-              display:'none'
+              display: 'none'
             }
           }
           return {
-            height: 80,
+            height: 60,
             backgroundColor: '#FFF',
             borderTopColor: '#FFF',
             borderTopWidth: 1,
@@ -44,33 +44,33 @@ export const TabNavigation = () => {
       })}>
       <Tab.Screen
         options={() => ({
-          headerShown:false,
+          headerShown: false,
 
-          tabBarIcon: ({focused}) => <HomeSvg focused={focused} />,
+          tabBarIcon: ({ focused }) => <HomeSvg focused={focused} />,
         })}
         name="Home"
         component={HomeNavigation}
       />
       <Tab.Screen
         options={() => ({
-          headerShown:false,
-          tabBarIcon: ({focused}) => <SearchSvg focused={focused} />,
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <SearchSvg focused={focused} />,
         })}
         name="SearchNavigation"
         component={SearchNavigation}
       />
       <Tab.Screen
         options={() => ({
-          headerShown:false,
-          tabBarIcon: ({focused}) => <AddSvg focused={focused} />,
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <AddSvg focused={focused} />,
         })}
         name="AddImg"
         component={AddImg}
       />
       <Tab.Screen
         options={() => ({
-          headerShown:false,
-          tabBarIcon: ({focused}) => <ChatSvg focused={focused} />,
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <ChatSvg focused={focused} />,
         })}
         name="ChatNavigation"
         component={ChatNavigation}
@@ -78,7 +78,7 @@ export const TabNavigation = () => {
       <Tab.Screen
         options={() => ({
           headerShown: false,
-          tabBarIcon: ({focused}) => <UserSvg focused={focused} />,
+          tabBarIcon: ({ focused }) => <UserSvg focused={focused} />,
         })}
         name="ProfileNavigation"
         component={ProfileNavigation}

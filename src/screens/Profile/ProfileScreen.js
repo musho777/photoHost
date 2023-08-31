@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -28,8 +28,9 @@ export const ProfileScreen = ({ navigation, profile }) => {
   const [page, setPage] = useState(1)
   const user = useSelector(st => st.userData);
   const [activeCard, setActiveCard] = useState(0)
+  const swiperRef = useRef(null);
 
-  const [data, setData] = useState(['albom', <View></View>])
+  const [data, setData] = useState(['albom', ''])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
@@ -59,6 +60,14 @@ export const ProfileScreen = ({ navigation, profile }) => {
     const paddingToBottom = 20;
     return layoutMeasurement.height + contentOffset.y >=
       contentSize.height - paddingToBottom;
+  };
+  const handelChange = () => {
+    setActiveCard(1);
+    swiperRef.current.goToLastIndex();
+  };
+  const handelChangeFirst = () => {
+    setActiveCard(0);
+    swiperRef.current.goToFirstIndex();
   };
 
   if (user.loading) {
@@ -141,12 +150,12 @@ export const ProfileScreen = ({ navigation, profile }) => {
             </View>
           )}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={[
+            <Text onPress={() => handelChangeFirst()} style={[
               Styles.balihaiMedium14,
               styles.textWrapper,
               activeCard == 0 && { borderColor: '#000', color: '#000' }
             ]}>Альбом</Text>
-            <Text style={[Styles.balihaiMedium14,
+            <Text onPress={() => handelChange()} style={[Styles.balihaiMedium14,
             styles.textWrapper,
             activeCard == 1 && { borderColor: '#000', color: '#000' }
 
@@ -154,6 +163,7 @@ export const ProfileScreen = ({ navigation, profile }) => {
           </View>
           <SwiperFlatList
             index={0}
+            ref={swiperRef}
             onChangeIndex={(index) => { setActiveCard(index.index) }}
           >
             {data.map((elm, i) => {

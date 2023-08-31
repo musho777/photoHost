@@ -6,10 +6,13 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Platform,
+  Linking,
 } from 'react-native';
-import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
+import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { CreatPostAction } from '../../store/action/action';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
@@ -22,11 +25,19 @@ export const AddImg = ({ navigation }) => {
   const staticData = useSelector(st => st.static);
 
   const dispatch = useDispatch();
-  useEffect(() => {
 
-    const unsubscribe = navigation.addListener('focus', async () => {
-      setUri([])
-      setDescription('')
+  const Camera = async () => {
+    const cameraPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.CAMERA
+    const photoLibraryPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
+    setUri([])
+    setDescription('')
+    const cameraPermissionStatus = await check(cameraPermission);
+    const photoLibraryPermissionStatus = await check(photoLibraryPermission);
+    if (cameraPermissionStatus !== RESULTS.GRANTED && photoLibraryPermissionStatus !== RESULTS.GRANTED) {
+      request(cameraPermission);
+      request(photoLibraryPermission);
+    }
+    else {
       ImagePicker.openPicker({
         width: 300,
         height: 400,
@@ -34,7 +45,19 @@ export const AddImg = ({ navigation }) => {
         multiple: true,
       }).then(image => {
         setUri(image);
-      });
+      }).catch((error) => {
+        console.log(error)
+      })
+
+    }
+
+
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+
+      Camera()
     });
     return unsubscribe;
   }, [navigation]);
@@ -68,6 +91,7 @@ export const AddImg = ({ navigation }) => {
       height: 400,
       cropping: true,
       multiple: true,
+      mediaType: 'photo'
     }).then(image => {
       let item = [...uri]
       item = item.concat(image);

@@ -110,7 +110,7 @@ export const RegisterScreen = ({ navigation }) => {
           onChange={(e) => setUsername({ ...userName, value: e })}
         />
         <Input
-          placeholder={'Укажите ваше имя'}
+          placeholder={'придумайте никнайм'}
           error={name.error}
           value={name.value}
           onChange={(e) => setName({ ...name, value: e })}
@@ -123,7 +123,7 @@ export const RegisterScreen = ({ navigation }) => {
           pass
         />
         <Input
-          placeholder={'Повтарйте пароль'}
+          placeholder={'Повторите пароль'}
           error={confirmPassword.error}
           value={confirmPassword.value}
           onChange={(e) => setConfirmPassword({ ...confirmPassword, value: e })}

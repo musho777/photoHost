@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { Albom } from '../../components/Albom';
@@ -14,6 +15,11 @@ import { BackArrow } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDeleteFollowAction, AddDeletFollow, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
+import SwiperFlatList from 'react-native-swiper-flatlist';
+import { InfoBlock } from '../Profile/InfoBlock';
+
+const { width } = Dimensions.get('window');
+
 
 export const SearchProfil = ({ navigation, route }) => {
   const singlPage = useSelector(st => st.singlPage);
@@ -21,6 +27,19 @@ export const SearchProfil = ({ navigation, route }) => {
   const getPosts = useSelector(st => st.getPosts);
   const [page, setPage] = useState(1)
   const dispatch = useDispatch();
+  const swiperRef = useRef(null);
+
+  const [activeCard, setActiveCard] = useState(0)
+  const [data, setData] = useState(['albom', ''])
+  const handelChange = () => {
+    setActiveCard(1);
+    swiperRef.current.goToLastIndex();
+  };
+  const handelChangeFirst = () => {
+    setActiveCard(0);
+    swiperRef.current.goToFirstIndex();
+  };
+
   useEffect(() => {
     dispatch(
       GetSinglPageAction(
@@ -31,7 +50,7 @@ export const SearchProfil = ({ navigation, route }) => {
       ),
     );
     dispatch(GetPostsAction({ user_id: route.params.id }, staticdata.token, 1));
-
+    setActiveCard(0)
   }, []);
   const sendMsg = () => {
     navigation.navigate('ChatScreen', { id: singlPage.data.id })
@@ -123,7 +142,34 @@ export const SearchProfil = ({ navigation, route }) => {
             }
             <Button onPress={() => sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
           </View>
-          <Albom user data={getPosts.data} />
+          {/* <Albom user data={getPosts.data} /> */}
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text onPress={() => handelChangeFirst()} style={[
+              Styles.balihaiMedium14,
+              styles.textWrapper,
+              activeCard == 0 && { borderColor: '#000', color: '#000' }
+            ]}>Альбом</Text>
+            <Text onPress={() => handelChange()} style={[Styles.balihaiMedium14,
+            styles.textWrapper,
+            activeCard == 1 && { borderColor: '#000', color: '#000' }
+
+            ]}>Информация</Text>
+          </View>
+          <SwiperFlatList
+            index={0}
+            ref={swiperRef}
+            onChangeIndex={(index) => { setActiveCard(index.index) }}
+          >
+            {data.map((elm, i) => {
+
+              return <View key={i} style={{ width: width - 30.1 }}>
+                {elm === 'albom' ?
+                  <Albom loading={getPosts.loading} data={getPosts.data} /> :
+                  <InfoBlock user={singlPage.data} />
+                }
+              </View>
+            })}
+          </SwiperFlatList>
         </ScrollView>
       </View>
     );
@@ -136,4 +182,13 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 50,
   },
+  textWrapper: {
+    width: '50%',
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    borderColor: '#E7EEF5',
+
+  }
 });
+

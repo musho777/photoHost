@@ -18,8 +18,8 @@ export const InfoBlock = ({ user }) => {
     const GetData = () => {
         console.log(user)
         let item = [...data]
-        item[0].value = user.city.name
-        item[1].value = user.date_of_birth.substring(0, 11)
+        item[0].value = user.city?.name
+        item[1].value = user.date_of_birth?.substring(0, 11)
         item[2].value = user.gender
         item[3].value = user.mgu
         item[4].value = user.work_type
