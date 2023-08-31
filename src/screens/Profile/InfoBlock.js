@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ScrollView, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WorkLocation } from "../../assets/svg/Svgs"
 import { Styles } from "../../styles/Styles"
 
@@ -16,7 +16,6 @@ export const InfoBlock = ({ user }) => {
     ])
 
     const GetData = () => {
-        console.log(user)
         let item = [...data]
         item[0].value = user.city?.name
         item[1].value = user.date_of_birth?.substring(0, 11)
@@ -26,21 +25,19 @@ export const InfoBlock = ({ user }) => {
         item[5].value = user.web
         item[6].value = user.email
         item[7].value = user.phone
-
-
         setData(item)
     }
     useEffect(() => {
         GetData()
     }, [user])
-    return <ScrollView style={{ paddingHorizontal: 0 }}>
+    return <View >
         {data.map((elm, i) => {
-            return <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }} key={i}>
+            return <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }} key={i}>
                 {elm.svg}
                 <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
                     {elm.value}
                 </Text>
             </View>
         })}
-    </ScrollView>
+    </View>
 }

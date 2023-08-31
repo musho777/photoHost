@@ -18,6 +18,7 @@ import { BootomModal } from './BootomSheet';
 import { Comments } from './Comment';
 import { LikeList } from './LikeList';
 import { Slider } from './Slider';
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -40,6 +41,7 @@ export const Post = ({
   isFollow,
   daysAgo
 }) => {
+  const navigation = useNavigation()
   const [likedCount, setLikedCount] = useState(+like)
   const [isLiked, setIsLiked] = useState(liked)
   const staticdata = useSelector(st => st.static);
@@ -96,7 +98,7 @@ export const Post = ({
       startColor={'#00000010'}>
       <View style={styles.block}>
         <View style={[Styles.flexSpaceBetween, { padding: 15 }]}>
-          <View style={Styles.flexAlignItems}>
+          <TouchableOpacity onPress={() => user.data.id !== userId && navigation.navigate('SearchProfil', { id: userId })} style={Styles.flexAlignItems}>
             <Image style={styles.userImg}
               source={{ uri: `https://chamba.justcode.am/uploads/${userImg}` }} />
             <View>
@@ -104,9 +106,9 @@ export const Post = ({
                 <Text Text style={[Styles.darkSemiBold14, { marginRight: 5 }]}>{userName}</Text>
                 {star > 0 && <CheckMarkUserSvg />}
               </View>
-              <Text style={Styles.balihaiMedium9}>{daysAgo} </Text>
+              <Text style={Styles.balihaiMedium9}>{daysAgo > 0 ? daysAgo : 'сегодня'} </Text>
             </View>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => handlePresentModalPress()}
             style={{ marginTop: -5, paddingLeft: 15 }}>

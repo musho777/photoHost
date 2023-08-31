@@ -13,13 +13,13 @@ export const Albom = ({ data, user, loading, seved }) => {
     </View>
   }
   return (
-    <View style={{ marginTop: 20, flex: 1 }}>
+    <View style={{ marginTop: 20, width: '98%' }}>
       <View
         style={[
           {
             flexWrap: 'wrap',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
           },
         ]}>
         {data?.map((elm, i) => {
@@ -67,8 +67,8 @@ export const Albom = ({ data, user, loading, seved }) => {
 
 const styles = StyleSheet.create({
   img: {
-    width: windowWidth / 2 - 17,
-    height: windowWidth / 2 - 17,
+    width: windowWidth / 2 - 25,
+    height: windowWidth / 2 - 25,
     marginBottom: 4,
     borderRadius: 15,
   },

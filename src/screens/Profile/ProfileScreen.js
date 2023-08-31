@@ -79,8 +79,9 @@ export const ProfileScreen = ({ navigation, profile }) => {
   }
   else {
     return (
-      <View style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
+      <View style={{ flex: 1, marginTop: 10, paddingHorizontal: 15, }}>
         <ScrollView
+          scrollEnabled={activeCard == 0}
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
           onScroll={({ nativeEvent }) => {
@@ -167,9 +168,11 @@ export const ProfileScreen = ({ navigation, profile }) => {
             onChangeIndex={(index) => { setActiveCard(index.index) }}
           >
             {data.map((elm, i) => {
-              return <View key={i} style={{ width: width - 30.1 }}>
+              return <View key={i} style={{ width: width - 32 }}>
                 {elm === 'albom' ?
-                  <Albom loading={getPosts.loading} data={getPosts.data} /> :
+                  <View>
+                    <Albom loading={getPosts.loading} data={getPosts.data} />
+                  </View> :
                   <InfoBlock user={user.data} />
                 }
               </View>

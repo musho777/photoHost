@@ -13,9 +13,13 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { ProfileNavigation } from './ProfileNavigation';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { HomeNavigation } from './HomeNavigation';
+import { Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 
 export const TabNavigation = () => {
+  const user = useSelector((st) => st.userData)
+  console.log(user.data)
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
@@ -70,7 +74,14 @@ export const TabNavigation = () => {
       <Tab.Screen
         options={() => ({
           headerShown: false,
-          tabBarIcon: ({ focused }) => <ChatSvg focused={focused} />,
+          tabBarIcon: ({ focused }) =>
+            <View>
+              {/* <View style={{ position: 'absolute', right: -7, top: -10, backgroundColor: 'red', borderRadius: 20, height: 15, width: 15, justifyContent: "center", alignItems: 'center', textAlign: 'center' }}>
+                <Text style={{ color: '#FFF', fontSize: 10 }}>2</Text>
+              </View> */}
+              <ChatSvg focused={focused} />
+            </View>
+          ,
         })}
         name="ChatNavigation"
         component={ChatNavigation}
