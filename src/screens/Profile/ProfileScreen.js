@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { Albom } from '../../components/Albom';
@@ -15,6 +16,9 @@ import { Menu } from '../../components/Menu';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
+import SwiperFlatList from 'react-native-swiper-flatlist';
+import { InfoBlock } from './InfoBlock';
+const { width } = Dimensions.get('window');
 
 export const ProfileScreen = ({ navigation, profile }) => {
 
@@ -23,27 +27,31 @@ export const ProfileScreen = ({ navigation, profile }) => {
   const getPosts = useSelector(st => st.getPosts);
   const [page, setPage] = useState(1)
   const user = useSelector(st => st.userData);
+  const [activeCard, setActiveCard] = useState(0)
+
+  const [data, setData] = useState(['albom', <View></View>])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(getUserInfoAction(staticdata.token))
-      dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1));
+      dispatch(GetPostsAction({ user_id: user.data?.id }, staticdata.token, 1));
+      setActiveCard(0)
     });
     return unsubscribe;
   }, [navigation]);
 
   useEffect(() => {
     if (!Object.keys(user.data).length && staticdata.token) {
-      dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1));
+      dispatch(GetPostsAction({ user_id: user.data?.id }, staticdata.token, 1));
       dispatch(getUserInfoAction(staticdata.token))
     }
   }, [staticdata.token, Object.keys(user.data).length])
 
   useEffect(() => {
-    if (user.data.id) {
-      dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1));
+    if (user.data?.id) {
+      dispatch(GetPostsAction({ user_id: user.data?.id }, staticdata.token, 1));
     }
-  }, [user.data.id]);
+  }, [user.data?.id]);
 
   const [openMenu, setOpenMenu] = useState(false)
 
@@ -85,16 +93,16 @@ export const ProfileScreen = ({ navigation, profile }) => {
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Image
               style={styles.img}
-              source={{ uri: `https://chamba.justcode.am/uploads/${user.avatar}` }}
+              source={{ uri: `https://chamba.justcode.am/uploads/${user?.avatar}` }}
             />
             <View style={{ marginTop: 7, marginBottom: 15, alignItems: 'center', marginLeft: 10 }}>
               <View style={Styles.flexAlignItems}>
-                <Text style={[Styles.darkMedium16, { marginRight: 5 }]}>{user.name}</Text>
+                <Text style={[Styles.darkMedium16, { marginRight: 5 }]}>{user?.name}</Text>
                 {user.data.star > 0 &&
                   <CheckMarkUserSvg />
                 }
               </View>
-              <Text style={[Styles.balihaiRegular12, { marginLeft: -17 }]}>@{user.username}</Text>
+              <Text style={[Styles.balihaiRegular12, { marginLeft: -17 }]}>@{user?.username}</Text>
             </View>
             {user.data.description && (
               <Text style={Styles.darkRegular14}>{user.description}</Text>
@@ -132,10 +140,34 @@ export const ProfileScreen = ({ navigation, profile }) => {
               <Button bg paddingV={10} title={'Сообщение'} width="48%" />
             </View>
           )}
-          <Albom loading={getPosts.loading} data={getPosts.data} />
-        </ScrollView>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={[
+              Styles.balihaiMedium14,
+              styles.textWrapper,
+              activeCard == 0 && { borderColor: '#000', color: '#000' }
+            ]}>Альбом</Text>
+            <Text style={[Styles.balihaiMedium14,
+            styles.textWrapper,
+            activeCard == 1 && { borderColor: '#000', color: '#000' }
+
+            ]}>Информация</Text>
+          </View>
+          <SwiperFlatList
+            index={0}
+            onChangeIndex={(index) => { setActiveCard(index.index) }}
+          >
+            {data.map((elm, i) => {
+              return <View key={i} style={{ width: width - 30.1 }}>
+                {elm === 'albom' ?
+                  <Albom loading={getPosts.loading} data={getPosts.data} /> :
+                  <InfoBlock user={user.data} />
+                }
+              </View>
+            })}
+          </SwiperFlatList>
+        </ScrollView >
         <Menu close={() => setOpenMenu(false)} visible={openMenu} />
-      </View>
+      </View >
     );
   }
 };
@@ -146,4 +178,12 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 50,
   },
+  textWrapper: {
+    width: '50%',
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    borderColor: '#E7EEF5',
+
+  }
 });

@@ -44,8 +44,9 @@ export const EditProfilScreen = ({ navigation }) => {
   const changeAvatar = useSelector(st => st.changeAvatar);
   const [imgUrl, setImgUrl] = useState('');
   const [imgFile, setImgFile] = useState();
+  console.log(staticdata)
   const [data, setDate] = useState([
-    { type: 'button', value: '', svg: <LocationSvg />, placeholder: 'Город', disabled: true },
+    { type: 'button', value: '', svg: <LocationSvg />, placeholder: 'Город', disabled: true, id: '' },
     { type: 'button', value: '', svg: <CakeSvg />, placeholder: 'Дата рождения', disabled: true },
     { type: 'button', value: '', svg: <GenderSvg />, placeholder: 'Пол', disabled: true },
     { type: 'input', value: '', svg: <ProfetionsSvg />, placeholder: 'Профессия/Сфера деятельности', disabled: true },
@@ -57,7 +58,7 @@ export const EditProfilScreen = ({ navigation }) => {
 
   const SetData = () => {
     let item = [...data]
-    item[0].value = user?.allData?.data?.city ? user?.allData?.data?.city : ''
+    item[0].value = user?.allData?.data?.city_id ? user?.allData?.data?.city_id : ''
     item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
     item[2].value = user?.allData?.data?.gender ? user?.allData?.data?.gender : ''
     item[3].value = user?.allData?.data?.mgu ? user?.allData?.data?.mgu : ''
@@ -87,9 +88,16 @@ export const EditProfilScreen = ({ navigation }) => {
     });
   };
   const dispatch = useDispatch();
-  const hadnelChange = (i, value) => {
+  const hadnelChange = (i, value, type) => {
     let item = [...data]
-    item[i].value = value
+    if (type == 'city') {
+      item[i].value = value.name
+      item[0].id = value.id
+
+    } else {
+
+      item[i].value = value
+    }
     setDate(item)
   }
   const chnageProfil = () => {
@@ -123,7 +131,7 @@ export const EditProfilScreen = ({ navigation }) => {
       dispatch(chnageAvatarAction(imgUrl, staticdata.token));
     }
     dispatch(UpdateIkInfoAction({
-      city_id: data[0].value,
+      city_id: data[0].id,
       date_of_birth: data[1].value,
       gender: data[2].value,
       mgu: data[3].value,
@@ -257,7 +265,7 @@ export const EditProfilScreen = ({ navigation }) => {
           </View>
         </BootomModal>
       </View>
-      {city && <CityModal onPress={(e) => hadnelChange(0, e)} close={() => setCity(false)} visible={city} />}
+      {city && <CityModal onPress={(e) => hadnelChange(0, e, type = 'city')} close={() => setCity(false)} visible={city} />}
     </ScrollView>
   );
 };

@@ -18,7 +18,6 @@ export const HomeScreen = ({ navigation }) => {
       dispatch(GetLentsAction(staticdata.token));
     }
   }, [staticdata.token]);
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       if (staticdata.token) {

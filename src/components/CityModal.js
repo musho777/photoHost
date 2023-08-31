@@ -39,7 +39,7 @@ export const CityModal = ({ visible, close, onPress }) => {
                         <ScrollView showsVerticalScrollIndicator={false}>
                             {getCitys.data?.map((elm, i) => (
                                 <TouchableOpacity key={i} onPress={() => {
-                                    onPress(elm.name)
+                                    onPress({ name: elm.name, id: elm.id })
                                     close()
                                 }}>
 
