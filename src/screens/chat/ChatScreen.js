@@ -21,6 +21,7 @@ import {
   DelateChatAction,
   GetSinglePageChatAction,
   SinglChatPageId,
+  getUserInfoAction,
   newMessageAction,
 } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
@@ -168,6 +169,15 @@ export const ChatScreen = ({ navigation, route }) => {
       // navigation.goBack()
     }
   }, [getSinglePageChat.delateChatStatus])
+
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      dispatch(getUserInfoAction(staticdata.token))
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   if (getSinglePageChat.loading) {
     return <View style={Styles.loading}>
       <ActivityIndicator size="large" color="#FFC24B" />

@@ -12,7 +12,8 @@ const initialState = {
   followerCount: 0,
   followersCount: 0,
   postCount: 0,
-  allData: {}
+  allData: {},
+  msgCount: ''
 };
 const GetUserDataReducer = (state = initialState, action) => {
   let item = { ...state };
@@ -36,18 +37,19 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'SuccessGetUserData':
       item.status = true
       item.error = ''
-      item.message = action.data?.message,
-        item.loading = false
+      item.message = action.data?.message
+      item.loading = false
       item.data = action.data
-      item.username = action.data.nickname,
-        item.name = action.data.name,
-        item.description = action.data.description
+      item.username = action.data.nickname
+      item.name = action.data.name
+      item.description = action.data.description
       item.email = action.data.email
       item.avatar = action.data.avatar
-      item.followerCount = action.follower_count,
-        item.followersCount = action.followers_count,
-        item.postCount = action.post_count
+      item.followerCount = action.follower_count
+      item.followersCount = action.followers_count
+      item.postCount = action.post_count
       item.allData = action.allData
+      item.msgCount = action.allData.chat_count
       break
     case 'ErrorGetUserData':
       item.error = action.data
@@ -69,6 +71,9 @@ const GetUserDataReducer = (state = initialState, action) => {
       break
     // case 'NewMsgAction':
     //   break
+    case 'MsgCountAction':
+      item.msgCount = action.data
+      break
     default:
       break;
   }

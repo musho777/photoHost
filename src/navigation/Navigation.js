@@ -19,6 +19,7 @@ import {
   DeleteChatPusherAction,
   DeviceIdAction,
   getUserInfoAction,
+  MsgCountAction,
   NewMsgAction,
   setToken,
 } from '../store/action/action';
@@ -63,6 +64,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
       channelName: 'NewMessage',
       onEvent: event => {
         if (JSON.parse(event.data).message.type == 'new_message') {
+          dispatch(MsgCountAction(JSON.parse(event.data)?.message.all_message_count))
           const today = new Date()
           dispatch(
             NewMsgAction({

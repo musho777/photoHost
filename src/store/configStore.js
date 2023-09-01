@@ -34,6 +34,7 @@ import StaticReducer from './reducers/staticReducer';
 import DeletChatPusherReducer from './reducers/DeletChatPusherReducer';
 import AddBlackListPussherReducer from './reducers/addBlackListPussherReducer';
 import GetCityesReducer from './reducers/getCityesReducer';
+import MsgCountReducer from './reducers/MsgCountReducer';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -69,7 +70,8 @@ const rootReducer = combineReducers({
     getPostLike: GetPostLikeReducer,
     deletChatPusher: DeletChatPusherReducer,
     addBlackPusher: AddBlackListPussherReducer,
-    getCitys: GetCityesReducer
+    getCitys: GetCityesReducer,
+    msgCount: MsgCountReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

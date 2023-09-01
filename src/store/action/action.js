@@ -1397,7 +1397,6 @@ export const DelatePostAction = (data, token) => {
     fetch(`${Api}/delete_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessUpdateIkinfo(r.data))
         }
@@ -1406,8 +1405,14 @@ export const DelatePostAction = (data, token) => {
         }
       })
       .catch(error => {
-        console.log(error, 'ss')
         dispatch(ErrorDeletePost())
       });
   };
+}
+
+export const MsgCountAction = (data) => {
+  return {
+    type: 'MsgCountAction',
+    data
+  }
 }

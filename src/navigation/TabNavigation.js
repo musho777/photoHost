@@ -15,10 +15,16 @@ import { AddImg } from '../screens/AddImg/AddImg';
 import { HomeNavigation } from './HomeNavigation';
 import { Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 
 export const TabNavigation = () => {
   const user = useSelector((st) => st.userData)
+  const [msgCout, setMSgCount] = useState('')
+  useEffect(() => {
+    setMSgCount(user.msgCount)
+  }, [user.msgCount])
+
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
@@ -75,9 +81,9 @@ export const TabNavigation = () => {
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             <View>
-              {/* <View style={{ position: 'absolute', right: -7, top: -10, backgroundColor: 'red', borderRadius: 20, height: 15, width: 15, justifyContent: "center", alignItems: 'center', textAlign: 'center' }}>
-                <Text style={{ color: '#FFF', fontSize: 10 }}>2</Text>
-              </View> */}
+              {msgCout > 0 && <View style={{ position: 'absolute', right: -7, top: -10, backgroundColor: 'red', borderRadius: 20, height: 15, width: 15, justifyContent: "center", alignItems: 'center', textAlign: 'center' }}>
+                <Text style={{ color: '#FFF', fontSize: 10 }}>{msgCout}</Text>
+              </View>}
               <ChatSvg focused={focused} />
             </View>
           ,
