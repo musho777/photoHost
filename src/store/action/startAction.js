@@ -236,3 +236,9 @@ export const StartUpdateIkInfo = () => {
         type: 'StartUpdateIkInfo',
     }
 }
+
+export const StartDeletePost = () => {
+    return {
+        type: 'StartDeletePost'
+    }
+}

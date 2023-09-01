@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
 import { NotificationLister, requestUserPermission } from './src/utils/pushnotification_helper';
+import { StatusBar } from 'react-native';
 export default App = () => {
   const firebaseConfig = {
     apiKey: "AIzaSyDeqDpmN8h9Zr2EkzcMlyZr-ddq_HkRZAc",
@@ -73,7 +74,16 @@ export default App = () => {
 
   if (!isLoading) {
     return (
+
       <Provider store={store}>
+        <StatusBar
+          animated={true}
+          backgroundColor="#fff"
+          barStyle={'dark-content'}
+        // barStyle={statusBarStyle}
+        // showHideTransition={statusBarTransition}
+        // hidden={hidden}
+        />
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Navigation initialRouteName={initialRouteName} token={token} id={id} />
         </GestureHandlerRootView>

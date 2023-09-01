@@ -272,4 +272,11 @@ export const ErrorUpdateIKInfor = (data) => {
         type: 'ErrorUpdateIKInfor',
         data
     }
-} 
+}
+
+export const ErrorDeletePost = (data) => {
+    return {
+        type: 'ErrorDeletePost',
+        data
+    }
+}

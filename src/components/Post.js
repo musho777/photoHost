@@ -39,7 +39,8 @@ export const Post = ({
   addToblack,
   isBook,
   isFollow,
-  daysAgo
+  daysAgo,
+  deletData
 }) => {
   const navigation = useNavigation()
   const [likedCount, setLikedCount] = useState(+like)
@@ -106,7 +107,7 @@ export const Post = ({
                 <Text Text style={[Styles.darkSemiBold14, { marginRight: 5 }]}>{userName}</Text>
                 {star > 0 && <CheckMarkUserSvg />}
               </View>
-              <Text style={Styles.balihaiMedium9}>{daysAgo > 0 ? daysAgo : 'сегодня'} </Text>
+              <Text style={Styles.balihaiMedium9}>{daysAgo != '0 дней назад' ? daysAgo : 'сегодня'} </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -116,7 +117,7 @@ export const Post = ({
           </TouchableOpacity>
         </View>
         <View style={{ paddingHorizontal: 15 }}>
-          <Text style={Styles.eslipesMedium13}>
+          <Text style={Styles.darkSemiBold12}>
             {description}
           </Text>
         </View>
@@ -136,7 +137,7 @@ export const Post = ({
                 handlePresentModalPressLike()
               }
               }>
-                <Text style={[Styles.darkMedium14, { marginLeft: 15 }]}>{likedCount}</Text>
+                <Text style={[Styles.darkMedium14, { marginLeft: 4 }]}>{likedCount}</Text>
               </TouchableOpacity>
             </View>
             <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>
@@ -159,9 +160,12 @@ export const Post = ({
       <View style={{ position: 'absolute' }}>
         <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
           <View style={{ paddingHorizontal: 20 }}>
-            <TouchableOpacity style={{ marginBottom: 20, marginTop: 20 }} onPress={() => addToBook()}>
+            {user.data.id == userId && <TouchableOpacity style={{ marginBottom: 20, marginTop: 20 }} onPress={() => deletData(id)}>
+              <Text style={Styles.darkRegular14}> Удалить пост </Text>
+            </TouchableOpacity>}
+            {user.data.id !== userId && <TouchableOpacity style={{ marginBottom: 20, marginTop: 20 }} onPress={() => addToBook()}>
               <Text style={Styles.darkRegular14}>{book ? 'Удалить из закладок' : 'В закладки'}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
             {user.data.id !== userId && <TouchableOpacity
               onPress={() => {
                 setFollow(!follow)

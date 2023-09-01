@@ -271,3 +271,10 @@ export const SuccessUpdateIkinfo = (data) => {
         data
     }
 }
+
+export const SuccessDeletPost = () => {
+    return {
+        type: 'SuccessDeletPost',
+        data
+    }
+}

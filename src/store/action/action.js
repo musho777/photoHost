@@ -15,6 +15,7 @@ import {
   ErrorCreatePost,
   ErrorDelateChat,
   ErrorDeleteOtherPople,
+  ErrorDeletePost,
   ErrorEditPost,
   ErrorForgotPassword,
   ErrorGetBlackList,
@@ -83,6 +84,7 @@ import {
   StartDelateChat,
   StartGetCiyts,
   StartUpdateIkInfo,
+  StartDeletePost,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -1371,11 +1373,41 @@ export const UpdateIkInfoAction = (data, token) => {
           dispatch(SuccessUpdateIkinfo(r.data))
         }
         else {
-          dispatch(ErrorUpdateIKInfor)
+          dispatch(ErrorUpdateIKInfor())
         }
       })
       .catch(error => {
         dispatch(ErrorUpdateIKInfor())
+      });
+  };
+}
+
+export const DelatePostAction = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartDeletePost());
+    fetch(`${Api}/delete_post`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if (r.status) {
+          dispatch(SuccessUpdateIkinfo(r.data))
+        }
+        else {
+          dispatch(ErrorDeletePost())
+        }
+      })
+      .catch(error => {
+        console.log(error, 'ss')
+        dispatch(ErrorDeletePost())
       });
   };
 }

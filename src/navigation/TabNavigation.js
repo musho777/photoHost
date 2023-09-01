@@ -19,7 +19,6 @@ import { useSelector } from 'react-redux';
 
 export const TabNavigation = () => {
   const user = useSelector((st) => st.userData)
-  console.log(user.data)
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator

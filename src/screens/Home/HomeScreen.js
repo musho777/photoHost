@@ -2,13 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/Post';
-import { AddPostViewCount, GetLentsAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, GetLentsAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 
 export const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents);
+  const [data, setData] = useState([])
   const [page, setPage] = useState(1);
   const [blackList, setBlackList] = useState([]);
   const [index, setIndex] = useState(0);
@@ -39,6 +40,17 @@ export const HomeScreen = ({ navigation }) => {
       );
     }
   }, [index]);
+
+  useEffect(() => {
+    setData(getLents.data)
+  }, [getLents.data])
+
+  const deletData = (i, post_id) => {
+    let item = [...data]
+    item.splice(i, 1)
+    dispatch(DelatePostAction({ post_id: post_id }, staticdata.token))
+    setData(item)
+  }
 
   const renderItem = ({ item, index }) => {
     const givenDate = new Date(item.created_at);
@@ -82,6 +94,7 @@ export const HomeScreen = ({ navigation }) => {
               item.push(e);
               setBlackList(item);
             }}
+            deletData={(e) => deletData(index, e)}
           />
         </View>
       );
@@ -116,7 +129,7 @@ export const HomeScreen = ({ navigation }) => {
           }}
         />
       }
-      data={getLents?.data}
+      data={data}
       enableEmptySections={true}
       // ListEmptyComponent = {()=>(
       //   !getFollowers?.loading && <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>{data?"Не найдено":'У Вас нет подписчиков'}</Text>
