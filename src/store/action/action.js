@@ -1377,6 +1377,7 @@ export const UpdateIkInfoAction = (data, token) => {
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorUpdateIKInfor())
       });
   };

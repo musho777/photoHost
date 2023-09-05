@@ -53,6 +53,7 @@ export const HomeScreen = ({ navigation }) => {
   }
 
   const renderItem = ({ item, index }) => {
+    console.log(item)
     const givenDate = new Date(item.created_at);
     const currentDate = new Date();
     const timeDifference = currentDate - givenDate;
@@ -72,7 +73,7 @@ export const HomeScreen = ({ navigation }) => {
             backfaceVisibility: 'visible',
             backgroundColor: 'transparent',
             paddingHorizontal: 10,
-            marginVertical: 10,
+            marginVertical: 5,
           }}>
           <Post
             userImg={item.user.avatar}
@@ -118,7 +119,7 @@ export const HomeScreen = ({ navigation }) => {
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
-      style={Styles.bg}
+      style={{ backgroundColor: 'rgb(237,238,240)' }}
       ref={flatListRef}
       onScroll={handleScroll}
       refreshControl={

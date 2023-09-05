@@ -44,7 +44,7 @@ export const TabNavigation = () => {
             }
           }
           return {
-            height: 60,
+            height: 50,
             backgroundColor: '#FFF',
             borderTopColor: '#FFF',
             borderTopWidth: 1,

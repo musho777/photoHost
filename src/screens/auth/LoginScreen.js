@@ -5,6 +5,7 @@ import { Button } from '../../ui/Button';
 import { Input } from '../../ui/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClearConfirmPasswordAction, ClearLoginAction, LoginAction } from '../../store/action/action';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LoginScreen = ({ navigation }) => {
   const [login, setLogin] = useState({ error: '', value: '' });
@@ -30,12 +31,24 @@ export const LoginScreen = ({ navigation }) => {
       }),
     );
   };
+  const getLoginPassword = async () => {
+    const login = await AsyncStorage.getItem('login')
+    const password = await AsyncStorage.getItem('password')
+    if (login) {
+      setLogin({ error: '', value: login })
+    }
+    if (password) {
+      setPasswod({ error: '', value: password })
+    }
+
+  }
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(ClearLoginAction())
       dispatch(ClearConfirmPasswordAction())
-      setLogin({ error: '', value: '' })
-      setPasswod({ error: '', value: '' })
+      getLoginPassword()
+      // setLogin({ error: '', value: '' })
+      // setPasswod({ error: '', value: '' })
     });
     return unsubscribe;
   }, [navigation]);
@@ -45,8 +58,13 @@ export const LoginScreen = ({ navigation }) => {
       navigation.navigate('TabNavigation')
       setLogin({ error: '', value: '' })
       setPasswod({ error: '', value: '' })
+      setLoginPassword()
     }
   }, [loginData.status])
+  const setLoginPassword = async () => {
+    await AsyncStorage.setItem('login', login.value)
+    await AsyncStorage.setItem('password', password.value)
+  }
   return (
     <View style={[Styles.authScreen, { marginTop: 80 }]}>
       <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>Вход</Text>

@@ -19,7 +19,6 @@ export const EditProfilScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [discription, setDiscription] = useState('');
   const [calendar, setCalendar] = useState(false)
-  const [location, setLocation] = useState('')
   const [city, setCity] = useState(false)
   const handlePresentModalPress = useCallback(() => { bottomSheetRef.current?.present(); }, []);
 
@@ -46,7 +45,7 @@ export const EditProfilScreen = ({ navigation }) => {
   const [imgFile, setImgFile] = useState();
   const [data, setDate] = useState([
     { type: 'button', value: '', svg: <LocationSvg />, placeholder: 'Город', disabled: true, id: '' },
-    { type: 'button', value: '', svg: <CakeSvg />, placeholder: 'Дата рождения', disabled: true },
+    { type: 'button', value: '', svg: <CakeSvg />, placeholder: 'Дата рождения', disabled: true, value2: '' },
     { type: 'button', value: '', svg: <GenderSvg />, placeholder: 'Пол', disabled: true },
     { type: 'input', value: '', svg: <ProfetionsSvg />, placeholder: 'Профессия/Сфера деятельности', disabled: true },
     { type: 'input', value: '', svg: <WorkLocation />, placeholder: 'Место работы', disabled: true },
@@ -56,9 +55,19 @@ export const EditProfilScreen = ({ navigation }) => {
   ])
 
   const SetData = () => {
+
+
+    const dateComponents = JSON.stringify(user?.allData?.data?.date_of_birth)?.substring(0, 11)?.split('-')
+    const year = dateComponents && dateComponents[0]?.replace(`"`, '')
+    const day = dateComponents && dateComponents[2]
+    const month = dateComponents && dateComponents[1]
+    const newDateFormat = `${day}-${month}-${year}`;
+
+
     let item = [...data]
-    item[0].value = user?.allData?.data?.city_id ? user?.allData?.data?.city_id : ''
+    item[0].value = user?.allData?.data?.city?.name ? user?.allData?.data?.city?.name : ''
     item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
+    item[1].value2 = newDateFormat ? newDateFormat : ''
     item[2].value = user?.allData?.data?.gender ? user?.allData?.data?.gender : ''
     item[3].value = user?.allData?.data?.mgu ? user?.allData?.data?.mgu : ''
     item[4].value = user?.allData?.data?.work_type ? user?.allData?.data?.work_type : ''
@@ -87,14 +96,17 @@ export const EditProfilScreen = ({ navigation }) => {
     });
   };
   const dispatch = useDispatch();
-  const hadnelChange = (i, value, type) => {
+  const hadnelChange = (i, value, type, value2) => {
     let item = [...data]
     if (type == 'city') {
       item[i].value = value.name
       item[0].id = value.id
 
-    } else {
-
+    } else if (i == 1) {
+      item[i].value = value
+      item[i].value2 = value2
+    }
+    else {
       item[i].value = value
     }
     setDate(item)
@@ -142,15 +154,14 @@ export const EditProfilScreen = ({ navigation }) => {
     dispatch(ClearChangeProfile());
     dispatch(ClearChangeAvatar())
   };
-  // useEffect(() => {
-  //   if (changeProfil.status || changeAvatar.status) {
-  //     navigation.navigate('ProfileScreen');
-  //     dispatch(ClearChangeProfile());
-  //     dispatch(ClearChangeAvatar())
-  //   }
-  // }, [changeProfil.status, changeAvatar.status]);
+
   const handleConfirm = (date) => {
-    hadnelChange(1, JSON.stringify(date).substring(1, 11))
+    const dateComponents = JSON.stringify(date).substring(1, 11).split('-')
+    const year = dateComponents[0]
+    const day = dateComponents[2]
+    const month = dateComponents[1]
+    const newDateFormat = `${day}-${month}-${year}`;
+    hadnelChange(1, JSON.stringify(date).substring(1, 11), newDateFormat)
     setCalendar(false)
   };
   return (
@@ -178,13 +189,7 @@ export const EditProfilScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.textWrapper}>
-        <TextInput
-          value={username}
-          onChangeText={e => setUsername(e)}
-          style={Styles.darkMedium14}
-        />
-      </View>
+
       <View style={styles.textWrapper}>
         <TextInput
           value={name}
@@ -194,7 +199,14 @@ export const EditProfilScreen = ({ navigation }) => {
       </View>
       <View style={styles.textWrapper}>
         <TextInput
-          placeholder="Текст под фото"
+          value={username}
+          onChangeText={e => setUsername(e)}
+          style={Styles.darkMedium14}
+        />
+      </View>
+      <View style={styles.textWrapper}>
+        <TextInput
+          placeholder="кратко о себе"
           placeholderTextColor={'#8C9CAB'}
           value={discription}
           onChangeText={e => setDiscription(e)}
@@ -222,7 +234,9 @@ export const EditProfilScreen = ({ navigation }) => {
             return <TouchableOpacity onPress={() => handelPress(elm.placeholder)} key={i} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
               <View style={{ flexDirection: "row", justifyContent: "center" }}>
                 {elm.svg}
-                <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{elm.value ? elm.value : elm.placeholder}</Text>
+                {i == 1 ?
+                  <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{elm.value2 ? elm.value2 : elm.placeholder}</Text> :
+                  <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{elm.value ? elm.value : elm.placeholder}</Text>}
               </View>
               <DownArrow />
             </TouchableOpacity>
