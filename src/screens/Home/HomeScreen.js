@@ -53,9 +53,9 @@ export const HomeScreen = ({ navigation }) => {
   }
 
   const renderItem = ({ item, index }) => {
-    console.log(item)
     const givenDate = new Date(item.created_at);
     const currentDate = new Date();
+    console.log(givenDate)
     const timeDifference = currentDate - givenDate;
     let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
     if (daysAgo < 0) {
@@ -95,6 +95,7 @@ export const HomeScreen = ({ navigation }) => {
               item.push(e);
               setBlackList(item);
             }}
+            data={item.created_at}
             deletData={(e) => deletData(index, e)}
           />
         </View>

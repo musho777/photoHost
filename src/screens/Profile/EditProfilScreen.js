@@ -43,6 +43,7 @@ export const EditProfilScreen = ({ navigation }) => {
   const changeAvatar = useSelector(st => st.changeAvatar);
   const [imgUrl, setImgUrl] = useState('');
   const [imgFile, setImgFile] = useState();
+  const [cityName, setCityName] = useState('')
   const [data, setDate] = useState([
     { type: 'button', value: '', svg: <LocationSvg />, placeholder: 'Город', disabled: true, id: '' },
     { type: 'button', value: '', svg: <CakeSvg />, placeholder: 'Дата рождения', disabled: true, value2: '' },
@@ -65,6 +66,7 @@ export const EditProfilScreen = ({ navigation }) => {
 
 
     let item = [...data]
+    setCityName(user?.allData?.data?.city?.name)
     item[0].value = user?.allData?.data?.city?.name ? user?.allData?.data?.city?.name : ''
     item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
     item[1].value2 = newDateFormat ? newDateFormat : ''
@@ -141,6 +143,7 @@ export const EditProfilScreen = ({ navigation }) => {
     if (imgUrl) {
       dispatch(chnageAvatarAction(imgUrl, staticdata.token));
     }
+    console.log(data[0].id)
     dispatch(UpdateIkInfoAction({
       city_id: data[0].id,
       date_of_birth: data[1].value,
@@ -148,7 +151,7 @@ export const EditProfilScreen = ({ navigation }) => {
       mgu: data[3].value,
       work_type: data[4].value,
       web: data[5].value,
-      phone: data[6].value,
+      phone: data[7].value,
     }, staticdata.token))
     navigation.navigate('ProfileScreen');
     dispatch(ClearChangeProfile());
