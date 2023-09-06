@@ -19,6 +19,7 @@ import { Comments } from './Comment';
 import { LikeList } from './LikeList';
 import { Slider } from './Slider';
 import { useNavigation } from '@react-navigation/native';
+import { SliderModal } from './SliderModal';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -62,6 +63,7 @@ export const Post = ({
   const [follow, setFollow] = useState(isFollow)
   const [day, setDay] = useState('')
   const [openModal, setOpenModal] = useState(false)
+  const [activePhoto, setActivePhoto] = useState(0)
   const dispatch = useDispatch()
   const LikePost = () => {
     if (isLiked) {
@@ -141,7 +143,7 @@ export const Post = ({
               {description}
             </Text>
           </View>
-          <Slider photo={photo} />
+          <Slider photo={photo} activePhoto={(e) => setActivePhoto(e)} />
           <View
             style={[
               { paddingHorizontal: 15, marginBottom: 15 },
@@ -212,6 +214,7 @@ export const Post = ({
           close={() => setComment(false)}
         />
       </Shadow>
+
     </TouchableOpacity>
   );
 };
