@@ -48,6 +48,7 @@ export const TabNavigation = () => {
             backgroundColor: '#FFF',
             borderTopColor: '#FFF',
             borderTopWidth: 1,
+            // paddingHorizontal: 20,
           };
         })(route),
       })}>
@@ -71,7 +72,10 @@ export const TabNavigation = () => {
       <Tab.Screen
         options={() => ({
           headerShown: false,
-          tabBarIcon: ({ focused }) => <AddSvg focused={focused} />,
+          tabBarIcon: ({ focused }) =>
+            <View style={{ marginLeft: 5 }}>
+              <AddSvg focused={focused} />
+            </View>
         })}
         name="AddImg"
         component={AddImg}

@@ -64,7 +64,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
       channelName: 'NewMessage',
       onEvent: event => {
         if (JSON.parse(event.data).message.type == 'new_message') {
-          console.log(JSON.parse(event.data).message.latest_sender == id)
           if (JSON.parse(event.data).message.latest_sender != id && JSON.parse(event.data).message.receiver_id == id) {
             dispatch(MsgCountAction(JSON.parse(event.data)?.message.all_message_count))
           }

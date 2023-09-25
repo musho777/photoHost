@@ -5,24 +5,18 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckMarkUserSvg, NotLineSvg } from '../assets/svg/Svgs';
-import { Comment, Heart, MenuSvg, Share, ViewSvg } from '../assets/svg/TabBarSvg';
+import { Comment, Heart, MenuSvg, ViewSvg } from '../assets/svg/TabBarSvg';
 import { AddBlackListAction, AddDeleteFollowAction, AddInBookAction, LikePostAction } from '../store/action/action';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
-import { BootomModal } from './BootomSheet';
 import { Comments } from './Comment';
 import { LikeList } from './LikeList';
 import { Slider } from './Slider';
 import { useNavigation } from '@react-navigation/native';
-import { SliderModal } from './SliderModal';
-
-const windowWidth = Dimensions.get('window').width;
-
 
 
 export const Post = ({
@@ -52,7 +46,6 @@ export const Post = ({
   const bottomSheetRef = useRef(null);
   const likeRef = useRef(null)
   const snapPointsLike = useMemo(() => ['50%'], []);
-  const snapPoints = useMemo(() => [user.data.id !== userId ? '25%' : '15%'], []);
   const handlePresentModalPress = useCallback(() => { bottomSheetRef.current?.present(); }, []);
   const handlePresentModalPressLike = useCallback(() => {
     likeRef.current?.present();
@@ -111,7 +104,7 @@ export const Post = ({
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => setOpenModal(false)} >
       <Shadow
-        style={{ width: '100%', borderRadius: 10, backgroundColor: '#fff', position: 'relative' }}
+        style={{ width: '100%', borderRadius: 20, backgroundColor: '#fff', position: 'relative' }}
         startColor={'#00000010'}>
         <View style={styles.block}>
           <View style={[Styles.flexSpaceBetween, { padding: 15, position: 'relative' }]}>
@@ -134,10 +127,62 @@ export const Post = ({
               style={{ marginTop: -5, paddingLeft: 15, width: 30, height: 20, }}>
               <MenuSvg />
             </TouchableOpacity>
-            {(user.data.id == userId && openModal) && <TouchableOpacity style={styles.delate} onPress={() => deletData(id)}>
-              <Text style={Styles.darkRegular14}> Удалить пост </Text>
-            </TouchableOpacity>}
+            {(user.data.id == userId && openModal) &&
+              <View style={styles.infoBlock}>
+
+                <TouchableOpacity
+                  style={{ marginVertical: 10 }}
+                  onPress={() => {
+                    setOpenModal(false)
+                    deletData(id)
+                  }}>
+                  <Text style={Styles.darkRegular14}> Удалить пост </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ marginVertical: 10 }}
+                  onPress={() => {
+                    setOpenModal(false)
+                    navigation.navigate('EditPostScreen', {
+                      description: description,
+                      id: id,
+                    });
+                  }}>
+                  <Text style={Styles.darkRegular14}>Редактировать</Text>
+                </TouchableOpacity>
+              </View>}
+
+
+
+            {(user.data.id != userId && openModal) &&
+              <View style={styles.infoBlock}>
+                <TouchableOpacity style={{ marginVertical: 20 }} onPress={() => {
+                  setOpenModal(false)
+                  addToBook()
+                }}>
+                  <Text style={Styles.darkRegular14}>{book ? 'Удалить из закладок' : 'В закладки'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setOpenModal(false)
+                    setFollow(!follow)
+                    dispatch(AddDeleteFollowAction({ user_id: userId }, staticdata.token))
+                  }}
+                  style={{ marginBottom: 20 }} >
+                  <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'Удалить из подписок'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => {
+                  setOpenModal(false)
+                  addToBlackList()
+                }}>
+                  <Text style={Styles.darkRegular14}>В чёрный список</Text>
+                </TouchableOpacity>
+              </View>
+            }
           </View>
+
+
+
+
 
           <View style={{ paddingHorizontal: 15 }}>
             <Text style={Styles.darkSemiBold12}>
@@ -180,31 +225,6 @@ export const Post = ({
             </View>
           </View>
         </View>
-        <View style={{ position: 'absolute' }}>
-          {user.data.id != userId && <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
-            <View style={{ paddingHorizontal: 20 }}>
-              {user.data.id == userId && <TouchableOpacity style={{ marginBottom: 20, marginTop: 20 }} onPress={() => deletData(id)}>
-                <Text style={Styles.darkRegular14}> Удалить пост </Text>
-              </TouchableOpacity>}
-              {user.data.id !== userId && <TouchableOpacity style={{ marginBottom: 20, marginTop: 20 }} onPress={() => addToBook()}>
-                <Text style={Styles.darkRegular14}>{book ? 'Удалить из закладок' : 'В закладки'}</Text>
-              </TouchableOpacity>}
-              {user.data.id !== userId && <TouchableOpacity
-                onPress={() => {
-                  setFollow(!follow)
-                  dispatch(AddDeleteFollowAction({ user_id: userId }, staticdata.token))
-                }}
-
-                style={{ marginBottom: 20 }}>
-                <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'Удалить из подписок'}</Text>
-              </TouchableOpacity>}
-              {user.data.id !== userId && <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => addToBlackList()}>
-                <Text style={Styles.darkRegular14}>В чёрный список</Text>
-              </TouchableOpacity>}
-            </View>
-          </BootomModal>}
-        </View>
-
         <LikeList close={() => CloseLike()} count={likedCount} openLike={openLike} token={staticdata.token} id={id} ref={likeRef} snapPoints={snapPointsLike} />
         <Comments
           userImg={userImg}
@@ -219,13 +239,13 @@ export const Post = ({
     </TouchableOpacity>
   );
 };
-// AddInBook
+
 const styles = StyleSheet.create({
   block: {
     shadowColor: '#7E9DB5',
     borderColor: AppColors.White_Color,
     borderRadius: 10,
-    position: 'relative'
+    position: 'relative',
   },
   userImg: {
     width: 35,
@@ -233,11 +253,17 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 50,
   },
-  img: {
-    height: 300,
-    width: windowWidth,
+  infoBlock: {
+    position: 'absolute',
+    right: 20,
+    top: 50,
+    elevation: 5,
+    backgroundColor: 'white',
+    padding: 5,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    zIndex: 1
   },
-  pagination: {},
   delate: {
     position: 'absolute',
     right: 20,

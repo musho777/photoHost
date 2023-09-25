@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CommentLikeSvg } from '../assets/svg/Svgs';
-import { LikeCommentAction } from '../store/action/action';
+import { DeletComment, LikeCommentAction } from '../store/action/action';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 
@@ -18,11 +18,13 @@ export const CommentItem = ({
   ownerName,
   userImg,
   onPressAnsswer,
-  daysAgo
+  daysAgo,
+  onDeletComment
 }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState();
   const [likeCount, setLikeCount] = useState();
+  const myuser = useSelector((st) => st.userData)
   useEffect(() => {
     setLiked(isLiked);
   }, [isLiked]);
@@ -60,33 +62,40 @@ export const CommentItem = ({
               onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
               <Text>Ответить</Text>
             </TouchableOpacity>
+            {myuser.allData.data.id == user?.id && <TouchableOpacity
+              style={{ marginLeft: 10 }}
+              onPress={() => onDeletComment(id)}>
+              <Text>удалить</Text>
+            </TouchableOpacity>}
           </View>
         )}
       </View>
-      {!owner && (
-        <View style={[styles.like]}>
-          <TouchableOpacity
-            onPress={() => {
-              if (liked) {
-                setLikeCount(likeCount - 1);
-                setLiked(false);
-              } else {
-                setLikeCount(likeCount + 1);
-                setLiked(true);
-              }
-              dispatch(LikeCommentAction({ comment_id: id }, token));
-            }}>
-            <CommentLikeSvg liked={liked} />
-          </TouchableOpacity>
-          <Text
-            style={[
-              [Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5 }],
-            ]}>
-            {likeCount}
-          </Text>
-        </View>
-      )}
-    </View>
+      {
+        !owner && (
+          <View style={[styles.like]}>
+            <TouchableOpacity
+              onPress={() => {
+                if (liked) {
+                  setLikeCount(likeCount - 1);
+                  setLiked(false);
+                } else {
+                  setLikeCount(likeCount + 1);
+                  setLiked(true);
+                }
+                dispatch(LikeCommentAction({ comment_id: id }, token));
+              }}>
+              <CommentLikeSvg liked={liked} />
+            </TouchableOpacity>
+            <Text
+              style={[
+                [Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5 }],
+              ]}>
+              {likeCount}
+            </Text>
+          </View>
+        )
+      }
+    </View >
   );
 };
 const styles = StyleSheet.create({

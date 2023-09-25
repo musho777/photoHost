@@ -13,7 +13,6 @@ export const LoginScreen = ({ navigation }) => {
   const [send, setSend] = useState(true);
   const dispatch = useDispatch();
   const loginData = useSelector(st => st.login);
-  const staticdata = useSelector(st => st.static);
   useEffect(() => {
     if (login.value && password.value) {
       setSend(false);
@@ -47,8 +46,6 @@ export const LoginScreen = ({ navigation }) => {
       dispatch(ClearLoginAction())
       dispatch(ClearConfirmPasswordAction())
       getLoginPassword()
-      // setLogin({ error: '', value: '' })
-      // setPasswod({ error: '', value: '' })
     });
     return unsubscribe;
   }, [navigation]);
@@ -69,7 +66,7 @@ export const LoginScreen = ({ navigation }) => {
     <View style={[Styles.authScreen, { marginTop: 80 }]}>
       <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>Вход</Text>
       <Input
-        placeholder={'Введите Емайл'}
+        placeholder={'Введите Е-майл'}
         error={login.error}
         value={login.value}
         onChange={e => setLogin({ ...login, value: e })}

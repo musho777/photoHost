@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
-import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 import { CommentItem } from './CommentItem';
 import CommentComponent from './CommetnComponent';
@@ -20,7 +19,8 @@ export const CommentBlock = ({
   onPressAnsswer,
   replay,
   replay_count,
-  daysAgo
+  daysAgo,
+  deletComment
 }) => {
   const [showAnswrs, setShowAnswers] = useState(false);
   const staticdata = useSelector(st => st.static);
@@ -39,6 +39,7 @@ export const CommentBlock = ({
         ownerName={ownerName}
         userImg={userImg}
         onPressAnsswer={onPressAnsswer}
+        onDeletComment={deletComment}
         replay={replay}
         daysAgo={daysAgo}
       />
@@ -56,32 +57,3 @@ export const CommentBlock = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  imgBlock: {
-    borderRadius: 60,
-    height: 55,
-    width: 55,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: AppColors.Mustard_Color,
-  },
-  img: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-  },
-  answerImg: {
-    width: 40,
-    height: 40,
-    borderRadius: 50,
-  },
-  like: {
-    position: 'absolute',
-    right: 0,
-    top: -7,
-    alignItems: 'centerd',
-    justifyContent: 'center',
-  },
-});

@@ -46,7 +46,6 @@ export const AddImg = ({ navigation }) => {
       }).then(image => {
         setUri(image);
       }).catch((error) => {
-        console.log(error)
       })
 
     }
@@ -131,7 +130,7 @@ export const AddImg = ({ navigation }) => {
               <TouchableOpacity
                 onPress={() => delateFoto(i)}
                 style={styles.close}>
-                <Text style={{ color: 'red', fontSize: 20 }}>x</Text>
+                <Text style={{ color: 'red', fontSize: 17, marginTop: -4 }}>x</Text>
               </TouchableOpacity>
             </View>
           );
@@ -182,9 +181,16 @@ const styles = StyleSheet.create({
   },
   close: {
     position: 'absolute',
-    color: 'red',
-    top: -15,
-    right: 0,
+    top: -10,
+    right: -10,
+    borderWidth: 1,
+    borderColor: 'red',
+    width: 20,
+    height: 20,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   addImgButton: {
     width: '22%',

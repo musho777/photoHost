@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -21,8 +22,9 @@ export const HomeScreen = ({ navigation }) => {
   }, [staticdata.token]);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-      if (staticdata.token) {
-        dispatch(GetLentsAction(staticdata.token));
+      let token = await AsyncStorage.getItem('token')
+      if (token) {
+        dispatch(GetLentsAction(token));
       }
     });
     return unsubscribe;
@@ -71,8 +73,8 @@ export const HomeScreen = ({ navigation }) => {
           style={{
             backfaceVisibility: 'visible',
             backgroundColor: 'transparent',
-            paddingHorizontal: 10,
-            marginVertical: 5,
+            // paddingHorizontal: 10,
+            marginTop: 5
           }}>
           <Post
             userImg={item.user.avatar}
@@ -132,9 +134,6 @@ export const HomeScreen = ({ navigation }) => {
       }
       data={data}
       enableEmptySections={true}
-      // ListEmptyComponent = {()=>(
-      //   !getFollowers?.loading && <Text style = {[Styles.darkMedium16,{marginTop:40,textAlign:'center'}]}>{data?"Не найдено":'У Вас нет подписчиков'}</Text>
-      // )}
       renderItem={renderItem}
       onEndReached={() => {
         if (getLents?.nextPage) {

@@ -51,14 +51,14 @@ export const RegisterScreen = ({ navigation }) => {
     else {
       setPassword({ ...password, error: '' })
     }
-    if (confirmPassword.value !== password.value) {
-      setConfirmPassword({ ...confirmPassword, error: 'Пароли не совпадают' })
-      item = false
+    // if (confirmPassword.value !== password.value) {
+    //   setConfirmPassword({ ...confirmPassword, error: 'Пароли не совпадают' })
+    //   item = false
 
-    }
-    else {
-      setConfirmPassword({ ...confirmPassword, error: '' })
-    }
+    // }
+    // else {
+    //   setConfirmPassword({ ...confirmPassword, error: '' })
+    // }
     if (!ValidateEmail(email.value)) {
       setEmail({ ...email, error: 'Введите корректный адрес эл. почты' })
       item = false
@@ -122,13 +122,13 @@ export const RegisterScreen = ({ navigation }) => {
           onChange={(e) => setPassword({ ...password, value: e })}
           pass
         />
-        <Input
+        {/* <Input
           placeholder={'Повторите пароль'}
           error={confirmPassword.error}
           value={confirmPassword.value}
           onChange={(e) => setConfirmPassword({ ...confirmPassword, value: e })}
           pass
-        />
+        /> */}
         <Input
           placeholder={'Укажите почту'}
           error={email.error || register.error?.email}

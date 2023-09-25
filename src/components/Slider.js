@@ -13,12 +13,8 @@ import { SliderModal } from './SliderModal';
 const windowWidth = Dimensions.get('window').width;
 export const Slider = ({ photo, single, activePhoto }) => {
   const [active, setActive] = useState(0);
-  const [isZoomVisible, setZoomVisible] = useState(false);
   const [openSlider, setOpenSlider] = useState(false)
 
-  const closeZoom = () => {
-    setZoomVisible(false);
-  };
   return (
     <View>
       <FlatList
@@ -44,7 +40,6 @@ export const Slider = ({ photo, single, activePhoto }) => {
                 style={[
                   { marginVertical: 10, width: '100%', height: '100%' },
                 ]}
-                // source={require('../assets/img/1.png')}
                 source={{ uri: `https://chamba.justcode.am/uploads/${item.photo}` }}
                 resizeMode={'cover'}
               />
@@ -59,7 +54,7 @@ export const Slider = ({ photo, single, activePhoto }) => {
           justifyContent: 'center',
           marginVertical: 10,
         }}>
-        {photo?.map((elm, i) => (
+        {photo.length > 1 && photo?.map((elm, i) => (
           <View
             key={i}
             style={[
@@ -79,7 +74,7 @@ export const Slider = ({ photo, single, activePhoto }) => {
 const styles = StyleSheet.create({
   img: {
     height: 410,
-    width: windowWidth - 20,
+    width: windowWidth,
     flexShrink: 0,
   },
   pagination: {
