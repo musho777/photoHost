@@ -14,6 +14,7 @@ import {
   AddCommentAction,
   AddDeleteFollowAction,
   AddInBookAction,
+  DelatePostAction,
   GelPostCommentsAction,
   GetSinglPostAction,
   LikePostAction,
@@ -50,7 +51,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
     bottomSheetRef.current?.present();
   }, []);
   const snapPoints = useMemo(
-    () => [user?.data?.id != singlData?.data?.user?.id ? '30%' : '20%'],
+    () => [user?.data?.id != singlData?.data?.user?.id ? '30%' : '13%'],
     [],
   );
   const LikePost = () => {
@@ -245,13 +246,13 @@ export const SinglPageScreen = ({ route, navigation }) => {
         <View style={{ position: 'absolute' }}>
           <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
             <View style={{ paddingHorizontal: 20 }}>
-              <TouchableOpacity
+              {user?.data?.id != singlData?.data?.user?.id && <TouchableOpacity
                 style={{ marginBottom: 20, marginTop: 20 }}
                 onPress={() => addToBook()}>
                 <Text style={Styles.darkRegular14}>
                   {book ? 'Удалить из закладок' : 'В закладки'}
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity>}
               {user?.data?.id != singlData?.data?.user?.id && (
                 <TouchableOpacity
                   style={{ marginBottom: 20 }}
@@ -282,6 +283,17 @@ export const SinglPageScreen = ({ route, navigation }) => {
                     });
                   }}>
                   <Text style={Styles.darkRegular14}>Редактировать</Text>
+                </TouchableOpacity>
+              )}
+              {user?.data?.id == singlData?.data?.user?.id && (
+                <TouchableOpacity
+                  style={{ marginBottom: 20 }}
+                  onPress={() => {
+                    bottomSheetRef.current?.close();
+                    dispatch(DelatePostAction({ post_id: singlData.data.id }, staticdata.token))
+                    navigation.goBack()
+                  }}>
+                  <Text style={Styles.darkRegular14}>Удалить пост</Text>
                 </TouchableOpacity>
               )}
             </View>

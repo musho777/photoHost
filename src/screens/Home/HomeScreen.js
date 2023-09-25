@@ -55,7 +55,6 @@ export const HomeScreen = ({ navigation }) => {
   const renderItem = ({ item, index }) => {
     const givenDate = new Date(item.created_at);
     const currentDate = new Date();
-    console.log(givenDate)
     const timeDifference = currentDate - givenDate;
     let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
     if (daysAgo < 0) {

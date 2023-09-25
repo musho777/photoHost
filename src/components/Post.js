@@ -64,6 +64,7 @@ export const Post = ({
   const [day, setDay] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [activePhoto, setActivePhoto] = useState(0)
+  const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const dispatch = useDispatch()
   const LikePost = () => {
     if (isLiked) {
@@ -102,9 +103,9 @@ export const Post = ({
     const currentDate = new Date(data);
     const dayOfMonth = currentDate.getDate();
     const hour = currentDate.getHours();
-    const monthString = currentDate.toLocaleString('ru', { month: 'long' })
     const minute = currentDate.getMinutes();
-    setDay(`${dayOfMonth} ${monthString} в ${hour}:${minute}`)
+    const Mounth = currentDate.getMonth()
+    setDay(`${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`)
   }, [data])
 
   return (

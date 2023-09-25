@@ -80,9 +80,6 @@ export default App = () => {
           animated={true}
           backgroundColor="#fff"
           barStyle={'dark-content'}
-        // barStyle={statusBarStyle}
-        // showHideTransition={statusBarTransition}
-        // hidden={hidden}
         />
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Navigation initialRouteName={initialRouteName} token={token} id={id} />

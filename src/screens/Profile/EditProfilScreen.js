@@ -143,7 +143,6 @@ export const EditProfilScreen = ({ navigation }) => {
     if (imgUrl) {
       dispatch(chnageAvatarAction(imgUrl, staticdata.token));
     }
-    console.log(data[0].id)
     dispatch(UpdateIkInfoAction({
       city_id: data[0].id,
       date_of_birth: data[1].value,

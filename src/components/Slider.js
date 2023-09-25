@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { AppColors } from '../styles/AppColors';
-import ImageZoom from 'react-native-image-pan-zoom';
-import ZoomableImage from './ZoomImg';
 import { SliderModal } from './SliderModal';
 
 const windowWidth = Dimensions.get('window').width;
@@ -50,11 +48,6 @@ export const Slider = ({ photo, single, activePhoto }) => {
                 source={{ uri: `https://chamba.justcode.am/uploads/${item.photo}` }}
                 resizeMode={'cover'}
               />
-              <ZoomableImage
-                imageUrl={`https://chamba.justcode.am/uploads/${item.photo}`}
-                isVisible={isZoomVisible}
-                onClose={closeZoom}
-              />
             </TouchableOpacity>
           );
         }}
@@ -85,7 +78,7 @@ export const Slider = ({ photo, single, activePhoto }) => {
 
 const styles = StyleSheet.create({
   img: {
-    height: 300,
+    height: 410,
     width: windowWidth - 20,
     flexShrink: 0,
   },
