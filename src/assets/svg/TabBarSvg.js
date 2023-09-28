@@ -3,8 +3,8 @@ import Svg, { Circle, Mask, Path, Rect } from "react-native-svg"
 export const HomeSvg = ({ focused }) => {
   if (focused) {
     return <Svg
-      width={41}
-      height={37}
+      width={33}
+      height={33}
       viewBox="0 0 41 37"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -29,8 +29,8 @@ export const HomeSvg = ({ focused }) => {
   }
   else {
     return <Svg
-      width={40}
-      height={37}
+      width={30}
+      height={30}
       viewBox="0 0 40 37"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -58,8 +58,8 @@ export const HomeSvg = ({ focused }) => {
 export const SearchSvg = ({ focused }) => {
   if (!focused) {
     return <Svg
-      width={31}
-      height={37}
+      width={30}
+      height={30}
       viewBox="0 0 31 37"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -77,8 +77,8 @@ export const SearchSvg = ({ focused }) => {
   }
   else {
     return <Svg
-      width={32}
-      height={37}
+      width={30}
+      height={30}
       viewBox="0 0 32 37"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -97,8 +97,8 @@ export const SearchSvg = ({ focused }) => {
 }
 export const AddSvg = () => {
   return <Svg
-    width={38}
-    height={38}
+    width={28}
+    height={28}
     viewBox="0 0 38 38"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +125,7 @@ export const AddSvg = () => {
 export const ChatSvg = ({ focused }) => {
   if (!focused) {
     return <Svg
-      width={25}
+      width={23}
       height={37}
       viewBox="0 0 25 37"
       fill="none"
@@ -160,7 +160,7 @@ export const ChatSvg = ({ focused }) => {
   }
   else {
     return <Svg
-      width={25}
+      width={23}
       height={37}
       viewBox="0 0 25 37"
       fill="none"
@@ -198,7 +198,7 @@ export const ChatSvg = ({ focused }) => {
 export const UserSvg = ({ focused }) => {
   if (!focused)
     return <Svg
-      width={46}
+      width={36}
       height={38}
       viewBox="0 0 46 38"
       fill="none"
@@ -223,7 +223,7 @@ export const UserSvg = ({ focused }) => {
     </Svg>
   else {
     return <Svg
-      width={46}
+      width={36}
       height={38}
       viewBox="0 0 46 38"
       fill="none"
@@ -251,7 +251,7 @@ export const UserSvg = ({ focused }) => {
 export const Notification = () => {
   return <Svg
     width={23}
-    height={26}
+    height={22}
     viewBox="0 0 23 26"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -280,8 +280,8 @@ export const MenuSvg = () => {
 
 export const Heart = () => {
   return <Svg
-    width={26}
-    height={23}
+    width={20}
+    height={20}
     viewBox="0 0 26 23"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -297,8 +297,8 @@ export const Heart = () => {
 
 export const Comment = () => {
   return <Svg
-    width={24}
-    height={24}
+    width={20}
+    height={20}
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

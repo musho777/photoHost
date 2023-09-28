@@ -129,15 +129,6 @@ export const Post = ({
             </TouchableOpacity>
             {(user.data.id == userId && openModal) &&
               <View style={styles.infoBlock}>
-
-                <TouchableOpacity
-                  style={{ marginVertical: 10 }}
-                  onPress={() => {
-                    setOpenModal(false)
-                    deletData(id)
-                  }}>
-                  <Text style={Styles.darkRegular14}> Удалить пост </Text>
-                </TouchableOpacity>
                 <TouchableOpacity
                   style={{ marginVertical: 10 }}
                   onPress={() => {
@@ -148,6 +139,14 @@ export const Post = ({
                     });
                   }}>
                   <Text style={Styles.darkRegular14}>Редактировать</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ marginVertical: 10 }}
+                  onPress={() => {
+                    setOpenModal(false)
+                    deletData(id)
+                  }}>
+                  <Text style={Styles.darkRegular14}> Удалить пост </Text>
                 </TouchableOpacity>
               </View>}
 
@@ -168,7 +167,7 @@ export const Post = ({
                     dispatch(AddDeleteFollowAction({ user_id: userId }, staticdata.token))
                   }}
                   style={{ marginBottom: 20 }} >
-                  <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'Удалить из подписок'}</Text>
+                  <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'отписаться'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => {
                   setOpenModal(false)

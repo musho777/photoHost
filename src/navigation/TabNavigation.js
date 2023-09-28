@@ -44,11 +44,10 @@ export const TabNavigation = () => {
             }
           }
           return {
-            height: 50,
+            height: 45,
             backgroundColor: '#FFF',
             borderTopColor: '#FFF',
             borderTopWidth: 1,
-            // paddingHorizontal: 20,
           };
         })(route),
       })}>
@@ -73,7 +72,7 @@ export const TabNavigation = () => {
         options={() => ({
           headerShown: false,
           tabBarIcon: ({ focused }) =>
-            <View style={{ marginLeft: 5 }}>
+            <View style={{ marginLeft: 8 }}>
               <AddSvg focused={focused} />
             </View>
         })}

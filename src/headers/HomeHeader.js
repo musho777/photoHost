@@ -6,7 +6,7 @@ import { Styles } from '../styles/Styles'
 export const HomeHeader = ({ navigation }) => {
 
     const user = useSelector(st => st.userData);
-    return <SafeAreaView style={[Styles.flexSpaceBetween, { paddingHorizontal: 10, paddingVertical: 20 }]}>
+    return <SafeAreaView style={[Styles.flexSpaceBetween, { paddingHorizontal: 10, paddingVertical: 10 }]}>
         <Text style={Styles.homeTitle}>Chamba</Text>
         <TouchableOpacity onPress={() => navigation.navigate('NotificationScreen')}>
             <Notification />
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         height: 15,
         fontSize: 10,
         position: 'absolute',
-        right: 0,
+        right: -7,
         top: -5,
         color: 'white'
     }

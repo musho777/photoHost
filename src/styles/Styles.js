@@ -150,7 +150,7 @@ export const Styles = StyleSheet.create({
     },
     homeTitle: {
         fontFamily: 'RussoOne-Regular',
-        fontSize: 18,
+        fontSize: 15,
         color: AppColors.Charcoal_Color,
     },
     CharcoalMedium14: {

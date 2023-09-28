@@ -198,7 +198,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
               flexDirection: 'row',
             }}>
             <Image
-              style={{ width: 40, height: 40, borderRadius: 50, marginRight: 20 }}
+              style={{ width: 40, height: 40, borderRadius: 50, marginRight: 10 }}
               source={{
                 uri: `https://chamba.justcode.am/uploads/${user.data.avatar}`,
               }}

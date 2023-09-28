@@ -262,7 +262,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
                     bottomSheetRef.current?.close();
                   }}>
 
-                  <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'Удалить из подписок'}</Text>
+                  <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'отписаться'}</Text>
                 </TouchableOpacity>
               )}
               {user?.data?.id != singlData?.data?.user?.id && (
