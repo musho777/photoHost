@@ -8,9 +8,7 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-            }}>
+            onRequestClose={() => { }}>
             <View activeOpacity={1} style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <TouchableOpacity onPress={() => close()} style={{ position: 'absolute', zIndex: 2, right: 15, borderRadius: 50, width: 20, height: 20, backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>

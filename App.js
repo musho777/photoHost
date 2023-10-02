@@ -44,8 +44,6 @@ export default App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState('')
   const [id, setID] = useState('')
-
-
   async function getData() {
     const token = await AsyncStorage.getItem('token')
     const id = await AsyncStorage.getItem('id');

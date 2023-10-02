@@ -48,10 +48,10 @@ export const CommentItem = ({
         />
       </View>
       <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>
-        <Text style={Styles.eslipesMedium13}>
-          <Text style={Styles.darkMedium13}>
-            {owner ? ownerName : user?.name}:{' '}
-          </Text>
+        <Text style={Styles.darkMedium13}>
+          {owner ? ownerName : user?.name}
+        </Text>
+        <Text style={[Styles.darkSemiBold12, { marginTop: 5 }]}>
           {text}
         </Text>
         <View style={Styles.flexAlignItems}></View>

@@ -49,13 +49,10 @@ export const AddImg = ({ navigation }) => {
       })
 
     }
-
-
   }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-
       Camera()
     });
     return unsubscribe;
@@ -130,7 +127,7 @@ export const AddImg = ({ navigation }) => {
               <TouchableOpacity
                 onPress={() => delateFoto(i)}
                 style={styles.close}>
-                <Text style={{ color: 'red', fontSize: 17, marginTop: -4 }}>x</Text>
+                <Text style={{ color: 'white', fontSize: 14, marginTop: -4 }}>x</Text>
               </TouchableOpacity>
             </View>
           );
@@ -183,14 +180,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -10,
     right: -10,
-    borderWidth: 1,
-    borderColor: 'red',
     width: 20,
     height: 20,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    backgroundColor: '#cccccc'
   },
   addImgButton: {
     width: '22%',

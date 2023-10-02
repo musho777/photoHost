@@ -130,7 +130,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
         <View style={{ height: '86%', justifyContent: 'space-between' }}>
 
           <View style={{ paddingHorizontal: 10, height: '90%' }}>
-            <View
+            {/* <View
               style={{
                 borderBottomWidth: 1,
                 borderColor: AppColors.PattenseBlue_Color,
@@ -142,7 +142,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
                 owner={true}
                 userImg={userImg}
               />
-            </View>
+            </View> */}
             <View style={{ height: '70%' }}>
               <FlatList
                 ref={flatListRef}
@@ -211,7 +211,7 @@ export const Comments = ({ visible, close, parentId, userImg, userName, descript
               value={sendComment}
               onChange={e => setSendCommet(e)}
               width={'78%'}
-              placeholder="Введите текст"
+              placeholder=" оставьте комментарий"
             />
           </View>
         </View>

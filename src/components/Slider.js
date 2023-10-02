@@ -14,7 +14,6 @@ const windowWidth = Dimensions.get('window').width;
 export const Slider = ({ photo, single, activePhoto }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false)
-
   return (
     <View>
       <FlatList
@@ -32,13 +31,14 @@ export const Slider = ({ photo, single, activePhoto }) => {
           activePhoto(index)
         }}
         renderItem={({ item, index }) => {
+          let aspectRatio = item.width / item.height
           return (
             <TouchableOpacity
               onPress={() => setOpenSlider(true)}
               style={!single ? styles.img : { ...styles.img, width: windowWidth, height: 350 }}>
               <Image
                 style={[
-                  { marginVertical: 10, width: '100%', height: '100%' },
+                  { marginVertical: 10, width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 },
                 ]}
                 source={{ uri: `https://chamba.justcode.am/uploads/${item.photo}` }}
                 resizeMode={'cover'}
@@ -73,7 +73,7 @@ export const Slider = ({ photo, single, activePhoto }) => {
 
 const styles = StyleSheet.create({
   img: {
-    height: 410,
+    // height: 500,
     width: windowWidth,
     flexShrink: 0,
   },

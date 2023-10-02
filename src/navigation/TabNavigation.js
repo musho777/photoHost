@@ -72,7 +72,7 @@ export const TabNavigation = () => {
         options={() => ({
           headerShown: false,
           tabBarIcon: ({ focused }) =>
-            <View style={{ marginLeft: 8 }}>
+            <View style={{ marginLeft: -2 }}>
               <AddSvg focused={focused} />
             </View>
         })}

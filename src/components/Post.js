@@ -146,7 +146,7 @@ export const Post = ({
                     setOpenModal(false)
                     deletData(id)
                   }}>
-                  <Text style={Styles.darkRegular14}> Удалить пост </Text>
+                  <Text style={Styles.darkRegular14}>Удалить пост </Text>
                 </TouchableOpacity>
               </View>}
 
@@ -178,10 +178,6 @@ export const Post = ({
               </View>
             }
           </View>
-
-
-
-
 
           <View style={{ paddingHorizontal: 15 }}>
             <Text style={Styles.darkSemiBold12}>
