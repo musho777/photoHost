@@ -75,11 +75,11 @@ export const SearchProfil = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}
           onScroll={({ nativeEvent }) => {
             if (isCloseToBottom(nativeEvent)) {
+              let pages = page
+              pages = page + 1
+              setPage(pages)
               if (getPosts.nextPage) {
-                let pages = page
-                pages = page + 1
-                dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, page));
-                setPage(page)
+                dispatch(GetPostsAction({ user_id: route.params.id, }, staticdata.token, page));
               }
               // enableSomeButton();
             }
@@ -152,7 +152,6 @@ export const SearchProfil = ({ navigation, route }) => {
             <Text onPress={() => handelChange()} style={[Styles.balihaiMedium14,
             styles.textWrapper,
             activeCard == 1 && { borderColor: '#000', color: '#000' }
-
             ]}>Информация</Text>
           </View>
           <SwiperFlatList
@@ -161,10 +160,9 @@ export const SearchProfil = ({ navigation, route }) => {
             onChangeIndex={(index) => { setActiveCard(index.index) }}
           >
             {data.map((elm, i) => {
-
               return <View key={i} style={{ width: width - 30.1 }}>
                 {elm === 'albom' ?
-                  <Albom loading={getPosts.loading} data={getPosts.data} /> :
+                  <Albom loading={getPosts.loading && page == 1} data={getPosts.data} /> :
                   <InfoBlock user={singlPage.data} />
                 }
               </View>
