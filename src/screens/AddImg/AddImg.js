@@ -7,7 +7,6 @@ import {
   Text,
   TouchableOpacity,
   Platform,
-  Linking,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,9 +39,9 @@ export const AddImg = ({ navigation }) => {
     else {
       ImagePicker.openPicker({
         width: 300,
-        height: 400,
+        height: 300,
         cropping: true,
-        multiple: true,
+        // multiple: true,
       }).then(image => {
         setUri(image);
       }).catch((error) => {
@@ -84,9 +83,9 @@ export const AddImg = ({ navigation }) => {
   const addPhoto = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 400,
+      height: 300,
       cropping: true,
-      multiple: true,
+      // multiple: true,
       mediaType: 'photo'
     }).then(image => {
       let item = [...uri]
@@ -185,7 +184,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
     backgroundColor: '#cccccc'
   },
   addImgButton: {

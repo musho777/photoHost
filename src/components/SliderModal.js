@@ -11,8 +11,8 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
             onRequestClose={() => { }}>
             <View activeOpacity={1} style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <TouchableOpacity onPress={() => close()} style={{ position: 'absolute', zIndex: 2, right: 15, borderRadius: 50, width: 20, height: 20, backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: "red", fontSize: 15, marginTop: -3 }}>x</Text>
+                    <TouchableOpacity onPress={() => close()} style={styles.close}>
+                        <Text style={{ color: "white", fontSize: 15, marginTop: -3 }}>x</Text>
                     </TouchableOpacity>
                     <ModalSliderImg photo={photo} activePhoto={activePhoto} />
                 </View>
@@ -41,4 +41,16 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
+    close: {
+        position: 'absolute',
+        zIndex: 2,
+        right: 15,
+        borderRadius: 50,
+        width: 20,
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#cccccc'
+
+    }
 });
