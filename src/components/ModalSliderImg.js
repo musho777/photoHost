@@ -3,19 +3,13 @@ import {
     View,
     StyleSheet,
     Image,
-    FlatList,
     Dimensions,
 } from 'react-native';
-import { AppColors } from '../styles/AppColors';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 
 const windowWidth = Dimensions.get('window').width;
 export const ModalSliderImg = ({ photo, single, activePhoto }) => {
     const [active, setActive] = useState(0);
-    const [isZoomVisible, setZoomVisible] = useState(false);
-    const closeZoom = () => {
-        setZoomVisible(false);
-    };
     return (
         <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }}>
             <SwiperFlatList
@@ -32,7 +26,7 @@ export const ModalSliderImg = ({ photo, single, activePhoto }) => {
                         <View style={!single ? styles.img : { ...styles.img, width: windowWidth, height: 350 }}>
                             <Image
                                 style={[
-                                    { marginVertical: 10, width: (windowWidth - 40), height: '100%', borderRadius: 20 },
+                                    { marginVertical: 10, width: windowWidth, height: '100%', borderRadius: 0 },
                                 ]}
                                 // source={require('../assets/img/1.png')}
                                 source={{ uri: `https://chamba.justcode.am/uploads/${item.photo}` }}
@@ -68,8 +62,8 @@ export const ModalSliderImg = ({ photo, single, activePhoto }) => {
 
 const styles = StyleSheet.create({
     img: {
-        height: 500,
-        width: windowWidth - 20,
+        height: 520,
+        width: windowWidth,
         flexShrink: 0,
         justifyContent: 'center',
         alignItems: 'center',

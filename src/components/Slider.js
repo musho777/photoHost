@@ -31,7 +31,17 @@ export const Slider = ({ photo, single, activePhoto }) => {
           activePhoto(index)
         }}
         renderItem={({ item, index }) => {
-          let aspectRatio = item.width / item.height
+          let aspectRatio = 0.2 + item.width / item.height
+          // if(aspectRatio<0.)
+          if (index == 0) {
+            console.log(aspectRatio, '22')
+          }
+          if (aspectRatio > 1) {
+            aspectRatio = 0.8
+          }
+          else if (aspectRatio < 1) {
+            aspectRatio = 0.8
+          }
           return (
             <TouchableOpacity
               onPress={() => setOpenSlider(true)}
@@ -73,7 +83,7 @@ export const Slider = ({ photo, single, activePhoto }) => {
 
 const styles = StyleSheet.create({
   img: {
-    // height: 500,
+    // height: 550,
     width: windowWidth,
     flexShrink: 0,
   },

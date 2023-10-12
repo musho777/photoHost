@@ -37,14 +37,13 @@ export const TabNavigation = () => {
         tabBarShowLabel: false,
         tabBarStyle: (() => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? ''
-
           if (routeName === 'ChatScreen' || routeName === 'FollowersScreen' || routeName === 'ChangeMailFirtScreen' || routeName === 'ParametrScreen' || routeName === 'EditProfilScreen' || routeName === 'ChangePasswordScreen' || routeName === 'ChangeMailScreen' || routeName === 'BlackListScreen') {
             return {
               display: 'none'
             }
           }
           return {
-            height: 45,
+            height: 40,
             backgroundColor: '#FFF',
             borderTopColor: '#FFF',
             borderTopWidth: 1,
@@ -105,5 +104,3 @@ export const TabNavigation = () => {
     </Tab.Navigator>
   );
 };
-// ChatSvg
-// UserSvg

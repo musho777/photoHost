@@ -104,6 +104,13 @@ export const HomeScreen = ({ navigation }) => {
     }
   };
 
+
+  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+    const paddingToBottom = 900;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
+
   const handleScroll = event => {
     const offsetY = event.nativeEvent.contentOffset.y;
     const itemHeight = 400;
@@ -123,7 +130,17 @@ export const HomeScreen = ({ navigation }) => {
       showsVerticalScrollIndicator={false}
       style={{ backgroundColor: 'rgb(237,238,240)' }}
       ref={flatListRef}
-      onScroll={handleScroll}
+      onScroll={({ nativeEvent }) => {
+        handleScroll({ nativeEvent })
+        if (isCloseToBottom(nativeEvent)) {
+          if (getLents?.nextPage) {
+            let p = page + 1;
+            dispatch(GetLentsAction(staticdata.token, p));
+            setPage(p);
+          }
+        }
+
+      }}
       refreshControl={
         <RefreshControl
           refreshing={getLents?.loading}
@@ -135,13 +152,13 @@ export const HomeScreen = ({ navigation }) => {
       data={data}
       enableEmptySections={true}
       renderItem={renderItem}
-      onEndReached={() => {
-        if (getLents?.nextPage) {
-          let p = page + 1;
-          dispatch(GetLentsAction(staticdata.token, p));
-          setPage(p);
-        }
-      }}
+    // onEndReached={() => {
+    //   if (getLents?.nextPage) {
+    //     let p = page + 1;
+    //     dispatch(GetLentsAction(staticdata.token, p));
+    //     setPage(p);
+    //   }
+    // }}
     />
   );
 };

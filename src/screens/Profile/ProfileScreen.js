@@ -91,7 +91,6 @@ export const ProfileScreen = ({ navigation, profile }) => {
                 dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, pages));
                 setPage(pages)
               }
-              // enableSomeButton();
             }
           }}
         >

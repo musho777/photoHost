@@ -94,10 +94,20 @@ export const Post = ({
 
   useEffect(() => {
     const currentDate = new Date(data);
-    const dayOfMonth = currentDate.getDate();
-    const hour = currentDate.getHours();
-    const minute = currentDate.getMinutes();
+    let dayOfMonth = currentDate.getDate();
+    let hour = currentDate.getHours();
+    let minute = currentDate.getMinutes();
     const Mounth = currentDate.getMonth()
+    console.log(minute)
+    if (minute <= 9) {
+      minute = `0${minute}`
+    }
+    if (hour <= 9) {
+      hour = `0${hour}`
+    }
+    if (dayOfMonth <= 9) {
+      dayOfMonth = `0${dayOfMonth}`
+    }
     setDay(`${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`)
   }, [data])
 
@@ -116,7 +126,7 @@ export const Post = ({
                   <Text Text style={[Styles.darkSemiBold14, { marginRight: 5 }]}>{userName}</Text>
                   {star > 0 && <CheckMarkUserSvg />}
                 </View>
-                <Text style={Styles.balihaiMedium9}>{daysAgo != '0 дней назад' ? day : 'сегодня'} </Text>
+                <Text style={Styles.balihaiMedium9}>{day} </Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -167,7 +177,7 @@ export const Post = ({
                     dispatch(AddDeleteFollowAction({ user_id: userId }, staticdata.token))
                   }}
                   style={{ marginBottom: 20 }} >
-                  <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'отписаться'}</Text>
+                  <Text style={Styles.darkRegular14}>{!follow ? 'Подписаться' : 'Отписаться'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => {
                   setOpenModal(false)

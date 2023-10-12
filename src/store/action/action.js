@@ -1055,7 +1055,6 @@ export const AddPostViewCount = (data, token) => {
     fetch(`${Api}/view_post_count`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
       })
       .catch(error => {
         console.log(error)

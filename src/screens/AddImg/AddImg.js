@@ -36,18 +36,6 @@ export const AddImg = ({ navigation }) => {
       request(cameraPermission);
       request(photoLibraryPermission);
     }
-    else {
-      ImagePicker.openPicker({
-        width: 300,
-        height: 300,
-        cropping: true,
-        // multiple: true,
-      }).then(image => {
-        setUri(image);
-      }).catch((error) => {
-      })
-
-    }
   }
 
   useEffect(() => {
@@ -83,9 +71,8 @@ export const AddImg = ({ navigation }) => {
   const addPhoto = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 300,
-      cropping: true,
-      // multiple: true,
+      height: 450,
+      cropping: false,
       mediaType: 'photo'
     }).then(image => {
       let item = [...uri]
@@ -114,7 +101,7 @@ export const AddImg = ({ navigation }) => {
         title={'Новая публикация'}
       />
       <View style={styles.wrapper}>
-        {uri.map((elm, i) => {
+        {uri?.length > 0 && uri?.map((elm, i) => {
           return (
             <View key={i} style={styles.imgWrapper}>
               <Image
@@ -126,7 +113,7 @@ export const AddImg = ({ navigation }) => {
               <TouchableOpacity
                 onPress={() => delateFoto(i)}
                 style={styles.close}>
-                <Text style={{ color: 'white', fontSize: 14, marginTop: -4 }}>x</Text>
+                <Text style={{ color: '#cccccc', fontSize: 14, marginTop: -4 }}>x</Text>
               </TouchableOpacity>
             </View>
           );
@@ -151,13 +138,13 @@ export const AddImg = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   imgWrapper: {
-    height: 85,
-    width: '22%',
-    margin: 5,
+    height: 150,
+    width: '31%',
+    margin: '1%',
     position: 'relative',
   },
   img: {
-    height: 85,
+    height: 150,
     width: '100%',
     borderRadius: 10,
   },
@@ -177,14 +164,15 @@ const styles = StyleSheet.create({
   },
   close: {
     position: 'absolute',
-    top: -10,
-    right: -10,
+    top: 5,
+    right: 5,
     width: 20,
     height: 20,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#cccccc'
+    backgroundColor: 'white'
+
   },
   addImgButton: {
     width: '22%',
