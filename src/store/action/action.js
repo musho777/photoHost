@@ -1146,7 +1146,6 @@ export const GelPostCommentsAction = (data, token, page) => {
         }
       })
       .catch(error => {
-        console.log(error, 'error')
         dispatch(ErrorGetPostComment('server error'))
       });
   };
@@ -1384,7 +1383,6 @@ export const UpdateIkInfoAction = (data, token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorUpdateIKInfor())
       });
   };

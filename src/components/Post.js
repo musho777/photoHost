@@ -98,7 +98,6 @@ export const Post = ({
     let hour = currentDate.getHours();
     let minute = currentDate.getMinutes();
     const Mounth = currentDate.getMonth()
-    console.log(minute)
     if (minute <= 9) {
       minute = `0${minute}`
     }
@@ -118,7 +117,12 @@ export const Post = ({
         startColor={'#00000010'}>
         <View style={styles.block}>
           <View style={[Styles.flexSpaceBetween, { padding: 15, position: 'relative' }]}>
-            <TouchableOpacity onPress={() => user.data.id !== userId && navigation.navigate('SearchProfil', { id: userId })} style={Styles.flexAlignItems}>
+            <TouchableOpacity onPress={() =>
+              user.data.id !== userId ? navigation.navigate('SearchProfil', { id: userId }) :
+                navigation.navigate('ProfileNavigation')
+            }
+              style={Styles.flexAlignItems
+              }>
               <Image style={styles.userImg}
                 source={{ uri: `https://chamba.justcode.am/uploads/${userImg}` }} />
               <View>

@@ -22,9 +22,12 @@ export const InfoBlock = ({ user }) => {
         const year = dateComponents && dateComponents[0]?.replace(`"`, '')
         const day = dateComponents && dateComponents[2]
         const month = dateComponents && dateComponents[1]
-        const newDateFormat = `${day}-${month}-${year}`;
-        item[1].value = newDateFormat
 
+        let newDateFormat = ''
+        if (day) {
+            newDateFormat = `${day}-${month}-${year}`;
+        }
+        item[1].value = newDateFormat
         item[2].value = user.gender
         item[3].value = user.mgu
         item[4].value = user.work_type

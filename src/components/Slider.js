@@ -31,16 +31,18 @@ export const Slider = ({ photo, single, activePhoto }) => {
           activePhoto(index)
         }}
         renderItem={({ item, index }) => {
-          let aspectRatio = 0.2 + item.width / item.height
-          // if(aspectRatio<0.)
-          if (index == 0) {
-            console.log(aspectRatio, '22')
+          let aspectRatio = 1
+          if (item.width > item.height) {
+            aspectRatio = 0.2 + item.width / item.height
+          }
+          else {
+            aspectRatio = 0.2 + item.height / item.width
           }
           if (aspectRatio > 1) {
-            aspectRatio = 0.8
+            aspectRatio = 0.72
           }
           else if (aspectRatio < 1) {
-            aspectRatio = 0.8
+            aspectRatio = 0.72
           }
           return (
             <TouchableOpacity
@@ -48,7 +50,7 @@ export const Slider = ({ photo, single, activePhoto }) => {
               style={!single ? styles.img : { ...styles.img, width: windowWidth, height: 350 }}>
               <Image
                 style={[
-                  { marginVertical: 10, width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 },
+                  { marginVertical: 5, width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 },
                 ]}
                 source={{ uri: `https://chamba.justcode.am/uploads/${item.photo}` }}
                 resizeMode={'cover'}
@@ -62,7 +64,7 @@ export const Slider = ({ photo, single, activePhoto }) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          marginVertical: 10,
+          marginVertical: 5,
         }}>
         {photo.length > 1 && photo?.map((elm, i) => (
           <View
