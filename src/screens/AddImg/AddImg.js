@@ -73,7 +73,8 @@ export const AddImg = ({ navigation }) => {
       width: 300,
       height: 450,
       cropping: false,
-      mediaType: 'photo'
+      mediaType: 'photo',
+      multiple: true,
     }).then(image => {
       let item = [...uri]
       item = item.concat(image);
