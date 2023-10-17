@@ -34,7 +34,6 @@ export const Post = ({
   addToblack,
   isBook,
   isFollow,
-  daysAgo,
   deletData,
   data
 }) => {

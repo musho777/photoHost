@@ -1,13 +1,8 @@
 import React from 'react';
-import { Modal, StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { ModalSliderImg } from './ModalSliderImg';
 export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
     return <View >
-        {/* {modalVisible ?
-            <StatusBar backgroundColor={"black"} barStyle="light-content" /> :
-            <StatusBar backgroundColor={"white"} barStyle="light-content" />
-
-        } */}
         <Modal
             animationType="slide"
             transparent={true}

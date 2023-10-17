@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommentLikeSvg } from '../assets/svg/Svgs';
-import { DeletComment, LikeCommentAction } from '../store/action/action';
+import { LikeCommentAction } from '../store/action/action';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 
@@ -56,14 +56,13 @@ export const CommentItem = ({
         </Text>
         <View style={Styles.flexAlignItems}></View>
         {!owner && (
-          <View style={{ flexDirection: 'row', marginTop: 5 }}>
-            <Text style={{ marginRight: 30 }}>{daysAgo}</Text>
+          <View style={{ flexDirection: 'row', marginTop: 5, gap: 20 }}>
+            <Text >{daysAgo}</Text>
             <TouchableOpacity
               onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
-              <Text>Ответить</Text>
+              <Text>ответить</Text>
             </TouchableOpacity>
             {myuser.allData.data.id == user?.id && <TouchableOpacity
-              style={{ marginLeft: 10 }}
               onPress={() => onDeletComment(id)}>
               <Text>удалить</Text>
             </TouchableOpacity>}
