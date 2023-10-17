@@ -1,8 +1,13 @@
 import React from 'react';
-import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
 import { ModalSliderImg } from './ModalSliderImg';
 export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
     return <View >
+        {/* {modalVisible ?
+            <StatusBar backgroundColor={"black"} barStyle="light-content" /> :
+            <StatusBar backgroundColor={"white"} barStyle="light-content" />
+
+        } */}
         <Modal
             animationType="slide"
             transparent={true}
@@ -23,7 +28,7 @@ const styles = StyleSheet.create({
         // flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.8)',
+        backgroundColor: 'rgb(0,0,0)',
         height: '100%',
     },
     centeredView2: {
@@ -35,6 +40,6 @@ const styles = StyleSheet.create({
     modalView: {
         borderRadius: 0,
         width: '100%',
-        height: 520,
+        height: 570,
     },
 });

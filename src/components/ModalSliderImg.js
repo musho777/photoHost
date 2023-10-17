@@ -4,6 +4,7 @@ import {
     StyleSheet,
     Image,
     Dimensions,
+    StatusBar,
 } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 
@@ -12,6 +13,7 @@ export const ModalSliderImg = ({ photo, single, activePhoto }) => {
     const [active, setActive] = useState(0);
     return (
         <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }}>
+            <StatusBar backgroundColor={"black"} barStyle="light-content" />
             <SwiperFlatList
                 index={activePhoto}
                 // ref={swiperRef}
@@ -75,7 +77,7 @@ export const ModalSliderImg = ({ photo, single, activePhoto }) => {
 
 const styles = StyleSheet.create({
     img: {
-        height: 520,
+        height: 570,
         width: windowWidth,
         flexShrink: 0,
         justifyContent: 'center',
