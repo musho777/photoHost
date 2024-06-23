@@ -505,17 +505,19 @@ export const chnageAvatarAction = (url, token) => {
     myHeaders.append('Authorization', `Bearer ${token}`);
 
     let body = new FormData();
+
     body.append('photo', {
       uri: url,
       name: 'photo.png',
       filename: 'imageName.png',
       type: 'image/png',
     });
+
     body.append('Content-Type', 'image/png');
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: body,
+      body: url && body,
     };
 
     fetch(
@@ -1057,7 +1059,6 @@ export const AddPostViewCount = (data, token) => {
       .then(r => {
       })
       .catch(error => {
-        console.log(error)
       });
   };
 };
@@ -1166,10 +1167,8 @@ export const LikeCommentAction = (data, token) => {
     fetch(`${Api}/comment_like`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
       })
       .catch(error => {
-        console.log(error)
       });
   };
 }
@@ -1274,10 +1273,8 @@ export const DeviceIdAction = (data, token) => {
     fetch(`${Api}/add_device_id`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
       })
       .catch(error => {
-        console.log(error)
       });
   };
 }
@@ -1370,6 +1367,7 @@ export const UpdateIkInfoAction = (data, token) => {
     body: JSON.stringify(data),
     redirect: 'follow',
   };
+
   return dispatch => {
     dispatch(StartUpdateIkInfo());
     fetch(`${Api}/update_lk_info`, requestOptions)
@@ -1443,4 +1441,11 @@ export const DeletComment = (data, token, data2) => {
       .catch(error => {
       });
   };
+}
+
+export const ChnageLanguage = (lang) => {
+  return {
+    type: 'ChnageLanguage',
+    lang
+  }
 }

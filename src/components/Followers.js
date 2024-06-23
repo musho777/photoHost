@@ -7,12 +7,14 @@ import { Input } from '../ui/Input';
 import { FollowingsBlock } from './FollowingsBlock';
 import { useNavigation } from '@react-navigation/native';
 import { Styles } from '../styles/Styles';
+import { t } from '../components/lang';
 
 export const Followers = ({ id }) => {
   const navigation = useNavigation();
   const [data, setData] = useState('');
   const [followers, setFollowers] = useState([]);
   const getFollowers = useSelector(st => st.getFollower);
+  const mainData = useSelector(st => st.mainData);
   // getFollowers
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState('');
@@ -63,7 +65,7 @@ export const Followers = ({ id }) => {
       <Input
         data={data}
         onChange={e => setData(e)}
-        placeholder={'Поиск'}
+        placeholder={t(mainData.lang).search}
         search
         marginTop={20}
       />
@@ -84,7 +86,7 @@ export const Followers = ({ id }) => {
           />
         }
         ListEmptyComponent={() =>
-          <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? 'Не найдено' : 'Нет подписок'}</Text>
+          <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscriptions}</Text>
         }
         data={followers}
         enableEmptySections={true}

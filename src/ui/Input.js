@@ -37,7 +37,9 @@ export const Input = forwardRef(
     sendMsg,
     value,
     sendCom,
-    pdR
+    pdR,
+    clearText,
+    clear,
   }, ref) => {
     const [securyty, setSecuryty] = useState(pass);
     return (
@@ -57,10 +59,12 @@ export const Input = forwardRef(
           onBlur={onBlur}
           style={[
             styles.Input,
-            { paddingRight: pass ? 45 : 7 },
-            { paddingRight: msg ? 80 : 7 },
-            { paddingRight: send ? 50 : 7 },
+            // { paddingRight: msg ? 80 : 30 },
+            { paddingRight: send ? 50 : 30 },
             { paddingRight: pdR },
+            { paddingRight: pass ? 70 : 30 },
+            msg && { paddingRight: 80 },
+
           ]}
           placeholder={placeholder}
           placeholderTextColor={AppColors.BaliHai_Color}
@@ -70,7 +74,7 @@ export const Input = forwardRef(
         />
         {pass && (
           <TouchableOpacity
-            style={styles.eye}
+            style={[styles.eye, clear ? { right: 45 } : { right: 20 }]}
             onPress={() => setSecuryty(!securyty)}>
             <Eye />
           </TouchableOpacity>
@@ -84,7 +88,6 @@ export const Input = forwardRef(
         )}
         {msg && (
           <View style={[Styles.flexAlignItems, styles.eye, { height: '100%' }]}>
-
             {data.length > 0 &&
               <TouchableOpacity onPress={sendMsg} style={{ marginLeft: 10 }}>
                 <SendMsgSvg />
@@ -99,12 +102,21 @@ export const Input = forwardRef(
             </TouchableOpacity>
           </View>
         )}
+
         {!msg && !send && (
           <Text style={[[Styles.tomatoMedium10, { marginBottom: 5 }]]}>
             {error}
           </Text>
         )}
+        {clear && (
+          <View style={[Styles.flexAlignItems, styles.clear]}>
+            <TouchableOpacity onPress={clearText} style={styles.clearText}>
+              <Text style={{ fontSize: 17 }}>x</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
+
     );
   });
 
@@ -124,4 +136,18 @@ const styles = StyleSheet.create({
     right: 20,
     height: '70%',
   },
+  clear: {
+    position: 'absolute',
+    right: 20,
+    height: '65%',
+    top: 0,
+    bottom: 0,
+    margin: 'auto',
+  },
+  clearText: {
+    height: '100%',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });

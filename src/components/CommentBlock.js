@@ -44,13 +44,16 @@ export const CommentBlock = ({
         daysAgo={daysAgo}
       />
       {showAnswrs &&
-        <CommentComponent token={staticdata.token} onPressAnsswer={onPressAnsswer} commentData={replay} />
+        <CommentComponent
+          onDeletComment={deletComment}
+
+          token={staticdata.token} onPressAnsswer={onPressAnsswer} commentData={replay} />
       }
       {!owner && (
         <TouchableOpacity onPress={() => setShowAnswers(!showAnswrs)}>
           {replay_count != 0 && <Text
             style={[Styles.balihaiMedium9, { marginLeft: 70, marginTop: 20 }]}>
-            {showAnswrs ? 'Скрыть ответы' : `Смотреть ещё ${replay_count} ответа`}
+            {showAnswrs ? 'Скрыть ответы' : `Смотреть ещё ${replay_count} Ответа`}
           </Text>}
         </TouchableOpacity>
       )}

@@ -1,58 +1,59 @@
-import {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
-import {Styles} from '../../styles/Styles';
-import {Button} from '../../ui/Button';
-import {Input} from '../../ui/Input';
-import {useDispatch, useSelector} from 'react-redux';
+import { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+import { Styles } from '../../styles/Styles';
+import { Button } from '../../ui/Button';
+import { Input } from '../../ui/Input';
+import { useDispatch, useSelector } from 'react-redux';
 import { NewPasswordAction } from '../../store/action/action';
 import { CleanNewPassword } from '../../store/action/clearAction';
+import { t } from '../../components/lang';
 
-
-export const NewPassword = ({navigation}) => {
-  const [password, setPassword] = useState({error: '', value: ''});
-  const [confirmPassword, setConfirmPassword] = useState({error: '', value: ''});
-  const [disabled,setDisabled] = useState(true)
+export const NewPassword = ({ navigation }) => {
+  const [password, setPassword] = useState({ error: '', value: '' });
+  const [confirmPassword, setConfirmPassword] = useState({ error: '', value: '' });
+  const [disabled, setDisabled] = useState(true)
   const confirm = useSelector(st => st.confirmForgotPassword);
   const newPassword = useSelector(st => st.newPassword);
   const dispatch = useDispatch()
-  useEffect(()=>{
-    if(password.value && confirmPassword.value){
+  const mainData = useSelector(st => st.mainData);
+  useEffect(() => {
+    if (password.value && confirmPassword.value) {
       setDisabled(false)
     }
     else {
       setDisabled(true)
     }
-  },[password,confirmPassword])
-  const snedNewPassword = () =>{
+  }, [password, confirmPassword])
+  const snedNewPassword = () => {
     let send = true
-    if(password.value.length<8){
-      setPassword({...password,error:'Пароль должен содержать не менее 8-ми символов.'})
+    if (password.value.length < 8) {
+      setPassword({ ...password, error: 'Пароль должен содержать не менее 8-ми символов.' })
       send = false
     }
     else {
-      setPassword({...password,error:''})
+      setPassword({ ...password, error: '' })
     }
-    if(confirmPassword.value !== password.value){
-      setConfirmPassword({...confirmPassword,error:'Пароли не совпадают'})
+    if (confirmPassword.value !== password.value) {
+      setConfirmPassword({ ...confirmPassword, error: 'Пароли не совпадают' })
       send = false
     }
     else {
-      setConfirmPassword({...confirmPassword,error:''})
+      setConfirmPassword({ ...confirmPassword, error: '' })
     }
-    if(send){
+    if (send) {
       dispatch(NewPasswordAction({
-        email:confirm.email,
-        code:confirm.code,
-        password:password.value,
-        password_confirmation:confirmPassword.value
+        email: confirm.email,
+        code: confirm.code,
+        password: password.value,
+        password_confirmation: confirmPassword.value
       }))
     }
   }
-  useEffect(()=>{
-    if(newPassword.status){
+  useEffect(() => {
+    if (newPassword.status) {
       navigation.navigate('LoginScreen')
     }
-  },[newPassword.status])
+  }, [newPassword.status])
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(CleanNewPassword())
@@ -60,23 +61,23 @@ export const NewPassword = ({navigation}) => {
     return unsubscribe;
   }, [navigation]);
   return (
-      <View style={[Styles.authScreen,{marginTop:80}]}>
-        <Text style={[ Styles.darkSemiBold22,{marginBottom: 30, textAlign: 'center'},]}>{confirm.username}</Text>
-        <Input
-          placeholder={'Придумайте пароль'}
-          error={password.error}
-          value={password.value}
-          onChange = {(e)=>setPassword({...password,value:e})}
-          pass
-        />
-        <Input
-          placeholder={'Повторите пароль'}
-          error={confirmPassword.error}
-          value={confirmPassword.value}
-          onChange = {(e)=>setConfirmPassword({...confirmPassword,value:e})}
-          pass
-        />
-        <Button loading={newPassword.loading} onPress={()=>snedNewPassword()} disabled = {disabled} marginV={20} title={'Подтвердить'} />
-      </View>
+    <View style={[Styles.authScreen, { marginTop: 80 }]}>
+      <Text style={[Styles.darkSemiBold22, { marginBottom: 30, textAlign: 'center' },]}>{confirm.username}</Text>
+      <Input
+        placeholder={t(mainData.lang).Createapassword}
+        error={password.error}
+        value={password.value}
+        onChange={(e) => setPassword({ ...password, value: e })}
+        pass
+      />
+      <Input
+        placeholder={t(mainData.lang).Createapassword}
+        error={confirmPassword.error}
+        value={confirmPassword.value}
+        onChange={(e) => setConfirmPassword({ ...confirmPassword, value: e })}
+        pass
+      />
+      <Button loading={newPassword.loading} onPress={() => snedNewPassword()} disabled={disabled} marginV={20} title={t(mainData.lang).Confirm} />
+    </View>
   );
 };

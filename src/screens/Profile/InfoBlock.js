@@ -21,12 +21,16 @@ export const InfoBlock = ({ user }) => {
         const dateComponents = JSON.stringify(user.date_of_birth)?.substring(0, 11)?.split('-')
         const year = dateComponents && dateComponents[0]?.replace(`"`, '')
         const day = dateComponents && dateComponents[2]
-        const month = dateComponents && dateComponents[1]
+        let month = dateComponents && +dateComponents[1] + 1
 
         let newDateFormat = ''
-        if (day) {
-            newDateFormat = `${day}-${month}-${year}`;
+        if (month < 10) {
+            month = '0' + month
         }
+        if (day) {
+            newDateFormat = `${day}.${month}.${year}`;
+        }
+
         item[1].value = newDateFormat
         item[2].value = user.gender
         item[3].value = user.mgu

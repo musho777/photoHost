@@ -6,6 +6,7 @@ import { Button } from '../../ui/Button';
 import { Input } from '../../ui/Input';
 import { useDispatch, useSelector } from 'react-redux'
 import { ClearConfirmPasswordAction, ClearRegisterAction, ConfirmRegisterCode, RegisterAction } from '../../store/action/action';
+import { t } from '../../components/lang';
 
 export const RegisterScreen = ({ navigation }) => {
   const [userName, setUsername] = useState({ value: '', error: '' });
@@ -18,6 +19,7 @@ export const RegisterScreen = ({ navigation }) => {
   const [code, setCode] = useState('')
   const dispatch = useDispatch()
   const register = useSelector(st => st.register)
+  const mainData = useSelector(st => st.mainData);
   const confirm = useSelector(st => st.confirmRegister)
   useEffect(() => {
     if (userName.value && name.value && password.value && email.value) {
@@ -102,35 +104,28 @@ export const RegisterScreen = ({ navigation }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={Styles.authScreen}>
-        <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>Регистрация</Text>
+        <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>{t(mainData.lang).Registration}</Text>
         <Input
-          placeholder={'ФИО/Название канала'}
+          placeholder={t(mainData.lang).FirstnameLastnameorchannelname}
           error={userName.error || register.error?.username}
           value={userName.value}
           onChange={(e) => setUsername({ ...userName, value: e })}
         />
         <Input
-          placeholder={'придумайте никнэйм'}
-          error={name.error}
-          value={name.value}
-          onChange={(e) => setName({ ...name, value: e })}
-        />
-        <Input
-          placeholder={'Придумайте пароль'}
+          placeholder={t(mainData.lang).Createapassword}
           error={password.error}
           value={password.value}
           onChange={(e) => setPassword({ ...password, value: e })}
           pass
         />
-        {/* <Input
-          placeholder={'Повторите пароль'}
-          error={confirmPassword.error}
-          value={confirmPassword.value}
-          onChange={(e) => setConfirmPassword({ ...confirmPassword, value: e })}
-          pass
-        /> */}
         <Input
-          placeholder={'Укажите почту'}
+          placeholder={t(mainData.lang).Comeupwithanicknam}
+          error={name.error}
+          value={name.value}
+          onChange={(e) => setName({ ...name, value: e })}
+        />
+        <Input
+          placeholder={t(mainData.lang).Enteryouremail}
           error={email.error || register.error?.email}
           value={email.value}
           onChange={(e) => setEmail({ ...email, value: e })}
@@ -146,7 +141,7 @@ export const RegisterScreen = ({ navigation }) => {
         <Text style={[[Styles.tomatoMedium10]]}>
           {register.error?.server || confirm.error}
         </Text>
-        {!sendMail && <Button loading={register.loading} onPress={() => Validation()} disabled={disableButton} marginV={30} title={'Подтвердить'} />}
+        {!sendMail && <Button loading={register.loading} onPress={() => Validation()} disabled={disableButton} marginV={30} title={t(mainData.lang).Confirm} />}
       </View>
     </ScrollView>
   );

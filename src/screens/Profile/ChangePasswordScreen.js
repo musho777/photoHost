@@ -1,15 +1,17 @@
-import {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {changeUserPassword} from '../../store/action/action';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeUserPassword } from '../../store/action/action';
 import { clearChangePassword } from '../../store/action/clearAction';
-import {Styles} from '../../styles/Styles';
-import {Button} from '../../ui/Button';
-import {Input} from '../../ui/Input';
+import { Styles } from '../../styles/Styles';
+import { Button } from '../../ui/Button';
+import { t } from '../../components/lang';
+import { Input } from '../../ui/Input';
 
-export const ChangePasswordScreen = ({navigation}) => {
-  const [oldPassword, setOldPasswrd] = useState({value: '', error: ''});
-  const [newPassword, setNewPassword] = useState({value: '', error: ''});
+export const ChangePasswordScreen = ({ navigation }) => {
+  const [oldPassword, setOldPasswrd] = useState({ value: '', error: '' });
+  const [newPassword, setNewPassword] = useState({ value: '', error: '' });
+  const mainData = useSelector(st => st.mainData);
   const [confirmPassword, setConfirmPassword] = useState({
     value: '',
     error: '',
@@ -38,13 +40,13 @@ export const ChangePasswordScreen = ({navigation}) => {
         error: 'Пароль должен содержать не менее 8-ми символов.',
       });
     } else {
-      setNewPassword({...newPassword, error: ''});
+      setNewPassword({ ...newPassword, error: '' });
     }
     if (confirmPassword.value !== newPassword.value) {
-      setConfirmPassword({...confirmPassword, error: 'Пароли не совпадают'});
+      setConfirmPassword({ ...confirmPassword, error: 'Пароли не совпадают' });
       item = false;
     } else {
-      setConfirmPassword({...confirmPassword, error: ''});
+      setConfirmPassword({ ...confirmPassword, error: '' });
     }
     if (item) {
       dispatch(
@@ -67,36 +69,36 @@ export const ChangePasswordScreen = ({navigation}) => {
     });
     return unsubscribe;
   }, [navigation]);
-  useEffect(()=>{
-    if(changePassword.status){
+  useEffect(() => {
+    if (changePassword.status) {
       navigation.navigate('ProfileScreen')
       dispatch(clearChangePassword())
     }
-  },[changePassword.status])
+  }, [changePassword.status])
   return (
-    <View style={{alignItems: 'center', marginTop: 30}}>
+    <View style={{ alignItems: 'center', marginTop: 30 }}>
       <Input
-        placeholder={'Старый пароль'}
+        placeholder={t(mainData.lang).OldPassword}
         pass
         error={oldPassword.error || changePassword.error.email}
         value={oldPassword.value}
-        onChange={e => setOldPasswrd({...oldPassword, value: e})}
+        onChange={e => setOldPasswrd({ ...oldPassword, value: e })}
         width={'80%'}
       />
       <Input
-        placeholder={'Новый пароль'}
+        placeholder={t(mainData.lang).NewPassword}
         pass
         error={newPassword.error}
         value={newPassword.value}
-        onChange={e => setNewPassword({...newPassword, value: e})}
+        onChange={e => setNewPassword({ ...newPassword, value: e })}
         width={'80%'}
       />
       <Input
-        placeholder={'Повторите новый пароль'}
+        placeholder={t(mainData.lang).repeatnewpassword}
         pass
         error={confirmPassword.error}
         value={confirmPassword.value}
-        onChange={e => setConfirmPassword({...confirmPassword, value: e})}
+        onChange={e => setConfirmPassword({ ...confirmPassword, value: e })}
         width={'80%'}
         marginBottom={20}
       />
@@ -104,7 +106,7 @@ export const ChangePasswordScreen = ({navigation}) => {
         onPress={() => sendData()}
         loading={changePassword.loading}
         disabled={disabled}
-        title={'Подтвердить'}
+        title={t(mainData.lang).Confirm}
       />
       <TouchableOpacity>
         {/* <Text style={[Styles.darkMedium12, {marginVertical: 15}]}>

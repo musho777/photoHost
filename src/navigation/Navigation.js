@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Header } from '../headers/Header';
 import { LoginScreen } from '../screens/auth/LoginScreen';
-import { NewPassword } from '../screens/auth/NewPassword';
-import { RecoveryPassword } from '../screens/auth/RecoveryPassword';
-import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { AppColors } from '../styles/AppColors';
 import { TabNavigation } from './TabNavigation';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 import Sound from 'react-native-sound';
-
+import { Comments } from '../components/Comment';
 import {
   AddBlackListPusherAction,
   AddMsgAction,
+  ChnageLanguage,
   DeleteChatPusherAction,
   DeviceIdAction,
   getUserInfoAction,
@@ -37,16 +34,24 @@ import { EditPostScreen } from '../screens/SinglePage/EditPostScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CheckBlack } from '../../CheckBlack';
+import { LoginNavigation } from './LoginNavigation';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
   const [i, setI] = useState(initialRouteName);
 
+
   const music = new Sound('ding.mp3', Sound.MAIN_BUNDLE, (error) => {
     if (error) {
-      console.log('Error loading music:', error);
     }
   });
+
+
+
+  const changeLanguage = async () => {
+    let lang = await AsyncStorage.getItem('lang')
+    dispatch(ChnageLanguage(lang))
+  }
 
 
   function getData() {
@@ -128,6 +133,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     });
   };
   useEffect(() => {
+    changeLanguage()
     Pushers();
     getData();
   }, [token]);
@@ -167,33 +173,8 @@ export default Navigation = ({ token, initialRouteName, id }) => {
         {<CheckBlack token={token} />}
         <Stack.Navigator initialRouteName={i}>
           <Stack.Screen
-            name="LoginScreen"
-            component={LoginScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="RegisterScreen"
-            component={RegisterScreen}
-            options={{
-              header: ({ navigation }) => (
-                <Header onPress={() => navigation.goBack()} />
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="RecoveryPassword"
-            component={RecoveryPassword}
-            options={{
-              header: ({ navigation }) => (
-                <Header onPress={() => navigation.goBack()} />
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="NewPassword"
-            component={NewPassword}
+            name="LoginScreen1"
+            component={LoginNavigation}
             options={{
               headerShown: false,
             }}
@@ -243,6 +224,13 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           <Stack.Screen
             name="SearchProfil"
             component={SearchProfil}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="coment"
+            component={Comments}
             options={{
               headerShown: false,
             }}

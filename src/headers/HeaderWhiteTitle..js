@@ -1,6 +1,8 @@
-import {TouchableOpacity, View, Text, ActivityIndicator} from 'react-native';
-import {BackArrow, CheckMarkSvg} from '../assets/svg/Svgs';
-import {Styles} from '../styles/Styles';
+import { TouchableOpacity, View, Text, ActivityIndicator } from 'react-native';
+import { BackArrow, CheckMarkSvg } from '../assets/svg/Svgs';
+import { Styles } from '../styles/Styles';
+import { useSelector } from 'react-redux';
+import { t } from '../../components/lang';
 
 export const HeaderWhiteTitle = ({
   onPress,
@@ -11,27 +13,28 @@ export const HeaderWhiteTitle = ({
   loading,
   disabled
 }) => {
+  const mainData = useSelector(st => st.mainData);
   return (
     <View
       style={[
         Styles.flexAlignItems,
-        {height: 70, paddingHorizontal: 10, backgroundColor: '#FFF'},
-        transparent && {backgroundColor: 'transparent'},
+        { height: 70, paddingHorizontal: 10, backgroundColor: '#FFF' },
+        transparent && { backgroundColor: 'transparent' },
       ]}>
       <TouchableOpacity onPress={onPress}>
         <BackArrow />
       </TouchableOpacity>
-      <Text style={[Styles.darkSemiBold16, {marginHorizontal: 15}]}>
+      <Text style={[Styles.darkSemiBold16, { marginHorizontal: 15 }]}>
         {title}
       </Text>
       {loading ? (
-        <View style={{position: 'absolute', right: 10}}>
+        <View style={{ position: 'absolute', right: 10 }}>
           <ActivityIndicator size="large" color={'#FFC24B'} />
         </View>
       ) : (
-        <View style={{position: 'absolute', right: 10}}>
+        <View style={{ position: 'absolute', right: 10 }}>
           {check && (
-            <TouchableOpacity disabled = {loading||disabled} onPress={onCheck}>
+            <TouchableOpacity disabled={loading || disabled} onPress={onCheck}>
               <CheckMarkSvg />
             </TouchableOpacity>
           )}

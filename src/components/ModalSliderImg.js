@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     View,
     StyleSheet,
@@ -7,9 +7,11 @@ import {
     StatusBar,
 } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
+import Video from 'react-native-video';
 
 const windowWidth = Dimensions.get('window').width;
 export const ModalSliderImg = ({ photo, single, activePhoto }) => {
+
     const [active, setActive] = useState(0);
     return (
         <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }}>
@@ -39,14 +41,33 @@ export const ModalSliderImg = ({ photo, single, activePhoto }) => {
                     }
                     return (
                         <View style={!single ? styles.img : { ...styles.img, width: windowWidth, height: 350 }}>
-                            <Image
-                                style={[
-                                    { marginVertical: 10, width: windowWidth, aspectRatio: aspectRatio ? aspectRatio : 1, borderRadius: 0 },
-                                ]}
-                                // source={require('../assets/img/1.png')}
-                                source={{ uri: `https://chamba.justcode.am/uploads/${item.photo}` }}
-                            // resizeMode={'cover'}
-                            />
+                            {!item.photo.includes('.mp4') ?
+
+                                <Image
+                                    style={[
+                                        { marginVertical: 10, width: windowWidth, aspectRatio: aspectRatio ? aspectRatio : 1, borderRadius: 0 },
+                                    ]}
+                                    source={{ uri: `https://chamba.justcode.am/uploads/${item.photo}` }}
+
+                                /> :
+                                <Video
+
+                                    style={[
+                                        {
+                                            width: windowWidth,
+                                            // aspectRatio: aspectRatio - 1 ? aspectRatio : 1,
+                                            zIndex: 999,
+                                            opacity: 1,
+                                            height: '50%'
+                                            // height: '100%'
+                                        },
+                                    ]}
+                                    controls={true}
+                                    repeat={true}
+                                    source={{ uri: `https://chamba.justcode.am/uploads/${item.photo}` }}
+                                    resizeMode={'cover'}
+                                />
+                            }
 
                         </View>
                     );

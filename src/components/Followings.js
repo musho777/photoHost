@@ -7,6 +7,7 @@ import { Input } from '../ui/Input';
 import { FollowingsBlock } from './FollowingsBlock';
 import { useNavigation } from '@react-navigation/native';
 import { Styles } from '../styles/Styles';
+import { t } from './lang';
 
 
 export const Followings = ({ id }) => {
@@ -14,6 +15,7 @@ export const Followings = ({ id }) => {
   const [data, setData] = useState();
   const [followers, setFollowers] = useState([]);
   const getFollowers = useSelector((st) => st.getFollowers)
+  const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState('')
   const dispatch = useDispatch()
@@ -61,7 +63,7 @@ export const Followings = ({ id }) => {
       <Input
         data={data}
         onChange={e => setData(e)}
-        placeholder={'Поиск'}
+        placeholder={ t(mainData.lang).search}
         search
         marginTop={20}
       />
@@ -78,7 +80,7 @@ export const Followings = ({ id }) => {
         data={followers}
         enableEmptySections={true}
         ListEmptyComponent={() => (
-          !getFollowers?.loading && <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? "Не найдено" : 'Нет подписчиков'}</Text>
+          !getFollowers?.loading && <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscribers}</Text>
         )}
         renderItem={renderItem}
         onEndReached={() => {

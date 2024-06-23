@@ -13,6 +13,8 @@ import { GetMyChatRoom } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import { Input } from '../../ui/Input';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { t } from '../../components/lang';
+
 export const ChatUsersScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
@@ -23,6 +25,7 @@ export const ChatUsersScreen = ({ navigation }) => {
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
 
+  const mainData = useSelector(st => st.mainData);
 
   const getToken = async () => {
     let token = await AsyncStorage.getItem('token')
@@ -99,12 +102,12 @@ export const ChatUsersScreen = ({ navigation }) => {
             <ActivityIndicator size="large" color="#FFC24B" />
           </View>
         )}
-        <Input
-          placeholder={'Поиск'}
+        {data.length > 0 && <Input
+          placeholder={t(mainData.lang).search}
           search
           value={search}
           onChange={e => searchData(e)}
-        />
+        />}
         <FlatList
           data={data}
           enableEmptySections={true}
@@ -119,9 +122,9 @@ export const ChatUsersScreen = ({ navigation }) => {
             <Text
               style={[
                 Styles.darkMedium16,
-                { marginTop: 40, textAlign: 'center' },
+                { marginTop: 10, textAlign: 'center' },
               ]}>
-              {!search ? 'У вас нет сообщений' : 'Не найдено'}
+              {!search ? t(mainData.lang).Youhavenomessages : t(mainData.lang).Notfound}
             </Text>
           )}
         />

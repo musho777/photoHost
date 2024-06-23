@@ -8,8 +8,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
 import { NotificationLister, requestUserPermission } from './src/utils/pushnotification_helper';
-import { StatusBar } from 'react-native';
+import { BackHandler, StatusBar } from 'react-native';
 export default App = () => {
+
+
+  const [hardwareBackPress, setHardwareBackPress] = useState(false)
+
+
   const firebaseConfig = {
     apiKey: "AIzaSyDeqDpmN8h9Zr2EkzcMlyZr-ddq_HkRZAc",
     authDomain: "https://chamba-f5697-default-rtdb.firebaseio.com",
@@ -22,12 +27,12 @@ export default App = () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
+
   useEffect(() => {
     requestUserPermission()
     NotificationLister()
     if (firebase.app()) {
       const unsubscribe = messaging().onMessage(async remoteMessage => {
-        console.log('Received a notification in the foreground:', remoteMessage);
       });
 
       return () => {
@@ -35,6 +40,7 @@ export default App = () => {
       };
     }
   }, []);
+
 
 
 
@@ -57,15 +63,9 @@ export default App = () => {
     }
     setIsLoading(false)
   }
-
-
-
-
-
-
   useEffect(() => {
     getData()
-  }, [])
+  }, [hardwareBackPress])
 
 
 

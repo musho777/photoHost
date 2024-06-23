@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCitysAction } from "../store/action/action";
 import { Styles } from "../styles/Styles";
+import { t } from './lang';
 
 export const CityModal = ({ visible, close, onPress }) => {
     const [searchCitys, setSearchCitys] = useState('')
     const getCitys = useSelector((st) => st.getCitys)
     const staticdata = useSelector(st => st.static);
+    const mainData = useSelector(st => st.mainData);
+
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -29,7 +32,8 @@ export const CityModal = ({ visible, close, onPress }) => {
                     <Input
                         onChange={e => setSearchCitys(e)}
                         value={searchCitys}
-                        placeholder="Поиск"
+                        placeholder={t(mainData.lang).search}
+
                     />
                     {getCitys.loading ?
                         <View style={Styles.loading}>

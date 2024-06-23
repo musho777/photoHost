@@ -11,6 +11,7 @@ import { ClearForGotPassword, ClearValidationForgotPassword } from '../../store/
 import { Styles } from '../../styles/Styles';
 import { Button } from '../../ui/Button';
 import { Input } from '../../ui/Input';
+import { t } from '../../components/lang';
 
 export const RecoveryPassword = ({ navigation }) => {
   const [email, setEmail] = useState({ error: '', value: '' });
@@ -19,6 +20,7 @@ export const RecoveryPassword = ({ navigation }) => {
   const dispatch = useDispatch();
   const forgotPassword = useSelector(st => st.forgotPassword);
   const confirm = useSelector(st => st.confirmForgotPassword);
+  const mainData = useSelector(st => st.mainData);
   const [code, setCode] = useState('');
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
@@ -71,10 +73,10 @@ export const RecoveryPassword = ({ navigation }) => {
           Styles.darkSemiBold22,
           { marginBottom: 30, textAlign: 'center' },
         ]}>
-        Восстановление пароля
+        {t(mainData.lang).Passwordrecovery}
       </Text>
       <Input
-        placeholder={'Введите эл. почту'}
+        placeholder={t(mainData.lang).Enteremailmail}
         error={email.error || forgotPassword.error}
         value={email.value}
         width={'95%'}
@@ -87,7 +89,7 @@ export const RecoveryPassword = ({ navigation }) => {
           disabled={disable}
           marginV={10}
           onPress={() => sendForgotPassword()}
-          title={'Далее'}
+          title={t(mainData.lang).Next}
         />
       )}
       {send && (

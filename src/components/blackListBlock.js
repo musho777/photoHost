@@ -12,7 +12,6 @@ export const BlackListBlock = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      // onPress={() => navigation.navigate('UserProfileScreen')}
       style={[{ marginBottom: 20 }, Styles.flexSpaceBetween]}>
       <View style={Styles.flexAlignItems}>
         <Image

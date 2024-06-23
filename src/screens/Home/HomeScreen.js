@@ -1,10 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -15,6 +17,25 @@ export const HomeScreen = ({ navigation }) => {
   const [blackList, setBlackList] = useState([]);
   const [index, setIndex] = useState(0);
   const flatListRef = useRef(null);
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (!navigation.canGoBack()) {
+          BackHandler.exitApp()
+        }
+        return true
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [navigation])
+  );
+
+
   useEffect(() => {
     if (staticdata.token) {
       dispatch(GetLentsAction(staticdata.token));
@@ -66,6 +87,7 @@ export const HomeScreen = ({ navigation }) => {
       }
     }
 
+
     if (!blackList.includes(item.user.id)) {
       return (
         <View
@@ -78,7 +100,7 @@ export const HomeScreen = ({ navigation }) => {
           }}>
           <Post
             userImg={item.user.avatar}
-            userName={item.user.name}
+            userName={item.user.nickname}
             userId={item.user.id}
             description={item.description}
             like={item.like_count}

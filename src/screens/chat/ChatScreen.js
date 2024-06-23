@@ -8,12 +8,16 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
+  Keyboard,
+  Platform,
 } from 'react-native';
+import { t } from '../../components/lang';
 import { useDispatch, useSelector } from 'react-redux';
-import { BackArrow } from '../../assets/svg/Svgs';
+import { BackArrow, EmojiIcon } from '../../assets/svg/Svgs';
 import { MenuSvg } from '../../assets/svg/TabBarSvg';
 import { BootomModal } from '../../components/BootomSheet';
 import { MsgBlock } from '../../components/MsgBlock';
+import EmojiSelector, { Categories } from 'react-native-emoji-selector'
 import {
   AddBlackListAction,
   AddMsgAction,
@@ -43,6 +47,9 @@ export const ChatScreen = ({ navigation, route }) => {
   const snapPoints = useMemo(() => ['18%'], []);
   const [page, setPage] = useState(1);
   const deletChat = useSelector((st) => st.deletChatPusher)
+  const [openEmoji, setOpenEmoji] = useState(false)
+  const mainData = useSelector(st => st.mainData);
+
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
@@ -51,7 +58,6 @@ export const ChatScreen = ({ navigation, route }) => {
 
   const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => {
     if (error) {
-      console.log('Error loading music:', error);
     }
   });
 
@@ -69,13 +75,35 @@ export const ChatScreen = ({ navigation, route }) => {
 
 
   useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow',
+      () => {
+        setOpenEmoji(false)
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide',
+      () => {
+
+      }
+    );
+
+    // Cleanup function to remove event listeners when the component unmounts
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  useEffect(() => {
     if (getSinglePageChat.blackList == 'You Blocked This User') {
       setBlackListStatus('Пользователь в черном списке')
       setAddToBlackList('Удалить из черного списка')
     }
     // else if()
     else {
-      setAddToBlackList('В черный список')
+      setAddToBlackList(t(mainData.lang).intoablacklist)
     }
     if (getSinglePageChat.blackList === 'This User Blocked You') {
       setBlackListStatus('Вы в черном списке')
@@ -203,15 +231,15 @@ export const ChatScreen = ({ navigation, route }) => {
             />
             <View style={{ marginHorizontal: 20 }}>
               <Text style={Styles.darkMedium14}>
-                {getSinglePageChat.resiverUser.name}
+                {getSinglePageChat.resiverUser.nickname}
               </Text>
               <Text style={Styles.balihaiMedium13}>
-                @{getSinglePageChat.resiverUser.nickname}
+                @{getSinglePageChat.resiverUser.name}
               </Text>
             </View>
           </View>
         </View>
-        <TouchableOpacity onPress={() => handlePresentModalPress()}>
+        <TouchableOpacity style={{ width: 30, height: 30, alignItems: 'flex-end' }} onPress={() => handlePresentModalPress()}>
           <MenuSvg />
         </TouchableOpacity>
       </View>
@@ -220,7 +248,6 @@ export const ChatScreen = ({ navigation, route }) => {
         inverted={true}
         showsVerticalScrollIndicator={false}
         data={data}
-        style={{ marginBottom: 60 }}
         onEndReached={() => {
           if (getSinglePageChat.nextPage && !getSinglePageChat.loading) {
             setPage(page + 1);
@@ -228,16 +255,15 @@ export const ChatScreen = ({ navigation, route }) => {
         }}
         renderItem={({ item }) => {
           return (
-            <View>
-              <MsgBlock
-                timestamp={item.created_at}
-                msg={item.message}
-                from={item.sender_id != user.data.id}
-              />
-            </View>
+            <MsgBlock
+              timestamp={item.created_at}
+              msg={item.message}
+              from={item.sender_id != user.data.id}
+            />
           );
         }}
       />
+      {/* </TouchableWithoutFeedback> */}
       <View>
         {!showInput && addToblackList == 'В черный список'
           ? <View
@@ -249,15 +275,39 @@ export const ChatScreen = ({ navigation, route }) => {
               width: '100%',
               alignItems: 'center',
             }}>
-            <Input
-              msg
-              pdR={50}
-              placeholder={'Введите текст'}
-              data={sendMSg}
-              onChange={e => setSendMsg(e)}
-              width={'100%'}
-              sendMsg={() => sendMsgFunction()}
-            />
+            <View style={{
+              position: 'absolute',
+              right: 50,
+              height: 23,
+              width: 23,
+              zIndex: 999
+            }}>
+              <TouchableOpacity onPress={() => {
+                setOpenEmoji(true)
+                Keyboard.dismiss()
+              }}>
+                <EmojiIcon />
+              </TouchableOpacity>
+            </View>
+            <View style={{ width: '100%' }}>
+              <Input
+                msg
+                pdR={50}
+                placeholder={'Введите текст'}
+                data={sendMSg}
+                onChange={e => setSendMsg(e)}
+                width={'100%'}
+                sendMsg={() => sendMsgFunction()}
+              />
+              {openEmoji && <View style={{ width: '100%', height: 300, zIndex: 9999, backgroundColor: 'white' }}>
+                <EmojiSelector columns={10} onEmojiSelected={emoji => {
+                  {
+
+                    setSendMsg(sendMSg + emoji)
+                  }
+                }} />
+              </View>}
+            </View>
           </View> :
           <View style={{ marginBottom: 20, justifyContent: 'center' }}>
             <Text style={[Styles.balihaiMedium14, { textAlign: 'center' }]}>{blackListStatus}</Text>
@@ -279,7 +329,7 @@ export const ChatScreen = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </BootomModal>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 

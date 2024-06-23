@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,21 +10,21 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {Albom} from '../../components/Albom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Albom } from '../../components/Albom';
 
-import {BlackListBlock} from '../../components/blackListBlock';
-import {Post} from '../../components/Post';
+import { BlackListBlock } from '../../components/blackListBlock';
+import { Post } from '../../components/Post';
 import {
   AddBlackListAction,
   GetBlackListAction,
   GetMyBooksAction,
 } from '../../store/action/action';
-import {Styles} from '../../styles/Styles';
+import { Styles } from '../../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const SavedPostScreen = ({navigation}) => {
+export const SavedPostScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
   const books = useSelector(st => st.books);
@@ -43,21 +43,21 @@ export const SavedPostScreen = ({navigation}) => {
     return unsubscribe;
   }, [navigation]);
 
-  const renderItem = ({item, index}) => {
-    return (
-      <TouchableOpacity>
-        <Image
-          style={styles.img}
-          source={{
-            uri: `https://chamba.justcode.am/uploads/${item.post.photo[0].photo}`,
-          }}
-          key={index}
-        />
-      </TouchableOpacity>
-    );
-  };
+  // const renderItem = ({ item, index }) => {
+  //   return (
+  //     <TouchableOpacity>
+  //       <Image
+  //         style={styles.img}
+  //         source={{
+  //           uri: `https://chamba.justcode.am/uploads/${item.post.photo[0].photo}`,
+  //         }}
+  //         key={index}
+  //       />
+  //     </TouchableOpacity>
+  //   );
+  // };
 
-  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
     const paddingToBottom = 20;
     return (
       layoutMeasurement.height + contentOffset.y >=
@@ -66,11 +66,11 @@ export const SavedPostScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{marginTop: 10, alignItems: 'center', paddingHorizontal: 15}}>
+    <View style={{ marginTop: 10, alignItems: 'center' }}>
       <ScrollView
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
-        onScroll={({nativeEvent}) => {
+        onScroll={({ nativeEvent }) => {
           if (isCloseToBottom(nativeEvent)) {
             if (books.nextPage) {
               let pages = page + 1;
@@ -79,17 +79,19 @@ export const SavedPostScreen = ({navigation}) => {
             }
           }
         }}>
-        <Albom seved data={books.data} />
+        <View style={{ width: windowWidth - 32, flexDirection: "column", }}>
+          <Albom seved data={books.data} />
+        </View>
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  img: {
-    width: windowWidth / 2 - 17,
-    height: windowWidth / 2 - 17,
-    marginBottom: 4,
-    borderRadius: 15,
-  },
+  // img: {
+  //   width: windowWidth / 2 - 37,
+  //   height: windowWidth / 2 - 37,
+  //   marginBottom: 4,
+  //   borderRadius: 15,
+  // },
 });

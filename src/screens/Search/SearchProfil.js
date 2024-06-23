@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AddDeleteFollowAction, AddDeletFollow, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import { InfoBlock } from '../Profile/InfoBlock';
+import { t } from '../../components/lang';
 
 const { width } = Dimensions.get('window');
 
@@ -28,6 +29,7 @@ export const SearchProfil = ({ navigation, route }) => {
   const [page, setPage] = useState(1)
   const dispatch = useDispatch();
   const swiperRef = useRef(null);
+  const mainData = useSelector(st => st.mainData);
 
   const [activeCard, setActiveCard] = useState(0)
   const [data, setData] = useState(['albom', ''])
@@ -96,8 +98,8 @@ export const SearchProfil = ({ navigation, route }) => {
               source={{ uri: `https://chamba.justcode.am/uploads/${singlPage.data.avatar}` }}
             />
             <View style={{ marginTop: 7, marginBottom: 15, alignItems: 'center' }}>
-              <Text style={Styles.darkMedium16}>{singlPage.data.name}</Text>
-              <Text style={Styles.balihaiRegular12}>@{singlPage.data.nickname}</Text>
+              <Text style={Styles.darkMedium16}>{singlPage.data.nickname}</Text>
+              <Text style={Styles.balihaiRegular12}>@{singlPage.data.name}</Text>
             </View>
             {singlPage.data.description && (
               <Text style={Styles.darkRegular14}>{singlPage.data.description}</Text>
@@ -110,20 +112,20 @@ export const SearchProfil = ({ navigation, route }) => {
             ]}>
             <View style={{ alignItems: 'center' }}>
               <Text style={Styles.darkSemiBold16}>{singlPage.postCount}</Text>
-              <Text style={Styles.balihaiRegular12}>Публикаций</Text>
+              <Text style={Styles.balihaiRegular12}>{t(mainData.lang).Publications}</Text>
             </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('FollowersScreen', { index: 0, id: singlPage.data.id })}
               style={{ alignItems: 'center' }}>
               <Text style={Styles.darkSemiBold16}>{singlPage.followersCount}</Text>
-              <Text style={Styles.balihaiRegular12}>Подписчиков</Text>
+              <Text style={Styles.balihaiRegular12}>{t(mainData.lang).Subscribers}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('FollowersScreen', { index: 1, id: singlPage.data.id })}
               style={{ alignItems: 'center' }}>
               <Text style={Styles.darkSemiBold16}>{singlPage.followerCount}</Text>
               {/* followerCount */}
-              <Text style={Styles.balihaiRegular12}>Подписок</Text>
+              <Text style={Styles.balihaiRegular12}>{t(mainData.lang).Subscriptions}</Text>
             </TouchableOpacity>
           </View>
           <View
@@ -134,11 +136,11 @@ export const SearchProfil = ({ navigation, route }) => {
             {!singlPage.data?.follow_status_sender?.length ? <Button onPress={() => {
               dispatch(AddDeleteFollowAction({ user_id: singlPage.data.id }, staticdata.token))
               dispatch(AddDeletFollow(singlPage.data?.id))
-            }} paddingV={10} title={'Подписаться'} width="48%" /> :
+            }} paddingV={10} title={t(mainData.lang).subscribe} width="48%" /> :
               <Button bg onPress={() => {
                 dispatch(AddDeleteFollowAction({ user_id: singlPage.data.id }, staticdata.token))
                 dispatch(AddDeletFollow(singlPage.data?.id))
-              }} paddingV={10} title={'Отписаться'} width="48%" />
+              }} paddingV={10} title={t(mainData.lang).Unsubscribe} width="48%" />
             }
             <Button onPress={() => sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
           </View>
@@ -148,11 +150,11 @@ export const SearchProfil = ({ navigation, route }) => {
               Styles.balihaiMedium14,
               styles.textWrapper,
               activeCard == 0 && { borderColor: '#000', color: '#000' }
-            ]}>Альбом</Text>
+            ]}>{t(mainData.lang).Album}</Text>
             <Text onPress={() => handelChange()} style={[Styles.balihaiMedium14,
             styles.textWrapper,
             activeCard == 1 && { borderColor: '#000', color: '#000' }
-            ]}>Информация</Text>
+            ]}>{t(mainData.lang).Information}</Text>
           </View>
           <SwiperFlatList
             index={0}

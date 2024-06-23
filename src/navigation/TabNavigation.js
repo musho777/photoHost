@@ -1,60 +1,139 @@
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  AddSvg,
-  ChatSvg,
-  HomeSvg,
-  SearchSvg,
-  UserSvg,
-} from '../assets/svg/TabBarSvg';
-
+import { AddSvg, ChatSvg, HomeSvg, SearchSvg, UserSvg } from '../assets/svg/TabBarSvg';
 import { ChatNavigation } from './ChatNavigation';
 import { SearchNavigation } from './SearchNavigation';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { ProfileNavigation } from './ProfileNavigation';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { HomeNavigation } from './HomeNavigation';
-import { Text, View } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
+const CustomTabBar = ({ state, descriptors, navigation }) => {
+  const user = useSelector((st) => st.userData);
+  const [msgCount, setMsgCount] = useState('');
+
+  useEffect(() => {
+    setMsgCount(user.msgCount);
+  }, [user.msgCount]);
+
+  return (
+    <View style={{
+      flexDirection: 'row',
+      height: 32,
+      backgroundColor: '#FFF',
+      borderTopColor: '#FFF',
+    }}>
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label = options.tabBarLabel !== undefined
+          ? options.tabBarLabel
+          : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const isFocused = state.index === index;
+
+        let tabIcon = null;
+
+        if (label === 'Home') {
+          tabIcon = <HomeSvg focused={isFocused} />;
+        } else if (label === 'SearchNavigation') {
+          tabIcon = <SearchSvg focused={isFocused} />;
+        } else if (label === 'AddImg') {
+          tabIcon = (
+            <View style={{ marginLeft: -2 }}>
+              <AddSvg focused={isFocused} />
+            </View>
+          );
+        } else if (label === 'ChatNavigation') {
+          tabIcon = (
+            <View>
+              {msgCount > 0 && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: -7,
+                    top: -10,
+                    backgroundColor: 'red',
+                    borderRadius: 20,
+                    height: 15,
+                    width: 15,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <Text style={{ color: '#FFF', fontSize: 10 }}>{msgCount}</Text>
+                </View>
+              )}
+              <ChatSvg focused={isFocused} />
+            </View>
+          );
+        } else if (label === 'ProfileNavigation') {
+          tabIcon = <UserSvg focused={isFocused} />;
+        }
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
+
+        return (
+          <TouchableWithoutFeedback
+            key={index}
+            accessibilityRole="button"
+            accessibilityState={isFocused ? { selected: true } : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
+            onLongPress={onLongPress}
+          >
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+              {tabIcon}
+            </View>
+          </TouchableWithoutFeedback>
+        );
+      })}
+    </View>
+  );
+};
 
 export const TabNavigation = () => {
-  const user = useSelector((st) => st.userData)
-  const [msgCout, setMSgCount] = useState('')
-  useEffect(() => {
-    setMSgCount(user.msgCount)
-  }, [user.msgCount])
-
   const Tab = createBottomTabNavigator();
+  const user = useSelector((st) => st.userData);
+  const [msgCount, setMsgCount] = useState('');
+
+  useEffect(() => {
+    setMsgCount(user.msgCount);
+  }, [user.msgCount]);
+
   return (
     <Tab.Navigator
-      sceneContainerStyle={{
-        primary: '#fff',
-        background: '#fff',
-        border: '#fff',
-      }}
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
-        tabBarStyle: (() => {
-          const routeName = getFocusedRouteNameFromRoute(route) ?? ''
-          if (routeName === 'ChatScreen' || routeName === 'FollowersScreen' || routeName === 'ChangeMailFirtScreen' || routeName === 'ParametrScreen' || routeName === 'EditProfilScreen' || routeName === 'ChangePasswordScreen' || routeName === 'ChangeMailScreen' || routeName === 'BlackListScreen') {
-            return {
-              display: 'none'
-            }
-          }
-          return {
-            height: 40,
-            backgroundColor: '#FFF',
-            borderTopColor: '#FFF',
-            borderTopWidth: 1,
-          };
-        })(route),
-      })}>
+      })}
+    >
       <Tab.Screen
         options={() => ({
           headerShown: false,
-
-          tabBarIcon: ({ focused }) => <HomeSvg focused={focused} />,
         })}
         name="Home"
         component={HomeNavigation}
@@ -62,7 +141,6 @@ export const TabNavigation = () => {
       <Tab.Screen
         options={() => ({
           headerShown: false,
-          tabBarIcon: ({ focused }) => <SearchSvg focused={focused} />,
         })}
         name="SearchNavigation"
         component={SearchNavigation}
@@ -70,10 +148,6 @@ export const TabNavigation = () => {
       <Tab.Screen
         options={() => ({
           headerShown: false,
-          tabBarIcon: ({ focused }) =>
-            <View style={{ marginLeft: -2 }}>
-              <AddSvg focused={focused} />
-            </View>
         })}
         name="AddImg"
         component={AddImg}
@@ -81,14 +155,6 @@ export const TabNavigation = () => {
       <Tab.Screen
         options={() => ({
           headerShown: false,
-          tabBarIcon: ({ focused }) =>
-            <View>
-              {msgCout > 0 && <View style={{ position: 'absolute', right: -7, top: -10, backgroundColor: 'red', borderRadius: 20, height: 15, width: 15, justifyContent: "center", alignItems: 'center', textAlign: 'center' }}>
-                <Text style={{ color: '#FFF', fontSize: 10 }}>{msgCout}</Text>
-              </View>}
-              <ChatSvg focused={focused} />
-            </View>
-          ,
         })}
         name="ChatNavigation"
         component={ChatNavigation}
@@ -96,7 +162,6 @@ export const TabNavigation = () => {
       <Tab.Screen
         options={() => ({
           headerShown: false,
-          tabBarIcon: ({ focused }) => <UserSvg focused={focused} />,
         })}
         name="ProfileNavigation"
         component={ProfileNavigation}
@@ -104,3 +169,4 @@ export const TabNavigation = () => {
     </Tab.Navigator>
   );
 };
+
