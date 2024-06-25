@@ -5,7 +5,7 @@ import { SelectSvg, SelectedSvg } from "../assets/svg/Svgs"
 export const CatalogItem = ({ data, onSelect, selected }) => {
   return <TouchableOpacity onPress={() => onSelect(data)} style={style.CatalogItem}>
     <View style={style.select}>
-      {selected ?
+      {!selected ?
         <SelectSvg /> :
         <SelectedSvg />
       }

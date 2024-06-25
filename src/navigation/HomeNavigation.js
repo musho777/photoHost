@@ -3,7 +3,6 @@ import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { HomeHeader } from '../headers/HomeHeader';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { NotificationScreen } from '../screens/Home/NotificationScreen';
-import { Catalog } from '../screens/catalog';
 
 export const HomeNavigation = () => {
   const Stack = createStackNavigator();
@@ -17,13 +16,6 @@ export const HomeNavigation = () => {
           header: ({ navigation }) => {
             return <HomeHeader navigation={navigation} />;
           },
-        }}
-      />
-      <Stack.Screen
-        name="Catalog"
-        component={Catalog}
-        options={{
-          headerShown: false,
         }}
       />
       <Stack.Screen

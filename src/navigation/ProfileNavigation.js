@@ -12,6 +12,7 @@ import { UserProfileScreen } from '../screens/Profile/userProfileScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
 import { useSelector } from 'react-redux';
 import { t } from '../components/lang';
+import { Catalog } from '../screens/catalog';
 
 export const ProfileNavigation = () => {
   const mainData = useSelector(st => st.mainData);
@@ -99,6 +100,13 @@ export const ProfileNavigation = () => {
       <Stack.Screen
         name="SearchProfil"
         component={SearchProfil}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Catalog"
+        component={Catalog}
         options={{
           headerShown: false,
         }}

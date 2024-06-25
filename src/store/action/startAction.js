@@ -248,3 +248,9 @@ export const StartGetCatalog = () => {
         type: 'StartGetCatalog'
     }
 }
+
+export const StartChangeCatalog = () => {
+    return {
+        type: 'StartChangeCatalog'
+    }
+}

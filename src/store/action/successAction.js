@@ -285,3 +285,10 @@ export const SuccessGetCatalog = (data) => {
         data
     }
 }
+
+export const SuccessChangeCatalog = (data) => {
+    return {
+        type: 'SuccessChangeCatalog',
+        data
+    }
+}

@@ -286,3 +286,9 @@ export const ErrorGetCatalog = () => {
         type: 'ErrorGetCatalog'
     }
 }
+
+export const ErrorChangeCatalog = () => {
+    return {
+        type: 'ErrorChangeCatalog'
+    }
+}

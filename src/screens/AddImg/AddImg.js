@@ -45,7 +45,6 @@ export const AddImg = ({ navigation }) => {
       let item = [...screenshotUri]
       item.push(uri)
       setScreenshotUri(item);
-      console.log('Screenshot captured:', uri);
     } catch (error) {
       console.error('Error capturing screenshot:', error);
     }

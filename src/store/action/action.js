@@ -6,6 +6,7 @@ import {
   ErrorAddDeleteFollow,
   ErrorAddInBook,
   ErrorChangeAvatar,
+  ErrorChangeCatalog,
   ErrorChangeEmail,
   ErrorChangeEmailCode,
   ErrorChangeEmailPassword,
@@ -87,6 +88,7 @@ import {
   StartUpdateIkInfo,
   StartDeletePost,
   StartGetCatalog,
+  StartChangeCatalog,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -94,6 +96,7 @@ import {
   SuccessAddDeleteFollow,
   SuccessAddInBook,
   SuccessChangeAvatar,
+  SuccessChangeCatalog,
   SuccessChangeEmail,
   SuccessChangeEmailCode,
   SuccessChangeEmailPassword,
@@ -159,7 +162,7 @@ export const RegisterAction = data => {
         }
       })
       .catch(error => {
-        console.log(error, '22')
+        console.log(error, 'error')
         dispatch(ErrorRegister({ server: 'server' }));
       });
   };
@@ -1468,7 +1471,6 @@ export const GetCatalogAction = (token) => {
     fetch(`${Api}/category`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessGetCatalog(r.data))
         }
@@ -1477,8 +1479,42 @@ export const GetCatalogAction = (token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorGetCatalog())
       });
   };
+}
+
+
+export const ChangeCatalog = (token, data) => {
+  return (dispatch) => {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${token}`);
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(data),
+      redirect: 'follow',
+    };
+    dispatch(StartChangeCatalog())
+    fetch(`${Api}/user_change_category`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessChangeCatalog(r))
+        }
+        else {
+          dispatch(ErrorChangeCatalog())
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorChangeCatalog())
+      });
+  };
+}
+
+export const ClearChangeCatalog = () => {
+  return {
+    type: 'ClearChangeCatalog'
+  }
 }

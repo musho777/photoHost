@@ -75,7 +75,7 @@ export const RegisterScreen = ({ navigation }) => {
         email: email.value,
         nickname: userName.value,
         password: password.value,
-        password_confirmation: confirmPassword.value
+        // password_confirmation: confirmPassword.value
       }))
     }
   }
@@ -89,8 +89,10 @@ export const RegisterScreen = ({ navigation }) => {
     if (confirm.status) {
       dispatch(ClearConfirmPasswordAction())
       dispatch(ClearRegisterAction())
+      navigation.navigate('ProfileNavigation', {
+        screen: 'Catalog'
+      });
       // navigation.navigate('TabNavigation')
-      navigation.navigate('Catalog')
     }
   }, [confirm.status])
 

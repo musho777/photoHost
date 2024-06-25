@@ -63,6 +63,17 @@ export const ParametrScreen = ({ navigation }) => {
       </View>
       <ArrowSvg />
     </TouchableOpacity>
+
+    <TouchableOpacity onPress={() => {
+      dispatch(ClearEmailChange())
+      navigation.navigate('Catalog', { id: 'accaunt' })
+    }} style={[Styles.flexSpaceBetween, { paddingVertical: 20, borderBottomWidth: 1, borderBottomColor: AppColors.Solitude_Color, paddingRight: 15 }]}>
+      <View style={Styles.flexAlignItems}>
+        <Text style={[Styles.darkSemiBold14, { paddingHorizontal: 15 }]}>{t(mainData.lang).Catalog}</Text>
+      </View>
+      <ArrowSvg />
+    </TouchableOpacity>
+
     <TouchableOpacity onPress={() => setShowModal(true)} style={[Styles.flexSpaceBetween, { paddingVertical: 20, borderBottomWidth: 1, borderBottomColor: AppColors.Solitude_Color, paddingRight: 15 }]}>
       <Text style={[Styles.darkSemiBold14, { paddingHorizontal: 15 }]}>{t(mainData.lang).changelanguage}</Text>
       <ArrowSvg />
