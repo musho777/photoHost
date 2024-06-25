@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
-import { CreatPostAction } from '../../store/action/action';
+import { CreatPostAction, GetCatalogAction } from '../../store/action/action';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -19,6 +19,8 @@ import Video from 'react-native-video';
 import { Button } from '../../ui/Button';
 import { t } from '../../components/lang';
 import { captureRef } from 'react-native-view-shot';
+import { MultySelect } from '../../components/multySelect';
+
 
 export const AddImg = ({ navigation }) => {
   const mainData = useSelector(st => st.mainData);
@@ -27,6 +29,9 @@ export const AddImg = ({ navigation }) => {
   const createPost = useSelector(st => st.createPost);
   const staticData = useSelector(st => st.static);
 
+
+  const [selectedCatalog, setSelectedCatalog] = useState('')
+  const getCatalog = useSelector((st) => st.getCatalog)
   const videoRef = useRef(null);
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
@@ -35,6 +40,7 @@ export const AddImg = ({ navigation }) => {
   const videoRef5 = useRef(null);
   const ref = [videoRef, videoRef1, videoRef2, videoRef3, videoRef4, videoRef5]
   const [screenshotUri, setScreenshotUri] = useState([]);
+  const [errorCatalog, setErrorCatalog] = useState(false)
 
   const captureScreenshot = async (ref) => {
     try {
@@ -76,9 +82,14 @@ export const AddImg = ({ navigation }) => {
   }
 
   useEffect(() => {
+    dispatch(GetCatalogAction(staticData.token))
+  }, [])
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       setError('')
       Camera()
+      setErrorCatalog(false)
     });
     return unsubscribe;
   }, [navigation]);
@@ -92,6 +103,7 @@ export const AddImg = ({ navigation }) => {
   }, [createPost.status]);
 
   const creatPost = () => {
+    setErrorCatalog(false)
     let form = new FormData();
     uri.length &&
       uri.forEach((el, i) => {
@@ -118,7 +130,15 @@ export const AddImg = ({ navigation }) => {
           )
       });
     description && form.append('description', description);
-    dispatch(CreatPostAction(form, staticData.token));
+    form.append('category_id', selectedCatalog)
+    console.log(selectedCatalog)
+    if (selectedCatalog != '') {
+      setErrorCatalog(true)
+      dispatch(CreatPostAction(form, staticData.token));
+    }
+    else {
+      setErrorCatalog(true)
+    }
   };
 
   const addPhoto = () => {
@@ -135,8 +155,7 @@ export const AddImg = ({ navigation }) => {
     };
     launchImageLibrary(options, (response) => {
       let item = [...uri]
-      if (response.didCancel) {
-      }
+      if (response.didCancel) { }
       else if (response.error) {
       } else {
         const selectedVideo = response.assets[0];
@@ -166,12 +185,13 @@ export const AddImg = ({ navigation }) => {
     });
   }
 
-
   const delateFoto = index => {
     let item = [...uri];
     item.splice(index, 1);
     setUri(item);
   };
+
+
   return (
     <View>
       <HeaderWhiteTitle
@@ -184,7 +204,6 @@ export const AddImg = ({ navigation }) => {
         disabled={uri.length === 0}
         title={t(mainData.lang).Newpublication}
       />
-
       <View style={styles.textWrapper}>
         <TextInput
           value={description}
@@ -231,12 +250,22 @@ export const AddImg = ({ navigation }) => {
           />
         </View>
       })}
+
+
       <Text style={{ padding: 1, color: 'red' }}>{error}</Text>
-      <View style={{ margin: 10 }}>
+
+      <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
         {uri.length < 6 &&
           <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
         }
       </View>
+      <View style={{ height: 60, marginHorizontal: 10 }}>
+        <MultySelect name={t(mainData.lang).Choosecatalog} selectedValue={(e) => setSelectedCatalog(e)} data={getCatalog.data} />
+      </View>
+      {errorCatalog &&
+        <Text style={[{ marginHorizontal: 10, marginBottom: 5 }, Styles.tomatoMedium10]}>{t(mainData.Data).selectacategory}</Text>
+      }
+      <Text style={[{ marginHorizontal: 10 }, Styles.balihaiMedium10]}>{t(mainData.Data).Yourcontent}</Text>
     </View>
   );
 };
