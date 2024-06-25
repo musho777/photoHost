@@ -10,7 +10,7 @@ export const NotificationBlock = ({ description, id, itemId, avatar, name, photo
       <Image
         style={styles.userImg}
         source={{
-          uri: `https://chamba.justcode.am/uploads/${avatar}`,
+          uri: `https://chamba.digiluys.com/uploads/${avatar}`,
         }}
       />
       <View style={{ width: (width - 120), flexDirection: 'row', borderWidth: 0, alignItems: 'center' }}>
@@ -22,7 +22,7 @@ export const NotificationBlock = ({ description, id, itemId, avatar, name, photo
       <Image
         style={styles.userImg}
         source={{
-          uri: `https://chamba.justcode.am/uploads/${photo}`,
+          uri: `https://chamba.digiluys.com/uploads/${photo}`,
         }}
       />
     </View>

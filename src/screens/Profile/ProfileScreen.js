@@ -148,12 +148,12 @@ export const ProfileScreen = ({ navigation, profile }) => {
                 source={{
                   uri: imgUrl
                     ? imgUrl
-                    : `https://chamba.justcode.am/uploads/${user.avatar}`,
+                    : `https://chamba.digiluys.com/uploads/${user.avatar}`,
                 }}
               />
               {/* <Image
                 style={styles.img}
-                source={{ uri: `https://chamba.justcode.am/uploads/${user?.avatar}` }}
+                source={{ uri: `https://chamba.digiluys.com/uploads/${user?.avatar}` }}
               /> */}
             </TouchableOpacity>
             {changeAvatar && <View style={{ top: 100, position: "absolute", }}>

@@ -280,3 +280,9 @@ export const ErrorDeletePost = (data) => {
         data
     }
 }
+
+export const ErrorGetCatalog = () => {
+    return {
+        type: 'ErrorGetCatalog'
+    }
+}

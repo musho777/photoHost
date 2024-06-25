@@ -95,7 +95,7 @@ export const SearchProfil = ({ navigation, route }) => {
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Image
               style={styles.img}
-              source={{ uri: `https://chamba.justcode.am/uploads/${singlPage.data.avatar}` }}
+              source={{ uri: `https://chamba.digiluys.com/uploads/${singlPage.data.avatar}` }}
             />
             <View style={{ marginTop: 7, marginBottom: 15, alignItems: 'center' }}>
               <Text style={Styles.darkMedium16}>{singlPage.data.nickname}</Text>

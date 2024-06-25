@@ -242,3 +242,9 @@ export const StartDeletePost = () => {
         type: 'StartDeletePost'
     }
 }
+
+export const StartGetCatalog = () => {
+    return {
+        type: 'StartGetCatalog'
+    }
+}

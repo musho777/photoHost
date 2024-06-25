@@ -166,6 +166,7 @@ export const TabNavigation = () => {
         name="ProfileNavigation"
         component={ProfileNavigation}
       />
+
     </Tab.Navigator>
   );
 };

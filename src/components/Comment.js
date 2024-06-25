@@ -251,7 +251,7 @@ export const Comments = ({ close, route, }) => {
               <Image
                 style={{ width: 40, height: 40, borderRadius: 50 }}
                 source={{
-                  uri: `https://chamba.justcode.am/uploads/${user.data.avatar}`,
+                  uri: `https://chamba.digiluys.com/uploads/${user.data.avatar}`,
                 }}
               />
               <View style={{ width: '100%', flexDirection: "row", alignItems: 'center', gap: 10 }}>

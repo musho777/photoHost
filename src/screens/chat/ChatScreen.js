@@ -226,7 +226,7 @@ export const ChatScreen = ({ navigation, route }) => {
             <Image
               style={styles.img}
               source={{
-                uri: `https://chamba.justcode.am/uploads/${getSinglePageChat.resiverUser.avatar}`,
+                uri: `https://chamba.digiluys.com/uploads/${getSinglePageChat.resiverUser.avatar}`,
               }}
             />
             <View style={{ marginHorizontal: 20 }}>

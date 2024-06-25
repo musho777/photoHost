@@ -76,7 +76,7 @@ export const ChatUsersScreen = ({ navigation }) => {
       <ChatUser
         username={item.sender?.nickname}
         name={item.sender?.name}
-        img={`https://chamba.justcode.am/uploads/${item?.sender?.avatar}`}
+        img={`https://chamba.digiluys.com/uploads/${item?.sender?.avatar}`}
         sendWhiteMe={item.sendWhiteMe}
         sendr_id={item.latest_sender}
         user_id={user.data.id}

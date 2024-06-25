@@ -36,6 +36,7 @@ import AddBlackListPussherReducer from './reducers/addBlackListPussherReducer';
 import GetCityesReducer from './reducers/getCityesReducer';
 import MsgCountReducer from './reducers/MsgCountReducer';
 import MainReducer from './reducers/MainReducer';
+import GetCatalogReducer from './reducers/GetCatalogReducer';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -74,6 +75,7 @@ const rootReducer = combineReducers({
     getCitys: GetCityesReducer,
     msgCount: MsgCountReducer,
     mainData: MainReducer,
+    getCatalog: GetCatalogReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

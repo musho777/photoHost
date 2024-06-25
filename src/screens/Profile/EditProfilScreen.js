@@ -211,7 +211,7 @@ export const EditProfilScreen = ({ navigation }) => {
             source={{
               uri: imgUrl
                 ? imgUrl
-                : `https://chamba.justcode.am/uploads/${user.data.avatar}`,
+                : `https://chamba.digiluys.com/uploads/${user.data.avatar}`,
             }}
           />
         </View>

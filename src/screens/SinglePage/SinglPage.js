@@ -364,7 +364,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
             marginHorizontal: 20,
           }}
           source={{
-            uri: `https://chamba.justcode.am/uploads/${user.data.avatar}`,
+            uri: `https://chamba.digiluys.com/uploads/${user.data.avatar}`,
           }}
         />
         <Input

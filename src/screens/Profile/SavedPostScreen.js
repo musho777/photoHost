@@ -49,7 +49,7 @@ export const SavedPostScreen = ({ navigation }) => {
   //       <Image
   //         style={styles.img}
   //         source={{
-  //           uri: `https://chamba.justcode.am/uploads/${item.post.photo[0].photo}`,
+  //           uri: `https://chamba.digiluys.com/uploads/${item.post.photo[0].photo}`,
   //         }}
   //         key={index}
   //       />

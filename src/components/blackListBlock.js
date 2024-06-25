@@ -16,7 +16,7 @@ export const BlackListBlock = ({
       <View style={Styles.flexAlignItems}>
         <Image
           style={styles.img}
-          source={{ uri: `https://chamba.justcode.am/uploads/${img}` }}
+          source={{ uri: `https://chamba.digiluys.com/uploads/${img}` }}
         />
         <View>
           <Text style={Styles.darkSemiBold14}>{name}</Text>

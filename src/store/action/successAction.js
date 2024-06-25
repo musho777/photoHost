@@ -278,3 +278,10 @@ export const SuccessDeletPost = () => {
         data
     }
 }
+
+export const SuccessGetCatalog = (data) => {
+    return {
+        type: "SuccessGetCatalog",
+        data
+    }
+}

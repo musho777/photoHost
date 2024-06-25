@@ -19,6 +19,7 @@ import {
   ErrorEditPost,
   ErrorForgotPassword,
   ErrorGetBlackList,
+  ErrorGetCatalog,
   ErrorGetCitys,
   ErrorGetFollower,
   ErrorGetFollowersAction,
@@ -85,6 +86,7 @@ import {
   StartGetCiyts,
   StartUpdateIkInfo,
   StartDeletePost,
+  StartGetCatalog,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -104,6 +106,7 @@ import {
   SuccessEditPost,
   SuccessForgotPassword,
   SuccessGetBlackList,
+  SuccessGetCatalog,
   SuccessGetCitys,
   SuccessGetFollower,
   SuccessGetLents,
@@ -128,7 +131,7 @@ import {
   SucessGetFollowersAction,
 } from './successAction';
 
-export const Api = 'https://chamba.justcode.am/api';
+export const Api = 'https://chamba.digiluys.com/api';
 
 export const RegisterAction = data => {
   return dispatch => {
@@ -156,6 +159,7 @@ export const RegisterAction = data => {
         }
       })
       .catch(error => {
+        console.log(error, '22')
         dispatch(ErrorRegister({ server: 'server' }));
       });
   };
@@ -521,7 +525,7 @@ export const chnageAvatarAction = (url, token) => {
     };
 
     fetch(
-      'https://chamba.justcode.am/api/user_update_profile_photo',
+      'https://chamba.digiluys.com/api/user_update_profile_photo',
       requestOptions,
     )
       .then(response => response.json())
@@ -1448,4 +1452,33 @@ export const ChnageLanguage = (lang) => {
     type: 'ChnageLanguage',
     lang
   }
+}
+
+export const GetCatalogAction = (token) => {
+  return (dispatch) => {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${token}`);
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+    dispatch(StartGetCatalog())
+    fetch(`${Api}/category`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if (r.status) {
+          dispatch(SuccessGetCatalog(r.data))
+        }
+        else {
+          dispatch(ErrorGetCatalog())
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        dispatch(ErrorGetCatalog())
+      });
+  };
 }

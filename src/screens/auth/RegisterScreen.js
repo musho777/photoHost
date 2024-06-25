@@ -89,7 +89,8 @@ export const RegisterScreen = ({ navigation }) => {
     if (confirm.status) {
       dispatch(ClearConfirmPasswordAction())
       dispatch(ClearRegisterAction())
-      navigation.navigate('TabNavigation')
+      // navigation.navigate('TabNavigation')
+      navigation.navigate('Catalog')
     }
   }, [confirm.status])
 

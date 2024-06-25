@@ -3,6 +3,8 @@ import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { RecoveryPassword } from '../screens/auth/RecoveryPassword';
 import { NewPassword } from '../screens/auth/NewPassword';
+import { Header } from '../headers/Header';
+import { Catalog } from '../screens/catalog';
 
 export const LoginNavigation = () => {
   const Stack = createStackNavigator();
@@ -37,6 +39,13 @@ export const LoginNavigation = () => {
       <Stack.Screen
         name="NewPassword"
         component={NewPassword}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Catalog"
+        component={Catalog}
         options={{
           headerShown: false,
         }}

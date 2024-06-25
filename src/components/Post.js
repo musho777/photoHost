@@ -173,7 +173,7 @@ export const Post = ({
               style={Styles.flexAlignItems
               }>
               <Image style={styles.userImg}
-                source={{ uri: `https://chamba.justcode.am/uploads/${userImg}` }} />
+                source={{ uri: `https://chamba.digiluys.com/uploads/${userImg}` }} />
               <View>
                 <View style={Styles.flexAlignItems}>
                   <Text Text style={[Styles.darkSemiBold14, { marginRight: 5 }]}>{userName}</Text>
