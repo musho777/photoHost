@@ -53,6 +53,7 @@ export const Catalog = ({ route }) => {
   useEffect(() => {
     if (changeCatalog.status) {
       navigation.navigate('Home')
+      dispatch(ClearChangeCatalog())
     }
   }, [changeCatalog.status])
 
@@ -62,6 +63,7 @@ export const Catalog = ({ route }) => {
     dispatch(ChangeCatalog(token, {
       category_ids: selected
     }))
+    dispatch(ClearChangeCatalog())
   }
 
   return <View style={style.page}>

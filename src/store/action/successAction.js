@@ -292,3 +292,10 @@ export const SuccessChangeCatalog = (data) => {
         data
     }
 }
+
+export const SuccessGetLentsRec = (data) => {
+    return {
+        type: 'SuccessGetLentsRec',
+        data
+    }
+}

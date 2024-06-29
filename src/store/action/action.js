@@ -25,6 +25,7 @@ import {
   ErrorGetFollower,
   ErrorGetFollowersAction,
   ErrorGetLents,
+  ErrorGetLentsRec,
   ErrorGetMyBooks,
   ErrorGetMyChatRoom,
   ErrorGetNotification,
@@ -89,6 +90,7 @@ import {
   StartDeletePost,
   StartGetCatalog,
   StartChangeCatalog,
+  StartGetLentsRec,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -113,6 +115,7 @@ import {
   SuccessGetCitys,
   SuccessGetFollower,
   SuccessGetLents,
+  SuccessGetLentsRec,
   SuccessGetMyBooks,
   SuccessGetMyChatRoom,
   SuccessGetNotification,
@@ -912,6 +915,32 @@ export const GetLentsAction = (token, page) => {
       })
       .catch(error => {
         dispatch(ErrorGetLents('server error'));
+      });
+  };
+};
+export const GetLentsActionRec = (token, page) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    if (page == 1 || !page) {
+      dispatch(StartGetLentsRec());
+    }
+    fetch(`${Api}/get_recommendation_posts?page=${page}`, {
+      method: 'GET',
+      headers: myHeaders,
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetLentsRec(r));
+        } else {
+          dispatch(ErrorGetLentsRec('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetLentsRec('server error'));
+
       });
   };
 };

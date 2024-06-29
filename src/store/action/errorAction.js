@@ -292,3 +292,9 @@ export const ErrorChangeCatalog = () => {
         type: 'ErrorChangeCatalog'
     }
 }
+
+export const ErrorGetLentsRec = () => {
+    return {
+        type: 'ErrorGetLentsRec'
+    }
+}

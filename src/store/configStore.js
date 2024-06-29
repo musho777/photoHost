@@ -38,6 +38,7 @@ import MsgCountReducer from './reducers/MsgCountReducer';
 import MainReducer from './reducers/MainReducer';
 import GetCatalogReducer from './reducers/GetCatalogReducer';
 import ChangeCatalogReducer from './reducers/changeCatalogReducer';
+import GetLentsActionRecReducer from './reducers/GetLentsActionRecReducer';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -77,7 +78,8 @@ const rootReducer = combineReducers({
     msgCount: MsgCountReducer,
     mainData: MainReducer,
     getCatalog: GetCatalogReducer,
-    changeCatalog: ChangeCatalogReducer
+    changeCatalog: ChangeCatalogReducer,
+    getLentsAction: GetLentsActionRecReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

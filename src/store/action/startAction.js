@@ -254,3 +254,9 @@ export const StartChangeCatalog = () => {
         type: 'StartChangeCatalog'
     }
 }
+
+export const StartGetLentsRec = () => {
+    return {
+        type: "StartGetLentsRec"
+    }
+}

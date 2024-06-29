@@ -174,7 +174,7 @@ export const ProfileScreen = ({ navigation, profile }) => {
                   <View style={{ width: 25, height: 25 }}>
                     <Image style={{ width: 25, height: 20, marginLeft: -2 }} source={require('../../assets/img/edit.png')} />
                   </View>
-                  <Text style={{ color: "black", fontSize: 14, fontWeight: '500', }} onPress={() => changeImg()}>{t(mainData.lang).Changemail}</Text>
+                  <Text style={{ color: "black", fontSize: 14, fontWeight: '500', }} onPress={() => changeImg()}>{t(mainData.lang).ChangePhoto}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ flexDirection: 'row', gap: 10, width: 150 }} onPress={() => DelatePhoto()}>
                   <View style={{ width: 25, height: 25 }}>
