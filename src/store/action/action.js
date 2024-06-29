@@ -140,6 +140,7 @@ import {
 export const Api = 'https://chamba.digiluys.com/api';
 
 export const RegisterAction = data => {
+  console.log(data)
   return dispatch => {
     dispatch(StartRegister());
     fetch(`${Api}/register`, {
@@ -149,6 +150,7 @@ export const RegisterAction = data => {
     })
       .then(response => response.json())
       .then(r => {
+        console.log("00000")
         if (r.status) {
           dispatch(SuccessRegister(r));
         } else {
@@ -165,7 +167,7 @@ export const RegisterAction = data => {
         }
       })
       .catch(error => {
-        console.log(error, 'error')
+        console.log(error)
         dispatch(ErrorRegister({ server: 'server' }));
       });
   };
@@ -854,13 +856,16 @@ export const CreatPostAction = (data, token) => {
     fetch(`${Api}/add_new_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessCreatePost(r));
         } else {
+
           dispatch(ErrorCreatePost(error));
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorCreatePost(error));
       });
   };

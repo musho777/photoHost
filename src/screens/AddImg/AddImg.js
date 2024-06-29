@@ -20,6 +20,7 @@ import { Button } from '../../ui/Button';
 import { t } from '../../components/lang';
 import { captureRef } from 'react-native-view-shot';
 import { MultySelect } from '../../components/multySelect';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 export const AddImg = ({ navigation }) => {
@@ -28,8 +29,7 @@ export const AddImg = ({ navigation }) => {
   const [description, setDescription] = useState('');
   const createPost = useSelector(st => st.createPost);
   const staticData = useSelector(st => st.static);
-
-
+  const [vidio, setVidio] = useState('')
   const [selectedCatalog, setSelectedCatalog] = useState('')
   const getCatalog = useSelector((st) => st.getCatalog)
   const videoRef = useRef(null);
@@ -38,9 +38,17 @@ export const AddImg = ({ navigation }) => {
   const videoRef3 = useRef(null);
   const videoRef4 = useRef(null);
   const videoRef5 = useRef(null);
-  const ref = [videoRef, videoRef1, videoRef2, videoRef3, videoRef4, videoRef5]
+  const videoRef6 = useRef(null);
+  const videoRef7 = useRef(null);
+  const videoRef8 = useRef(null);
+  const videoRef9 = useRef(null);
+  const videoRef10 = useRef(null);
+
+  const ref = [videoRef, videoRef1, videoRef2, videoRef3, videoRef4, videoRef5, videoRef6, videoRef7, videoRef8, videoRef9, videoRef10]
   const [screenshotUri, setScreenshotUri] = useState([]);
   const [errorCatalog, setErrorCatalog] = useState(false)
+  const [error, setError] = useState('')
+  const dispatch = useDispatch();
 
   const captureScreenshot = async (ref) => {
     try {
@@ -56,18 +64,6 @@ export const AddImg = ({ navigation }) => {
     }
   };
 
-
-  const [error, setError] = useState('')
-
-  const dispatch = useDispatch();
-
-
-  const onEnd = () => {
-    if (videoRef.current) {
-      videoRef.current.seek(0);
-      videoRef.current.play();
-    }
-  };
   const Camera = async () => {
     const cameraPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.CAMERA
     const photoLibraryPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
@@ -111,6 +107,7 @@ export const AddImg = ({ navigation }) => {
         if (el.uri.includes('.mp4')) {
           index = index + 1
         }
+        console.log(!el.uri.includes('.mp4'))
         !el.uri.includes('.mp4') ?
           form.append('photos[]', {
             uri: el.uri,
@@ -131,9 +128,7 @@ export const AddImg = ({ navigation }) => {
       });
     description && form.append('description', description);
     form.append('category_id', selectedCatalog)
-    console.log(selectedCatalog)
     if (selectedCatalog != '') {
-      setErrorCatalog(true)
       dispatch(CreatPostAction(form, staticData.token));
     }
     else {
@@ -148,7 +143,6 @@ export const AddImg = ({ navigation }) => {
       quality: 1,
       maxWidth: 500,
       maxHeight: 500,
-      // durationLimit: 5,
       storageOptions: {
         skipBackup: true,
       },
@@ -160,7 +154,8 @@ export const AddImg = ({ navigation }) => {
       } else {
         const selectedVideo = response.assets[0];
         if (response.assets[0].type && response.assets[0].type.startsWith('video')) {
-          if (selectedVideo.duration <= 20) {
+          setVidio(true)
+          if (selectedVideo.duration <= 60) {
             const source = { uri: response.assets[0].uri };
             if (response.type && response.type.startsWith('video')) {
               item = item.concat(source)
@@ -173,7 +168,7 @@ export const AddImg = ({ navigation }) => {
             }, 2000)
           }
           else {
-            setError('видео должен быть меньше чем 20 с')
+            setError('видео должен быть меньше чем 60 с')
           }
         }
         else {
@@ -189,18 +184,30 @@ export const AddImg = ({ navigation }) => {
     let item = [...uri];
     item.splice(index, 1);
     setUri(item);
-  };
+  }
 
+  useEffect(() => {
+    let item = false
+    uri.map((elm, i) => {
+      if (elm.uri.includes('.mov') || elm.uri.includes('.mp4')) {
+        item = true
+      }
+    })
+    if (item) {
+      setVidio(true)
+    }
+    else {
+      setVidio(false)
+    }
+  }, [uri])
 
   return (
-    <View>
+    <ScrollView>
       <HeaderWhiteTitle
         loading={createPost.loading}
         onCheck={() => creatPost()}
         check
-        onPress={() => {
-          navigation.navigate('Home')
-        }}
+        onPress={() => { navigation.navigate('Home') }}
         disabled={uri.length === 0}
         title={t(mainData.lang).Newpublication}
       />
@@ -217,8 +224,7 @@ export const AddImg = ({ navigation }) => {
         {uri?.length > 0 && uri?.map((elm, i) => {
           return (
             <View key={i} style={styles.imgWrapper}>
-              {!elm.uri.includes('.mov') ?
-
+              {(!elm.uri.includes('.mov') && !elm.uri.includes('.mp4')) ?
                 <Image
                   ref={ref[i]}
                   style={styles.img}
@@ -227,9 +233,8 @@ export const AddImg = ({ navigation }) => {
                 <Video
                   source={{ uri: elm.uri }}
                   style={styles.img}
-                  controls={true}
+                  // controls={true}
                   resizeMode="cover"
-                  onEnd={onEnd}
                   ref={videoRef}
                 />
               }
@@ -242,31 +247,29 @@ export const AddImg = ({ navigation }) => {
           );
         })}
       </View>
-      {screenshotUri.map((elm, i) => {
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={{ uri: elm }}
-            style={{ width: 200, height: 150, marginTop: 20 }}
-          />
-        </View>
-      })}
-
-
-      <Text style={{ padding: 1, color: 'red' }}>{error}</Text>
-
-      <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
-        {uri.length < 6 &&
+      {error && <Text style={{ padding: 1, color: 'red' }}>{error}</Text>}
+      <View style={{ marginHorizontal: 10, marginVertical: 15 }}>
+        {uri.length < 10 &&
           <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
         }
       </View>
+      {vidio && <View style={styles.textWrapper1}>
+        <TextInput
+          value={description}
+          onChangeText={e => setDescription(e)}
+          style={Styles.darkMedium14}
+          placeholder={t(mainData.lang).adddescription}
+          placeholderTextColor={'#8C9CAB'}
+        />
+      </View>}
       <View style={{ height: 60, marginHorizontal: 10 }}>
         <MultySelect name={t(mainData.lang).Choosecatalog} selectedValue={(e) => setSelectedCatalog(e)} data={getCatalog.data} />
       </View>
       {errorCatalog &&
-        <Text style={[{ marginHorizontal: 10, marginBottom: 5 }, Styles.tomatoMedium10]}>{t(mainData.Data).selectacategory}</Text>
+        <Text style={[{ marginHorizontal: 10, marginBottom: 5 }, Styles.tomatoMedium10]}>{t(mainData.lang).Selectacategory}</Text>
       }
-      <Text style={[{ marginHorizontal: 10 }, Styles.balihaiMedium10]}>{t(mainData.Data).Yourcontent}</Text>
-    </View>
+      <Text style={[{ marginHorizontal: 10 }, Styles.balihaiMedium10]}>{t(mainData.lang).Yourcontent}</Text>
+    </ScrollView>
   );
 };
 
@@ -293,6 +296,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomColor: AppColors.Solitude_Color,
     borderBottomWidth: 1,
+  },
+  textWrapper1: {
+    paddingHorizontal: 15,
+    borderColor: AppColors.Solitude_Color,
+    borderWidth: 1,
+    marginBottom: 10,
   },
   close: {
     position: 'absolute',

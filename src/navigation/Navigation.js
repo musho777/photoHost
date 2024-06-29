@@ -35,6 +35,7 @@ import { SearchProfil } from '../screens/Search/SearchProfil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CheckBlack } from '../../CheckBlack';
 import { LoginNavigation } from './LoginNavigation';
+import { Catalog } from '../screens/catalog';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
@@ -235,11 +236,15 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="Catalog"
+            component={Catalog}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </BottomSheetModalProvider>
   );
 };
-
-// SinglPageScreen
-// EditProfil

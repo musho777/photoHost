@@ -53,14 +53,6 @@ export const RegisterScreen = ({ navigation }) => {
     else {
       setPassword({ ...password, error: '' })
     }
-    // if (confirmPassword.value !== password.value) {
-    //   setConfirmPassword({ ...confirmPassword, error: 'Пароли не совпадают' })
-    //   item = false
-
-    // }
-    // else {
-    //   setConfirmPassword({ ...confirmPassword, error: '' })
-    // }
     if (!ValidateEmail(email.value)) {
       setEmail({ ...email, error: 'Введите корректный адрес эл. почты' })
       item = false
@@ -75,7 +67,6 @@ export const RegisterScreen = ({ navigation }) => {
         email: email.value,
         nickname: userName.value,
         password: password.value,
-        // password_confirmation: confirmPassword.value
       }))
     }
   }
@@ -89,9 +80,7 @@ export const RegisterScreen = ({ navigation }) => {
     if (confirm.status) {
       dispatch(ClearConfirmPasswordAction())
       dispatch(ClearRegisterAction())
-      navigation.navigate('ProfileNavigation', {
-        screen: 'Catalog'
-      });
+      navigation.navigate('Catalog');
       // navigation.navigate('TabNavigation')
     }
   }, [confirm.status])

@@ -45,10 +45,17 @@ export const Catalog = ({ route }) => {
     setSelected(item)
   }, [userData])
 
+
   useEffect(() => {
-    dispatch(ClearChangeCatalog())
-    GetTokecn(token, { category_ids: selected })
-  }, [])
+    const unsubscribe = navigation.addListener('focus', async () => {
+      let token = await AsyncStorage.getItem('token')
+      if (token) {
+        dispatch(ClearChangeCatalog())
+        GetTokecn(token, { category_ids: selected })
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     if (changeCatalog.status) {

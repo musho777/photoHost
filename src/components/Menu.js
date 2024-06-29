@@ -47,6 +47,15 @@ export const Menu = ({ visible, close }) => {
             <TouchableOpacity
               onPress={() => {
                 close();
+                navigation.navigate('Catalog', { id: 'accaunt' });
+              }}>
+              <Text style={[Styles.darkRegular16, { marginTop: 25 }]}>
+                {t(mainData.lang).Catalog}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                close();
                 navigation.navigate('ParametrScreen');
               }}>
               <Text style={[Styles.darkRegular16, { marginTop: 30 }]}>

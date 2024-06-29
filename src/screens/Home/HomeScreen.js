@@ -5,8 +5,6 @@ import { Post } from '../../components/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BackHandler } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 
 export const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -18,29 +16,14 @@ export const HomeScreen = ({ navigation }) => {
   const [index, setIndex] = useState(0);
   const flatListRef = useRef(null);
 
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        if (!navigation.canGoBack()) {
-          BackHandler.exitApp()
-        }
-        return true
-      };
-
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-      return () =>
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation])
-  );
-
-
   useEffect(() => {
     if (staticdata.token) {
       dispatch(GetLentsAction(staticdata.token));
     }
   }, [staticdata.token]);
+
+
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       let token = await AsyncStorage.getItem('token')
@@ -95,7 +78,6 @@ export const HomeScreen = ({ navigation }) => {
           style={{
             backfaceVisibility: 'visible',
             backgroundColor: 'transparent',
-            // paddingHorizontal: 10,
             marginTop: 5
           }}>
           <Post
@@ -174,13 +156,6 @@ export const HomeScreen = ({ navigation }) => {
       data={data}
       enableEmptySections={true}
       renderItem={renderItem}
-    // onEndReached={() => {
-    //   if (getLents?.nextPage) {
-    //     let p = page + 1;
-    //     dispatch(GetLentsAction(staticdata.token, p));
-    //     setPage(p);
-    //   }
-    // }}
     />
   );
 };
