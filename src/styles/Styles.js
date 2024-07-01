@@ -113,6 +113,11 @@ export const Styles = StyleSheet.create({
         fontSize: 10,
         color: AppColors.BaliHai_Color,
     },
+    balihaiMedium8: {
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 8,
+        color: AppColors.BaliHai_Color,
+    },
     eslipesMedium13: {
         fontFamily: 'Montserrat-Medium',
         fontSize: 13,

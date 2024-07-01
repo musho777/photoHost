@@ -16,7 +16,7 @@ import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Video from 'react-native-video';
-import { Button } from '../../ui/Button';
+import { Button } from './components/button';
 import { t } from '../../components/lang';
 import { captureRef } from 'react-native-view-shot';
 import { MultySelect } from '../../components/multySelect';
@@ -30,6 +30,7 @@ export const AddImg = ({ navigation }) => {
   const createPost = useSelector(st => st.createPost);
   const staticData = useSelector(st => st.static);
   const [vidio, setVidio] = useState('')
+  const [musicFromVidio, setMusicFromVidio] = useState('')
   const [selectedCatalog, setSelectedCatalog] = useState('')
   const getCatalog = useSelector((st) => st.getCatalog)
   const videoRef = useRef(null);
@@ -49,7 +50,7 @@ export const AddImg = ({ navigation }) => {
   const [errorCatalog, setErrorCatalog] = useState(false)
   const [error, setError] = useState('')
   const dispatch = useDispatch();
-
+  console.log(musicFromVidio)
   const captureScreenshot = async (ref) => {
     try {
       const uri = await captureRef(ref, {
@@ -128,6 +129,7 @@ export const AddImg = ({ navigation }) => {
       });
     description && form.append('description', description);
     form.append('category_id', selectedCatalog)
+    musicFromVidio && form.append('music_name', musicFromVidio)
     if (selectedCatalog != '') {
       dispatch(CreatPostAction(form, staticData.token));
     }
@@ -220,55 +222,57 @@ export const AddImg = ({ navigation }) => {
           placeholderTextColor={'#8C9CAB'}
         />
       </View>
-      <View style={styles.wrapper}>
-        {uri?.length > 0 && uri?.map((elm, i) => {
-          return (
-            <View key={i} style={styles.imgWrapper}>
-              {(!elm.uri.includes('.mov') && !elm.uri.includes('.mp4')) ?
-                <Image
-                  ref={ref[i]}
-                  style={styles.img}
-                  source={{ uri: elm.uri }}
-                /> :
-                <Video
-                  source={{ uri: elm.uri }}
-                  style={styles.img}
-                  // controls={true}
-                  resizeMode="cover"
-                  ref={videoRef}
-                />
-              }
-              <TouchableOpacity
-                onPress={() => delateFoto(i)}
-                style={styles.close}>
-                <Text style={{ color: '#cccccc', fontSize: 14, marginTop: -4 }}>x</Text>
-              </TouchableOpacity>
-            </View>
-          );
-        })}
-      </View>
-      {error && <Text style={{ padding: 1, color: 'red' }}>{error}</Text>}
-      <View style={{ marginHorizontal: 10, marginVertical: 15 }}>
-        {uri.length < 10 &&
-          <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
+      <View style={{ marginHorizontal: 10 }}>
+        <View style={styles.wrapper}>
+          {uri?.length > 0 && uri?.map((elm, i) => {
+            return (
+              <View key={i} style={styles.imgWrapper}>
+                {(!elm.uri.includes('.mov') && !elm.uri.includes('.mp4')) ?
+                  <Image
+                    ref={ref[i]}
+                    style={styles.img}
+                    source={{ uri: elm.uri }}
+                  /> :
+                  <Video
+                    source={{ uri: elm.uri }}
+                    style={styles.img}
+                    resizeMode="cover"
+                    ref={videoRef}
+                  />
+                }
+                <TouchableOpacity
+                  onPress={() => delateFoto(i)}
+                  style={styles.close}>
+                  <Text style={{ color: '#cccccc', fontSize: 14, marginTop: -4 }}>x</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        </View>
+        {error && <Text style={{ padding: 1, color: 'red' }}>{error}</Text>}
+        <View style={{ marginVertical: 15, width: 233 }}>
+          {uri.length < 10 &&
+            <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
+          }
+          <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 10, marginTop: 3, textAlign: 'right' }]}>(Видео не более 1 минуты)</Text>
+        </View>
+        {vidio && <View style={styles.textWrapper1}>
+          <TextInput
+            value={musicFromVidio}
+            onChangeText={e => setMusicFromVidio(e)}
+            style={Styles.balihaiMedium10}
+            placeholder={t(mainData.lang).Musicfromthevideo}
+            placeholderTextColor={'#8C9CAB'}
+          />
+        </View>}
+        <View style={{ height: 60 }}>
+          <MultySelect name={t(mainData.lang).Choosecatalog} selectedValue={(e) => setSelectedCatalog(e)} data={getCatalog.data} />
+        </View>
+        {errorCatalog &&
+          <Text style={[{ marginBottom: 5 }, Styles.tomatoMedium10]}>{t(mainData.lang).Selectacategory}</Text>
         }
+        <Text style={[{ width: 270 }, Styles.balihaiMedium8]}>{t(mainData.lang).Yourcontent}</Text>
       </View>
-      {vidio && <View style={styles.textWrapper1}>
-        <TextInput
-          value={description}
-          onChangeText={e => setDescription(e)}
-          style={Styles.darkMedium14}
-          placeholder={t(mainData.lang).adddescription}
-          placeholderTextColor={'#8C9CAB'}
-        />
-      </View>}
-      <View style={{ height: 60, marginHorizontal: 10 }}>
-        <MultySelect name={t(mainData.lang).Choosecatalog} selectedValue={(e) => setSelectedCatalog(e)} data={getCatalog.data} />
-      </View>
-      {errorCatalog &&
-        <Text style={[{ marginHorizontal: 10, marginBottom: 5 }, Styles.tomatoMedium10]}>{t(mainData.lang).Selectacategory}</Text>
-      }
-      <Text style={[{ marginHorizontal: 10 }, Styles.balihaiMedium10]}>{t(mainData.lang).Yourcontent}</Text>
     </ScrollView>
   );
 };
@@ -277,7 +281,6 @@ const styles = StyleSheet.create({
   imgWrapper: {
     height: 150,
     width: '31%',
-    margin: '1%',
     position: 'relative',
     marginTop: 20,
   },
@@ -289,7 +292,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginHorizontal: 8,
+    gap: 10,
   },
   textWrapper: {
     paddingHorizontal: 15,
@@ -299,9 +302,10 @@ const styles = StyleSheet.create({
   },
   textWrapper1: {
     paddingHorizontal: 15,
-    borderColor: AppColors.Solitude_Color,
+    borderColor: '#d1d3d3',
     borderWidth: 1,
     marginBottom: 10,
+    width: 265,
   },
   close: {
     position: 'absolute',

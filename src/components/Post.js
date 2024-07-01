@@ -53,12 +53,10 @@ export const Post = ({
     likeRef.current?.present();
   }, []);
   const [openLike, setOpenLike] = useState(false)
-  const [comment, setComment] = useState(false)
   const [book, setBook] = useState(isBook)
   const [follow, setFollow] = useState(isFollow)
   const [day, setDay] = useState('')
   const [openModal, setOpenModal] = useState(false)
-  const [activePhoto, setActivePhoto] = useState(0)
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const dispatch = useDispatch()
   const [showSave, setShowSave] = useState(false)
@@ -256,7 +254,7 @@ export const Post = ({
 
             </Text>
           </View>
-          <Slider description={description} photo={photo} activePhoto={(e) => setActivePhoto(e)} />
+          <Slider description={description} photo={photo} />
           <View
             style={[
               { paddingHorizontal: 15, marginBottom: 15 },
@@ -283,13 +281,11 @@ export const Post = ({
                 <Text style={[Styles.darkMedium14]}> - {commentCount}</Text>
               </View>
             </View>
-            <View>
-              <View style={Styles.flexAlignItems}>
-                <ViewSvg />
-                <Text style={[Styles.balihaiRegular14, { marginLeft: 5 }]}>
-                  {view}
-                </Text>
-              </View>
+            <View style={Styles.flexAlignItems}>
+              <ViewSvg />
+              <Text style={[Styles.balihaiRegular14, { marginLeft: 5 }]}>
+                {view}
+              </Text>
             </View>
           </View>
         </View>
@@ -302,14 +298,6 @@ export const Post = ({
           ref={likeRef}
           snapPoints={snapPointsLike}
         />
-        {/* <Comments
-          userImg={userImg}
-          userName={userName}
-          description={description}
-          parentId={id}
-          visible={comment}
-          close={() => setComment(false)}
-        /> */}
       </Shadow>
 
     </TouchableOpacity>
