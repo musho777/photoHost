@@ -46,13 +46,13 @@ export const Post = ({
   const [openLike, setOpenLike] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
-  const [showMore, setShowMore] = useState(true)
+  const [showMore, setShowMore] = useState(false)
   const [D, setD] = useState(description)
 
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setShowSave(false);
+      // setShowSave(false);
     }, 1000);
 
     return () => clearTimeout(timeoutId);
@@ -87,7 +87,7 @@ export const Post = ({
           <PostHeader
             userImg={userImg}
             user={user}
-            setShowSave={(e) => setShowSave(e)}
+            setShowSave={(e) => setShowSave(true)}
             userName={userName}
             setSaveType={(e) => setSaveType(e)}
             userId={userId}

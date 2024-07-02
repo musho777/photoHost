@@ -133,6 +133,11 @@ export const Styles = StyleSheet.create({
         fontSize: 10,
         color: '#fff',
     },
+    whiteMedium12: {
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 12,
+        color: '#fff',
+    },
     whiteSemiBold13: {
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 13,

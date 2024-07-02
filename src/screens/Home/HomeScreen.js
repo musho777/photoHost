@@ -72,7 +72,6 @@ export const HomeScreen = ({ navigation }) => {
 
 
     if (!blackList.includes(item.user.id)) {
-      console.log(item.music_name, 'elm')
       return (
         <View
           key={index}

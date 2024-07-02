@@ -165,7 +165,6 @@ export const RegisterAction = data => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorRegister({ server: 'server' }));
       });
   };
@@ -854,7 +853,6 @@ export const CreatPostAction = (data, token) => {
     fetch(`${Api}/add_new_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessCreatePost(r));
         } else {
@@ -863,7 +861,6 @@ export const CreatPostAction = (data, token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorCreatePost(error));
       });
   };

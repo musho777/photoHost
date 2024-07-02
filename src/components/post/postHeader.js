@@ -9,6 +9,7 @@ import { AppColors } from '../../styles/AppColors';
 import { useNavigation } from '@react-navigation/native';
 import { t } from '../lang';
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ShowSave } from "./showSave";
 
 export const PostHeader = ({
   userImg,
@@ -25,13 +26,15 @@ export const PostHeader = ({
   deletData,
   isBook,
   addToblack,
-  setShowSave,
-  setSaveType
 }
 ) => {
 
   const [follow, setFollow] = useState(isFollow)
   const staticdata = useSelector(st => st.static);
+  const [saveType, setSaveType] = useState('Запись сохранена в закладках')
+  const [showSave, setShowSave] = useState(false)
+
+
   const dispatch = useDispatch()
   useEffect(() => {
     const currentDate = new Date(data);
@@ -55,7 +58,6 @@ export const PostHeader = ({
   const bottomSheetRef = useRef(null);
 
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-  // const [openModal, setOpenModal] = useState(false)
   const navigation = useNavigation()
   const [day, setDay] = useState('')
   const mainData = useSelector(st => st.mainData);
@@ -76,6 +78,9 @@ export const PostHeader = ({
   }
 
   return <View style={[Styles.flexSpaceBetween, { padding: 10, position: 'relative' }]}>
+    <View style={{ position: 'absolute', left: 0, right: 0, top: 110 }}>
+      <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
+    </View>
     <TouchableOpacity onPress={() =>
       user?.data.id !== userId ? navigation.navigate('SearchProfil', { id: userId }) :
         navigation.navigate('ProfileNavigation')
