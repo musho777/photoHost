@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Albom } from '../../components/Albom';
 
 import { BlackListBlock } from '../../components/blackListBlock';
-import { Post } from '../../components/Post';
+import { Post } from '../../components/post/Post';
 import {
   AddBlackListAction,
   GetBlackListAction,

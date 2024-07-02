@@ -18,7 +18,6 @@ export const LikeList = forwardRef(
   ({ snapPoints, id, token, openLike, count, close }, ref) => {
     const navigation = useNavigation();
     const user = useSelector(st => st.userData);
-
     const [page, setPage] = useState(1);
     const dispatch = useDispatch();
     // useEffect(() => {

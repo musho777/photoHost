@@ -7,30 +7,26 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import MediaControls, { PLAYER_STATES } from '../components/vidio';
 import Video from 'react-native-video';
 import { AppColors } from '../styles/AppColors';
+import { MusicSvg } from '../assets/svg/Svgs';
+import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, activePhoto, description }) => {
+export const Slider = ({ photo, single, activePhoto, description, music }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [paused, setPaused] = useState(false);
   const [playerState, setPlayerState] = useState(PLAYER_STATES.PLAYING);
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const videoRef = useRef(null);
   const [first, setFirst] = useState(true)
-
   const [isPlayed, setIsPlayeds] = useState(false)
 
-  useEffect(() => {
-    setIsLoading(true); // Reset loading state when photo prop changes
-  }, [photo]);
 
   const onSeek = (value) => {
     videoRef.current.seek(value);
@@ -71,7 +67,7 @@ export const Slider = ({ photo, single, activePhoto, description }) => {
       Math.floor(event.nativeEvent.layoutMeasurement.width)
     );
     setActive(index);
-    activePhoto(index);
+    // activePhoto(index);
   };
 
   const togglePlayPause = () => {
@@ -124,31 +120,42 @@ export const Slider = ({ photo, single, activePhoto, description }) => {
                         style={[styles.playButton, { backgroundColor: "orange" }]}
                       >
                         <Image source={require('../assets/img/ic.png')} style={styles.playIcon} />
+
                       </TouchableOpacity>
                     </View>
+                    {music && <View style={styles.music}>
+                      <MusicSvg />
+                      <Text style={[Styles.whiteSemiBold13, { marginTop: -1 }]}>{music}</Text>
+                    </View>}
                   </View>
                   }
-                  <Video
-                    ref={videoRef}
-                    paused={!isPlayed}
-                    repeat={true}
-                    style={[
-                      {
-                        width: '100%',
-                        height: 400,
-                        position: 'relative',
+                  <View>
+                    <Video
+                      ref={videoRef}
+                      paused={!isPlayed}
+                      repeat={true}
+                      style={[
+                        {
+                          width: '100%',
+                          height: 400,
+                          position: 'relative',
 
-                      },
-                    ]}
-                    source={{ uri: `https://chamba.digiluys.com/uploads/${item.video}` }}
-                    resizeMode={'cover'}
-                    onLoad={(data) => {
-                      setDuration(data.duration);
-                      setIsLoading(false);
-                    }}
-                    onProgress={(data) => setCurrentTime(data.currentTime)}
-                    onEnd={onEnd}
-                  />
+                        },
+                      ]}
+                      source={{ uri: `https://chamba.digiluys.com/uploads/${item.video}` }}
+                      resizeMode={'cover'}
+                      onLoad={(data) => {
+                        setDuration(data.duration);
+                        // setIsLoading(false);
+                      }}
+                      onProgress={(data) => setCurrentTime(data.currentTime)}
+                      onEnd={onEnd}
+                    />
+                    {music && <View style={styles.music}>
+                      <MusicSvg />
+                      <Text style={{ color: 'white', marginTop: -1 }}>{music}</Text>
+                    </View>}
+                  </View>
                   {!first && <MediaControls
                     duration={duration}
                     mainColor="orange"
@@ -232,4 +239,16 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     width: 22
   },
+  music: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    zIndex: 999,
+    position: 'absolute',
+    height: 35,
+    width: '100%',
+    bottom: 0,
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    paddingHorizontal: 10
+  }
 });

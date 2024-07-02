@@ -1,7 +1,7 @@
-import {useState} from 'react';
-import {ScrollView, View} from 'react-native';
-import {Post} from '../../components/Post';
-import {Styles} from '../../styles/Styles';
+import { useState } from 'react';
+import { ScrollView, View } from 'react-native';
+import { Post } from '../../components/post/Post';
+import { Styles } from '../../styles/Styles';
 export const UserProfileScreen = () => {
   const [post, setPost] = useState([
     {

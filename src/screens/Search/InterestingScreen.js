@@ -1,6 +1,6 @@
-import {useState} from 'react';
-import {View, ScrollView} from 'react-native';
-import {Post} from '../../components/Post';
+import { useState } from 'react';
+import { View, ScrollView } from 'react-native';
+import { Post } from '../../components/post/Post';
 import { Styles } from '../../styles/Styles';
 
 export const InterestingScreen = () => {
@@ -16,13 +16,13 @@ export const InterestingScreen = () => {
     },
   ]);
   return (
-    <ScrollView style = {Styles.bg}>
+    <ScrollView style={Styles.bg}>
       <View
         style={{
           backfaceVisibility: 'visible',
           backgroundColor: 'transparent',
           paddingHorizontal: 10,
-          marginVertical:10,
+          marginVertical: 10,
         }}>
         {post.map((elm, i) => (
           <Post userImg={elm.userImg} key={i} />

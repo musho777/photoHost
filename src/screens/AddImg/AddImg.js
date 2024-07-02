@@ -50,7 +50,6 @@ export const AddImg = ({ navigation }) => {
   const [errorCatalog, setErrorCatalog] = useState(false)
   const [error, setError] = useState('')
   const dispatch = useDispatch();
-  console.log(musicFromVidio)
   const captureScreenshot = async (ref) => {
     try {
       const uri = await captureRef(ref, {
@@ -108,7 +107,6 @@ export const AddImg = ({ navigation }) => {
         if (el.uri.includes('.mp4')) {
           index = index + 1
         }
-        console.log(!el.uri.includes('.mp4'))
         !el.uri.includes('.mp4') ?
           form.append('photos[]', {
             uri: el.uri,

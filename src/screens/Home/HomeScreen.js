@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Post } from '../../components/Post';
+import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -72,6 +72,7 @@ export const HomeScreen = ({ navigation }) => {
 
 
     if (!blackList.includes(item.user.id)) {
+      console.log(item.music_name, 'elm')
       return (
         <View
           key={index}
@@ -88,6 +89,7 @@ export const HomeScreen = ({ navigation }) => {
             like={item.like_count}
             commentCount={item.comment_count}
             view={item.view_count}
+            music={item.music_name}
             photo={item.photo}
             liked={item.like_auth_user.length}
             id={item.id}

@@ -140,7 +140,6 @@ import {
 export const Api = 'https://chamba.digiluys.com/api';
 
 export const RegisterAction = data => {
-  console.log(data)
   return dispatch => {
     dispatch(StartRegister());
     fetch(`${Api}/register`, {
@@ -150,7 +149,6 @@ export const RegisterAction = data => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log("00000")
         if (r.status) {
           dispatch(SuccessRegister(r));
         } else {
