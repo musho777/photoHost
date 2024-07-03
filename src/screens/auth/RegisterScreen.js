@@ -22,7 +22,7 @@ export const RegisterScreen = ({ navigation }) => {
   const mainData = useSelector(st => st.mainData);
   const confirm = useSelector(st => st.confirmRegister)
   useEffect(() => {
-    if (userName.value && name.value && password.value && email.value) {
+    if (userName.value && password.value && email.value) {
       setDisableButton(false)
     }
     else {

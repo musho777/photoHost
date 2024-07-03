@@ -260,3 +260,9 @@ export const StartGetLentsRec = () => {
         type: "StartGetLentsRec"
     }
 }
+
+export const StartGetRelationCatalog = () => {
+    return {
+        type: 'StartGetRelationCatalog'
+    }
+}

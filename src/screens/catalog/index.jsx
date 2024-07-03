@@ -45,7 +45,6 @@ export const Catalog = ({ route }) => {
     setSelected(item)
   }, [userData])
 
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       let token = await AsyncStorage.getItem('token')
@@ -59,7 +58,7 @@ export const Catalog = ({ route }) => {
 
   useEffect(() => {
     if (changeCatalog.status) {
-      navigation.navigate('Home')
+      navigation.navigate('TabNavigation', { screen: 'Home' })
       dispatch(ClearChangeCatalog())
     }
   }, [changeCatalog.status])
@@ -68,7 +67,8 @@ export const Catalog = ({ route }) => {
 
   const SendData = () => {
     dispatch(ChangeCatalog(token, {
-      category_ids: selected
+      category_ids: selected,
+      settings: 1,
     }))
     dispatch(ClearChangeCatalog())
   }
@@ -110,7 +110,7 @@ export const Catalog = ({ route }) => {
 
 const style = StyleSheet.create({
   page: {
-    paddingHorizontal: 45,
+    paddingHorizontal: 35,
     paddingTop: 30,
     gap: 30,
   },

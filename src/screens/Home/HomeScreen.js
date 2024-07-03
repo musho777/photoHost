@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, FlatList, ActivityIndicator, RefreshControl, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, GetLentsAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, GetLentsAction, getUserInfoAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ModalComponent } from './modal';
+
 
 export const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -15,6 +17,17 @@ export const HomeScreen = ({ navigation }) => {
   const [blackList, setBlackList] = useState([]);
   const [index, setIndex] = useState(0);
   const flatListRef = useRef(null);
+  const [showModal, setShowModal] = useState(false)
+  const userData = useSelector((st) => st.userData)
+  const [isChange, setIschange] = useState(0)
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (userData.data.show_category_pop_up == 1) {
+        setShowModal(true)
+      }
+    }, 5000)
+  }, [userData.data])
 
   useEffect(() => {
     if (staticdata.token) {
@@ -29,6 +42,8 @@ export const HomeScreen = ({ navigation }) => {
       let token = await AsyncStorage.getItem('token')
       if (token) {
         dispatch(GetLentsAction(token));
+        setIschange(isChange + 1)
+        dispatch(getUserInfoAction(token))
       }
     });
     return unsubscribe;
@@ -131,32 +146,39 @@ export const HomeScreen = ({ navigation }) => {
     );
   }
   return (
-    <FlatList
-      showsVerticalScrollIndicator={false}
-      style={{ backgroundColor: 'rgb(237,238,240)' }}
-      ref={flatListRef}
-      onScroll={({ nativeEvent }) => {
-        handleScroll({ nativeEvent })
-        if (isCloseToBottom(nativeEvent)) {
-          if (getLents?.nextPage) {
-            let p = page + 1;
-            dispatch(GetLentsAction(staticdata.token, p));
-            setPage(p);
+    <View>
+      {showModal && <ModalComponent
+        showModal={showModal}
+        close={() => setShowModal(false)}
+        token={staticdata.token}
+      />}
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: 'rgb(237,238,240)' }}
+        ref={flatListRef}
+        onScroll={({ nativeEvent }) => {
+          handleScroll({ nativeEvent })
+          if (isCloseToBottom(nativeEvent)) {
+            if (getLents?.nextPage) {
+              let p = page + 1;
+              dispatch(GetLentsAction(staticdata.token, p));
+              setPage(p);
+            }
           }
-        }
 
-      }}
-      refreshControl={
-        <RefreshControl
-          refreshing={getLents?.loading}
-          onRefresh={() => {
-            dispatch(GetLentsAction(staticdata.token));
-          }}
-        />
-      }
-      data={data}
-      enableEmptySections={true}
-      renderItem={renderItem}
-    />
+        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={getLents?.loading}
+            onRefresh={() => {
+              dispatch(GetLentsAction(staticdata.token));
+            }}
+          />
+        }
+        data={data}
+        enableEmptySections={true}
+        renderItem={renderItem}
+      />
+    </View>
   );
 };

@@ -18,7 +18,7 @@ export const SearchNavigation = () => {
           headerShown: false,
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="InterestingScreen"
         component={InterestingScreen}
         options={{
@@ -26,7 +26,7 @@ export const SearchNavigation = () => {
             return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={'Интересное'} />
           }
         }}
-      />
+      /> */}
       <Stack.Screen
         name="SearchProfil"
         component={SearchProfil}

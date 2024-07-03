@@ -298,3 +298,9 @@ export const ErrorGetLentsRec = () => {
         type: 'ErrorGetLentsRec'
     }
 }
+
+export const ErrorGetRelationCatalog = () => {
+    return {
+        type: 'ErrorGetRelationCatalog'
+    }
+}

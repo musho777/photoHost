@@ -32,6 +32,7 @@ import {
   ErrorGetPostComment,
   ErrorGetPostLike,
   ErrorGetPosts,
+  ErrorGetRelationCatalog,
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
   ErrorGetSinglPost,
@@ -91,6 +92,7 @@ import {
   StartGetCatalog,
   StartChangeCatalog,
   StartGetLentsRec,
+  StartGetRelationCatalog,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -122,6 +124,7 @@ import {
   SuccessGetPostComment,
   SuccessGetPostLike,
   SuccessGetPosts,
+  SuccessGetRelationCatalog,
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
   SuccessGetSinglPost,
@@ -149,6 +152,7 @@ export const RegisterAction = data => {
     })
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessRegister(r));
         } else {
@@ -165,6 +169,7 @@ export const RegisterAction = data => {
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorRegister({ server: 'server' }));
       });
   };
@@ -1547,3 +1552,59 @@ export const ClearChangeCatalog = () => {
     type: 'ClearChangeCatalog'
   }
 }
+
+
+
+export const GetRelationCategory = (token) => {
+  return (dispatch) => {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${token}`);
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+    dispatch(StartGetRelationCatalog())
+    fetch(`${Api}/get_relation_category`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetRelationCatalog(r.data))
+        }
+        else {
+          dispatch(ErrorGetRelationCatalog())
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetRelationCatalog())
+      });
+  };
+}
+
+
+export const NoShowPopup = (token) => {
+  return (dispatch) => {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${token}`);
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+    fetch(`${Api}/no_show_pop_up`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+        }
+        else {
+        }
+      })
+      .catch(error => {
+      });
+  };
+}
+
+// export const Clear
+// /api/no_show_pop_up

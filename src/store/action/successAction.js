@@ -299,3 +299,10 @@ export const SuccessGetLentsRec = (data) => {
         data
     }
 }
+
+export const SuccessGetRelationCatalog = (data) => {
+    return {
+        type: 'SuccessGetRelationCatalog',
+        data
+    }
+}

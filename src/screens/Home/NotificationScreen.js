@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { NotificationBlock } from "../../components/NotificationBlock"
 import { GetNotificationAction, getUserInfoAction } from "../../store/action/action"
 import { Styles } from "../../styles/Styles"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export const NotificationScreen = ({ navigation }) => {
   const dispatch = useDispatch()

@@ -27,7 +27,7 @@ export const ProfileNavigation = () => {
           headerShown: false,
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="UserProfileScreen"
         component={UserProfileScreen}
         options={{
@@ -35,7 +35,7 @@ export const ProfileNavigation = () => {
             return <HeaderWhiteTitle transparent onPress={() => navigation.goBack()} title={t(mainData.lang).Publications} />
           }
         }}
-      />
+      /> */}
       <Stack.Screen
         name="EditProfilScreen"
         component={EditProfilScreen}

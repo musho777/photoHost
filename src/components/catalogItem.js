@@ -11,7 +11,8 @@ export const CatalogItem = ({ data, onSelect, selected }) => {
       }
     </View>
     <View >
-      <Image width={35} height={35}
+      <Image width={60} height={50}
+        style={{ objectFit: 'contain' }}
         source={{ uri: `https://chamba.digiluys.com/uploads/${data.photo}` }}
       />
     </View>
@@ -25,11 +26,10 @@ const style = StyleSheet.create({
     width: '48%',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 100,
+    height: 120,
     borderRadius: 10,
     gap: 10,
-    borderWidth: 1,
-    borderColor: '#FFD953'
+
   },
   select: {
     position: 'absolute',
