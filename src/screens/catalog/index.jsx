@@ -89,14 +89,18 @@ export const Catalog = ({ route }) => {
       }
     </ScrollView>
     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-      <TouchableOpacity onPress={() =>
+      {/* <TouchableOpacity onPress={() =>
         route.params?.id ?
           navigation.goBack() :
           navigation.navigate('TabNavigation')
       } style={style.button}>
         <Text style={Styles.darkMedium13}>Пропустить</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, { backgroundColor: '#FFD953' }]}>
+      </TouchableOpacity> */}
+      <TouchableOpacity
+
+        onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
+          { backgroundColor: '#8f8f8f' }
+        ]}>
         {changeCatalog.loading ?
           <View style={{ height: 8 }}>
             <ActivityIndicator color={'white'} size='small' />

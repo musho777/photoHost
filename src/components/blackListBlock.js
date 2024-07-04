@@ -20,7 +20,7 @@ export const BlackListBlock = ({
         />
         <View>
           <Text style={Styles.darkSemiBold14}>{name}</Text>
-          <Text style={Styles.balihaiRegular12}>{username}</Text>
+          {/* <Text style={Styles.balihaiRegular12}>{username}</Text> */}
         </View>
       </View>
       <View>

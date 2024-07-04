@@ -61,7 +61,7 @@ export const CommentItem = ({
               onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
               <Text>ответить</Text>
             </TouchableOpacity>
-            {myuser.allData.data.id == user?.id && <TouchableOpacity
+            {myuser.allData.data?.id == user?.id && <TouchableOpacity
               onPress={() => onDeletComment(id)}>
               <Text>удалить</Text>
             </TouchableOpacity>}

@@ -21,7 +21,7 @@ export const InfoBlock = ({ user }) => {
         const dateComponents = JSON.stringify(user.date_of_birth)?.substring(0, 11)?.split('-')
         const year = dateComponents && dateComponents[0]?.replace(`"`, '')
         const day = dateComponents && dateComponents[2]
-        let month = dateComponents && +dateComponents[1] + 1
+        let month = dateComponents && +dateComponents[1]
 
         let newDateFormat = ''
         if (month < 10) {

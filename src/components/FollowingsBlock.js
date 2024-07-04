@@ -43,7 +43,7 @@ export const FollowingsBlock = ({
           source={{ uri: `https://chamba.digiluys.com/uploads/${img}` }}
         />
         <View>
-          <Text style={Styles.darkSemiBold14}>{username}</Text>
+          {/* <Text style={Styles.darkSemiBold14}>{username}</Text> */}
           <Text style={Styles.balihaiRegular12}>{name}</Text>
         </View>
       </View>

@@ -186,12 +186,12 @@ export const ProfileScreen = ({ navigation, profile }) => {
             </View>}
             <View style={{ marginTop: 7, marginBottom: 15, alignItems: 'center', marginLeft: 10 }}>
               <View style={Styles.flexAlignItems}>
-                <Text style={[Styles.darkMedium16, { marginRight: 5 }]}>{user?.username}</Text>
+                <Text style={[Styles.darkMedium16, { marginRight: 5 }]}>{user?.name}</Text>
                 {user.data.star > 0 &&
                   <CheckMarkUserSvg />
                 }
               </View>
-              <Text style={[Styles.balihaiRegular12, { marginLeft: -17 }]}>@{user?.name}</Text>
+              {/* <Text style={[Styles.balihaiRegular12, { marginLeft: -17 }]}>@{user?.name}</Text> */}
             </View>
             {user.data.description && (
               <Text style={Styles.darkRegular14}>{user.description}</Text>

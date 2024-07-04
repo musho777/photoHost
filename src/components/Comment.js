@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import {
-  Modal,
   View,
   Text,
   Image,
   FlatList,
   RefreshControl,
-  ScrollView,
   Keyboard,
   TouchableOpacity,
   Dimensions,
@@ -44,10 +42,8 @@ export const Comments = ({ close, route, }) => {
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
   useEffect(() => {
-    // if (visible) {
     dispatch(ClearSinglpAgeComment())
     dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
-    // }
   }, []);
 
   const sendCommentFunction = () => {
@@ -177,7 +173,6 @@ export const Comments = ({ close, route, }) => {
       <View style={{ height: screenWidth }}>
         <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
         <View style={{ height: '87.4%', justifyContent: 'space-between', marginBottom: 10 }}>
-
           <View style={{ paddingHorizontal: 10, height: '100%', }}>
             <View style={{ height: '100%', paddingBottom: 55 }}>
               <FlatList
@@ -226,66 +221,62 @@ export const Comments = ({ close, route, }) => {
                 }}
               />
             </View>
-          </View>
-          <View
-            style={{
-              alignItems: 'center',
-              // flexDirection: 'row',
-              // justifyContent: 'space-between',
-              // alignContent: 'space-between',
-              position: 'absolute',
-              bottom: 3,
-              // right: 0,
-              width: '100%',
-              paddingHorizontal: 10,
-            }}>
-            <View style={{
-              width: '100%',
-              justifyContent: 'space-between',
-              alignContent: 'space-between',
-              paddingHorizontal: 10,
-              flexDirection: "row",
-              gap: 10
+            <View
+              style={{
+                alignItems: 'center',
+                position: 'absolute',
+                bottom: 3,
+                width: '100%',
+                paddingHorizontal: 10,
+              }}>
+              <View style={{
+                width: '100%',
+                justifyContent: 'space-between',
+                alignContent: 'space-between',
+                paddingHorizontal: 10,
+                flexDirection: "row",
+                gap: 10
 
-            }}>
-              <Image
-                style={{ width: 40, height: 40, borderRadius: 50 }}
-                source={{
-                  uri: `https://chamba.digiluys.com/uploads/${user.data.avatar}`,
-                }}
-              />
-              <View style={{ width: '100%', flexDirection: "row", alignItems: 'center', gap: 10 }}>
-                <Input
-                  ref={textInputRef}
-                  pdR={50}
-                  send
-                  sendCom={() => sendCommentFunction()}
-                  value={sendComment}
-                  onChange={e => setSendCommet(e)}
-                  width={'80%'}
-                  placeholder={t(mainData.lang).Leaveacomment}
+              }}>
+                <Image
+                  style={{ width: 40, height: 40, borderRadius: 50 }}
+                  source={{
+                    uri: `https://chamba.digiluys.com/uploads/${user.data.avatar}`,
+                  }}
                 />
-                <View style={{
-                  height: 23,
-                  width: 23,
-                }}>
-                  <TouchableOpacity onPress={() => {
-                    setOpenEmoji(true)
-                    Keyboard.dismiss()
+                <View style={{ width: '100%', flexDirection: "row", alignItems: 'center', gap: 10 }}>
+                  <Input
+                    ref={textInputRef}
+                    pdR={50}
+                    send
+                    sendCom={() => sendCommentFunction()}
+                    value={sendComment}
+                    onChange={e => setSendCommet(e)}
+                    width={'80%'}
+                    placeholder={t(mainData.lang).Leaveacomment}
+                  />
+                  <View style={{
+                    height: 23,
+                    width: 23,
                   }}>
-                    <EmojiIcon />
-                  </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                      setOpenEmoji(true)
+                      Keyboard.dismiss()
+                    }}>
+                      <EmojiIcon />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
 
+              </View>
+              {openEmoji && <View style={{ width: '100%', height: 200, }}>
+                <EmojiSelector columns={10} onEmojiSelected={emoji => {
+                  {
+                    setSendCommet(sendComment + emoji)
+                  }
+                }} />
+              </View>}
             </View>
-            {openEmoji && <View style={{ width: '100%', height: 200, }}>
-              <EmojiSelector columns={10} onEmojiSelected={emoji => {
-                {
-                  setSendCommet(sendComment + emoji)
-                }
-              }} />
-            </View>}
           </View>
         </View>
       </View>

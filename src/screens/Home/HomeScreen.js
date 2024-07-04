@@ -97,7 +97,7 @@ export const HomeScreen = ({ navigation }) => {
           }}>
           <Post
             userImg={item.user.avatar}
-            userName={item.user.nickname}
+            userName={item.user.name}
             userId={item.user.id}
             description={item.description}
             like={item.like_count}

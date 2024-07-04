@@ -216,7 +216,6 @@ export const EditProfilScreen = ({ navigation }) => {
           />
         </View>
       </View>
-
       <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: "center", gap: 20 }}>
 
         {/* <TouchableOpacity onPress={() => changeLanguage('ru')} style={styles.languageButton}>
@@ -228,18 +227,18 @@ export const EditProfilScreen = ({ navigation }) => {
       </View>
       <View style={styles.textWrapper}>
         <TextInput
-          value={username}
-          onChangeText={e => setUsername(e)}
-          style={Styles.darkMedium14}
-        />
-      </View>
-      <View style={styles.textWrapper}>
-        <TextInput
           value={name}
           onChangeText={e => setName(e)}
           style={Styles.darkMedium14}
         />
       </View>
+      {/* <View style={styles.textWrapper}>
+        <TextInput
+          value={name}
+          onChangeText={e => setName(e)}
+          style={Styles.darkMedium14}
+        />
+      </View> */}
       <View style={styles.textWrapper}>
         <TextInput
           placeholder={t(mainData.lang).Brieflyaboutyourself}

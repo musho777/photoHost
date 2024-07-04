@@ -22,13 +22,13 @@ export const RegisterScreen = ({ navigation }) => {
   const mainData = useSelector(st => st.mainData);
   const confirm = useSelector(st => st.confirmRegister)
   useEffect(() => {
-    if (userName.value && password.value && email.value) {
+    if (name.value && password.value && email.value) {
       setDisableButton(false)
     }
     else {
       setDisableButton(true)
     }
-  }, [userName, name, password, email])
+  }, [name, password, email])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
@@ -65,7 +65,7 @@ export const RegisterScreen = ({ navigation }) => {
       dispatch(RegisterAction({
         name: name.value,
         email: email.value,
-        nickname: userName.value,
+        // nickname: userName.value,
         password: password.value,
       }))
     }
@@ -97,21 +97,14 @@ export const RegisterScreen = ({ navigation }) => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={Styles.authScreen}>
         <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>{t(mainData.lang).Registration}</Text>
-        <Input
+        {/* <Input
           placeholder={t(mainData.lang).FirstnameLastnameorchannelname}
           error={userName.error || register.error?.username}
           value={userName.value}
           onChange={(e) => setUsername({ ...userName, value: e })}
-        />
+        /> */}
         <Input
-          placeholder={t(mainData.lang).Createapassword}
-          error={password.error}
-          value={password.value}
-          onChange={(e) => setPassword({ ...password, value: e })}
-          pass
-        />
-        <Input
-          placeholder={t(mainData.lang).Comeupwithanicknam}
+          placeholder={t(mainData.lang).FirstnameLastnameorchannelname}
           error={name.error}
           value={name.value}
           onChange={(e) => setName({ ...name, value: e })}
@@ -122,6 +115,14 @@ export const RegisterScreen = ({ navigation }) => {
           value={email.value}
           onChange={(e) => setEmail({ ...email, value: e })}
         />
+        <Input
+          placeholder={t(mainData.lang).Createapassword}
+          error={password.error}
+          value={password.value}
+          onChange={(e) => setPassword({ ...password, value: e })}
+          pass
+        />
+
         {sendMail && (
           <View style={{ alignItems: 'center' }}>
             <Text style={[Styles.balihaiMedium13, { textAlign: 'center' }]}>
