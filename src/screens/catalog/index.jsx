@@ -4,7 +4,6 @@ import { CatalogItem } from "../../components/catalogItem"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction } from "../../store/action/action"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useNavigation } from "@react-navigation/native"
 
 export const Catalog = ({ route }) => {
@@ -12,8 +11,9 @@ export const Catalog = ({ route }) => {
   const getCatalog = useSelector((st) => st.getCatalog)
   const userData = useSelector((st) => st.userData)
   const [selected, setSelected] = useState([])
-  const [token, setToken] = useState()
   const navigation = useNavigation()
+  const staticdata = useSelector(st => st.static);
+
 
   const changeCatalog = useSelector((st) => st.changeCatalog)
 
@@ -29,11 +29,6 @@ export const Catalog = ({ route }) => {
     setSelected(item)
   }
 
-  const GetTokecn = async () => {
-    let token = await AsyncStorage.getItem('token')
-    setToken(token)
-    dispatch(GetCatalogAction(token))
-  }
 
 
   useEffect(() => {
@@ -47,11 +42,7 @@ export const Catalog = ({ route }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-      let token = await AsyncStorage.getItem('token')
-      if (token) {
-        dispatch(ClearChangeCatalog())
-        GetTokecn(token, { category_ids: selected })
-      }
+      dispatch(ClearChangeCatalog())
     });
     return unsubscribe;
   }, [navigation]);
@@ -66,38 +57,32 @@ export const Catalog = ({ route }) => {
 
 
   const SendData = () => {
-    dispatch(ChangeCatalog(token, {
+    dispatch(ChangeCatalog(staticdata.token, {
       category_ids: selected,
       settings: 1,
     }))
     dispatch(ClearChangeCatalog())
   }
 
+  useEffect(() => {
+    if (staticdata.token) {
+      dispatch(GetCatalogAction(staticdata.token))
+    }
+  }, [staticdata.token])
+
   return <View style={style.page}>
-    <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересы</Text>
-    <ScrollView style={{ height: '81%' }} showsVerticalScrollIndicator={false}>
-      {!getCatalog.loading ? <View style={style.CatalogWrapper}>
+    <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
+    <ScrollView style={{ height: '81.5%' }} showsVerticalScrollIndicator={false}>
+      <View style={style.CatalogWrapper}>
         {
           getCatalog.data.map((elm, i) => {
             return <CatalogItem selected={selected.findIndex(item => item == elm.id) > -1} onSelect={(e) => SelectCatalog(e)} data={elm} key={i} />
           })
         }
-      </View> :
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator size="large" color="#FFC24B" />
-        </View>
-      }
+      </View>
     </ScrollView>
     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-      {/* <TouchableOpacity onPress={() =>
-        route.params?.id ?
-          navigation.goBack() :
-          navigation.navigate('TabNavigation')
-      } style={style.button}>
-        <Text style={Styles.darkMedium13}>Пропустить</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity
-
         onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
           { backgroundColor: '#8f8f8f' }
         ]}>
@@ -116,7 +101,7 @@ const style = StyleSheet.create({
   page: {
     paddingHorizontal: 35,
     paddingTop: 30,
-    gap: 30,
+    gap: 20,
   },
   CatalogWrapper: {
     flexDirection: 'row',

@@ -35,15 +35,7 @@ export const Menu = ({ visible, close }) => {
               style={{ marginTop: 20 }}>
               <BackArrow />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                close();
-                navigation.navigate('EditProfilScreen');
-              }}>
-              <Text style={[Styles.darkRegular16, { marginTop: 25 }]}>
-                {t(mainData.lang).Editprofile}
-              </Text>
-            </TouchableOpacity>
+
             <TouchableOpacity
               onPress={() => {
                 close();
@@ -51,6 +43,24 @@ export const Menu = ({ visible, close }) => {
               }}>
               <Text style={[Styles.darkRegular16, { marginTop: 25 }]}>
                 {t(mainData.lang).Catalog}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                close();
+                navigation.navigate('SavedPostScreen');
+              }}>
+              <Text style={[Styles.darkRegular16, { marginTop: 30 }]}>
+                {t(mainData.lang).Bookmarks}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                close();
+                navigation.navigate('EditProfilScreen');
+              }}>
+              <Text style={[Styles.darkRegular16, { marginTop: 25 }]}>
+                {t(mainData.lang).Editprofile}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -71,15 +81,7 @@ export const Menu = ({ visible, close }) => {
                 {t(mainData.lang).Blacklist}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                close();
-                navigation.navigate('SavedPostScreen');
-              }}>
-              <Text style={[Styles.darkRegular16, { marginTop: 30 }]}>
-                {t(mainData.lang).Bookmarks}
-              </Text>
-            </TouchableOpacity>
+
             <TouchableOpacity onPress={() => {
               dispatch(LogoutAction(staticdata.token))
               dispatch(ClearLoginAction())

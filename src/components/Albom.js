@@ -33,7 +33,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
               <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', {
                 id: elm.post?.photo[0]?.post_id, isBook: true
               })}>
-                {!elm.post?.photo[0]?.includes('.mov') ?
+                {!elm.post?.photo[0]?.photo.includes('.mov') ?
 
                   <Image
                     style={[styles.img, {
@@ -113,8 +113,8 @@ export const Albom = ({ data, user, loading, seved, post }) => {
 
 const styles = StyleSheet.create({
   img: {
-    width: windowWidth / 2 - 25,
-    height: windowWidth / 2 - 25,
+    width: (windowWidth / 2 - 25),
+    height: (windowWidth / 2 - 25),
     borderRadius: 15,
   },
 });

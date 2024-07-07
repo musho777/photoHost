@@ -63,6 +63,11 @@ export const Styles = StyleSheet.create({
         fontSize: 12,
         color: AppColors.Blcak_Color,
     },
+    darkMedium11: {
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 11,
+        color: AppColors.Blcak_Color,
+    },
     darkMedium10: {
         fontFamily: 'Montserrat-Medium',
         fontSize: 10,

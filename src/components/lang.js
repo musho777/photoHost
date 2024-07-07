@@ -37,7 +37,7 @@ export const t = (lang) => {
             Website: 'Сайт',
             Mail: 'Почта',
             Phonenumber: 'Phone number',
-            changelanguage: "изменение языка",
+            changelanguage: "Изменение языка",
             Brieflyaboutyourself: 'Кратко о себе',
             Day: 'День',
             Month: 'Месяц',

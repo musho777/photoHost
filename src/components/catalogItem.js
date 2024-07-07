@@ -10,13 +10,15 @@ export const CatalogItem = ({ data, onSelect, selected }) => {
         <SelectedSvg />
       }
     </View>
-    <View >
+    <View style={{ width: 60, height: 50, }}>
       <Image width={60} height={50}
         style={{ objectFit: 'contain' }}
         source={{ uri: `https://chamba.digiluys.com/uploads/${data.photo}` }}
       />
     </View>
-    <Text style={[Styles.darkMedium13, { textAlign: 'center' }]}>{data.name}</Text>
+    <View style={{ height: 43 }}>
+      <Text style={[Styles.darkMedium11, { textAlign: 'center', }]}>{data.name}</Text>
+    </View>
   </TouchableOpacity>
 }
 
@@ -26,10 +28,10 @@ const style = StyleSheet.create({
     width: '48%',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 120,
+    height: 130,
     borderRadius: 10,
     gap: 10,
-
+    paddingHorizontal: 5
   },
   select: {
     position: 'absolute',

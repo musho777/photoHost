@@ -335,10 +335,12 @@ export const getUserInfoAction = token => {
             ),
           );
         } else {
+          console.log(r.data, 'error')
           dispatch(ErrorGetUserData());
         }
       })
       .catch(error => {
+        console.log(error, 'error')
         dispatch(ErrorGetUserData());
       });
   };

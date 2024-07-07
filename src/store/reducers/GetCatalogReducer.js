@@ -9,7 +9,7 @@ const GetCatalogReducer = (state = initialState, action) => {
     case 'StartGetCatalog':
       item.error = '';
       item.loading = true;
-      item.data = []
+      // item.data = []
       break;
     case 'SuccessGetCatalog':
       item.error = '';

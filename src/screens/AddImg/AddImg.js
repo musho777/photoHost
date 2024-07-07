@@ -252,7 +252,7 @@ export const AddImg = ({ navigation }) => {
           {uri.length < 10 &&
             <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
           }
-          <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 10, marginTop: 3, textAlign: 'right' }]}>(Видео не более 1 минуты)</Text>
+          <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 10, marginTop: 3, textAlign: 'right' }]}>(Видео не более 1-ой минуты)</Text>
         </View>
         {vidio && <View style={styles.textWrapper1}>
           <TextInput

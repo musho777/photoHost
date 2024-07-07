@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { ChangeCatalog, ClearChangeCatalog, GetRelationCategory, NoShowPopup } from "../../store/action/action"
 import { CatalogItem } from "../../components/catalogItem"
 import { Styles } from "../../styles/Styles"
+import { BackArrow } from "../../assets/svg/Svgs"
 
 export const ModalComponent = ({ showModal, token, close }) => {
   const dispatch = useDispatch()
@@ -12,6 +13,8 @@ export const ModalComponent = ({ showModal, token, close }) => {
   const changeCatalog = useSelector((st) => st.changeCatalog)
   const userData = useSelector((st) => st.userData)
   const [catalog, setCatalog] = useState([])
+  const [ShowText, setShowText] = useState(false)
+  const [showCatalog, setSHowCatalog] = useState(false)
 
   useEffect(() => {
     if (userData.data.categories) {
@@ -31,14 +34,15 @@ export const ModalComponent = ({ showModal, token, close }) => {
 
 
   const SelectCatalog = (data) => {
-    let index = selected.findIndex(item => item == data.id)
+    // let index = selected.findIndex(item => item == data.id)
     let item = [...selected]
-    if (index == -1) {
-      item.push(data.id)
-    }
-    else {
-      item.splice(index, 1)
-    }
+
+    // if (index == -1) {
+    //   item.push(data.id)
+    // }
+    // else {
+    //   item.splice(index, 1)
+    // }
     setSelected(item)
   }
 
@@ -48,6 +52,9 @@ export const ModalComponent = ({ showModal, token, close }) => {
     userData.data?.categories.map((elm, i) => {
       item.push(elm.id)
     })
+    getRelationCategory?.data?.map((elm, i) => {
+      item.push(elm.id)
+    })
     dispatch(ChangeCatalog(token, {
       category_ids: item,
       settings: 0,
@@ -55,54 +62,136 @@ export const ModalComponent = ({ showModal, token, close }) => {
     dispatch(ClearChangeCatalog())
     close()
   }
-  return <Modal
-    animationType="slide"
-    transparent={true}
-    visible={showModal}
-  >
-    <View style={styles.popup}>
-      <View style={[styles.card, styles.shadowProp]}>
-        <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, flexDirection: 'row' }}>
-          <Text style={Styles.darkMedium16}>Какие рубрики Вам интересны?</Text>
+
+  if (!ShowText && !showCatalog) {
+    return <Modal
+      animationType="slide"
+      transparent={true}
+      visible={showModal}
+    >
+      <View style={styles.popup}>
+        <View style={[styles.card, styles.shadowProp]}>
+          <View style={{ justifyContent: 'center', alignItems: 'center', gap: 6 }}>
+            <Text style={Styles.darkMedium16}>Предложить Вам попутный контент?</Text>
+            <Text onPress={() => setShowText(true)} style={[Styles.balihaiMedium10, { borderBottomWidth: 0.5, paddingBottom: 2, borderColor: '#8C9CAB' }]}>(что такое попутный контент?)</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+            <TouchableOpacity
+              onPress={() => SendData()}
+              style={{ padding: 8, width: 100, backgroundColor: '#FFD953', borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ color: 'white' }}>Да</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                close()
+                dispatch(NoShowPopup(token))
+              }}
+              style={{ padding: 8, width: 100, backgroundColor: 'rgb(200, 200, 200)', borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ color: 'white' }}>Нет</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View>
-          <ScrollView style={{ height: '80%' }}>
-            <View style={styles.catalogWrapper}>
-              {getRelationCategory.data.map((elm, i) => {
-                return <CatalogItem selected={selected.findIndex(item => item == elm.id) > -1} onSelect={(e) => SelectCatalog(e)} data={elm} key={i} />
-              })}
+      </View>
+    </Modal>
+  }
+  else if (ShowText) {
+    return <Modal
+      animationType="slide"
+      transparent={true}
+      visible={showModal}
+    >
+      <View style={styles.popup}>
+        <View style={[styles.card1, styles.shadowProp]}>
+          <TouchableOpacity
+            onPress={() => setShowText(false)}
+            style={{ position: 'absolute', top: 10, left: 20 }}>
+            <BackArrow />
+          </TouchableOpacity>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{ gap: 30 }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
+                <Text style={Styles.darkMedium13}>Попутный контент – это контент, который косвенно имеет отношение к выбранным Вами рубрикам и будет предлагаться в ленте событий.
+                </Text>
+              </View>
+              <View>
+                <Text>Пример</Text>
+              </View>
+              <View style={{ gap: 10 }}>
+                <Text>Вы выбрали категорию Транспорт, к ней будут предлагаться:</Text>
+                <Text>-Путешествияи туризм (путешествия на личном и другом транспорте)</Text>
+                <Text>-Города и страны (города и страны, которые можно и нужно посетить)</Text>
+                <Text>-Одежда и обувь (какую удобную одежду и обувь взять с собой)</Text>
+                <Text>-Активный отдых (информация о всех видах отдыха)</Text>
+                <Text>-Квадрокоптер (разные фото и видео с высоты птичьего полета)</Text>
+                <Text>-Природа (самые лучшие уголки планеты)</Text>
+                <Text>-Релакс ( самые лучшие расслабления которые можно получить на отдыхе)</Text>
+              </View>
+              <View>
+                <Text>попутный контент</Text>
+              </View>
+              <View style={{ gap: 10 }}>
+                {getRelationCategory?.data?.map((elm, i) => {
+                  console.log(elm)
+                  return <Text key={i}>{elm.name}</Text>
+                })}
+              </View>
             </View>
           </ScrollView>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 }}>
-          <TouchableOpacity
-            onPress={() => {
-              close()
-              dispatch(NoShowPopup(token))
-            }}
-            style={styles.button}>
-            <Text style={Styles.darkMedium13}>Пропустить</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[styles.button, { backgroundColor: '#FFD953' }]}>
-            {changeCatalog.loading ?
-              <View style={{ height: 8 }}>
-                <ActivityIndicator color={'white'} size='small' />
-              </View> :
-              <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
-            }
-          </TouchableOpacity>
-        </View>
       </View>
-    </View>
-  </Modal >
+    </Modal>
+  }
+
+  // else if (!ShowText && showCatalog) {
+  //   return <Modal
+  //     animationType="slide"
+  //     transparent={true}
+  //     visible={showModal}
+  //   >
+  //     <View style={styles.popup}>
+  //       <View style={[styles.card, styles.shadowProp]}>
+  //         <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, flexDirection: 'row' }}>
+  //           <Text style={Styles.darkMedium16}>Какие рубрики Вам интересны?</Text>
+  //         </View>
+  //         <View>
+  //           <ScrollView style={{ height: '80%' }}>
+  //             <View style={styles.catalogWrapper}>
+  //               {getRelationCategory.data.map((elm, i) => {
+  //                 return <CatalogItem selected={selected.findIndex(item => item == elm.id) > -1} onSelect={(e) => SelectCatalog(e)} data={elm} key={i} />
+  //               })}
+  //             </View>
+  //           </ScrollView>
+  //         </View>
+  //         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 }}>
+  //           <TouchableOpacity
+  //             onPress={() => {
+  //               close()
+  //               dispatch(NoShowPopup(token))
+  //             }}
+  //             style={styles.button}>
+  //             <Text style={Styles.darkMedium13}>Пропустить</Text>
+  //           </TouchableOpacity>
+  //           <TouchableOpacity onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[styles.button, { backgroundColor: '#FFD953' }]}>
+  //             {changeCatalog.loading ?
+  //               <View style={{ height: 8 }}>
+  //                 <ActivityIndicator color={'white'} size='small' />
+  //               </View> :
+  //               <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
+  //             }
+  //           </TouchableOpacity>
+  //         </View>
+  //       </View>
+  //     </View>
+  //   </Modal >
+  // }
+
 }
 const styles = StyleSheet.create({
   popup: {
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   catalogWrapper: {
     flexDirection: 'row',
@@ -119,12 +208,28 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     paddingHorizontal: 25,
-    marginVertical: 10,
     position: 'absolute',
     backgroundColor: 'white',
     width: '96%',
+    paddingVertical: 30,
+    gap: 20,
+    paddingTop: 30,
+    marginTop: 30,
+  },
+  card1: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    paddingHorizontal: 25,
+    position: 'absolute',
+    backgroundColor: 'white',
+    width: '96%',
+    paddingVertical: 30,
+    gap: 20,
+    paddingTop: 30,
+    marginTop: 30,
     height: '85%',
   },
+
   shadowProp: {
     shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },

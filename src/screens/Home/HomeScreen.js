@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, FlatList, ActivityIndicator, RefreshControl, StyleSheet } from 'react-native';
+import { View, FlatList, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction, getUserInfoAction } from '../../store/action/action';
-import { Styles } from '../../styles/Styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ModalComponent } from './modal';
 
@@ -41,7 +40,7 @@ export const HomeScreen = ({ navigation }) => {
     const unsubscribe = navigation.addListener('focus', async () => {
       let token = await AsyncStorage.getItem('token')
       if (token) {
-        dispatch(GetLentsAction(token));
+        // dispatch(GetLentsAction(token));
         setIschange(isChange + 1)
         dispatch(getUserInfoAction(token))
       }
@@ -138,13 +137,13 @@ export const HomeScreen = ({ navigation }) => {
     setIndex(index);
   };
 
-  if (getLents?.loading) {
-    return (
-      <View style={Styles.loading}>
-        <ActivityIndicator size="large" color="#FFC24B" />
-      </View>
-    );
-  }
+  // if (getLents?.loading) {
+  //   return (
+  //     <View style={Styles.loading}>
+  //       <ActivityIndicator size="large" color="#FFC24B" />
+  //     </View>
+  //   );
+  // }
   return (
     <View>
       {showModal && <ModalComponent
