@@ -3,11 +3,10 @@ import { View, FlatList, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction, getUserInfoAction } from '../../store/action/action';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ModalComponent } from './modal';
 
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = () => {
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents);
@@ -18,7 +17,6 @@ export const HomeScreen = ({ navigation }) => {
   const flatListRef = useRef(null);
   const [showModal, setShowModal] = useState(false)
   const userData = useSelector((st) => st.userData)
-  const [isChange, setIschange] = useState(0)
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,22 +29,9 @@ export const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     if (staticdata.token) {
       dispatch(GetLentsAction(staticdata.token));
+      dispatch(getUserInfoAction(staticdata.token))
     }
   }, [staticdata.token]);
-
-
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
-      let token = await AsyncStorage.getItem('token')
-      if (token) {
-        // dispatch(GetLentsAction(token));
-        setIschange(isChange + 1)
-        dispatch(getUserInfoAction(token))
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
 
   useEffect(() => {
     if (index) {
@@ -72,49 +57,31 @@ export const HomeScreen = ({ navigation }) => {
     setData(item)
   }
 
+  const AddToBack = (e) => {
+    let item = [...blackList];
+    item.push(e);
+    setBlackList(item);
+  }
+
   const renderItem = ({ item, index }) => {
-    const givenDate = new Date(item.created_at);
-    const currentDate = new Date();
-    const timeDifference = currentDate - givenDate;
-    let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + ' дней назад';
-    if (daysAgo < 0) {
-      daysAgo = daysAgo * 24 + 'часов назад'
-      if (daysAgo < 0) {
-        daysAgo = daysAgo * 60 + 'минут назад'
-      }
-    }
-
-
     if (!blackList.includes(item.user.id)) {
       return (
         <View
           key={index}
-          style={{
-            backfaceVisibility: 'visible',
-            backgroundColor: 'transparent',
-            marginTop: 5
-          }}>
+          style={{ marginTop: 5 }}>
           <Post
-            userImg={item.user.avatar}
-            userName={item.user.name}
-            userId={item.user.id}
+            userInfo={item.user}
             description={item.description}
             like={item.like_count}
             commentCount={item.comment_count}
             view={item.view_count}
             music={item.music_name}
             photo={item.photo}
-            liked={item.like_auth_user.length}
             id={item.id}
             star={item.user.star}
             isBook={item.auth_user_book.length > 0}
             isFollow={item.user.follow_status_sender.length}
-            daysAgo={daysAgo}
-            addToblack={e => {
-              let item = [...blackList];
-              item.push(e);
-              setBlackList(item);
-            }}
+            addToblack={(e) => AddToBack(e)}
             data={item.created_at}
             deletData={(e) => deletData(index, e)}
           />
@@ -137,13 +104,6 @@ export const HomeScreen = ({ navigation }) => {
     setIndex(index);
   };
 
-  // if (getLents?.loading) {
-  //   return (
-  //     <View style={Styles.loading}>
-  //       <ActivityIndicator size="large" color="#FFC24B" />
-  //     </View>
-  //   );
-  // }
   return (
     <View>
       {showModal && <ModalComponent

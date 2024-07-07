@@ -28,7 +28,6 @@ export const PostHeader = ({
   addToblack,
 }
 ) => {
-
   const [follow, setFollow] = useState(isFollow)
   const staticdata = useSelector(st => st.static);
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')

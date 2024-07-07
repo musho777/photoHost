@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   View,
   StyleSheet,
-  Image,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -17,16 +16,14 @@ import { PostBody } from './postBody';
 import { ShowSave } from './showSave';
 
 export const Post = ({
-  userImg,
-  userName,
   description,
+  userInfo,
   like,
   commentCount,
   view,
   photo,
   id,
   star,
-  userId,
   addToblack,
   isBook,
   isFollow,
@@ -85,12 +82,12 @@ export const Post = ({
         startColor={'#00000010'}>
         <View style={styles.block}>
           <PostHeader
-            userImg={userImg}
+            userImg={userInfo.avatar}
             user={user}
             setShowSave={(e) => setShowSave(true)}
-            userName={userName}
+            userName={userInfo.name}
             setSaveType={(e) => setSaveType(e)}
-            userId={userId}
+            userId={userInfo.id}
             data={data}
             isFollow={isFollow}
             openModal={openModal}
