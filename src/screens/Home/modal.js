@@ -126,15 +126,6 @@ export const ModalComponent = ({ showModal, token, close }) => {
                 <Text>-Природа (самые лучшие уголки планеты)</Text>
                 <Text>-Релакс ( самые лучшие расслабления которые можно получить на отдыхе)</Text>
               </View>
-              <View>
-                <Text>попутный контент</Text>
-              </View>
-              <View style={{ gap: 10 }}>
-                {getRelationCategory?.data?.map((elm, i) => {
-                  console.log(elm)
-                  return <Text key={i}>{elm.name}</Text>
-                })}
-              </View>
             </View>
           </ScrollView>
         </View>
@@ -227,7 +218,7 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingTop: 30,
     marginTop: 30,
-    height: '85%',
+    height: '74%',
   },
 
   shadowProp: {
