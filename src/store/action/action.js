@@ -1569,6 +1569,7 @@ export const GetRelationCategory = (token) => {
     fetch(`${Api}/get_relation_category`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r, '11', token)
         if (r.status) {
           dispatch(SuccessGetRelationCatalog(r.data))
         }

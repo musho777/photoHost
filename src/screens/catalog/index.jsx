@@ -3,16 +3,17 @@ import { Styles } from "../../styles/Styles"
 import { CatalogItem } from "../../components/catalogItem"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction } from "../../store/action/action"
+import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction, getUserInfoAction } from "../../store/action/action"
 import { useNavigation } from "@react-navigation/native"
 
-export const Catalog = ({ route }) => {
+export const Catalog = () => {
   const dispatch = useDispatch()
   const getCatalog = useSelector((st) => st.getCatalog)
   const userData = useSelector((st) => st.userData)
   const [selected, setSelected] = useState([])
   const navigation = useNavigation()
   const staticdata = useSelector(st => st.static);
+  const [loading, setLiading] = useState(false)
 
 
   const changeCatalog = useSelector((st) => st.changeCatalog)
@@ -43,24 +44,31 @@ export const Catalog = ({ route }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(ClearChangeCatalog())
+      setLiading(false)
     });
     return unsubscribe;
   }, [navigation]);
 
   useEffect(() => {
     if (changeCatalog.status) {
+      setLiading(false)
       navigation.navigate('TabNavigation', { screen: 'Home' })
       dispatch(ClearChangeCatalog())
     }
+    else {
+      setLiading(false)
+    }
   }, [changeCatalog.status])
 
-
+  console.log(changeCatalog, 'changeCatalog')
 
   const SendData = () => {
+    setLiading(true)
     dispatch(ChangeCatalog(staticdata.token, {
       category_ids: selected,
       settings: 1,
     }))
+    dispatch(getUserInfoAction(staticdata.token))
     dispatch(ClearChangeCatalog())
   }
 
@@ -86,7 +94,7 @@ export const Catalog = ({ route }) => {
         onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
           { backgroundColor: '#8f8f8f' }
         ]}>
-        {changeCatalog.loading ?
+        {loading ?
           <View style={{ height: 8 }}>
             <ActivityIndicator color={'white'} size='small' />
           </View> :

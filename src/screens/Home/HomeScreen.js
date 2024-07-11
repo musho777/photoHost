@@ -6,7 +6,7 @@ import { AddPostViewCount, DelatePostAction, GetLentsAction, getUserInfoAction }
 import { ModalComponent } from './modal';
 
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = () => {
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents);
@@ -32,16 +32,6 @@ export const HomeScreen = ({ navigation }) => {
       dispatch(getUserInfoAction(staticdata.token))
     }
   }, [staticdata.token]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
-      if (staticdata.token) {
-        dispatch(getUserInfoAction(staticdata.token))
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
-
 
   useEffect(() => {
     if (index) {

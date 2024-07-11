@@ -26,12 +26,12 @@ const style = StyleSheet.create({
   CatalogItem: {
     backgroundColor: 'rgb(245, 245, 245)',
     width: '48%',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     height: 130,
     borderRadius: 10,
-    gap: 10,
-    paddingHorizontal: 5
+    gap: 7,
+    paddingHorizontal: 5,
   },
   select: {
     position: 'absolute',
