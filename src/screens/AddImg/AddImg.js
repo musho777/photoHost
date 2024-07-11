@@ -250,11 +250,11 @@ export const AddImg = ({ navigation }) => {
           })}
         </View>
         {error && <Text style={{ padding: 1, color: 'red' }}>{error}</Text>}
-        <View style={{ marginVertical: 15, width: 233 }}>
+        <View style={{ marginVertical: 15, width: 233, flexDirection: 'row', alignItems: 'center' }}>
           {uri.length < 10 &&
             <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
           }
-          <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 10, marginTop: 3, textAlign: 'right' }]}>(Видео не более 1-ой минуты)</Text>
+          <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 4, marginTop: 3, textAlign: 'right' }]}>(не более 1-ой минуты)</Text>
         </View>
         {vidio && <View style={styles.textWrapper1}>
           <TextInput
