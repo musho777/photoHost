@@ -37,9 +37,7 @@ export const Post = ({
 
   const likeRef = useRef(null)
   const snapPointsLike = useMemo(() => ['50%'], []);
-  const handlePresentModalPressLike = useCallback(() => {
-    likeRef.current?.present();
-  }, []);
+  const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
   const [openLike, setOpenLike] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
@@ -49,9 +47,7 @@ export const Post = ({
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      // setShowSave(false);
     }, 1000);
-
     return () => clearTimeout(timeoutId);
   }, [showSave]);
 

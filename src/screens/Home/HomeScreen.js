@@ -34,15 +34,8 @@ export const HomeScreen = () => {
   }, [staticdata.token]);
 
   useEffect(() => {
-    if (index) {
-      dispatch(
-        AddPostViewCount(
-          {
-            post_id: getLents?.data[index]?.id,
-          },
-          staticdata.token,
-        ),
-      );
+    if (index != -1) {
+      dispatch(AddPostViewCount({ post_id: getLents?.data[index]?.id }, staticdata.token))
     }
   }, [index]);
 
@@ -62,6 +55,19 @@ export const HomeScreen = () => {
     item.push(e);
     setBlackList(item);
   }
+
+  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+    const paddingToBottom = 900;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
+
+  const handleScroll = event => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const itemHeight = 400;
+    const index = Math.floor(offsetY / itemHeight);
+    setIndex(index);
+  };
 
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
@@ -88,20 +94,6 @@ export const HomeScreen = () => {
         </View>
       );
     }
-  };
-
-
-  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
-    const paddingToBottom = 900;
-    return layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom;
-  };
-
-  const handleScroll = event => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const itemHeight = 400;
-    const index = Math.floor(offsetY / itemHeight);
-    setIndex(index);
   };
 
   return (
