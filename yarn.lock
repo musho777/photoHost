@@ -2520,6 +2520,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nyashanziramasanga/react-native-horizontal-scroll-menu@npm:^1.0.11":
+  version: 1.0.11
+  resolution: "@nyashanziramasanga/react-native-horizontal-scroll-menu@npm:1.0.11"
+  checksum: 25c5c0d665203ba2ac2b26d721a0d4d6d74be9ad0afe3d06b545e3b5f29ff6a5b6cb441d44814440beeb40d857cc6c1b18fdabb00e292a8f43c5f753b86b2ec4
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -10670,6 +10677,7 @@ __metadata:
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
     "@gorhom/bottom-sheet": ^4
+    "@nyashanziramasanga/react-native-horizontal-scroll-menu": ^1.0.11
     "@pusher/pusher-websocket-react-native": ^1.3.0
     "@react-native-async-storage/async-storage": ^1.19.1
     "@react-native-community/datetimepicker": ^7.5.0
@@ -10718,6 +10726,7 @@ __metadata:
     react-native-reanimated: ^3.4.2
     react-native-safe-area-context: 3.3.2
     react-native-screens: ^3.22.1
+    react-native-screens-swiper: ^1.2.6
     react-native-scrollable-tab-view-forked: ^1.1.4
     react-native-shadow-2: ^7.0.8
     react-native-slider: ^0.11.0
@@ -11327,6 +11336,13 @@ __metadata:
   peerDependencies:
     react-native: "*"
   checksum: df30e1935dfb32ece9be57cd21ccbbecd058a68942536ff6c543f591e5488cc22f17093131eaabf490b6e187caa78e802a4b2e55c890af1c48a3f012dd57c9f2
+  languageName: node
+  linkType: hard
+
+"react-native-screens-swiper@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "react-native-screens-swiper@npm:1.2.6"
+  checksum: 62c53397913de186ec09639fde3721a30319c77f200c3695efac7d4f8e46eb70375fda1eab91794a19ad1cc3b095f04bae742c4b28a1369d653731465af0dc47
   languageName: node
   linkType: hard
 
