@@ -30,8 +30,14 @@ const GetPostsReducer = (state = initialState, action) => {
       item.error = action.data;
       item.loading = false;
       item.status = false;
-      // item.data = {}
       break;
+    case 'DeletLocalPhoto':
+      let data = item.data
+      const postId = action.data.post_id
+      const index = data.findIndex((elm) => elm.id == postId)
+      data.splice(index, 1)
+      item.data = data
+      break
     default:
       break;
   }

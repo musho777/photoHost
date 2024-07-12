@@ -16,7 +16,7 @@ import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, activePhoto, description, music }) => {
+export const Slider = ({ photo, single, music }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -180,7 +180,7 @@ export const Slider = ({ photo, single, activePhoto, description, music }) => {
           justifyContent: 'center',
           marginVertical: 5,
         }}>
-        {photo.length > 1 &&
+        {photo?.length > 1 &&
           photo?.map((elm, i) => (
             <View
               key={i}

@@ -83,3 +83,9 @@ export const ClearSinglpAgeComment = () => {
         type: 'ClearSinglpAgeComment'
     }
 }
+
+export const ClearDelatePhost = () => {
+    return {
+        type: 'ClearDelatePhost'
+    }
+}

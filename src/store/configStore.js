@@ -40,6 +40,7 @@ import GetCatalogReducer from './reducers/GetCatalogReducer';
 import ChangeCatalogReducer from './reducers/changeCatalogReducer';
 import GetLentsActionRecReducer from './reducers/GetLentsActionRecReducer';
 import GetRelationCategoryReducer from './reducers/GetRelationCategoryReducer';
+import DelatePhotoReducer from './reducers/delatePhotoReducer';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -82,6 +83,7 @@ const rootReducer = combineReducers({
     changeCatalog: ChangeCatalogReducer,
     getLentsAction: GetLentsActionRecReducer,
     getRelationCategory: GetRelationCategoryReducer,
+    delatePhoto: DelatePhotoReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

@@ -109,6 +109,7 @@ import {
   SuccessConfirmRegisterCode,
   SuccessCreatePost,
   SuccessDelateChat,
+  SuccessDelatePhost,
   SuccessDeleteOtherPople,
   SuccessEditPost,
   SuccessForgotPassword,
@@ -1442,17 +1443,27 @@ export const DelatePostAction = (data, token) => {
     fetch(`${Api}/delete_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
-          dispatch(SuccessUpdateIkinfo(r.data))
+          dispatch(DeletLocalPhoto(data))
+          dispatch(SuccessDelatePhost(r.data))
         }
         else {
           dispatch(ErrorDeletePost())
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorDeletePost())
       });
   };
+}
+
+const DeletLocalPhoto = (data) => {
+  return {
+    type: 'DeletLocalPhoto',
+    data
+  }
 }
 
 export const MsgCountAction = (data) => {

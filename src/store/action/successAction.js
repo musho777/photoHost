@@ -306,3 +306,10 @@ export const SuccessGetRelationCatalog = (data) => {
         data
     }
 }
+
+export const SuccessDelatePhost = (data) => {
+    return {
+        type: 'SuccessDelatePhost',
+        data
+    }
+}
