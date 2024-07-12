@@ -77,9 +77,7 @@ export const PostHeader = ({
   }
 
   return <View style={[Styles.flexSpaceBetween, { padding: 10, position: 'relative' }]}>
-    <View style={{ position: 'absolute', left: 0, right: 0, top: 110 }}>
-      <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
-    </View>
+    <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
     <TouchableOpacity onPress={() =>
       user?.data.id !== userId ? navigation.navigate('SearchProfil', { id: userId }) :
         navigation.navigate('ProfileNavigation')

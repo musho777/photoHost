@@ -8,8 +8,8 @@ import { BackArrow } from "../../../assets/svg/Svgs";
 import { MenuSvg } from "../../../assets/svg/TabBarSvg";
 import { useNavigation } from "@react-navigation/native";
 import { AddBlackListAction, AddInBookAction, DelatePostAction, GetPostsAction } from "../../../store/action/action";
-import { Shadow } from "react-native-shadow-2";
 import { ClearDelatePhost } from "../../../store/action/clearAction";
+import { ShowSave } from "../../../components/post/showSave";
 
 
 export const BootomModalComponent = ({ id, route, user }) => {
@@ -46,9 +46,6 @@ export const BootomModalComponent = ({ id, route, user }) => {
     bottomSheetRef.current?.present();
   }, []);
 
-  const handleCloseModalPress = useCallback(() => {
-    bottomSheetRef.current?.close();
-  }, []);
 
 
   const snapPoints = useMemo(
@@ -69,7 +66,7 @@ export const BootomModalComponent = ({ id, route, user }) => {
   };
 
   const DelatePhoto = () => {
-    handleCloseModalPress()
+    bottomSheetRef.current?.close();
     setTimeout(() => {
       dispatch(DelatePostAction({ post_id: singlData.data.id }, staticdata.token))
     }, 10)
@@ -84,21 +81,7 @@ export const BootomModalComponent = ({ id, route, user }) => {
 
 
   return <View >
-    {showSave &&
-      <View style={styles.block}>
-        <Shadow
-          style={{ width: '100%', borderRadius: 10, backgroundColor: '#fff', justifyContent: 'center', alignItems: "center", height: 50 }}
-          startColor={'#00000010'}
-        >
-          <View style={styles.card}>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: 'center', gap: 10, paddingHorizontal: 2 }}>
-              <Image source={require('../../../assets/img/icons8-save-30.png')} />
-              <Text style={styles.heading}>{saveType}</Text>
-            </View>
-          </View>
-        </Shadow>
-      </View>
-    }
+    <ShowSave showSave={showSave} saveType={saveType} setShowSave={(e) => setShowSave(e)} />
     <View
       style={[
         Styles.flexSpaceBetween,
@@ -203,12 +186,5 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
-  },
-
-  shadowProp: {
-    shadowColor: 'black',
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
 })

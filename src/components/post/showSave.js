@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'
 import { SuccessSvg } from '../../assets/svg/Svgs';
 import { Styles } from '../../styles/Styles';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const ShowSave = ({ showSave, saveType, setShowSave }) => {
 
@@ -15,12 +15,14 @@ export const ShowSave = ({ showSave, saveType, setShowSave }) => {
   }, [showSave]);
 
   if (showSave)
-    return <Shadow style={styles.blocks} startColor={'#00000010'}>
-      <View style={styles.card}>
-        <SuccessSvg />
-        <Text style={Styles.whiteMedium12}>{saveType}</Text>
-      </View>
-    </Shadow>
+    return <View style={{ position: 'absolute', left: 0, right: 0, top: 110 }}>
+      <Shadow style={styles.blocks} startColor={'#00000010'}>
+        <View style={styles.card}>
+          <SuccessSvg />
+          <Text style={Styles.whiteMedium12}>{saveType}</Text>
+        </View>
+      </Shadow>
+    </View>
 }
 
 const styles = StyleSheet.create({
