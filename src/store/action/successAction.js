@@ -313,3 +313,10 @@ export const SuccessDelatePhost = (data) => {
         data
     }
 }
+
+export const SuccessOtherPostsAction = (data) => {
+    return {
+        type: 'SuccessOtherPostsAction',
+        data
+    }
+}

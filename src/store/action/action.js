@@ -42,6 +42,7 @@ import {
   ErrorLogout,
   ErrorNewMessageAction,
   ErrorNewPassword,
+  ErrorOtherPostsAction,
   ErrorRegister,
   ErrorSearch,
   ErrorUpdateIKInfor,
@@ -93,6 +94,7 @@ import {
   StartChangeCatalog,
   StartGetLentsRec,
   StartGetRelationCatalog,
+  StartOtherPostsAction,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -134,6 +136,7 @@ import {
   SuccessLogout,
   SuccessNewMessageAction,
   SuccessNewPassword,
+  SuccessOtherPostsAction,
   SuccessRegister,
   SuccessSearch,
   SuccessUpdateIkinfo,
@@ -896,6 +899,32 @@ export const GetPostsAction = (data, token, page) => {
       });
   };
 };
+export const GetOtherPostsAction = (data, token, page) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  return dispatch => {
+    if (page == 1 || !page) {
+      dispatch(StartOtherPostsAction());
+    }
+    fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessOtherPostsAction(r));
+        } else {
+          dispatch(ErrorOtherPostsAction('server error'));
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorOtherPostsAction('server error'));
+      });
+  };
+};
 
 export const GetLentsAction = (token, page) => {
   var myHeaders = new Headers();
@@ -1413,7 +1442,6 @@ export const UpdateIkInfoAction = (data, token) => {
     fetch(`${Api}/update_lk_info`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessUpdateIkinfo(r.data))
         }

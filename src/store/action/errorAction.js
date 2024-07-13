@@ -304,3 +304,9 @@ export const ErrorGetRelationCatalog = () => {
         type: 'ErrorGetRelationCatalog'
     }
 }
+
+export const ErrorOtherPostsAction = () => {
+    return {
+        type: 'ErrorOtherPostsAction'
+    }
+}

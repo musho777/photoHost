@@ -4,6 +4,7 @@ import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, Profet
 import { Styles } from "../../styles/Styles"
 
 export const InfoBlock = ({ user }) => {
+
     const [data, setData] = useState([
         { svg: <LocationSvg />, value: '' },
         { svg: <CakeSvg />, value: '' },
@@ -15,14 +16,12 @@ export const InfoBlock = ({ user }) => {
         { svg: <PhoneSvg />, value: '' },
     ])
 
-
     const GetData = () => {
         let item = [...data]
         let dateComponents = ''
         let year = ''
         let day = ''
         let month = ''
-        console.log(user.date_of_birth1, 'user.date_of_birth1')
         if (user.date_of_birth1) {
             if (user.date_of_birth1.includes('.')) {
                 dateComponents = user.date_of_birth1.split('.')
@@ -30,7 +29,6 @@ export const InfoBlock = ({ user }) => {
             else {
                 dateComponents = user.date_of_birth1.split('-')
             }
-            console.log(dateComponents, 'dateComponents')
             year = dateComponents[0]
             day = dateComponents[1]
             month = dateComponents[2]
@@ -55,68 +53,30 @@ export const InfoBlock = ({ user }) => {
         if (day) {
             newDateFormat = `${day}.${month}.${year}`;
         }
+
+        item[0].value = user.city?.name ? user.city?.name : user.city?.value
         item[1].value = newDateFormat
-        item[2].value = user.gender
+        item[2].value = user.gender ? user.gender : ''
+        item[3].value = user.mgu
+        item[4].value = user.work_type
+        item[5].value = user.web
         item[6].value = user.email
         item[7].value = user.phone
         setData(item)
     }
     useEffect(() => {
         GetData()
-    }, [user.date_of_birth1])
-    return <View >
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }}>
-            <LocationSvg />
-            <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                {user.city?.name}
-            </Text>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }}>
-            <CakeSvg />
-            <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                {data[1].value}
-            </Text>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }}>
+    }, [user.mgu, user.phone, user.work_type, user.email, user.gender, user.date_of_birth1, user.city, user.web])
 
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }}>
-            <ProfetionsSvg />
-            <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                {user.mgu}
-            </Text>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }}>
-            <WorkLocation />
-            <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                {user.work_type}
-            </Text>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }}>
-            <NetWorkSvg />
-            <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                {user.web}
-            </Text>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }}>
-            <EmailSvg />
-            <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                {user.email}
-            </Text>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }}>
-            <PhoneSvg />
-            <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                {user.phone}
-            </Text>
-        </View>
-        {/* {data.map((elm, i) => {
+
+    return <View >
+        {data.map((elm, i) => {
             return <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }} key={i}>
                 {elm.svg}
                 <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
                     {elm.value}
                 </Text>
             </View>
-        })} */}
+        })}
     </View>
 }

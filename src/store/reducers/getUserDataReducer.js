@@ -76,9 +76,10 @@ const GetUserDataReducer = (state = initialState, action) => {
       break
 
     case 'UpdateUserInfo':
-      console.log(action.data[1].value, '79')
-      // item.data.city = item.data.city
+      console.log(action.data[0].value, '79')
+      item.data.city = action.data[0]
       item.data.date_of_birth1 = action.data[1].value
+      item.data.gender = action.data[2].value
       item.data.mgu = action.data[3].value
       item.data.work_type = action.data[4].value
       item.data.web = action.data[5].value

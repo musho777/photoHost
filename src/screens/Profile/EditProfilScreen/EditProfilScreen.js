@@ -49,6 +49,16 @@ export const EditProfilScreen = ({ navigation }) => {
     }
   }
 
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      if (staticdata.token) {
+        SetData()
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   const [error, setError] = useState('');
   const user = useSelector(st => st.userData);
   const staticdata = useSelector(st => st.static);
@@ -78,7 +88,6 @@ export const EditProfilScreen = ({ navigation }) => {
 
   const SetData = () => {
     let d = ''
-    console.log(user?.allData?.data?.date_of_birth, 'user?.allData?.data?.date_of_birth')
     if (user?.allData?.data?.date_of_birth) {
       setYera(user?.allData?.data?.date_of_birth?.split('-')[0])
       d = user?.allData?.data?.date_of_birth?.split('-')[2].slice(0, 2)
@@ -95,17 +104,48 @@ export const EditProfilScreen = ({ navigation }) => {
       m = +m[1]
     }
 
+
+
     setMount(data1[m])
     const dateComponents = JSON.stringify(user?.allData?.data?.date_of_birth)?.substring(0, 11)?.split('-')
     const year = dateComponents && dateComponents[0]?.replace(`"`, '')
     const day = dateComponents && dateComponents[2]
     const month = dateComponents && dateComponents[1]
-    const newDateFormat = `${day}-${month}-${year}`;
+    let newDateFormat = `${day}-${month}-${year}`;
 
     let item = [...data]
-    item[0].value = user?.allData?.data?.city?.name ? user?.allData?.data?.city?.name : ''
-    item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
+    console.log(user?.allData?.data?.city?.name, '116')
+    if (user?.allData?.data?.city?.name) {
+      item[0].value = user?.allData?.data?.city?.name
+
+    }
+    else if (user?.allData?.data?.city?.value) {
+      item[0].value = user?.allData?.data?.city?.value
+    }
+    else {
+      item[0].value = ''
+
+    }
+
+    if (user?.allData?.data?.date_of_birth1) {
+      let dateComponents = ''
+      if (user?.allData?.data?.date_of_birth1.includes('.')) {
+        dateComponents = user?.allData?.data.date_of_birth1.split('.')
+      }
+      else {
+        dateComponents = user?.allData?.data.date_of_birth1.split('-')
+      }
+      newDateFormat = `${dateComponents[1]}-${dateComponents[2]}-${dateComponents[0]}`;
+      setDay(dateComponents[2])
+      setYera(dateComponents[0])
+      if (dateComponents[1]) {
+        let index = +dateComponents[1] - 1
+        setMount(data1[index])
+      }
+    }
+    console.log(newDateFormat, 'newDateFormat')
     item[1].value2 = newDateFormat ? newDateFormat : ''
+    item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
     item[2].value = user?.allData?.data?.gender ? user?.allData?.data?.gender : ''
     item[3].value = user?.allData?.data?.mgu ? user?.allData?.data?.mgu : ''
     item[4].value = user?.allData?.data?.work_type ? user?.allData?.data?.work_type : ''

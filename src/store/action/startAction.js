@@ -266,3 +266,9 @@ export const StartGetRelationCatalog = () => {
         type: 'StartGetRelationCatalog'
     }
 }
+
+export const StartOtherPostsAction = () => {
+    return {
+        type: 'StartOtherPostsAction'
+    }
+}
