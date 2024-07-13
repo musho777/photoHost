@@ -4,7 +4,7 @@ import { BlackListScreen } from '../screens/Profile/BlackListScreen';
 import { ChangeMailFirtScreen } from '../screens/Profile/ChangeMailFirtScreen';
 import { ChangeMailScreen } from '../screens/Profile/ChangeMailScreen';
 import { ChangePasswordScreen } from '../screens/Profile/ChangePasswordScreen';
-import { EditProfilScreen } from '../screens/Profile/EditProfilScreen';
+import { EditProfilScreen } from '../screens/Profile/EditProfilScreen/EditProfilScreen';
 import { ParametrScreen } from '../screens/Profile/ParametrScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { SavedPostScreen } from '../screens/Profile/SavedPostScreen';

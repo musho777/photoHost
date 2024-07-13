@@ -24,7 +24,6 @@ export const ModalComponent = ({ showModal, token, close }) => {
 
 
   useEffect(() => {
-    // console.log(token)
     if (token) {
       dispatch(GetRelationCategory(token))
     }
@@ -37,13 +36,6 @@ export const ModalComponent = ({ showModal, token, close }) => {
   const SelectCatalog = (data) => {
     // let index = selected.findIndex(item => item == data.id)
     let item = [...selected]
-
-    // if (index == -1) {
-    //   item.push(data.id)
-    // }
-    // else {
-    //   item.splice(index, 1)
-    // }
     setSelected(item)
   }
 
@@ -56,7 +48,6 @@ export const ModalComponent = ({ showModal, token, close }) => {
     getRelationCategory?.data?.map((elm, i) => {
       item.push(elm.id)
     })
-    console.log(getRelationCategory.data, '0000')
     dispatch(ChangeCatalog(token, {
       category_ids: item,
       settings: 0,
@@ -134,50 +125,6 @@ export const ModalComponent = ({ showModal, token, close }) => {
       </View>
     </Modal>
   }
-
-  // else if (!ShowText && showCatalog) {
-  //   return <Modal
-  //     animationType="slide"
-  //     transparent={true}
-  //     visible={showModal}
-  //   >
-  //     <View style={styles.popup}>
-  //       <View style={[styles.card, styles.shadowProp]}>
-  //         <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, flexDirection: 'row' }}>
-  //           <Text style={Styles.darkMedium16}>Какие рубрики Вам интересны?</Text>
-  //         </View>
-  //         <View>
-  //           <ScrollView style={{ height: '80%' }}>
-  //             <View style={styles.catalogWrapper}>
-  //               {getRelationCategory.data.map((elm, i) => {
-  //                 return <CatalogItem selected={selected.findIndex(item => item == elm.id) > -1} onSelect={(e) => SelectCatalog(e)} data={elm} key={i} />
-  //               })}
-  //             </View>
-  //           </ScrollView>
-  //         </View>
-  //         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 }}>
-  //           <TouchableOpacity
-  //             onPress={() => {
-  //               close()
-  //               dispatch(NoShowPopup(token))
-  //             }}
-  //             style={styles.button}>
-  //             <Text style={Styles.darkMedium13}>Пропустить</Text>
-  //           </TouchableOpacity>
-  //           <TouchableOpacity onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[styles.button, { backgroundColor: '#FFD953' }]}>
-  //             {changeCatalog.loading ?
-  //               <View style={{ height: 8 }}>
-  //                 <ActivityIndicator color={'white'} size='small' />
-  //               </View> :
-  //               <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
-  //             }
-  //           </TouchableOpacity>
-  //         </View>
-  //       </View>
-  //     </View>
-  //   </Modal >
-  // }
-
 }
 const styles = StyleSheet.create({
   popup: {

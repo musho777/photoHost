@@ -1,9 +1,6 @@
 import {
-  View,
   Text,
   SafeAreaView,
-  StyleSheet,
-  Dimensions,
 } from 'react-native';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,10 +10,6 @@ import { Slider } from '../../components/Slider';
 import { BootomModalComponent } from './components/BootomModal';
 import { LikeAndComment } from './components/likeAndCimment';
 
-
-
-const height = Dimensions.get('window').height;
-
 export const SinglPageScreen = ({ route }) => {
   const staticdata = useSelector(st => st.static);
   const singlData = useSelector(st => st.getSinglPage);
@@ -24,12 +17,10 @@ export const SinglPageScreen = ({ route }) => {
   const dispatch = useDispatch();
   const id = route.params.id;
 
-
   useEffect(() => {
     dispatch(GelPostCommentsAction({ post_id: id }, staticdata.token));
     dispatch(GetSinglPostAction({ post_id: id }, staticdata.token));
   }, []);
-
 
   return (
     <SafeAreaView>

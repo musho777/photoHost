@@ -6,8 +6,6 @@ import { Styles } from "../../../styles/Styles";
 import { useRef } from "react";
 import { Albom } from "../../../components/Albom";
 import { InfoBlock } from "../InfoBlock";
-import Swiper from "react-native-screens-swiper";
-import HorizontalScrollMenu, { RouteProps } from '@nyashanziramasanga/react-native-horizontal-scroll-menu/src';
 
 const { width } = Dimensions.get('window');
 

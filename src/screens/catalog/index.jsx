@@ -60,8 +60,6 @@ export const Catalog = () => {
     }
   }, [changeCatalog.status])
 
-  console.log(changeCatalog, 'changeCatalog')
-
   const SendData = () => {
     setLiading(true)
     dispatch(ChangeCatalog(staticdata.token, {

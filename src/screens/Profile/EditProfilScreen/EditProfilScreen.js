@@ -2,31 +2,28 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CakeSvg, DownArrow, DownArrow1, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WorkLocation } from '../../assets/svg/Svgs';
-import { AppColors } from '../../styles/AppColors';
-import { Styles } from '../../styles/Styles';
+import { CakeSvg, DownArrow, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WorkLocation } from '../../../assets/svg/Svgs';
+import { AppColors } from '../../../styles/AppColors';
+import { Styles } from '../../../styles/Styles';
 import React, { useEffect } from 'react';
-import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
-import { ChnageLanguage, UpdateIkInfoAction, chnageAvatarAction, chnageUserProfil } from '../../store/action/action';
-import { ClearChangeAvatar, ClearChangeProfile } from '../../store/action/clearAction';
-import { BootomModal } from '../../components/BootomSheet';
-import { CityModal } from '../../components/CityModal';
-import { MountWrapper } from '../../components/MountWrapper';
-import { t } from '../../components/lang';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { HeaderWhiteTitle } from '../../../headers/HeaderWhiteTitle.';
+import { UpdateIkInfoAction, UpdateUserInfo, chnageUserProfil, getUserInfoAction } from '../../../store/action/action';
+import { ClearChangeProfile } from '../../../store/action/clearAction';
+import { BootomModal } from '../../../components/BootomSheet';
+import { CityModal } from '../../../components/CityModal';
+import { t } from '../../../components/lang';
+import { Date } from './components/date';
 
 export const EditProfilScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [discription, setDiscription] = useState('');
-  const [calendar, setCalendar] = useState(false)
   const [city, setCity] = useState(false)
-  const [openMount, setOpenMout] = useState(false)
   const mainData = useSelector(st => st.mainData);
 
+  const updateUserInfo = useSelector((st) => st.updateUserInfo)
+
   const [height, setHeight] = useState();
-  const [data1, setData] = useState([
+  const data1 = [
     { name: 'Январь', id: 0 },
     { name: 'Февраль', id: 1 },
     { name: 'Март', id: 2 },
@@ -39,15 +36,13 @@ export const EditProfilScreen = ({ navigation }) => {
     { name: 'Октябрь', id: 9 },
     { name: 'Ноябрь', id: 10 },
     { name: 'Декабрь', id: 11 },
-  ])
+  ]
+
   const handlePresentModalPress = useCallback(() => { bottomSheetRef.current?.present(); }, []);
 
   const handelPress = (type) => {
     if (type == 'Пол') {
       handlePresentModalPress()
-    }
-    else if (type == 'Дата рождения') {
-      setCalendar(true)
     }
     else if (type === 'Город') {
       setCity(true)
@@ -60,13 +55,9 @@ export const EditProfilScreen = ({ navigation }) => {
   const changeProfil = useSelector(st => st.changeUserProfil);
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['16%'], []);
-  const changeAvatar = useSelector(st => st.changeAvatar);
-  const [imgUrl, setImgUrl] = useState('');
-  const [cityName, setCityName] = useState('')
   const [day, setDay] = useState()
   const [mount, setMount] = useState()
   const [year, setYera] = useState()
-  const [dym, setDym] = useState()
   const [data, setDate] = useState([
     { type: 'button', value: '', svg: <LocationSvg />, placeholder: t(mainData.lang).City, disabled: true, id: '' },
     { type: 'calendar', value: '', svg: <CakeSvg />, placeholder: t(mainData).DateofBirth, disabled: true, value2: '' },
@@ -82,13 +73,16 @@ export const EditProfilScreen = ({ navigation }) => {
     if (day || mount?.id || year) {
       const newDateFormat = `${year}.${mount?.id + 1}.${day}`;
       hadnelChange(1, newDateFormat, 'typ2', newDateFormat)
-      setCalendar(false)
     }
   }, [day, mount, year])
 
   const SetData = () => {
-    setYera(user?.allData?.data?.date_of_birth?.split('-')[0])
-    let d = user?.allData?.data?.date_of_birth?.split('-')[2].slice(0, 2)
+    let d = ''
+    console.log(user?.allData?.data?.date_of_birth, 'user?.allData?.data?.date_of_birth')
+    if (user?.allData?.data?.date_of_birth) {
+      setYera(user?.allData?.data?.date_of_birth?.split('-')[0])
+      d = user?.allData?.data?.date_of_birth?.split('-')[2].slice(0, 2)
+    }
     if (d?.length > 0 && d[0] == 0) {
       setDay(d[1])
     }
@@ -109,7 +103,6 @@ export const EditProfilScreen = ({ navigation }) => {
     const newDateFormat = `${day}-${month}-${year}`;
 
     let item = [...data]
-    setCityName(user?.allData?.data?.city?.name)
     item[0].value = user?.allData?.data?.city?.name ? user?.allData?.data?.city?.name : ''
     item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
     item[1].value2 = newDateFormat ? newDateFormat : ''
@@ -122,20 +115,17 @@ export const EditProfilScreen = ({ navigation }) => {
     setDate(item)
   }
 
-  const changeLanguage = async (type) => {
-    await AsyncStorage.setItem('lang', type)
-    dispatch(ChnageLanguage(type))
-  }
-
   useEffect(() => {
     if (!name) {
-      setUsername(user.username);
       setName(user.name);
       setDiscription(user.description);
     }
-    SetData()
+    if (!name) {
+      SetData()
+    }
   }, [user]);
   const dispatch = useDispatch();
+
   const hadnelChange = (i, value, type, value2) => {
     let item = [...data]
     if (type == 'city') {
@@ -152,33 +142,17 @@ export const EditProfilScreen = ({ navigation }) => {
     setDate(item)
   }
   const chnageProfil = () => {
-    let send = true
-    if (username === user.data.nickname && name === user.data.name && imgUrl === '') {
-      navigation.goBack();
-    }
-    if (username === user.data.nickname && name === user.data.name) {
-      send = false
-    }
-    if (username === '') {
-      setError('Введите корректный  ФИО/Название канала');
-    } else if (name === '') {
+    if (name === '') {
       setError('Введите корректный  имя');
     } else {
       setError('');
     }
-    dispatch(
-      chnageUserProfil(
-        {
-          name: name,
-          nickname: username,
-          description: discription,
-        },
-        staticdata.token,
-      ),
-    );
-    if (imgUrl) {
-      dispatch(chnageAvatarAction(imgUrl, staticdata.token));
-    }
+    dispatch(chnageUserProfil({
+      name: name,
+      nickname: "#",
+      description: discription
+    }, staticdata.token
+    ));
     dispatch(UpdateIkInfoAction({
       city_id: data[0].id,
       date_of_birth: data[1].value,
@@ -188,42 +162,36 @@ export const EditProfilScreen = ({ navigation }) => {
       web: data[5].value,
       phone: data[7].value,
     }, staticdata.token))
-    dispatch(ClearChangeProfile());
-    dispatch(ClearChangeAvatar())
   };
+
+  useEffect(() => {
+    if (updateUserInfo.status) {
+      dispatch(ClearChangeProfile());
+      getUserInfoAction(staticdata.token)
+      dispatch(UpdateUserInfo(data))
+      navigation.navigate('ProfileScreen')
+    }
+  }, [updateUserInfo.status])
+
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <HeaderWhiteTitle
-        loading={changeProfil.loading || changeAvatar.loading}
+        loading={changeProfil.loading}
         onCheck={() => chnageProfil()}
         check
         onPress={() => navigation.goBack()}
         title=
         {t(mainData.lang).Editprofile}
-
       />
 
       <View style={{ alignItems: 'center', marginVertical: 40 }}>
-        <View style>
-          <Image
-            style={styles.img}
-            source={{
-              uri: imgUrl
-                ? imgUrl
-                : `https://chamba.digiluys.com/uploads/${user.data.avatar}`,
-            }}
-          />
-        </View>
-      </View>
-      <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: "center", gap: 20 }}>
-
-        {/* <TouchableOpacity onPress={() => changeLanguage('ru')} style={styles.languageButton}>
-          <Text>ru</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => changeLanguage('en')} style={styles.languageButton}>
-          <Text>en</Text>
-        </TouchableOpacity> */}
+        <Image
+          style={styles.img}
+          source={{
+            uri: `https://chamba.digiluys.com/uploads/${user.data.avatar}`,
+          }}
+        />
       </View>
       <View style={styles.textWrapper}>
         <TextInput
@@ -232,13 +200,6 @@ export const EditProfilScreen = ({ navigation }) => {
           style={Styles.darkMedium14}
         />
       </View>
-      {/* <View style={styles.textWrapper}>
-        <TextInput
-          value={name}
-          onChangeText={e => setName(e)}
-          style={Styles.darkMedium14}
-        />
-      </View> */}
       <View style={styles.textWrapper}>
         <TextInput
           placeholder={t(mainData.lang).Brieflyaboutyourself}
@@ -270,38 +231,15 @@ export const EditProfilScreen = ({ navigation }) => {
             </View>
           }
           else if (elm.type == 'calendar') {
-            return <View style={styles.calnedarView} key={i}>
-              <View style={{ width: '28%' }}>
-                <Text style={styles.clandatLable}>{t(mainData.lang).Day}</Text>
-                <TextInput
-                  value={day}
-                  onChangeText={((e) => {
-                    if (e <= 31) {
-                      setDay(e)
-                    }
-                  })} keyboardType='numeric' style={styles.calendarInput} />
-              </View>
-              <View style={{ width: '28%', height: 45 }}>
-                <Text style={styles.clandatLable}>{t(mainData.lang).Month}</Text>
-                <View style={styles.clandarTochable}>
-                  <TouchableOpacity onPress={() => setOpenMout(true)} style={styles.calendarInput} >
-                    <Text style={styles.calsendarText}>{mount?.name}</Text>
-                  </TouchableOpacity>
-                  <View style={styles.calsendarVector}>
-                    <DownArrow1 />
-                  </View>
-                </View>
-              </View>
-              <View style={{ width: '28%' }}>
-                <Text style={styles.clandatLable}>{t(mainData.lang).Year}</Text>
-                <TextInput keyboardType='numeric' value={year} onChangeText={(e) => {
-                  if (e <= 2024) {
-                    setYera(e)
-                  }
-                }}
-                  style={styles.calendarInput} />
-              </View>
-            </View>
+            return <Date
+              day={day}
+              year={year}
+              mount={mount}
+              key={i}
+              setDay={(e) => setDay(e)}
+              setYera={(e) => setYera(e)}
+              setMount={(e) => setMount(e)}
+            />
           }
           else {
             return <TouchableOpacity onPress={() => handelPress(elm.placeholder)} key={i} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
@@ -340,9 +278,6 @@ export const EditProfilScreen = ({ navigation }) => {
         </BootomModal>
       </View>
       {city && <CityModal onPress={(e) => hadnelChange(0, e, type = 'city')} close={() => setCity(false)} visible={city} />}
-      {openMount && <MountWrapper onPress={(e) =>
-        setMount(e)} close={() => setOpenMout(false)}
-        visible={openMount} />}
     </ScrollView>
   );
 };
@@ -352,11 +287,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 50,
-  },
-  imgWrapper: {
-    width: 80,
-    height: 80,
-    position: 'relative',
   },
   edit: {
     position: 'absolute',
@@ -377,52 +307,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  calnedarView: {
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    paddingTop: 20,
-    position: 'relative'
-  },
-  calendarInput: {
-    borderWidth: 1,
-    width: '100%',
-    borderColor: AppColors.Solitude_Color,
-    height: 47,
-    textAlign: 'center'
-  },
-  clandatLable: {
-    position: 'absolute',
-    top: -10,
-    backgroundColor: 'white',
-    zIndex: 22,
-    left: 5,
-    width: 45,
-    textAlign: 'center'
-  },
-  clandarTochable: {
-    justifyContent: 'center',
-    width: "100%",
-    height: '100%',
-  },
-  calsendarVector: {
-    position: 'absolute',
-    right: 10,
-  },
-  calsendarText: {
-    position: 'absolute',
-    height: '100%',
-    top: 10,
-    left: 10,
-  },
-  languageButton: {
-    borderWidth: 1,
-    paddingHorizontal: 20,
-    borderRadius: 15,
-    paddingVertical: 5,
-    justifyContent: 'center',
-    alignContent: 'center',
-    borderColor: AppColors.Solitude_Color,
-  }
 });
 

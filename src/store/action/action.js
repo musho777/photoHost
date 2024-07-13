@@ -153,7 +153,6 @@ export const RegisterAction = data => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessRegister(r));
         } else {
@@ -170,7 +169,6 @@ export const RegisterAction = data => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorRegister({ server: 'server' }));
       });
   };
@@ -1415,6 +1413,7 @@ export const UpdateIkInfoAction = (data, token) => {
     fetch(`${Api}/update_lk_info`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessUpdateIkinfo(r.data))
         }
@@ -1443,7 +1442,6 @@ export const DelatePostAction = (data, token) => {
     fetch(`${Api}/delete_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(DeletLocalPhoto(data))
           dispatch(SuccessDelatePhost(r.data))
@@ -1453,7 +1451,6 @@ export const DelatePostAction = (data, token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorDeletePost())
       });
   };
@@ -1580,7 +1577,6 @@ export const GetRelationCategory = (token) => {
     fetch(`${Api}/get_relation_category`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r, '11', token)
         if (r.status) {
           dispatch(SuccessGetRelationCatalog(r.data))
         }
@@ -1618,5 +1614,9 @@ export const NoShowPopup = (token) => {
   };
 }
 
-// export const Clear
-// /api/no_show_pop_up
+export const UpdateUserInfo = (data) => {
+  return {
+    type: 'UpdateUserInfo',
+    data
+  }
+}

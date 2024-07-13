@@ -74,6 +74,18 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'MsgCountAction':
       item.msgCount = action.data
       break
+
+    case 'UpdateUserInfo':
+      console.log(action.data[1].value, '79')
+      // item.data.city = item.data.city
+      item.data.date_of_birth1 = action.data[1].value
+      item.data.mgu = action.data[3].value
+      item.data.work_type = action.data[4].value
+      item.data.web = action.data[5].value
+      item.data.phone = action.data[7].value
+
+      break
+
     default:
       break;
   }

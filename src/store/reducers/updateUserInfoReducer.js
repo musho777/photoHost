@@ -1,26 +1,28 @@
 const initialState = {
   error: '',
   status: false,
-  message: '',
   loading: false,
 };
-const NewMassageReducer = (state = initialState, action) => {
+const UpdateUserInfoReducer = (state = initialState, action) => {
   let item = { ...state };
   switch (action.type) {
-    case 'StartNewMessageAction':
+    case 'StartUpdateIkInfo':
       item.status = false
       item.error = ''
-      item.message = ''
       item.loading = true
       break
-    case 'SuccessNewMessageAction':
+    case 'SuccessUpdateIkinfo':
       item.status = true
       item.error = ''
-      item.message = action.data?.message,
-        item.loading = false
+      item.loading = false
       break
-    case 'ErrorNewMessageAction':
+    case 'ErrorUpdateIKInfor':
       item.error = action.data
+      item.loading = false
+      item.status = false
+      break;
+    case 'ClearChangeProfile':
+      item.error = ''
       item.loading = false
       item.status = false
       break;
@@ -29,4 +31,4 @@ const NewMassageReducer = (state = initialState, action) => {
   }
   return item;
 };
-export default NewMassageReducer;
+export default UpdateUserInfoReducer;
