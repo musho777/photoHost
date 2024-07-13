@@ -3,7 +3,7 @@ import { Comment, Heart, ViewSvg } from "../../assets/svg/TabBarSvg";
 import { NotLineSvg } from "../../assets/svg/Svgs";
 import { Styles } from "../../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { GetPostLikeAction, LikePostAction } from "../../store/action/action";
 import { useNavigation } from "@react-navigation/native";
 

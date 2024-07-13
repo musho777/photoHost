@@ -1,11 +1,9 @@
 import { TouchableOpacity, View, Image, Text, StyleSheet } from "react-native"
 import { Styles } from "../../styles/Styles"
-
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckMarkUserSvg } from '../../assets/svg/Svgs';
 import { MenuSvg } from '../../assets/svg/TabBarSvg';
 import { AddBlackListAction, AddDeleteFollowAction, AddInBookAction } from '../../store/action/action';
-import { AppColors } from '../../styles/AppColors';
 import { useNavigation } from '@react-navigation/native';
 import { t } from '../lang';
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -158,12 +156,6 @@ export const PostHeader = ({
 }
 
 const styles = StyleSheet.create({
-  block: {
-    shadowColor: '#7E9DB5',
-    borderColor: AppColors.White_Color,
-    borderRadius: 10,
-    position: 'relative',
-  },
   userImg: {
     width: 35,
     height: 35,

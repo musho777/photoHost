@@ -7,7 +7,7 @@ const initialState = {
   nextPage: '',
 };
 const GetLentsReducer = (state = initialState, action) => {
-  let item = {...state};
+  let item = { ...state };
   switch (action.type) {
     case 'StartGetLents':
       item.status = false;
@@ -32,6 +32,13 @@ const GetLentsReducer = (state = initialState, action) => {
       item.status = false;
       // item.data = {}
       break;
+    case 'EditLentPhot':
+      let index = item.data.findIndex(elm => elm.id === action.data.post_id)
+      console.log(index, item.data[index])
+      if (index != -1) {
+        item.data[index].description = action.data.description
+      }
+      break
     // case 'NewMsgAction':
     //   item.data.map((elm, i) => {
     //     if (elm.room_id == action.data.data.room_id) {

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Styles } from '../../styles/Styles';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { useDispatch, useSelector } from 'react-redux';
-import { EditPostAction } from '../../store/action/action';
+import { EditLentPhot, EditPostAction } from '../../store/action/action';
 import { ClearEditPost } from '../../store/action/clearAction';
 import { t } from '../../components/lang';
 
@@ -26,6 +26,11 @@ export const EditPostScreen = ({ route, navigation }) => {
   }
   useEffect(() => {
     if (editPost.status) {
+      dispatch(EditLentPhot({
+        post_id: route.params.id,
+        description: description
+      },
+        staticdata.token))
       navigation.navigate('ProfileNavigation')
       dispatch(ClearEditPost())
     }

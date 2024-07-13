@@ -55,6 +55,10 @@ export const Post = ({
     CutText()
   }, [showMore])
 
+  useEffect(() => {
+    setD(description)
+  }, [description])
+
   const CutText = () => {
     let t = ''
     if (showMore) {
@@ -65,6 +69,8 @@ export const Post = ({
     }
     setD(t)
   }
+
+  console.log(description, 'des')
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => setOpenModal(false)} >
@@ -80,6 +86,7 @@ export const Post = ({
           <PostHeader
             userImg={userInfo.avatar}
             user={user}
+            description={description}
             setShowSave={(e) => setShowSave(true)}
             userName={userInfo.name}
             setSaveType={(e) => setSaveType(e)}
@@ -137,27 +144,5 @@ const styles = StyleSheet.create({
     borderColor: AppColors.White_Color,
     borderRadius: 10,
     position: 'relative',
-  },
-  blocks: {
-    zIndex: 999,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-    width: '100%'
-  },
-  heading: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: 'black'
-  },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 10,
-    marginVertical: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
   },
 });

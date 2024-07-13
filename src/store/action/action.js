@@ -1648,3 +1648,10 @@ export const UpdateUserInfo = (data) => {
     data
   }
 }
+
+export const EditLentPhot = (data) => {
+  return {
+    type: 'EditLentPhot',
+    data
+  }
+}
