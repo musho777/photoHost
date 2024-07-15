@@ -34,7 +34,6 @@ const GetLentsReducer = (state = initialState, action) => {
       break;
     case 'EditLentPhot':
       let index = item.data.findIndex(elm => elm.id === action.data.post_id)
-      console.log(index, item.data[index])
       if (index != -1) {
         item.data[index].description = action.data.description
       }

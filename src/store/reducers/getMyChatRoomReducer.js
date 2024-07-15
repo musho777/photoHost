@@ -26,6 +26,10 @@ const GetMyChatRoomReducer = (state = initialState, action) => {
       item.nextPage = action.data.data.next_page_url;
       item.loading = false;
       break;
+    case 'SuccessDelateChat':
+      let i = item.data.findIndex((elm) => elm.room_id = action.data.receiver_id)
+      item.data.splice(i, 1);
+      break
     case 'ErrorGetMyChatRoom':
       item.error = action.data;
       item.loading = false;

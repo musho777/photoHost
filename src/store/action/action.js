@@ -1364,7 +1364,7 @@ export const DelateChatAction = (data, token) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(SuccessDelateChat(r.data))
+          dispatch(SuccessDelateChat(data))
         }
         else {
           dispatch(ErrorDelateChat('server error'))
@@ -1652,6 +1652,13 @@ export const UpdateUserInfo = (data) => {
 export const EditLentPhot = (data) => {
   return {
     type: 'EditLentPhot',
+    data
+  }
+}
+
+export const DelateChat = (data) => {
+  return {
+    type: 'DelateChat',
     data
   }
 }

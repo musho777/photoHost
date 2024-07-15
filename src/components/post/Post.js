@@ -70,8 +70,6 @@ export const Post = ({
     setD(t)
   }
 
-  console.log(description, 'des')
-
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => setOpenModal(false)} >
       {showSave &&
