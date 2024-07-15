@@ -9,7 +9,7 @@ import {
   Dimensions
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
-import { Albom } from '../../components/Albom';
+import { Albom } from './component/albom';
 import { BackArrow } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';

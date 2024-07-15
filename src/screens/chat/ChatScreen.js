@@ -69,6 +69,13 @@ export const ChatScreen = ({ navigation, route }) => {
     dispatch(ClearChat())
   }, [])
 
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    let item = getSinglePageChat?.message.reverse()
+    setData(item)
+  }, [getSinglePageChat?.message])
+
   return (
     <SafeAreaView style={styles.body}>
       <Header route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} />
@@ -78,9 +85,9 @@ export const ChatScreen = ({ navigation, route }) => {
       >
         <FlatList
           snapToEnd
-          inverted={true}
+          inverted={false}
           showsVerticalScrollIndicator={false}
-          data={getSinglePageChat?.message}
+          data={data}
           contentContainerStyle={styles.scrollViewContent}
           onEndReached={() => {
             if (getSinglePageChat.nextPage && !getSinglePageChat.loading) {

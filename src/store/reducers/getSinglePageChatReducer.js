@@ -24,9 +24,7 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
     case 'StartGetSinglePageChat':
       item.status = false;
       item.error = '';
-      // item.message = '', 
       item.loading = true;
-      // item.data = {}
       break;
     case 'ClearChat':
       item.message = []
@@ -44,28 +42,23 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
         item.nextPage = action.data?.data?.next_page_url
       }
       item.loading = false;
-      item.data = action?.data?.receiver_user
       break;
     case 'ErrorGetSinglePageChat':
       item.error = action.data;
       item.loading = false;
       item.status = false;
-      // item.data = {}
       break;
     case 'AddMsgAction':
       if (item.myid == action.data.receiver_id && item.id == action.data.sender_id) {
-        item.message.unshift(action.data)
+        item.message.push(action.data)
       }
       if (item.myid == action.data.sender_id && item.id == action.data.receiver_id) {
-        item.message.unshift(action.data)
+        item.message.push(action.data)
       }
       break
     case 'AddMyMSgAction':
-      item.message.unshift(action.data)
+      item.message.push(action.data)
       break
-    // case 'SuccessNewMessageAction':
-    //   item.message.unshift(action.data)
-    //   break
     case 'StartDelateChat':
       item.delateChatStatus = false
       item.dleateChatLoading = true
@@ -75,12 +68,12 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       item.dleateChatLoading = false
       break
     case 'ErrorDelateChat':
-      item.delateChatStatus = false,
-        item.dleateChatLoading = false
+      item.delateChatStatus = false
+      item.dleateChatLoading = false
       break
     case 'ClearDeleteChat':
-      item.delateChatStatus = false,
-        item.dleateChatLoading = false
+      item.delateChatStatus = false
+      item.dleateChatLoading = false
       break
     default:
       break;

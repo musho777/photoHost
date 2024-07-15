@@ -30,7 +30,7 @@ export const InputComponent = ({ setAddToBlackList, addToblackList, route }) => 
     if (addBlackPusher.addBlackListPusher?.reseiver_id === 'black_list_delete' && addBlackPusher.addBlackListPusher?.sender_id === 'black_list_delete' && addToblackList != 'Удалить из черного списка') {
       setShopwINput(false)
     }
-  }, [getSinglePageChat.data, addBlackPusher, addToblackList]);
+  }, [getSinglePageChat.resiverUser, addBlackPusher, addToblackList]);
 
 
 
@@ -45,7 +45,7 @@ export const InputComponent = ({ setAddToBlackList, addToblackList, route }) => 
     if (getSinglePageChat.blackList === 'This User Blocked You') {
       setBlackListStatus('Вы в черном списке')
     }
-  }, [getSinglePageChat.data])
+  }, [getSinglePageChat.resiverUser])
 
 
   const sendMsgFunction = () => {
