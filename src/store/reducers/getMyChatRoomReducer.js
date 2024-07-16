@@ -34,7 +34,6 @@ const GetMyChatRoomReducer = (state = initialState, action) => {
       item.error = action.data;
       item.loading = false;
       item.status = false;
-      // item.data = {}
       break;
     case 'NewMsgAction':
       item.data.map((elm, i) => {

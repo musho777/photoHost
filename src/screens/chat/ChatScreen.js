@@ -29,12 +29,9 @@ export const ChatScreen = ({ navigation, route }) => {
   const [page, setPage] = useState(1);
   const deletChat = useSelector((st) => st.deletChatPusher)
   const [keyboardOpen, setKeyboardOpen] = useState(false);
-  const addBlackPusher = useSelector(st => st.addBlackPusher)
-  console.log(addBlackPusher, 'addBlackPusher')
 
-
-
-
+  const getMyChatRoom = useSelector((st) => st.getMyChatRoom)
+  console.log(getMyChatRoom.succaseDelateChat)
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -61,6 +58,7 @@ export const ChatScreen = ({ navigation, route }) => {
       }
     }
   }, [deletChat.deletChatPusher])
+
 
   useEffect(() => {
     dispatch(GetSinglePageChatAction({ receiver_id: route.params.id }, staticdata.token, page,),);

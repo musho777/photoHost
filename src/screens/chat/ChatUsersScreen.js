@@ -28,10 +28,14 @@ export const ChatUsersScreen = () => {
 
 
   useEffect(() => {
-    if (!getMyChatRoom.loading) {
-      setData(getMyChatRoom.data);
-    }
-  }, [getMyChatRoom.data]);
+    console.log("11")
+    // if (getMyChatRoom.data) {
+    setData(getMyChatRoom.data);
+    // }
+  }, [getMyChatRoom]);
+
+
+  console.log(getMyChatRoom.data)
 
   const searchData = e => {
     setSearch(e)
@@ -51,6 +55,7 @@ export const ChatUsersScreen = () => {
   }, [deletChat.deletChatPusher])
 
   const renderItem = ({ item }) => {
+    console.log(item)
     return (
       <ChatUser
         username={item.sender?.nickname}

@@ -30,16 +30,7 @@ const GetLentsActionRecReducer = (state = initialState, action) => {
       item.error = action.data;
       item.loading = false;
       item.status = false;
-      // item.data = {}
       break;
-    // case 'NewMsgAction':
-    //   item.data.map((elm, i) => {
-    //     if (elm.room_id == action.data.data.room_id) {
-    //       item.data.splice(i, 1);
-    //     }
-    //   });
-    //   item.data.unshift(action.data.data);
-    //   break;
     default:
       break;
   }

@@ -63,10 +63,6 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       item.delateChatStatus = false
       item.dleateChatLoading = true
       break
-    case 'SuccessDelateChat':
-      item.delateChatStatus = true
-      item.dleateChatLoading = false
-      break
     case 'ErrorDelateChat':
       item.delateChatStatus = false
       item.dleateChatLoading = false

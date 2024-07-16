@@ -114,7 +114,6 @@ export const EditProfilScreen = ({ navigation }) => {
     let newDateFormat = `${day}-${month}-${year}`;
 
     let item = [...data]
-    console.log(user?.allData?.data?.city?.name, '116')
     if (user?.allData?.data?.city?.name) {
       item[0].value = user?.allData?.data?.city?.name
 
@@ -143,7 +142,6 @@ export const EditProfilScreen = ({ navigation }) => {
         setMount(data1[index])
       }
     }
-    console.log(newDateFormat, 'newDateFormat')
     item[1].value2 = newDateFormat ? newDateFormat : ''
     item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
     item[2].value = user?.allData?.data?.gender ? user?.allData?.data?.gender : ''

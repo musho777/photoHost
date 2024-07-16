@@ -30,7 +30,6 @@ const GetLentsReducer = (state = initialState, action) => {
       item.error = action.data;
       item.loading = false;
       item.status = false;
-      // item.data = {}
       break;
     case 'EditLentPhot':
       let index = item.data.findIndex(elm => elm.id === action.data.post_id)
@@ -38,14 +37,6 @@ const GetLentsReducer = (state = initialState, action) => {
         item.data[index].description = action.data.description
       }
       break
-    // case 'NewMsgAction':
-    //   item.data.map((elm, i) => {
-    //     if (elm.room_id == action.data.data.room_id) {
-    //       item.data.splice(i, 1);
-    //     }
-    //   });
-    //   item.data.unshift(action.data.data);
-    //   break;
     default:
       break;
   }

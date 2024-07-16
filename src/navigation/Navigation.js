@@ -74,6 +74,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             dispatch(MsgCountAction(JSON.parse(event.data)?.message.all_message_count))
           }
           const today = new Date()
+          console.log(event.data)
           dispatch(
             NewMsgAction({
               data: JSON.parse(event.data)?.message,

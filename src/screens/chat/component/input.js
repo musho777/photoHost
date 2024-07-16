@@ -61,7 +61,6 @@ export const InputComponent = ({ setAddToBlackList, addToblackList, route }) => 
         staticdata.token));
     setSendMsg('')
   };
-  console.log(showInput, '22')
 
   return <View>
     {!showInput ?

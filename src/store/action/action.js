@@ -942,7 +942,6 @@ export const GetLentsAction = (token, page) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          console.log("----")
           dispatch(SuccessGetLents(r));
         } else {
           dispatch(ErrorGetLents('server error'));
@@ -1365,6 +1364,7 @@ export const DelateChatAction = (data, token) => {
     fetch(`${Api}/delete_chat`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessDelateChat(data))
         }

@@ -69,8 +69,6 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'ChangeAvatar':
       item.avatar = action.data
       break
-    // case 'NewMsgAction':
-    //   break
     case 'MsgCountAction':
       item.msgCount = action.data
       break
