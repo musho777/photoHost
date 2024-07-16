@@ -29,6 +29,9 @@ export const ChatScreen = ({ navigation, route }) => {
   const [page, setPage] = useState(1);
   const deletChat = useSelector((st) => st.deletChatPusher)
   const [keyboardOpen, setKeyboardOpen] = useState(false);
+  const addBlackPusher = useSelector(st => st.addBlackPusher)
+  console.log(addBlackPusher, 'addBlackPusher')
+
 
 
 
@@ -78,7 +81,7 @@ export const ChatScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.body}>
-      <Header route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} />
+      <Header user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoidingView}

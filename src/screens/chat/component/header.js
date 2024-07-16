@@ -4,11 +4,11 @@ import { Styles } from "../../../styles/Styles"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { MenuSvg } from "../../../assets/svg/TabBarSvg";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BootomModal } from "../../../components/BootomSheet";
 import { AddBlackListAction, DelateChatAction } from "../../../store/action/action";
 
-export const Header = ({ data, route }) => {
+export const Header = ({ data, route, user }) => {
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const navigation = useNavigation()
   const bottomSheetRef = useRef(null);
@@ -16,6 +16,8 @@ export const Header = ({ data, route }) => {
   const [isInblack, setIsInblack] = useState(false)
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
+  const addBlackPusher = useSelector(st => st.addBlackPusher)
+
 
   const addToBlackList = () => {
     bottomSheetRef.current?.close();
@@ -25,6 +27,18 @@ export const Header = ({ data, route }) => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
+
+
+  useEffect(() => {
+    let a = addBlackPusher.addBlackListPusher?.reseiver_id == user.data.id && addBlackPusher.addBlackListPusher?.sender_id == route.params.id
+    let b = addBlackPusher.addBlackListPusher?.reseiver_id == route.params.id && addBlackPusher.addBlackListPusher?.sender_id == user.data.id
+    if (getSinglePageChat.blackList == 'You Blocked This User' || getSinglePageChat.blackList == 'This User Blocked You' || a || b) {
+      setIsInblack(true)
+    }
+    if (addBlackPusher.addBlackListPusher?.reseiver_id === 'black_list_delete' && addBlackPusher.addBlackListPusher?.sender_id === 'black_list_delete') {
+      setIsInblack(false)
+    }
+  }, [getSinglePageChat.resiverUser, addBlackPusher]);
 
   return <View
     style={[Styles.flexSpaceBetween, styles.header]}>

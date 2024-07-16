@@ -192,7 +192,7 @@ export const ConfirmRegisterCode = data => {
     })
       .then(response => response.json())
       .then(r => {
-        setTokenSorage(r.token);
+        setTokenSorage(r.token, r.user.id);
         if (r.status) {
           dispatch(setToken(r.token));
           dispatch(SuccessConfirmRegisterCode(r));
@@ -1573,6 +1573,7 @@ export const ChangeCatalog = (token, data) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          dispatch(GetLentsAction(token))
           dispatch(SuccessChangeCatalog(r))
         }
         else {
