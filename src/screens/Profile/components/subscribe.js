@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Styles } from "../../../styles/Styles"
 
 export const Subscribe = ({ user }) => {
+
   return <TouchableOpacity
     activeOpacity={!user.tochable && 1}
     style={styles.alignItemsCenter}

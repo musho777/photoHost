@@ -129,9 +129,9 @@ export const AddImg = ({ navigation }) => {
     form.append('category_id', selectedCatalog)
     musicFromVidio && form.append('music_name', musicFromVidio)
     if (selectedCatalog != '') {
+      dispatch(GetLentsAction(staticData.token));
       dispatch(CreatPostAction(form, staticData.token));
       dispatch(getUserInfoAction(staticData.token))
-      dispatch(GetLentsAction(staticData.token));
     }
     else {
       setErrorCatalog(true)

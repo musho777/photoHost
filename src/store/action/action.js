@@ -861,6 +861,7 @@ export const CreatPostAction = (data, token) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          dispatch(GetLentsAction(token));
           dispatch(SuccessCreatePost(r));
         } else {
 
@@ -941,6 +942,7 @@ export const GetLentsAction = (token, page) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          console.log("----")
           dispatch(SuccessGetLents(r));
         } else {
           dispatch(ErrorGetLents('server error'));

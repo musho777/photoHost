@@ -7,13 +7,14 @@ import { Subscribe } from "./subscribe";
 
 
 export const ProfilInfo = ({ user }) => {
+  const getPosts = useSelector(st => st.getPosts);
 
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()
   const data = [
     {
       title: t(mainData.lang).Publications,
-      count: user.postCount,
+      count: getPosts.data.length,
       tochable: false
     },
     {
