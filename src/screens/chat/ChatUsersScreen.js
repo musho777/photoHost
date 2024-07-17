@@ -28,14 +28,10 @@ export const ChatUsersScreen = () => {
 
 
   useEffect(() => {
-    console.log("11")
-    // if (getMyChatRoom.data) {
     setData(getMyChatRoom.data);
-    // }
   }, [getMyChatRoom]);
 
 
-  console.log(getMyChatRoom.data)
 
   const searchData = e => {
     setSearch(e)
@@ -55,18 +51,28 @@ export const ChatUsersScreen = () => {
   }, [deletChat.deletChatPusher])
 
   const renderItem = ({ item }) => {
-    console.log(item)
+    let avatar = ''
+    let name = ''
+    if (item.sender.id == user.allData.data.id) {
+      avatar = item?.receiver_user.avatar
+      name = item?.receiver_user.name
+      otherUserId = item.receiver_user?.id
+    }
+    else {
+      avatar = item?.sender.avatar
+      name = item?.sender.name
+      otherUserId = item.sender?.id
+    }
     return (
       <ChatUser
-        username={item.sender?.nickname}
-        name={item.sender?.name}
-        img={`https://chamba.digiluys.com/uploads/${item?.sender?.avatar}`}
+        name={name}
+        img={`https://chamba.digiluys.com/uploads/${avatar}`}
         sendWhiteMe={item.sendWhiteMe}
         sendr_id={item.latest_sender}
         user_id={user.data.id}
         seen={item.status}
         text={item.message}
-        otherUserId={item.sender?.id}
+        otherUserId={otherUserId}
         msg={item.message_sum}
       />
     );

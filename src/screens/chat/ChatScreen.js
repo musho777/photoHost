@@ -30,9 +30,6 @@ export const ChatScreen = ({ navigation, route }) => {
   const deletChat = useSelector((st) => st.deletChatPusher)
   const [keyboardOpen, setKeyboardOpen] = useState(false);
 
-  const getMyChatRoom = useSelector((st) => st.getMyChatRoom)
-  console.log(getMyChatRoom.succaseDelateChat)
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardOpen(true);

@@ -35,7 +35,7 @@ export const ChatUser = ({
           <Text style={Styles.darkSemiBold14}>{name}</Text>
           {sendr_id != user_id &&
             // <Text style={Styles.balihaiMedium13} numberOfLines={1}>{text}</Text>
-            <Text>{((text).length > 30) ?
+            <Text>{((text)?.length > 30) ?
               (((text).substring(0, 30 - 3)) + '...') :
               text}
             </Text>

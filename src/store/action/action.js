@@ -1364,7 +1364,6 @@ export const DelateChatAction = (data, token) => {
     fetch(`${Api}/delete_chat`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessDelateChat(data))
         }
