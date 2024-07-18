@@ -6,7 +6,6 @@ import { Styles } from '../styles/Styles';
 import { t } from '../components/lang';
 export const FollowingsBlock = ({
   name,
-  username,
   img,
   type,
   onPress,
@@ -35,7 +34,6 @@ export const FollowingsBlock = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      // onPress={() => navigation.navigate('UserProfileScreen')}
       style={[{ marginBottom: 20 }, Styles.flexSpaceBetween]}>
       <View style={Styles.flexAlignItems}>
         <Image
@@ -43,7 +41,6 @@ export const FollowingsBlock = ({
           source={{ uri: `https://chamba.digiluys.com/uploads/${img}` }}
         />
         <View>
-          {/* <Text style={Styles.darkSemiBold14}>{username}</Text> */}
           <Text style={Styles.balihaiRegular12}>{name}</Text>
         </View>
       </View>

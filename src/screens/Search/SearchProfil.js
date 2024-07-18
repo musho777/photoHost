@@ -13,7 +13,7 @@ import { Albom } from './component/albom';
 import { BackArrow } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddDeleteFollowAction, AddDeletFollow, GetOtherPostsAction, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
+import { AddDeleteFollowAction, GetOtherPostsAction, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import { InfoBlock } from '../Profile/InfoBlock';
 import { t } from '../../components/lang';
@@ -29,6 +29,10 @@ export const SearchProfil = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const swiperRef = useRef(null);
   const mainData = useSelector(st => st.mainData);
+  const [isFollow, setIsFollow] = useState(false)
+  const [followersCount, setFollowersCount] = useState(0)
+
+
 
   const [activeCard, setActiveCard] = useState(0)
   const [data, setData] = useState(['albom', ''])
@@ -42,17 +46,17 @@ export const SearchProfil = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    dispatch(
-      GetSinglPageAction(
-        {
-          user_id: route?.params?.id,
-        },
-        staticdata.token,
-      ),
-    );
+    setIsFollow(singlPage.data?.follow_status_sender?.length)
+    setFollowersCount(singlPage.followersCount)
+  }, [singlPage.data])
+
+  useEffect(() => {
+    dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
     dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
     setActiveCard(0)
   }, []);
+
+
   const sendMsg = () => {
     navigation.navigate('ChatScreen', { id: singlPage.data.id })
   }
@@ -62,6 +66,18 @@ export const SearchProfil = ({ navigation, route }) => {
     return layoutMeasurement.height + contentOffset.y >=
       contentSize.height - paddingToBottom;
   };
+
+  const AddDeletFollow = () => {
+    if (isFollow) {
+      setFollowersCount(followersCount - 1)
+    }
+    else {
+      setFollowersCount(followersCount + 1)
+    }
+    setIsFollow(!isFollow)
+    dispatch(AddDeleteFollowAction({ user_id: singlPage.data.id }, staticdata.token))
+
+  }
 
 
   return (
@@ -109,7 +125,7 @@ export const SearchProfil = ({ navigation, route }) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('FollowersScreen', { index: 0, id: singlPage.data.id })}
             style={{ alignItems: 'center' }}>
-            <Text style={Styles.darkSemiBold16}>{singlPage.followersCount}</Text>
+            <Text style={Styles.darkSemiBold16}>{followersCount}</Text>
             <Text style={Styles.balihaiRegular12}>{t(mainData.lang).Subscribers}</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -124,15 +140,12 @@ export const SearchProfil = ({ navigation, route }) => {
             Styles.flexSpaceBetween,
             { paddingHorizontal: 15, marginVertical: 10 },
           ]}>
-          {!singlPage.data?.follow_status_sender?.length ? <Button onPress={() => {
-            dispatch(AddDeleteFollowAction({ user_id: singlPage.data.id }, staticdata.token))
-            dispatch(AddDeletFollow(singlPage.data?.id))
-          }} paddingV={10} title={t(mainData.lang).subscribe} width="48%" /> :
-            <Button bg onPress={() => {
-              dispatch(AddDeleteFollowAction({ user_id: singlPage.data.id }, staticdata.token))
-              dispatch(AddDeletFollow(singlPage.data?.id))
-            }} paddingV={10} title={t(mainData.lang).Unsubscribe} width="48%" />
-          }
+          <Button
+            bg={isFollow}
+            onPress={() => AddDeletFollow()} paddingV={10}
+            title={isFollow ? t(mainData.lang).Unsubscribe : t(mainData.lang).subscribe}
+            width="48%"
+          />
           <Button onPress={() => sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

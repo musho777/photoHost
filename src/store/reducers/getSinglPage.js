@@ -33,14 +33,14 @@ const GetSinglPage = (state = initialState, action) => {
       item.status = false;
       item.data = {}
       break;
-    case 'AddDeletFollow':
-      if (item.data.follow_status_sender.length) {
-        item.data.follow_status_sender = []
-      }
-      else {
-        item.data.follow_status_sender = [{}]
-      }
-      break
+    // case 'AddDeletFollow':
+    //   if (item.data.follow_status_sender.length) {
+    //     item.data.follow_status_sender = []
+    //   }
+    //   else {
+    //     item.data.follow_status_sender = [{}]
+    //   }
+    //   break
     default:
       break;
   }

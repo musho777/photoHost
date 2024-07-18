@@ -8,7 +8,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 import Sound from 'react-native-sound';
-import { Comments } from '../components/Comment';
+import { Comments } from '../components/comment/Comment';
 import {
   AddBlackListPusherAction,
   AddMsgAction,

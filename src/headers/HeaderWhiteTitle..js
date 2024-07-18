@@ -1,8 +1,6 @@
 import { TouchableOpacity, View, Text, ActivityIndicator } from 'react-native';
 import { BackArrow, CheckMarkSvg } from '../assets/svg/Svgs';
 import { Styles } from '../styles/Styles';
-import { useSelector } from 'react-redux';
-import { t } from '../../components/lang';
 
 export const HeaderWhiteTitle = ({
   onPress,
@@ -13,7 +11,6 @@ export const HeaderWhiteTitle = ({
   loading,
   disabled
 }) => {
-  const mainData = useSelector(st => st.mainData);
   return (
     <View
       style={[

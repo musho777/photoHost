@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { SearchProfil } from '../screens/Search/SearchProfil';
-import { SearchScreen } from '../screens/Search/SearchScreen';
+import { SearchBlock } from '../screens/Search/SearchBlock';
 
 export const SearchNavigation = () => {
   const Stack = createStackNavigator();
@@ -9,7 +9,7 @@ export const SearchNavigation = () => {
     <Stack.Navigator initialRouteName={'SearchScreen'}>
       <Stack.Screen
         name="SearchScreen"
-        component={SearchScreen}
+        component={SearchBlock}
         options={{
           headerShown: false,
         }}
