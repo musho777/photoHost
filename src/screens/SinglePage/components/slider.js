@@ -24,7 +24,6 @@ export const Slider = ({ photo, single, music, image }) => {
   const videoRef = useRef(null);
   const [first, setFirst] = useState(true)
   const [isPlayed, setIsPlayeds] = useState(false)
-  console.log(image)
 
 
   const onSeek = (value) => {

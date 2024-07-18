@@ -123,7 +123,6 @@ export const ChatScreen = ({ navigation, route }) => {
         </View>
       </KeyboardAvoidingView>
       <Main ref={bottomSheetRef} />
-      {/* <GiphyExample /> */}
     </SafeAreaView >
   );
 };

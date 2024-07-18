@@ -23,7 +23,6 @@ const Sticker = () => {
       response = await fetch(`https://api.giphy.com/v1/stickers/trending?api_key=${api_kay}&limit=20&offset=${(page - 1) * 20}`);
     }
     const result = await response.json();
-    console.log(result, 'result')
     setData(prevData => page === 1 ? result.data : [...prevData, ...result.data]);
     setLoading(false);
   };

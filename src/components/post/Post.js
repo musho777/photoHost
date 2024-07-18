@@ -29,7 +29,8 @@ export const Post = ({
   isFollow,
   deletData,
   data,
-  music
+  music,
+  isLiked
 }) => {
   const [likedCount, setLikedCount] = useState(+like)
   const staticdata = useSelector(st => st.static);
@@ -112,7 +113,7 @@ export const Post = ({
           <Slider music={music} description={description} photo={photo} />
           <PostBody
             commentCount={commentCount}
-            liked={+like}
+            liked={isLiked >= 0}
             view={view}
             likedCount={likedCount}
             setLikedCount={(e) => setLikedCount(e)}

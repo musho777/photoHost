@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, forwardRef } from 'react';
+import React, { useCallback, forwardRef } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import {
   BottomSheetBackdrop,
@@ -15,17 +15,11 @@ import { HearSvg2 } from '../assets/svg/Svgs';
 import { Styles } from '../styles/Styles';
 
 export const LikeList = forwardRef(
-  ({ snapPoints, id, token, openLike, count, close }, ref) => {
+  ({ snapPoints, id, token, close }, ref) => {
     const navigation = useNavigation();
     const user = useSelector(st => st.userData);
     const [page, setPage] = useState(1);
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //   if (openLike) {
-    //     dispatch(GetPostLikeAction({ post_id: id }, token, page));
-    //   }
-    // }, [id]);
-
     const getPostLike = useSelector(st => st.getPostLike);
     const renderBackdrop = useCallback(
       props => (
@@ -64,7 +58,7 @@ export const LikeList = forwardRef(
           ]}>
           <HearSvg2 />
           <Text style={[Styles.darkMedium16, { marginHorizontal: 10 }]}>
-            Нравится: {count}
+            Нравится: {getPostLike.data?.length}
           </Text>
         </View>
 
@@ -80,7 +74,6 @@ export const LikeList = forwardRef(
                   dispatch(GetPostLikeAction({ post_id: id }, token, page));
                   setPage(pages);
                 }
-                // enableSomeButton();
               }
             }}>
             {getPostLike.data.map((elm, i) => {
@@ -108,7 +101,7 @@ export const LikeList = forwardRef(
                     }}
                   />
                   <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
-                    {elm.user.nickname}
+                    {elm.user.name}
                   </Text>
                 </TouchableOpacity>
               );

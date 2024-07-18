@@ -53,7 +53,7 @@ export const NotificationScreen = ({ navigation }) => {
       data={data}
       enableEmptySections={true}
       ListEmptyComponent={() => (
-        !notification?.loading && <Text style={[Styles.darkMedium16, { marginTop: 10, textAlign: 'center' }]}>список пуст</Text>
+        !notification?.loading && <Text style={[Styles.darkMedium16, { marginTop: 10, textAlign: 'center' }]}>Список пуст</Text>
       )}
       renderItem={renderItem}
       onEndReached={() => {

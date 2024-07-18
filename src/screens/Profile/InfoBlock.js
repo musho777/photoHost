@@ -30,25 +30,21 @@ export const InfoBlock = ({ user }) => {
                 dateComponents = user.date_of_birth1.split('-')
             }
             year = dateComponents[0]
-            day = dateComponents[1]
-            month = dateComponents[2]
+            day = dateComponents[2]
+            month = dateComponents[1]
         }
         else {
             dateComponents = JSON.stringify(user.date_of_birth)?.substring(0, 11)?.split('-')
             year = dateComponents && dateComponents[0]?.replace(`"`, '')
-            day = dateComponents && dateComponents[2]
-            month = dateComponents && +dateComponents[1]
+            day = dateComponents && +dateComponents[2]
+            month = dateComponents && dateComponents[1]
         }
-
-        if (day?.length == 1) {
-            day = `0${day}`
-        }
+        let newDateFormat = ''
         if (month?.length == 1) {
             month = `0${month}`
         }
-        let newDateFormat = ''
-        if (month < 10) {
-            month = '0' + month
+        if (JSON.stringify(day)?.length == 1 || day.length == 1) {
+            day = `0${day}`
         }
         if (day) {
             newDateFormat = `${day}.${month}.${year}`;

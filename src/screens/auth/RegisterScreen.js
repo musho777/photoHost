@@ -65,7 +65,6 @@ export const RegisterScreen = ({ navigation }) => {
       dispatch(RegisterAction({
         name: name.value,
         email: email.value,
-        // nickname: userName.value,
         password: password.value,
       }))
     }

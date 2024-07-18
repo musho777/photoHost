@@ -18,7 +18,6 @@ export const SinglPageScreen = ({ route }) => {
   const id = route.params.id;
   const photo = route.params.photo
   // const photo
-  console.log(photo, 'photo')
   useEffect(() => {
     dispatch(GelPostCommentsAction({ post_id: id }, staticdata.token));
     dispatch(GetSinglPostAction({ post_id: id }, staticdata.token));

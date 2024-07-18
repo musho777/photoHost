@@ -18,6 +18,7 @@ export const HomeScreen = () => {
   const [showModal, setShowModal] = useState(false)
   const userData = useSelector((st) => st.userData)
 
+
   useEffect(() => {
     setTimeout(() => {
       if (userData.data.show_category_pop_up == 1) {
@@ -90,6 +91,7 @@ export const HomeScreen = () => {
             addToblack={(e) => AddToBack(e)}
             data={item.created_at}
             deletData={(e) => deletData(index, e)}
+            isLiked={item.like_auth_user.findIndex((elm, i) => elm.user_id == userData.data.id)}
           />
         </View>
       );

@@ -78,7 +78,7 @@ export const Catalog = () => {
 
   return <View style={style.page}>
     <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
-    <ScrollView style={{ height: '81.5%' }} showsVerticalScrollIndicator={false}>
+    <ScrollView style={{ height: '84.5%' }} showsVerticalScrollIndicator={false}>
       <View style={style.CatalogWrapper}>
         {
           getCatalog.data.map((elm, i) => {
@@ -87,7 +87,7 @@ export const Catalog = () => {
         }
       </View>
     </ScrollView>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
       <TouchableOpacity
         onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
           { backgroundColor: '#8f8f8f' }
