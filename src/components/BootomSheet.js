@@ -1,9 +1,8 @@
-import React, { useCallback, useMemo, forwardRef} from 'react';
-import { View,StyleSheet } from 'react-native';
+import React, { useCallback, useMemo, forwardRef } from 'react';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-export const BootomModal = forwardRef(({children,snapPoints},ref) =>{
+export const BootomModal = forwardRef(({ children, snapPoints }, ref) => {
 
-    const renderBackdrop = useCallback(
+  const renderBackdrop = useCallback(
     (props) => (
       <BottomSheetBackdrop
         {...props}
@@ -13,23 +12,15 @@ export const BootomModal = forwardRef(({children,snapPoints},ref) =>{
         opacity={0.85}
       />
     ), [])
-    return (
-        <BottomSheetModal
-          ref={ref}
-          index={0}
-          snapPoints={snapPoints}
-          backdropComponent={renderBackdrop}
-        >
-          {children}
-        </BottomSheetModal>
-    );
-  });
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 24,
-    },
-   
-  });
-  
+  return (
+    <BottomSheetModal
+      ref={ref}
+      index={0}
+      snapPoints={snapPoints}
+      backdropComponent={renderBackdrop}
+    >
+      {children}
+    </BottomSheetModal>
+  );
+});
+

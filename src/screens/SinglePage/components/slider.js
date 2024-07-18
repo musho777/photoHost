@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,11 +8,9 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import MediaControls, { PLAYER_STATES } from '../components/vidio';
+import MediaControls, { PLAYER_STATES } from '../../../components/vidio';
 import Video from 'react-native-video';
-import { AppColors } from '../styles/AppColors';
-import { MusicSvg } from '../assets/svg/Svgs';
-import { Styles } from '../styles/Styles';
+import { Styles } from '../../../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -26,6 +24,7 @@ export const Slider = ({ photo, single, music, image }) => {
   const videoRef = useRef(null);
   const [first, setFirst] = useState(true)
   const [isPlayed, setIsPlayeds] = useState(false)
+  console.log(image)
 
 
   const onSeek = (value) => {
@@ -97,11 +96,11 @@ export const Slider = ({ photo, single, music, image }) => {
             aspectRatio = single ? 0.65 : 0.70;
           }
           return (
-            <TouchableOpacity style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
+            <TouchableOpacity style={styles.img}>
               {!item.video ? (
                 <Image
                   style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 }]}
-                  source={{ uri: `https://chamba.digiluys.com/uploads/${item.photo}` }}
+                  source={{ uri: `https://chamba.digiluys.com/uploads/${image}` }}
                   resizeMode="cover"
                 />
               ) : (
@@ -119,8 +118,7 @@ export const Slider = ({ photo, single, music, image }) => {
                         }}
                         style={[styles.playButton, { backgroundColor: "orange" }]}
                       >
-                        <Image source={require('../assets/img/ic.png')} style={styles.playIcon} />
-
+                        <Image source={require('../../../assets/img/ic.png')} style={styles.playIcon} />
                       </TouchableOpacity>
                     </View>
                     {music && <View style={styles.music}>

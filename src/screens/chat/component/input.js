@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { Input } from "../../../ui/Input"
 import { useEffect, useState } from "react"
 import Sound from "react-native-sound"
@@ -62,7 +62,7 @@ export const InputComponent = ({ setAddToBlackList, addToblackList, route }) => 
     setSendMsg('')
   };
 
-  return <View>
+  return <View style={{ width: '100%' }}>
     {!showInput ?
       <Input
         msg

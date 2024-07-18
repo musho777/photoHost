@@ -31,7 +31,8 @@ export const Albom = ({ data, user, loading, seved, post }) => {
           if (seved) {
             return (
               <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', {
-                id: elm.post?.photo[0]?.post_id, isBook: true
+                id: elm.post?.photo[0]?.post_id, isBook: true,
+                photo: elm?.photo[0]?.photo
               })}>
                 {!elm.post?.photo[0]?.photo.includes('.mov') ?
 
@@ -67,7 +68,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
             return (
               !elm.photo[0]?.photo?.includes('.mp4') ?
 
-                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { id: elm.id, isBook: elm.auth_user_book?.length > 0 })}>
+                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { id: elm.id, isBook: elm.auth_user_book?.length > 0, photo: elm?.photo[0]?.photo })}>
                   <Image
                     style={styles.img}
                     source={{
@@ -75,7 +76,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
                     }}
                   />
                 </TouchableOpacity> :
-                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { id: elm.id, isBook: elm.auth_user_book?.length > 0 })}>
+                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { id: elm.id, isBook: elm.auth_user_book?.length > 0, photo: elm?.photo[0]?.photo })}>
                   {
                     <Image
                       style={[styles.img]}

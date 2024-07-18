@@ -1796,9 +1796,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^4":
-  version: 4.4.7
-  resolution: "@gorhom/bottom-sheet@npm:4.4.7"
+"@gorhom/bottom-sheet@npm:^4.6.3":
+  version: 4.6.3
+  resolution: "@gorhom/bottom-sheet@npm:4.6.3"
   dependencies:
     "@gorhom/portal": 1.0.14
     invariant: ^2.2.4
@@ -1814,7 +1814,7 @@ __metadata:
       optional: true
     "@types/react-native":
       optional: true
-  checksum: ae330e7712fa58d78dc91e089e29f07b23c0c581e8a152b806c39dd831d64a7979e274f188868b086ebbb6f435ce8575fc32f2a1df6b8cf2d522a13b7182374c
+  checksum: 718c55a89b0e18581eae6080d1d21caabf4895088e01f0dfe17b5891835a110d7aee1d0cb1b9e623efc16b598fdb28c2ec929e0ed74bfbca283306191d8a5c41
   languageName: node
   linkType: hard
 
@@ -10676,7 +10676,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
-    "@gorhom/bottom-sheet": ^4
+    "@gorhom/bottom-sheet": ^4.6.3
     "@nyashanziramasanga/react-native-horizontal-scroll-menu": ^1.0.11
     "@pusher/pusher-websocket-react-native": ^1.3.0
     "@react-native-async-storage/async-storage": ^1.19.1
@@ -10709,7 +10709,9 @@ __metadata:
     react-native-awesome-slider: ^2.5.2
     react-native-device-info: ^10.8.0
     react-native-emoji-selector: ^0.2.0
+    react-native-fast-image: ^8.6.3
     react-native-gesture-handler: ^2.12.1
+    react-native-gif-search: ^1.3.2
     react-native-image-crop-picker: ^0.40.0
     react-native-image-pan-zoom: ^2.1.12
     react-native-image-picker: ^7.1.0
@@ -11122,6 +11124,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-fast-image@npm:^8.6.3":
+  version: 8.6.3
+  resolution: "react-native-fast-image@npm:8.6.3"
+  peerDependencies:
+    react: ^17 || ^18
+    react-native: ">=0.60.0"
+  checksum: 29289cb6b2eae0983c8922b22e2d9de3be07322bb7991c5def19f95eadefaedb0e308ff0b38cc1d0444e8bd4fe94a7621a99a2d3d9298100bcb60b3144677234
+  languageName: node
+  linkType: hard
+
 "react-native-gesture-handler@npm:^2.12.1":
   version: 2.12.1
   resolution: "react-native-gesture-handler@npm:2.12.1"
@@ -11135,6 +11147,13 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 1aec3d71c5fd3b8087e613708ee77a0ce7a1ac2bc87f5a6a22529300795b48aaa2359bcba7309f2c14f9de1ca1ffa4904d06b3cb7263820f657a4469976aecb3
+  languageName: node
+  linkType: hard
+
+"react-native-gif-search@npm:^1.3.2":
+  version: 1.3.2
+  resolution: "react-native-gif-search@npm:1.3.2"
+  checksum: 316ba44cf0b494db7c016951b43cf82655d592ab1fcd61bcd7624a6fc4b270a751cc7ecfec95d42ed983d1871b6087dbba217fe1a4e0fa1adcf34faef44fc134
   languageName: node
   linkType: hard
 
