@@ -46,7 +46,6 @@ export const SearchBlock = () => {
     return () => clearTimeout(delayDebounceFn)
   }, [data])
   const renderItem = ({ item }) => {
-    console.log(item)
     return (
       <View style={{ marginHorizontal: 15 }}>
         <SearchItem

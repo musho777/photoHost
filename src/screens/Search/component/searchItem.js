@@ -9,12 +9,14 @@ import { useEffect, useState } from 'react';
 export const SearchItem = ({ data }) => {
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
+  const userData = useSelector((st) => st.userData)
   const [isFollow, setIsFollow] = useState()
   const navigation = useNavigation()
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsFollow(data?.follow_status_sender?.length)
+    let item = data?.follow_status_sender.findIndex((elm) => elm.sender_id == userData.data.id)
+    setIsFollow(item >= 0)
   }, [data])
 
   const addDeletData = (id) => {

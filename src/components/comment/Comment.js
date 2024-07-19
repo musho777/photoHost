@@ -24,7 +24,6 @@ import { InputComponent } from './component/input';
 
 const screenWidth = Dimensions.get('window').height;
 export const Comments = ({ route, }) => {
-  console.log(screenWidth, 'screenWidth')
   let parentId = route?.params?.parentId
   const [sendComment, setSendCommet] = useState('');
   const [parenId, setParentId] = useState(null);
@@ -111,7 +110,7 @@ export const Comments = ({ route, }) => {
 
 
   const renderItem = ({ item, index }) => {
-    const currentDate = new Date();
+    const currentDate = new Date(item.created_at);
     let dayOfMonth = currentDate.getDate();
     let hour = currentDate.getHours();
     let minute = currentDate.getMinutes();

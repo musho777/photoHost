@@ -24,9 +24,12 @@ export const InputComponent = ({ setAddToBlackList, addToblackList, route }) => 
   useEffect(() => {
     let a = addBlackPusher.addBlackListPusher?.reseiver_id == user.data.id && addBlackPusher.addBlackListPusher?.sender_id == route.params.id
     let b = addBlackPusher.addBlackListPusher?.reseiver_id == route.params.id && addBlackPusher.addBlackListPusher?.sender_id == user.data.id
-    if (getSinglePageChat.blackList == 'You Blocked This User' || getSinglePageChat.blackList == 'This User Blocked You' || a || b) {
+    if (getSinglePageChat.blackList == 'You Blocked This User' || a || b) {
       setShopwINput(true)
       setBlackListStatus('Пользователь в черном списке')
+    }
+    if (getSinglePageChat.blackList == 'This User Blocked You') {
+      setBlackListStatus('Вы в черном списке')
     }
     if (addBlackPusher.addBlackListPusher?.reseiver_id === 'black_list_delete' && addBlackPusher.addBlackListPusher?.sender_id === 'black_list_delete') {
       setShopwINput(false)

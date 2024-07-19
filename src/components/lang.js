@@ -88,7 +88,7 @@ export const t = (lang) => {
             Catalog: "Headings",
             Notfound: "Not found",
             subscribe: "subscribe",
-            Unsubscribe: "Отписаться",
+            Unsubscribe: "Unsubscribe",
             Youhavenomessages: "You have no messages",
             Newpublication: "New publication",
             adddescription: "add description",

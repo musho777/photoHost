@@ -33,7 +33,6 @@ export const SearchProfil = ({ navigation, route }) => {
   const [followersCount, setFollowersCount] = useState(0)
 
 
-
   const [activeCard, setActiveCard] = useState(0)
   const [data, setData] = useState(['albom', ''])
   const handelChange = () => {

@@ -17,8 +17,6 @@ export const HomeScreen = () => {
   const flatListRef = useRef(null);
   const [showModal, setShowModal] = useState(false)
   const userData = useSelector((st) => st.userData)
-
-
   useEffect(() => {
     setTimeout(() => {
       if (userData.data.show_category_pop_up == 1) {

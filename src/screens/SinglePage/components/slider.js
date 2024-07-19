@@ -95,7 +95,7 @@ export const Slider = ({ photo, single, music, image }) => {
             aspectRatio = single ? 0.65 : 0.70;
           }
           return (
-            <TouchableOpacity style={styles.img}>
+            <TouchableOpacity activeOpacity={1} style={styles.img}>
               {!item.video ? (
                 <Image
                   style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 }]}

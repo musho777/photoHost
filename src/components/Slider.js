@@ -13,6 +13,7 @@ import Video from 'react-native-video';
 import { AppColors } from '../styles/AppColors';
 import { MusicSvg } from '../assets/svg/Svgs';
 import { Styles } from '../styles/Styles';
+import { SliderModal } from './SliderModal';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -97,7 +98,7 @@ export const Slider = ({ photo, single, music, image }) => {
             aspectRatio = single ? 0.65 : 0.70;
           }
           return (
-            <TouchableOpacity style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
+            <TouchableOpacity onPress={() => setOpenSlider(true)} style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ? (
                 <Image
                   style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 }]}
