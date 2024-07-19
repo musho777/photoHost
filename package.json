@@ -67,7 +67,8 @@
     "react-native-view-shot": "^3.8.0",
     "react-redux": "^8.1.1",
     "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "rn-emoji-keyboard": "^1.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

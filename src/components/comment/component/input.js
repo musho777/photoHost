@@ -47,7 +47,7 @@ export const InputComponent = ({ parentId, user, sendComment, setSendCommet, sen
       sendCom={() => sendCommentFunction()}
       value={sendComment}
       onChange={e => setSendCommet(e)}
-      width={'89%'}
+      width={'85%'}
       placeholder={t(mainData.lang).Leaveacomment}
     />
   </View>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   InputComponent: {
-    width: '100%',
+    width: '80%',
     flexDirection: 'row',
     gap: 10,
   }

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { View, Image, StyleSheet, TextInput, Button, Text } from 'react-native';
-import BottomSheet, { BottomSheetModal } from '@gorhom/bottom-sheet';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { BootomModal } from '../BootomSheet';
 import FastImage from 'react-native-fast-image';
 
-const Gif = () => {
+const Gif = ({ setSelected }) => {
+
+
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -16,6 +16,7 @@ const Gif = () => {
   useEffect(() => {
     fetchGifs();
   }, [page, searchQuery]);
+
 
   const fetchGifs = async () => {
     if (loading) return;
@@ -30,11 +31,12 @@ const Gif = () => {
     setLoading(false);
   };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
+  const renderItem = ({ item }) => {
+    console.log(item.images.fixed_width.url, 'item')
+    return <TouchableOpacity onPress={() => setSelected(item.images.fixed_width.url)} style={styles.itemContainer}>
       <FastImage source={{ uri: item.images.fixed_width.url }} style={styles.image} />
-    </View>
-  );
+    </TouchableOpacity>
+  };
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);

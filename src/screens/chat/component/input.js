@@ -8,8 +8,7 @@ import { t } from '../../../components/lang';
 import { Styles } from "../../../styles/Styles"
 
 
-export const InputComponent = ({ setAddToBlackList, addToblackList, route }) => {
-  const [sendMSg, setSendMsg] = useState('');
+export const InputComponent = ({ sendMSg, setSendMsg, setAddToBlackList, addToblackList, route }) => {
   const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
   const dispatch = useDispatch()
   const [showInput, setShopwINput] = useState()
@@ -65,7 +64,7 @@ export const InputComponent = ({ setAddToBlackList, addToblackList, route }) => 
     setSendMsg('')
   };
 
-  return <View style={{ width: '100%' }}>
+  return <View style={{ width: '80%' }}>
     {!showInput ?
       <Input
         msg

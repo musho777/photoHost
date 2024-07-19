@@ -10,16 +10,20 @@ import {
   Keyboard,
   SafeAreaView,
   Platform,
+  TouchableOpacity
 } from 'react-native';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { Styles } from '../../styles/Styles';
 import { CommentBlock } from '../CommentBlock';
 import { t } from '../lang';
 import { useDispatch, useSelector } from 'react-redux';
-import { DeletComment, GelPostCommentsAction } from '../../store/action/action';
+import { AddCommentAction, DeletComment, GelPostCommentsAction } from '../../store/action/action';
 import { ClearSinglpAgeComment } from '../../store/action/clearAction';
 import { useNavigation } from '@react-navigation/native';
 import { InputComponent } from './component/input';
+import Main from '../GIf/main';
+import { Emojy, Sticker } from '../../assets/svg/Svgs';
+import EmojiPicker from 'rn-emoji-keyboard';
 
 
 const screenWidth = Dimensions.get('window').height;
@@ -30,6 +34,8 @@ export const Comments = ({ route, }) => {
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState(1);
   const [keyboardOpen, setKeyboardOpen] = useState(10);
+  const bottomSheetRef = useRef(null);
+
 
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
@@ -41,6 +47,8 @@ export const Comments = ({ route, }) => {
   const [data, setData] = useState([]);
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false)
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardOpen(60);
@@ -109,6 +117,30 @@ export const Comments = ({ route, }) => {
   }
 
 
+  const sendCommentFunction = (e) => {
+
+    dispatch(
+      AddCommentAction(
+        {
+          comment: e,
+          parent_id: parenId,
+          post_id: parentId,
+        },
+        staticdata.token,
+        { post_id: parentId }
+      ),
+    )
+    setParentId(null)
+    bottomSheetRef.current?.close()
+
+  };
+
+  const handlePick = (e) => {
+    setSendCommet(sendComment + e.emoji)
+    // setSendMsg(sendMSg + e.emoji)
+  }
+
+
   const renderItem = ({ item, index }) => {
     const currentDate = new Date(item.created_at);
     let dayOfMonth = currentDate.getDate();
@@ -149,44 +181,83 @@ export const Comments = ({ route, }) => {
 
   return (
 
-    <SafeAreaView>
+    // <SafeAreaView>
+    //   <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
+    //   <KeyboardAvoidingView
+    //     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    //     style={styles.keyboardAvoidingView}
+    //   >
+    //     <FlatList
+    //       showsVerticalScrollIndicator={false}
+    //       contentContainerStyle={styles.scrollViewContent}
+    //       refreshControl={<RefreshControl refreshing={getComments?.loading} onRefresh={() => Refresh()} />}
+    //       data={data}
+    //       inverted={false}
+    //       style={{ borderWidth: 1 }}
+    //       enableEmptySections={true}
+    //       ListEmptyComponent={() => Empty()}
+    //       renderItem={renderItem}
+    //       onEndReached={() => { onEndReached() }}
+    //       showsHorizontalScrollIndicator
+    //     />
+    //     <View style={{ marginBottom: keyboardOpen, flexDirection: 'row', alignItems: 'center' }}>
+    //       <InputComponent setParentId={(e) => setParentId(e)} parentId={parentId} parenId={parenId} sendComment={sendComment} setSendCommet={(e) => setSendCommet(e)} senderName={senderName} user={user} />
+    //       <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
+    //         <Sticker />
+    //       </TouchableOpacity>
+    //     </View>
+    //   </KeyboardAvoidingView>
+    //   <Main setSelected={(e) => sendCommentFunction(e)} route={route} ref={bottomSheetRef} />
+    // </SafeAreaView>
+
+    <SafeAreaView style={styles.body}>
       <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoidingView}
       >
         <FlatList
+          snapToEnd
+          inverted={false}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollViewContent}
-          refreshControl={<RefreshControl refreshing={getComments?.loading} onRefresh={() => Refresh()} />}
           data={data}
-          enableEmptySections={true}
+          contentContainerStyle={styles.scrollViewContent}
+          onEndReached={() => { onEndReached() }}
           ListEmptyComponent={() => Empty()}
           renderItem={renderItem}
-          onEndReached={() => { onEndReached() }}
         />
-        <View style={{ marginBottom: keyboardOpen }}>
+        <View style={{ marginBottom: keyboardOpen, width: '100%', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           <InputComponent setParentId={(e) => setParentId(e)} parentId={parentId} parenId={parenId} sendComment={sendComment} setSendCommet={(e) => setSendCommet(e)} senderName={senderName} user={user} />
+          <View style={{ flexDirection: 'row', gap: 5 }}>
+            <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
+              <Sticker />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsOpen(true)}>
+              <Emojy />
+            </TouchableOpacity>
+          </View>
+          <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+      <Main setSelected={(e) => sendCommentFunction(e)} route={route} ref={bottomSheetRef} />
+    </SafeAreaView >
   );
 };
 
 const styles = StyleSheet.create({
   body: {
     height: '100%',
-
+    paddingHorizontal: 15,
   },
   keyboardAvoidingView: {
-    height: screenWidth - 80,
-    width: '100%',
-    paddingHorizontal: 10
-  },
-  scrollViewContent: {
     flex: 1,
   },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+  },
   content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -9,39 +9,40 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {
-  GifSearch,
-  poweredByTenorLogoWhite,
-  poweredByTenorLogoGrey,
-  poweredByTenorLogoBlue,
-  viaTenorLogoWhite,
-  viaTenorLogoGrey,
-  viaTenorLogoBlue,
-  poweredByGiphyLogoGrey,
-  poweredByGiphyLogoWhite
-} from 'react-native-gif-search'
 import { useDispatch, useSelector } from 'react-redux';
 import { MsgBlock } from '../../components/MsgBlock';
-import { GetSinglePageChatAction, SinglChatPageId, } from '../../store/action/action';
+import { GetSinglePageChatAction, newMessageAction, SinglChatPageId, } from '../../store/action/action';
 import { ClearChat, ClearDeletChat } from '../../store/action/clearAction';
 import { InputComponent } from './component/input';
 import { Header } from './component/header';
-import { Sticker } from '../../assets/svg/Svgs';
+import { Emojy, Sticker } from '../../assets/svg/Svgs';
 import Main from '../../components/GIf/main';
+import Sound from 'react-native-sound';
+import EmojiPicker from 'rn-emoji-keyboard'
 
 
 export const ChatScreen = ({ navigation, route }) => {
   const bottomSheetRef = useRef(null);
 
+
   const dispatch = useDispatch();
+  const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
+
   const staticdata = useSelector(st => st.static);
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const [addToblackList, setAddToBlackList] = useState('')
   const user = useSelector(st => st.userData);
   const [page, setPage] = useState(1);
   const deletChat = useSelector((st) => st.deletChatPusher)
+  const [data, setData] = useState([])
   const [keyboardOpen, setKeyboardOpen] = useState(false);
-  const [stickers, setStickers] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [sendMSg, setSendMsg] = useState('');
+
+
+  const handlePick = (e) => {
+    setSendMsg(sendMSg + e.emoji)
+  }
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -51,8 +52,6 @@ export const ChatScreen = ({ navigation, route }) => {
     const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardOpen(false);
     });
-
-    // Cleanup listeners on component unmount
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
@@ -80,12 +79,22 @@ export const ChatScreen = ({ navigation, route }) => {
     dispatch(ClearChat())
   }, [])
 
-  const [data, setData] = useState([])
 
   useEffect(() => {
     let item = getSinglePageChat?.message.reverse()
     setData(item)
   }, [getSinglePageChat?.message])
+
+  const SendSticker = (e) => {
+    music.play()
+    setTimeout(() => {
+      music.stop()
+    }, 2000);
+    dispatch(
+      newMessageAction({ message: e, receiver_id: route.params.id }, staticdata.token));
+    bottomSheetRef.current?.close()
+
+  }
 
   return (
     <SafeAreaView style={styles.body}>
@@ -116,13 +125,19 @@ export const ChatScreen = ({ navigation, route }) => {
           }}
         />
         <View style={{ marginBottom: !keyboardOpen ? 10 : 60, width: '100%', paddingHorizontal: 15, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <InputComponent setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
-          {/* <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
-            <Sticker />
-          </TouchableOpacity> */}
+          <InputComponent sendMSg={sendMSg} setSendMsg={(e) => setSendMsg(e)} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
+          <View style={{ flexDirection: 'row', gap: 5 }}>
+            <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
+              <Sticker />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsOpen(true)}>
+              <Emojy />
+            </TouchableOpacity>
+          </View>
+          <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
         </View>
       </KeyboardAvoidingView>
-      <Main ref={bottomSheetRef} />
+      <Main setSelected={(e) => SendSticker(e)} route={route} ref={bottomSheetRef} />
     </SafeAreaView >
   );
 };
@@ -143,5 +158,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  image: {
+    height: 200,
+    objectFit: 'contain',
+    width: 200
   },
 });

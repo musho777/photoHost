@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 import { useState } from 'react';
+import FastImage from 'react-native-fast-image';
 export const MsgBlock = ({ msg, from, timestamp }) => {
   const date = new Date(timestamp);
   const year = date.getFullYear();
@@ -45,7 +46,10 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
             borderBottomStartRadius: 20,
           },
       ]}>
-      <Text style={Styles.CharcoalMedium14}>{msg}</Text>
+      {msg.includes('https://media') ?
+        <FastImage source={{ uri: msg }} style={styles.image} /> :
+        <Text style={Styles.CharcoalMedium14}>{msg}</Text>
+      }
       <View style={from ?
         [
           styles.msgDate,
@@ -75,5 +79,11 @@ const styles = StyleSheet.create({
   msgDate: {
     position: 'absolute',
     bottom: -5
-  }
+  },
+  image: {
+    height: 200,
+    objectFit: 'contain',
+    width: 200,
+    borderRadius: 10,
+  },
 });

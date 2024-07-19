@@ -1,31 +1,19 @@
-import React, { useState, useEffect, useRef, useMemo, forwardRef } from 'react';
-import { View, Image, StyleSheet, TextInput, Button, Text, TouchableOpacity } from 'react-native';
-import BottomSheet, { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { FlatList } from 'react-native-gesture-handler';
+import React, { useState, useMemo, forwardRef } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { BootomModal } from '../BootomSheet';
-import FastImage from 'react-native-fast-image';
 import Gif from './Gif';
 import { GifSvg, StickerSvg } from '../../assets/svg/Svgs';
 import Sticker from './Stickers';
 
-const Main = forwardRef(({ }, ref) => {
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
-  const bottomSheetRef = useRef(null);
+const Main = forwardRef(({ setSelected }, ref) => {
   const [showGif, setShowGif] = useState(false)
-  const api_kay = 'vH1C0TVHpNEFoxXFPMFlqIAkGfZ63rIc'
-
-
   const snapPoints = useMemo(() => ['80%'], []);
   return (
     <View>
       <BootomModal ref={ref} snapPoints={snapPoints}>
         {showGif ?
-          <Gif /> :
-          <Sticker />
+          <Gif setSelected={(e) => setSelected(e)} /> :
+          <Sticker setSelected={(e) => setSelected(e)} />
         }
         <View style={styles.sticker}>
           <TouchableOpacity onPress={() => setShowGif(false)}>

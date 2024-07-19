@@ -5,6 +5,7 @@ import { CommentLikeSvg } from '../assets/svg/Svgs';
 import { LikeCommentAction } from '../store/action/action';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
+import FastImage from 'react-native-fast-image';
 
 export const CommentItem = ({
   text,
@@ -47,9 +48,12 @@ export const CommentItem = ({
         />
       </View>
       <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>
-        <Text style={[Styles.darkSemiBold12, { marginTop: 5, fontSize: 15 }]}>
-          {text}
-        </Text>
+        {text.includes('https://media') ?
+          <FastImage source={{ uri: text }} style={styles.image} /> :
+          <Text style={[Styles.darkSemiBold12, { marginTop: 5, fontSize: 15 }]}>
+            {text}
+          </Text>
+        }
         <View style={Styles.flexAlignItems}></View>
         {!owner && (
           <View style={{ flexDirection: 'row', marginTop: 5, gap: 20 }}>
@@ -119,5 +123,11 @@ const styles = StyleSheet.create({
     top: -7,
     alignItems: 'centerd',
     justifyContent: 'center',
+  },
+  image: {
+    height: 200,
+    objectFit: 'contain',
+    width: 200,
+    borderRadius: 10,
   },
 });

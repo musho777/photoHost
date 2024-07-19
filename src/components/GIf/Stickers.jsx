@@ -1,8 +1,8 @@
 import React, { useState, useEffect, } from 'react';
-import { View, Image, StyleSheet, TextInput } from 'react-native';
+import { View, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-const Sticker = () => {
+const Sticker = ({ setSelected }) => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -28,9 +28,9 @@ const Sticker = () => {
   };
 
   const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity onPress={() => setSelected(item.images.fixed_width.url)} style={styles.itemContainer}>
       <Image source={{ uri: item.images.fixed_width.url }} style={styles.image} />
-    </View>
+    </TouchableOpacity>
   );
 
   const handleLoadMore = () => {

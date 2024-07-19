@@ -10746,6 +10746,7 @@ __metadata:
     react-test-renderer: 18.2.0
     redux: ^4.2.1
     redux-thunk: ^2.4.2
+    rn-emoji-keyboard: ^1.7.0
     typescript: ^5.5.2
   languageName: unknown
   linkType: soft
@@ -12018,6 +12019,16 @@ react-native-snap-carousel@latest:
   bin:
     rimraf: ./bin.js
   checksum: 3ea587b981a19016297edb96d1ffe48af7e6af69660e3b371dbfc73722a73a0b0e9be5c88089fbeeb866c389c1098e07f64929c7414290504b855f54f901ab10
+  languageName: node
+  linkType: hard
+
+"rn-emoji-keyboard@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "rn-emoji-keyboard@npm:1.7.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: a949b72b40358561c8c95a878aa873fb4186540c39980ca2087b43022303f807b4481563049e2d414b6de4fefeb19d91cf470d49332d4e075824641e7c3702da
   languageName: node
   linkType: hard
 
