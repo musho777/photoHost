@@ -11,6 +11,7 @@ import {
 import MediaControls, { PLAYER_STATES } from '../../../components/vidio';
 import Video from 'react-native-video';
 import { Styles } from '../../../styles/Styles';
+import { AppColors } from '../../../styles/AppColors';
 
 const windowWidth = Dimensions.get('window').width;
 

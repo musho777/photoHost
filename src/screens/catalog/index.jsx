@@ -76,9 +76,9 @@ export const Catalog = () => {
     }
   }, [staticdata.token])
 
-  return <View style={style.page}>
-    <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
-    <ScrollView style={{ height: '84.5%' }} showsVerticalScrollIndicator={false}>
+  return <ScrollView showsVerticalScrollIndicator={false}>
+    <View style={style.page}>
+      <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
       <View style={style.CatalogWrapper}>
         {
           getCatalog.data.map((elm, i) => {
@@ -86,21 +86,21 @@ export const Catalog = () => {
           })
         }
       </View>
-    </ScrollView>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
-      <TouchableOpacity
-        onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
-          { backgroundColor: '#8f8f8f' }
-        ]}>
-        {loading ?
-          <View style={{ height: 8 }}>
-            <ActivityIndicator color={'white'} size='small' />
-          </View> :
-          <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
-        }
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+        <TouchableOpacity
+          onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
+            { backgroundColor: '#8f8f8f' }
+          ]}>
+          {loading ?
+            <View style={{ height: 8 }}>
+              <ActivityIndicator color={'white'} size='small' />
+            </View> :
+            <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
+          }
+        </TouchableOpacity>
+      </View>
     </View>
-  </View>
+  </ScrollView>
 }
 
 const style = StyleSheet.create({
