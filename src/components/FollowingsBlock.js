@@ -18,10 +18,14 @@ export const FollowingsBlock = ({
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
   const dispatch = useDispatch();
+
+
   const addFollow = () => {
     dispatch(AddDeleteFollowAction({ user_id: userId }, staticdata.token));
     addClick();
   };
+
+
   const deleteData = () => {
     if (type1 === 'Удалить') {
       dispatch(DeleteOtherPeople({ user_id: userId }, staticdata.token));
@@ -52,7 +56,6 @@ export const FollowingsBlock = ({
             <View>
               <TouchableOpacity
                 onPress={() => {
-                  // addFollow();
                   deleteData();
                 }}
                 style={styles.button}>

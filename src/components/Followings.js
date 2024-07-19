@@ -43,7 +43,6 @@ export const Followings = ({ id }) => {
           onPress={() => {
             navigation.navigate('SearchProfil', { id: item.followers.id })
             setData('')
-            // close()
           }}
           key={item.followers.id}
           name={item.followers.name}
@@ -53,7 +52,6 @@ export const Followings = ({ id }) => {
           type2={id ? true : false}
           userId={item.followers.id}
           deletClick={() => deletClick(item.followers.id)}
-        // addClick = {()=>addDeletData(itemfollowers.id)}
         />
       </View>
     );
@@ -63,7 +61,7 @@ export const Followings = ({ id }) => {
       <Input
         data={data}
         onChange={e => setData(e)}
-        placeholder={ t(mainData.lang).search}
+        placeholder={t(mainData.lang).search}
         search
         marginTop={20}
       />

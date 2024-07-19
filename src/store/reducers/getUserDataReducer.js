@@ -81,7 +81,15 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.data.work_type = action.data[4].value
       item.data.web = action.data[5].value
       item.data.phone = action.data[7].value
+      break
 
+    case 'AddDeletFollowAction':
+      if (action.data == 'add') {
+        item.followerCount = item.followerCount + 1
+      }
+      else {
+        item.followerCount = item.followerCount - 1
+      }
       break
 
     default:

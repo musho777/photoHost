@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, FlatList, RefreshControl, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetFollowerAction, GetFollowersAction } from '../store/action/action';
+import { AddDeletFollowAction, GetFollowerAction, GetFollowersAction } from '../store/action/action';
 import { clearGetFollowersAction } from '../store/action/clearAction';
 import { Input } from '../ui/Input';
 import { FollowingsBlock } from './FollowingsBlock';
@@ -15,7 +15,6 @@ export const Followers = ({ id }) => {
   const [followers, setFollowers] = useState([]);
   const getFollowers = useSelector(st => st.getFollower);
   const mainData = useSelector(st => st.mainData);
-  // getFollowers
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState('');
   const dispatch = useDispatch();
@@ -32,12 +31,20 @@ export const Followers = ({ id }) => {
   }, [data]);
 
   const addClick = id => {
+    let remove = false
     let item = [...followers];
     item.map((elm, i) => {
       if (elm.follower.id === id) {
         elm.type = !elm.type
+        remove = !elm.type
       }
     });
+    if (remove) {
+      dispatch(AddDeletFollowAction('remove'))
+    }
+    else {
+      dispatch(AddDeletFollowAction('add'))
+    }
     setFollowers(item);
   };
   const renderItem = ({ item }) => {

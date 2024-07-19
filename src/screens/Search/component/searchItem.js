@@ -1,6 +1,6 @@
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddDeleteFollowAction } from '../../../store/action/action';
+import { AddDeleteFollowAction, AddDeletFollowAction } from '../../../store/action/action';
 import { AppColors } from '../../../styles/AppColors';
 import { Styles } from '../../../styles/Styles';
 import { t } from '../../../components/lang';
@@ -19,12 +19,16 @@ export const SearchItem = ({ data }) => {
     setIsFollow(item >= 0)
   }, [data])
 
-  const addDeletData = (id) => {
-    setIsFollow(!isFollow)
-  }
+
   const addFollow = () => {
     dispatch(AddDeleteFollowAction({ user_id: data.id }, staticdata.token));
-    addDeletData();
+    setIsFollow(!isFollow)
+    if (isFollow) {
+      dispatch(AddDeletFollowAction('remove'))
+    }
+    else {
+      dispatch(AddDeletFollowAction('add'))
+    }
   };
   return (
     <TouchableOpacity onPress={() => navigation.navigate('SearchProfil', { id: data.id })}

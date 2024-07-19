@@ -636,12 +636,12 @@ export const AddDeleteFollowAction = (data, token) => {
   };
 };
 
-// export const AddDeletFollow = id => {
-//   return {
-//     type: 'AddDeletFollow',
-//     id,
-//   };
-// };
+export const AddDeletFollowAction = (data) => {
+  return {
+    type: 'AddDeletFollowAction',
+    data,
+  };
+};
 
 export const GetFollowersAction = (data, token, page) => {
   var myHeaders = new Headers();

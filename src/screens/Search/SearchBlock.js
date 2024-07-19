@@ -9,6 +9,7 @@ import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { t } from '../../components/lang';
 import { SearchItem } from './component/searchItem';
+import { useNavigation } from '@react-navigation/native';
 
 export const SearchBlock = () => {
   const [data, setData] = useState('');
@@ -18,6 +19,7 @@ export const SearchBlock = () => {
   const staticdata = useSelector(st => st.static);
   const [serchData, setSearchData] = useState([])
   const mainData = useSelector(st => st.mainData);
+  const navigation = useNavigation()
 
   useEffect(() => {
     setSearchData(search.data)
@@ -55,6 +57,14 @@ export const SearchBlock = () => {
       </View>
     );
   };
+
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      setData('')
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <SafeAreaView >
