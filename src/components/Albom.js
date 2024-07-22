@@ -18,7 +18,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
     </View>
   }
   return (
-    <View style={{ marginTop: 20, width: '99%' }}>
+    <TouchableOpacity activeOpacity={1} style={{ marginTop: 20, width: '100%' }}>
       <View
         style={[
           {
@@ -108,7 +108,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
           </View>
         }
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -4,20 +4,22 @@ import { useSelector } from "react-redux";
 import { Styles } from "../../../styles/Styles";
 import { useState } from "react";
 import { Albom } from "../../../components/Albom";
-import { InfoBlock } from "../InfoBlock";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { AppColors } from "../../../styles/AppColors";
+import { InfoBlock } from '../../Profile/InfoBlock';
+
 
 
 
 export const AlbomAndInfo = () => {
   const mainData = useSelector(st => st.mainData);
-  const getPosts = useSelector(st => st.getPosts);
-  const user = useSelector(st => st.userData);
+  const getPosts = useSelector(st => st.getOtherPosts);
+  const singlPage = useSelector(st => st.singlPage);
+
 
   const renderScene = SceneMap({
     first: () => <Albom loading={getPosts.loading} data1={getPosts.data1} data={getPosts.data} />,
-    second: () => <InfoBlock user={user.data} />,
+    second: () => <InfoBlock user={singlPage.data} />,
   });
   const [index, setIndex] = useState(0);
   const [routes] = useState([

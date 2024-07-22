@@ -14,9 +14,8 @@ import { BackArrow } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDeleteFollowAction, AddDeletFollowAction, GetOtherPostsAction, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
-import SwiperFlatList from 'react-native-swiper-flatlist';
-import { InfoBlock } from '../Profile/InfoBlock';
 import { t } from '../../components/lang';
+import { AlbomAndInfo } from './component/albomAndInfo';
 
 const { width } = Dimensions.get('window');
 
@@ -150,31 +149,7 @@ export const SearchProfil = ({ navigation, route }) => {
           />
           <Button onPress={() => sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text onPress={() => handelChangeFirst()} style={[
-            Styles.balihaiMedium14,
-            styles.textWrapper,
-            activeCard == 0 && { borderColor: '#000', color: '#000' }
-          ]}>{t(mainData.lang).Album}</Text>
-          <Text onPress={() => handelChange()} style={[Styles.balihaiMedium14,
-          styles.textWrapper,
-          activeCard == 1 && { borderColor: '#000', color: '#000' }
-          ]}>{t(mainData.lang).Information}</Text>
-        </View>
-        <SwiperFlatList
-          index={1}
-          ref={swiperRef}
-          onChangeIndex={(index) => { setActiveCard(index.index) }}
-        >
-          {data.map((elm, i) => {
-            return <View key={i} style={{ width: width - 30.1 }}>
-              {activeCard == 0 ?
-                <Albom loading={getPosts.loading && page == 1} data={getPosts.data} /> :
-                <InfoBlock user={singlPage.data} />
-              }
-            </View>
-          })}
-        </SwiperFlatList>
+        <AlbomAndInfo />
       </ScrollView>
     </View>
   );
