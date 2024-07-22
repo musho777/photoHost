@@ -27,7 +27,7 @@ export const Followers = ({ id }) => {
   }, [getFollowers?.data]);
   useEffect(() => {
     dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
-    dispatch(clearGetFollowersAction());
+    // dispatch(clearGetFollowersAction());
   }, [data]);
 
   const addClick = id => {
@@ -79,9 +79,9 @@ export const Followers = ({ id }) => {
       <FlatList
         refreshControl={
           <RefreshControl
-            refreshing={getFollowers?.loading}
+            // refreshing={getFollowers?.loading}
             onRefresh={() => {
-              dispatch(clearGetFollowersAction());
+              // dispatch(clearGetFollowersAction());
               dispatch(
                 GetFollowerAction(
                   { search: data, user_id: id },

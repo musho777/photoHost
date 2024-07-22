@@ -32,9 +32,9 @@ const GetFollowersReducer = (state = initialState, action) => {
       item.loading = false;
       item.status = false;
       break;
-    case 'clearGetFollowersAction':
-      item.data = [];
-      break
+    // case 'clearGetFollowersAction':
+    //   item.data = [];
+    //   break
     default:
       break;
   }
