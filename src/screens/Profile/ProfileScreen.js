@@ -8,7 +8,7 @@ import { ProfilImage } from './components/profilImage';
 import { ProfilInfo } from './components/profilInfo';
 import { AlbomAndInfo } from './components/albomAndInfo';
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
@@ -52,7 +52,8 @@ export const ProfileScreen = () => {
         }}
       >
         <TouchableOpacity
-          onPress={() => setOpenMenu(true)}
+          onPress={() => navigation.openDrawer()}
+
           style={{ marginVertical: 25 }}>
           <MenuSvg2 />
         </TouchableOpacity>
