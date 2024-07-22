@@ -2,7 +2,7 @@ import React, { useState, useMemo, forwardRef } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { BootomModal } from '../BootomSheet';
 import Gif from './Gif';
-import { GifSvg, StickerSvg } from '../../assets/svg/Svgs';
+import { GifSvg, GifSvg1, StickerSvg, StickerSvg1 } from '../../assets/svg/Svgs';
 import Sticker from './Stickers';
 
 const Main = forwardRef(({ setSelected }, ref) => {
@@ -17,10 +17,18 @@ const Main = forwardRef(({ setSelected }, ref) => {
         }
         <View style={styles.sticker}>
           <TouchableOpacity onPress={() => setShowGif(false)}>
-            <StickerSvg />
+            {showGif ?
+
+              < StickerSvg /> :
+              <StickerSvg1 />
+            }
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setShowGif(true)}>
-            <GifSvg />
+            {showGif ?
+              <GifSvg1 /> :
+              <GifSvg />
+            }
+
           </TouchableOpacity>
         </View>
       </BootomModal>

@@ -1175,6 +1175,7 @@ export const AddCommentAction = (data, token, data2) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          dispatch(AddCommentLocal({ id: data.post_id }))
           dispatch(
             GelPostCommentsAction(
               data2,
@@ -1661,6 +1662,20 @@ export const EditLentPhot = (data) => {
 export const DelateChat = (data) => {
   return {
     type: 'DelateChat',
+    data
+  }
+}
+
+export const DelateCommentLocal = (data) => {
+  return {
+    type: 'DelateCommentLocal',
+    data
+  }
+}
+
+export const AddCommentLocal = (data) => {
+  return {
+    type: 'AddCommentLocal',
     data
   }
 }

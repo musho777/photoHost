@@ -801,7 +801,7 @@ export const StickerSvg = () => {
       stroke="#000"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={8}
+      strokeWidth={15}
       d="M136 216H88a48 48 0 01-48-48V88a48 48 0 0148-48h80a48 48 0 0148 48v48c-8 24-56 72-80 80z"
     />
     <Path
@@ -809,7 +809,36 @@ export const StickerSvg = () => {
       stroke="#000"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={8}
+      strokeWidth={15}
+      d="M136 216v-32a48 48 0 0148-48h32"
+    />
+  </Svg>
+}
+
+export const StickerSvg1 = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 256 256"
+    width={40}
+    height={40}
+    fill="none"
+
+  >
+    <Path fill="none" d="M0 0H256V256H0z" />
+    <Path
+      fill="none"
+      stroke="#FFD953"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={15}
+      d="M136 216H88a48 48 0 01-48-48V88a48 48 0 0148-48h80a48 48 0 0148 48v48c-8 24-56 72-80 80z"
+    />
+    <Path
+      fill="none"
+      stroke="#FFD953"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={15}
       d="M136 216v-32a48 48 0 0148-48h32"
     />
   </Svg>
@@ -827,12 +856,40 @@ export const GifSvg = () => {
       stroke="#000"
       strokeLinejoin="round"
       d="M2 6a4 4 0 014-4h12a4 4 0 014 4v12a4 4 0 01-4 4H6a4 4 0 01-4-4V6z"
+      strokeWidth={1.5}
+
     />
     <Path
       stroke="#000"
       strokeLinecap="round"
       strokeLinejoin="round"
       d="M12 8v8m3 0v-4m4-4h-3.5a.5.5 0 00-.5.5V12m0 0h3M9 8H7.5A2.5 2.5 0 005 10.5v3.278C5 15.005 5.995 16 7.222 16v0C8.204 16 9 15.204 9 14.222V12.5a.5.5 0 00-.5-.5h-1"
+      strokeWidth={1.5}
+    />
+  </Svg>
+}
+
+export const GifSvg1 = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={34}
+    height={34}
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <Path
+      stroke="#FFD953"
+      strokeLinejoin="round"
+      d="M2 6a4 4 0 014-4h12a4 4 0 014 4v12a4 4 0 01-4 4H6a4 4 0 01-4-4V6z"
+      strokeWidth={1.5}
+
+    />
+    <Path
+      stroke="#FFD953"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M12 8v8m3 0v-4m4-4h-3.5a.5.5 0 00-.5.5V12m0 0h3M9 8H7.5A2.5 2.5 0 005 10.5v3.278C5 15.005 5.995 16 7.222 16v0C8.204 16 9 15.204 9 14.222V12.5a.5.5 0 00-.5-.5h-1"
+      strokeWidth={1.5}
     />
   </Svg>
 }

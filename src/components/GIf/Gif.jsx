@@ -32,7 +32,6 @@ const Gif = ({ setSelected }) => {
   };
 
   const renderItem = ({ item }) => {
-    console.log(item.images.fixed_width.url, 'item')
     return <TouchableOpacity onPress={() => setSelected(item.images.fixed_width.url)} style={styles.itemContainer}>
       <FastImage source={{ uri: item.images.fixed_width.url }} style={styles.image} />
     </TouchableOpacity>
@@ -42,13 +41,8 @@ const Gif = ({ setSelected }) => {
     setPage(prevPage => prevPage + 1);
   };
 
-  const handleSearch = () => {
-    setData([]);
-    setPage(1);
-    setSearchQuery(query);
-  };
   return (
-    <View style={styles.container}>
+    <View>
       <View style={{ paddingHorizontal: 20 }}>
         <View style={styles.searchContainer}>
           <TextInput
@@ -73,10 +67,6 @@ const Gif = ({ setSelected }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // backgroundColor: 'white',
-  },
   searchContainer: {
     flexDirection: 'row',
     paddingVertical: 10,

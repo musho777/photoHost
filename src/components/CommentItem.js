@@ -6,6 +6,7 @@ import { LikeCommentAction } from '../store/action/action';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 import FastImage from 'react-native-fast-image';
+import emojiRegex from 'emoji-regex';
 
 export const CommentItem = ({
   text,
@@ -16,7 +17,6 @@ export const CommentItem = ({
   like_count,
   id,
   token,
-  ownerName,
   userImg,
   onPressAnsswer,
   daysAgo,
@@ -32,36 +32,54 @@ export const CommentItem = ({
   useEffect(() => {
     setLikeCount(+like_count)
   }, [like_count])
+
+
+
+  const checkIfEmoji = (text) => {
+    const regex = emojiRegex();
+    return regex.test(text);
+  };
+
+  const TextType = (text) => {
+    if (text.includes('https://media')) {
+      return <FastImage source={{ uri: text }} style={styles.image} />
+    }
+    else if (checkIfEmoji(text)) {
+      return <Text style={[Styles.darkSemiBold12, { marginTop: -5, fontSize: 40 }]}>
+        {text}
+      </Text>
+    }
+    else {
+      return <Text style={[Styles.darkSemiBold12, { marginTop: 5, fontSize: 15 }]}>
+        {text}
+      </Text>
+    }
+  }
   return (
     <View
       style={[
         Styles.flexAlignItems,
         { alignItems: 'flex-start', marginTop: 20 },
       ]}>
-      <View style={owner && styles.imgBlock}>
+      <View >
         <Image
           style={ansswer ? styles.answerImg : styles.img}
           source={{
-            uri: `https://chamba.digiluys.com/uploads/${owner ? userImg : user?.avatar
+            uri: `https://chamba.digiluys.com/uploads/${user?.avatar
               }`,
           }}
         />
       </View>
       <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>
-        {text.includes('https://media') ?
-          <FastImage source={{ uri: text }} style={styles.image} /> :
-          <Text style={[Styles.darkSemiBold12, { marginTop: 5, fontSize: 15 }]}>
-            {text}
-          </Text>
-        }
+        {TextType(text)}
         <View style={Styles.flexAlignItems}></View>
-        {!owner && (
+        {owner && (
           <View style={{ flexDirection: 'row', marginTop: 5, gap: 20 }}>
             <Text >{daysAgo}</Text>
-            <TouchableOpacity
+            {!owner && <TouchableOpacity
               onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
               <Text>ответить</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
             {myuser.allData.data?.id == user?.id && <TouchableOpacity
               onPress={() => onDeletComment(id)}>
               <Text>удалить</Text>
@@ -69,31 +87,27 @@ export const CommentItem = ({
           </View>
         )}
       </View>
-      {
-        !owner && (
-          <View style={[styles.like]}>
-            <TouchableOpacity
-              onPress={() => {
-                if (liked) {
-                  setLikeCount(likeCount - 1);
-                  setLiked(false);
-                } else {
-                  setLikeCount(likeCount + 1);
-                  setLiked(true);
-                }
-                dispatch(LikeCommentAction({ comment_id: id }, token));
-              }}>
-              <CommentLikeSvg liked={liked} />
-            </TouchableOpacity>
-            <Text
-              style={[
-                [Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5 }],
-              ]}>
-              {likeCount}
-            </Text>
-          </View>
-        )
-      }
+      <View style={[styles.like]}>
+        <TouchableOpacity
+          onPress={() => {
+            if (liked) {
+              setLikeCount(likeCount - 1);
+              setLiked(false);
+            } else {
+              setLikeCount(likeCount + 1);
+              setLiked(true);
+            }
+            dispatch(LikeCommentAction({ comment_id: id }, token));
+          }}>
+          <CommentLikeSvg liked={liked} />
+        </TouchableOpacity>
+        <Text
+          style={[
+            [Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5 }],
+          ]}>
+          {likeCount}
+        </Text>
+      </View>
     </View >
   );
 };

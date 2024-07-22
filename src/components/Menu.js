@@ -12,7 +12,7 @@ import { BackArrow } from '../assets/svg/Svgs';
 import { ClearLoginAction, LogoutAction } from '../store/action/action';
 import { Styles } from '../styles/Styles';
 import { t } from './lang';
-import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -21,6 +21,14 @@ export const Menu = ({ visible, close }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
+
+  const LogOut = async () => {
+
+    dispatch(LogoutAction(staticdata.token))
+    dispatch(ClearLoginAction())
+    navigation.navigate('LoginScreen1', { screen: 'LoginScreen' })
+    close()
+  }
 
   return (
     <SafeAreaView>
@@ -82,12 +90,7 @@ export const Menu = ({ visible, close }) => {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {
-              dispatch(LogoutAction(staticdata.token))
-              dispatch(ClearLoginAction())
-              navigation.navigate('LoginScreen1', { screen: 'LoginScreen' })
-              close()
-            }}>
+            <TouchableOpacity onPress={() => LogOut()}>
               <Text style={[Styles.darkRegular16, { marginTop: 30 }]}>{t(mainData.lang).logOut}</Text>
             </TouchableOpacity>
           </View>

@@ -37,6 +37,17 @@ const GetLentsReducer = (state = initialState, action) => {
         item.data[index].description = action.data.description
       }
       break
+
+    case 'DelateCommentLocal':
+      const i = item.data.findIndex(elm => elm.id === action.data.id)
+      if (i >= 0) {
+        item.data[i].comment_count = item.data[i].comment_count - 1
+      }
+      break
+    case "AddCommentLocal":
+      let inde = item.data.findIndex(elm => elm.id === action.data.id)
+      item.data[inde].comment_count = item.data[inde].comment_count + 1
+      break
     default:
       break;
   }

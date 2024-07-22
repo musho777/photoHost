@@ -7,6 +7,7 @@ import { Input } from '../../ui/Input';
 import { useDispatch, useSelector } from 'react-redux'
 import { ClearConfirmPasswordAction, ClearRegisterAction, ConfirmRegisterCode, RegisterAction } from '../../store/action/action';
 import { t } from '../../components/lang';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const RegisterScreen = ({ navigation }) => {
   const [userName, setUsername] = useState({ value: '', error: '' });
@@ -75,12 +76,20 @@ export const RegisterScreen = ({ navigation }) => {
       setSnedMail(true)
     }
   }, [register.status])
+
+
+  const ShowDesctiption = async () => {
+    await AsyncStorage.setItem('showDescription', 'yes')
+
+  }
+
+
   useEffect(() => {
     if (confirm.status) {
       dispatch(ClearConfirmPasswordAction())
       dispatch(ClearRegisterAction())
       navigation.navigate('Catalog');
-      // navigation.navigate('TabNavigation')
+      ShowDesctiption()
     }
   }, [confirm.status])
 

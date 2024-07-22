@@ -86,7 +86,7 @@ export const Catalog = () => {
           })
         }
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+      <View style={{ marginBottom: 20, alignItems: 'flex-end' }}>
         <TouchableOpacity
           onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
             { backgroundColor: '#8f8f8f' }

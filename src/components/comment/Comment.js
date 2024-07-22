@@ -17,13 +17,14 @@ import { Styles } from '../../styles/Styles';
 import { CommentBlock } from '../CommentBlock';
 import { t } from '../lang';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddCommentAction, DeletComment, GelPostCommentsAction } from '../../store/action/action';
+import { AddCommentAction, DelateComment, DelateCommentLocal, DeletComment, GelPostCommentsAction } from '../../store/action/action';
 import { ClearSinglpAgeComment } from '../../store/action/clearAction';
 import { useNavigation } from '@react-navigation/native';
 import { InputComponent } from './component/input';
 import Main from '../GIf/main';
 import { Emojy, Sticker } from '../../assets/svg/Svgs';
 import EmojiPicker from 'rn-emoji-keyboard';
+import emojiRegex from 'emoji-regex';
 
 
 const screenWidth = Dimensions.get('window').height;
@@ -72,6 +73,7 @@ export const Comments = ({ route, }) => {
 
   const deletComment = (id) => {
     dispatch(DeletComment({ comment_id: id }, staticdata.token, { post_id: parentId }))
+    dispatch(DelateCommentLocal({ id: parentId }))
   }
 
 
@@ -167,7 +169,7 @@ export const Comments = ({ route, }) => {
           isLiked={item.like_auth_user?.length}
           id={item.id}
           token={staticdata.token}
-          owner={false}
+          owner={item.user.id == user.allData?.data?.id}
           daysAgo={daysAgo}
           replay_count={item.replay_count}
           deletComment={(e) => { deletComment(e) }}
@@ -180,36 +182,6 @@ export const Comments = ({ route, }) => {
   };
 
   return (
-
-    // <SafeAreaView>
-    //   <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
-    //   <KeyboardAvoidingView
-    //     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    //     style={styles.keyboardAvoidingView}
-    //   >
-    //     <FlatList
-    //       showsVerticalScrollIndicator={false}
-    //       contentContainerStyle={styles.scrollViewContent}
-    //       refreshControl={<RefreshControl refreshing={getComments?.loading} onRefresh={() => Refresh()} />}
-    //       data={data}
-    //       inverted={false}
-    //       style={{ borderWidth: 1 }}
-    //       enableEmptySections={true}
-    //       ListEmptyComponent={() => Empty()}
-    //       renderItem={renderItem}
-    //       onEndReached={() => { onEndReached() }}
-    //       showsHorizontalScrollIndicator
-    //     />
-    //     <View style={{ marginBottom: keyboardOpen, flexDirection: 'row', alignItems: 'center' }}>
-    //       <InputComponent setParentId={(e) => setParentId(e)} parentId={parentId} parenId={parenId} sendComment={sendComment} setSendCommet={(e) => setSendCommet(e)} senderName={senderName} user={user} />
-    //       <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
-    //         <Sticker />
-    //       </TouchableOpacity>
-    //     </View>
-    //   </KeyboardAvoidingView>
-    //   <Main setSelected={(e) => sendCommentFunction(e)} route={route} ref={bottomSheetRef} />
-    // </SafeAreaView>
-
     <SafeAreaView style={styles.body}>
       <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
       <KeyboardAvoidingView
@@ -217,8 +189,6 @@ export const Comments = ({ route, }) => {
         style={styles.keyboardAvoidingView}
       >
         <FlatList
-          snapToEnd
-          inverted={false}
           showsVerticalScrollIndicator={false}
           data={data}
           contentContainerStyle={styles.scrollViewContent}
@@ -254,7 +224,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flexGrow: 1,
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
   },
   content: {
     flex: 1,
