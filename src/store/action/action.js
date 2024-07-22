@@ -1679,3 +1679,10 @@ export const AddCommentLocal = (data) => {
     data
   }
 }
+
+export const DelateFollower = (id) => {
+  return {
+    type: 'DelateFollower',
+    id
+  }
+}

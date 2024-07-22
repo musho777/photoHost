@@ -32,9 +32,12 @@ const GetFollowersReducer = (state = initialState, action) => {
       item.loading = false;
       item.status = false;
       break;
-    // case 'clearGetFollowersAction':
-    //   item.data = [];
-    //   break
+    case 'DelateFollower':
+      let index = item.data?.findIndex((elm) => elm.followers.id == action.id)
+      if (index >= 0) {
+        item.data.splice(index, 1);
+      }
+      break
     default:
       break;
   }

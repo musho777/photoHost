@@ -17,7 +17,6 @@ export const CommentItem = ({
   like_count,
   id,
   token,
-  userImg,
   onPressAnsswer,
   daysAgo,
   onDeletComment

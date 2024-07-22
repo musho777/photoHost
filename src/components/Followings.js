@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, FlatList, RefreshControl, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetFollowersAction } from '../store/action/action';
-import { clearGetFollowersAction } from '../store/action/clearAction';
+import { DelateFollower, GetFollowersAction } from '../store/action/action';
 import { Input } from '../ui/Input';
 import { FollowingsBlock } from './FollowingsBlock';
 import { useNavigation } from '@react-navigation/native';
@@ -13,29 +12,16 @@ import { t } from './lang';
 export const Followings = ({ id }) => {
   const navigation = useNavigation()
   const [data, setData] = useState();
-  const [followers, setFollowers] = useState([]);
   const getFollowers = useSelector((st) => st.getFollowers)
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState('')
   const dispatch = useDispatch()
+
   useEffect(() => {
-    setFollowers(getFollowers?.data)
-  }, [getFollowers?.data])
-  useEffect(() => {
-    // dispatch(clearGetFollowersAction());
     dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
   }, [data])
 
-  const deletClick = (id) => {
-    let item = [...followers]
-    item.map((elm, i) => {
-      if (elm.followers.id === id) {
-        item.splice(i, 1);
-      }
-    })
-    setFollowers(item)
-  }
   const renderItem = ({ item }) => {
     return (
       <View style={{ marginHorizontal: 15 }}>
@@ -51,7 +37,7 @@ export const Followings = ({ id }) => {
           type1={'Удалить'}
           type2={id ? true : false}
           userId={item.followers.id}
-          deletClick={() => deletClick(item.followers.id)}
+          deletClick={() => dispatch(DelateFollower(item.followers.id))}
         />
       </View>
     );
@@ -68,17 +54,15 @@ export const Followings = ({ id }) => {
       <FlatList
         refreshControl={
           <RefreshControl
-            // refreshing={getFollowers?.loading}
             onRefresh={() => {
-              // dispatch(clearGetFollowersAction());
               dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
             }}
           />
         }
-        data={followers}
+        data={getFollowers?.data}
         enableEmptySections={true}
         ListEmptyComponent={() => (
-          !getFollowers?.loading && <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscribers}</Text>
+          (!getFollowers?.loading && getFollowers.data?.length == 0) && <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscribers}</Text>
         )}
         renderItem={renderItem}
         onEndReached={() => {

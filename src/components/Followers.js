@@ -13,18 +13,20 @@ export const Followers = ({ id }) => {
   const navigation = useNavigation();
   const [data, setData] = useState('');
   const [followers, setFollowers] = useState([]);
-  const getFollowers = useSelector(st => st.getFollower);
+  let getFollowers = useSelector(st => st.getFollower);
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState('');
   const dispatch = useDispatch();
-  useEffect(() => {
-    let item = getFollowers?.data
-    item.map((elm, i) => {
-      elm.type = true
-    })
-    setFollowers(item);
-  }, [getFollowers?.data]);
+  // useEffect(() => {
+  //   let item = getFollowers?.data
+  //   item.map((elm, i) => {
+  //     elm.type = true
+  //   })
+  //   setFollowers(item);
+  // }, [getFollowers?.data]);
+
+
   useEffect(() => {
     dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
     // dispatch(clearGetFollowersAction());
@@ -32,20 +34,20 @@ export const Followers = ({ id }) => {
 
   const addClick = id => {
     let remove = false
-    let item = [...followers];
-    item.map((elm, i) => {
+    // let item = [...getFollowers.data];
+    getFollowers.data.map((elm, i) => {
       if (elm.follower.id === id) {
         elm.type = !elm.type
         remove = !elm.type
       }
     });
-    if (remove) {
+    if (!remove) {
       dispatch(AddDeletFollowAction('remove'))
     }
     else {
       dispatch(AddDeletFollowAction('add'))
     }
-    setFollowers(item);
+    // setFollowers(item);
   };
   const renderItem = ({ item }) => {
     return (
@@ -59,7 +61,7 @@ export const Followers = ({ id }) => {
           name={item.follower?.name}
           username={item.follower?.nickname}
           img={item.follower?.avatar}
-          type={item.type}
+          type={!item.type}
           userId={item.follower?.id}
           type2={id ? true : false}
           addClick={() => addClick(item.follower?.id)}
@@ -92,10 +94,12 @@ export const Followers = ({ id }) => {
             }}
           />
         }
-        ListEmptyComponent={() =>
-          <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscriptions}</Text>
+        ListEmptyComponent={() => {
+          (!getFollowers?.loading && getFollowers.data?.length == 0) &&
+            <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscriptions}</Text>
         }
-        data={followers}
+        }
+        data={getFollowers?.data}
         enableEmptySections={true}
         renderItem={renderItem}
         onEndReached={() => {

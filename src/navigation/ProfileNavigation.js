@@ -7,13 +7,12 @@ import { EditProfilScreen } from '../screens/Profile/EditProfilScreen/EditProfil
 import { ParametrScreen } from '../screens/Profile/ParametrScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { SavedPostScreen } from '../screens/Profile/SavedPostScreen';
-import { UserProfileScreen } from '../screens/Profile/userProfileScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { t } from '../components/lang';
 import { Catalog } from '../screens/catalog';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Styles } from '../styles/Styles';
 import { ClearLoginAction, LogoutAction } from '../store/action/action';
 import { BackArrow } from '../assets/svg/Svgs';
@@ -21,12 +20,12 @@ import { BackArrow } from '../assets/svg/Svgs';
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
+  const dispatch = useDispatch()
 
   const LogOut = async () => {
     dispatch(LogoutAction(staticdata.token))
     dispatch(ClearLoginAction())
     props.navigation.navigate('LoginScreen1', { screen: 'LoginScreen' })
-    close()
   }
   return (
     <DrawerContentScrollView style={{ backgroundColor: 'white', paddingTop: 40 }} {...props}>

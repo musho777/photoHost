@@ -1,6 +1,6 @@
 import { Input } from '../../../ui/Input';
 import { Image, StyleSheet, View } from "react-native"
-import { AddCommentAction } from "../../../store/action/action";
+import { AddCommentAction, AddCommentLocal } from "../../../store/action/action";
 import { useDispatch, useSelector } from "react-redux";
 import { t } from '../../lang';
 
@@ -17,6 +17,7 @@ export const InputComponent = ({ parentId, user, sendComment, setSendCommet, sen
       let regex = new RegExp(senderName, "gi");
       send = send.replace(regex, "");
     }
+    // dispatch(AddCommentLocal({ id: data.post_id }))
     dispatch(
       AddCommentAction(
         {

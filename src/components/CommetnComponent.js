@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { CommentItem } from './CommentItem';
 
 const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDeletComment }) => {

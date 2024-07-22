@@ -72,8 +72,8 @@ export const Comments = ({ route, }) => {
   }, []);
 
   const deletComment = (id) => {
-    dispatch(DeletComment({ comment_id: id }, staticdata.token, { post_id: parentId }))
     dispatch(DelateCommentLocal({ id: parentId }))
+    dispatch(DeletComment({ comment_id: id }, staticdata.token, { post_id: parentId }))
   }
 
 
