@@ -36,7 +36,7 @@ export const SearchItem = ({ data }) => {
       <View style={Styles.flexAlignItems}>
         <Image
           style={styles.img}
-          source={{ uri: `https://chamba.digiluys.com/uploads/${data.avatar}` }}
+          source={{ uri: `https://chambaonline.pro/uploads/${data.avatar}` }}
         />
         <Text style={Styles.balihaiRegular12}>{data.name}</Text>
       </View>

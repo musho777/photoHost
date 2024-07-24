@@ -21,6 +21,7 @@ export const PostBody = ({
   const navigation = useNavigation()
   const [isLiked, setIsLiked] = useState(liked)
   const staticdata = useSelector(st => st.static);
+  const dispatch = useDispatch()
 
   const LikePost = () => {
     if (isLiked) {
@@ -37,7 +38,6 @@ export const PostBody = ({
     ))
   }
 
-  const dispatch = useDispatch()
   return <View
     style={[
       { paddingHorizontal: 15, marginBottom: 15 },

@@ -39,7 +39,7 @@ export const InputComponent = ({ parentId, user, sendComment, setSendCommet, sen
   return <View style={styles.InputComponent}>
     <Image
       style={styles.image}
-      source={{ uri: `https://chamba.digiluys.com/uploads/${user.data.avatar}`, }}
+      source={{ uri: `https://chambaonline.pro/uploads/${user.data.avatar}`, }}
     />
     <Input
       // ref={textInputRef}

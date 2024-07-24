@@ -26,7 +26,7 @@ export const Albom = ({ data, user }) => {
                 <Image
                   style={styles.img}
                   source={{
-                    uri: `https://chamba.digiluys.com/uploads/${elm?.photo[0]?.photo}`,
+                    uri: `https://chambaonline.pro/uploads/${elm?.photo[0]?.photo}`,
                   }}
                 />
               </TouchableOpacity>

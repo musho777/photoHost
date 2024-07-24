@@ -227,7 +227,7 @@ export const EditProfilScreen = ({ navigation }) => {
         <Image
           style={styles.img}
           source={{
-            uri: `https://chamba.digiluys.com/uploads/${user.data.avatar}`,
+            uri: `https://chambaonline.pro/uploads/${user.data.avatar}`,
           }}
         />
       </View>

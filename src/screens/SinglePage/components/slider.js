@@ -100,7 +100,7 @@ export const Slider = ({ photo, single, music, image }) => {
               {!item.video ? (
                 <Image
                   style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 }]}
-                  source={{ uri: `https://chamba.digiluys.com/uploads/${image}` }}
+                  source={{ uri: `https://chambaonline.pro/uploads/${image}` }}
                   resizeMode="cover"
                 />
               ) : (
@@ -108,7 +108,7 @@ export const Slider = ({ photo, single, music, image }) => {
                   {!isPlayed && first && <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Image
                       style={[{ width: '100%', height: 400 }]}
-                      source={{ uri: `https://chamba.digiluys.com/uploads/${item.photo}` }}
+                      source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                     />
                     <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, top: 0, alignItems: 'center', height: "100%", justifyContent: 'center' }}>
                       <TouchableOpacity
@@ -140,7 +140,7 @@ export const Slider = ({ photo, single, music, image }) => {
 
                         },
                       ]}
-                      source={{ uri: `https://chamba.digiluys.com/uploads/${item.video}` }}
+                      source={{ uri: `https://chambaonline.pro/uploads/${item.video}` }}
                       resizeMode={'cover'}
                       onLoad={(data) => {
                         setDuration(data.duration);

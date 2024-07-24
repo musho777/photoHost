@@ -43,7 +43,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
                       // margin: 5,
                     }]}
                     source={{
-                      uri: `https://chamba.digiluys.com/uploads/${elm.post?.photo[0]?.photo}`,
+                      uri: `https://chambaonline.pro/uploads/${elm.post?.photo[0]?.photo}`,
                     }}
                   /> :
                   <View>
@@ -56,7 +56,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
                         setLoading(false);
                       }}
                       style={styles.img}
-                      source={{ uri: `https://chamba.digiluys.com/uploads/${elm.post?.photo[0]?.photo}` }}
+                      source={{ uri: `https://chambaonline.pro/uploads/${elm.post?.photo[0]?.photo}` }}
                       resizeMode={'cover'}
                     />
                   </View>
@@ -72,7 +72,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
                   <Image
                     style={styles.img}
                     source={{
-                      uri: `https://chamba.digiluys.com/uploads/${elm?.photo[0]?.photo}`,
+                      uri: `https://chambaonline.pro/uploads/${elm?.photo[0]?.photo}`,
                     }}
                   />
                 </TouchableOpacity> :
@@ -92,7 +92,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
                       setLoading(false);
                     }}
                     style={styles.img}
-                    source={{ uri: `https://chamba.digiluys.com/uploads/${elm.photo[0]?.photo}` }}
+                    source={{ uri: `https://chambaonline.pro/uploads/${elm.photo[0]?.photo}` }}
                     resizeMode={'cover'}
                   /> */}
                 </TouchableOpacity>

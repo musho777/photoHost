@@ -97,7 +97,7 @@ export const LikeList = forwardRef(
                   <Image
                     style={styles.img}
                     source={{
-                      uri: `https://chamba.digiluys.com/uploads/${elm.user.avatar}`,
+                      uri: `https://chambaonline.pro/uploads/${elm.user.avatar}`,
                     }}
                   />
                   <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>

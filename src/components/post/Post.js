@@ -46,11 +46,6 @@ export const Post = ({
   const [D, setD] = useState(description)
 
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-    }, 1000);
-    return () => clearTimeout(timeoutId);
-  }, [showSave]);
 
   useEffect(() => {
     CutText()

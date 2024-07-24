@@ -42,6 +42,10 @@ export const Followings = ({ id }) => {
       </View>
     );
   };
+
+
+
+
   return (
     <View style={{ paddingHorizontal: 15 }}>
       <Input

@@ -12,29 +12,19 @@ import { t } from '../components/lang';
 export const Followers = ({ id }) => {
   const navigation = useNavigation();
   const [data, setData] = useState('');
-  const [followers, setFollowers] = useState([]);
   let getFollowers = useSelector(st => st.getFollower);
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState('');
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   let item = getFollowers?.data
-  //   item.map((elm, i) => {
-  //     elm.type = true
-  //   })
-  //   setFollowers(item);
-  // }, [getFollowers?.data]);
 
 
   useEffect(() => {
     dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
-    // dispatch(clearGetFollowersAction());
   }, [data]);
 
   const addClick = id => {
     let remove = false
-    // let item = [...getFollowers.data];
     getFollowers.data.map((elm, i) => {
       if (elm.follower.id === id) {
         elm.type = !elm.type
@@ -47,7 +37,6 @@ export const Followers = ({ id }) => {
     else {
       dispatch(AddDeletFollowAction('add'))
     }
-    // setFollowers(item);
   };
   const renderItem = ({ item }) => {
     return (

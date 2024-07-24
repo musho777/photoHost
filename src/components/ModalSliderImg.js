@@ -47,7 +47,7 @@ export const ModalSliderImg = ({ photo, single, activePhoto }) => {
                                     style={[
                                         { marginVertical: 10, width: windowWidth, aspectRatio: aspectRatio ? aspectRatio : 1, borderRadius: 0 },
                                     ]}
-                                    source={{ uri: `https://chamba.digiluys.com/uploads/${item.photo}` }}
+                                    source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
 
                                 /> :
                                 <Video
@@ -64,7 +64,7 @@ export const ModalSliderImg = ({ photo, single, activePhoto }) => {
                                     ]}
                                     controls={true}
                                     repeat={true}
-                                    source={{ uri: `https://chamba.digiluys.com/uploads/${item.photo}` }}
+                                    source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                                     resizeMode={'cover'}
                                 />
                             }

@@ -32,6 +32,8 @@ export const HomeScreen = () => {
     }
   }, [staticdata.token]);
 
+  console.log(staticdata.token)
+
   useEffect(() => {
     if (index != -1) {
       dispatch(AddPostViewCount({ post_id: getLents?.data[index]?.id }, staticdata.token))

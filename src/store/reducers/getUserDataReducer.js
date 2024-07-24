@@ -92,6 +92,9 @@ const GetUserDataReducer = (state = initialState, action) => {
       }
       break
 
+    case 'DelateFollower':
+      item.followersCount = item.followersCount - 1
+      break
     default:
       break;
   }

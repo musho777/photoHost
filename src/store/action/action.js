@@ -144,7 +144,7 @@ import {
   SucessGetFollowersAction,
 } from './successAction';
 
-export const Api = 'https://chamba.digiluys.com/api';
+export const Api = 'https://chambaonline.pro/api';
 
 export const RegisterAction = data => {
   return dispatch => {
@@ -537,7 +537,7 @@ export const chnageAvatarAction = (url, token) => {
     };
 
     fetch(
-      'https://chamba.digiluys.com/api/user_update_profile_photo',
+      'https://chambaonline.pro/api/user_update_profile_photo',
       requestOptions,
     )
       .then(response => response.json())
@@ -698,7 +698,7 @@ export const GetFollowerAction = (data, token, page) => {
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    dispatch(StartGetFollower());
+    // dispatch(StartGetFollower());
     fetch(`${Api}/get_follower?page=${page}`, {
       method: 'POST',
       headers: myHeaders,
@@ -1113,6 +1113,7 @@ export const GetMyBooksAction = (token, page) => {
 };
 
 export const AddPostViewCount = (data, token) => {
+  console.log(token)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1127,8 +1128,10 @@ export const AddPostViewCount = (data, token) => {
     fetch(`${Api}/view_post_count`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
       })
       .catch(error => {
+        console.log(error)
       });
   };
 };

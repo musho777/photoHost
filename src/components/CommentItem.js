@@ -64,7 +64,7 @@ export const CommentItem = ({
         <Image
           style={ansswer ? styles.answerImg : styles.img}
           source={{
-            uri: `https://chamba.digiluys.com/uploads/${user?.avatar
+            uri: `https://chambaonline.pro/uploads/${user?.avatar
               }`,
           }}
         />

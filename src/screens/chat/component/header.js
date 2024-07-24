@@ -50,7 +50,7 @@ export const Header = ({ data, route, user }) => {
         <Image
           style={styles.img}
           source={{
-            uri: `https://chamba.digiluys.com/uploads/${getSinglePageChat.resiverUser.avatar}`,
+            uri: `https://chambaonline.pro/uploads/${getSinglePageChat.resiverUser.avatar}`,
           }}
         />
         <View style={{ marginHorizontal: 20 }}>

@@ -1,21 +1,21 @@
-import {useState} from 'react'
-import {View,useWindowDimensions,Text} from 'react-native';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import { useState } from 'react'
+import { View, useWindowDimensions, Text } from 'react-native';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { Followings } from '../../components/Followings';
 import { Followers } from '../../components/Followers';
 
-export const FollowersScreen = ({route}) => {
+export const FollowersScreen = ({ route }) => {
   const renderScene = SceneMap({
     first: () => <Followings id={route.params.id} />,
-    second:()=> <Followers id={route.params.id} />,
+    second: () => <Followers id={route.params.id} />,
   });
   const [index, setIndex] = useState(route.params.index);
-  const [routes] = useState([
-    {key: 'first', title: 'Подписчики'},
-    {key: 'second', title: 'Подписки'},
-  ]);
+  const routes = [
+    { key: 'first', title: 'Подписчики' },
+    { key: 'second', title: 'Подписки' }
+  ]
   const layout = useWindowDimensions();
   const renderTabBar = props => {
     return (
@@ -24,7 +24,7 @@ export const FollowersScreen = ({route}) => {
         indicatorStyle={{
           backgroundColor: AppColors.Charcoal_Color,
           height: 2,
-          borderRadius: 10,
+          borderRadius: 10
         }}
         style={{
           backgroundColor: '#FFF',
@@ -32,13 +32,14 @@ export const FollowersScreen = ({route}) => {
           borderBottomWidth: 1,
           borderColor: AppColors.Solitude_Color,
           borderRadius: 10,
-          marginHorizontal:15
+          marginHorizontal: 15
         }}
         renderLabel={a => (
           <Text
             style={[
               a.focused ? Styles.darkRegular14 : Styles.heatherRegular14,
-            ]}>
+            ]}
+          >
             {a.route.title}
           </Text>
         )}
@@ -48,13 +49,13 @@ export const FollowersScreen = ({route}) => {
       />
     );
   };
-  return <View style = {{flex:1}}>
-     <TabView
-          renderTabBar={renderTabBar}
-          navigationState={{index, routes}}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
-        />
-  </View>;
+  return <View style={{ flex: 1 }}>
+    <TabView
+      renderTabBar={renderTabBar}
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{ width: layout.width }}
+    />
+  </View>
 };

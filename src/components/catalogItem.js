@@ -13,7 +13,7 @@ export const CatalogItem = ({ data, onSelect, selected }) => {
     <View style={{ width: 60, height: 50, }}>
       <Image width={60} height={50}
         style={{ objectFit: 'contain' }}
-        source={{ uri: `https://chamba.digiluys.com/uploads/${data.photo}` }}
+        source={{ uri: `https://chambaonline.pro/uploads/${data.photo}` }}
       />
     </View>
     <View style={{ height: 43 }}>

@@ -53,7 +53,7 @@ export const ChatUsersScreen = () => {
   const renderItem = ({ item }) => {
     let avatar = ''
     let name = ''
-    if (item.sender.id == user.allData.data.id) {
+    if (item.sender.id == user.allData?.data?.id) {
       avatar = item?.receiver_user.avatar
       name = item?.receiver_user.name
       otherUserId = item.receiver_user?.id
@@ -66,7 +66,7 @@ export const ChatUsersScreen = () => {
     return (
       <ChatUser
         name={name}
-        img={`https://chamba.digiluys.com/uploads/${avatar}`}
+        img={`https://chambaonline.pro/uploads/${avatar}`}
         sendWhiteMe={item.sendWhiteMe}
         sendr_id={item.latest_sender}
         user_id={user.data.id}

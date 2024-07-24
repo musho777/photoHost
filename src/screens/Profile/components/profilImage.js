@@ -44,7 +44,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
         source={{
           uri: imgUrl
             ? imgUrl
-            : `https://chamba.digiluys.com/uploads/${user.avatar}`,
+            : `https://chambaonline.pro/uploads/${user.avatar}`,
         }}
       />
     </TouchableOpacity>

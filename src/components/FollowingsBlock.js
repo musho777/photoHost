@@ -42,7 +42,7 @@ export const FollowingsBlock = ({
       <View style={Styles.flexAlignItems}>
         <Image
           style={styles.img}
-          source={{ uri: `https://chamba.digiluys.com/uploads/${img}` }}
+          source={{ uri: `https://chambaonline.pro/uploads/${img}` }}
         />
         <View>
           <Text style={Styles.balihaiRegular12}>{name}</Text>
