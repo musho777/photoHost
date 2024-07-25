@@ -43,6 +43,7 @@ import GetRelationCategoryReducer from './reducers/GetRelationCategoryReducer';
 import DelatePhotoReducer from './reducers/delatePhotoReducer';
 import UpdateUserInfoReducer from './reducers/updateUserInfoReducer';
 import GetOtherPostsReducer from './reducers/GetOtherPostsReducer';
+import GetPostViewReducer from './reducers/getPostViewReducer';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -88,6 +89,7 @@ const rootReducer = combineReducers({
     delatePhoto: DelatePhotoReducer,
     updateUserInfo: UpdateUserInfoReducer,
     getOtherPosts: GetOtherPostsReducer,
+    getPostView: GetPostViewReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

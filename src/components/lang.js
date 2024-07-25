@@ -73,7 +73,10 @@ export const t = (lang) => {
             FirstnameLastnameorchannelname: 'Имя Фамилия или название канала',
             comments: 'Комментарии',
             Nocomments: ' Нет комментариев',
-            Leaveacomment: 'Оставьте комментарий'
+            Leaveacomment: 'Оставьте комментарий',
+            Women: 'Женщины',
+            Men: "Mужчины",
+            Unspecifiedgender: 'Неуказанные гендере'
         }
     }
     else {
@@ -150,7 +153,10 @@ export const t = (lang) => {
             FirstnameLastnameorchannelname: 'First name Last name or channel name',
             comments: 'Comments',
             Nocomments: 'No comments',
-            Leaveacomment: 'Leave a comment'
+            Leaveacomment: 'Leave a comment',
+            Women: 'Women',
+            Men: "Men",
+            Unspecifiedgender: 'Unspecified gender'
         }
     }
 }

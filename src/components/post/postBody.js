@@ -12,10 +12,10 @@ export const PostBody = ({
   view,
   liked,
   id,
-  setOpenLike,
   handlePresentModalPressLike,
   setLikedCount,
   likedCount,
+  handlePresentModalPressView
 }) => {
 
   const navigation = useNavigation()
@@ -49,7 +49,6 @@ export const PostBody = ({
           {isLiked ? <Heart /> : <NotLineSvg />}
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
-          setOpenLike(true)
           dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
           handlePresentModalPressLike()
         }
@@ -64,11 +63,13 @@ export const PostBody = ({
         <Text style={[Styles.darkMedium14]}> - {commentCount}</Text>
       </View>
     </View>
-    <View style={Styles.flexAlignItems}>
+    <TouchableOpacity
+      onPress={() => handlePresentModalPressView()}
+      style={Styles.flexAlignItems}>
       <ViewSvg />
       <Text style={[Styles.balihaiRegular14, { marginLeft: 5 }]}>
         {view}
       </Text>
-    </View>
+    </TouchableOpacity>
   </View>
 }

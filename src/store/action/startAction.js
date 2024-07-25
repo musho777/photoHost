@@ -272,3 +272,9 @@ export const StartOtherPostsAction = () => {
         type: 'StartOtherPostsAction'
     }
 }
+
+export const StartGetPostView = () => {
+    return {
+        type: 'StartGetPostView'
+    }
+}

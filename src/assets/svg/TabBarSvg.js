@@ -17,7 +17,6 @@ export const HomeSvg = ({ focused }) => {
       />
     </Svg>
   }
-  // #FFC24B
 
 
   else {

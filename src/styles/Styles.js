@@ -89,6 +89,16 @@ export const Styles = StyleSheet.create({
         fontSize: 16,
         color: AppColors.BaliHai_Color,
     },
+    balihaiSemiBold20: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 20,
+        color: AppColors.BaliHai_Color,
+    },
+    balihaiSemiBold18: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 18,
+        color: AppColors.BaliHai_Color,
+    },
     tomatoMedium10: {
         fontFamily: 'Montserrat-Medium',
         fontSize: 10,

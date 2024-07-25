@@ -32,6 +32,7 @@ import {
   ErrorGetPostComment,
   ErrorGetPostLike,
   ErrorGetPosts,
+  ErrorGetPostView,
   ErrorGetRelationCatalog,
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
@@ -95,6 +96,7 @@ import {
   StartGetLentsRec,
   StartGetRelationCatalog,
   StartOtherPostsAction,
+  StartGetPostView,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -127,6 +129,7 @@ import {
   SuccessGetPostComment,
   SuccessGetPostLike,
   SuccessGetPosts,
+  SuccessGetPostView,
   SuccessGetRelationCatalog,
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
@@ -1113,7 +1116,6 @@ export const GetMyBooksAction = (token, page) => {
 };
 
 export const AddPostViewCount = (data, token) => {
-  console.log(token)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1128,10 +1130,8 @@ export const AddPostViewCount = (data, token) => {
     fetch(`${Api}/view_post_count`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
       })
       .catch(error => {
-        console.log(error)
       });
   };
 };
@@ -1688,4 +1688,34 @@ export const DelateFollower = (id) => {
     type: 'DelateFollower',
     id
   }
+}
+
+export const GetPostViewAction = (data, token, page) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    if (page == 1) {
+      dispatch(StartGetPostView());
+    }
+    fetch(`${Api}/get_post_vied_user_and_statistics?page=${page}`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetPostView(r))
+        }
+        else {
+          dispatch(ErrorGetPostView('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetPostView('server error'))
+      });
+  };
 }

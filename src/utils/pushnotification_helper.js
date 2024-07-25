@@ -14,32 +14,32 @@ export async function requestUserPermission() {
 
 
 
-async function GetFCMToke(){
+async function GetFCMToke() {
   let fcmtoken = await AsyncStorage.getItem('fcmtoken')
-  if(!fcmtoken)  {
+  if (!fcmtoken) {
     try {
-        let fcmtoken = await messaging().getToken()
-        if(fcmtoken){
-            AsyncStorage.setItem('fcmtoken',fcmtoken)
-        }else {
+      let fcmtoken = await messaging().getToken()
+      if (fcmtoken) {
+        AsyncStorage.setItem('fcmtoken', fcmtoken)
+      } else {
 
-        }
+      }
     } catch (error) {
-        console.log(error,"error in fcmtoken")
+      console.log(error, "error in fcmtoken")
     }
 
   }
 }
-export const NotificationLister = () =>{
-    messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
-        );
-      });
+export const NotificationLister = () => {
+  messaging().onNotificationOpenedApp(remoteMessage => {
+    console.log(
+      'Notification caused app to open from background state:',
+      remoteMessage.notification,
+    );
+  });
 
-       // Check whether an initial notification is available
-    messaging()
+  // Check whether an initial notification is available
+  messaging()
     .getInitialNotification()
     .then(remoteMessage => {
       if (remoteMessage) {
@@ -50,8 +50,8 @@ export const NotificationLister = () =>{
       }
     });
 
-    messaging().onMessage(async remoteMessage =>{
-        console.log('notification on froground state ...........',remoteMessage);
-    })
-  
+  messaging().onMessage(async remoteMessage => {
+    console.log('notification on froground state ...........', remoteMessage);
+  })
+
 }

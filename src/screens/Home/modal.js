@@ -17,7 +17,6 @@ export const ModalComponent = ({ showModal, token, close }) => {
   const [showDescrition, setShowDescription] = useState(true)
 
   useEffect(() => {
-    console.log('LogOut')
     if (userData.data.categories) {
       setCatalog(userData.data.categories)
     }

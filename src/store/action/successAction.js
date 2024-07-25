@@ -320,3 +320,10 @@ export const SuccessOtherPostsAction = (data) => {
         data
     }
 }
+
+export const SuccessGetPostView = (data) => {
+    return {
+        type: 'SuccessGetPostView',
+        data
+    }
+}

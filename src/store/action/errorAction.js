@@ -310,3 +310,10 @@ export const ErrorOtherPostsAction = () => {
         type: 'ErrorOtherPostsAction'
     }
 }
+
+export const ErrorGetPostView = (error) => {
+    return {
+        type: 'ErrorGetPostView',
+        error
+    }
+}

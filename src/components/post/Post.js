@@ -14,6 +14,7 @@ import { Slider } from '../Slider';
 import { PostHeader } from './postHeader';
 import { PostBody } from './postBody';
 import { ShowSave } from './showSave';
+import { ViewComponent } from './components/ViewComponent';
 
 export const Post = ({
   description,
@@ -37,15 +38,31 @@ export const Post = ({
   const user = useSelector((st) => st.userData)
 
   const likeRef = useRef(null)
-  const snapPointsLike = useMemo(() => ['50%'], []);
+  const ViewRef = useRef(null)
+
+  const snapPointsLike = useMemo(() => ['85%'], []);
   const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
-  const [openLike, setOpenLike] = useState(false)
+  const handlePresentModalPressView = useCallback(() => {
+    setCurrentId(id)
+    ViewRef.current?.present()
+  }, []);
+
+  const [openView, setOpenView] = useState(false)
+  const [currentId, setCurrentId] = useState(null)
+
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
   const [showMore, setShowMore] = useState(false)
   const [D, setD] = useState(description)
 
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
+
+  const CloseLike = () => {
+    likeRef.current?.close()
+  }
+  const CloseView = () => {
+    ViewRef.current?.close()
+  }
 
   useEffect(() => {
     CutText()
@@ -113,18 +130,23 @@ export const Post = ({
             likedCount={likedCount}
             setLikedCount={(e) => setLikedCount(e)}
             id={id}
-            openLike={openLike}
-            setOpenLike={(e) => setOpenLike(e)}
             handlePresentModalPressLike={() => handlePresentModalPressLike()}
+            handlePresentModalPressView={() => handlePresentModalPressView()}
           />
         </View>
         <LikeList
           close={() => CloseLike()}
-          count={likedCount}
-          openLike={true}
           token={staticdata.token}
           id={id}
           ref={likeRef}
+          snapPoints={snapPointsLike}
+        />
+        <ViewComponent
+          close={() => CloseView()}
+          currentId={currentId}
+          token={staticdata.token}
+          id={id}
+          ref={ViewRef}
           snapPoints={snapPointsLike}
         />
       </Shadow>

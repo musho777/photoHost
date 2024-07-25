@@ -7114,6 +7114,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gifted-charts-core@npm:^0.1.18":
+  version: 0.1.18
+  resolution: "gifted-charts-core@npm:0.1.18"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 086cc3415c382f3b5f671444eefa1b88ffdca888dad6230b3d84650ed904ee77e7c68a334e25b818e9cb93c130b86a932da2dcdb8a689b27ce9ef0727144348f
+  languageName: node
+  linkType: hard
+
 "glob-parent@npm:^5.1.2":
   version: 5.1.2
   resolution: "glob-parent@npm:5.1.2"
@@ -10720,12 +10730,14 @@ __metadata:
     react-native-fast-image: ^8.6.3
     react-native-gesture-handler: ^2.12.1
     react-native-gif-search: ^1.3.2
+    react-native-gifted-charts: ^1.4.19
     react-native-image-crop-picker: ^0.40.0
     react-native-image-pan-zoom: ^2.1.12
     react-native-image-picker: ^7.1.0
     react-native-image-slider-box: ^2.0.7
     react-native-image-zoom-viewer: ^3.0.1
     react-native-largelist: ^3.1.0-rc.2
+    react-native-linear-gradient: ^2.8.3
     react-native-media-controls: ^2.3.0
     react-native-modal: ^13.0.1
     react-native-modal-datetime-picker: ^17.1.0
@@ -11166,6 +11178,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-gifted-charts@npm:^1.4.19":
+  version: 1.4.19
+  resolution: "react-native-gifted-charts@npm:1.4.19"
+  dependencies:
+    gifted-charts-core: ^0.1.18
+  peerDependencies:
+    expo-linear-gradient: "*"
+    react: "*"
+    react-native: "*"
+    react-native-linear-gradient: "*"
+    react-native-svg: "*"
+  peerDependenciesMeta:
+    expo-linear-gradient:
+      optional: true
+    react-native-linear-gradient:
+      optional: true
+  checksum: 2a44982f5b1f631195e33acace4179c35ec89bd2315e11967ceff1552db858d0293d9ea91b148b5b0c11334f05cd6948cccdf6b10bfafe388de453e30794d95f
+  languageName: node
+  linkType: hard
+
 "react-native-image-crop-picker@npm:^0.40.0":
   version: 0.40.0
   resolution: "react-native-image-crop-picker@npm:0.40.0"
@@ -11225,6 +11257,16 @@ __metadata:
     react-native: ^0.50.0
     react-native-spring-scrollview: ^3.0.1-rc.5
   checksum: 0f789defb4352c40fdaa065df3fe5ecf914ee297d0dc43d0db084968af2c0ae9cc142d4440e907aaacb93cb22d9c56e8aded0e16c66f5a9b9e4b7732681066af
+  languageName: node
+  linkType: hard
+
+"react-native-linear-gradient@npm:^2.8.3":
+  version: 2.8.3
+  resolution: "react-native-linear-gradient@npm:2.8.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: f980d324e551bbc475c6406bdc5250a08242020cbe653412fa169bbdf51e28a502e225de105b4d696d6a1a1b733d44782469020f4936d8b3ce0e2c78e51cf58f
   languageName: node
   linkType: hard
 
