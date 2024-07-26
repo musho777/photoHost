@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WorkLocation } from "../../assets/svg/Svgs"
 import { Styles } from "../../styles/Styles"
 
@@ -65,14 +65,16 @@ export const InfoBlock = ({ user }) => {
     }, [user.mgu, user.phone, user.work_type, user.email, user.gender, user.date_of_birth1, user.city, user.web])
 
 
-    return <TouchableOpacity activeOpacity={1}>
-        {data.map((elm, i) => {
-            return <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }} key={i}>
-                {elm.svg}
-                <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                    {elm.value}
-                </Text>
-            </View>
-        })}
-    </TouchableOpacity>
+    return <ScrollView showsVerticalScrollIndicator={false}>
+        <TouchableOpacity activeOpacity={1}>
+            {data.map((elm, i) => {
+                return <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }} key={i}>
+                    {elm.svg}
+                    <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
+                        {elm.value}
+                    </Text>
+                </View>
+            })}
+        </TouchableOpacity>
+    </ScrollView>
 }

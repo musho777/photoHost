@@ -1,10 +1,5 @@
-import { Modal, StyleSheet, View, Text, ScrollView, TextInput, ActivityIndicator, TouchableOpacity } from "react-native"
-import { } from "react-native-svg";
-import { Input } from "../ui/Input";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GetCitysAction } from "../store/action/action";
-import { Styles } from "../styles/Styles";
+import { Modal, StyleSheet, View, Text, ScrollView, TouchableOpacity } from "react-native"
+import { useState } from "react";
 
 export const MountWrapper = ({ visible, close, onPress }) => {
     const [data, setData] = useState([

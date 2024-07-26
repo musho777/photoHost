@@ -132,7 +132,7 @@ export const LoginScreen = ({ navigation }) => {
         title={t(mainData.lang).Login}
         loading={loginData.loading}
       />
-      <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: "center", gap: 20 }}>
+      {/* <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: "center", gap: 20 }}>
 
         <TouchableOpacity onPress={() => changeLanguage('ru')} style={styles.languageButton}>
           <Text>ru</Text>
@@ -140,7 +140,7 @@ export const LoginScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => changeLanguage('en')} style={styles.languageButton}>
           <Text>en</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };

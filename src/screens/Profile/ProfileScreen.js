@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TouchableOpacity, ScrollView } from 'react-native';
 import { MenuSvg2 } from '../../assets/svg/Svgs';
-import { Menu } from '../../components/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction } from '../../store/action/action';
 import { ProfilImage } from './components/profilImage';
@@ -53,8 +52,7 @@ export const ProfileScreen = ({ navigation }) => {
       >
         <TouchableOpacity
           onPress={() => navigation.openDrawer()}
-
-          style={{ marginVertical: 25 }}>
+          style={{ marginVertical: 10 }}>
           <MenuSvg2 />
         </TouchableOpacity>
         <ProfilImage
@@ -68,7 +66,6 @@ export const ProfileScreen = ({ navigation }) => {
           setActiveCard={(e) => setActiveCard(e)}
         />
       </ScrollView >
-      <Menu close={() => setOpenMenu(false)} visible={openMenu} />
     </TouchableOpacity >
   );
 }

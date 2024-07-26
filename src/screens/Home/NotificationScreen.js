@@ -42,6 +42,7 @@ export const NotificationScreen = ({ navigation }) => {
   }
   return <View style={{ marginTop: 30, paddingHorizontal: 15 }}>
     <FlatList
+      showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
           refreshing={notification?.loading}

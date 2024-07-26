@@ -163,21 +163,23 @@ export const SendImgSvg = () => {
 
 export const MenuSvg2 = () => {
   return <Svg
-    width={32}
-    height={12}
-    viewBox="0 0 32 12"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    height={30}
+    viewBox="0 0 24 24"
+    width={30}
   >
-    <Path stroke="#444" strokeWidth={2} strokeLinecap="round" d="M1 1L31 1" />
     <Path
+      d="M4 6h16M4 12h16M4 18h16"
       stroke="#444"
-      strokeWidth={2}
       strokeLinecap="round"
-      d="M1 11L19.4074 11"
+      strokeLinejoin="round"
+      strokeWidth={2}
     />
   </Svg>
 }
+
+
 
 export const EditAvaterSvg = () => {
   return <Svg

@@ -322,6 +322,7 @@ export const NewPasswordAction = data => {
 };
 
 export const getUserInfoAction = token => {
+  console.log(Api, token)
   return dispatch => {
     dispatch(StartGetUserData());
     axios
@@ -329,6 +330,7 @@ export const getUserInfoAction = token => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(r => {
+        console.log(r)
         if (r.data.status) {
           dispatch(
             SuccessGetUserData(
@@ -344,6 +346,7 @@ export const getUserInfoAction = token => {
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorGetUserData());
       });
   };

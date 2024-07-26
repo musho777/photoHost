@@ -3,7 +3,6 @@ import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
 export const BlackListBlock = ({
   name,
-  username,
   img,
   type,
   onPress,
@@ -20,7 +19,6 @@ export const BlackListBlock = ({
         />
         <View>
           <Text style={Styles.darkSemiBold14}>{name}</Text>
-          {/* <Text style={Styles.balihaiRegular12}>{username}</Text> */}
         </View>
       </View>
       <View>
