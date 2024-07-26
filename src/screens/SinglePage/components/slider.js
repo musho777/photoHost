@@ -15,7 +15,7 @@ import { AppColors } from '../../../styles/AppColors';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, music, image }) => {
+export const Slider = ({ photo, music, image }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -66,12 +66,6 @@ export const Slider = ({ photo, single, music, image }) => {
       Math.floor(event.nativeEvent.layoutMeasurement.width)
     );
     setActive(index);
-    // activePhoto(index);
-  };
-
-  const togglePlayPause = () => {
-    setPaused(!paused);
-    setPlayerState(paused ? PLAYER_STATES.PLAYING : PLAYER_STATES.PAUSED);
   };
 
   return (
@@ -84,23 +78,13 @@ export const Slider = ({ photo, single, music, image }) => {
         data={photo}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         renderItem={({ item, index }) => {
-          let aspectRatio = 1;
-          if (item.width > item.height) {
-            aspectRatio = 0.2 + item.width / item.height;
-          } else {
-            aspectRatio = 0.2 + item.height / item.width;
-          }
-          if (aspectRatio > 1) {
-            aspectRatio = single ? 0.65 : 0.70;
-          } else if (aspectRatio < 1) {
-            aspectRatio = single ? 0.65 : 0.70;
-          }
+          let aspectRatio = 0.65
           return (
             <TouchableOpacity activeOpacity={1} style={styles.img}>
               {!item.video ? (
                 <Image
                   style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 }]}
-                  source={{ uri: `https://chambaonline.pro/uploads/${image}` }}
+                  source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                   resizeMode="cover"
                 />
               ) : (
@@ -108,7 +92,7 @@ export const Slider = ({ photo, single, music, image }) => {
                   {!isPlayed && first && <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Image
                       style={[{ width: '100%', height: 400 }]}
-                      source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
+                      source={{ uri: `https://chambaonline.pro/uploads/${image}` }}
                     />
                     <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, top: 0, alignItems: 'center', height: "100%", justifyContent: 'center' }}>
                       <TouchableOpacity
@@ -142,10 +126,7 @@ export const Slider = ({ photo, single, music, image }) => {
                       ]}
                       source={{ uri: `https://chambaonline.pro/uploads/${item.video}` }}
                       resizeMode={'cover'}
-                      onLoad={(data) => {
-                        setDuration(data.duration);
-                        // setIsLoading(false);
-                      }}
+                      onLoad={(data) => { setDuration(data.duration); }}
                       onProgress={(data) => setCurrentTime(data.currentTime)}
                       onEnd={onEnd}
                     />

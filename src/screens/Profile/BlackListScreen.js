@@ -6,7 +6,7 @@ import { AddBlackListAction, GetBlackListAction } from "../../store/action/actio
 import { Styles } from "../../styles/Styles"
 import { t } from '../../components/lang';
 
-export const BlackListScreen = () => {
+export const BlackListScreen = ({ navigation }) => {
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const blackList = useSelector((st) => st.blackList)
@@ -14,9 +14,13 @@ export const BlackListScreen = () => {
   const [page, setPage] = useState(1)
   const mainData = useSelector(st => st.mainData);
 
+
   useEffect(() => {
-    dispatch(GetBlackListAction(staticdata.token, 1))
-  }, [])
+    const unsubscribe = navigation.addListener('focus', async () => {
+      dispatch(GetBlackListAction(staticdata.token, 1))
+    });
+    return unsubscribe;
+  }, [navigation]);
   useEffect(() => {
     setData(blackList.data)
   }, [blackList.data])

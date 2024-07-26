@@ -6,18 +6,14 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Dimensions
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
-import { Albom } from './component/albom';
 import { BackArrow } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDeleteFollowAction, AddDeletFollowAction, GetOtherPostsAction, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
 import { t } from '../../components/lang';
 import { AlbomAndInfo } from './component/albomAndInfo';
-
-const { width } = Dimensions.get('window');
 
 
 export const SearchProfil = ({ navigation, route }) => {

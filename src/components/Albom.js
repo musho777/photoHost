@@ -8,15 +8,11 @@ import Video from 'react-native-video';
 import { useState } from "react";
 const windowWidth = Dimensions.get('window').width;
 
-export const Albom = ({ data, user, loading, seved, post }) => {
+export const Albom = ({ data, seved }) => {
   const navigation = useNavigation()
   const mainData = useSelector(st => st.mainData);
   const [isloading, setLoading] = useState(true)
-  if (loading) {
-    return <View style={Styles.loading}>
-      <ActivityIndicator size="large" color="#FFC24B" />
-    </View>
-  }
+  const user = useSelector((st) => st.userData)
   return (
     <TouchableOpacity activeOpacity={1} style={{ marginTop: 20, width: '100%' }}>
       <View
@@ -31,8 +27,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
           if (seved) {
             return (
               <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', {
-                id: elm.post?.photo[0]?.post_id, isBook: true,
-                photo: elm?.photo[0]?.photo
+                data: elm.post
               })}>
                 {!elm.post?.photo[0]?.photo.includes('.mov') ?
 
@@ -40,7 +35,6 @@ export const Albom = ({ data, user, loading, seved, post }) => {
                     style={[styles.img, {
                       width: windowWidth / 2 - 25,
                       height: windowWidth / 2 - 25,
-                      // margin: 5,
                     }]}
                     source={{
                       uri: `https://chambaonline.pro/uploads/${elm.post?.photo[0]?.photo}`,
@@ -52,9 +46,7 @@ export const Albom = ({ data, user, loading, seved, post }) => {
                     }
                     <Video
                       paused={true}
-                      onLoad={(data) => {
-                        setLoading(false);
-                      }}
+                      onLoad={(data) => setLoading(false)}
                       style={styles.img}
                       source={{ uri: `https://chambaonline.pro/uploads/${elm.post?.photo[0]?.photo}` }}
                       resizeMode={'cover'}
@@ -67,8 +59,10 @@ export const Albom = ({ data, user, loading, seved, post }) => {
           else {
             return (
               !elm.photo[0]?.photo?.includes('.mp4') ?
-
-                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { id: elm.id, isBook: elm.auth_user_book?.length > 0, photo: elm?.photo[0]?.photo })}>
+                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', {
+                  data: elm,
+                  my: true
+                })}>
                   <Image
                     style={styles.img}
                     source={{
@@ -76,7 +70,10 @@ export const Albom = ({ data, user, loading, seved, post }) => {
                     }}
                   />
                 </TouchableOpacity> :
-                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { id: elm.id, isBook: elm.auth_user_book?.length > 0, photo: elm?.photo[0]?.photo })}>
+                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', {
+                  data: elm,
+                  my: true
+                })}>
                   {
                     <Image
                       style={[styles.img]}

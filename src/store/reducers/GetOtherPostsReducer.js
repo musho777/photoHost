@@ -31,6 +31,19 @@ const GetOtherPostsReducer = (state = initialState, action) => {
       item.loading = false;
       item.status = false;
       break;
+
+    case 'AddBookLocal':
+      let i = item.data.findIndex(elm => elm.id === action.data.post_id)
+      if (i != -1) {
+        let ind = item.data[i].auth_user_book?.findIndex(elm => elm.user_id === action.data.userId)
+        if (ind != -1) {
+          item.data[i].auth_user_book.splice(ind, 1)
+        }
+        else {
+          item.data[i].auth_user_book?.push({ user_id: action.data.userId })
+        }
+      }
+      break
     default:
       break;
   }

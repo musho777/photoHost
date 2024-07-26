@@ -3,7 +3,7 @@ import { t } from '../../../components/lang';
 import { useSelector } from "react-redux";
 import { Styles } from "../../../styles/Styles";
 import { useState } from "react";
-import { Albom } from "../../../components/Albom";
+import { Albom } from "./albom";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { AppColors } from "../../../styles/AppColors";
 import { InfoBlock } from '../../Profile/InfoBlock';
@@ -18,7 +18,7 @@ export const AlbomAndInfo = () => {
 
 
   const renderScene = SceneMap({
-    first: () => <Albom loading={getPosts.loading} data1={getPosts.data1} data={getPosts.data} />,
+    first: () => <Albom data={getPosts.data} />,
     second: () => <InfoBlock user={singlPage.data} />,
   });
   const [index, setIndex] = useState(0);

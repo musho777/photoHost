@@ -16,7 +16,7 @@ export const AlbomAndInfo = () => {
   const user = useSelector(st => st.userData);
 
   const renderScene = SceneMap({
-    first: () => <Albom loading={getPosts.loading} data1={getPosts.data1} data={getPosts.data} />,
+    first: () => <Albom data={getPosts.data} />,
     second: () => <InfoBlock user={user.data} />,
   });
   const [index, setIndex] = useState(0);

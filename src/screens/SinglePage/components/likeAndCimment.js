@@ -4,26 +4,23 @@ import { NotLineSvg } from "../../../assets/svg/Svgs";
 import { useNavigation } from "@react-navigation/native";
 import { Styles } from "../../../styles/Styles";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LikePostAction } from "../../../store/action/action";
 
-export const LikeAndComment = ({ singlData, id, staticdata, user }) => {
-
+export const LikeAndComment = ({ data }) => {
   const [likeCount, setLikeCount] = useState();
   const [isLiked, setIsLiked] = useState();
-
+  const staticdata = useSelector(st => st.static);
+  const user = useSelector(st => st.userData);
+  const id = data.id
   const dispatch = useDispatch()
 
-
   useEffect(() => {
-    if (singlData.data) {
-      const foundElement = singlData?.data.like_auth_user?.find(
-        item => item?.user_id == user?.data?.id,
-      );
-      setIsLiked(foundElement);
-    }
-    setLikeCount(singlData?.data.like_auth_user?.length);
-  }, [singlData.data]);
+    let likde = data?.like_auth_user?.findIndex(item => item?.user_id == user?.data?.id)
+    setIsLiked(likde >= 0)
+    setLikeCount(data.like_count)
+  }, [data])
+
 
   const LikePost = () => {
     if (isLiked) {
@@ -63,7 +60,7 @@ export const LikeAndComment = ({ singlData, id, staticdata, user }) => {
             <Comment />
           </TouchableOpacity>
           <Text style={[Styles.darkMedium14, { marginLeft: 5 }]}>
-            - {singlData.data.comment_count}
+            - {data.comment_count}
           </Text>
         </View>
       </View>
@@ -71,7 +68,7 @@ export const LikeAndComment = ({ singlData, id, staticdata, user }) => {
         <View style={Styles.flexAlignItems}>
           <ViewSvg />
           <Text style={[Styles.balihaiRegular14, { marginLeft: 5, }]}>
-            {singlData.data.view_count}
+            {data.view_count}
           </Text>
         </View>
       </View>

@@ -38,6 +38,19 @@ const GetPostsReducer = (state = initialState, action) => {
       data.splice(index, 1)
       item.data = data
       break
+
+    case 'AddCommentLocal':
+      let inde = item.data.findIndex(elm => elm.id === action.data.id)
+      console.log(inde, 'ind', item.data[inde].comment_count)
+      item.data[inde].comment_count = +item.data[inde].comment_count + 1
+      break
+
+    case 'EditLentPhot':
+      let i = item.data.findIndex(elm => elm.id === action.data.post_id)
+      if (i != -1) {
+        item.data[i].description = action.data.description
+      }
+      break
     default:
       break;
   }

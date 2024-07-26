@@ -16,7 +16,6 @@ export const ProfileScreen = ({ navigation }) => {
   const [page, setPage] = useState(1)
   const [activeCard, setActiveCard] = useState(0)
   const [changeAvatar, setChangeAvatar] = useState(false)
-  const [openMenu, setOpenMenu] = useState(false)
 
   useEffect(() => {
     if (user.data?.id) {

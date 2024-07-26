@@ -322,7 +322,6 @@ export const NewPasswordAction = data => {
 };
 
 export const getUserInfoAction = token => {
-  console.log(Api, token)
   return dispatch => {
     dispatch(StartGetUserData());
     axios
@@ -330,7 +329,6 @@ export const getUserInfoAction = token => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(r => {
-        console.log(r)
         if (r.data.status) {
           dispatch(
             SuccessGetUserData(
@@ -346,7 +344,6 @@ export const getUserInfoAction = token => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorGetUserData());
       });
   };
@@ -1027,6 +1024,7 @@ export const AddBlackListAction = (data, token) => {
     fetch(`${Api}/add_user_in_black_list`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessAddBlackList(r));
         } else {
@@ -1721,4 +1719,11 @@ export const GetPostViewAction = (data, token, page) => {
         dispatch(ErrorGetPostView('server error'))
       });
   };
+}
+
+export const AddBookLocal = (data) => {
+  return {
+    type: 'AddBookLocal',
+    data
+  }
 }

@@ -22,7 +22,8 @@ export const Albom = ({ data, user }) => {
         {data.map((elm, i) => {
           return (
             !elm.photo[0]?.photo?.includes('.mp4') ?
-              <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { id: elm.id, isBook: elm.auth_user_book?.length > 0, photo: elm?.photo[0]?.photo })}>
+              <TouchableOpacity key={i} onPress={() =>
+                navigation.navigate('SinglPageScreen', { data: elm })}>
                 <Image
                   style={styles.img}
                   source={{
@@ -31,7 +32,7 @@ export const Albom = ({ data, user }) => {
                 />
               </TouchableOpacity>
               :
-              <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { id: elm.id, isBook: elm.auth_user_book?.length > 0, photo: elm?.photo[0]?.photo })}>
+              <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', { data: elm })}>
                 {
                   <Image
                     style={[styles.img]}

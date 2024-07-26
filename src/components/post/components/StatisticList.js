@@ -127,9 +127,6 @@ export const StatisticList = () => {
 
   }, [getPostView.stateData])
 
-  console.log(unknown)
-
-  console.log(getPostView.stateData.unknown_gender, 'getPostView.stateData')
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
 
