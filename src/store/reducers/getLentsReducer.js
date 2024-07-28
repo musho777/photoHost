@@ -48,6 +48,28 @@ const GetLentsReducer = (state = initialState, action) => {
       let inde = item.data.findIndex(elm => elm.id === action.data.id)
       item.data[inde].comment_count = +item.data[inde].comment_count + 1
       break
+
+    case 'LocalLike':
+      let data = item.data.find((elm) => elm.id == action.data.post_id)
+      console.log(data, item.data.find((elm) => elm.id == action.data.post_id), 'lent')
+      if (data) {
+        let iid = item.data.findIndex((elm) => elm.id == action.data.post_id)
+        console.log(iid)
+        let indx = item.data[iid]?.like_auth_user.findIndex((elm) => elm.user_id == action.id)
+        if (indx == -1) {
+          if (item.data[iid]) {
+            item.data[iid].like_count = item.data[iid]?.like_count + 1
+            item.data[iid].like_auth_user.push({ user_id: action.id })
+          }
+        }
+        else {
+          if (item.data[iid]) {
+            item.data[iid].like_count = item.data[iid]?.like_count - 1
+            item.data[iid].like_auth_user.splice(iid, 1)
+          }
+        }
+      }
+      break
     default:
       break;
   }

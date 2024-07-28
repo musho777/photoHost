@@ -16,16 +16,18 @@ export const PostBody = ({
   id,
   like,
 }) => {
-  const [likedCount, setLikedCount] = useState(+like)
+  const user = useSelector((st) => st.userData)
   const likeRef = useRef(null)
-  const CloseLike = () => {
-    likeRef.current?.close()
-  }
+  const CloseLike = () => { likeRef.current?.close() }
 
 
   const [currentId, setCurrentId] = useState(null)
   const snapPointsLike = useMemo(() => ['85%'], []);
   const ViewRef = useRef(null)
+  const navigation = useNavigation()
+  const staticdata = useSelector(st => st.static);
+  const dispatch = useDispatch()
+
   const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
   const handlePresentModalPressView = useCallback(() => {
     setCurrentId(id)
@@ -33,25 +35,12 @@ export const PostBody = ({
   }, []);
 
 
-
-  const navigation = useNavigation()
-  const [isLiked, setIsLiked] = useState(liked)
-  const staticdata = useSelector(st => st.static);
-  const dispatch = useDispatch()
-
   const LikePost = () => {
-    if (isLiked) {
-      setLikedCount(likedCount - 1)
-    }
-    else {
-      setLikedCount(likedCount + 1)
-    }
-    setIsLiked(!isLiked)
     dispatch(LikePostAction({
       'post_id': id
     },
-
-      staticdata.token
+      staticdata.token,
+      user.data.id
     ))
   }
 
@@ -63,14 +52,14 @@ export const PostBody = ({
     <View style={Styles.flexAlignItems}>
       <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>
         <TouchableOpacity onPress={() => { LikePost() }}>
-          {isLiked ? <Heart /> : <NotLineSvg />}
+          {liked ? <Heart /> : <NotLineSvg />}
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
           dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
           handlePresentModalPressLike()
         }
         }>
-          <Text style={[Styles.darkMedium14]}> - {likedCount}</Text>
+          <Text style={[Styles.darkMedium14]}> - {like}</Text>
         </TouchableOpacity>
       </View>
       <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>

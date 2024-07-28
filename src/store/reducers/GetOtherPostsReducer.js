@@ -44,6 +44,29 @@ const GetOtherPostsReducer = (state = initialState, action) => {
         }
       }
       break
+
+    case 'LocalLike':
+      let data1 = item.data.find((elm) => elm.id == action.data.post_id)
+      console.log(item.data, 'other')
+      if (data1) {
+        console.log(data1.id, 'other')
+        let iid = item.data.findIndex((elm) => elm.id == action.data.post_id)
+        console.log(iid, 'iid')
+        let indx = item.data[iid]?.like_auth_user.findIndex((elm) => elm.user_id == action.id)
+        if (indx == -1) {
+          if (item.data[iid]) {
+            item.data[iid].like_count = item.data[iid]?.like_count + 1
+            item.data[iid].like_auth_user.push({ user_id: action.id })
+          }
+        }
+        else {
+          if (item.data[iid]) {
+            item.data[iid].like_count = item.data[iid]?.like_count - 1
+            item.data[iid].like_auth_user.splice(iid, 1)
+          }
+        }
+      }
+      break
     default:
       break;
   }

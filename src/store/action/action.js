@@ -912,9 +912,7 @@ export const GetOtherPostsAction = (data, token, page) => {
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    if (page == 1 || !page) {
-      dispatch(StartOtherPostsAction());
-    }
+    if (page == 1 || !page) { dispatch(StartOtherPostsAction()) }
     fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
       method: 'POST',
       headers: myHeaders,
@@ -986,7 +984,8 @@ export const GetLentsActionRec = (token, page) => {
   };
 };
 
-export const LikePostAction = (data, token) => {
+export const LikePostAction = (data, token, id) => {
+
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -997,6 +996,7 @@ export const LikePostAction = (data, token) => {
     redirect: 'follow',
   };
   return dispatch => {
+    dispatch(LocalLike(data, id))
     dispatch(StartLikePost());
     fetch(`${Api}/post_like`, requestOptions)
       .then(response => response.json())
@@ -1012,6 +1012,14 @@ export const LikePostAction = (data, token) => {
       });
   };
 };
+
+export const LocalLike = (data, id) => {
+  return {
+    type: 'LocalLike',
+    data,
+    id
+  }
+}
 
 export const AddBlackListAction = (data, token) => {
   var myHeaders = new Headers();
