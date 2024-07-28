@@ -135,6 +135,7 @@ import {
   SuccessGetSinglPage,
   SuccessGetSinglPost,
   SuccessGetUserData,
+  SuccessLikePost,
   SuccessLogin,
   SuccessLogout,
   SuccessNewMessageAction,
@@ -146,6 +147,7 @@ import {
   SuccessValidForgotPassowrd,
   SucessGetFollowersAction,
 } from './successAction';
+import { ClearCreatPost } from './clearAction';
 
 export const Api = 'https://chambaonline.pro/api';
 
@@ -866,6 +868,8 @@ export const CreatPostAction = (data, token) => {
         if (r.status) {
           dispatch(GetLentsAction(token));
           dispatch(SuccessCreatePost(r));
+          dispatch(getUserInfoAction(token))
+
         } else {
 
           dispatch(ErrorCreatePost(error));
@@ -998,7 +1002,7 @@ export const LikePostAction = (data, token) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(SuccessCreatePost(r));
+          dispatch(SuccessLikePost(r));
         } else {
           dispatch(ErrorLikePost(error));
         }

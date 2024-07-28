@@ -1,22 +1,38 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { Comment, Heart, ViewSvg } from "../../assets/svg/TabBarSvg";
-import { NotLineSvg } from "../../assets/svg/Svgs";
-import { Styles } from "../../styles/Styles";
+import { Comment, Heart, ViewSvg } from "../assets/svg/TabBarSvg";
+import { NotLineSvg } from "../assets/svg/Svgs";
+import { Styles } from "../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { GetPostLikeAction, LikePostAction } from "../../store/action/action";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { GetPostLikeAction, LikePostAction } from "../store/action/action";
 import { useNavigation } from "@react-navigation/native";
+import { LikeList } from "./LikeList";
+import { ViewComponent } from "./post/components/ViewComponent";
 
 export const PostBody = ({
   commentCount,
   view,
   liked,
   id,
-  handlePresentModalPressLike,
-  setLikedCount,
-  likedCount,
-  handlePresentModalPressView
+  like,
 }) => {
+  const [likedCount, setLikedCount] = useState(+like)
+  const likeRef = useRef(null)
+  const CloseLike = () => {
+    likeRef.current?.close()
+  }
+
+
+  const [currentId, setCurrentId] = useState(null)
+  const snapPointsLike = useMemo(() => ['85%'], []);
+  const ViewRef = useRef(null)
+  const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
+  const handlePresentModalPressView = useCallback(() => {
+    setCurrentId(id)
+    ViewRef.current?.present()
+  }, []);
+
+
 
   const navigation = useNavigation()
   const [isLiked, setIsLiked] = useState(liked)
@@ -34,6 +50,7 @@ export const PostBody = ({
     dispatch(LikePostAction({
       'post_id': id
     },
+
       staticdata.token
     ))
   }
@@ -71,5 +88,20 @@ export const PostBody = ({
         {view}
       </Text>
     </TouchableOpacity>
+    <LikeList
+      close={() => CloseLike()}
+      token={staticdata.token}
+      id={id}
+      ref={likeRef}
+      snapPoints={snapPointsLike}
+    />
+    <ViewComponent
+      close={() => CloseView()}
+      currentId={currentId}
+      token={staticdata.token}
+      id={id}
+      ref={ViewRef}
+      snapPoints={snapPointsLike}
+    />
   </View>
 }

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction, getUserInfoAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
+import { ClearCreatPost } from '../../store/action/clearAction';
 
 
 export const HomeScreen = () => {

@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
-import { CreatPostAction, GetCatalogAction, GetLentsAction, getUserInfoAction } from '../../store/action/action';
+import { CreatPostAction, GetCatalogAction } from '../../store/action/action';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -21,6 +21,7 @@ import { t } from '../../components/lang';
 import { captureRef } from 'react-native-view-shot';
 import { MultySelect } from '../../components/multySelect';
 import { ScrollView } from 'react-native-gesture-handler';
+import { ClearCreatPost } from '../../store/action/clearAction';
 
 
 export const AddImg = ({ navigation }) => {
@@ -86,12 +87,15 @@ export const AddImg = ({ navigation }) => {
       setError('')
       Camera()
       setErrorCatalog(false)
+      dispatch(ClearCreatPost())
     });
     return unsubscribe;
   }, [navigation]);
 
   useEffect(() => {
+    console.log(createPost.status, 'createPost.status')
     if (createPost.status) {
+      dispatch(ClearCreatPost())
       setUri([])
       setDescription('')
       navigation.navigate('Home');
@@ -129,9 +133,7 @@ export const AddImg = ({ navigation }) => {
     form.append('category_id', selectedCatalog)
     musicFromVidio && form.append('music_name', musicFromVidio)
     if (selectedCatalog != '') {
-      dispatch(GetLentsAction(staticData.token));
       dispatch(CreatPostAction(form, staticData.token));
-      dispatch(getUserInfoAction(staticData.token))
     }
     else {
       setErrorCatalog(true)

@@ -51,7 +51,7 @@ export const clearGetFollowersAction = () => {
 
 export const ClearCreatPost = () => {
     return {
-        type: 'clearCreatPost'
+        type: 'ClearCreatPost'
     }
 }
 

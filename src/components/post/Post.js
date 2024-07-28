@@ -9,12 +9,10 @@ import { Shadow } from 'react-native-shadow-2';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
-import { LikeList } from '../LikeList';
 import { Slider } from '../Slider';
 import { PostHeader } from './postHeader';
-import { PostBody } from './postBody';
+import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
-import { ViewComponent } from './components/ViewComponent';
 
 export const Post = ({
   description,
@@ -33,23 +31,8 @@ export const Post = ({
   music,
   isLiked
 }) => {
-  const [likedCount, setLikedCount] = useState(+like)
-  const staticdata = useSelector(st => st.static);
+
   const user = useSelector((st) => st.userData)
-
-  const likeRef = useRef(null)
-  const ViewRef = useRef(null)
-
-  const snapPointsLike = useMemo(() => ['85%'], []);
-  const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
-  const handlePresentModalPressView = useCallback(() => {
-    setCurrentId(id)
-    ViewRef.current?.present()
-  }, []);
-
-  const [openView, setOpenView] = useState(false)
-  const [currentId, setCurrentId] = useState(null)
-
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
   const [showMore, setShowMore] = useState(false)
@@ -57,12 +40,6 @@ export const Post = ({
 
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
 
-  const CloseLike = () => {
-    likeRef.current?.close()
-  }
-  const CloseView = () => {
-    ViewRef.current?.close()
-  }
 
   useEffect(() => {
     CutText()
@@ -127,28 +104,10 @@ export const Post = ({
             commentCount={commentCount}
             liked={isLiked >= 0}
             view={view}
-            likedCount={likedCount}
-            setLikedCount={(e) => setLikedCount(e)}
+            like={like}
             id={id}
-            handlePresentModalPressLike={() => handlePresentModalPressLike()}
-            handlePresentModalPressView={() => handlePresentModalPressView()}
           />
         </View>
-        <LikeList
-          close={() => CloseLike()}
-          token={staticdata.token}
-          id={id}
-          ref={likeRef}
-          snapPoints={snapPointsLike}
-        />
-        <ViewComponent
-          close={() => CloseView()}
-          currentId={currentId}
-          token={staticdata.token}
-          id={id}
-          ref={ViewRef}
-          snapPoints={snapPointsLike}
-        />
       </Shadow>
     </TouchableOpacity>
   );

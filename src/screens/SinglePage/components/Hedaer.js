@@ -17,7 +17,6 @@ export const Header = ({ data, navigation, my }) => {
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['13%'], [],);
 
-  console.log(data.user.id)
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShowSave(false);

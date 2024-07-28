@@ -17,13 +17,14 @@ export const MyBootomModal = forwardRef(({ navigation, id, description }, ref) =
     ref.current?.close();
     setTimeout(() => {
       dispatch(DelatePostAction({ post_id: id }, staticdata.token))
+      navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
     }, 10)
   }
 
   useEffect(() => {
+    console.log(delatePhoto.status)
     if (delatePhoto.status) {
       dispatch(ClearDelatePhost())
-      navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
     }
   }, [delatePhoto.status])
 

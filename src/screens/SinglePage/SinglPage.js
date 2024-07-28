@@ -2,14 +2,14 @@ import {
   Text,
   SafeAreaView,
 } from 'react-native';
-import { useSelector } from 'react-redux';
 import { Styles } from '../../styles/Styles';
-import { LikeAndComment } from './components/likeAndCimment';
 import { Slider } from './components/slider';
 import { Header } from './components/Hedaer';
+import { PostBody } from '../../components/postBody';
+import { useSelector } from 'react-redux';
 
 export const SinglPageScreen = ({ route, navigation }) => {
-
+  const user = useSelector((st) => st.userData)
   let data = route.params.data
   const my = route.params.my
   return (
@@ -19,7 +19,13 @@ export const SinglPageScreen = ({ route, navigation }) => {
         {data.description}
       </Text>}
       <Slider single image={data?.photo[0].photo} photo={data?.photo} />
-      <LikeAndComment data={data} />
+      <PostBody
+        commentCount={data.comment_count}
+        liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
+        view={data.view_count}
+        like={data.like_count}
+        id={data.id}
+      />
     </SafeAreaView>
   );
 };
