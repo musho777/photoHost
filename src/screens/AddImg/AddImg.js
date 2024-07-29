@@ -93,7 +93,6 @@ export const AddImg = ({ navigation }) => {
   }, [navigation]);
 
   useEffect(() => {
-    console.log(createPost.status, 'createPost.status')
     if (createPost.status) {
       dispatch(ClearCreatPost())
       setUri([])

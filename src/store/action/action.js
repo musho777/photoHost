@@ -1036,7 +1036,6 @@ export const AddBlackListAction = (data, token) => {
     fetch(`${Api}/add_user_in_black_list`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessAddBlackList(r));
         } else {

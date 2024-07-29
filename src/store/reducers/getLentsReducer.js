@@ -51,10 +51,8 @@ const GetLentsReducer = (state = initialState, action) => {
 
     case 'LocalLike':
       let data = item.data.find((elm) => elm.id == action.data.post_id)
-      console.log(data, item.data.find((elm) => elm.id == action.data.post_id), 'lent')
       if (data) {
         let iid = item.data.findIndex((elm) => elm.id == action.data.post_id)
-        console.log(iid)
         let indx = item.data[iid]?.like_auth_user.findIndex((elm) => elm.user_id == action.id)
         if (indx == -1) {
           if (item.data[iid]) {

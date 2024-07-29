@@ -71,10 +71,6 @@ export const Slider = ({ photo, single, music, image }) => {
     // activePhoto(index);
   };
 
-  const togglePlayPause = () => {
-    setPaused(!paused);
-    setPlayerState(paused ? PLAYER_STATES.PLAYING : PLAYER_STATES.PAUSED);
-  };
 
   return (
     <View>
@@ -98,7 +94,9 @@ export const Slider = ({ photo, single, music, image }) => {
             aspectRatio = single ? 0.65 : 0.70;
           }
           return (
-            <TouchableOpacity onPress={() => setOpenSlider(true)} style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => setOpenSlider(true)} style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ? (
                 <Image
                   style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 }]}

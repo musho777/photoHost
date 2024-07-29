@@ -22,7 +22,6 @@ export const MyBootomModal = forwardRef(({ navigation, id, description }, ref) =
   }
 
   useEffect(() => {
-    console.log(delatePhoto.status)
     if (delatePhoto.status) {
       dispatch(ClearDelatePhost())
     }

@@ -38,7 +38,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
 
 
   return <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-    <TouchableOpacity onPress={() => setChangeAvatar(!changeAvatar)}>
+    <TouchableOpacity activeOpacity={1} onPress={() => setChangeAvatar(!changeAvatar)}>
       <Image
         style={styles.img}
         source={{

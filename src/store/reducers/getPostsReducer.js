@@ -41,7 +41,6 @@ const GetPostsReducer = (state = initialState, action) => {
 
     case 'AddCommentLocal':
       let inde = item.data.findIndex(elm => elm.id === action.data.id)
-      console.log(inde, 'ind', item.data[inde].comment_count)
       item.data[inde].comment_count = +item.data[inde].comment_count + 1
       break
 

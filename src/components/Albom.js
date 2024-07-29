@@ -26,7 +26,7 @@ export const Albom = ({ data, seved }) => {
         {data.map((elm, i) => {
           if (seved) {
             return (
-              <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', {
+              <TouchableOpacity activeOpacity={1} key={i} onPress={() => navigation.navigate('SinglPageScreen', {
                 data: elm.post
               })}>
                 {!elm.post?.photo[0]?.photo.includes('.mov') ?
@@ -59,7 +59,7 @@ export const Albom = ({ data, seved }) => {
           else {
             return (
               !elm.photo[0]?.photo?.includes('.mp4') ?
-                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', {
+                <TouchableOpacity activeOpacity={1} key={i} onPress={() => navigation.navigate('SinglPageScreen', {
                   data: elm,
                   my: true
                 })}>
@@ -70,7 +70,7 @@ export const Albom = ({ data, seved }) => {
                     }}
                   />
                 </TouchableOpacity> :
-                <TouchableOpacity key={i} onPress={() => navigation.navigate('SinglPageScreen', {
+                <TouchableOpacity activeOpacity={1} key={i} onPress={() => navigation.navigate('SinglPageScreen', {
                   data: elm,
                   my: true
                 })}>

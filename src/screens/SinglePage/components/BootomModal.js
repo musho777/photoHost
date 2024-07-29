@@ -10,7 +10,6 @@ export const BootomModalComponent = forwardRef(({ setShowSave, setSaveType, navi
   const staticdata = useSelector(st => st.static);
 
   const addToBlackList = () => {
-    // console.log(user.data.id)
     ref.current?.close();
     dispatch(AddBlackListAction({ user_id: otherUserId }, staticdata.token));
     navigation.navigate('SearchScreen')
