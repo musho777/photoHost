@@ -113,7 +113,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             onPress={onPress}
             onLongPress={onLongPress}
           >
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               {tabIcon}
             </View>
           </TouchableWithoutFeedback>

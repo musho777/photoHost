@@ -83,10 +83,6 @@ export const LoginScreen = ({ navigation }) => {
     }
   }
 
-  const changeLanguage = async (type) => {
-    await AsyncStorage.setItem('lang', type)
-    dispatch(ChnageLanguage(type))
-  }
   return (
     <View style={[Styles.authScreen, { marginTop: 80 }]}>
       <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>{t(mainData.lang).Login}</Text>
@@ -132,15 +128,6 @@ export const LoginScreen = ({ navigation }) => {
         title={t(mainData.lang).Login}
         loading={loginData.loading}
       />
-      {/* <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: "center", gap: 20 }}>
-
-        <TouchableOpacity onPress={() => changeLanguage('ru')} style={styles.languageButton}>
-          <Text>ru</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => changeLanguage('en')} style={styles.languageButton}>
-          <Text>en</Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };

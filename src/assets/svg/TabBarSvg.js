@@ -40,50 +40,50 @@ export const HomeSvg = ({ focused }) => {
 // #FFC24B
 export const SearchSvg = ({ focused }) => {
   if (!focused) {
+
     return <Svg
-      width={24}
-      height={24}
-      viewBox="0 0 62 60"
+      width={25}
+      height={21}
+      viewBox="0 0 23 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <Path
-        d="M46.907 25.556c0 12.813-10.02 23.055-22.203 23.055C12.52 48.611 2.5 38.37 2.5 25.556 2.5 12.742 12.52 2.5 24.704 2.5c12.183 0 22.203 10.242 22.203 23.056z"
+        d="M16.689 8.944a7.744 7.744 0 11-15.489 0 7.744 7.744 0 0115.489 0z"
         stroke="#000"
-        strokeWidth={7}
+        strokeWidth={2.4}
       />
       <Path
-        transform="scale(.98291 1.0168) rotate(45 -28.59 69.021)"
         stroke="#000"
-        strokeWidth={7}
-        d="M0 -2.5L26.2715 -2.5"
+        strokeWidth={2.4}
+        d="M15.2374 13.5404L21.8485 20.1515"
       />
     </Svg>
+
   }
-  // FFC24B
+  // 
   else {
     return <Svg
-      width={24}
-      height={24}
-      viewBox="0 0 62 60"
+      width={25}
+      height={23}
+      viewBox="0 0 25 23"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-
     >
       <Path
-        d="M46.907 25.556c0 12.813-10.02 23.055-22.203 23.055C12.52 48.611 2.5 38.37 2.5 25.556 2.5 12.742 12.52 2.5 24.704 2.5c12.183 0 22.203 10.242 22.203 23.056z"
+        d="M18.343 9.796a8.546 8.546 0 11-17.093 0 8.546 8.546 0 0117.093 0z"
         stroke="#FFC24B"
-        strokeWidth={7}
+        strokeWidth={2.3}
       />
       <Path
-        transform="scale(.98291 1.0168) rotate(45 -28.59 69.021)"
         stroke="#FFC24B"
-        strokeWidth={7}
-        d="M0 -2.5L26.2715 -2.5"
+        strokeWidth={2.3}
+        d="M16.6431 14.8754L23.8839 22.1161"
       />
     </Svg>
   }
 }
+// FFC24B
 export const AddSvg = () => {
   return <Svg
     width={24}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, GetLentsAction, getUserInfoAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { ClearCreatPost } from '../../store/action/clearAction';
 
@@ -30,6 +30,7 @@ export const HomeScreen = () => {
     if (staticdata.token) {
       dispatch(GetLentsAction(staticdata.token));
       dispatch(getUserInfoAction(staticdata.token))
+      dispatch(GetMyChatRoom({ search: "" }, staticdata.token, 1))
     }
   }, [staticdata.token]);
 

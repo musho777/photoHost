@@ -1,5 +1,5 @@
 const initialState = {
-  lang: 'en'
+  lang: 'ru'
 };
 
 const MainReducer = (state = initialState, action) => {

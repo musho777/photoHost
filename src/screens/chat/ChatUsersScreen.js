@@ -22,9 +22,6 @@ export const ChatUsersScreen = () => {
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
 
-  useEffect(() => {
-    dispatch(GetMyChatRoom({ search: search }, staticdata.token, page));
-  }, [staticdata.token]);
 
 
   useEffect(() => {
