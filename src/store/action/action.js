@@ -1544,7 +1544,11 @@ export const ChnageLanguage = (lang) => {
   }
 }
 
-export const GetCatalogAction = (token) => {
+export const GetCatalogAction = (token, limit, page) => {
+  let api = `${Api}/category`
+  if (limit) {
+    api = `${Api}/category?limit=${limit}&page=${page}`
+  }
   return (dispatch) => {
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -1555,19 +1559,21 @@ export const GetCatalogAction = (token) => {
       redirect: 'follow',
     };
     dispatch(StartGetCatalog())
-    fetch(`${Api}/category`, requestOptions)
-      .then(response => response.json())
-      .then(r => {
-        if (r.status) {
-          dispatch(SuccessGetCatalog(r.data))
-        }
-        else {
+    if (limit) {
+      fetch(api, requestOptions)
+        .then(response => response.json())
+        .then(r => {
+          if (r.status) {
+            dispatch(SuccessGetCatalog(r.data))
+          }
+          else {
+            dispatch(ErrorGetCatalog())
+          }
+        })
+        .catch(error => {
           dispatch(ErrorGetCatalog())
-        }
-      })
-      .catch(error => {
-        dispatch(ErrorGetCatalog())
-      });
+        });
+    }
   };
 }
 

@@ -81,17 +81,6 @@ export const Albom = ({ data, seved }) => {
                       resizeMode="cover"
                       source={require('../assets/img/default-video-image.webp')} />
                   }
-                  {/* <Video
-                    // controls={true}
-                    // repeat={true}
-                    paused={true}
-                    onLoad={(data) => {
-                      setLoading(false);
-                    }}
-                    style={styles.img}
-                    source={{ uri: `https://chambaonline.pro/uploads/${elm.photo[0]?.photo}` }}
-                    resizeMode={'cover'}
-                  /> */}
                 </TouchableOpacity>
             );
           }

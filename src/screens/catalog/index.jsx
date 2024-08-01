@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Styles } from "../../styles/Styles"
 import { CatalogItem } from "../../components/catalogItem"
 import { useEffect, useState } from "react"
@@ -14,6 +14,7 @@ export const Catalog = () => {
   const navigation = useNavigation()
   const staticdata = useSelector(st => st.static);
   const [loading, setLiading] = useState(false)
+  const [page, setPage] = useState(1)
 
 
   const changeCatalog = useSelector((st) => st.changeCatalog)
@@ -29,8 +30,6 @@ export const Catalog = () => {
     }
     setSelected(item)
   }
-
-
 
   useEffect(() => {
     let item = [...selected]
@@ -72,35 +71,52 @@ export const Catalog = () => {
 
   useEffect(() => {
     if (staticdata.token) {
-      dispatch(GetCatalogAction(staticdata.token))
+      dispatch(GetCatalogAction(staticdata.token, 8, page))
     }
-  }, [staticdata.token])
+  }, [staticdata.token, page])
 
-  return <ScrollView showsVerticalScrollIndicator={false}>
+  const renderItem = ({ item, index }) => {
+    return <View style={[{ justifyContent: 'center', alignItems: 'center', width: '100%' }, getCatalog.data?.length - 1 == index && { marginBottom: 50 }]}>
+      <CatalogItem selected={selected.findIndex(temp => temp == item.id) > -1} onSelect={(e) => SelectCatalog(e)} data={item} key={index} />
+    </View >
+  }
+  const handleLoadMore = (event) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const contentHeight = event.nativeEvent.contentSize.height;
+    const layoutHeight = event.nativeEvent.layoutMeasurement.height;
+    if (offsetY + layoutHeight >= contentHeight - 200) {
+      if (getCatalog.nextPage)
+        setPage(page + 1);
+    }
+  };
+
+  return <View>
     <View style={style.page}>
       <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
-      <View style={style.CatalogWrapper}>
-        {
-          getCatalog.data.map((elm, i) => {
-            return <CatalogItem selected={selected.findIndex(item => item == elm.id) > -1} onSelect={(e) => SelectCatalog(e)} data={elm} key={i} />
-          })
-        }
-      </View>
-      <View style={{ marginBottom: 20, alignItems: 'flex-end' }}>
-        <TouchableOpacity
-          onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
-            { backgroundColor: '#8f8f8f' }
-          ]}>
-          {loading ?
-            <View style={{ height: 8 }}>
-              <ActivityIndicator color={'white'} size='small' />
-            </View> :
-            <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
-          }
-        </TouchableOpacity>
-      </View>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        style={{ height: '84%' }}
+        data={getCatalog.data}
+        renderItem={renderItem}
+        onScroll={handleLoadMore}
+      >
+      </FlatList>
     </View>
-  </ScrollView>
+    <View style={style.buttonWrapper}>
+      <TouchableOpacity
+        onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
+          { backgroundColor: '#8f8f8f' }
+        ]}>
+        {loading ?
+          <View style={{ height: 8 }}>
+            <ActivityIndicator color={'white'} size='small' />
+          </View> :
+          <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
+        }
+      </TouchableOpacity>
+    </View>
+  </View>
+
 }
 
 const style = StyleSheet.create({
@@ -108,12 +124,8 @@ const style = StyleSheet.create({
     paddingHorizontal: 35,
     paddingTop: 30,
     gap: 20,
-  },
-  CatalogWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    rowGap: 10,
+    height: '100%',
+    position: 'relative'
   },
   button: {
     backgroundColor: 'rgb(240, 240, 240)',
@@ -122,5 +134,15 @@ const style = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     borderRadius: 5,
+  },
+  buttonWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    alignItems: 'flex-end',
+    right: 0,
+    backgroundColor: 'white',
+    height: 55,
+    justifyContent: 'center'
   }
 })

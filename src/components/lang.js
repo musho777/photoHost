@@ -1,6 +1,4 @@
 export const t = (lang = 'ru') => {
-    console.log(lang)
-
     if (lang == 'en') {
         return {
             Editprofile: "Edit profile",
