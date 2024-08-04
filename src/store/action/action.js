@@ -1559,21 +1559,19 @@ export const GetCatalogAction = (token, limit, page) => {
       redirect: 'follow',
     };
     dispatch(StartGetCatalog())
-    if (limit) {
-      fetch(api, requestOptions)
-        .then(response => response.json())
-        .then(r => {
-          if (r.status) {
-            dispatch(SuccessGetCatalog(r.data))
-          }
-          else {
-            dispatch(ErrorGetCatalog())
-          }
-        })
-        .catch(error => {
+    fetch(api, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetCatalog(r.data))
+        }
+        else {
           dispatch(ErrorGetCatalog())
-        });
-    }
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetCatalog())
+      });
   };
 }
 
