@@ -63,7 +63,6 @@ export const ViewComponent = forwardRef(
 
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: 50, alignItems: 'center' }}>
           <TouchableOpacity onPress={() => setStatistic(false)}>
-
             <ViewListSwg active={!statistic} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setStatistic(true)}>

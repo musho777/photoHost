@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { View, FlatList, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
@@ -18,6 +18,7 @@ export const HomeScreen = () => {
   const flatListRef = useRef(null);
   const [showModal, setShowModal] = useState(false)
   const userData = useSelector((st) => st.userData)
+  const [viewableItems, setViewableItems] = useState([])
   useEffect(() => {
     setTimeout(() => {
       if (userData.data.show_category_pop_up == 1) {
@@ -69,12 +70,21 @@ export const HomeScreen = () => {
     const index = Math.floor(offsetY / itemHeight);
     setIndex(index);
   };
+  const onViewableItemsChanged = useCallback(({ viewableItems, changed }) => {
+    setViewableItems(changed)
+  }, []);
+
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50, // trigger when at least 50% of the item is visible
+  };
+
 
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (
         <View key={index} style={{ marginTop: 5 }}>
           <Post
+            viewableItems={viewableItems}
             userInfo={item.user}
             description={item.description}
             like={item.like_count}
@@ -96,6 +106,7 @@ export const HomeScreen = () => {
     }
   };
 
+
   return (
     <View>
       {showModal && <ModalComponent
@@ -107,6 +118,7 @@ export const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: 'rgb(237,238,240)' }}
         ref={flatListRef}
+        onViewableItemsChanged={onViewableItemsChanged}
         onScroll={({ nativeEvent }) => {
           handleScroll({ nativeEvent })
           if (isCloseToBottom(nativeEvent)) {
@@ -126,6 +138,7 @@ export const HomeScreen = () => {
             }}
           />
         }
+        viewabilityConfig={viewabilityConfig}
         data={data}
         enableEmptySections={true}
         renderItem={renderItem}

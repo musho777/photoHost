@@ -14,7 +14,7 @@ import { VidioModal } from './post/VidionModal';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, music, image }) => {
+export const Slider = ({ photo, single, music, viewableItems }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [resizeVidio, setResizeVidio] = useState(false)
@@ -27,6 +27,7 @@ export const Slider = ({ photo, single, music, image }) => {
     setActive(index);
   };
 
+
   return (
     <View>
       <FlatList
@@ -36,6 +37,7 @@ export const Slider = ({ photo, single, music, image }) => {
         decelerationRate="fast"
         data={photo}
         onMomentumScrollEnd={handleMomentumScrollEnd}
+
         renderItem={({ item, index }) => {
           let aspectRatio = 1;
           if (item.width > item.height) {
@@ -62,7 +64,8 @@ export const Slider = ({ photo, single, music, image }) => {
                 <VidioComponent setResizeVidio={() => {
                   setSelectedVidio(item)
                   setResizeVidio(true)
-                }} music={music} item={item} />
+
+                }} viewableItems={viewableItems} music={music} item={item} />
               }
 
             </TouchableOpacity>

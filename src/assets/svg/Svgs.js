@@ -1054,6 +1054,25 @@ export const AddSecSvg = () => {
   </Svg>
 }
 
+export const AddSecSvg1 = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="50px"
+    height="50px"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="white"
+  >
+    <G strokeWidth={1.5} strokeLinecap="round">
+      <Path
+        d="M14 4.5L12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.985 9.985 0 01-8-3.999M8 2.832A10.017 10.017 0 005 4.86 9.97 9.97 0 002 12c0 .685.069 1.354.2 2"
+        strokeLinejoin="round"
+      />
+      <Path d="M14 8.5h-2.64a.5.5 0 00-.474.342l-.667 2a.5.5 0 00.475.658H12a2 2 0 110 4h-2" />
+    </G>
+  </Svg>
+}
+
 export const Pause = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"

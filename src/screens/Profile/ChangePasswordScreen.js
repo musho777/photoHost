@@ -119,5 +119,3 @@ export const ChangePasswordScreen = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});

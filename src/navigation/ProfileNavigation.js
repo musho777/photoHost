@@ -75,8 +75,6 @@ export const ProfileNavigation = () => {
   return (
     <Drawer.Navigator
 
-
-
       initialRouteName={'ProfileScreen'} drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
 

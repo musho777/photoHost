@@ -18,6 +18,7 @@ export const Post = ({
   description,
   userInfo,
   like,
+  viewableItems,
   commentCount,
   view,
   photo,
@@ -99,7 +100,7 @@ export const Post = ({
               }
             </Text>
           </View>}
-          <Slider music={music} description={description} photo={photo} />
+          <Slider viewableItems={viewableItems} music={music} description={description} photo={photo} />
           <PostBody
             commentCount={commentCount}
             liked={isLiked >= 0}

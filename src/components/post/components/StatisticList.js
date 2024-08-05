@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
@@ -7,6 +7,7 @@ import { BarChart } from "react-native-gifted-charts";
 import { Styles } from '../../../styles/Styles';
 import { useSelector } from 'react-redux';
 import { t } from '../../lang';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 export const StatisticList = () => {
@@ -129,43 +130,50 @@ export const StatisticList = () => {
 
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
-
-      <View>
-        <Text style={[Styles.darkMedium14, { textAlign: 'center' }]}>{t(mainData.lang).Women}</Text>
-        <BarChart
-          barWidth={24}
-          barBorderRadius={4}
-          frontColor="#177AD5"
-          data={womenData}
-          yAxisThickness={0}
-          xAxisThickness={0}
-        />
+      <View style={{ gap: 20, paddingHorizontal: 20, marginBottom: 50 }}>
+        <View>
+          <Text style={Styles.darkMedium14}>общее кол-во просмотров - 5.</Text>
+        </View>
+        <View>
+          <Text style={Styles.darkMedium14}>Среднее время просмотра - 8 секунд.</Text>
+        </View>
+        <View>
+          <Text style={Styles.darkMedium14}>Активность просмотров</Text>
+        </View>
+        <View>
+          <Text style={Styles.darkMedium14}>
+            Статистина, идет и обновляется каждый час с того момента как выложил фото или ви,
+          </Text>
+        </View>
       </View>
-
-      <View style={{ marginTop: 40 }}>
-        <Text style={[Styles.darkMedium14, { textAlign: 'center' }]}>{t(mainData.lang).Men}</Text>
-        <BarChart
-          barWidth={24}
-          barBorderRadius={4}
-          frontColor="#177AD5"
-          data={menData}
-          yAxisThickness={0}
-          xAxisThickness={0}
-        />
-      </View>
-
-      <View style={{ marginTop: 40 }}>
-        <Text style={[Styles.darkMedium14, { textAlign: 'center' }]}>{t(mainData.lang).Unspecifiedgender}</Text>
-        <BarChart
-          barWidth={24}
-          barBorderRadius={4}
-          frontColor="#177AD5"
-          data={unknown}
-          yAxisThickness={0}
-          xAxisThickness={0}
-        />
-      </View>
-
+      <ScrollView showsHorizontalScrollIndicator horizontal style={{ minHeight: 100 }}>
+        <View style={{ gap: 15 }}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={[{ width: 100, textAlign: 'center' }, Styles.balihaiSemiBold14]}>Дата</Text>
+            <Text style={[{ width: 80, textAlign: 'center' }, Styles.balihaiSemiBold14]}>Время</Text>
+            <Text style={[{ width: 50, textAlign: 'center' }, Styles.balihaiSemiBold14]}>Пол</Text>
+            <Text style={[{ width: 80, textAlign: 'center' }, Styles.balihaiSemiBold14]}>Воз.</Text>
+            <Text style={[{ width: 150, textAlign: 'center' }, Styles.balihaiSemiBold14]}>кол-во просмотров</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ width: 100, justifyContent: 'center', alignItems: 'center', gap: 5 }}>
+              <Text style={[{ textAlign: 'center' }, Styles.balihaiSemiBold14]}>05.08.24 г.</Text>
+            </View>
+            <View style={{ width: 80, justifyContent: 'center', alignItems: 'center', gap: 5 }}>
+              <Text style={[{ textAlign: 'center' }, Styles.balihaiSemiBold14]}>01-02</Text>
+            </View>
+            <View style={{ width: 50, justifyContent: 'center', alignItems: 'center', gap: 5 }}>
+              <Text style={[{ textAlign: 'center' }, Styles.balihaiSemiBold14]}>M</Text>
+            </View>
+            <View style={{ width: 80, justifyContent: 'center', alignItems: 'center', gap: 5 }}>
+              <Text style={[{ textAlign: 'center' }, Styles.balihaiSemiBold14]}>20-25</Text>
+            </View>
+            <View style={{ width: 150, justifyContent: 'center', alignItems: 'center', gap: 5 }}>
+              <Text style={[{ textAlign: 'center' }, Styles.balihaiSemiBold14]}>5</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </BottomSheetScrollView>
   );
 }

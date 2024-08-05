@@ -3,124 +3,145 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AddSvg, ChatSvg, HomeSvg, SearchSvg, UserSvg } from '../assets/svg/TabBarSvg';
 import { ChatNavigation } from './ChatNavigation';
 import { SearchNavigation } from './SearchNavigation';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { ProfileNavigation } from './ProfileNavigation';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { HomeNavigation } from './HomeNavigation';
-import { Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const user = useSelector((st) => st.userData);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [msgCount, setMsgCount] = useState('');
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   useEffect(() => {
     setMsgCount(user.msgCount);
   }, [user.msgCount]);
 
-  return (
-    <View style={{
-      flexDirection: 'row',
-      height: 32,
-      backgroundColor: '#FFF',
-      borderTopColor: '#FFF',
-    }}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label = options.tabBarLabel !== undefined
-          ? options.tabBarLabel
-          : options.title !== undefined
-            ? options.title
-            : route.name;
+  if (!isKeyboardVisible)
+    return (
+      <View style={{
+        flexDirection: 'row',
+        height: 32,
+        backgroundColor: '#FFF',
+        borderTopColor: '#FFF',
+      }}>
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
+          const label = options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+              ? options.title
+              : route.name;
 
-        const isFocused = state.index === index;
+          const isFocused = state.index === index;
 
-        let tabIcon = null;
+          let tabIcon = null;
 
-        if (label === 'Home') {
-          tabIcon = <HomeSvg focused={isFocused} />;
-        } else if (label === 'SearchNavigation') {
-          tabIcon = <SearchSvg focused={isFocused} />;
-        } else if (label === 'AddImg') {
-          tabIcon = (
-            <View style={{ marginLeft: -2 }}>
-              <AddSvg focused={isFocused} />
-            </View>
-          );
-        } else if (label === 'ChatNavigation') {
-          tabIcon = (
-            <View>
-              {msgCount > 0 && (
-                <View
-                  style={{
-                    position: 'absolute',
-                    right: -7,
-                    top: -10,
-                    backgroundColor: 'red',
-                    borderRadius: 20,
-                    height: 15,
-                    width: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}
-                >
-                  <Text style={{ color: '#FFF', fontSize: 10 }}>{msgCount}</Text>
-                </View>
-              )}
-              <ChatSvg focused={isFocused} />
-            </View>
-          );
-        } else if (label === 'ProfileNavigation') {
-          tabIcon = <UserSvg focused={isFocused} />;
-        }
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            if (route.name == 'ProfileNavigation') {
-              navigation.navigate(route.name, {
-                screen: 'ProfileScreen'
-              });
-            }
-            else {
-
-              navigation.navigate(route.name);
-            }
+          if (label === 'Home') {
+            tabIcon = <HomeSvg focused={isFocused} />;
+          } else if (label === 'SearchNavigation') {
+            tabIcon = <SearchSvg focused={isFocused} />;
+          } else if (label === 'AddImg') {
+            tabIcon = (
+              <View style={{ marginLeft: -2 }}>
+                <AddSvg focused={isFocused} />
+              </View>
+            );
+          } else if (label === 'ChatNavigation') {
+            tabIcon = (
+              <View>
+                {msgCount > 0 && (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      right: -7,
+                      top: -10,
+                      backgroundColor: 'red',
+                      borderRadius: 20,
+                      height: 15,
+                      width: 15,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <Text style={{ color: '#FFF', fontSize: 10 }}>{msgCount}</Text>
+                  </View>
+                )}
+                <ChatSvg focused={isFocused} />
+              </View>
+            );
+          } else if (label === 'ProfileNavigation') {
+            tabIcon = <UserSvg focused={isFocused} />;
           }
-        };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
 
-        return (
-          <TouchableWithoutFeedback
-            key={index}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-          >
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              {tabIcon}
-            </View>
-          </TouchableWithoutFeedback>
-        );
-      })}
-    </View>
-  );
+            if (!isFocused && !event.defaultPrevented) {
+              if (route.name == 'ProfileNavigation') {
+                navigation.navigate(route.name, {
+                  screen: 'ProfileScreen'
+                });
+              }
+              else {
+
+                navigation.navigate(route.name);
+              }
+            }
+          };
+
+          const onLongPress = () => {
+            navigation.emit({
+              type: 'tabLongPress',
+              target: route.key,
+            });
+          };
+
+          return (
+            <TouchableWithoutFeedback
+              key={index}
+              accessibilityRole="button"
+              accessibilityState={isFocused ? { selected: true } : {}}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              testID={options.tabBarTestID}
+              onPress={onPress}
+              onLongPress={onLongPress}
+            >
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                {tabIcon}
+              </View>
+            </TouchableWithoutFeedback>
+          );
+        })}
+      </View>
+    );
 };
 
 export const TabNavigation = () => {

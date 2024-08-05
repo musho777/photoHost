@@ -1,4 +1,4 @@
-import { Text, useWindowDimensions, View } from "react-native"
+import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import { t } from '../../../components/lang';
 import { useSelector } from "react-redux";
 import { Styles } from "../../../styles/Styles";
@@ -34,14 +34,7 @@ export const AlbomAndInfo = () => {
           height: 2,
           borderRadius: 10,
         }}
-        style={{
-          backgroundColor: '#FFF',
-          elevation: 0,
-          borderBottomWidth: 1,
-          borderColor: AppColors.Solitude_Color,
-          borderRadius: 10,
-          marginHorizontal: 15
-        }}
+        style={styles.TabBar}
         renderLabel={a => (
           <Text
             style={[
@@ -66,3 +59,14 @@ export const AlbomAndInfo = () => {
     />
   </View>;
 }
+
+const styles = StyleSheet.create({
+  TabBar: {
+    backgroundColor: '#FFF',
+    elevation: 0,
+    borderBottomWidth: 1,
+    borderColor: AppColors.Solitude_Color,
+    borderRadius: 10,
+    marginHorizontal: 15
+  }
+});

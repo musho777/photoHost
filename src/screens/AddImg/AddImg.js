@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
@@ -22,7 +23,9 @@ import { captureRef } from 'react-native-view-shot';
 import { MultySelect } from '../../components/multySelect';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
+import { opacity } from 'react-native-reanimated';
 
+const windowWidth = Dimensions.get('window').width;
 
 export const AddImg = ({ navigation }) => {
   const mainData = useSelector(st => st.mainData);
@@ -35,6 +38,7 @@ export const AddImg = ({ navigation }) => {
   const [selectedCatalog, setSelectedCatalog] = useState('')
   const getCatalog = useSelector((st) => st.getCatalog)
   const videoRef = useRef(null);
+  const videoRefCut = useRef(null);
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
   const videoRef3 = useRef(null);
@@ -55,7 +59,7 @@ export const AddImg = ({ navigation }) => {
     try {
       const uri = await captureRef(ref, {
         format: 'jpg',
-        quality: 0.8,
+        quality: 1,
       });
       let item = [...screenshotUri]
       item.push(uri)
@@ -167,7 +171,7 @@ export const AddImg = ({ navigation }) => {
             }
             setUri(item);
             setTimeout(() => {
-              captureScreenshot(ref[uri.length])
+              captureScreenshot(videoRefCut)
             }, 2000)
           }
           else {
@@ -234,12 +238,27 @@ export const AddImg = ({ navigation }) => {
                     style={styles.img}
                     source={{ uri: elm.uri }}
                   /> :
-                  <Video
-                    source={{ uri: elm.uri }}
-                    style={styles.img}
-                    resizeMode="cover"
-                    ref={videoRef}
-                  />
+                  <View>
+                    {/* <Video
+                      source={{ uri: elm.uri }}
+                      style={styles.img}
+                      resizeMode="cover"
+                      ref={videoRef}
+                      paused={true}
+                    /> */}
+                    <Image
+                      ref={ref[i]}
+                      style={styles.img}
+                      source={{ uri: elm.uri }}
+                    />
+
+                    <Video
+                      source={{ uri: elm.uri }}
+                      style={[styles.img, { opacity: 0 }]}
+                      resizeMode="cover"
+                      ref={videoRefCut}
+                    />
+                  </View>
                 }
                 <TouchableOpacity
                   onPress={() => delateFoto(i)}
@@ -252,7 +271,7 @@ export const AddImg = ({ navigation }) => {
         </View>
         {error && <Text style={{ padding: 1, color: 'red' }}>{error}</Text>}
         <View style={{ marginVertical: 15, width: 233, flexDirection: 'row', alignItems: 'center' }}>
-          {uri.length < 10 &&
+          {uri.length < 4 &&
             <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
           }
           <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 4, marginTop: 3, textAlign: 'right' }]}>(не более 1-ой минуты)</Text>

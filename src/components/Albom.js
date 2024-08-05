@@ -1,36 +1,27 @@
 import { useNavigation } from "@react-navigation/native"
-
-import { View, Dimensions, Image, StyleSheet, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Dimensions, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Styles } from '../styles/Styles';
 import { t } from './lang';
 import { useSelector } from "react-redux";
-import Video from 'react-native-video';
-import { useState } from "react";
+import { StartSvg } from "../assets/svg/Svgs";
+
 const windowWidth = Dimensions.get('window').width;
 
 export const Albom = ({ data, seved }) => {
   const navigation = useNavigation()
   const mainData = useSelector(st => st.mainData);
-  const [isloading, setLoading] = useState(true)
   const user = useSelector((st) => st.userData)
   return (
     <TouchableOpacity activeOpacity={1} style={{ marginTop: 20, width: '100%' }}>
       <View
-        style={[
-          {
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            gap: 14,
-          },
-        ]}>
+        style={styles.albom}>
         {data.map((elm, i) => {
           if (seved) {
             return (
               <TouchableOpacity activeOpacity={1} key={i} onPress={() => navigation.navigate('SinglPageScreen', {
                 data: elm.post
               })}>
-                {!elm.post?.photo[0]?.photo.includes('.mov') ?
-
+                {!elm.photo[0].video ?
                   <Image
                     style={[styles.img, {
                       width: windowWidth / 2 - 25,
@@ -41,15 +32,14 @@ export const Albom = ({ data, seved }) => {
                     }}
                   /> :
                   <View>
-                    {
-                      isloading && <ActivityIndicator size="large" color="#FFC24B" />
-                    }
-                    <Video
-                      paused={true}
-                      onLoad={(data) => setLoading(false)}
+                    <View style={styles.playerIcone}>
+                      <StartSvg />
+                    </View>
+                    <Image
                       style={styles.img}
-                      source={{ uri: `https://chambaonline.pro/uploads/${elm.post?.photo[0]?.photo}` }}
-                      resizeMode={'cover'}
+                      source={{
+                        uri: `https://chambaonline.pro/uploads/${elm?.photo[0]?.photo}`,
+                      }}
                     />
                   </View>
                 }
@@ -58,7 +48,7 @@ export const Albom = ({ data, seved }) => {
           }
           else {
             return (
-              !elm.photo[0]?.photo?.includes('.mp4') ?
+              !elm.photo[0].video ?
                 <TouchableOpacity activeOpacity={1} key={i} onPress={() => navigation.navigate('SinglPageScreen', {
                   data: elm,
                   my: true
@@ -74,13 +64,15 @@ export const Albom = ({ data, seved }) => {
                   data: elm,
                   my: true
                 })}>
-                  {
-                    <Image
-                      style={[styles.img]}
-                      // style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1, position: 'absolute' }]}
-                      resizeMode="cover"
-                      source={require('../assets/img/default-video-image.webp')} />
-                  }
+                  <View style={styles.playerIcone}>
+                    <StartSvg />
+                  </View>
+                  <Image
+                    style={styles.img}
+                    source={{
+                      uri: `https://chambaonline.pro/uploads/${elm?.photo[0]?.photo}`,
+                    }}
+                  />
                 </TouchableOpacity>
             );
           }
@@ -104,4 +96,19 @@ const styles = StyleSheet.create({
     height: (windowWidth / 2 - 25),
     borderRadius: 15,
   },
+  playerIcone: {
+    position: 'absolute',
+    zIndex: 999,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
+  },
+  albom: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    gap: 14,
+  }
 });
