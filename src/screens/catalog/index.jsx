@@ -16,7 +16,6 @@ export const Catalog = () => {
   const [loading, setLiading] = useState(false)
   const [page, setPage] = useState(1)
 
-
   const changeCatalog = useSelector((st) => st.changeCatalog)
 
   const SelectCatalog = (data) => {
@@ -38,7 +37,7 @@ export const Catalog = () => {
         item.push(elm.id)
     })
     setSelected(item)
-  }, [userData])
+  }, [])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
@@ -51,7 +50,6 @@ export const Catalog = () => {
   useEffect(() => {
     if (changeCatalog.status) {
       setLiading(false)
-      navigation.navigate('TabNavigation', { screen: 'Home' })
       dispatch(ClearChangeCatalog())
     }
     else {
@@ -67,18 +65,29 @@ export const Catalog = () => {
     }))
     dispatch(getUserInfoAction(staticdata.token))
     dispatch(ClearChangeCatalog())
+    navigation.navigate('TabNavigation', { screen: 'Home' })
   }
 
   useEffect(() => {
     if (staticdata.token) {
-      dispatch(GetCatalogAction(staticdata.token, 8, page))
+      dispatch(GetCatalogAction(staticdata.token, 14, page))
     }
   }, [staticdata.token, page])
 
   const renderItem = ({ item, index }) => {
-    return <View style={[{ justifyContent: 'center', alignItems: 'center', width: '100%' }, getCatalog.data?.length - 1 == index && { marginBottom: 50 }]}>
-      <CatalogItem selected={selected.findIndex(temp => temp == item.id) > -1} onSelect={(e) => SelectCatalog(e)} data={item} key={index} />
-    </View >
+    const isEven = index % 2 === 0;
+    const nextItem = getCatalog.data[index + 1];
+    if (isEven)
+      return <View style={style.row}>
+        <View style={[{ justifyContent: 'center', alignItems: 'center', width: '48%' }, getCatalog.data?.length - 1 == index && { marginBottom: 50 }]}>
+          <CatalogItem selected={selected.findIndex(temp => temp == item.id) > -1} onSelect={(e) => SelectCatalog(e)} data={item} key={index} />
+        </View >
+        {nextItem && (
+          <View style={[{ justifyContent: 'center', alignItems: 'center', width: '48%' }, getCatalog.data?.length - 1 == index && { marginBottom: 50 }]}>
+            <CatalogItem selected={selected.findIndex(temp => temp == nextItem.id) > -1} onSelect={(e) => SelectCatalog(e)} data={nextItem} key={index} />
+          </View >
+        )}
+      </View>
   }
   const handleLoadMore = (event) => {
     const offsetY = event.nativeEvent.contentOffset.y;
@@ -120,6 +129,11 @@ export const Catalog = () => {
 }
 
 const style = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
   page: {
     paddingHorizontal: 35,
     paddingTop: 30,

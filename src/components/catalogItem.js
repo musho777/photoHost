@@ -14,13 +14,15 @@ export const CatalogItem = ({ data, onSelect, selected }) => {
         <SelectedSvg />
       }
     </View>
-    <View style={{ width: 140, height: 140 }}>
-      <Image width={140} height={150}
+    <View style={{ width: 60, height: 60 }}>
+      <Image width={60} height={60}
         style={{ objectFit: 'contain' }}
         source={{ uri: `https://chambaonline.pro/uploads/${data.photo}` }}
       />
     </View>
-    <Text style={[Styles.darkMedium14, { textAlign: 'center', marginTop: 5 }]}>{data.name}</Text>
+    <View style={{ height: 43 }}>
+      <Text style={[Styles.darkMedium14, { textAlign: 'center', marginTop: 5 }]}>{data.name}</Text>
+    </View>
   </TouchableOpacity>
 }
 
@@ -35,10 +37,10 @@ const style = StyleSheet.create({
   CatalogItem: {
     backgroundColor: 'white',
     // backgroundColor: 'rgb(245, 245, 245)',
-    width: '80%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 200,
+    height: 130,
     borderRadius: 10,
     gap: 7,
     paddingHorizontal: 5,
