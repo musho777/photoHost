@@ -4,7 +4,7 @@ import { Styles } from "../../../styles/Styles"
 export const Subscribe = ({ user }) => {
 
   return <TouchableOpacity
-    activeOpacity={!user.tochable && 1}
+    activeOpacity={1}
     style={styles.alignItemsCenter}
     onPress={() => user.tochable && user?.func()}
   >

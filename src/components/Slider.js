@@ -19,6 +19,7 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
   const [openSlider, setOpenSlider] = useState(false);
   const [resizeVidio, setResizeVidio] = useState(false)
   const [selectedVidio, setSelectedVidio] = useState(false)
+  const [scrollEnabled, setScrollEnabled] = useState(false)
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
       Math.floor(event.nativeEvent.contentOffset.x) /
@@ -37,7 +38,7 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
         decelerationRate="fast"
         data={photo}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-
+        scrollEnabled={!scrollEnabled}
         renderItem={({ item, index }) => {
           let aspectRatio = 1;
           if (item.width > item.height) {
@@ -53,7 +54,7 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
           return (
             <TouchableOpacity
               activeOpacity={1}
-              onPress={() => setOpenSlider(true)}
+              onPress={() => !item.video && setOpenSlider(true)}
               style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ?
                 <Image
@@ -64,8 +65,10 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
                 <VidioComponent setResizeVidio={() => {
                   setSelectedVidio(item)
                   setResizeVidio(true)
+                }}
 
-                }} viewableItems={viewableItems} music={music} item={item} />
+                  setScrollEnabled={(e) => setScrollEnabled(e)}
+                  viewableItems={viewableItems} music={music} item={item} />
               }
 
             </TouchableOpacity>

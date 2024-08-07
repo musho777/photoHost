@@ -11,7 +11,7 @@ export const VidioModal = ({ modalVisible, close, music, item }) => {
     >
       <View style={styles.centeredView}>
         <TouchableOpacity activeOpacity={1} style={styles.centeredView2} onPress={() => close()} />
-        <View onClick={(e) => { e.stopPropagation(); }} style={styles.modalView}>
+        <View style={styles.modalView}>
           <VidioComponent setResizeVidio={() => close()} big music={music} item={item} />
         </View>
       </View>
