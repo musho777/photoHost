@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     width: '100%',
     borderColor: AppColors.Solitude_Color,
     height: 47,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: AppColors.BaliHai_Color,
   },
   clandatLable: {
     position: 'absolute',

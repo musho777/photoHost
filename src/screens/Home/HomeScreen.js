@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
-import { ClearCreatPost } from '../../store/action/clearAction';
+import { PostLoading } from '../../components/post/Loading';
 
 
 export const HomeScreen = () => {
@@ -19,6 +19,15 @@ export const HomeScreen = () => {
   const [showModal, setShowModal] = useState(false)
   const userData = useSelector((st) => st.userData)
   const [viewableItems, setViewableItems] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!getLents.loading) {
+      setLoading(false)
+    }
+  }, [getLents.loading])
+
+
   useEffect(() => {
     setTimeout(() => {
       if (userData.data.show_category_pop_up == 1) {
@@ -79,6 +88,8 @@ export const HomeScreen = () => {
   };
 
 
+  const loadingData = ['', '']
+
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (
@@ -107,6 +118,22 @@ export const HomeScreen = () => {
   };
 
 
+  if (loading) {
+    console.log("---")
+    return (
+      <View style={{ gap: 5, backgroundColor: 'rgb(237,238,240)', paddingVertical: 5 }}>
+        {showModal && <ModalComponent
+          showModal={showModal}
+          close={() => setShowModal(false)}
+          token={staticdata.token}
+        />}
+        {loadingData.map((elm, i) => {
+          return <PostLoading key={i} />
+        })}
+      </View>
+    );
+  }
+
   return (
     <View>
       {showModal && <ModalComponent
@@ -134,7 +161,8 @@ export const HomeScreen = () => {
           <RefreshControl
             refreshing={getLents?.loading}
             onRefresh={() => {
-              dispatch(GetLentsAction(staticdata.token));
+              if (!loading)
+                dispatch(GetLentsAction(staticdata.token));
             }}
           />
         }

@@ -2,7 +2,8 @@ const initialState = {
     error: '',
     status: false,
     data: [],
-    loading: false
+    loading: false,
+    nextPage: null,
 };
 const GetCityesReducer = (state = initialState, action) => {
     let item = { ...state };
@@ -10,13 +11,15 @@ const GetCityesReducer = (state = initialState, action) => {
         case 'StartGetCiyts':
             item.status = false
             item.error = ''
-            item.data = []
             item.loading = true
             break
         case 'SuccessGetCitys':
             item.status = true
             item.error = ''
-            item.data = action.data
+            action.data.data.map((elm, i) => {
+                item.data.push(elm)
+            })
+            item.nextPage = action.data.next_page_url
             item.loading = false
             break
         case 'ErrorGetCitys':

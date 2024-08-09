@@ -1,7 +1,7 @@
 const initialState = {
   error: '',
   status: false,
-  loading: false,
+  loading: true,
   data: [],
   message: '',
   nextPage: '',
