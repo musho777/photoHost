@@ -1,72 +1,76 @@
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import { t } from '../../../components/lang';
+import React, { useState } from "react";
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, useWindowDimensions } from "react-native";
 import { useSelector } from "react-redux";
 import { Styles } from "../../../styles/Styles";
-import { useState } from "react";
-import { Albom } from "../../../components/Albom";
+import { Albom } from "../../../components/Albom/Albom";
 import { InfoBlock } from "../InfoBlock";
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { AppColors } from "../../../styles/AppColors";
-
-
+import { t } from "../../../components/lang";
 
 export const AlbomAndInfo = () => {
   const mainData = useSelector(st => st.mainData);
   const getPosts = useSelector(st => st.getPosts);
   const user = useSelector(st => st.userData);
+  const [selectedTab, setSelectedTab] = useState('first');
 
-  const renderScene = SceneMap({
-    first: () => <Albom data={getPosts.data} />,
-    second: () => <InfoBlock user={user.data} />,
-  });
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: 'first', title: t(mainData.lang).Album },
-    { key: 'second', title: t(mainData.lang).Information },
-  ]);
-  const layout = useWindowDimensions();
-  const renderTabBar = props => {
-    return (
-      <TabBar
-        {...props}
-        indicatorStyle={{
-          backgroundColor: AppColors.Charcoal_Color,
-          height: 2,
-          borderRadius: 10,
-        }}
-        style={styles.TabBar}
-        renderLabel={a => (
-          <Text
-            style={[
-              a.focused ? Styles.darkRegular14 : Styles.heatherRegular14,
-            ]}>
-            {a.route.title}
-          </Text>
-        )}
-        labelStyle={Styles.blueSemiBold14}
-        pressOpacity={0}
-        pressColor="white"
-      />
-    );
+  const renderContent = () => {
+    if (selectedTab === 'first') {
+      return <Albom loading={getPosts.loading} my={true} data={getPosts.data} />;
+    }
+    if (selectedTab === 'second') {
+      return <InfoBlock user={user.data} />;
+    }
   };
-  return <View style={{ flex: 1 }}>
-    <TabView
-      renderTabBar={renderTabBar}
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
-    />
-  </View>;
-}
+
+  return (
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tab, selectedTab === 'first' && styles.activeTab]}
+          onPress={() => setSelectedTab('first')}
+        >
+          <Text style={Styles.balihaiRegular15}>{t(mainData.lang).Album}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tab, selectedTab === 'second' && styles.activeTab]}
+          onPress={() => setSelectedTab('second')}
+        >
+          <Text style={Styles.balihaiRegular15}>{t(mainData.lang).Information}</Text>
+        </TouchableOpacity>
+      </View>
+      <ScrollView style={styles.scrollView} contentContainerStyle={{ flexGrow: 1 }}>
+        {renderContent()}
+      </ScrollView>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  TabBar: {
-    backgroundColor: '#FFF',
-    elevation: 0,
+  tabContainer: {
+    flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: AppColors.Solitude_Color,
-    borderRadius: 10,
-    marginHorizontal: 15
-  }
+    backgroundColor: '#FFF',
+    elevation: 0,
+    marginHorizontal: 15,
+    marginBottom: 10,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  activeTab: {
+    borderBottomWidth: 2,
+    borderBottomColor: AppColors.Charcoal_Color,
+  },
+  tabText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: AppColors.Charcoal_Color,
+  },
+  scrollView: {
+    flex: 1,
+  },
 });

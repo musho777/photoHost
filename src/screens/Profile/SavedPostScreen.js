@@ -5,7 +5,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Albom } from '../../components/Albom';
+import { Albom } from '../../components/Albom/Albom';
 import { GetMyBooksAction, } from '../../store/action/action';
 
 const windowWidth = Dimensions.get('window').width;
@@ -19,10 +19,10 @@ export const SavedPostScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-      dispatch(GetMyBooksAction(staticdata.token, 1));
+      dispatch(GetMyBooksAction(staticdata.token, page));
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, page]);
 
   const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
     const paddingToBottom = 20;

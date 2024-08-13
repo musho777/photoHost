@@ -26,7 +26,6 @@ export const VidioComponent = ({ music, setScrollEnabled, item, big, setResizeVi
   };
 
   const onSeek = (value) => {
-    console.log(value, 'value')
     setHold(true)
     setCurrentTime(value);
     videoRef.current.seek(value);

@@ -77,7 +77,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
       </View>
     </View>
     {user.data.description && (
-      <Text style={Styles.darkRegular14}>{user.description}</Text>
+      <Text style={[Styles.darkRegular14, { textAlign: 'center' }]}>{user.description}</Text>
     )}
     <SliderModal
       modalVisible={openSlider} photo={[{ photo: user.avatar }]} close={() => setOpenSlider(false)} />

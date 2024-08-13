@@ -116,10 +116,7 @@ export const HomeScreen = () => {
       );
     }
   };
-
-
   if (loading) {
-    console.log("---")
     return (
       <View style={{ gap: 5, backgroundColor: 'rgb(237,238,240)', paddingVertical: 5 }}>
         {showModal && <ModalComponent
