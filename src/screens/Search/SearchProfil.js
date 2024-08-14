@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -22,22 +22,11 @@ export const SearchProfil = ({ navigation, route }) => {
   const getPosts = useSelector(st => st.getOtherPosts);
   const [page, setPage] = useState(1)
   const dispatch = useDispatch();
-  const swiperRef = useRef(null);
   const mainData = useSelector(st => st.mainData);
   const [isFollow, setIsFollow] = useState(false)
   const [followersCount, setFollowersCount] = useState(0)
 
   const user = useSelector(st => st.userData);
-  const [activeCard, setActiveCard] = useState(0)
-  const [data, setData] = useState(['albom', ''])
-  const handelChange = () => {
-    setActiveCard(1);
-    swiperRef.current.goToLastIndex();
-  };
-  const handelChangeFirst = () => {
-    setActiveCard(0);
-    swiperRef.current.goToFirstIndex();
-  };
 
   useEffect(() => {
     let index = singlPage.data?.follow_status_sender?.findIndex((elm) => elm.sender_id == user.data.id)
@@ -48,7 +37,6 @@ export const SearchProfil = ({ navigation, route }) => {
   useEffect(() => {
     dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
     dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
-    setActiveCard(0)
   }, []);
 
 
