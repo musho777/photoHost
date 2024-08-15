@@ -59,7 +59,7 @@ export const ProfileScreen = ({ navigation }) => {
             setChangeAvatar={(e) => setChangeAvatar(e)}
           />
         }
-        <ProfilInfo loading={getPosts.loading} postCount={getPosts.data.length} user={user} />
+        <ProfilInfo id={user?.allData?.data.id} loading={getPosts.loading} postCount={getPosts.data.length} user={user} />
         <AlbomAndInfo />
       </ScrollView>
     </TouchableOpacity>

@@ -21,7 +21,7 @@ export const Followings = ({ id }) => {
   const loadingData = ['', '', '', '', '', '']
   useEffect(() => {
     dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
-  }, [data])
+  }, [data, id])
 
   const renderItem = ({ item }) => {
     return (
@@ -70,7 +70,8 @@ export const Followings = ({ id }) => {
           data={getFollowers?.data}
           enableEmptySections={true}
           ListEmptyComponent={() => (
-            (!getFollowers?.loading && getFollowers.data?.length == 0) && <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscribers}</Text>
+            !getFollowers?.loading &&
+            <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscribers}</Text>
           )}
           renderItem={renderItem}
           onEndReached={() => {

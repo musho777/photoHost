@@ -19,10 +19,9 @@ export const Followers = ({ id }) => {
   const [page, setPage] = useState('');
   const dispatch = useDispatch();
   const loadingData = ['', '', '', '', '', '', '', '']
-
   useEffect(() => {
     dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
-  }, [data]);
+  }, [data, id]);
 
   const addClick = id => {
     let remove = false

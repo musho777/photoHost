@@ -8,12 +8,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { AppColors } from '../../../styles/AppColors';
+import { VidioComponent } from '../../../components/post/VidioComponent';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo }) => {
+export const Slider = ({ photo, music_name }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
+  const [scroleEneble, setScrollEnabled] = useState(true)
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -30,10 +32,12 @@ export const Slider = ({ photo }) => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
+        scrollEnabled={scroleEneble}
         data={photo}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         renderItem={({ item, index }) => {
           let aspectRatio = 0.65
+          console.log(item)
           return (
             <TouchableOpacity activeOpacity={1} style={styles.img}>
               {!item.video ? (
@@ -43,7 +47,16 @@ export const Slider = ({ photo }) => {
                   resizeMode="cover"
                 />
               ) : (
-                <View></View>
+
+                <VidioComponent setResizeVidio={() => {
+                  setSelectedVidio(item)
+                  setResizeVidio(true)
+                }}
+                  setScrollEnabled={(e) => setScrollEnabled(false)}
+                  music={music_name}
+                  item={item}
+                />
+
               )}
             </TouchableOpacity>
           );

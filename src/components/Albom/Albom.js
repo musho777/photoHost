@@ -29,7 +29,7 @@ export const Albom = ({ data, seved, my = false, loading }) => {
             <ImageComponent
               video={elm.photo ? elm.photo[0].video : elm.post.photo[0].video}
               photo={elm.photo ? elm?.photo[0]?.photo : elm?.post.photo[0]?.photo}
-              data={elm}
+              data={seved ? elm.post : elm}
               my={my}
               key={i}
             />

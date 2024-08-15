@@ -71,7 +71,7 @@ export const Header = ({ data, navigation, my }) => {
 
 const styles = StyleSheet.create({
   header: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     marginTop: 20,
     marginBottom: 10
   },

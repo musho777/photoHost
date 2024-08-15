@@ -29,14 +29,13 @@ export const SinglPageScreen = ({ route, navigation }) => {
       };
     }, [])
   );
-
   return (
     <SafeAreaView>
       <Header data={data} navigation={navigation} my={my} />
-      {data.description && <Text style={[Styles.darkSemiBold12, { marginTop: 5, marginBottom: 10, paddingHorizontal: 20 }]}>
+      {data.description && <Text style={[Styles.darkSemiBold12, { marginTop: 5, marginBottom: 10, paddingHorizontal: 10 }]}>
         {data.description}
       </Text>}
-      <Slider single image={data?.photo[0].photo} photo={data?.photo} />
+      <Slider music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       <PostBody
         commentCount={data.comment_count}
         liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}

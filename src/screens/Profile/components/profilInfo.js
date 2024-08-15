@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 import { Subscribe } from "./subscribe";
 
 
-export const ProfilInfo = ({ user, postCount, loading }) => {
+export const ProfilInfo = ({ id, user, postCount, loading }) => {
+
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()
   const data = [
@@ -19,13 +20,13 @@ export const ProfilInfo = ({ user, postCount, loading }) => {
       title: t(mainData.lang).Subscribers,
       count: !loading && user.followersCount,
       tochable: true,
-      func: () => navigation.navigate('FollowersScreen', { index: 0 })
+      func: () => navigation.navigate('FollowersScreen', { index: 0, id })
     },
     {
       title: t(mainData.lang).Subscriptions,
       count: !loading && user.followerCount,
       tochable: true,
-      func: () => navigation.navigate('FollowersScreen', { index: 1 })
+      func: () => navigation.navigate('FollowersScreen', { index: 1, id })
     },
 
   ]

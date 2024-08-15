@@ -1763,7 +1763,6 @@ export const Getstatistic1 = (id, token) => {
     fetch(`${Api}/get_one_statistics?post_id=${id}`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessGetstatistic1(r.data))
         }
@@ -1777,8 +1776,6 @@ export const Getstatistic1 = (id, token) => {
   };
 }
 
-
-// export const token = await AsyncStorage.getItem('token')
 
 export const EndViewPost = (data, token) => {
   var myHeaders = new Headers();
@@ -1794,10 +1791,8 @@ export const EndViewPost = (data, token) => {
     fetch(`${Api}/end_view_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
       })
       .catch(error => {
-        console.log(error)
       });
   };
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, useWindowDimensions, Text } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { AppColors } from '../../styles/AppColors';
@@ -12,6 +12,9 @@ export const FollowersScreen = ({ route }) => {
     second: () => <Followers id={route.params.id} />,
   });
   const [index, setIndex] = useState(route.params.index);
+  useEffect(() => {
+    setIndex(route.params.index)
+  }, [route.params.index])
   const routes = [
     { key: 'first', title: 'Подписчики' },
     { key: 'second', title: 'Подписки' }
