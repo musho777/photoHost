@@ -7,7 +7,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { GetPostLikeAction, LikePostAction } from "../store/action/action";
 import { useNavigation } from "@react-navigation/native";
 import { LikeList } from "./LikeList";
-import { ViewComponent } from "./post/components/ViewComponent";
+import { ViewComponent } from "./statistic/ViewComponent";
 
 export const PostBody = ({
   commentCount,

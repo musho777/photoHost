@@ -7,11 +7,11 @@ import {
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { Styles } from '../../../styles/Styles';
-import { StatisticSvg, ViewListSwg } from '../../../assets/svg/Svgs';
+import { Styles } from '../../styles/Styles';
+import { StatisticSvg, ViewListSwg } from '../../assets/svg/Svgs';
 import { ViewList } from './ViewList';
 import { StatisticList } from './StatisticList';
-import { GetPostViewAction } from '../../../store/action/action';
+import { GetPostViewAction } from '../../store/action/action';
 
 export const ViewComponent = forwardRef(
   ({ snapPoints, id, token, close, currentId }, ref) => {
@@ -59,7 +59,7 @@ export const ViewComponent = forwardRef(
             token={token}
             close={close}
           /> :
-          <StatisticList />}
+          <StatisticList token={token} id={id} />}
 
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: 50, alignItems: 'center' }}>
           <TouchableOpacity onPress={() => setStatistic(false)}>

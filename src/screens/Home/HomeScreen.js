@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { View, FlatList, RefreshControl } from 'react-native';
+import { View, FlatList, RefreshControl, AppState } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const HomeScreen = () => {
@@ -20,6 +22,9 @@ export const HomeScreen = () => {
   const userData = useSelector((st) => st.userData)
   const [viewableItems, setViewableItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [currentPost, setCurrentPost] = useState({})
+
+
 
   useEffect(() => {
     if (!getLents.loading) {
@@ -48,7 +53,7 @@ export const HomeScreen = () => {
     if (index != -1) {
       dispatch(AddPostViewCount({ post_id: getLents?.data[index]?.id }, staticdata.token))
     }
-  }, [index]);
+  }, [index, getLents?.data]);
 
   useEffect(() => {
     setData(getLents.data)
@@ -78,15 +83,40 @@ export const HomeScreen = () => {
     const itemHeight = 400;
     const index = Math.floor(offsetY / itemHeight);
     setIndex(index);
+    setCurrentPost(data[index])
   };
+
+
+  const End = async (id) => {
+    let token = await AsyncStorage.getItem('token')
+    if (id) {
+      dispatch(EndViewPost({ post_id: id }, token))
+    }
+    else {
+      dispatch(EndViewPost({ post_id: currentPost?.id }, token))
+    }
+  }
+
   const onViewableItemsChanged = useCallback(({ viewableItems, changed }) => {
+    if (changed[0].index) {
+      End(viewableItems[0].item.id)
+    }
     setViewableItems(changed)
   }, []);
 
   const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50, // trigger when at least 50% of the item is visible
+    itemVisiblePercentThreshold: 50,
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        if (data[index]?.id) {
+          End(data[index]?.id)
+        }
+      };
+    }, [data])
+  );
 
   const loadingData = ['', '']
 

@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@gapur/react-native-accordion": "^1.0.7",
     "@gorhom/bottom-sheet": "^4.6.3",
     "@nyashanziramasanga/react-native-horizontal-scroll-menu": "^1.0.11",
     "@pusher/pusher-websocket-react-native": "^1.3.0",
@@ -33,6 +34,7 @@
     "npm": "^10.8.2",
     "react": "18.2.0",
     "react-native": "0.72.2",
+    "react-native-accordion": "^1.0.1",
     "react-native-awesome-slider": "^2.5.3",
     "react-native-device-info": "^10.8.0",
     "react-native-emoji-selector": "^0.2.0",
@@ -68,6 +70,7 @@
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper-flatlist": "^3.2.3",
     "react-native-tab-view": "^3.5.2",
+    "react-native-table-component": "^1.2.2",
     "react-native-vector-icons": "^10.1.0",
     "react-native-video": "^5.2.1",
     "react-native-video-controls": "^2.8.1",

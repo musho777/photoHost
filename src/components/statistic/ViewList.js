@@ -5,14 +5,16 @@ import {
 } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Styles } from '../../../styles/Styles';
-import { GetPostViewAction } from '../../../store/action/action';
+import { Styles } from '../../styles/Styles';
+import { GetPostViewAction } from '../../store/action/action';
+import { ViewSkeleton } from './compeont/ViewSkeleton';
 
 export const ViewList = ({ id, token, close, navigation }) => {
 
   const user = useSelector(st => st.userData);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
+  const loadingData = ['', '', '', '', '', '']
   const getPostView = useSelector(st => st.getPostView);
   const isCloseToBottom = ({
     layoutMeasurement,
@@ -25,6 +27,16 @@ export const ViewList = ({ id, token, close, navigation }) => {
       contentSize.height - paddingToBottom
     );
   };
+
+
+
+  if (getPostView.loading) {
+    return <View style={{ flex: 1 }}>
+      {loadingData.map((elm, i) => {
+        return <ViewSkeleton key={i} />
+      })}
+    </View>
+  }
   return (
     <BottomSheetScrollView
       onScroll={({ nativeEvent }) => {
@@ -69,10 +81,6 @@ export const ViewList = ({ id, token, close, navigation }) => {
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-  },
   img: {
     width: 45,
     height: 45,

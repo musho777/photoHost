@@ -28,7 +28,6 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
     setActive(index);
   };
 
-
   return (
     <View>
       <FlatList

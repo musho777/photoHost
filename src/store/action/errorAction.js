@@ -317,3 +317,15 @@ export const ErrorGetPostView = (error) => {
         error
     }
 }
+
+export const ErrorGetstatistic1 = () => {
+    return {
+        type: "ErrorGetstatistic1",
+    }
+}
+
+export const ErrorGetStatisitc2 = () => {
+    return {
+        type: "ErrorGetStatisitc2",
+    }
+}

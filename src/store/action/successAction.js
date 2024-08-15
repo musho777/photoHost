@@ -327,3 +327,17 @@ export const SuccessGetPostView = (data) => {
         data
     }
 }
+
+export const SuccessGetstatistic1 = (data) => {
+    return {
+        type: 'SuccessGetstatistic1',
+        data
+    }
+}
+
+export const SuccessGetStatisitc2 = (data) => {
+    return {
+        type: 'SuccessGetStatisitc2',
+        data
+    }
+}

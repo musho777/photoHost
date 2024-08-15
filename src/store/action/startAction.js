@@ -278,3 +278,15 @@ export const StartGetPostView = () => {
         type: 'StartGetPostView'
     }
 }
+
+export const StartGetstatistic1 = () => {
+    return {
+        type: 'StartGetstatistic1',
+    }
+}
+
+export const StartGetStatisitc2 = () => {
+    return {
+        type: 'StartGetStatisitc2'
+    }
+}

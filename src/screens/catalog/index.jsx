@@ -1,10 +1,11 @@
-import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Styles } from "../../styles/Styles"
 import { CatalogItem } from "../../components/catalogItem"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction, getUserInfoAction } from "../../store/action/action"
 import { useNavigation } from "@react-navigation/native"
+import { Skeleton } from "../../components/Skeleton"
 
 export const Catalog = () => {
   const dispatch = useDispatch()
@@ -15,6 +16,7 @@ export const Catalog = () => {
   const staticdata = useSelector(st => st.static);
   const [loading, setLiading] = useState(false)
   const [page, setPage] = useState(1)
+  const [dataLoading, setDataLoading] = useState(['', '', '', '', '', '', '', '', ''])
 
   const changeCatalog = useSelector((st) => st.changeCatalog)
 
@@ -74,16 +76,17 @@ export const Catalog = () => {
     }
   }, [staticdata.token, page])
 
+
   const renderItem = ({ item, index }) => {
     const isEven = index % 2 === 0;
     const nextItem = getCatalog.data[index + 1];
     if (isEven)
       return <View style={style.row}>
-        <View style={[{ justifyContent: 'center', alignItems: 'center', width: '48%' }, getCatalog.data?.length - 1 == index && { marginBottom: 50 }]}>
+        <View style={[{ justifyContent: 'center', alignItems: 'center', width: '48%' }]}>
           <CatalogItem selected={selected.findIndex(temp => temp == item.id) > -1} onSelect={(e) => SelectCatalog(e)} data={item} key={index} />
         </View >
         {nextItem && (
-          <View style={[{ justifyContent: 'center', alignItems: 'center', width: '48%' }, getCatalog.data?.length - 1 == index && { marginBottom: 50 }]}>
+          <View style={[{ justifyContent: 'center', alignItems: 'center', width: '48%' }]}>
             <CatalogItem selected={selected.findIndex(temp => temp == nextItem.id) > -1} onSelect={(e) => SelectCatalog(e)} data={nextItem} key={index} />
           </View >
         )}
@@ -102,27 +105,38 @@ export const Catalog = () => {
   return <View>
     <View style={style.page}>
       <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        style={{ height: '84%' }}
-        data={getCatalog.data}
-        renderItem={renderItem}
-        onScroll={handleLoadMore}
-      >
-      </FlatList>
-    </View>
-    <View style={style.buttonWrapper}>
-      <TouchableOpacity
-        onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } :
-          { backgroundColor: '#8f8f8f' }
-        ]}>
-        {loading ?
-          <View style={{ height: 8 }}>
-            <ActivityIndicator color={'white'} size='small' />
-          </View> :
-          <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
-        }
-      </TouchableOpacity>
+      {!getCatalog.loading ?
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          style={{ height: '84%' }}
+          data={getCatalog.data}
+          renderItem={renderItem}
+          onScroll={handleLoadMore}
+          ListFooterComponent={
+            <View style={style.buttonWrapper}>
+              <TouchableOpacity
+                onPress={() => SendData()} disabled={(selected.length == 0 || changeCatalog.loading)} style={[style.button, selected.length ? { backgroundColor: '#FFD953' } : { backgroundColor: '#8f8f8f' }]}>
+                {loading ?
+                  <View style={{ height: 8 }}>
+                    <ActivityIndicator color={'white'} size='small' />
+                  </View> :
+                  <Text style={Styles.darkMedium13}>Далее ({selected.length})</Text>
+                }
+              </TouchableOpacity>
+            </View>
+          }
+        /> :
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', }}>
+          {dataLoading.map((elm, i) => {
+            return <Skeleton
+              key={i}
+              width={'48%'}
+              height={130}
+              style={{ borderRadius: 10, marginBottom: 20 }}
+            />
+          })}
+        </View>
+      }
     </View>
   </View>
 
@@ -150,13 +164,15 @@ const style = StyleSheet.create({
     borderRadius: 5,
   },
   buttonWrapper: {
-    position: 'absolute',
-    bottom: 0,
     width: '100%',
     alignItems: 'flex-end',
     right: 0,
     backgroundColor: 'white',
-    height: 55,
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
+  footer: {
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })

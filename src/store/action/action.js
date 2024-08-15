@@ -37,6 +37,8 @@ import {
   ErrorGetSinglePageChat,
   ErrorGetSinglPage,
   ErrorGetSinglPost,
+  ErrorGetStatisitc2,
+  ErrorGetstatistic1,
   ErrorGetUserData,
   ErrorLikePost,
   ErrorLogin,
@@ -97,6 +99,8 @@ import {
   StartGetRelationCatalog,
   StartOtherPostsAction,
   StartGetPostView,
+  StartGetstatistic1,
+  StartGetStatisitc2,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -134,6 +138,8 @@ import {
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
   SuccessGetSinglPost,
+  SuccessGetStatisitc2,
+  SuccessGetstatistic1,
   SuccessGetUserData,
   SuccessLikePost,
   SuccessLogin,
@@ -1741,4 +1747,84 @@ export const AddBookLocal = (data) => {
     type: 'AddBookLocal',
     data
   }
+}
+
+export const Getstatistic1 = (id, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartGetstatistic1());
+    fetch(`${Api}/get_one_statistics?post_id=${id}`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if (r.status) {
+          dispatch(SuccessGetstatistic1(r.data))
+        }
+        else {
+          dispatch(ErrorGetstatistic1('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetstatistic1('server error'))
+      });
+  };
+}
+
+
+// export const token = await AsyncStorage.getItem('token')
+
+export const EndViewPost = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+    redirect: 'follow',
+  };
+  return dispatch => {
+    fetch(`${Api}/end_view_post`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  };
+}
+
+export const GetStatisitc2 = (id, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartGetStatisitc2());
+    fetch(`${Api}/get_three_statistics?post_id=${id}`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetStatisitc2(r.data))
+        }
+        else {
+          dispatch(ErrorGetStatisitc2('server error'))
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetStatisitc2('server error'))
+      });
+  };
 }

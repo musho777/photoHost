@@ -44,6 +44,8 @@ import DelatePhotoReducer from './reducers/delatePhotoReducer';
 import UpdateUserInfoReducer from './reducers/updateUserInfoReducer';
 import GetOtherPostsReducer from './reducers/GetOtherPostsReducer';
 import GetPostViewReducer from './reducers/getPostViewReducer';
+import GetStatistic1Reducer from './reducers/GetStatistic1Reducer';
+import GetStatistic2Reducer from './reducers/getStatistic2Reducer';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -90,6 +92,8 @@ const rootReducer = combineReducers({
     updateUserInfo: UpdateUserInfoReducer,
     getOtherPosts: GetOtherPostsReducer,
     getPostView: GetPostViewReducer,
+    getStatistic1: GetStatistic1Reducer,
+    getStatistic2: GetStatistic2Reducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

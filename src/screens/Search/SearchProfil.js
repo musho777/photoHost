@@ -35,7 +35,7 @@ export const SearchProfil = ({ navigation, route }) => {
   }, [singlPage.data])
 
   useEffect(() => {
-    dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
+    dispatch(GetSinglPageAction({ user_id: route?.params?.id, post_id: route?.params?.post_id }, staticdata.token));
     dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
   }, []);
 
