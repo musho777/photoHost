@@ -6,26 +6,24 @@ import { useSelector } from "react-redux";
 import { Subscribe } from "./subscribe";
 
 
-export const ProfilInfo = ({ user }) => {
-  const getPosts = useSelector(st => st.getPosts);
-
+export const ProfilInfo = ({ user, postCount, loading }) => {
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()
   const data = [
     {
       title: t(mainData.lang).Publications,
-      count: getPosts.data.length,
+      count: !loading && postCount,
       tochable: false
     },
     {
       title: t(mainData.lang).Subscribers,
-      count: user.followersCount,
+      count: !loading && user.followersCount,
       tochable: true,
       func: () => navigation.navigate('FollowersScreen', { index: 0 })
     },
     {
       title: t(mainData.lang).Subscriptions,
-      count: user.followerCount,
+      count: !loading && user.followerCount,
       tochable: true,
       func: () => navigation.navigate('FollowersScreen', { index: 1 })
     },

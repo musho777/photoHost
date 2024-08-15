@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { TouchableOpacity, ScrollView, View } from 'react-native';
+import { TouchableOpacity, ScrollView } from 'react-native';
 import { MenuSvg2 } from '../../assets/svg/Svgs';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction } from '../../store/action/action';
 import { ProfilImage } from './components/profilImage';
 import { ProfilInfo } from './components/profilInfo';
 import { AlbomAndInfo } from './components/albomAndInfo';
-import { Skeleton } from '../../components/Skeleton';
+import { ProfileImageSkeleton } from '../../components/skeleton/profileImageSkeleton';
 
 export const ProfileScreen = ({ navigation }) => {
 
@@ -52,24 +52,14 @@ export const ProfileScreen = ({ navigation }) => {
           <MenuSvg2 />
         </TouchableOpacity>
         {user.loading ?
-          <View style={{ justifyContent: "center", alignItems: 'center', gap: 12, marginBottom: 16.5 }}>
-            <Skeleton
-              width={90}
-              height={90}
-              style={{ borderRadius: 50 }}
-            />
-            <Skeleton
-              width={150}
-              height={14}
-            />
-          </View> :
+          <ProfileImageSkeleton /> :
           <ProfilImage
             user={user}
             changeAvatar={changeAvatar}
             setChangeAvatar={(e) => setChangeAvatar(e)}
           />
         }
-        <ProfilInfo user={user} />
+        <ProfilInfo loading={getPosts.loading} postCount={getPosts.data.length} user={user} />
         <AlbomAndInfo />
       </ScrollView>
     </TouchableOpacity>

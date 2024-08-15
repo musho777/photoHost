@@ -1813,7 +1813,7 @@ export const GetStatisitc2 = (id, token) => {
   };
   return dispatch => {
     dispatch(StartGetStatisitc2());
-    fetch(`${Api}/get_three_statistics?post_id=${id}`, requestOptions)
+    fetch(`${Api}/get_statistics_three_new?post_id=${id}`, requestOptions)
       .then(response => response.json())
       .then(r => {
         if (r.status) {

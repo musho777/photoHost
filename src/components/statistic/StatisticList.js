@@ -16,13 +16,6 @@ export const StatisticList = ({ id, token }) => {
   const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'кол-во просмотров ']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
-  // const tableData = [
-  //   ['01.04.24 г.', '08-09', 'М', ' 15-20', '1500'],
-  //   ['01.04.24 г.', '08-09', 'М', ' 15-20', '1500'],
-  //   ['01.04.24 г.', '08-09', 'М', ' 15-20', '1500'],
-  //   ['01.04.24 г.', '08-09', 'М', ' 15-20', '1500'],
-  //   ['01.04.24 г.', '08-09', 'М', ' 15-20', '1500'],
-  // ]
   const [tableData, setTableDat] = useState([])
   const widthArr = [100, 60, 80, 100, 120]
   const dispatch = useDispatch()
@@ -34,32 +27,23 @@ export const StatisticList = ({ id, token }) => {
     }
   }, [id])
 
-
   useEffect(() => {
     let item = [...tableData]
-    console.log(getStatistic2.data, 'getStatistic2.data')
     if (getStatistic2.data.length) {
-      let result = []
-      getStatistic2?.data?.map((elm, i) => {
-        for (const [ageRange, genders] of Object.entries(elm.stat)) {
-          if (ageRange !== "unknown_gender" && ageRange !== "unknown_year") {
-            for (const [gender, count] of Object.entries(genders)) {
-              result.push([gender, ageRange, String(count)]);
-            }
+      getStatistic2.data.map((elm, i) => {
+        elm.statistics.map((el, i) => {
+          let gender = el.gender
+          if (gender == 'men') {
+            gender = "М"
           }
-        }
-
-        // Handle unknown genders
-        for (const [ageRange, count] of Object.entries(elm.stat["unknown_gender"])) {
-          result.push(["unknown_gender", ageRange, String(count)]);
-        }
-
-        // Handle unknown year
-        for (const [gender, count] of Object.entries(elm.stat["unknown_year"])) {
-          result.push([gender, "unknown_year", String(count)]);
-        }
+          else if (gender == 'women') {
+            gender = "Ж"
+          }
+          item.push([elm.date, elm.hour_range, gender, el.year, el.count])
+        })
       })
     }
+    setTableDat(item)
   }, [getStatistic2.data])
 
   return (
@@ -79,25 +63,23 @@ export const StatisticList = ({ id, token }) => {
         <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="СТАТИСТИКА НОМЕР 2">
           <ScrollView style={{ marginTop: 20 }} horizontal={true}>
             <View>
-              <Table borderStyle={{}}>
+              <Table >
                 <Row data={tableHead} widthArr={widthArr} style={styles.header} textStyle={styles.textStyle} />
               </Table>
               <ScrollView style={styles.dataWrapper}>
-                <Table borderStyle={{}} >
-                  {/* {
+                <Table>
+                  {
                     tableData.map((rowData, index) => (
                       <Row
                         key={index}
                         data={rowData}
                         widthArr={widthArr}
                         style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
-                        textStyle={
-                          [Styles.darkSemiBold12, {
-                            textAlign: 'center',
-                          }]}
+                        textStyle={styles.textStyle}
+
                       />
                     ))
-                  } */}
+                  }
                 </Table>
               </ScrollView>
             </View>

@@ -7,6 +7,7 @@ import { FollowingsBlock } from './FollowingsBlock';
 import { useNavigation } from '@react-navigation/native';
 import { Styles } from '../styles/Styles';
 import { t } from './lang';
+import { FollowerSkeleton } from './skeleton/followerSkeleton';
 
 
 export const Followings = ({ id }) => {
@@ -17,7 +18,7 @@ export const Followings = ({ id }) => {
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState('')
   const dispatch = useDispatch()
-
+  const loadingData = ['', '', '', '', '', '']
   useEffect(() => {
     dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
   }, [data])
@@ -43,9 +44,6 @@ export const Followings = ({ id }) => {
     );
   };
 
-
-
-
   return (
     <View style={{ paddingHorizontal: 15 }}>
       <Input
@@ -55,26 +53,33 @@ export const Followings = ({ id }) => {
         search
         marginTop={20}
       />
-      <FlatList
-        refreshControl={
-          <RefreshControl
-            onRefresh={() => {
-              dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
-            }}
-          />
-        }
-        data={getFollowers?.data}
-        enableEmptySections={true}
-        ListEmptyComponent={() => (
-          (!getFollowers?.loading && getFollowers.data?.length == 0) && <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscribers}</Text>
-        )}
-        renderItem={renderItem}
-        onEndReached={() => {
-          if (getFollowers?.nextPage) {
-            dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
+      {getFollowers.loading ?
+        <View>
+          {loadingData.map((elm, i) => {
+            return <FollowerSkeleton key={i} />
+          })}
+        </View> :
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => {
+                dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
+              }}
+            />
           }
-        }}
-      />
+          data={getFollowers?.data}
+          enableEmptySections={true}
+          ListEmptyComponent={() => (
+            (!getFollowers?.loading && getFollowers.data?.length == 0) && <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscribers}</Text>
+          )}
+          renderItem={renderItem}
+          onEndReached={() => {
+            if (getFollowers?.nextPage) {
+              dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
+            }
+          }}
+        />
+      }
     </View>
   );
 };
