@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { TouchableOpacity, ScrollView } from 'react-native';
+import { TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import { MenuSvg2 } from '../../assets/svg/Svgs';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetPostsAction } from '../../store/action/action';
+import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
 import { ProfilImage } from './components/profilImage';
 import { ProfilInfo } from './components/profilInfo';
 import { AlbomAndInfo } from './components/albomAndInfo';
@@ -36,6 +36,17 @@ export const ProfileScreen = ({ navigation }) => {
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={getPosts?.loading}
+            onRefresh={() => {
+              if (!getPosts.loading)
+                dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1));
+              dispatch(getUserInfoAction(staticdata.token))
+
+            }}
+          />
+        }
         onScroll={({ nativeEvent }) => {
           if (isCloseToBottom(nativeEvent)) {
             if (getPosts.nextPage) {

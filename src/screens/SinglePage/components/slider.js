@@ -41,7 +41,6 @@ export const Slider = ({ photo, music_name }) => {
         onMomentumScrollEnd={handleMomentumScrollEnd}
         renderItem={({ item, index }) => {
           let aspectRatio = 0.65
-          console.log(item)
           return (
             <TouchableOpacity activeOpacity={1} style={styles.img}>
               {!item.video ? (

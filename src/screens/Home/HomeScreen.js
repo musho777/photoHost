@@ -123,7 +123,7 @@ export const HomeScreen = () => {
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (
-        <View key={index} style={{ marginTop: 5 }}>
+        <View key={index} style={[{ marginTop: 5 }, index == data.length - 1 && { marginBottom: 5 }]}>
           <Post
             viewableItems={viewableItems}
             userInfo={item.user}

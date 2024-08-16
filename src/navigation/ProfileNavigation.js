@@ -1,10 +1,6 @@
 import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { BlackListScreen } from '../screens/Profile/BlackListScreen';
-import { ChangeMailFirtScreen } from '../screens/Profile/ChangeMailFirtScreen';
-import { ChangeMailScreen } from '../screens/Profile/ChangeMailScreen';
-import { ChangePasswordScreen } from '../screens/Profile/ChangePasswordScreen';
 import { EditProfilScreen } from '../screens/Profile/EditProfilScreen/EditProfilScreen';
-import { ParametrScreen } from '../screens/Profile/ParametrScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { SavedPostScreen } from '../screens/Profile/SavedPostScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
@@ -12,10 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { t } from '../components/lang';
 import { Catalog } from '../screens/catalog';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Styles } from '../styles/Styles';
 import { ClearLoginAction, LogoutAction } from '../store/action/action';
 import { BackArrow } from '../assets/svg/Svgs';
+import AccauntParametrNavigation from './AccauntParametrNavigation';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
@@ -70,8 +67,6 @@ export const ProfileNavigation = () => {
   const Drawer = createDrawerNavigator();
   const mainData = useSelector(st => st.mainData);
 
-
-  // const Drawer = createDrawerNavigator();
   return (
     <Drawer.Navigator
 
@@ -94,38 +89,9 @@ export const ProfileNavigation = () => {
       />
       <Drawer.Screen
         name="ParametrScreen"
-        component={ParametrScreen}
+        component={AccauntParametrNavigation}
         options={{
-          header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Accountsettings} />
-          }
-        }}
-      />
-      <Drawer.Screen
-        name="ChangePasswordScreen"
-        component={ChangePasswordScreen}
-        options={{
-          header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Changepassword} />
-          }
-        }}
-      />
-      <Drawer.Screen
-        name="ChangeMailScreen"
-        component={ChangeMailScreen}
-        options={{
-          header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Changemail} />
-          }
-        }}
-      />
-      <Drawer.Screen
-        name="ChangeMailFirtScreen"
-        component={ChangeMailFirtScreen}
-        options={{
-          header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Changemail} />
-          }
+          headerShown: false,
         }}
       />
       <Drawer.Screen
@@ -163,24 +129,3 @@ export const ProfileNavigation = () => {
     </Drawer.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  drawerHeader: {
-    padding: 20,
-    backgroundColor: '#f4f4f4',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  customDrawerItem: {
-    backgroundColor: '#eee',
-  },
-});

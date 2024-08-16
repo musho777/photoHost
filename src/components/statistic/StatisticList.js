@@ -45,7 +45,6 @@ export const StatisticList = ({ id, token }) => {
     }
     setTableDat(item)
   }, [getStatistic2.data])
-  console.log(getStatistic1.data)
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
       <Text style={[{ textAlign: 'center' }, Styles.darkMedium16]}>СТАТИСТИКА</Text>
