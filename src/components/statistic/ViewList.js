@@ -57,7 +57,7 @@ export const ViewList = ({ id, token, close, navigation }) => {
                 navigation.navigate('ProfileNavigation');
               }
               else {
-                navigation.navigate('SearchProfil', { id: elm.user.id });
+                navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: elm.user.id } });
               }
             }}
             key={i}

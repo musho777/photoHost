@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { View, FlatList, RefreshControl, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDeletFollowAction, GetFollowerAction, GetFollowersAction } from '../store/action/action';
 import { clearGetFollowersAction } from '../store/action/clearAction';
 import { Input } from '../ui/Input';
 import { FollowingsBlock } from './FollowingsBlock';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Styles } from '../styles/Styles';
 import { t } from '../components/lang';
 import { FollowerSkeleton } from './skeleton/followerSkeleton';
@@ -19,9 +19,16 @@ export const Followers = ({ id }) => {
   const [page, setPage] = useState('');
   const dispatch = useDispatch();
   const loadingData = ['', '', '', '', '', '', '', '']
-  useEffect(() => {
-    dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
-  }, [data, id]);
+  const user = useSelector(st => st.userData);
+
+  // useEffect(() => {
+  //   dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
+  // }, [data, id]);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
+    }, [data, id])
+  );
 
   const addClick = id => {
     let remove = false
@@ -43,7 +50,12 @@ export const Followers = ({ id }) => {
       <View style={{ marginHorizontal: 15 }}>
         <FollowingsBlock
           onPress={() => {
-            navigation.navigate('SearchProfil', { id: item.follower.id });
+            if (user.data.id == item.follower.id) {
+              navigation.navigate('ProfileScreen', { screen: 'ProfileScreens' });
+            }
+            else {
+              navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: item.follower.id } });
+            }
             setData('');
           }}
           key={item.follower?.id}

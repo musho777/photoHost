@@ -31,7 +31,7 @@ export const SearchItem = ({ data }) => {
     }
   };
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('SearchProfil', { id: data.id })}
+    <TouchableOpacity onPress={() => navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data.id } })}
       style={[{ marginBottom: 20 }, Styles.flexSpaceBetween]}>
       <View style={Styles.flexAlignItems}>
         <Image

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { View, FlatList, RefreshControl, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { DelateFollower, GetFollowersAction } from '../store/action/action';
 import { Input } from '../ui/Input';
 import { FollowingsBlock } from './FollowingsBlock';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Styles } from '../styles/Styles';
 import { t } from './lang';
 import { FollowerSkeleton } from './skeleton/followerSkeleton';
@@ -17,18 +17,29 @@ export const Followings = ({ id }) => {
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState('')
+  const user = useSelector(st => st.userData);
   const dispatch = useDispatch()
   const loadingData = ['', '', '', '', '', '']
   useEffect(() => {
     dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
   }, [data, id])
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
+    }, [data, id])
+  );
 
   const renderItem = ({ item }) => {
     return (
       <View style={{ marginHorizontal: 15 }}>
         <FollowingsBlock
           onPress={() => {
-            navigation.navigate('SearchProfil', { id: item.followers.id })
+            if (user.data.id == item.followers.id) {
+              navigation.navigate('ProfileScreen', { screen: 'ProfileScreens' });
+            }
+            else {
+              navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: item.followers.id } })
+            }
             setData('')
           }}
           key={item.followers.id}

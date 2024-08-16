@@ -36,6 +36,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CheckBlack } from '../../CheckBlack';
 import { LoginNavigation } from './LoginNavigation';
 import { Catalog } from '../screens/catalog';
+import { SearchNavigation } from './SearchNavigation';
+import { OtherUserScreenNavigation } from './OtherUserScreenNavigation';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
@@ -194,7 +196,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="FollowersScreen"
             component={FollowersScreen}
             options={{
@@ -207,7 +209,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
                 );
               },
             }}
-          />
+          /> */}
           <Stack.Screen
             name="SinglPageScreen"
             component={SinglPageScreen}
@@ -224,7 +226,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           />
           <Stack.Screen
             name="SearchProfil"
-            component={SearchProfil}
+            component={OtherUserScreenNavigation}
             options={{
               headerShown: false,
             }}

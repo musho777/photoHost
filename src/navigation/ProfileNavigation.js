@@ -2,7 +2,6 @@ import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { BlackListScreen } from '../screens/Profile/BlackListScreen';
 import { EditProfilScreen } from '../screens/Profile/EditProfilScreen/EditProfilScreen';
 import { SavedPostScreen } from '../screens/Profile/SavedPostScreen';
-import { SearchProfil } from '../screens/Search/SearchProfil';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from '../components/lang';
 import { Catalog } from '../screens/catalog';
@@ -111,13 +110,6 @@ export const ProfileNavigation = () => {
           }
         }}
       />
-      {/* <Drawer.Screen
-        name="SearchProfil"
-        component={SearchProfil}
-        options={{
-          headerShown: false,
-        }}
-      /> */}
       <Drawer.Screen
         name="Catalog"
         component={Catalog}
