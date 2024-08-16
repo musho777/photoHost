@@ -105,7 +105,17 @@ export const Catalog = () => {
   return <View>
     <View style={style.page}>
       <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
-      {!getCatalog.loading ?
+      {(getCatalog.loading && page == 1) ?
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', }}>
+          {dataLoading.map((elm, i) => {
+            return <Skeleton
+              key={i}
+              width={'48%'}
+              height={130}
+              style={{ borderRadius: 10, marginBottom: 20 }}
+            />
+          })}
+        </View> :
         <FlatList
           showsVerticalScrollIndicator={false}
           style={{ height: '84%' }}
@@ -125,17 +135,8 @@ export const Catalog = () => {
               </TouchableOpacity>
             </View>
           }
-        /> :
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', }}>
-          {dataLoading.map((elm, i) => {
-            return <Skeleton
-              key={i}
-              width={'48%'}
-              height={130}
-              style={{ borderRadius: 10, marginBottom: 20 }}
-            />
-          })}
-        </View>
+        />
+
       }
     </View>
   </View>

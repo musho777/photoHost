@@ -11,7 +11,7 @@ import { Styles } from '../../styles/Styles';
 import { BackArrow } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetOtherPostsAction, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
+import { AddDeleteFollowAction, AddDeletFollowAction, GetOtherPostsAction, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
 import { t } from '../../components/lang';
 import { AlbomAndInfo } from './component/albomAndInfo';
 import { useFocusEffect } from '@react-navigation/native';
@@ -27,6 +27,24 @@ export const SearchProfil = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const mainData = useSelector(st => st.mainData);
   const [isFollow, setIsFollow] = useState(false)
+  const [followersCount, setFollowersCount] = useState(0)
+  const AddDeletFollow = () => {
+    if (isFollow) {
+      setFollowersCount(followersCount - 1)
+      dispatch(AddDeletFollowAction('remove'))
+    }
+    else {
+      setFollowersCount(followersCount + 1)
+      dispatch(AddDeletFollowAction('add'))
+    }
+    setIsFollow(!isFollow)
+    dispatch(AddDeleteFollowAction({ user_id: singlPage.data.id }, staticdata.token))
+  }
+
+
+  const sendMsg = () => {
+    navigation.navigate('ChatScreen', { id: route.params.id })
+  }
 
   const user = useSelector(st => st.userData);
 
@@ -40,6 +58,7 @@ export const SearchProfil = ({ navigation, route }) => {
   useEffect(() => {
     let index = singlPage.data?.follow_status_sender?.findIndex((elm) => elm.sender_id == user.data.id)
     setIsFollow(index >= 0)
+    setFollowersCount(singlPage.followersCount)
   }, [singlPage.data])
   const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
     const paddingToBottom = 900;
@@ -83,7 +102,10 @@ export const SearchProfil = ({ navigation, route }) => {
             )}
           </View>
         }
-        <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={singlPage} postCount={singlPage.postCount} />
+        {
+          console.log(singlPage.data, 'singlPage.data')
+        }
+        <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={{ followersCount: followersCount, followerCount: singlPage.followerCount }} postCount={singlPage.postCount} />
         <View
           style={[
             Styles.flexSpaceBetween,
