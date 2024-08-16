@@ -93,7 +93,7 @@ export const SearchBlock = () => {
           data={serchData}
           enableEmptySections={true}
           ListEmptyComponent={() => {
-            if (data.length == 0 && !search.loading) {
+            if (data != '' && !search.loading) {
               return <Text style={[Styles.darkMedium14, { textAlign: 'center' }]}>{t(mainData.lang).Notfound}</Text>;
             }
           }}

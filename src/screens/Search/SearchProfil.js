@@ -41,6 +41,11 @@ export const SearchProfil = ({ navigation, route }) => {
     let index = singlPage.data?.follow_status_sender?.findIndex((elm) => elm.sender_id == user.data.id)
     setIsFollow(index >= 0)
   }, [singlPage.data])
+  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+    const paddingToBottom = 900;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
 
   return (
     <View style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>

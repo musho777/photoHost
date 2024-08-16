@@ -33,14 +33,14 @@ export const NotificationScreen = ({ navigation }) => {
   const renderItem = ({ item, index }) => {
     return <NotificationBlock
       description={item.description}
-      id={item.id}
+      id={item.sender.id}
       itemId={item.parent_id}
       avatar={item.sender.avatar}
       name={item.sender.name}
       photo={item?.photo?.length && item?.photo[0]?.photo}
     />
   }
-  return <View style={{ marginTop: 30, paddingHorizontal: 15 }}>
+  return <View style={{ paddingHorizontal: 15 }}>
     <FlatList
       showsVerticalScrollIndicator={false}
       refreshControl={

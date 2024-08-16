@@ -147,7 +147,7 @@ export const t = (lang = 'ru') => {
             Repeatpassword: 'Повторите пароль',
             Passwordrecovery: 'Восстановление пароля',
             Enteremailmail: 'Введите эл. почту',
-            Next: 'далее',
+            Next: 'Далее',
             Comeupwithanicknam: 'Придумайте никнейм',
             Enteryouremail: 'Укажите почту',
             FirstnameLastnameorchannelname: 'Имя Фамилия или название канала',

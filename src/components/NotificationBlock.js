@@ -1,12 +1,16 @@
-import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { Styles } from '../styles/Styles';
+import { useNavigation } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get('window');
 
-export const NotificationBlock = ({ description, id, itemId, avatar, name, photo }) => {
+export const NotificationBlock = ({ description, avatar, name, photo, id }) => {
+  const navigation = useNavigation()
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
+    <TouchableOpacity onPress={() =>
+      navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: id } })
+    } style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
       <Image
         style={styles.userImg}
         source={{
@@ -25,7 +29,7 @@ export const NotificationBlock = ({ description, id, itemId, avatar, name, photo
           uri: `https://chambaonline.pro/uploads/${photo}`,
         }}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
