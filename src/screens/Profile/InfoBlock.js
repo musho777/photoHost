@@ -49,15 +49,15 @@ export const InfoBlock = ({ user }) => {
         if (day) {
             newDateFormat = `${day}.${month}.${year}`;
         }
-
-        item[0].value = user.city?.name ? user.city?.name : user.city?.value
-        item[1].value = newDateFormat
-        item[2].value = user.gender ? user.gender : ''
-        item[3].value = user.mgu
-        item[4].value = user.work_type
-        item[5].value = user.web
-        item[6].value = user.email
-        item[7].value = user.phone
+        console.log(user.city)
+        item[0].value = user.city?.name ? user.city?.name : '-'
+        item[1].value = newDateFormat ? newDateFormat : '-'
+        item[2].value = user.gender ? user.gender : '-'
+        item[3].value = user.mgu ? user.mgu : '-'
+        item[4].value = user.work_type ? user.work_type : '-'
+        item[5].value = user.web ? user.web : '-'
+        item[6].value = user.email ? user.email : '-'
+        item[7].value = user.phone ? user.phone : '-'
         setData(item)
     }
     useEffect(() => {

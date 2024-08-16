@@ -43,7 +43,7 @@ export const Albom = ({ data, seved, my = false, loading }) => {
 
 const styles = StyleSheet.create({
   block: {
-    marginTop: 20,
+    marginTop: 5,
     width: '100%',
     marginBottom: 10
   },
