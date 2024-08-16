@@ -19,6 +19,7 @@ export const PostBody = ({
   const user = useSelector((st) => st.userData)
   const likeRef = useRef(null)
   const CloseLike = () => { likeRef.current?.close() }
+  const CloseView = () => { ViewRef.current?.close() }
 
 
   const [currentId, setCurrentId] = useState(null)

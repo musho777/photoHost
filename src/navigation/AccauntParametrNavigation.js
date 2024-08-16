@@ -1,7 +1,5 @@
 
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { ParametrScreen } from '../screens/Profile/ParametrScreen';
 import { t } from '../components/lang';

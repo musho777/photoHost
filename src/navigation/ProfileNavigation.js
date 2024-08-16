@@ -1,7 +1,6 @@
 import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { BlackListScreen } from '../screens/Profile/BlackListScreen';
 import { EditProfilScreen } from '../screens/Profile/EditProfilScreen/EditProfilScreen';
-import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { SavedPostScreen } from '../screens/Profile/SavedPostScreen';
 import { SearchProfil } from '../screens/Search/SearchProfil';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +12,7 @@ import { Styles } from '../styles/Styles';
 import { ClearLoginAction, LogoutAction } from '../store/action/action';
 import { BackArrow } from '../assets/svg/Svgs';
 import AccauntParametrNavigation from './AccauntParametrNavigation';
+import MyPageNavigation from './MyPageNavigation';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
@@ -74,8 +74,7 @@ export const ProfileNavigation = () => {
       <Drawer.Screen
 
         name="ProfileScreen"
-        component={ProfileScreen}
-
+        component={MyPageNavigation}
         options={{
           headerShown: false,
         }}
@@ -112,13 +111,13 @@ export const ProfileNavigation = () => {
           }
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="SearchProfil"
         component={SearchProfil}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
       <Drawer.Screen
         name="Catalog"
         component={Catalog}
