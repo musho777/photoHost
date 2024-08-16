@@ -78,7 +78,7 @@ export const SearchProfil = ({ navigation, route }) => {
             )}
           </View>
         }
-        <ProfilInfo loading={singlPage.loading} user={singlPage} postCount={singlPage.postCount} />
+        <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={singlPage} postCount={singlPage.postCount} />
         <View
           style={[
             Styles.flexSpaceBetween,

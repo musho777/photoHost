@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { AppColors } from '../../../styles/AppColors';
 import { VidioComponent } from '../../../components/post/VidioComponent';
+import { VidioModal } from '../../../components/post/VidionModal';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -16,6 +17,9 @@ export const Slider = ({ photo, music_name }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [scroleEneble, setScrollEnabled] = useState(true)
+  const [resizeVidio, setResizeVidio] = useState(false)
+  const [selectedVidio, setSelectedVidio] = useState(false)
+
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -90,6 +94,7 @@ export const Slider = ({ photo, music_name }) => {
           close={() => setOpenSlider(false)}
         />
       )}
+      <VidioModal close={() => setResizeVidio(false)} modalVisible={resizeVidio} music={music_name} item={selectedVidio} />
     </View>
   );
 };

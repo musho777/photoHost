@@ -1,5 +1,4 @@
 import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { HorizontalVidio } from './horizontalVidio';
 import { VidioComponent } from './VidioComponent';
 export const VidioModal = ({ modalVisible, close, music, item }) => {
   return <View >

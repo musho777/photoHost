@@ -7,7 +7,7 @@ import { Styles } from '../../styles/Styles';
 
 const windowHeight = Dimensions.get('window').height;
 
-export const VidioComponent = ({ music, setScrollEnabled, item, big, setResizeVidio, viewableItems }) => {
+export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, setResizeVidio, viewableItems }) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
