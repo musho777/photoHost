@@ -38,7 +38,7 @@ import { LoginNavigation } from './LoginNavigation';
 import { Catalog } from '../screens/catalog';
 import { SearchNavigation } from './SearchNavigation';
 import { OtherUserScreenNavigation } from './OtherUserScreenNavigation';
-import { RegisterType } from '../screens/auth/registerType';
+import { RegisterType } from '../screens/auth/RegisterType';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
@@ -197,20 +197,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               headerShown: false,
             }}
           />
-          {/* <Stack.Screen
-            name="FollowersScreen"
-            component={FollowersScreen}
-            options={{
-              header: ({ navigation }) => {
-                return (
-                  <HeaderWhiteTitle
-                    onPress={() => navigation.goBack()}
-                    title={'Интересное'}
-                  />
-                );
-              },
-            }}
-          /> */}
           <Stack.Screen
             name="SinglPageScreen"
             component={SinglPageScreen}
@@ -246,13 +232,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               headerShown: false,
             }}
           />
-          <Stack.Screen
-            name="RegisterType"
-            component={RegisterType}
-            options={{
-              headerShown: false,
-            }}
-          />
+
         </Stack.Navigator>
       </NavigationContainer>
     </BottomSheetModalProvider>

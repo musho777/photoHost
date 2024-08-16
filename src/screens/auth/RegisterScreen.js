@@ -9,11 +9,10 @@ import { ClearConfirmPasswordAction, ClearRegisterAction, ConfirmRegisterCode, R
 import { t } from '../../components/lang';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const RegisterScreen = ({ navigation }) => {
-  const [userName, setUsername] = useState({ value: '', error: '' });
+export const RegisterScreen = ({ navigation, route }) => {
+  console.log(route.params.selected == 'Individual')
   const [name, setName] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
-  const [confirmPassword, setConfirmPassword] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [sendMail, setSnedMail] = useState(false);
   const [disableButton, setDisableButton] = useState(true)
@@ -105,14 +104,11 @@ export const RegisterScreen = ({ navigation }) => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={Styles.authScreen}>
         <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>{t(mainData.lang).Registration}</Text>
-        {/* <Input
-          placeholder={t(mainData.lang).FirstnameLastnameorchannelname}
-          error={userName.error || register.error?.username}
-          value={userName.value}
-          onChange={(e) => setUsername({ ...userName, value: e })}
-        /> */}
         <Input
-          placeholder={t(mainData.lang).FirstnameLastnameorchannelname}
+          placeholder={route.params.selected == 'Individual' ?
+            t(mainData.lang).FirstnameLastnameorchannelname :
+            t(mainData.lang).Companyname
+          }
           error={name.error}
           value={name.value}
           onChange={(e) => setName({ ...name, value: e })}

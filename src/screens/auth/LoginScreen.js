@@ -108,7 +108,7 @@ export const LoginScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('RecoveryPassword')}>
           <Text style={Styles.darkSemiBold12}>{t(mainData.lang).Forgotpassword}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('RegisterType')}>
           <Text style={Styles.darkSemiBold12}>{t(mainData.lang).Registration}</Text>
         </TouchableOpacity>
       </View>

@@ -5,6 +5,7 @@ import { RecoveryPassword } from '../screens/auth/RecoveryPassword';
 import { NewPassword } from '../screens/auth/NewPassword';
 import { Header } from '../headers/Header';
 import { Catalog } from '../screens/catalog';
+import { RegisterType } from '../screens/auth/RegisterType';
 
 export const LoginNavigation = () => {
   const Stack = createStackNavigator();
@@ -46,6 +47,13 @@ export const LoginNavigation = () => {
       <Stack.Screen
         name="Catalog"
         component={Catalog}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="RegisterType"
+        component={RegisterType}
         options={{
           headerShown: false,
         }}
