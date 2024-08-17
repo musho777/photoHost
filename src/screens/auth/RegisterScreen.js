@@ -10,7 +10,6 @@ import { t } from '../../components/lang';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const RegisterScreen = ({ navigation, route }) => {
-  console.log(route.params.selected == 'Individual')
   const [name, setName] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
@@ -66,6 +65,7 @@ export const RegisterScreen = ({ navigation, route }) => {
         name: name.value,
         email: email.value,
         password: password.value,
+        user_type: route.params.selected
       }))
     }
   }

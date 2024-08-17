@@ -21,6 +21,12 @@ export const ClearChangeProfile = () => {
     }
 }
 
+export const ClearChangeProfileTrue = () => {
+    return {
+        type: 'ClearChangeProfileTrue'
+    }
+}
+
 export const clearChangePassword = () => {
     return {
         type: 'clearChangePassword'

@@ -1,80 +1,58 @@
 import { useEffect, useState } from "react"
-import { ScrollView, Text, TouchableOpacity, View } from "react-native"
-import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WorkLocation } from "../../assets/svg/Svgs"
-import { Styles } from "../../styles/Styles"
+import { ScrollView, TouchableOpacity } from "react-native"
+import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from "../../assets/svg/Svgs"
+import { InfoItem } from "./components/infoItem"
 
 export const InfoBlock = ({ user }) => {
+    const [location, setLocation] = useState('')
+    const [date, setDate] = useState('')
+    const [gender, setGender] = useState('')
+    const [profetion, setProfetion] = useState('')
+    const [workLocation, setWorkLocation] = useState('')
+    const [userType, setUserType] = useState(true)
+    const [web, setWeb] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [graf, setGraf] = useState('')
 
-    const [data, setData] = useState([
-        { svg: <LocationSvg />, value: '' },
-        { svg: <CakeSvg />, value: '' },
-        { svg: <GenderSvg />, value: '' },
-        { svg: <ProfetionsSvg />, value: '' },
-        { svg: <WorkLocation />, value: '' },
-        { svg: <NetWorkSvg />, value: '' },
-        { svg: <EmailSvg />, value: '' },
-        { svg: <PhoneSvg />, value: '' },
-    ])
 
     const GetData = () => {
-        let item = [...data]
-        let dateComponents = ''
-        let year = ''
-        let day = ''
-        let month = ''
-        if (user.date_of_birth1) {
-            if (user.date_of_birth1.includes('.')) {
-                dateComponents = user.date_of_birth1.split('.')
-            }
-            else {
-                dateComponents = user.date_of_birth1.split('-')
-            }
-            year = dateComponents[0]
-            day = dateComponents[2]
-            month = dateComponents[1]
+        let date = new Date(user.date_of_birth);
+
+        const year = date.getFullYear();
+        console.log(date, '11')
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        setDate(`${day}.${month}.${year}`)
+        setLocation(user.city?.name ? user.city?.name : '-')
+        setGender(user.gender ? user.gender : '-')
+        setProfetion(user.mgu ? user.mgu : '-')
+        setWorkLocation(user.work_type ? user.work_type : '-')
+        setWeb(user.web ? user.web : '-')
+        setEmail(user.email ? user.email : '-')
+        setPhone(user.phone ? user.phone : '-')
+        setGraf(user.work_grafik ? user.work_grafik : '-')
+        console.log(user.user_type)
+        if (user.user_type == 'Legal_entity') {
+            setUserType(false)
         }
-        else {
-            dateComponents = JSON.stringify(user.date_of_birth)?.substring(0, 11)?.split('-')
-            year = dateComponents && dateComponents[0]?.replace(`"`, '')
-            day = dateComponents && +dateComponents[2]
-            month = dateComponents && dateComponents[1]
-        }
-        let newDateFormat = ''
-        if (month?.length == 1) {
-            month = `0${month}`
-        }
-        if (JSON.stringify(day)?.length == 1 || day?.length == 1) {
-            day = `0${day}`
-        }
-        if (day) {
-            newDateFormat = `${day}.${month}.${year}`;
-        }
-        console.log(user.city)
-        item[0].value = user.city?.name ? user.city?.name : '-'
-        item[1].value = newDateFormat ? newDateFormat : '-'
-        item[2].value = user.gender ? user.gender : '-'
-        item[3].value = user.mgu ? user.mgu : '-'
-        item[4].value = user.work_type ? user.work_type : '-'
-        item[5].value = user.web ? user.web : '-'
-        item[6].value = user.email ? user.email : '-'
-        item[7].value = user.phone ? user.phone : '-'
-        setData(item)
     }
     useEffect(() => {
         GetData()
-    }, [user.mgu, user.phone, user.work_type, user.email, user.gender, user.date_of_birth1, user.city, user.web])
+    }, [user.mgu, user.phone, user.work_type, user.email, user.gender, user.date_of_birth, user.city, user.web])
 
 
     return <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableOpacity activeOpacity={1}>
-            {data.map((elm, i) => {
-                return <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingHorizontal: 5 }} key={i}>
-                    {elm.svg}
-                    <Text style={[Styles.darkMedium14, { marginLeft: 10 }]}>
-                        {elm.value}
-                    </Text>
-                </View>
-            })}
+            <InfoItem svg={<LocationSvg />} value={location} />
+            {userType && <InfoItem svg={<CakeSvg />} value={date} />}
+            {userType && <InfoItem svg={<GenderSvg />} value={gender} />}
+            <InfoItem svg={<ProfetionsSvg />} value={profetion} />
+            <InfoItem svg={<WorkLocation />} value={workLocation} />
+            {!userType && <InfoItem svg={<NetWorkSvg />} value={web} />}
+            {!userType && <InfoItem svg={<WatchSvg />} value={graf} />}
+            <InfoItem svg={<EmailSvg />} value={email} />
+            <InfoItem svg={<PhoneSvg />} value={phone} />
         </TouchableOpacity>
     </ScrollView>
 }

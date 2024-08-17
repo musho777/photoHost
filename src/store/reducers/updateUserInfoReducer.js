@@ -26,6 +26,9 @@ const UpdateUserInfoReducer = (state = initialState, action) => {
       item.loading = false
       item.status = false
       break;
+    case 'ClearChangeProfileTrue':
+      item.error = ''
+      item.status = true
     default:
       break;
   }

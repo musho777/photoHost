@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { Button } from '../../ui/Button';
 import { Input } from '../../ui/Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChnageLanguage, ClearConfirmPasswordAction, ClearLoginAction, LoginAction } from '../../store/action/action';
+import { ClearConfirmPasswordAction, ClearLoginAction, LoginAction } from '../../store/action/action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ChecboxUNchekedSvg, CheckedChexbox } from '../../assets/svg/Svgs';
 import { t } from '../../components/lang';
-import { AppColors } from '../../styles/AppColors';
 import { CommonActions } from '@react-navigation/native';
 
 
@@ -131,16 +130,3 @@ export const LoginScreen = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  languageButton: {
-    borderWidth: 1,
-    paddingHorizontal: 20,
-    borderRadius: 15,
-    paddingVertical: 5,
-    justifyContent: 'center',
-    alignContent: 'center',
-    borderColor: AppColors.Solitude_Color,
-    marginTop: 20,
-  }
-})

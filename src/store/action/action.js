@@ -168,6 +168,7 @@ export const RegisterAction = data => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          console.log(r, '22222')
           dispatch(SuccessRegister(r));
         } else {
           dispatch(
@@ -1473,6 +1474,7 @@ export const UpdateIkInfoAction = (data, token) => {
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorUpdateIKInfor())
       });
   };

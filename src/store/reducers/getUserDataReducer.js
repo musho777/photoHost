@@ -74,13 +74,18 @@ const GetUserDataReducer = (state = initialState, action) => {
       break
 
     case 'UpdateUserInfo':
-      item.data.city = action.data[0]
-      item.data.date_of_birth1 = action.data[1].value
-      item.data.gender = action.data[2].value
-      item.data.mgu = action.data[3].value
-      item.data.work_type = action.data[4].value
-      item.data.web = action.data[5].value
-      item.data.phone = action.data[7].value
+      if (item.data.city) {
+        item.data.city.name = action.data.city;
+      } else {
+        item.data.city = { name: action.data.city };
+      }
+      item.data.work_grafik = action.data.work_grafik
+      item.data.date_of_birth = action.data.date_of_birth
+      item.data.gender = action.data.gender
+      item.data.mgu = action.data.mgu
+      item.data.work_type = action.data.work_type
+      item.data.web = action.data.web
+      item.data.phone = action.data.phone
       break
 
     case 'AddDeletFollowAction':

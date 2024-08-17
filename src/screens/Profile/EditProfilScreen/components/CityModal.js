@@ -1,11 +1,11 @@
 import { Modal, StyleSheet, View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
-import { Input } from "../ui/Input";
+import { Input } from "../../../../ui/Input";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GetCitysAction } from "../store/action/action";
-import { Styles } from "../styles/Styles";
-import { t } from './lang';
-import { AppColors } from "../styles/AppColors";
+import { GetCitysAction } from "../../../../store/action/action";
+import { Styles } from "../../../../styles/Styles";
+import { t } from '../../../../components/lang';
+import { AppColors } from "../../../../styles/AppColors";
 
 export const CityModal = ({ visible, close, onPress }) => {
     const [searchCitys, setSearchCitys] = useState('');

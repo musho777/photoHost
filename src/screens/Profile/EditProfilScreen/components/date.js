@@ -7,10 +7,10 @@ import { MountWrapper } from "../../../../components/MountWrapper";
 import { useState } from "react";
 
 
-export const Date = ({ setDay, day, mount, setMount, year, setYera }) => {
+export const DateComponent = ({ setDay, day, mount, setMount, year, setYera }) => {
   const mainData = useSelector(st => st.mainData);
   const [openMount, setOpenMout] = useState(false)
-
+  console.log(year)
   return <View>
     <View style={styles.calnedarView}>
       <View style={{ width: '28%' }}>
@@ -36,9 +36,12 @@ export const Date = ({ setDay, day, mount, setMount, year, setYera }) => {
       </View>
       <View style={{ width: '28%' }}>
         <Text style={styles.clandatLable}>{t(mainData.lang).Year}</Text>
-        <TextInput keyboardType='numeric' value={year} onChangeText={(e) => {
-          if (e <= 2024) { setYera(e) }
-        }}
+        <TextInput
+          keyboardType='numeric'
+          value={year}
+          onChangeText={(e) => {
+            if (e <= 2024) { setYera(e) }
+          }}
           style={styles.calendarInput} />
       </View>
     </View>

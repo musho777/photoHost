@@ -7238,7 +7238,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fbjs@npm:^0.8.4":
+"fbjs@npm:^0.8.4, fbjs@npm:^0.8.9":
   version: 0.8.18
   resolution: "fbjs@npm:0.8.18"
   dependencies:
@@ -7824,7 +7824,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.2":
+"hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -7960,6 +7960,13 @@ __metadata:
   bin:
     image-size: bin/image-size.js
   checksum: 01745fdb47f87cecf538e69c63f9adc5bfab30a345345c2de91105f3afbd1bfcfba1256af02bf3323077b33b0004469a837e077bf0cbb9c907e9c1e9e7547585
+  languageName: node
+  linkType: hard
+
+"immutable@npm:^4.0.0-rc.12":
+  version: 4.3.7
+  resolution: "immutable@npm:4.3.7"
+  checksum: 1c50eb053bb300796551604afff554066f041aa8e15926cf98f6d11d9736b62ad12531c06515dd96375258653878b4736f8051cd20b640f5f976d09fa640e3ec
   languageName: node
   linkType: hard
 
@@ -9428,7 +9435,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.debounce@npm:^4.0.8":
+"lodash.debounce@npm:4.0.8, lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
   checksum: a3f527d22c548f43ae31c861ada88b2637eb48ac6aa3eb56e82d44917971b8aa96fbb37aa60efea674dc4ee8c42074f90f7b1f772e9db375435f6c83a19b3bc6
@@ -9519,7 +9526,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.16.4, lodash@npm:^4.17.21":
+"lodash@npm:^4.16.4, lodash@npm:^4.17.15, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -9676,7 +9683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memoize-one@npm:^5.0.0":
+"memoize-one@npm:^5.0.0, memoize-one@npm:^5.2.1":
   version: 5.2.1
   resolution: "memoize-one@npm:5.2.1"
   checksum: a3cba7b824ebcf24cdfcd234aa7f86f3ad6394b8d9be4c96ff756dafb8b51c7f71320785fbc2304f1af48a0467cbbd2a409efc9333025700ed523f254cb52e3d
@@ -10239,6 +10246,13 @@ __metadata:
   version: 3.0.5
   resolution: "mockdate@npm:3.0.5"
   checksum: 72b66786d9e072379693f80bf9fb82eb5153c9741030a4294184e3ccaf952d0713fae8966f77780580cf902f8ec7ccc95577b0ad47980d255e2ffb71fc7ca49c
+  languageName: node
+  linkType: hard
+
+"moment@npm:^2.24.0":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: 859236bab1e88c3e5802afcf797fc801acdbd0ee509d34ea3df6eea21eb6bcc2abd4ae4e4e64aa7c986aa6cba563c6e62806218e6412a765010712e5fa121ba6
   languageName: node
   linkType: hard
 
@@ -11179,6 +11193,7 @@ __metadata:
     react-native: 0.72.2
     react-native-accordion: ^1.0.1
     react-native-awesome-slider: ^2.5.3
+    react-native-calendars: 1.1286.0
     react-native-device-info: ^10.8.0
     react-native-emoji-selector: ^0.2.0
     react-native-fast-image: ^8.6.3
@@ -11455,6 +11470,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prop-types@npm:15.5.8":
+  version: 15.5.8
+  resolution: "prop-types@npm:15.5.8"
+  dependencies:
+    fbjs: ^0.8.9
+  checksum: b64fcb5770c665e66e57663940864425529ea2b8c7821fb86068d1879d7b2c85778948b9a1294912e0d58f55075d1f3e19f44ae4fd5f5cd988c3bf833fa3e1f6
+  languageName: node
+  linkType: hard
+
 "proxy-from-env@npm:^1.1.0":
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
@@ -11597,6 +11621,26 @@ __metadata:
     react-native-gesture-handler: ">=2.0.0"
     react-native-reanimated: ">=3.0.0"
   checksum: 1b86a80d095eed6590201ea5e8286bcdcaed8d6c14059e6f477a500e41d0c19ec2e80b5201f87aed5a83163428f0140faa5db9f5b3e7896245f5ddd9b928caeb
+  languageName: node
+  linkType: hard
+
+"react-native-calendars@npm:1.1286.0":
+  version: 1.1286.0
+  resolution: "react-native-calendars@npm:1.1286.0"
+  dependencies:
+    hoist-non-react-statics: ^3.3.1
+    immutable: ^4.0.0-rc.12
+    lodash: ^4.17.15
+    memoize-one: ^5.2.1
+    moment: ^2.24.0
+    prop-types: ^15.5.10
+    react-native-swipe-gestures: ^1.0.5
+    recyclerlistview: ^3.0.5
+    xdate: ^0.8.0
+  dependenciesMeta:
+    moment:
+      optional: true
+  checksum: 5b95310ff5931791ea8fec87300316bbbfd0342daf1ce72cb1dda5b91b75400be64c25e69aa6b9d277fd3197bc5a1b42e5767b5ece35b7c14abdb7362805ed5a
   languageName: node
   linkType: hard
 
@@ -12036,6 +12080,13 @@ react-native-snap-carousel@latest:
   languageName: node
   linkType: hard
 
+"react-native-swipe-gestures@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "react-native-swipe-gestures@npm:1.0.5"
+  checksum: d637bc40baa50fa0ce3b6cf2b494efeceaea03cc3875cb7cf7d76922914a21d5e6b098d4a084fb291ce61bfbb0a241c03cff24b15bebf0cfae1c146f4ad10d92
+  languageName: node
+  linkType: hard
+
 "react-native-swipeable@npm:^0.6.0":
   version: 0.6.0
   resolution: "react-native-swipeable@npm:0.6.0"
@@ -12357,6 +12408,20 @@ react-native-snap-carousel@latest:
     source-map: ~0.6.1
     tslib: ^2.0.1
   checksum: 03cc7f57562238ba258d468be67bf7446ce7a707bc87a087891dad15afead46c36e9aaeedf2130e2ab5a465244a9c62bfd4127849761cf8f4085abe2f3e5f485
+  languageName: node
+  linkType: hard
+
+"recyclerlistview@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "recyclerlistview@npm:3.0.5"
+  dependencies:
+    lodash.debounce: 4.0.8
+    prop-types: 15.5.8
+    ts-object-utils: 0.0.5
+  peerDependencies:
+    react: ">= 15.2.1"
+    react-native: ">= 0.30.0"
+  checksum: 68fe28f044a42d30ea92f2a2a37d3d96bfb5f57cb2aea763edd37c52f1c735a7e4c559b6ab88339b4ce04cd043490fdaf210a43e0e3eb0eb00fcc25fd0f9ccfe
   languageName: node
   linkType: hard
 
@@ -13486,6 +13551,13 @@ react-native-snap-carousel@latest:
   languageName: node
   linkType: hard
 
+"ts-object-utils@npm:0.0.5":
+  version: 0.0.5
+  resolution: "ts-object-utils@npm:0.0.5"
+  checksum: 83c48fbdaba392fb2c01cea53b267ed5538d2bb44fc6c3eecc10bcfabc1780bfa6ec8569b52bbf0140d9b521d9049d5f15884e12286918244d463d854dbc73cb
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
@@ -14063,6 +14135,13 @@ react-native-snap-carousel@latest:
     utf-8-validate:
       optional: true
   checksum: c3c100a181b731f40b7f2fddf004aa023f79d64f489706a28bc23ff88e87f6a64b3c6651fbec3a84a53960b75159574d7a7385709847a62ddb7ad6af76f49138
+  languageName: node
+  linkType: hard
+
+"xdate@npm:^0.8.0":
+  version: 0.8.3
+  resolution: "xdate@npm:0.8.3"
+  checksum: 5fa07921dca6e75ad6ce2945477ed68974ac840d5b446015165aef6afdb000116e07964a4a47ab6ad36f8c398adbcb1e2ba43202e87b6190587672016c214ab7
   languageName: node
   linkType: hard
 

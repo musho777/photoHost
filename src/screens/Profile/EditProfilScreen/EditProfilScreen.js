@@ -1,29 +1,25 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CakeSvg, DownArrow, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WorkLocation } from '../../../assets/svg/Svgs';
+import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WorkLocation } from '../../../assets/svg/Svgs';
 import { AppColors } from '../../../styles/AppColors';
 import { Styles } from '../../../styles/Styles';
 import React, { useEffect } from 'react';
 import { HeaderWhiteTitle } from '../../../headers/HeaderWhiteTitle.';
 import { UpdateIkInfoAction, UpdateUserInfo, chnageUserProfil, getUserInfoAction } from '../../../store/action/action';
-import { ClearChangeProfile } from '../../../store/action/clearAction';
-import { BootomModal } from '../../../components/BootomSheet';
-import { CityModal } from '../../../components/CityModal';
+import { ClearChangeProfile, ClearChangeProfileTrue } from '../../../store/action/clearAction';
 import { t } from '../../../components/lang';
-import { Date } from './components/date';
+import { DateComponent } from './components/date';
+import { Fild } from './components/Fild';
+import { Location } from './components/location';
+import { ChnageGender } from './components/changeGender';
+import { LocaleConfig, Calendar } from 'react-native-calendars';
+import { CalendarComponent } from './components/Calendar';
 
 export const EditProfilScreen = ({ navigation }) => {
-  const [name, setName] = useState('');
-  const [discription, setDiscription] = useState('');
-  const [city, setCity] = useState(false)
-  const mainData = useSelector(st => st.mainData);
 
-  const updateUserInfo = useSelector((st) => st.updateUserInfo)
-
-  const [height, setHeight] = useState();
-  const data1 = [
+  const mountDate = [
     { name: 'Январь', id: 0 },
     { name: 'Февраль', id: 1 },
     { name: 'Март', id: 2 },
@@ -38,17 +34,37 @@ export const EditProfilScreen = ({ navigation }) => {
     { name: 'Декабрь', id: 11 },
   ]
 
-  const handlePresentModalPress = useCallback(() => { bottomSheetRef.current?.present(); }, []);
+  const [name, setName] = useState('');
+  const [discription, setDiscription] = useState('');
+  const mainData = useSelector(st => st.mainData);
+  const updateUserInfo = useSelector((st) => st.updateUserInfo)
+  const [error, setError] = useState('');
+  const user = useSelector(st => st.userData);
+  const staticdata = useSelector(st => st.static);
+  const changeProfil = useSelector(st => st.changeUserProfil);
+  const [loaction, setLocation] = useState({ name: '', id: '' })
+  const [gender, setGender] = useState('')
+  const [profation, setProfation] = useState('')
+  const [workLocation, setWorkLocation] = useState('')
+  const [email, setEmail] = useState('')
+  const [phonNumber, setPhonNumber] = useState('')
+  const dispatch = useDispatch();
+  const [accauntType, setAccauntType] = useState(false)
+  const [graf, setGraf] = useState('')
+  const [web, setWeb] = useState('')
+  const [year, setYear] = useState('')
+  const [mount, setMount] = useState('')
+  const [day, setDay] = useState('')
+  const [date, setDate] = useState('')
 
-  const handelPress = (type) => {
-    if (type == 'Пол') {
-      handlePresentModalPress()
-    }
-    else if (type === 'Город') {
-      setCity(true)
-    }
-  }
 
+  useEffect(() => {
+    if (day || mount?.id || year) {
+      console.log(mount, 'mount')
+      const newDateFormat = `${year}-${mount?.id + 1}-${day}`;
+      setDate(newDateFormat)
+    }
+  }, [day, mount, year])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
@@ -59,146 +75,81 @@ export const EditProfilScreen = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
-  const [error, setError] = useState('');
-  const user = useSelector(st => st.userData);
-  const staticdata = useSelector(st => st.static);
-  const changeProfil = useSelector(st => st.changeUserProfil);
-  const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ['16%'], []);
-  const [day, setDay] = useState()
-  const [mount, setMount] = useState()
-  const [year, setYera] = useState()
-  const [data, setDate] = useState([
-    { type: 'button', value: '', svg: <LocationSvg />, placeholder: t(mainData.lang).City, disabled: true, id: '' },
-    { type: 'calendar', value: '', svg: <CakeSvg />, placeholder: t(mainData).DateofBirth, disabled: true, value2: '' },
-    { type: 'button', value: '', svg: <GenderSvg />, placeholder: t(mainData.lang).gender, disabled: true },
-    { type: 'input', value: '', svg: <ProfetionsSvg />, placeholder: t(mainData.lang).ProfessionFieldofactivity, disabled: true },
-    { type: 'input', value: '', svg: <WorkLocation />, placeholder: t(mainData.lang).Placeofwork, disabled: true },
-    { type: 'input', value: '', svg: <NetWorkSvg />, placeholder: t(mainData.lang).Website, disabled: true },
-    { type: 'input', value: '', svg: <EmailSvg />, placeholder: t(mainData.lang).Mail, disabled: false },
-    { type: 'input', value: '', svg: <PhoneSvg />, placeholder: t(mainData.lang).Phonenumber, disabled: true },
-  ])
-
-  useEffect(() => {
-    if (day || mount?.id || year) {
-      const newDateFormat = `${year}.${mount?.id + 1}.${day}`;
-      hadnelChange(1, newDateFormat, 'typ2', newDateFormat)
-    }
-  }, [day, mount, year])
 
   const SetData = () => {
-    let d = ''
-    if (user?.allData?.data?.date_of_birth) {
-      setYera(user?.allData?.data?.date_of_birth?.split('-')[0])
-      d = user?.allData?.data?.date_of_birth?.split('-')[2].slice(0, 2)
+    let date = ''
+    let year = ''
+    let month = ''
+    let day = ''
+    if (user?.allData?.data.date_of_birth) {
+      date = new Date(user?.allData?.data.date_of_birth);
+      year = JSON.stringify(date.getFullYear());
+      month = String(date.getMonth() + 1).padStart(2, '0');
+      day = String(date.getDate()).padStart(2, '0');
     }
-    if (d?.length > 0 && d[0] == 0) {
-      setDay(d[1])
+    console.log(month, year)
+    if (month[0] == 0) {
+      month = month[1] - 1
     }
-    else {
-      setDay(d)
-    }
+    const temp = user?.allData?.data
+    setYear(year)
+    setMount(mountDate[month])
+    setDay(day)
+    setEmail(user?.allData?.data?.email)
+    setLocation({ name: temp.city?.name, id: '' })
+    setGender(temp.gender)
+    setWorkLocation(temp.work_type)
+    setProfation(temp.mgu)
+    setPhonNumber(temp.phone)
+    setWeb(temp.web)
+    setGraf(temp.work_grafik)
 
-    let m = user?.allData?.data?.date_of_birth?.split('-')[1] - 1
-    if (m?.length > 0 && m[0] == 0 && m.length == 2) {
-      m = +m[1]
-    }
-
-
-
-    setMount(data1[m])
-    const dateComponents = JSON.stringify(user?.allData?.data?.date_of_birth)?.substring(0, 11)?.split('-')
-    const year = dateComponents && dateComponents[0]?.replace(`"`, '')
-    const day = dateComponents && dateComponents[2]
-    const month = dateComponents && dateComponents[1]
-    let newDateFormat = `${day}-${month}-${year}`;
-
-    let item = [...data]
-    if (user?.allData?.data?.city?.name) {
-      item[0].value = user?.allData?.data?.city?.name
-
-    }
-    else if (user?.allData?.data?.city?.value) {
-      item[0].value = user?.allData?.data?.city?.value
-    }
-    else {
-      item[0].value = ''
-
-    }
-
-    if (user?.allData?.data?.date_of_birth1) {
-      let dateComponents = ''
-      if (user?.allData?.data?.date_of_birth1.includes('.')) {
-        dateComponents = user?.allData?.data.date_of_birth1.split('.')
-      }
-      else {
-        dateComponents = user?.allData?.data.date_of_birth1.split('-')
-      }
-      newDateFormat = `${dateComponents[1]}-${dateComponents[2]}-${dateComponents[0]}`;
-      setDay(dateComponents[2])
-      setYera(dateComponents[0])
-      if (dateComponents[1]) {
-        let index = +dateComponents[1] - 1
-        setMount(data1[index])
-      }
-    }
-    item[1].value2 = newDateFormat ? newDateFormat : ''
-    item[1].value = user?.allData?.data?.date_of_birth ? user?.allData?.data?.date_of_birth?.substring(0, 11) : ''
-    item[2].value = user?.allData?.data?.gender ? user?.allData?.data?.gender : ''
-    item[3].value = user?.allData?.data?.mgu ? user?.allData?.data?.mgu : ''
-    item[4].value = user?.allData?.data?.work_type ? user?.allData?.data?.work_type : ''
-    item[5].value = user?.allData?.data?.web ? user?.allData?.data.web : ''
-    item[6].value = user?.allData?.data?.email ? user?.allData?.data.email : ''
-    item[7].value = user?.allData?.data?.phone ? user?.allData?.data.phone : ''
-    setDate(item)
   }
 
+
   useEffect(() => {
+    if (user?.allData?.data?.user_type != 'Legal_entity') {
+      setAccauntType(true)
+    }
     if (!name) {
       setName(user.name);
       setDiscription(user.description);
-    }
-    if (!name) {
       SetData()
     }
   }, [user]);
-  const dispatch = useDispatch();
 
-  const hadnelChange = (i, value, type, value2) => {
-    let item = [...data]
-    if (type == 'city') {
-      item[i].value = value.name
-      item[0].id = value.id
-
-    } else if (i == 1) {
-      item[i].value = value
-      item[i].value2 = value2
-    }
-    else {
-      item[i].value = value
-    }
-    setDate(item)
-  }
   const chnageProfil = () => {
     if (name === '') {
       setError('Введите корректный  имя');
     } else {
       setError('');
     }
-    dispatch(chnageUserProfil({
-      name: name,
-      nickname: "#",
-      description: discription
-    }, staticdata.token
-    ));
+    if (name != user.allData.data.name) {
+      dispatch(chnageUserProfil({
+        name: name,
+        nickname: "#",
+      }, staticdata.token
+      ));
+    }
+    else {
+      dispatch(ClearChangeProfileTrue());
+    }
+    if (discription != user.allData.data.description) {
+      dispatch(chnageUserProfil({
+        description: discription,
+      }, staticdata.token
+      ));
+    }
     dispatch(UpdateIkInfoAction({
-      city_id: data[0].id,
-      date_of_birth: data[1].value,
-      gender: data[2].value,
-      mgu: data[3].value,
-      work_type: data[4].value,
-      web: data[5].value,
-      phone: data[7].value,
+      city_id: loaction.id,
+      date_of_birth: date,
+      gender: gender,
+      mgu: profation,
+      work_type: workLocation,
+      phone: phonNumber,
+      work_grafik: graf,
+      web: web,
+      user_type: user?.allData?.data.user_type,
     }, staticdata.token))
   };
 
@@ -206,147 +157,83 @@ export const EditProfilScreen = ({ navigation }) => {
     if (updateUserInfo.status) {
       dispatch(ClearChangeProfile());
       getUserInfoAction(staticdata.token)
-      dispatch(UpdateUserInfo(data))
+      dispatch(UpdateUserInfo({
+        city: loaction.name,
+        date_of_birth: date,
+        gender: gender,
+        mgu: profation,
+        work_type: workLocation,
+        phone: phonNumber,
+        work_grafik: graf,
+        web: web,
+      })) //chjnjel
       navigation.navigate('ProfileScreen')
     }
-  }, [updateUserInfo.status])
+  }, [updateUserInfo.status, changeProfil.status])
 
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <HeaderWhiteTitle
-        loading={changeProfil.loading}
-        onCheck={() => chnageProfil()}
-        check
-        onPress={() => navigation.goBack()}
-        title=
-        {t(mainData.lang).Editprofile}
-      />
-
-      <View style={{ alignItems: 'center', marginVertical: 40 }}>
-        <Image
-          style={styles.img}
-          source={{
-            uri: `https://chambaonline.pro/uploads/${user.data.avatar}`,
-          }}
+    <View style={{ flex: 1 }}>
+      {/* <CalendarComponent /> */}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <HeaderWhiteTitle
+          loading={changeProfil.loading}
+          onCheck={() => chnageProfil()}
+          check
+          onPress={() => navigation.goBack()}
+          title=
+          {t(mainData.lang).Editprofile}
         />
-      </View>
-      <View style={styles.textWrapper}>
-        <TextInput
-          value={name}
-          onChangeText={e => setName(e)}
-          style={Styles.darkMedium14}
-        />
-      </View>
-      <View style={styles.textWrapper}>
-        <TextInput
-          placeholder={t(mainData.lang).Brieflyaboutyourself}
-          placeholderTextColor={'#8C9CAB'}
-          multiline={true}
-          value={discription}
-          onContentSizeChange={event => {
-            setHeight(event.nativeEvent.contentSize.height);
-          }}
-          style={[Styles.balihaiMedium14, { height: height }]}
-          onChangeText={e => setDiscription(e)}
-        />
-      </View>
-      <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
-        (чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
-        Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)
-      </Text>
-      <View>
-        {/* <Text style={[Styles.darkRegular16, { paddingHorizontal: 15, marginTop: 30 }]}>{t(mainData.lang).Addinformation}</Text> */}
-        {data.map((elm, i) => {
-          if (elm.type == 'input') {
-            return <View key={i} style={styles.textWrapper2}>
-              {elm.svg}
-              <TextInput
-                editable={elm.disabled}
-                placeholder={elm.placeholder}
-                placeholderTextColor={'#8C9CAB'}
-                value={elm.value}
-                onChangeText={e => hadnelChange(i, e)}
-                style={[Styles.balihaiMedium14, { width: '90%' }]}
-              />
-            </View>
+        <View style={styles.textWrapper}>
+          <TextInput
+            value={name}
+            onChangeText={e => setName(e)}
+            style={Styles.darkMedium14}
+          />
+        </View>
+        <Fild value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
+        {!accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
+          (чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
+          Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)
+        </Text> :
+          <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
+            (чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
+            Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города)
+          </Text>
+        }
+        <View>
+          {accauntType &&
+            <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />
           }
-          else if (elm.type == 'calendar') {
-            return <Date
-              day={day}
-              year={year}
-              mount={mount}
-              key={i}
-              setDay={(e) => setDay(e)}
-              setYera={(e) => setYera(e)}
-              setMount={(e) => setMount(e)}
-            />
-          }
-          else {
-            return <TouchableOpacity onPress={() => handelPress(elm.placeholder)} key={i} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
-              <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                {elm.svg}
-                {i == 1 ?
-                  <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{elm.value2 ? elm.value2 : elm.placeholder}</Text> :
-                  <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{elm.value ? elm.value : elm.placeholder}</Text>}
-              </View>
-              <DownArrow />
-            </TouchableOpacity>
-          }
-        })}
-      </View>
-      <Text
-        style={[[Styles.tomatoMedium10, { textAlign: 'center', marginTop: 10 }]]}>
-        {error || changeProfil.error}
-      </Text>
-      <View style={{ position: 'absolute' }}>
-        <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
-          <View style={{ paddingHorizontal: 20 }}>
-            <TouchableOpacity onPress={() => {
-              hadnelChange(2, 'Мужской')
-              bottomSheetRef.current?.close()
-            }} style={{ marginBottom: 20, marginTop: 20 }} >
-              <Text style={Styles.darkRegular14}>{t(mainData.lang).Male}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              hadnelChange(2, 'Женский')
-              bottomSheetRef.current?.close()
-
-            }} style={{ marginBottom: 20 }}>
-              <Text style={Styles.darkRegular14}>{t(mainData.lang).Female}</Text>
-            </TouchableOpacity>
-          </View>
-        </BootomModal>
-      </View>
-      {city && <CityModal onPress={(e) => hadnelChange(0, e, type = 'city')} close={() => setCity(false)} visible={city} />}
-    </ScrollView>
+          <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
+          {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
+          {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
+          <Fild value={profation} hadnelChange={(e) => setProfation(e)} svg={<ProfetionsSvg />} placeholder={accauntType ?
+            t(mainData.lang).ProfessionFieldofactivity :
+            'Сфера/Отрасль'
+          } />
+          {!accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
+          {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WorkLocation />} placeholder={'График работы'} />}
+          {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
+          <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />
+          <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
+        </View>
+        <Text
+          style={[[Styles.tomatoMedium10, { textAlign: 'center', marginTop: 10 }]]}>
+          {error || changeProfil.error}
+        </Text>
+      </ScrollView>
+      {/* <CalendarComponent /> */}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  img: {
-    width: 80,
-    height: 80,
-    borderRadius: 50,
-  },
-  edit: {
-    position: 'absolute',
-    bottom: -5,
-    right: 0,
-  },
   textWrapper: {
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderBottomColor: AppColors.Solitude_Color,
     borderBottomWidth: 1,
-  },
-  textWrapper2: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderBottomColor: AppColors.Solitude_Color,
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
 
