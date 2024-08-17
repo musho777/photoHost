@@ -8,7 +8,7 @@ import { Catalog } from '../screens/catalog';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { TouchableOpacity } from 'react-native';
 import { Styles } from '../styles/Styles';
-import { ClearLoginAction, LogoutAction } from '../store/action/action';
+import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
 import { BackArrow } from '../assets/svg/Svgs';
 import AccauntParametrNavigation from './AccauntParametrNavigation';
 import MyPageNavigation from './MyPageNavigation';
@@ -21,6 +21,7 @@ function CustomDrawerContent(props) {
   const LogOut = async () => {
     dispatch(LogoutAction(staticdata.token))
     dispatch(ClearLoginAction())
+    dispatch(ClearUser())
     props.navigation.navigate('LoginScreen1', { screen: 'LoginScreen' })
   }
   return (

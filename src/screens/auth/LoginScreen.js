@@ -4,7 +4,7 @@ import { Styles } from '../../styles/Styles';
 import { Button } from '../../ui/Button';
 import { Input } from '../../ui/Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { ClearConfirmPasswordAction, ClearLoginAction, LoginAction } from '../../store/action/action';
+import { ClearConfirmPasswordAction, ClearLoginAction, LoginAction, DeleteTokenSorage } from '../../store/action/action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ChecboxUNchekedSvg, CheckedChexbox } from '../../assets/svg/Svgs';
 import { t } from '../../components/lang';
@@ -46,11 +46,11 @@ export const LoginScreen = ({ navigation }) => {
     if (password) {
       setPasswod({ error: '', value: password })
     }
-
   }
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       dispatch(ClearLoginAction())
+      DeleteTokenSorage()
       dispatch(ClearConfirmPasswordAction())
       getLoginPassword()
     });

@@ -45,6 +45,13 @@ export const StatisticList = ({ id, token }) => {
     }
     setTableDat(item)
   }, [getStatistic2.data])
+  const formatTime = (totalSeconds) => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+
+    return `${hours > 0 ? `${hours}h:` : ''}${minutes > 0 ? `${minutes}m:` : ''}${secs}s`;
+  };
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
       <Text style={[{ textAlign: 'center' }, Styles.darkMedium16]}>СТАТИСТИКА</Text>
@@ -54,7 +61,7 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>просмотров - {getStatistic1.data.get_view_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getStatistic1.data.get_post_view_minute} секунды</Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {formatTime(getStatistic1.data.get_post_view_minute)} секунды</Text>
             <Text style={Styles.darkSemiBold14}>ПЕРЕХОД  (С ЛЕНТЫ СОБЫТИЙ НА ВАШ АККАУНТ) - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>

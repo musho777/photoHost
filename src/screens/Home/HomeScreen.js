@@ -35,6 +35,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     setTimeout(() => {
+      console.log(userData.data.show_category_pop_up)
       if (userData.data.show_category_pop_up == 1) {
         setShowModal(true)
       }
@@ -71,6 +72,16 @@ export const HomeScreen = () => {
     item.push(e);
     setBlackList(item);
   }
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      End()
+    }, 30000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+
 
   const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
     const paddingToBottom = 900;

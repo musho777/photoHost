@@ -10,7 +10,6 @@ import { useState } from "react";
 export const DateComponent = ({ setDay, day, mount, setMount, year, setYera }) => {
   const mainData = useSelector(st => st.mainData);
   const [openMount, setOpenMout] = useState(false)
-  console.log(year)
   return <View>
     <View style={styles.calnedarView}>
       <View style={{ width: '28%' }}>

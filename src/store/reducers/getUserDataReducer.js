@@ -100,6 +100,16 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'DelateFollower':
       item.followersCount = item.followersCount - 1
       break
+    case 'ClearUser':
+      item.data = {}
+      item.allData = {}
+      item.message = 0
+      item.username = ''
+      item.name = ''
+      item.description = ''
+      item.email = ''
+      item.avatar = ''
+      break
     default:
       break;
   }

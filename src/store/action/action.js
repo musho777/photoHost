@@ -204,9 +204,10 @@ export const ConfirmRegisterCode = data => {
     })
       .then(response => response.json())
       .then(r => {
-        setTokenSorage(r.token, r.user.id);
         if (r.status) {
           dispatch(setToken(r.token));
+          setTokenSorage(r.token, r.user.id);
+          dispatch(getUserInfoAction(r.token))
           dispatch(SuccessConfirmRegisterCode(r));
         } else {
           dispatch(ErrorConfirmRegisterCode('Неверный код'));
@@ -374,7 +375,7 @@ export const chnageUserProfil = (data, token) => {
         }
       })
       .catch(error => {
-        dispatch(ErrorChangeProfile('такой пользователь уже авторизован'));
+        dispatch(ErrorChangeProfile(''));
       });
   };
 };
@@ -842,6 +843,7 @@ export const LogoutAction = token => {
       .then(r => {
         if (r.status) {
           DeleteTokenSorage();
+          dispatch(ClearUser())
           dispatch(SuccessLogout(r));
         } else {
           dispatch(ErrorLogout('server error'));
@@ -853,7 +855,7 @@ export const LogoutAction = token => {
   };
 };
 
-async function DeleteTokenSorage() {
+export async function DeleteTokenSorage() {
   await AsyncStorage.removeItem('token');
 }
 
@@ -1474,7 +1476,6 @@ export const UpdateIkInfoAction = (data, token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorUpdateIKInfor())
       });
   };
@@ -1824,4 +1825,10 @@ export const GetStatisitc2 = (id, token) => {
         dispatch(ErrorGetStatisitc2('server error'))
       });
   };
+}
+
+export const ClearUser = () => {
+  return {
+    type: 'ClearUser'
+  }
 }

@@ -1,21 +1,20 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WorkLocation } from '../../../assets/svg/Svgs';
+import { EmailSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from '../../../assets/svg/Svgs';
 import { AppColors } from '../../../styles/AppColors';
 import { Styles } from '../../../styles/Styles';
 import React, { useEffect } from 'react';
 import { HeaderWhiteTitle } from '../../../headers/HeaderWhiteTitle.';
 import { UpdateIkInfoAction, UpdateUserInfo, chnageUserProfil, getUserInfoAction } from '../../../store/action/action';
-import { ClearChangeProfile, ClearChangeProfileTrue } from '../../../store/action/clearAction';
+import { ClearChangeProfile } from '../../../store/action/clearAction';
 import { t } from '../../../components/lang';
 import { DateComponent } from './components/date';
 import { Fild } from './components/Fild';
 import { Location } from './components/location';
 import { ChnageGender } from './components/changeGender';
-import { LocaleConfig, Calendar } from 'react-native-calendars';
-import { CalendarComponent } from './components/Calendar';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const EditProfilScreen = ({ navigation }) => {
 
@@ -40,6 +39,7 @@ export const EditProfilScreen = ({ navigation }) => {
   const updateUserInfo = useSelector((st) => st.updateUserInfo)
   const [error, setError] = useState('');
   const user = useSelector(st => st.userData);
+
   const staticdata = useSelector(st => st.static);
   const changeProfil = useSelector(st => st.changeUserProfil);
   const [loaction, setLocation] = useState({ name: '', id: '' })
@@ -60,34 +60,41 @@ export const EditProfilScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (day || mount?.id || year) {
-      console.log(mount, 'mount')
       const newDateFormat = `${year}-${mount?.id + 1}-${day}`;
       setDate(newDateFormat)
     }
   }, [day, mount, year])
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
-      if (staticdata.token) {
-        SetData()
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
-
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', async () => {
+  //     if (staticdata.token) {
+  //       SetData()
+  //     }
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
+  useFocusEffect(
+    useCallback(() => {
+      SetData()
+    }, [user.data])
+  );
 
   const SetData = () => {
+    if (user?.allData?.data?.user_type != 'Legal_entity') {
+      setAccauntType(true)
+    }
+    setName(user.name);
+    setDiscription(user.description);
     let date = ''
     let year = ''
     let month = ''
     let day = ''
-    if (user?.allData?.data.date_of_birth) {
-      date = new Date(user?.allData?.data.date_of_birth);
+    if (user?.allData?.data?.date_of_birth) {
+      date = new Date(user?.allData?.data?.date_of_birth);
       year = JSON.stringify(date.getFullYear());
       month = String(date.getMonth() + 1).padStart(2, '0');
       day = String(date.getDate()).padStart(2, '0');
     }
-    console.log(month, year)
     if (month[0] == 0) {
       month = month[1] - 1
     }
@@ -96,27 +103,14 @@ export const EditProfilScreen = ({ navigation }) => {
     setMount(mountDate[month])
     setDay(day)
     setEmail(user?.allData?.data?.email)
-    setLocation({ name: temp.city?.name, id: '' })
-    setGender(temp.gender)
-    setWorkLocation(temp.work_type)
-    setProfation(temp.mgu)
-    setPhonNumber(temp.phone)
-    setWeb(temp.web)
-    setGraf(temp.work_grafik)
-
+    setLocation({ name: temp?.city?.name, id: '' })
+    setGender(temp?.gender)
+    setWorkLocation(temp?.work_type)
+    setProfation(temp?.mgu)
+    setPhonNumber(temp?.phone)
+    setWeb(temp?.web)
+    setGraf(temp?.work_grafik)
   }
-
-
-  useEffect(() => {
-    if (user?.allData?.data?.user_type != 'Legal_entity') {
-      setAccauntType(true)
-    }
-    if (!name) {
-      setName(user.name);
-      setDiscription(user.description);
-      SetData()
-    }
-  }, [user]);
 
   const chnageProfil = () => {
     if (name === '') {
@@ -124,22 +118,12 @@ export const EditProfilScreen = ({ navigation }) => {
     } else {
       setError('');
     }
-    if (name != user.allData.data.name) {
-      dispatch(chnageUserProfil({
-        name: name,
-        nickname: "#",
-      }, staticdata.token
-      ));
-    }
-    else {
-      dispatch(ClearChangeProfileTrue());
-    }
-    if (discription != user.allData.data.description) {
-      dispatch(chnageUserProfil({
-        description: discription,
-      }, staticdata.token
-      ));
-    }
+    dispatch(chnageUserProfil({
+      name: name,
+      nickname: '#',
+      description: discription,
+    }, staticdata.token
+    ));
     dispatch(UpdateIkInfoAction({
       city_id: loaction.id,
       date_of_birth: date,
@@ -213,7 +197,7 @@ export const EditProfilScreen = ({ navigation }) => {
             'Сфера/Отрасль'
           } />
           {!accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
-          {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WorkLocation />} placeholder={'График работы'} />}
+          {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />}
           {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
           <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />
           <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />

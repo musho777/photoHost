@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ScrollView, TouchableOpacity } from "react-native"
 import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from "../../assets/svg/Svgs"
 import { InfoItem } from "./components/infoItem"
+import { useFocusEffect } from "@react-navigation/native"
 
 export const InfoBlock = ({ user }) => {
     const [location, setLocation] = useState('')
@@ -17,13 +18,20 @@ export const InfoBlock = ({ user }) => {
 
 
     const GetData = () => {
+        console.log(user.date_of_birth, 'user.date_of_birth')
         let date = new Date(user.date_of_birth);
-
-        const year = date.getFullYear();
-        console.log(date, '11')
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        setDate(`${day}.${month}.${year}`)
+        let year = ''
+        let month = ''
+        let day = ''
+        if (user.date_of_birth) {
+            year = date.getFullYear();
+            month = String(date.getMonth() + 1).padStart(2, '0');
+            day = String(date.getDate()).padStart(2, '0');
+            setDate(`${day}.${month}.${year}`)
+        }
+        else {
+            setDate(`-`)
+        }
         setLocation(user.city?.name ? user.city?.name : '-')
         setGender(user.gender ? user.gender : '-')
         setProfetion(user.mgu ? user.mgu : '-')
@@ -32,14 +40,22 @@ export const InfoBlock = ({ user }) => {
         setEmail(user.email ? user.email : '-')
         setPhone(user.phone ? user.phone : '-')
         setGraf(user.work_grafik ? user.work_grafik : '-')
-        console.log(user.user_type)
         if (user.user_type == 'Legal_entity') {
             setUserType(false)
         }
     }
-    useEffect(() => {
-        GetData()
-    }, [user.mgu, user.phone, user.work_type, user.email, user.gender, user.date_of_birth, user.city, user.web])
+
+
+    useFocusEffect(
+        useCallback(() => {
+            GetData()
+        }, [user])
+    );
+
+
+    // useEffect(() => {
+    //     GetData()
+    // }, [user.mgu, user.phone, user.work_type, user.email, user.gender, user.date_of_birth, user.city, user.web])
 
 
     return <ScrollView showsVerticalScrollIndicator={false}>
