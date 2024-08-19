@@ -77,6 +77,7 @@ export const ProfileNavigation = () => {
         component={MyPageNavigation}
         options={{
           headerShown: false,
+          unmountOnBlur: false
         }}
       />
       <Drawer.Screen

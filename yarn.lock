@@ -11231,6 +11231,7 @@ __metadata:
     react-native-table-component: ^1.2.2
     react-native-vector-icons: ^10.1.0
     react-native-video: ^5.2.1
+    react-native-video-cache: ^2.7.4
     react-native-video-controls: ^2.8.1
     react-native-video-player: ^0.14.0
     react-native-view-shot: ^3.8.0
@@ -12140,6 +12141,16 @@ react-native-snap-carousel@latest:
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
   checksum: c1e1d7c7ccc110e99caaed4d57324d5331dfa91817183350d2fd4df16d2302e7363da1f7a2b87011da3936b77aac3a7bf8ee11844dd8786b8b7dbc6553494866
+  languageName: node
+  linkType: hard
+
+"react-native-video-cache@npm:^2.7.4":
+  version: 2.7.4
+  resolution: "react-native-video-cache@npm:2.7.4"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 9e737f12ea68de156f45f0d7eecfa9b68bacb8a6131c9d21a5a7289faf01e3ae8dd61e6e2aa3a5f0d02894c40253c6d86aa2c5523f7fa6736a7d819497be7be1
   languageName: node
   linkType: hard
 

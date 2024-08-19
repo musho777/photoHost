@@ -65,14 +65,6 @@ export const EditProfilScreen = ({ navigation }) => {
     }
   }, [day, mount, year])
 
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', async () => {
-  //     if (staticdata.token) {
-  //       SetData()
-  //     }
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
   useFocusEffect(
     useCallback(() => {
       SetData()
@@ -115,9 +107,22 @@ export const EditProfilScreen = ({ navigation }) => {
   const chnageProfil = () => {
     if (name === '') {
       setError('Введите корректный  имя');
-    } else {
+    }
+
+
+    else if (day == '' && (mount != '' || year != '')) {
+      setError('Введите корректный дата');
+    }
+    else if (mount == '' && (day != '' || year != '')) {
+      setError('Введите корректный дата');
+    }
+    else if (year == '' && (day != '' || mount != '')) {
+      setError('Введите корректный дата');
+    }
+    else {
       setError('');
     }
+
     dispatch(chnageUserProfil({
       name: name,
       nickname: '#',
@@ -150,7 +155,7 @@ export const EditProfilScreen = ({ navigation }) => {
         phone: phonNumber,
         work_grafik: graf,
         web: web,
-      })) //chjnjel
+      }))
       navigation.navigate('ProfileScreen')
     }
   }, [updateUserInfo.status, changeProfil.status])
@@ -158,7 +163,6 @@ export const EditProfilScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <CalendarComponent /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderWhiteTitle
           loading={changeProfil.loading}
@@ -207,7 +211,6 @@ export const EditProfilScreen = ({ navigation }) => {
           {error || changeProfil.error}
         </Text>
       </ScrollView>
-      {/* <CalendarComponent /> */}
     </View>
   );
 };

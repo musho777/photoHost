@@ -34,6 +34,7 @@ export const ProfileScreen = ({ navigation }) => {
       onPress={() => setChangeAvatar(false)}
       style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
       <ScrollView
+        removeClippedSubviews={false}
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         refreshControl={

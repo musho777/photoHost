@@ -1,9 +1,11 @@
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import { AddSecSvg, AddSecSvg1, FullScrenn, MuteSvg, Pause, StartSvg } from '../../assets/svg/Svgs';
 import { Styles } from '../../styles/Styles';
+import { Skeleton } from '../Skeleton';
+import { useFocusEffect } from '@react-navigation/native';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -15,8 +17,9 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [paused, setPaused] = useState(true);
+  const [paused, setPaused] = useState(false);
   const [volume, setVolume] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const onPlayPausePress = () => {
     setFirst(false);
@@ -26,7 +29,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   };
 
   const onSeek = (value) => {
-    setHold(true)
+    setHold(true);
     setCurrentTime(value);
     videoRef.current.seek(value);
   };
@@ -41,10 +44,8 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     if (viewableItems?.length) {
       if (currentId === viewableItems[0]?.item.id && !viewableItems[0]?.isViewable) {
         setFirst(true);
-        setPaused(true);
       } else if (currentId !== viewableItems[0]?.item.id) {
         setFirst(true);
-        setPaused(true);
       }
     }
   }, [viewableItems]);
@@ -66,9 +67,8 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
       if (!holde) {
         setShowStartButton(false);
         setScrollEnabled(false);
-      }
-      else {
-        setHold(false)
+      } else {
+        setHold(false);
       }
     }, 3000);
 
@@ -81,93 +81,108 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
 
   const ChangeCurentTime = (data) => {
     if (currentTime <= duration) {
-      setCurrentTime(currentTime + 0.251)
-    }
-    else {
-      setCurrentTime(0)
+      setCurrentTime(currentTime + 0.251);
+    } else {
+      setCurrentTime(0);
       setPaused(true);
       videoRef.current.seek(0);
     }
-  }
-
+  };
+  useFocusEffect(
+    useCallback(() => {
+      setPaused(false);
+      setLoading(true)
+      return () => {
+        setPaused(true);
+      };
+    }, [])
+  );
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPressIn={() => {
-        setHold(true);
-        setCurrentId(item.id);
-        setShowStartButton(true);
-        setScrollEnabled(true);
-      }}
-      onPressOut={() => {
-        setHold(false);
-      }}
-      style={[{ position: 'relative', height: 550 }, big && { height: windowHeight, marginTop: -122 }]}
-    >
-      {(showStartButton || first) && (
-        <TouchableOpacity onPress={() => setResizeVidio()} style={{ position: 'absolute', top: 10, right: 10, zIndex: 999 }}>
-          <FullScrenn />
-        </TouchableOpacity>
-      )}
-      {(showStartButton || first) && (
-        <View style={styles.playButton}>
-          <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>
-            <AddSecSvg1 />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onPlayPausePress}>
-            {!paused ? <Pause /> : <StartSvg />}
-          </TouchableOpacity>
-          <TouchableOpacity onPress={AddCurrentTime}>
-            <AddSecSvg />
-          </TouchableOpacity>
-        </View>
-      )}
-      {paused && first && (
-        <View>
-          <Image style={[styles.Vidio, { objectFit: 'cover' }, big && { height: windowHeight }]} source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }} />
-        </View>
-      )}
-      <Video
-        ref={videoRef}
-        paused={paused}
-        repeat={false}
-        volume={volume}
-        style={[styles.Vidio, big && { height: windowHeight }]}
-        source={{ uri: `https://chambaonline.pro/uploads/${item.video}` }}
-        resizeMode={'cover'}
-        onLoad={(data) => setDuration(data.duration)}
-        onProgress={(data) => ChangeCurentTime(data)}
-        onEnd={() => {
-          setCurrentTime(0);
-          setPaused(true);
-          videoRef.current.seek(0);
+    <View style={{ position: 'relative', height: big ? windowHeight : 550 }}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPressIn={() => {
+          setHold(true);
+          setCurrentId(item.id);
+          setShowStartButton(true);
+          setScrollEnabled(true);
         }}
-      />
-      {(showStartButton || first) && (
-        <View style={styles.music}>
-          <Text style={Styles.whiteSemiBold13}>{music}</Text>
-          <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
-        </View>
-      )}
-      {(showStartButton || first) && (
-        <View style={styles.controls}>
-          <Slider
-            style={styles.seekSlider}
-            value={currentTime}
-            minimumValue={0}
-            maximumValue={duration}
-            onValueChange={onSeek}
-            minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="#000000"
-            thumbTintColor="#FFC24B"
-          />
-          <TouchableOpacity onPress={ChangeVolume}>
-            {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
+        onPressOut={() => {
+          setHold(false);
+        }}
+        style={{ position: 'absolute', width: '100%', height: '100%' }}
+      >
+        {(showStartButton || first) && (
+          <TouchableOpacity onPress={() => setResizeVidio()} style={{ position: 'absolute', top: 10, right: 10, zIndex: 999 }}>
+            <FullScrenn />
           </TouchableOpacity>
-        </View>
-      )}
-    </TouchableOpacity>
+        )}
+        {(showStartButton || first) && (
+          <View style={styles.playButton}>
+            <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>
+              <AddSecSvg1 />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onPlayPausePress}>
+              {!paused ? <Pause /> : <StartSvg />}
+            </TouchableOpacity>
+            <TouchableOpacity onPress={AddCurrentTime}>
+              <AddSecSvg />
+            </TouchableOpacity>
+          </View>
+        )}
+        {loading && (
+          <Skeleton
+            width={'100%'}
+            height={!big ? 550 : windowHeight}
+          />
+        )}
+        <Video
+          ref={videoRef}
+          paused={paused}
+          repeat={false}
+
+          volume={volume}
+          style={[styles.Vidio, big && { height: windowHeight }]}
+          source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
+          resizeMode={'cover'}
+          onLoad={(data) => {
+            setPaused(true);
+            setDuration(data.duration);
+            setLoading(false);
+          }}
+          onProgress={(data) => ChangeCurentTime(data)}
+          onEnd={() => {
+            setCurrentTime(0);
+            setPaused(true);
+            videoRef.current.seek(0);
+          }}
+        />
+        {(showStartButton || first) && (
+          <View style={styles.music}>
+            <Text style={Styles.whiteSemiBold13}>{music}</Text>
+            <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
+          </View>
+        )}
+        {(showStartButton || first) && (
+          <View style={styles.controls}>
+            <Slider
+              style={styles.seekSlider}
+              value={currentTime}
+              minimumValue={0}
+              maximumValue={duration}
+              onValueChange={onSeek}
+              minimumTrackTintColor="#FFFFFF"
+              maximumTrackTintColor="#000000"
+              thumbTintColor="#FFC24B"
+            />
+            <TouchableOpacity onPress={ChangeVolume}>
+              {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
+            </TouchableOpacity>
+          </View>
+        )}
+      </TouchableOpacity>
+    </View>
   );
 };
 

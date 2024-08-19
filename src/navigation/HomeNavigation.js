@@ -10,6 +10,7 @@ export const HomeNavigation = () => {
   return (
     <Stack.Navigator initialRouteName={'Catalog'}>
       <Stack.Screen
+        detachInactiveScreens={false}
         name="HomeScreen"
         component={HomeScreen}
         options={{

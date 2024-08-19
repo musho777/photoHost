@@ -35,7 +35,6 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log(userData.data.show_category_pop_up)
       if (userData.data.show_category_pop_up == 1) {
         setShowModal(true)
       }
@@ -180,6 +179,7 @@ export const HomeScreen = () => {
         token={staticdata.token}
       />}
       <FlatList
+        removeClippedSubviews={false}
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: 'rgb(237,238,240)' }}
         ref={flatListRef}

@@ -1,10 +1,24 @@
 import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import { StartSvg } from "../../assets/svg/Svgs"
-import { useNavigation } from "@react-navigation/native"
+import { useFocusEffect, useNavigation } from "@react-navigation/native"
+import Video from 'react-native-video';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Skeleton } from "../Skeleton";
 
 const windowWidth = Dimensions.get('window').width;
 
-export const ImageComponent = ({ video, photo, my, data }) => {
+export const ImageComponent = React.memo(({ video, photo, my, data }) => {
+  const videoRef = useRef(null);
+  const [paused, setPaused] = useState(false);
+  const [loading, setLoaidng] = useState(false)
+  const [videoPath, setVideoPath] = React.useState(null);
+  useFocusEffect(
+    useCallback(() => {
+      setLoaidng(true)
+      setPaused(false)
+    }, [])
+  );
+  console.log(video, 'video')
 
   const navigation = useNavigation()
   return <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate('SinglPageScreen', { data: data, my: my })}>
@@ -13,12 +27,48 @@ export const ImageComponent = ({ video, photo, my, data }) => {
         <StartSvg />
       </View>
     }
-    <Image
-      style={styles.img}
-      source={{ uri: `https://chambaonline.pro/uploads/${photo}`, }}
-    />
+    {!video ?
+      <Image
+        style={styles.img}
+        source={{ uri: `https://chambaonline.pro/uploads/${photo}`, }}
+      /> :
+      <View>
+        {loading &&
+          <Skeleton
+            width={windowWidth / 2 - 25}
+            height={windowWidth / 2 - 25}
+            style={{ borderRadius: 15 }}
+          />
+        }
+        <Video
+          ref={videoRef}
+          paused={paused}
+          repeat={false}
+          style={[styles.img, loading && { width: 0, height: 0 }]}
+          source={{ uri: 'https://chambaonline.pro/uploads/1722792250.mp4' }}
+          resizeMode={'cover'}
+          playInBackground={true}
+          playWhenInactive={true}
+          onLoad={(data) => {
+            setPaused(true)
+            setLoaidng(false)
+          }}
+          onEnd={() => {
+            setPaused(true);
+            videoRef.current.seek(0);
+          }}
+        />
+
+      </View>
+    }
   </TouchableOpacity>
-}
+}, (prevProps, nextProps) => {
+  return prevProps.video === nextProps.video &&
+    prevProps.photo === nextProps.photo &&
+    prevProps.my === nextProps.my &&
+    prevProps.data === nextProps.data;
+})
+
 const styles = StyleSheet.create({
   img: {
     width: windowWidth / 2 - 25,
