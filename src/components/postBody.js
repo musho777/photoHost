@@ -15,8 +15,9 @@ export const PostBody = ({
   liked,
   id,
   like,
+  user,
+  my
 }) => {
-  const user = useSelector((st) => st.userData)
   const likeRef = useRef(null)
   const CloseLike = () => { likeRef.current?.close() }
   const CloseView = () => { ViewRef.current?.close() }
@@ -71,6 +72,7 @@ export const PostBody = ({
       </View>
     </View>
     <TouchableOpacity
+      activeOpacity={my ? 0 : 1}
       onPress={() => handlePresentModalPressView()}
       style={Styles.flexAlignItems}>
       <ViewSvg />
@@ -85,13 +87,13 @@ export const PostBody = ({
       ref={likeRef}
       snapPoints={snapPointsLike}
     />
-    <ViewComponent
+    {my && <ViewComponent
       close={() => CloseView()}
       currentId={currentId}
       token={staticdata.token}
       id={id}
       ref={ViewRef}
       snapPoints={snapPointsLike}
-    />
+    />}
   </View>
 }

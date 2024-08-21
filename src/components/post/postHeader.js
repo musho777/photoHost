@@ -78,7 +78,7 @@ export const PostHeader = ({
   return <View style={[Styles.flexSpaceBetween, { padding: 10, position: 'relative' }]}>
     <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
     <TouchableOpacity onPress={() =>
-      user?.data.id !== userId ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userId, post_id: id } }) :
+      user?.data.id != userId ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userId, post_id: id } }) :
         navigation.navigate('ProfileNavigation')
     } style={Styles.flexAlignItems}>
       <Image style={styles.userImg}

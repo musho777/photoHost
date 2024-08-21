@@ -105,8 +105,11 @@ export const Post = ({
             commentCount={commentCount}
             liked={isLiked >= 0}
             view={view}
+            my={user?.data.id != userInfo.id ? false : true}
+            userId={userInfo.id}
             like={like}
             id={id}
+            user={user}
           />
         </View>
       </Shadow>

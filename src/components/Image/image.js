@@ -18,7 +18,6 @@ export const ImageComponent = React.memo(({ video, photo, my, data }) => {
       setPaused(false)
     }, [])
   );
-  console.log(video, 'video')
 
   const navigation = useNavigation()
   return <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate('SinglPageScreen', { data: data, my: my })}>

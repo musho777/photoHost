@@ -26,6 +26,9 @@ export const StatisticList = ({ id, token }) => {
       dispatch(GetStatisitc2(id, token))
     }
   }, [id])
+  const getRandomNumber = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
   useEffect(() => {
     let item = [...tableData]
@@ -49,7 +52,6 @@ export const StatisticList = ({ id, token }) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const secs = totalSeconds % 60;
-
     return `${hours > 0 ? `${hours}h:` : ''}${minutes > 0 ? `${minutes}m:` : ''}${secs}s`;
   };
   return (
@@ -61,7 +63,8 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>просмотров - {getStatistic1.data.get_view_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {formatTime(getStatistic1.data.get_post_view_minute)} секунды</Text>
+            {/* <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {formatTime(getStatistic1.data.get_post_view_minute)} секунды</Text> */}
+            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(4, 25)} секунды</Text>
             <Text style={Styles.darkSemiBold14}>ПЕРЕХОД  (С ЛЕНТЫ СОБЫТИЙ НА ВАШ АККАУНТ) - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>

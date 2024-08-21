@@ -54,7 +54,6 @@ export const Header = ({ data, navigation, my }) => {
           <BootomModalComponent
             ref={bottomSheetRef}
             setSaveType={(e) => setSaveType(e)}
-            my={my}
             id={data.id}
             setShowSave={() => setShowSave(true)}
             navigation={navigation}

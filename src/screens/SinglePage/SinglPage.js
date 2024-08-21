@@ -37,6 +37,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
       </Text>}
       <Slider music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       <PostBody
+        my={my}
         commentCount={data.comment_count}
         liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
         view={data.view_count}

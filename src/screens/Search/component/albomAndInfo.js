@@ -16,7 +16,7 @@ export const AlbomAndInfo = () => {
 
   const renderContent = () => {
     if (selectedTab === 'first') {
-      return <Albom loading={getPosts.loading} my={true} data={getPosts.data} />;
+      return <Albom loading={getPosts.loading} my={false} data={getPosts.data} />;
     }
     if (selectedTab === 'second') {
       return <InfoBlock user={singlPage.data} />;
