@@ -48,6 +48,7 @@ export const ViewList = ({ id, token, close, navigation }) => {
           }
         }
       }}>
+      <Text style={[{ textAlign: 'center' }, Styles.darkMedium16]}>ПРАСМОТРЫ</Text>
       {getPostView.data.map((elm, i) => {
         return (
           <TouchableOpacity

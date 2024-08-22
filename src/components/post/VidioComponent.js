@@ -18,7 +18,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const onPlayPausePress = () => {
@@ -54,12 +54,14 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     const newTime = Math.min(currentTime + 5, duration);
     videoRef.current.seek(newTime);
     setCurrentTime(newTime);
+    setShowStartButton(false);
   };
 
   const LakeCurrentTime = () => {
     const newTime = Math.max(currentTime - 5, 0);
     videoRef.current.seek(newTime);
     setCurrentTime(newTime);
+    setShowStartButton(false);
   };
 
   useEffect(() => {
@@ -141,7 +143,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           ref={videoRef}
           paused={paused}
           repeat={false}
-
           volume={volume}
           style={[styles.Vidio, big && { height: windowHeight }]}
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}

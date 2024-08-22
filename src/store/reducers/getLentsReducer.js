@@ -68,6 +68,9 @@ const GetLentsReducer = (state = initialState, action) => {
         }
       }
       break
+    case 'ClearLoginAction':
+      item.data = []
+      break
     default:
       break;
   }

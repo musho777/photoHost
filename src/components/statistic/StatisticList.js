@@ -17,7 +17,7 @@ export const StatisticList = ({ id, token }) => {
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
-  const widthArr = [100, 60, 80, 100, 120]
+  const widthArr = [100, 40, 40, 80, 80]
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -60,12 +60,14 @@ export const StatisticList = ({ id, token }) => {
       <View style={{ gap: 20, paddingHorizontal: 5, marginBottom: 50 }}>
         <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="СТАТИСТИКА НОМЕР 1">
           <View style={{ gap: 10, marginTop: 20, }}>
-            <Text style={Styles.darkSemiBold14}>лайков - {getStatistic1.data.get_like_count}</Text>
-            <Text style={Styles.darkSemiBold14}>комментариев - {getStatistic1.data.get_comment_count}</Text>
-            <Text style={Styles.darkSemiBold14}>просмотров - {getStatistic1.data.get_view_count}</Text>
+            <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
+            <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
+            <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
             {/* <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {formatTime(getStatistic1.data.get_post_view_minute)} секунды</Text> */}
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(4, 25)} секунды</Text>
-            <Text style={Styles.darkSemiBold14}>ПЕРЕХОД  (С ЛЕНТЫ СОБЫТИЙ НА ВАШ АККАУНТ) - {getStatistic1.data.get_post_page_count} </Text>
+            <Text style={Styles.darkSemiBold14}>Активность просмотров - {getRandomNumber(4, 25)} секунды</Text>
+            <Text style={Styles.darkSemiBold14}>ПЕРЕХОД
+              <Text style={{ fontSize: 10 }}>(С ЛЕНТЫ СОБЫТИЙ НА ВАШ АККАУНТ)</Text>
+              - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>
         </Accordion>
