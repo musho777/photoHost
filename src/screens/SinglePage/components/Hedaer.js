@@ -1,8 +1,8 @@
 import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Styles } from "../../../styles/Styles";
-import { BackArrow } from "../../../assets/svg/Svgs";
-import { MenuSvg } from "../../../assets/svg/TabBarSvg";
+import { BackArrow, WhiteBackArrow } from "../../../assets/svg/Svgs";
+import { MenuSvg, WhiteMenuSvg } from "../../../assets/svg/TabBarSvg";
 import { ShowSave } from "../../../components/post/showSave";
 import { MyBootomModal } from "./MyBootomModal";
 import { BootomModalComponent } from "./BootomModal";
@@ -10,7 +10,7 @@ import { BootomModal } from "../../../components/BootomSheet";
 import { useSelector } from "react-redux";
 
 
-export const Header = ({ data, navigation, my }) => {
+export const Header = ({ data, navigation, my, big = false }) => {
   const user = useSelector(st => st.userData);
   const [showSave, setShowSave] = useState(false)
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
@@ -35,10 +35,10 @@ export const Header = ({ data, navigation, my }) => {
     <ShowSave showSave={showSave} saveType={saveType} setShowSave={(e) => setShowSave(e)} />
     <View style={[Styles.flexSpaceBetween, styles.header]}>
       <TouchableOpacity onPress={() => { navigation.goBack() }}>
-        <BackArrow />
+        {big ? <WhiteBackArrow /> : <BackArrow />}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePresentModalPress()} style={styles.MenuSvg}>
-        <MenuSvg />
+        {big ? <WhiteMenuSvg /> : <MenuSvg />}
       </TouchableOpacity>
     </View>
     <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>

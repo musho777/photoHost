@@ -13,7 +13,7 @@ import { VidioModal } from '../../../components/post/VidionModal';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, music_name }) => {
+export const Slider = ({ photo, music_name, big = false }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [scroleEneble, setScrollEnabled] = useState(true)
@@ -40,7 +40,7 @@ export const Slider = ({ photo, music_name }) => {
         data={photo}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         renderItem={({ item, index }) => {
-          let aspectRatio = 0.65
+          let aspectRatio = 0.50
           return (
             <TouchableOpacity activeOpacity={1} style={styles.img}>
               {!item.video ? (
@@ -51,7 +51,7 @@ export const Slider = ({ photo, music_name }) => {
                 />
               ) : (
 
-                <VidioComponent setResizeVidio={() => {
+                <VidioComponent big={big} setResizeVidio={() => {
                   setSelectedVidio(item)
                   setResizeVidio(true)
                 }}

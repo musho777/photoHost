@@ -1,6 +1,7 @@
 import {
   Text,
   SafeAreaView,
+  View,
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { Slider } from './components/slider';
@@ -31,19 +32,24 @@ export const SinglPageScreen = ({ route, navigation }) => {
   );
   return (
     <SafeAreaView>
-      <Header data={data} navigation={navigation} my={my} />
-      {data.description && <Text style={[Styles.darkSemiBold12, { marginTop: 5, marginBottom: 10, paddingHorizontal: 10 }]}>
-        {data.description}
-      </Text>}
-      <Slider music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
-      <PostBody
-        my={my}
-        commentCount={data.comment_count}
-        liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
-        view={data.view_count}
-        like={data.like_count}
-        id={data.id}
-      />
+      <View style={{ position: 'absolute', top: 0, zIndex: 999, width: "100%" }}>
+        <Header big={true} data={data} navigation={navigation} my={my} />
+        {data.description && <Text style={[Styles.darkSemiBold12, { marginTop: 5, marginBottom: 10, paddingHorizontal: 10, color: 'white' }]}>
+          {data.description}
+        </Text>}
+      </View>
+      <Slider big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+      <View style={{ position: 'absolute', bottom: 15, width: '100%', zIndex: 999 }}>
+        <PostBody
+          my={my}
+          commentCount={data.comment_count}
+          liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
+          view={data.view_count}
+          like={data.like_count}
+          id={data.id}
+          big={true}
+        />
+      </View>
     </SafeAreaView>
   );
 };

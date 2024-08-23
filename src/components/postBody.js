@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { Comment, Heart, ViewSvg } from "../assets/svg/TabBarSvg";
-import { NotLineSvg } from "../assets/svg/Svgs";
+import { Comment, CommentWhite, Heart, ViewSvg, WhiteHeart, WhiteViewSvg } from "../assets/svg/TabBarSvg";
+import { NotLineSvg, NotLineSvgWhite } from "../assets/svg/Svgs";
 import { Styles } from "../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -16,7 +16,8 @@ export const PostBody = ({
   id,
   like,
   user,
-  my
+  my,
+  big = false
 }) => {
   const likeRef = useRef(null)
   const CloseLike = () => { likeRef.current?.close() }
@@ -53,30 +54,39 @@ export const PostBody = ({
     ]}>
     <View style={Styles.flexAlignItems}>
       <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>
-        <TouchableOpacity onPress={() => { LikePost() }}>
+        {big ? <TouchableOpacity onPress={() => { LikePost() }}>
+          {liked ? <WhiteHeart /> : <NotLineSvgWhite />}
+        </TouchableOpacity> : <TouchableOpacity onPress={() => { LikePost() }}>
           {liked ? <Heart /> : <NotLineSvg />}
         </TouchableOpacity>
+        }
         <TouchableOpacity onPress={() => {
           dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
           handlePresentModalPressLike()
         }
         }>
-          <Text style={[Styles.darkMedium14]}> - {like}</Text>
+          <Text style={[Styles.darkMedium14, big && { color: 'white' }]}> - {like}</Text>
         </TouchableOpacity>
       </View>
       <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>
         <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })}>
-          <Comment />
+          {big ?
+            <CommentWhite /> :
+            <Comment />
+          }
         </TouchableOpacity>
-        <Text style={[Styles.darkMedium14]}> - {commentCount}</Text>
+        <Text style={[Styles.darkMedium14, big && { color: 'white' }]}> - {commentCount}</Text>
       </View>
     </View>
     <TouchableOpacity
       activeOpacity={my ? 0 : 1}
       onPress={() => handlePresentModalPressView()}
       style={Styles.flexAlignItems}>
-      <ViewSvg />
-      <Text style={[Styles.balihaiRegular14, { marginLeft: 5 }]}>
+      {big ?
+        <WhiteViewSvg /> :
+        <ViewSvg />
+      }
+      <Text style={[Styles.balihaiRegular14, big && { color: 'white' }, { marginLeft: 5 }]}>
         {view}
       </Text>
     </TouchableOpacity>

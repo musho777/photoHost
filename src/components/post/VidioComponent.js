@@ -166,7 +166,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           </View>
         )}
         {(showStartButton || first) && (
-          <View style={styles.controls}>
+          <View style={[styles.controls, big && { bottom: 40 }]}>
             <Slider
               style={styles.seekSlider}
               value={currentTime}
