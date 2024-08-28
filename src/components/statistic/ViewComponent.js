@@ -62,10 +62,10 @@ export const ViewComponent = forwardRef(
           <StatisticList token={token} id={id} />}
 
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: 50, alignItems: 'center' }}>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: '#FFC24B', borderRadius: 10, }} onPress={() => setStatistic(false)}>
+          <TouchableOpacity style={[{ padding: 10, borderRadius: 10, }, statistic == false && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(false)}>
             <ViewListSwg active={!statistic} />
           </TouchableOpacity>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: '#FFC24B', borderRadius: 10 }} onPress={() => setStatistic(true)}>
+          <TouchableOpacity style={[{ padding: 10, borderRadius: 10 }, statistic && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(true)}>
             <StatisticSvg active={!statistic} />
           </TouchableOpacity>
         </View>

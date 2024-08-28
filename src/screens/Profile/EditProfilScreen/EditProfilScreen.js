@@ -15,6 +15,7 @@ import { Fild } from './components/Fild';
 import { Location } from './components/location';
 import { ChnageGender } from './components/changeGender';
 import { useFocusEffect } from '@react-navigation/native';
+import { Profiesions } from './components/Profiesions';
 
 export const EditProfilScreen = ({ navigation }) => {
 
@@ -39,7 +40,7 @@ export const EditProfilScreen = ({ navigation }) => {
   const updateUserInfo = useSelector((st) => st.updateUserInfo)
   const [error, setError] = useState('');
   const user = useSelector(st => st.userData);
-
+  const [otrasl, setOtrasl] = useState('')
   const staticdata = useSelector(st => st.static);
   const changeProfil = useSelector(st => st.changeUserProfil);
   const [loaction, setLocation] = useState({ name: '', id: '' })
@@ -102,6 +103,7 @@ export const EditProfilScreen = ({ navigation }) => {
     setPhonNumber(temp?.phone)
     setWeb(temp?.web)
     setGraf(temp?.work_grafik)
+    setOtrasl(temp?.otrasl)
   }
 
   const chnageProfil = () => {
@@ -138,6 +140,7 @@ export const EditProfilScreen = ({ navigation }) => {
       phone: phonNumber,
       work_grafik: graf,
       web: web,
+      otrasl: otrasl,
       user_type: user?.allData?.data.user_type,
     }, staticdata.token))
   };
@@ -155,6 +158,7 @@ export const EditProfilScreen = ({ navigation }) => {
         phone: phonNumber,
         work_grafik: graf,
         web: web,
+        otrasl: otrasl,
       }))
       navigation.navigate('ProfileScreen')
     }
@@ -190,26 +194,24 @@ export const EditProfilScreen = ({ navigation }) => {
           </Text>
         }
         <View>
-          {accauntType &&
-            <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />
-          }
+          {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
           <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
           {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
           {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
-          <Fild value={profation} hadnelChange={(e) => setProfation(e)} svg={<ProfetionsSvg />} placeholder={accauntType ?
-            t(mainData.lang).ProfessionFieldofactivity :
-            'Сфера/Отрасль'
-          } />
+          <Fild value={profation} hadnelChange={(e) => setProfation(e)} svg={<ProfetionsSvg />} placeholder={t(mainData.lang).ProfessionFieldofactivity} />
+          {!accauntType &&
+            <Profiesions setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
+          }
           {!accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
           {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />}
           {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
           <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />
           <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
         </View>
-        <Text
+        {/* <Text
           style={[[Styles.tomatoMedium10, { textAlign: 'center', marginTop: 10 }]]}>
           {error || changeProfil.error}
-        </Text>
+        </Text> */}
       </ScrollView>
     </View>
   );

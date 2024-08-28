@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { ScrollView, TouchableOpacity } from "react-native"
-import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from "../../assets/svg/Svgs"
+import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, Otrastel, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from "../../assets/svg/Svgs"
 import { InfoItem } from "./components/infoItem"
 import { useFocusEffect } from "@react-navigation/native"
 
@@ -15,6 +15,7 @@ export const InfoBlock = ({ user }) => {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [graf, setGraf] = useState('')
+    const [otrastel, setOtrasel] = useState('')
 
 
     const GetData = () => {
@@ -37,26 +38,27 @@ export const InfoBlock = ({ user }) => {
         setProfetion(user.mgu ? user.mgu : '-')
         setWorkLocation(user.work_type ? user.work_type : '-')
         setWeb(user.web ? user.web : '-')
+        setOtrasel(user.otrasl ? user.otrasl : '-')
         setEmail(user.email ? user.email : '-')
         setPhone(user.phone ? user.phone : '-')
         setGraf(user.work_grafik ? user.work_grafik : '-')
         if (user.user_type == 'Legal_entity') {
             setUserType(false)
         }
+        else {
+            setUserType(true)
+
+        }
     }
 
 
     useFocusEffect(
         useCallback(() => {
+            console.log(user)
             GetData()
         }, [user])
     );
-
-
-    // useEffect(() => {
-    //     GetData()
-    // }, [user.mgu, user.phone, user.work_type, user.email, user.gender, user.date_of_birth, user.city, user.web])
-
+    console.log(userType)
 
     return <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableOpacity activeOpacity={1}>
@@ -66,6 +68,7 @@ export const InfoBlock = ({ user }) => {
             <InfoItem svg={<ProfetionsSvg />} value={profetion} />
             <InfoItem svg={<WorkLocation />} value={workLocation} />
             {!userType && <InfoItem svg={<NetWorkSvg />} value={web} />}
+            {!userType && <InfoItem svg={<Otrastel />} value={otrastel} />}
             {!userType && <InfoItem svg={<WatchSvg />} value={graf} />}
             <InfoItem svg={<EmailSvg />} value={email} />
             <InfoItem svg={<PhoneSvg />} value={phone} />

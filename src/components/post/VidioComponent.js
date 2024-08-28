@@ -44,8 +44,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     if (viewableItems?.length) {
       if (currentId === viewableItems[0]?.item.id && !viewableItems[0]?.isViewable) {
         setFirst(true);
-      } else if (currentId !== viewableItems[0]?.item.id) {
+        setPaused(true)
+      } else if ((currentId !== viewableItems[0]?.item.id) && viewableItems[0]?.item.id && currentId) {
         setFirst(true);
+        setPaused(true)
       }
     }
   }, [viewableItems]);

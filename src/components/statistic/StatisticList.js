@@ -13,6 +13,7 @@ import { AppColors } from '../../styles/AppColors';
 
 
 export const StatisticList = ({ id, token }) => {
+  console.log(id)
   const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'кол-во просмотров ']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
@@ -42,7 +43,12 @@ export const StatisticList = ({ id, token }) => {
           else if (gender == 'women') {
             gender = "Ж"
           }
-          item.push([elm.date, elm.hour_range, gender, el.year, el.count])
+
+          let year = elm.date.slice(2, 4)
+          let mounth = elm.date.slice(5, 7)
+          let day = elm.date.slice(8, 10)
+          const newDateString = `${day}.${mounth}.${year}`;
+          item.push([newDateString, elm.hour_range, gender, el.year, el.count])
         })
       })
     }
@@ -65,7 +71,7 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
             {/* <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {formatTime(getStatistic1.data.get_post_view_minute)} секунды</Text> */}
             <Text style={Styles.darkSemiBold14}>Активность просмотров - {getRandomNumber(4, 25)} секунды</Text>
-            <Text style={Styles.darkSemiBold14}>ПЕРЕХОД
+            <Text style={Styles.darkSemiBold14}>Переход
               <Text style={{ fontSize: 10 }}>(С ЛЕНТЫ СОБЫТИЙ НА ВАШ АККАУНТ)</Text>
               - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontFamily: 'Montserrat-SemiBold',
-    fontSize: 12,
+    fontSize: 10,
     color: AppColors.Charcoal_Color,
     textAlign: 'center'
   },

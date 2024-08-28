@@ -86,6 +86,7 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.data.work_type = action.data.work_type
       item.data.web = action.data.web
       item.data.phone = action.data.phone
+      item.data.otrasl = action.data.otrasl
       break
 
     case 'AddDeletFollowAction':
