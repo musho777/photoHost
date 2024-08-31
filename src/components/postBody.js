@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
 import { Comment, CommentWhite, Heart, ViewSvg, WhiteHeart, WhiteViewSvg } from "../assets/svg/TabBarSvg";
 import { NotLineSvg, NotLineSvgWhite } from "../assets/svg/Svgs";
 import { Styles } from "../styles/Styles";
@@ -22,6 +22,7 @@ export const PostBody = ({
   const likeRef = useRef(null)
   const CloseLike = () => { likeRef.current?.close() }
   const CloseView = () => { ViewRef.current?.close() }
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
 
   const [currentId, setCurrentId] = useState(null)
@@ -30,6 +31,7 @@ export const PostBody = ({
   const navigation = useNavigation()
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
+  const [showView, setShowView] = useState(false)
 
   const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
   const handlePresentModalPressView = useCallback(() => {
@@ -78,9 +80,14 @@ export const PostBody = ({
         <Text style={[Styles.darkMedium14, big && { color: 'white' }]}> - {commentCount}</Text>
       </View>
     </View>
+    {showView && view > 0 &&
+      <TouchableOpacity onPress={() => handlePresentModalPressView()}>
+        <Text style={Styles.balihaiRegular14}>Просмотреть статистику?</Text>
+      </TouchableOpacity>
+    }
     <TouchableOpacity
       activeOpacity={my ? 0 : 1}
-      onPress={() => handlePresentModalPressView()}
+      onPress={() => setShowView(!showView)}
       style={Styles.flexAlignItems}>
       {big ?
         <WhiteViewSvg /> :
@@ -90,6 +97,7 @@ export const PostBody = ({
         {view}
       </Text>
     </TouchableOpacity>
+
     <LikeList
       close={() => CloseLike()}
       token={staticdata.token}

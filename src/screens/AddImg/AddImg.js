@@ -23,7 +23,6 @@ import { captureRef } from 'react-native-view-shot';
 import { MultySelect } from '../../components/multySelect';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
-import { opacity } from 'react-native-reanimated';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -92,6 +91,7 @@ export const AddImg = ({ navigation }) => {
       Camera()
       setErrorCatalog(false)
       dispatch(ClearCreatPost())
+      setSelectedCatalog('')
     });
     return unsubscribe;
   }, [navigation]);
@@ -148,8 +148,8 @@ export const AddImg = ({ navigation }) => {
     const options = {
       mediaType: 'mixed',
       quality: 1,
-      maxWidth: 500,
-      maxHeight: 500,
+      maxWidth: 5000,
+      maxHeight: 5000,
       storageOptions: {
         skipBackup: true,
       },
@@ -239,23 +239,16 @@ export const AddImg = ({ navigation }) => {
                     source={{ uri: elm.uri }}
                   /> :
                   <View>
-                    {/* <Video
-                      source={{ uri: elm.uri }}
-                      style={styles.img}
-                      resizeMode="cover"
-                      ref={videoRef}
-                      paused={true}
-                    /> */}
                     <Image
                       ref={ref[i]}
                       style={styles.img}
                       source={{ uri: elm.uri }}
                     />
-
                     <Video
                       source={{ uri: elm.uri }}
                       style={[styles.img, { opacity: 0 }]}
                       resizeMode="cover"
+                      paused={true}
                       ref={videoRefCut}
                     />
                   </View>
@@ -286,7 +279,7 @@ export const AddImg = ({ navigation }) => {
           />
         </View>}
         <View style={{ height: 60 }}>
-          <MultySelect name={t(mainData.lang).Choosecatalog} selectedValue={(e) => setSelectedCatalog(e)} data={getCatalog.data} />
+          <MultySelect value={selectedCatalog} name={t(mainData.lang).Choosecatalog} selectedValue={(e) => setSelectedCatalog(e)} data={getCatalog.data} />
         </View>
         {errorCatalog &&
           <Text style={[{ marginBottom: 5 }, Styles.tomatoMedium10]}>{t(mainData.lang).Selectacategory}</Text>

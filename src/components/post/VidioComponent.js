@@ -2,9 +2,8 @@ import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
-import { AddSecSvg, AddSecSvg1, FullScrenn, MuteSvg, Pause, StartSvg } from '../../assets/svg/Svgs';
+import { AddSecSvg, AddSecSvg1, FullScrenn, MusicSvg, MuteSvg, Pause, StartSvg } from '../../assets/svg/Svgs';
 import { Styles } from '../../styles/Styles';
-import { Skeleton } from '../Skeleton';
 import { useFocusEffect } from '@react-navigation/native';
 
 const windowHeight = Dimensions.get('window').height;
@@ -19,7 +18,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   const [currentTime, setCurrentTime] = useState(0);
   const [paused, setPaused] = useState(false);
   const [volume, setVolume] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   const onPlayPausePress = () => {
     setFirst(false);
@@ -31,7 +29,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   const onSeek = (value) => {
     setHold(true);
     setCurrentTime(value);
-    videoRef.current.seek(value);
+    videoRef?.current?.seek(value);
   };
 
   const formatTime = (time) => {
@@ -54,14 +52,14 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
 
   const AddCurrentTime = () => {
     const newTime = Math.min(currentTime + 5, duration);
-    videoRef.current.seek(newTime);
+    videoRef?.current?.seek(newTime);
     setCurrentTime(newTime);
     setShowStartButton(false);
   };
 
   const LakeCurrentTime = () => {
     const newTime = Math.max(currentTime - 5, 0);
-    videoRef.current.seek(newTime);
+    videoRef?.current?.seek(newTime);
     setCurrentTime(newTime);
     setShowStartButton(false);
   };
@@ -95,7 +93,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   useFocusEffect(
     useCallback(() => {
       setPaused(false);
-      setLoading(true)
       return () => {
         setPaused(true);
       };
@@ -135,12 +132,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
             </TouchableOpacity>
           </View>
         )}
-        {loading && (
-          <Skeleton
-            width={'100%'}
-            height={!big ? 550 : windowHeight}
-          />
-        )}
         <Video
           ref={videoRef}
           paused={paused}
@@ -152,7 +143,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           onLoad={(data) => {
             setPaused(true);
             setDuration(data.duration);
-            setLoading(false);
+            setVolume(1)
           }}
           onProgress={(data) => ChangeCurentTime(data)}
           onEnd={() => {
@@ -163,7 +154,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
         />
         {(showStartButton || first) && (
           <View style={styles.music}>
-            <Text style={Styles.whiteSemiBold13}>{music}</Text>
+            <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+              {music && <MusicSvg />}
+              <Text style={Styles.whiteSemiBold13}>{music}</Text>
+            </View>
             <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
           </View>
         )}

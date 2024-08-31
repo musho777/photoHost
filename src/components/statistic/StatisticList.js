@@ -13,12 +13,11 @@ import { AppColors } from '../../styles/AppColors';
 
 
 export const StatisticList = ({ id, token }) => {
-  console.log(id)
   const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'кол-во просмотров ']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
-  const widthArr = [100, 40, 40, 80, 80]
+  const widthArr = [80, 40, 40, 80, 100]
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -64,20 +63,19 @@ export const StatisticList = ({ id, token }) => {
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
       <Text style={[{ textAlign: 'center' }, Styles.darkMedium16]}>СТАТИСТИКА</Text>
       <View style={{ gap: 20, paddingHorizontal: 5, marginBottom: 50 }}>
-        <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="СТАТИСТИКА НОМЕР 1">
+        <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="Статистика по публикации">
           <View style={{ gap: 10, marginTop: 20, }}>
             <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
             {/* <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {formatTime(getStatistic1.data.get_post_view_minute)} секунды</Text> */}
-            <Text style={Styles.darkSemiBold14}>Активность просмотров - {getRandomNumber(4, 25)} секунды</Text>
-            <Text style={Styles.darkSemiBold14}>Переход
-              <Text style={{ fontSize: 10 }}>(С ЛЕНТЫ СОБЫТИЙ НА ВАШ АККАУНТ)</Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(4, 25)} секунды</Text>
+            <Text style={Styles.darkSemiBold14}>Переход (с ленты на Ваш аккаунт)
               - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>
         </Accordion>
-        <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="СТАТИСТИКА НОМЕР 2">
+        <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="Активность просмотров">
           <ScrollView style={{ marginTop: 20 }} horizontal={true}>
             <View>
               <Table >

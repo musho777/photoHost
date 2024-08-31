@@ -1,11 +1,16 @@
 import { View, Text } from "react-native"
 import { Box, CheckIcon, Select, NativeBaseProvider, } from "native-base";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Styles } from "../styles/Styles";
 import { AppColors } from "../styles/AppColors";
 
-export const MultySelect = ({ data, selectedValue, name }) => {
-  const [service, setService] = useState("");
+export const MultySelect = ({ value, data, selectedValue, name }) => {
+  const [service, setService] = useState();
+  useEffect(() => {
+    if (value == '') {
+      setService('')
+    }
+  }, [value])
   return <View>
     <NativeBaseProvider>
       <Box maxW="300" maxH='1.5'>

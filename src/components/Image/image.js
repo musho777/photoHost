@@ -44,7 +44,7 @@ export const ImageComponent = React.memo(({ video, photo, my, data }) => {
           paused={paused}
           repeat={false}
           style={[styles.img, loading && { width: 0, height: 0 }]}
-          source={{ uri: 'https://chambaonline.pro/uploads/1722792250.mp4' }}
+          source={{ uri: `https://chambaonline.pro/uploads/${video}` }}
           resizeMode={'cover'}
           playInBackground={true}
           playWhenInactive={true}
@@ -54,7 +54,7 @@ export const ImageComponent = React.memo(({ video, photo, my, data }) => {
           }}
           onEnd={() => {
             setPaused(true);
-            videoRef.current.seek(0);
+            videoRef?.current?.seek(0);
           }}
         />
 
