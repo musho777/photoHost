@@ -279,7 +279,10 @@ export const AddImg = ({ navigation }) => {
           />
         </View>}
         <View style={{ height: 60 }}>
-          <MultySelect value={selectedCatalog} name={t(mainData.lang).Choosecatalog} selectedValue={(e) => setSelectedCatalog(e)} data={getCatalog.data} />
+          <MultySelect value={selectedCatalog} name={t(mainData.lang).Choosecatalog} selectedValue={(e) => {
+            setErrorCatalog(false)
+            setSelectedCatalog(e)
+          }} data={getCatalog.data} />
         </View>
         {errorCatalog &&
           <Text style={[{ marginBottom: 5 }, Styles.tomatoMedium10]}>{t(mainData.lang).Selectacategory}</Text>

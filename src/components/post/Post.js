@@ -38,6 +38,8 @@ export const Post = ({
   const [showSave, setShowSave] = useState(false)
   const [showMore, setShowMore] = useState(false)
   const [D, setD] = useState(description)
+  const { full } = useSelector((st) => st.fullScreen)
+
 
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
 
@@ -72,7 +74,7 @@ export const Post = ({
         style={{ width: '100%', backgroundColor: '#fff', position: 'relative' }}
         startColor={'#00000010'}>
         <View style={styles.block}>
-          <PostHeader
+          {!full && <PostHeader
             userImg={userInfo.avatar}
             user={user}
             description={description}
@@ -89,7 +91,7 @@ export const Post = ({
             deletData={deletData}
             isBook={isBook}
             addToblack={addToblack}
-          />
+          />}
           {description && <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
             <Text style={Styles.darkSemiBold12}>
               {D} {description?.length > 50 &&
@@ -101,7 +103,7 @@ export const Post = ({
             </Text>
           </View>}
           <Slider viewableItems={viewableItems} music={music} description={description} photo={photo} />
-          <PostBody
+          {!full && <PostBody
             commentCount={commentCount}
             liked={isLiked >= 0}
             view={view}
@@ -110,7 +112,7 @@ export const Post = ({
             like={like}
             id={id}
             user={user}
-          />
+          />}
         </View>
       </Shadow>
     </TouchableOpacity>

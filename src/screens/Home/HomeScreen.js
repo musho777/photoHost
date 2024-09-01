@@ -23,8 +23,10 @@ export const HomeScreen = () => {
   const [viewableItems, setViewableItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentPost, setCurrentPost] = useState({})
+  const { full } = useSelector((st) => st.fullScreen)
 
 
+  console.log(full)
 
   useEffect(() => {
     if (!getLents.loading) {
@@ -179,6 +181,7 @@ export const HomeScreen = () => {
         token={staticdata.token}
       />}
       <FlatList
+        scrollEnabled={!full}
         removeClippedSubviews={false}
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: 'rgb(237,238,240)' }}

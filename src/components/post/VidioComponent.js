@@ -5,6 +5,8 @@ import Slider from '@react-native-community/slider';
 import { AddSecSvg, AddSecSvg1, FullScrenn, MusicSvg, MuteSvg, Pause, StartSvg } from '../../assets/svg/Svgs';
 import { Styles } from '../../styles/Styles';
 import { useFocusEffect } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { FullScreen } from '../../store/action/action';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -18,6 +20,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   const [currentTime, setCurrentTime] = useState(0);
   const [paused, setPaused] = useState(false);
   const [volume, setVolume] = useState(0);
+  // const [full, setIsFullscreen] = useState(false);
+  const dispatch = useDispatch()
+  const { full } = useSelector((st) => st.fullScreen)
+  const [width, setWidth] = useState(windowHeight)
 
   const onPlayPausePress = () => {
     setFirst(false);
@@ -99,14 +105,23 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     }, [])
   );
 
+  useEffect(() => {
+    if (big) {
+      setWidth(windowHeight)
+    }
+    else {
+      setWidth(windowHeight + 45)
+    }
+  }, [])
+
   return (
-    <View style={{ position: 'relative', height: big ? windowHeight : 550 }}>
+    <View style={{ position: 'relative', height: (big || full) ? width : 550 }}>
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
           setHold(true);
           setCurrentId(item.id);
-          setShowStartButton(true);
+          setShowStartButton(!showStartButton);
           setScrollEnabled(true);
         }}
         onPressOut={() => {
@@ -115,7 +130,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       >
         {(showStartButton || first) && (
-          <TouchableOpacity onPress={() => setResizeVidio()} style={{ position: 'absolute', top: 10, right: 10, zIndex: 999 }}>
+          <TouchableOpacity onPress={() => dispatch(FullScreen(!full))} style={{ position: 'absolute', top: 10, right: 10, zIndex: 999 }}>
             <FullScrenn />
           </TouchableOpacity>
         )}
@@ -136,10 +151,13 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           ref={videoRef}
           paused={paused}
           repeat={false}
+          fullscreen={full}
           volume={volume}
-          style={[styles.Vidio, big && { height: windowHeight }]}
+          style={[styles.Vidio, (big || full) && { height: width }]}
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
           resizeMode={'cover'}
+          onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
+          onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
           onLoad={(data) => {
             setPaused(true);
             setDuration(data.duration);
@@ -154,7 +172,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
         />
         {(showStartButton || first) && (
           <View style={styles.music}>
-            <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: big ? 30 : 5 }}>
               {music && <MusicSvg />}
               <Text style={Styles.whiteSemiBold13}>{music}</Text>
             </View>

@@ -46,6 +46,7 @@ import GetOtherPostsReducer from './reducers/GetOtherPostsReducer';
 import GetPostViewReducer from './reducers/getPostViewReducer';
 import GetStatistic1Reducer from './reducers/GetStatistic1Reducer';
 import GetStatistic2Reducer from './reducers/getStatistic2Reducer';
+import FullScreenReducer from './reducers/fullScreenReducer';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -93,7 +94,8 @@ const rootReducer = combineReducers({
     getOtherPosts: GetOtherPostsReducer,
     getPostView: GetPostViewReducer,
     getStatistic1: GetStatistic1Reducer,
-    getStatistic2: GetStatistic2Reducer
+    getStatistic2: GetStatistic2Reducer,
+    fullScreen: FullScreenReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

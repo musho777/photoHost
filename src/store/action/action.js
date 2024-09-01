@@ -1832,3 +1832,11 @@ export const ClearUser = () => {
     type: 'ClearUser'
   }
 }
+
+export const FullScreen = (data) => {
+  console.log(data, 'type')
+  return {
+    type: 'FullScreen',
+    data
+  }
+}

@@ -3,10 +3,11 @@ import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { HomeHeader } from '../headers/HomeHeader';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { NotificationScreen } from '../screens/Home/NotificationScreen';
+import { useSelector } from 'react-redux';
 
 export const HomeNavigation = () => {
   const Stack = createStackNavigator();
-
+  const { full } = useSelector((st) => st.fullScreen)
   return (
     <Stack.Navigator initialRouteName={'Catalog'}>
       <Stack.Screen
@@ -15,7 +16,12 @@ export const HomeNavigation = () => {
         component={HomeScreen}
         options={{
           header: ({ navigation }) => {
-            return <HomeHeader navigation={navigation} />;
+            if (!full) {
+              return <HomeHeader navigation={navigation} />;
+            }
+            else {
+              return
+            }
           },
         }}
       />
