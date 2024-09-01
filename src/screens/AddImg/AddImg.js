@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
-import { CreatPostAction, GetCatalogAction } from '../../store/action/action';
+import { CreatePostLocal, CreatPostAction, GetCatalogAction } from '../../store/action/action';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -101,7 +101,7 @@ export const AddImg = ({ navigation }) => {
       dispatch(ClearCreatPost())
       setUri([])
       setDescription('')
-      navigation.navigate('Home');
+      // navigation.navigate('Home');
     }
   }, [createPost.status]);
 
@@ -136,6 +136,8 @@ export const AddImg = ({ navigation }) => {
     form.append('category_id', selectedCatalog)
     musicFromVidio && form.append('music_name', musicFromVidio)
     if (selectedCatalog != '') {
+      dispatch(CreatePostLocal(uri[0]))
+      navigation.navigate('Home');
       dispatch(CreatPostAction(form, staticData.token));
     }
     else {

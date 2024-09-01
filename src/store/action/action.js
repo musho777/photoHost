@@ -890,6 +890,13 @@ export const CreatPostAction = (data, token) => {
   };
 };
 
+export const CreatePostLocal = (form) => {
+  return {
+    type: 'CreatePostLocal',
+    form
+  }
+}
+
 export const GetPostsAction = (data, token, page) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');

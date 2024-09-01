@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { View, FlatList, RefreshControl, AppState } from 'react-native';
+import { View, FlatList, RefreshControl, AppState, Image, Text, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
@@ -7,6 +7,8 @@ import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import { Styles } from '../../styles/Styles';
+
 
 
 export const HomeScreen = () => {
@@ -24,10 +26,8 @@ export const HomeScreen = () => {
   const [loading, setLoading] = useState(true)
   const [currentPost, setCurrentPost] = useState({})
   const { full } = useSelector((st) => st.fullScreen)
-
-
-  console.log(full)
-
+  const createPost = useSelector(st => st.createPost);
+  // const createPostReducer = useSelector((st) => st.CreatePostReducer)
   useEffect(() => {
     if (!getLents.loading) {
       setLoading(false)
@@ -180,6 +180,12 @@ export const HomeScreen = () => {
         close={() => setShowModal(false)}
         token={staticdata.token}
       />}
+      {createPost.loading && <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, zIndex: 999 }}>
+        <View style={styles.loadingVidio}>
+          <Image source={{ uri: createPost.localImg.uri }} style={{ width: 50, height: 50, borderRadius: 5 }} />
+          <Text style={Styles.darkMedium12}>загрузка</Text>
+        </View>
+      </View>}
       <FlatList
         scrollEnabled={!full}
         removeClippedSubviews={false}
@@ -212,6 +218,25 @@ export const HomeScreen = () => {
         enableEmptySections={true}
         renderItem={renderItem}
       />
-    </View>
+    </View >
   );
 };
+
+const styles = StyleSheet.create({
+  loadingVidio: {
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // Required for Android to show shadow
+    borderRadius: 5,
+    width: '60%',
+    paddingHorizontal: 10,
+    height: 70,
+    flexDirection: "row",
+    alignItems: 'center',
+    gap: 20,
+    borderRadius: 10,
+  }
+})
