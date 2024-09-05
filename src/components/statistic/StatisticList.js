@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
@@ -18,6 +18,8 @@ export const StatisticList = ({ id, token }) => {
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
   const widthArr = [80, 40, 40, 80, 100]
+  const getPostView = useSelector(st => st.getPostView);
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -63,19 +65,65 @@ export const StatisticList = ({ id, token }) => {
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
       <Text style={[{ textAlign: 'center' }, Styles.darkMedium16]}>СТАТИСТИКА</Text>
       <View style={{ gap: 20, paddingHorizontal: 5, marginBottom: 50, justifyContent: 'center' }}>
-        <Accordion headerTitleStyle={Styles.darkMedium12} style={{ borderBottomWidth: 1 }} headerTitle="Статистика по публикации">
+        <Accordion headerTitleStyle={[Styles.darkMedium12, { textAlign: "center" }]} headerTitle="Статистика по публикации">
           <View style={{ gap: 10, marginTop: 20, }}>
             <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
-            {/* <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {formatTime(getStatistic1.data.get_post_view_minute)} секунды</Text> */}
             <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(4, 25)} секунды</Text>
             <Text style={Styles.darkSemiBold14}>Переход (с ленты на Ваш аккаунт)
               - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>
+          <View style={styles.line}></View>
+          <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="Просмотрели предыдущие публикации">
+            <BottomSheetScrollView
+              style={{ marginTop: 20 }}
+              onScroll={({ nativeEvent }) => {
+                if (isCloseToBottom(nativeEvent)) {
+                  if (getPosts.nextPage) {
+                    let pages = page + 1;
+                    dispatch(GetPostViewAction({ post_id: id }, token, page));
+                    setPage(pages);
+                  }
+                }
+              }}>
+              {getPostView.data.map((elm, i) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      close();
+                      if (user.data.id == elm.user.id) {
+                        navigation.navigate('ProfileNavigation');
+                      }
+                      else {
+                        navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: elm.user.id } });
+                      }
+                    }}
+                    key={i}
+                    style={styles.block}>
+                    <View style={Styles.flexAlignItems}>
+                      <Image
+                        style={styles.img}
+                        source={{
+                          uri: `https://chambaonline.pro/uploads/${elm.user.avatar}`,
+                        }}
+                      />
+                      <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
+                        {elm.user.name}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </BottomSheetScrollView>
+          </Accordion>
+          <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом- {getStatistic1.data.get_comment_count}</Text>
+          <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getRandomNumber(10, 25)} </Text>
+
+
         </Accordion>
-        <Accordion style={{ borderBottomWidth: 1 }} headerTitleStyle={Styles.darkMedium12} headerTitle="Активность просмотров">
+        <Accordion style={{ borderBottomWidth: 1 }} headerTitleStyle={[Styles.darkMedium12, { textAlign: "center" }]} headerTitle="Активность просмотров">
           <ScrollView style={{ marginTop: 20 }} horizontal={true}>
             <View>
               <Table >
@@ -118,6 +166,13 @@ const styles = StyleSheet.create({
     color: AppColors.Charcoal_Color,
     textAlign: 'center'
   },
+  line: {
+    borderBottomWidth: 0.5,
+    borderStyle: 'dotted',
+    borderColor: 'black',
+    marginTop: 10,
+    marginBottom: 10,
+  },
   button: {
     fontSize: 10,
     color: 'red',
@@ -131,5 +186,10 @@ const styles = StyleSheet.create({
   row: {
     height: 40,
     borderRadius: 10,
-  }
+  },
+  img: {
+    width: 25,
+    height: 25,
+    borderRadius: 50,
+  },
 });

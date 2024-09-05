@@ -16,8 +16,8 @@ const NewMassageReducer = (state = initialState, action) => {
     case 'SuccessNewMessageAction':
       item.status = true
       item.error = ''
-      item.message = action.data?.message,
-        item.loading = false
+      item.message = action.data?.message
+      item.loading = false
       break
     case 'ErrorNewMessageAction':
       item.error = action.data

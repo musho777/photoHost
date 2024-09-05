@@ -4,16 +4,31 @@ import { BootomModal } from '../BootomSheet';
 import Gif from './Gif';
 import { GifSvg, GifSvg1, StickerSvg, StickerSvg1 } from '../../assets/svg/Svgs';
 import Sticker from './Stickers';
+import Sound from 'react-native-sound';
+import { useSelector } from 'react-redux';
 
-const Main = forwardRef(({ setSelected }, ref) => {
+const Main = forwardRef(({ }, ref) => {
+
   const [showGif, setShowGif] = useState(false)
   const snapPoints = useMemo(() => ['80%'], []);
+  const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
+  const staticdata = useSelector(st => st.static);
+
+  const SendSticker = (e) => {
+    music.play()
+    setTimeout(() => {
+      music.stop()
+    }, 2000);
+    dispatch(newMessageAction({ message: e, receiver_id: route.params.id }, staticdata.token));
+    ref.current?.close()
+  }
+
   return (
     <View>
       <BootomModal ref={ref} snapPoints={snapPoints}>
         {showGif ?
-          <Gif setSelected={(e) => setSelected(e)} /> :
-          <Sticker setSelected={(e) => setSelected(e)} />
+          <Gif setSelected={(e) => SendSticker(e)} /> :
+          <Sticker setSelected={(e) => SendSticker(e)} />
         }
         <View style={styles.sticker}>
           <TouchableOpacity onPress={() => setShowGif(false)}>

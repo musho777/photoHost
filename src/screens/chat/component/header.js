@@ -7,6 +7,7 @@ import { MenuSvg } from "../../../assets/svg/TabBarSvg";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BootomModal } from "../../../components/BootomSheet";
 import { AddBlackListAction, DelateChatAction } from "../../../store/action/action";
+import { ClearDeletChat } from "../../../store/action/clearAction";
 
 export const Header = ({ data, route, user }) => {
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
@@ -17,6 +18,7 @@ export const Header = ({ data, route, user }) => {
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const addBlackPusher = useSelector(st => st.addBlackPusher)
+  const deletChat = useSelector((st) => st.deletChatPusher)
 
 
   const addToBlackList = () => {
@@ -39,6 +41,16 @@ export const Header = ({ data, route, user }) => {
       setIsInblack(false)
     }
   }, [getSinglePageChat.resiverUser, addBlackPusher]);
+
+
+  useEffect(() => {
+    if (Object.keys(deletChat.deletChatPusher).length) {
+      if (deletChat.deletChatPusher.reseiver_id == user.data.id && deletChat.deletChatPusher.sender_id == route.params.id) {
+        navigation.goBack()
+        dispatch(ClearDeletChat())
+      }
+    }
+  }, [deletChat.deletChatPusher])
 
   return <View
     style={[Styles.flexSpaceBetween, styles.header]}>

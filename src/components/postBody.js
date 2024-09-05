@@ -128,7 +128,7 @@ export const PostBody = ({
       close={() => CloseShare()}
       postId={id}
       ref={shareRef}
-      user_id={user.allData.data?.id}
+      user_id={user?.allData.data?.id}
       snapPoints={snapPointsShare}
       open={openShare}
     />

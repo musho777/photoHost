@@ -50,10 +50,10 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       break;
     case 'AddMsgAction':
       if (item.myid == action.data.receiver_id && item.id == action.data.sender_id) {
-        item.message.push(action.data)
+        item.message.unshift(action.data)
       }
       if (item.myid == action.data.sender_id && item.id == action.data.receiver_id) {
-        item.message.push(action.data)
+        item.message.unshift(action.data)
       }
       break
     case 'AddMyMSgAction':

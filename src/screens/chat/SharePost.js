@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export const SharePost = ({ from, avatar, post, name, id, my }) => {
   const navigation = useNavigation()
-  return <TouchableOpacity onPress={() => my ?
+  return <TouchableOpacity activeOpacity={1} onPress={() => my ?
     navigation.navigate('ProfileNavigation') :
     navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: id } })
   }
