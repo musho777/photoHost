@@ -19,7 +19,6 @@ export const InfoBlock = ({ user }) => {
 
 
     const GetData = () => {
-        console.log(user.date_of_birth, 'user.date_of_birth')
         let date = new Date(user.date_of_birth);
         let year = ''
         let month = ''
@@ -54,11 +53,9 @@ export const InfoBlock = ({ user }) => {
 
     useFocusEffect(
         useCallback(() => {
-            console.log(user)
             GetData()
         }, [user])
     );
-    console.log(userType)
 
     return <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableOpacity activeOpacity={1}>

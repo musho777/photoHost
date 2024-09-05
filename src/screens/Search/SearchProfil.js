@@ -102,9 +102,6 @@ export const SearchProfil = ({ navigation, route }) => {
             )}
           </View>
         }
-        {
-          console.log(singlPage.data, 'singlPage.data')
-        }
         <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={{ followersCount: followersCount, followerCount: singlPage.followerCount }} postCount={singlPage.postCount} />
         <View
           style={[

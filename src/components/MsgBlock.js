@@ -1,20 +1,15 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
-import { useState } from 'react';
 import FastImage from 'react-native-fast-image';
 export const MsgBlock = ({ msg, from, timestamp }) => {
   const date = new Date(timestamp);
-  const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const hour = date.getHours();
   const minut = date.getMinutes()
-  const [margin, setMargin] = useState(-20)
 
   const today = new Date()
 
-  const tyear = today.getFullYear();
   const tmonth = today.getMonth() + 1;
   const tday = today.getDate();
   const thour = today.getHours();
@@ -24,12 +19,10 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
       m = '0' + m
     }
     if (month == tmonth && tday == day) {
-      // setMargin(-20)
 
       return `${thour}:${m}`
     }
     else {
-      // setMargin(-30)
       return `${day}. ${thour}:${m}`
     }
   }
@@ -46,18 +39,16 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
             borderBottomStartRadius: 20,
           },
       ]}>
-      {msg.includes('https://media') ?
+      {msg?.includes('https://media') ?
         <FastImage source={{ uri: msg }} style={styles.image} /> :
         <Text style={Styles.CharcoalMedium14}>{msg}</Text>
       }
       <View style={from ?
-        [
-          styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { right: -35 } : { right: -20 }
+        [styles.msgDate,
+        JSON.stringify(getData()).length > 7 ? { right: -35 } : { right: -20 }
         ] :
-        [
-          styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { left: -35 } : { left: -20 }
+        [styles.msgDate,
+        JSON.stringify(getData()).length > 7 ? { left: -35 } : { left: -20 }
         ]
       }
       >

@@ -168,7 +168,6 @@ export const RegisterAction = data => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          console.log(r, '22222')
           dispatch(SuccessRegister(r));
         } else {
           dispatch(
@@ -769,6 +768,7 @@ export const newMessageAction = (data, token, send) => {
     })
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessNewMessageAction(r));
         } else {
@@ -1841,7 +1841,6 @@ export const ClearUser = () => {
 }
 
 export const FullScreen = (data) => {
-  console.log(data, 'type')
   return {
     type: 'FullScreen',
     data

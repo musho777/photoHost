@@ -1,13 +1,14 @@
-import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Comment, CommentWhite, Heart, ViewSvg, WhiteHeart, WhiteViewSvg } from "../assets/svg/TabBarSvg";
-import { NotLineSvg, NotLineSvgWhite } from "../assets/svg/Svgs";
+import { NotLineSvg, NotLineSvgWhite, ShearSvg } from "../assets/svg/Svgs";
 import { Styles } from "../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { GetPostLikeAction, LikePostAction } from "../store/action/action";
+import { GetFollowerAction, GetPostLikeAction, LikePostAction, newMessageAction } from "../store/action/action";
 import { useNavigation } from "@react-navigation/native";
 import { LikeList } from "./LikeList";
 import { ViewComponent } from "./statistic/ViewComponent";
+import { Share } from "./share";
 
 export const PostBody = ({
   commentCount,
@@ -20,20 +21,25 @@ export const PostBody = ({
   big = false
 }) => {
   const likeRef = useRef(null)
-  const CloseLike = () => { likeRef.current?.close() }
-  const CloseView = () => { ViewRef.current?.close() }
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const shareRef = useRef(null)
 
+  const CloseLike = () => { likeRef.current?.close() }
+  const CloseShare = () => { shareRef.current?.close() }
+  const CloseView = () => { ViewRef.current?.close() }
 
   const [currentId, setCurrentId] = useState(null)
   const snapPointsLike = useMemo(() => ['85%'], []);
+  const snapPointsShare = useMemo(() => ['85%'], []);
   const ViewRef = useRef(null)
   const navigation = useNavigation()
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
   const [showView, setShowView] = useState(false)
+  const [openShare, setOpenShare] = useState(0)
 
   const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
+  const handlePresentModalPressShare = useCallback(() => { shareRef.current?.present() }, []);
+
   const handlePresentModalPressView = useCallback(() => {
     setCurrentId(id)
     ViewRef.current?.present()
@@ -48,6 +54,7 @@ export const PostBody = ({
       user.data.id
     ))
   }
+
 
   return <View
     style={[
@@ -70,7 +77,7 @@ export const PostBody = ({
           <Text style={[Styles.darkMedium14, big && { color: 'white' }]}> - {like}</Text>
         </TouchableOpacity>
       </View>
-      <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>
+      <View style={[Styles.flexAlignItems, { marginRight: 10 }]}>
         <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })}>
           {big ?
             <CommentWhite /> :
@@ -79,24 +86,36 @@ export const PostBody = ({
         </TouchableOpacity>
         <Text style={[Styles.darkMedium14, big && { color: 'white' }]}> - {commentCount}</Text>
       </View>
+      <View>
+        <TouchableOpacity onPress={() => {
+          dispatch(GetFollowerAction({ search: "", user_id: user.allData.data.id }, staticdata.token, 1));
+          handlePresentModalPressShare()
+          setOpenShare(openShare + 1)
+        }}>
+          <ShearSvg />
+        </TouchableOpacity>
+      </View>
     </View>
-    {showView && view > 0 &&
-      <TouchableOpacity onPress={() => handlePresentModalPressView()}>
-        <Text style={Styles.balihaiRegular14}>Просмотреть статистику?</Text>
-      </TouchableOpacity>
-    }
-    <TouchableOpacity
-      activeOpacity={my ? 0 : 1}
-      onPress={() => setShowView(!showView)}
-      style={Styles.flexAlignItems}>
-      {big ?
-        <WhiteViewSvg /> :
-        <ViewSvg />
+
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+      {showView && view > 0 &&
+        <TouchableOpacity onPress={() => handlePresentModalPressView()}>
+          <Text style={Styles.balihaiRegular12}>Посмотреть статистику?</Text>
+        </TouchableOpacity>
       }
-      <Text style={[Styles.balihaiRegular14, big && { color: 'white' }, { marginLeft: 5 }]}>
-        {view}
-      </Text>
-    </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={my ? 0 : 1}
+        onPress={() => setShowView(!showView)}
+        style={Styles.flexAlignItems}>
+        {big ?
+          <WhiteViewSvg /> :
+          <ViewSvg />
+        }
+        <Text style={[Styles.balihaiRegular14, big && { color: 'white' }, { marginLeft: 5 }]}>
+          {view}
+        </Text>
+      </TouchableOpacity>
+    </View>
 
     <LikeList
       close={() => CloseLike()}
@@ -104,6 +123,14 @@ export const PostBody = ({
       id={id}
       ref={likeRef}
       snapPoints={snapPointsLike}
+    />
+    <Share
+      close={() => CloseShare()}
+      postId={id}
+      ref={shareRef}
+      user_id={user.allData.data?.id}
+      snapPoints={snapPointsShare}
+      open={openShare}
     />
     {my && <ViewComponent
       close={() => CloseView()}

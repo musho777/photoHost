@@ -7,6 +7,8 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableOpacity,
+  Image,
+  Text,
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,15 +21,16 @@ import { Emojy, Sticker } from '../../assets/svg/Svgs';
 import Main from '../../components/GIf/main';
 import Sound from 'react-native-sound';
 import EmojiPicker from 'rn-emoji-keyboard'
+import { Styles } from '../../styles/Styles';
+import { Shadow } from 'react-native-shadow-2';
+import { SharePost } from './SharePost';
 
 
 export const ChatScreen = ({ navigation, route }) => {
   const bottomSheetRef = useRef(null);
-
-
+  const scrollViewRef = useRef(null);
   const dispatch = useDispatch();
   const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
-
   const staticdata = useSelector(st => st.static);
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const [addToblackList, setAddToBlackList] = useState('')
@@ -90,11 +93,12 @@ export const ChatScreen = ({ navigation, route }) => {
     setTimeout(() => {
       music.stop()
     }, 2000);
-    dispatch(
-      newMessageAction({ message: e, receiver_id: route.params.id }, staticdata.token));
+    dispatch(newMessageAction({ message: e, receiver_id: route.params.id }, staticdata.token));
     bottomSheetRef.current?.close()
-
   }
+  useEffect(() => {
+    scrollViewRef.current?.scrollToEnd({ animated: true });
+  }, [data]);
 
   return (
     <SafeAreaView style={styles.body}>
@@ -105,8 +109,9 @@ export const ChatScreen = ({ navigation, route }) => {
       >
         <FlatList
           snapToEnd
+          ref={scrollViewRef}
           inverted={false}
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
           data={data}
           contentContainerStyle={styles.scrollViewContent}
           onEndReached={() => {
@@ -115,6 +120,10 @@ export const ChatScreen = ({ navigation, route }) => {
             }
           }}
           renderItem={({ item }) => {
+            if (item.post) {
+              let from = item.sender_id != user.data.id
+              return <SharePost my id={item.post.user.id} postData={item.post} name={item.post.user.name} from={from} avatar={item.post.user.avatar} post={item.post.photo[0].photo} />
+            }
             return (
               <MsgBlock
                 timestamp={item.created_at}
@@ -164,4 +173,18 @@ const styles = StyleSheet.create({
     objectFit: 'contain',
     width: 200
   },
+  post: {
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 1.00,
+    elevation: 1,
+    padding: 10,
+    marginBottom: 30,
+    borderWidth: 3,
+    borderRadius: 20
+  }
 });

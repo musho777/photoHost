@@ -41,7 +41,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   }, [user.msgCount]);
 
   if (!isKeyboardVisible) {
-    console.log(full)
     if (!full) {
       return (
         <View style={{

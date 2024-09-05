@@ -13,7 +13,7 @@ import { AppColors } from '../../styles/AppColors';
 
 
 export const StatisticList = ({ id, token }) => {
-  const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'кол-во просмотров ']
+  const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'кол во просмотров ']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
@@ -62,8 +62,8 @@ export const StatisticList = ({ id, token }) => {
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
       <Text style={[{ textAlign: 'center' }, Styles.darkMedium16]}>СТАТИСТИКА</Text>
-      <View style={{ gap: 20, paddingHorizontal: 5, marginBottom: 50 }}>
-        <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="Статистика по публикации">
+      <View style={{ gap: 20, paddingHorizontal: 5, marginBottom: 50, justifyContent: 'center' }}>
+        <Accordion headerTitleStyle={Styles.darkMedium12} style={{ borderBottomWidth: 1 }} headerTitle="Статистика по публикации">
           <View style={{ gap: 10, marginTop: 20, }}>
             <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
@@ -75,7 +75,7 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>
         </Accordion>
-        <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="Активность просмотров">
+        <Accordion style={{ borderBottomWidth: 1 }} headerTitleStyle={Styles.darkMedium12} headerTitle="Активность просмотров">
           <ScrollView style={{ marginTop: 20 }} horizontal={true}>
             <View>
               <Table >
