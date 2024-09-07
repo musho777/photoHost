@@ -12,6 +12,7 @@ import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/actio
 import { BackArrow } from '../assets/svg/Svgs';
 import AccauntParametrNavigation from './AccauntParametrNavigation';
 import MyPageNavigation from './MyPageNavigation';
+import { ContactsPage } from '../screens/contacts';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
@@ -46,6 +47,11 @@ function CustomDrawerContent(props) {
       />
       <DrawerItem
         labelStyle={[Styles.darkRegular16]}
+        label={t(mainData.lang).Contacts}
+        onPress={() => props.navigation.navigate('Contacts')}
+      />
+      <DrawerItem
+        labelStyle={[Styles.darkRegular16]}
         label={t(mainData.lang).Accountsettings}
         onPress={() => props.navigation.navigate('ParametrScreen')}
       />
@@ -71,7 +77,6 @@ export const ProfileNavigation = () => {
     <Drawer.Navigator
       initialRouteName={'ProfileScreen'} drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
-
         name="ProfileScreen"
         component={MyPageNavigation}
         options={{
@@ -99,6 +104,15 @@ export const ProfileNavigation = () => {
         options={{
           header: ({ navigation }) => {
             return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Blacklist} />
+          }
+        }}
+      />
+      <Drawer.Screen
+        name="Contacts"
+        component={ContactsPage}
+        options={{
+          header: ({ navigation }) => {
+            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={'Синхронизация контактов'} />
           }
         }}
       />

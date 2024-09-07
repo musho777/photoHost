@@ -1235,13 +1235,83 @@ export const FullScrenn = () => {
 export const ShearSvg = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    fill="#444"
+    fill="white"
     height="16px"
     width="20px"
     viewBox="0 0 458.624 458.624"
     xmlSpace="preserve"
-    stroke="#444"
+    stroke="white"
   >
     <Path d="M339.588 314.529a71.683 71.683 0 00-38.621 11.239l-112.682-78.67a72.036 72.036 0 002.798-19.871c0-6.896-.989-13.557-2.798-19.871l109.64-76.547c11.764 8.356 26.133 13.286 41.662 13.286 39.79 0 72.047-32.257 72.047-72.047S379.378 0 339.588 0c-39.79 0-72.047 32.257-72.047 72.047 0 5.255.578 10.373 1.646 15.308l-112.424 78.491c-10.974-6.759-23.892-10.666-37.727-10.666-39.79 0-72.047 32.257-72.047 72.047s32.256 72.047 72.047 72.047c13.834 0 26.753-3.907 37.727-10.666l113.292 79.097a72.108 72.108 0 00-2.514 18.872c0 39.79 32.257 72.047 72.047 72.047s72.047-32.257 72.047-72.047-32.257-72.048-72.047-72.048z" />
+  </Svg>
+}
+
+export const DownSvg = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={13}
+    height={13}
+    viewBox="0 0 256 256"
+  >
+    <G
+      stroke="none"
+      strokeWidth={0}
+      strokeDasharray="none"
+      strokeLinecap="butt"
+      strokeLinejoin="miter"
+      strokeMiterlimit={10}
+      fill="none"
+      fillRule="nonzero"
+      opacity={1}
+    >
+      <Path
+        d="M90 24.25a3.499 3.499 0 00-5.974-2.475L45 60.8 5.975 21.775a3.5 3.5 0 10-4.95 4.95l41.5 41.5a3.499 3.499 0 004.949 0l41.5-41.5A3.487 3.487 0 0090 24.25z"
+        transform="matrix(2.81 0 0 2.81 1.407 1.407)"
+        stroke="none"
+        strokeWidth={1}
+        strokeDasharray="none"
+        strokeLinecap="butt"
+        strokeLinejoin="miter"
+        strokeMiterlimit={10}
+        fill="#8C9CAB"
+        fillRule="nonzero"
+        opacity={1}
+      />
+    </G>
+  </Svg>
+}
+
+export const TopArrow = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={13}
+    height={13}
+    viewBox="0 0 256 256"
+  >
+    <G
+      stroke="none"
+      strokeWidth={0}
+      strokeDasharray="none"
+      strokeLinecap="butt"
+      strokeLinejoin="miter"
+      strokeMiterlimit={10}
+      fill="none"
+      fillRule="nonzero"
+      opacity={1}
+    >
+      <Path
+        d="M90 65.75a3.499 3.499 0 01-5.974 2.475L45 29.2 5.975 68.225a3.5 3.5 0 11-4.95-4.95l41.5-41.5a3.499 3.499 0 014.949 0l41.5 41.5A3.487 3.487 0 0190 65.75z"
+        transform="matrix(2.81 0 0 2.81 1.407 1.407)"
+        stroke="none"
+        strokeWidth={1}
+        strokeDasharray="none"
+        strokeLinecap="butt"
+        strokeLinejoin="miter"
+        strokeMiterlimit={10}
+        fill="#8C9CAB"
+        fillRule="nonzero"
+        opacity={1}
+      />
+    </G>
   </Svg>
 }

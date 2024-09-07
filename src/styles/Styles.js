@@ -134,6 +134,11 @@ export const Styles = StyleSheet.create({
         fontSize: 9,
         color: AppColors.BaliHai_Color,
     },
+    whiteMedium9: {
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 9,
+        color: "#fff",
+    },
     balihaiMedium10: {
         fontFamily: 'Montserrat-Medium',
         fontSize: 10,
@@ -179,10 +184,20 @@ export const Styles = StyleSheet.create({
         fontSize: 14,
         color: AppColors.Charcoal_Color,
     },
+    whiteSemiBold14: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 14,
+        color: '#fff',
+    },
     darkSemiBold12: {
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 12,
         color: AppColors.Charcoal_Color,
+    },
+    whiteSemiBold12: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 12,
+        color: "#fff",
     },
     darkSemiBold10: {
         fontFamily: 'Montserrat-SemiBold',

@@ -46,9 +46,9 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
             aspectRatio = 0.2 + item.height / item.width;
           }
           if (aspectRatio > 1) {
-            aspectRatio = single ? 0.65 : 0.70;
+            aspectRatio = single ? 0.65 : 0.6;
           } else if (aspectRatio < 1) {
-            aspectRatio = single ? 0.65 : 0.70;
+            aspectRatio = single ? 0.65 : 0.60;
           }
           return (
             <TouchableOpacity
@@ -69,7 +69,6 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
                   setScrollEnabled={(e) => setScrollEnabled(e)}
                   viewableItems={viewableItems} music={music} item={item} />
               }
-
             </TouchableOpacity>
           );
         }}

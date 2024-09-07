@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { View, FlatList, RefreshControl, AppState, Image, Text, StyleSheet } from 'react-native';
+import { View, FlatList, RefreshControl, Image, Text, StyleSheet, PermissionsAndroid } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
@@ -8,8 +8,6 @@ import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
-
-
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -27,7 +25,6 @@ export const HomeScreen = () => {
   const [currentPost, setCurrentPost] = useState({})
   const { full } = useSelector((st) => st.fullScreen)
   const createPost = useSelector(st => st.createPost);
-  // const createPostReducer = useSelector((st) => st.CreatePostReducer)
   useEffect(() => {
     if (!getLents.loading) {
       setLoading(false)
@@ -109,35 +106,41 @@ export const HomeScreen = () => {
     }
   }
 
-  const onViewableItemsChanged = useCallback(({ viewableItems, changed }) => {
-    if (changed[0].index) {
-      End(viewableItems[0].item.id)
-    }
-    setViewableItems(changed)
-  }, []);
+  // const onViewableItemsChanged = useCallback(({ viewableItems, changed }) => {
+  //   if (changed[0].index) {
+  //     End(viewableItems[0].item.id)
+  //   }
+  //   setViewableItems(changed)
+  // }, []);
+  // const onViewableItemsChanged = useRef(({ viewableItems, changed }) => {
+  //   if (changed.length > 0 && changed[0]?.index !== undefined) {
+  //     End(viewableItems[0].item.id); // Call your End function
+  //   }
+  //   setViewableItems(changed); // Update viewable items state
+  // }).current;
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        if (data[index]?.id) {
-          End(data[index]?.id)
-        }
-      };
-    }, [data])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     return () => {
+  //       if (data[index]?.id) {
+  //         End(data[index]?.id)
+  //       }
+  //     };
+  //   }, [data])
+  // );
 
   const loadingData = ['', '']
-
+  // console.log('22')
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (
         <View key={index} style={[{ marginTop: 5 }, index == data.length - 1 && { marginBottom: 5 }]}>
           <Post
-            viewableItems={viewableItems}
+            // viewableItems={viewableItems}
             userInfo={item.user}
             description={item.description}
             like={item.like_count}
@@ -160,7 +163,7 @@ export const HomeScreen = () => {
   };
   if (loading) {
     return (
-      <View style={{ gap: 5, backgroundColor: 'rgb(237,238,240)', paddingVertical: 5 }}>
+      <View style={{ gap: 5, paddingVertical: 5 }}>
         {showModal && <ModalComponent
           showModal={showModal}
           close={() => setShowModal(false)}
@@ -190,9 +193,9 @@ export const HomeScreen = () => {
         scrollEnabled={!full}
         removeClippedSubviews={false}
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: 'rgb(237,238,240)' }}
+        // style={{ backgroundColor: 'rgb(237,238,240)' }}
         ref={flatListRef}
-        onViewableItemsChanged={onViewableItemsChanged}
+        // onViewableItemsChanged={onViewableItemsChanged}
         onScroll={({ nativeEvent }) => {
           handleScroll({ nativeEvent })
           if (isCloseToBottom(nativeEvent)) {
@@ -229,7 +232,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5, // Required for Android to show shadow
+    elevation: 5,
     borderRadius: 5,
     width: '60%',
     paddingHorizontal: 10,
@@ -240,3 +243,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   }
 })
+

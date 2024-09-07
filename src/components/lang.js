@@ -2,6 +2,7 @@ export const t = (lang = 'ru') => {
     if (lang == 'en') {
         return {
             Editprofile: "Edit profile",
+            Contacts: "Contacts",
             Edit: "Edit",
             Deletepost: "Delete post",
             Subscriptions: 'Subscriptions',
@@ -83,6 +84,7 @@ export const t = (lang = 'ru') => {
     {
         return {
             Editprofile: "Редактировать профиль",
+            Contacts: "Контакты",
             Edit: "Редактировать",
             Deletepost: "Удалить пост",
             Companyname: 'Название компании',
@@ -137,7 +139,7 @@ export const t = (lang = 'ru') => {
             password: 'пароль',
             intoablacklist: 'в черный список',
             Blacklistisempty: "Черный список пуст",
-            Yourcontent: 'Ваш контент дойдет точно до адресата, и увидят те люди, которые подписаны на эту рубрику.',
+            Yourcontent: 'Ваш контент дойдет точно до адресата, и увидят те люди, которые выбрали эту рубрику.',
             Selectacategory: 'выберите рубрику',
             Login: 'Вход',
             Enteryouremail: 'Введите е-майл',

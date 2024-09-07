@@ -11194,6 +11194,7 @@ __metadata:
     react-native-accordion: ^1.0.1
     react-native-awesome-slider: ^2.5.3
     react-native-calendars: 1.1286.0
+    react-native-contacts: ^7.0.8
     react-native-device-info: ^10.8.0
     react-native-emoji-selector: ^0.2.0
     react-native-fast-image: ^8.6.3
@@ -11641,6 +11642,15 @@ __metadata:
     moment:
       optional: true
   checksum: 5b95310ff5931791ea8fec87300316bbbfd0342daf1ce72cb1dda5b91b75400be64c25e69aa6b9d277fd3197bc5a1b42e5767b5ece35b7c14abdb7362805ed5a
+  languageName: node
+  linkType: hard
+
+"react-native-contacts@npm:^7.0.8":
+  version: 7.0.8
+  resolution: "react-native-contacts@npm:7.0.8"
+  peerDependencies:
+    react-native: ">=0.64.0"
+  checksum: 5a2f3084f47c935da60694cd60a96f27e7836dbd8b12a89561a22b93131df9c792d8ff75830d953ac4349782bf0c9265ea9d7b28312b20ba5731e90aeaf09b94
   languageName: node
   linkType: hard
 

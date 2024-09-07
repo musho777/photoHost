@@ -58,33 +58,35 @@ export const PostBody = ({
 
   return <View
     style={[
-      { paddingHorizontal: 15, marginBottom: 15 },
-      Styles.flexSpaceBetween,
+      { paddingHorizontal: 15, marginBottom: 15, flexDirection: 'row', justifyContent: 'space-between', width: '100%' },
     ]}>
     <View style={Styles.flexAlignItems}>
       <View style={[Styles.flexAlignItems, { marginRight: 15 }]}>
-        {big ? <TouchableOpacity onPress={() => { LikePost() }}>
-          {liked ? <WhiteHeart /> : <NotLineSvgWhite />}
-        </TouchableOpacity> : <TouchableOpacity onPress={() => { LikePost() }}>
-          {liked ? <Heart /> : <NotLineSvg />}
-        </TouchableOpacity>
+        {
+          // big ?
+          <TouchableOpacity onPress={() => { LikePost() }}>
+            {liked ? <WhiteHeart /> : <NotLineSvgWhite />}
+          </TouchableOpacity>
+          // <TouchableOpacity onPress={() => { LikePost() }}>
+          //   {liked ? <Heart /> : <NotLineSvg />}
+          // </TouchableOpacity>
         }
         <TouchableOpacity onPress={() => {
           dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
           handlePresentModalPressLike()
         }
         }>
-          <Text style={[Styles.darkMedium14, big && { color: 'white' }]}> - {like}</Text>
+          <Text style={[Styles.darkMedium14, { color: 'white' }]}> - {like}</Text>
         </TouchableOpacity>
       </View>
       <View style={[Styles.flexAlignItems, { marginRight: 10 }]}>
         <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })}>
-          {big ?
-            <CommentWhite /> :
-            <Comment />
-          }
+          {/* {big ? */}
+          <CommentWhite />
+          {/* <Comment /> */}
+          {/* } */}
         </TouchableOpacity>
-        <Text style={[Styles.darkMedium14, big && { color: 'white' }]}> - {commentCount}</Text>
+        <Text style={[Styles.darkMedium14, { color: 'white' }]}> - {commentCount}</Text>
       </View>
       <View>
         <TouchableOpacity onPress={() => {
@@ -106,12 +108,12 @@ export const PostBody = ({
       <TouchableOpacity
         activeOpacity={my ? 0 : 1}
         onPress={() => setShowView(!showView)}
-        style={Styles.flexAlignItems}>
-        {big ?
-          <WhiteViewSvg /> :
-          <ViewSvg />
-        }
-        <Text style={[Styles.balihaiRegular14, big && { color: 'white' }, { marginLeft: 5 }]}>
+        style={[Styles.flexAlignItems, { zIndex: 999 }]}>
+        {/* {big ? */}
+        <WhiteViewSvg />
+        {/* // <ViewSvg /> */}
+        {/* } */}
+        <Text style={[Styles.balihaiRegular14, { color: 'white' }, { marginLeft: 5 }]}>
           {view}
         </Text>
       </TouchableOpacity>

@@ -75,7 +75,7 @@ export const PostHeader = ({
     setBook(!book)
   }
 
-  return <View style={[Styles.flexSpaceBetween, { padding: 10, position: 'relative' }]}>
+  return <View style={[{ padding: 10, position: 'relative', flexDirection: 'row', width: '100%', justifyContent: 'space-between', alignItems: 'center' }]}>
     <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
     <TouchableOpacity onPress={() =>
       user?.data.id != userId ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userId, post_id: id } }) :
@@ -85,10 +85,10 @@ export const PostHeader = ({
         source={{ uri: `https://chambaonline.pro/uploads/${userImg}` }} />
       <View>
         <View style={Styles.flexAlignItems}>
-          <Text Text style={[Styles.darkSemiBold14, { marginRight: 5 }]}>{userName}</Text>
+          <Text Text style={[Styles.whiteSemiBold14, { marginRight: 5 }]}>{userName}</Text>
           {star > 0 && <CheckMarkUserSvg />}
         </View>
-        <Text style={Styles.balihaiMedium9}>{day} </Text>
+        <Text style={Styles.whiteMedium9}>{day} </Text>
       </View>
     </TouchableOpacity>
     <TouchableOpacity
@@ -96,10 +96,11 @@ export const PostHeader = ({
         setOpenModal(!openModal)
         handlePresentModalPress()
       }}
-      style={{ marginTop: -5, paddingLeft: 15, width: 30, height: 20, }}>
+      style={{}}>
       <MenuSvg />
     </TouchableOpacity>
-    {(user?.data.id == userId && openModal) &&
+    {
+      (user?.data.id == userId && openModal) &&
       <View style={styles.infoBlock}>
         <TouchableOpacity
           style={{ marginVertical: 10 }}
@@ -123,9 +124,11 @@ export const PostHeader = ({
           }}>
           <Text style={Styles.darkRegular14}>{t(mainData.lang).Deletepost} </Text>
         </TouchableOpacity>
-      </View>}
+      </View>
+    }
 
-    {(user?.data.id != userId && openModal) &&
+    {
+      (user?.data.id != userId && openModal) &&
       <View style={styles.infoBlock}>
         <TouchableOpacity style={{ marginVertical: 20 }} onPress={() => {
           setOpenModal(false)
@@ -151,7 +154,7 @@ export const PostHeader = ({
         </TouchableOpacity>
       </View>
     }
-  </View>
+  </View >
 }
 
 const styles = StyleSheet.create({

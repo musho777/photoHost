@@ -70,10 +70,12 @@ export const Post = ({
           saveType={saveType}
         />
       }
-      <Shadow
+      {/* <Shadow
         style={{ width: '100%', backgroundColor: '#fff', position: 'relative' }}
-        startColor={'#00000010'}>
-        <View style={styles.block}>
+        startColor={'#00000010'}> */}
+      <View style={styles.block}>
+
+        <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
           {!full && <PostHeader
             userImg={userInfo.avatar}
             user={user}
@@ -93,16 +95,18 @@ export const Post = ({
             addToblack={addToblack}
           />}
           {description && <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-            <Text style={Styles.darkSemiBold12}>
+            <Text style={Styles.whiteSemiBold12}>
               {D} {description?.length > 50 &&
                 (showMore ?
-                  <Text style={{ color: "#037ffc", fontSize: 13 }} onPress={() => setShowMore(false)}>Показать ещё</Text> :
-                  <Text style={{ color: "#037ffc", fontSize: 13 }} onPress={() => setShowMore(true)}>Скрыть</Text>
+                  <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(false)}>Показать ещё</Text> :
+                  <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(true)}>Скрыть</Text>
                 )
               }
             </Text>
           </View>}
-          <Slider viewableItems={viewableItems} music={music} description={description} photo={photo} />
+        </View>
+        <Slider viewableItems={viewableItems} music={music} description={description} photo={photo} />
+        <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
           {!full && <PostBody
             commentCount={commentCount}
             liked={isLiked >= 0}
@@ -114,14 +118,15 @@ export const Post = ({
             user={user}
           />}
         </View>
-      </Shadow>
+      </View>
+      {/* </Shadow> */}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   block: {
-    shadowColor: '#7E9DB5',
+    // shadowColor: '#7E9DB5',
     borderColor: AppColors.White_Color,
     borderRadius: 10,
     position: 'relative',

@@ -47,6 +47,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
           view={data.view_count}
           like={data.like_count}
           id={data.id}
+          user={user}
           big={true}
         />
       </View>
