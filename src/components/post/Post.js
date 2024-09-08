@@ -39,6 +39,7 @@ export const Post = ({
   const [showMore, setShowMore] = useState(false)
   const [D, setD] = useState(description)
   const { full } = useSelector((st) => st.fullScreen)
+  const [textWidth, setTextWidth] = useState(0);
 
 
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
@@ -62,6 +63,9 @@ export const Post = ({
     }
     setD(t)
   }
+  const handleTextLayout = (event) => {
+    setTextWidth(event.nativeEvent.layout.width);
+  };
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => setOpenModal(false)} >
@@ -70,9 +74,6 @@ export const Post = ({
           saveType={saveType}
         />
       }
-      {/* <Shadow
-        style={{ width: '100%', backgroundColor: '#fff', position: 'relative' }}
-        startColor={'#00000010'}> */}
       <View style={styles.block}>
 
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
@@ -94,8 +95,10 @@ export const Post = ({
             isBook={isBook}
             addToblack={addToblack}
           />}
-          {description && <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-            <Text style={Styles.whiteSemiBold12}>
+          {description && <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
+            <Text
+              onLayout={handleTextLayout}
+              style={[Styles.whiteSemiBold12, styles.text]}>
               {D} {description?.length > 50 &&
                 (showMore ?
                   <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(false)}>Показать ещё</Text> :
@@ -119,16 +122,22 @@ export const Post = ({
           />}
         </View>
       </View>
-      {/* </Shadow> */}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   block: {
-    // shadowColor: '#7E9DB5',
     borderColor: AppColors.White_Color,
     borderRadius: 10,
     position: 'relative',
   },
+  text: {
+    paddingHorizontal: 15,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    borderRadius: 20,
+    paddingVertical: 3,
+    width: 'auto',
+    alignItems: 'center'
+  }
 });

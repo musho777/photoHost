@@ -135,12 +135,12 @@ export const AddImg = ({ navigation }) => {
     description && form.append('description', description);
     form.append('category_id', selectedCatalog)
     musicFromVidio && form.append('music_name', musicFromVidio)
-    if (selectedCatalog != '') {
+    if (selectedCatalog != '' && error == '') {
       dispatch(CreatePostLocal(uri[0]))
       navigation.navigate('Home');
       dispatch(CreatPostAction(form, staticData.token));
     }
-    else {
+    else if (selectedCatalog == '') {
       setErrorCatalog(true)
     }
   };
@@ -152,42 +152,36 @@ export const AddImg = ({ navigation }) => {
       quality: 1,
       maxWidth: 5000,
       maxHeight: 5000,
+      selectionLimit: 3,
       storageOptions: {
         skipBackup: true,
       },
     };
     launchImageLibrary(options, (response) => {
       let item = [...uri]
-      if (response.didCancel) { }
-      else if (response.error) {
-      } else {
-        const selectedVideo = response.assets[0];
-        if (response.assets[0].type && response.assets[0].type.startsWith('video')) {
-          setVidio(true)
-          if (selectedVideo.duration <= 60) {
-            const source = { uri: response.assets[0].uri };
-            if (response.type && response.type.startsWith('video')) {
-              item = item.concat(source)
-            } else {
-              item = item.concat(source);
+      if (!response.didCancel && !response.error) {
+        response.assets.map((elm, i) => {
+          if (elm?.type.startsWith('video')) {
+            setVidio(true)
+            if (elm.duration <= 60) {
+              item.push({ uri: elm.uri })
+              setTimeout(() => {
+                captureScreenshot(videoRefCut)
+              }, 2000)
             }
-            setUri(item);
-            setTimeout(() => {
-              captureScreenshot(videoRefCut)
-            }, 2000)
+            else {
+              setError('видео должен быть меньше чем 60 с')
+            }
           }
           else {
-            setError('видео должен быть меньше чем 60 с')
+            item.push({ uri: elm.uri });
           }
-        }
-        else {
-          const source = { uri: response.assets[0].uri };
-          item = item.concat(source);
-          setUri(item);
-        }
+        })
+        setUri(item);
       }
     });
   }
+
 
   const delateFoto = index => {
     let item = [...uri];
@@ -207,6 +201,13 @@ export const AddImg = ({ navigation }) => {
     }
     else {
       setVidio(false)
+    }
+    console.log(item, uri.length)
+    if (item && uri.length != 1) {
+      setError("пост должен содержать только один видео")
+    }
+    else {
+      setError("")
     }
   }, [uri])
 
@@ -266,7 +267,7 @@ export const AddImg = ({ navigation }) => {
         </View>
         {error && <Text style={{ padding: 1, color: 'red' }}>{error}</Text>}
         <View style={{ marginVertical: 15, width: 233, flexDirection: 'row', alignItems: 'center' }}>
-          {uri.length < 4 &&
+          {uri.length < 3 &&
             <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
           }
           <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 4, marginTop: 3, textAlign: 'right' }]}>(не более 1-ой минуты)</Text>

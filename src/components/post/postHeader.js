@@ -8,7 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 import { t } from '../lang';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ShowSave } from "./showSave";
-import Slider from "@react-native-community/slider";
 
 export const PostHeader = ({
   userImg,
@@ -96,7 +95,7 @@ export const PostHeader = ({
         setOpenModal(!openModal)
         handlePresentModalPress()
       }}
-      style={{}}>
+      style={{ width: 10 }}>
       <MenuSvg />
     </TouchableOpacity>
     {

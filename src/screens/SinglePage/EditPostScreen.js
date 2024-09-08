@@ -31,7 +31,7 @@ export const EditPostScreen = ({ route, navigation }) => {
         description: description
       },
         staticdata.token))
-      navigation.navigate('ProfileNavigation')
+      navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
       dispatch(ClearEditPost())
     }
   }, [editPost.status])

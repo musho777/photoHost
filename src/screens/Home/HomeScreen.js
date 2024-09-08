@@ -37,7 +37,7 @@ export const HomeScreen = () => {
       if (userData.data.show_category_pop_up == 1) {
         setShowModal(true)
       }
-    }, 5000)
+    }, 20000)
   }, [userData.data])
 
   useEffect(() => {
@@ -134,7 +134,6 @@ export const HomeScreen = () => {
   // );
 
   const loadingData = ['', '']
-  // console.log('22')
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (

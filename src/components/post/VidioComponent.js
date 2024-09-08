@@ -10,7 +10,7 @@ import { FullScreen } from '../../store/action/action';
 
 const windowHeight = Dimensions.get('window').height;
 
-export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, setResizeVidio, viewableItems }) => {
+export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, setResizeVidio, viewableItems, aspectRatio }) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
@@ -20,7 +20,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   const [currentTime, setCurrentTime] = useState(0);
   const [paused, setPaused] = useState(false);
   const [volume, setVolume] = useState(0);
-  // const [full, setIsFullscreen] = useState(false);
   const dispatch = useDispatch()
   const { full } = useSelector((st) => st.fullScreen)
   const [width, setWidth] = useState(windowHeight)
@@ -115,7 +114,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   }, [])
 
   return (
-    <View style={{ position: 'relative', height: (big || full) ? width : 550 }}>
+    <View style={{ position: 'relative', height: (big || full) ? width : 550, }}>
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
@@ -130,7 +129,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       >
         {(showStartButton || first) && (
-          <TouchableOpacity onPress={() => dispatch(FullScreen(!full))} style={{ position: 'absolute', top: 10, right: 10, zIndex: 999 }}>
+          <TouchableOpacity onPress={() => dispatch(FullScreen(!full))} style={{ position: 'absolute', top: big ? 10 : 50, right: 10, zIndex: 999 }}>
             <FullScrenn />
           </TouchableOpacity>
         )}
@@ -172,7 +171,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
         />
         {(showStartButton || first) && (
           <View style={styles.music}>
-            <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: big ? 30 : 5 }}>
+            <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
               {music && <MusicSvg />}
               <Text style={Styles.whiteSemiBold13}>{music}</Text>
             </View>
@@ -180,7 +179,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           </View>
         )}
         {(showStartButton || first) && (
-          <View style={[styles.controls, big && { bottom: 40 }]}>
+          <View style={[styles.controls, { bottom: 40 }]}>
             <Slider
               style={styles.seekSlider}
               value={currentTime}

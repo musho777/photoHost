@@ -87,7 +87,6 @@ export const Share = forwardRef(
           onScroll={({ nativeEvent }) => {
             if (isCloseToBottom(nativeEvent)) {
               if (getPosts.nextPage) {
-                console.log('22')
                 let pages = page + 1;
                 dispatch(GetFollowerAction({ search: "", user_id: user_id }, staticdata.token, 1));
                 // dispatch(GetPostLikeAction({ post_id: id }, token, page));

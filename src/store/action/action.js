@@ -768,7 +768,6 @@ export const newMessageAction = (data, token, send) => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessNewMessageAction(r));
         } else {

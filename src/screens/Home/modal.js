@@ -110,7 +110,7 @@ export const ModalComponent = ({ showModal, token, close }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{ gap: 20 }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
-                <Text style={Styles.darkMedium13}>Попутный контент – это контент, который косвенно имеет отношение к выбранным Вами рубрикам и будет предлагаться в ленте событий.
+                <Text style={Styles.darkMedium13}>Попутный контент – это контент, который косвенно имеет отношение к выбранными вами рубриками и будет предлагаться в ленте событий.
                 </Text>
               </View>
               <View style={{ gap: 10 }}>
@@ -123,7 +123,7 @@ export const ModalComponent = ({ showModal, token, close }) => {
                   <Text style={Styles.balihaiMedium13}>-Активный отдых (информация о всех видах отдыха)</Text>
                   <Text style={Styles.balihaiMedium13}>-Квадрокоптер (разные фото и видео с высоты птичьего полета)</Text>
                   <Text style={Styles.balihaiMedium13}>-Природа (самые лучшие уголки планеты)</Text>
-                  <Text style={Styles.balihaiMedium13}>-Релакс ( самые лучшие расслабления которые можно получить на отдыхе)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Релакс (самые лучшие расслабления которые можно получить на отдыхе)</Text>
                 </View>
               </View>
             </View>

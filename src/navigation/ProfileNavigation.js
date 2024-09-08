@@ -42,13 +42,13 @@ function CustomDrawerContent(props) {
       />
       <DrawerItem
         labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).Editprofile}
-        onPress={() => props.navigation.navigate('EditProfilScreen')}
+        label={t(mainData.lang).Contacts}
+        onPress={() => props.navigation.navigate('Contacts')}
       />
       <DrawerItem
         labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).Contacts}
-        onPress={() => props.navigation.navigate('Contacts')}
+        label={t(mainData.lang).Editprofile}
+        onPress={() => props.navigation.navigate('EditProfilScreen')}
       />
       <DrawerItem
         labelStyle={[Styles.darkRegular16]}

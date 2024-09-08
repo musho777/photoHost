@@ -63,6 +63,7 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
                 /> :
                 <VidioComponent setResizeVidio={() => {
                   setSelectedVidio(item)
+                  aspectRatio = { aspectRatio }
                   setResizeVidio(true)
                 }}
 
@@ -75,7 +76,7 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
       />
       <View style={styles.paginationWrapper}>
         {photo?.length > 1 && photo?.map((elm, i) => (
-          <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 },]}></View>
+          <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
         ))}
       </View>
       {openSlider && (
