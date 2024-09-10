@@ -119,6 +119,11 @@ export const Styles = StyleSheet.create({
         fontSize: 12,
         color: AppColors.BaliHai_Color,
     },
+    whiteRegular12: {
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 12,
+        color: "white",
+    },
     balihaiRegular15: {
         fontFamily: 'Montserrat-Regular',
         fontSize: 15,

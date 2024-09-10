@@ -17,7 +17,7 @@ export const StatisticList = ({ id, token }) => {
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
-  const widthArr = [80, 40, 40, 80, 100]
+  const widthArr = [80, 50, 40, 70, 100]
   const getPostView = useSelector(st => st.getPostView);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch()
@@ -32,35 +32,64 @@ export const StatisticList = ({ id, token }) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  useEffect(() => {
-    let item = [...tableData]
-    if (getStatistic2.data.length) {
-      getStatistic2.data.map((elm, i) => {
-        elm.statistics.map((el, i) => {
-          let gender = el.gender
-          if (gender == 'men') {
-            gender = "М"
-          }
-          else if (gender == 'women') {
-            gender = "Ж"
-          }
 
-          let year = elm.date.slice(2, 4)
-          let mounth = elm.date.slice(5, 7)
-          let day = elm.date.slice(8, 10)
-          const newDateString = `${day}.${mounth}.${year}`;
-          item.push([newDateString, elm.hour_range, gender, el.year, el.count])
-        })
-      })
-    }
-    setTableDat(item)
-  }, [getStatistic2.data])
+  function getMaxCountItem(data) {
+    return data.map((item) => {
+      const maxStatistic = item.statistics.reduce((max, current) =>
+        current.count > max.count ? current : max, item.statistics[0]);
+
+      const gender = maxStatistic.gender === "men" ? "M" : "Ж";
+      if (maxStatistic.count > 0)
+        return [item.date, item.hour_range, gender, maxStatistic.year, maxStatistic.count];
+    });
+  }
+
+
+
+
+  // useEffect(() => {
+  //   let item = [...tableData]
+  //   if (getStatistic2.data.length >= 0) {
+  //     getStatistic2.data.map((elm, i) => {
+  //       elm.statistics.map((el, i) => {
+  //         let gender = el.gender
+  //         if (gender == 'men') {
+  //           gender = "М"
+  //         }
+  //         else if (gender == 'women') {
+  //           gender = "Ж"
+  //         }
+
+  //         let year = elm.date.slice(2, 4)
+  //         let mounth = elm.date.slice(5, 7)
+  //         let day = elm.date.slice(8, 10)
+  //         const newDateString = `${day}.${mounth}.${year}`;
+  //         item.push([newDateString, elm.hour_range, gender, el.year, el.count])
+  //       })
+  //     })
+  //   }
+  //   setTableDat(item)
+  // }, [getStatistic2.data])
   const formatTime = (totalSeconds) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const secs = totalSeconds % 60;
     return `${hours > 0 ? `${hours}h:` : ''}${minutes > 0 ? `${minutes}m:` : ''}${secs}s`;
   };
+
+  useEffect(() => {
+    let result = []
+    if (getStatistic2.data.length >= 0) {
+
+      result = getMaxCountItem(getStatistic2.data);
+      result
+    }
+    setTableDat(result)
+    console.log(result, 'result');
+  }, [getStatistic2.data])
+
+
+
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
       <Text style={[{ textAlign: 'center' }, Styles.darkMedium16]}>СТАТИСТИКА</Text>

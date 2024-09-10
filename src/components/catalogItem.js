@@ -3,6 +3,7 @@ import { Styles } from "../styles/Styles"
 import { SelectSvg, SelectedSvg } from "../assets/svg/Svgs"
 
 export const CatalogItem = ({ data, onSelect, selected }) => {
+  console.log(data.name)
   return <TouchableOpacity
     onPress={() => onSelect(data)}
     style={[style.CatalogItem, style.shadowProp]}
@@ -20,8 +21,8 @@ export const CatalogItem = ({ data, onSelect, selected }) => {
         source={{ uri: `https://chambaonline.pro/uploads/${data.photo}` }}
       />
     </View>
-    <View style={{ height: 43 }}>
-      <Text style={[Styles.darkMedium14, { textAlign: 'center', marginTop: 5 }]}>{data.name}</Text>
+    <View style={{ height: 55 }}>
+      <Text style={[Styles.darkMedium14, { textAlign: 'center', }]}>{data.name}</Text>
     </View>
   </TouchableOpacity>
 }
@@ -40,7 +41,7 @@ const style = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 130,
+    height: 140,
     borderRadius: 10,
     gap: 7,
     paddingHorizontal: 5,

@@ -9,8 +9,9 @@ import { Header } from './components/Hedaer';
 import { PostBody } from '../../components/postBody';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { AddPostViewCount, EndViewPost } from '../../store/action/action';
+import { ViewComponent } from '../../components/statistic/ViewComponent';
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const user = useSelector((st) => st.userData)
@@ -18,6 +19,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const staticdata = useSelector(st => st.static);
   const my = route.params.my
   const dispatch = useDispatch()
+  const [showView, setShowView] = useState(null)
 
   const End = async (id) => {
     dispatch(EndViewPost({ post_id: id }, staticdata.token))
@@ -40,7 +42,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
       </View>
       <Slider big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       <View style={{ position: 'absolute', bottom: 15, width: '100%', zIndex: 999 }}>
-        <PostBody
+        {!showView && <PostBody
           my={my}
           commentCount={data.comment_count}
           liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
@@ -49,8 +51,15 @@ export const SinglPageScreen = ({ route, navigation }) => {
           id={data.id}
           user={user}
           big={true}
-        />
+          setShowView={(e) => setShowView(e)}
+        />}
       </View>
+      {showView && <ViewComponent
+        id={data.id}
+        big={true}
+        token={staticdata.token}
+        close={(e) => setShowView(e)}
+      />}
     </SafeAreaView>
   );
 };

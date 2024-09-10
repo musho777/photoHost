@@ -30,7 +30,9 @@ export const Post = ({
   deletData,
   data,
   music,
-  isLiked
+  isLiked,
+  setSelectidId,
+  setShowView
 }) => {
 
   const user = useSelector((st) => st.userData)
@@ -112,7 +114,9 @@ export const Post = ({
         <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
           {!full && <PostBody
             commentCount={commentCount}
+            setSelectidId={(id) => setSelectidId(id)}
             liked={isLiked >= 0}
+            setShowView={(e) => setShowView(e)}
             view={view}
             my={user?.data.id != userInfo.id ? false : true}
             userId={userInfo.id}

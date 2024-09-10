@@ -12,83 +12,74 @@ import { StatisticSvg, ViewListSwg } from '../../assets/svg/Svgs';
 import { ViewList } from './ViewList';
 import { StatisticList } from './StatisticList';
 import { GetPostViewAction } from '../../store/action/action';
+import BottomSheet from '@gorhom/bottom-sheet';
 
-export const ViewComponent = forwardRef(
-  ({ snapPoints, id, token, close, currentId }, ref) => {
-    const dispatch = useDispatch()
-    useEffect(() => {
-      if (currentId) {
-        dispatch(GetPostViewAction({ post_id: currentId }, token, 1));
-      }
-    }, [currentId])
-
-    const [statistic, setStatistic] = useState(false)
-
-    const navigation = useNavigation();
-    const renderBackdrop = useCallback(
-      props => (
-        <BottomSheetBackdrop
-          {...props}
-          animatedIndex={{
-            value: 1,
-          }}
-          opacity={0.85}
-        />
-      ),
-      [],
-    );
+export const ViewComponent = ({ id, token, close, big = false }) => {
 
 
-    return (
-      <BottomSheetModal
-        ref={ref}
-        index={0}
-        snapPoints={snapPoints}
-        backdropComponent={renderBackdrop}>
-        <View
-          style={[
-            Styles.flexAlignItems,
-            { justifyContent: 'center', marginVertical: 20 },
-          ]}>
-          <StatisticSvg />
-        </View>
-        {!statistic ?
-          <ViewList
-            navigation={navigation}
-            id={id}
-            token={token}
-            close={close}
-          /> :
-          <StatisticList token={token} id={id} />}
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (id) {
+      dispatch(GetPostViewAction({ post_id: id }, token, 1));
+    }
+  }, [id])
 
-        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: 50, alignItems: 'center' }}>
-          <TouchableOpacity style={[{ padding: 10, borderRadius: 10, }, statistic == false && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(false)}>
-            <ViewListSwg active={!statistic} />
-          </TouchableOpacity>
-          <TouchableOpacity style={[{ padding: 10, borderRadius: 10 }, statistic && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(true)}>
-            <StatisticSvg active={!statistic} />
-          </TouchableOpacity>
-        </View>
-      </BottomSheetModal>
-    );
-  },
-);
+  useEffect(() => {
+    navigation.setOptions({
+      tabBarStyle: { display: 'none' },
+    });
+  }, [])
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-  },
-  img: {
-    width: 45,
-    height: 45,
-    borderRadius: 50,
-  },
-  block: {
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  }
-});
+  const [statistic, setStatistic] = useState(false)
+
+  const navigation = useNavigation();
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        animatedIndex={{
+          value: 1,
+        }}
+        opacity={0.85}
+      />
+    ),
+    [],
+  );
+
+
+  return (
+    <BottomSheet
+      index={0}
+      snapPoints={['80%']}
+      backdropComponent={renderBackdrop}
+      enablePanDownToClose={true}
+      onClose={() => close()}
+      style={{ zIndex: 999993, postion: 'absalute' }}
+    >
+      <View
+        style={[
+          Styles.flexAlignItems,
+          { justifyContent: 'center', marginVertical: 20 },
+        ]}>
+        <StatisticSvg />
+      </View>
+      {!statistic ?
+        <ViewList
+          navigation={navigation}
+          id={id}
+          token={token}
+          close={close}
+        /> :
+        <StatisticList token={token} id={id} />}
+
+      <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: big ? 100 : 50, alignItems: 'center' }}>
+        <TouchableOpacity style={[{ padding: 10, borderRadius: 10, }, statistic == false && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(false)}>
+          <ViewListSwg active={!statistic} />
+        </TouchableOpacity>
+        <TouchableOpacity style={[{ padding: 10, borderRadius: 10 }, statistic && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(true)}>
+          <StatisticSvg active={!statistic} />
+        </TouchableOpacity>
+      </View>
+    </BottomSheet>
+  );
+}

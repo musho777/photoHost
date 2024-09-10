@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { View, FlatList, RefreshControl, Image, Text, StyleSheet, PermissionsAndroid } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
@@ -8,6 +8,7 @@ import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
+import { ViewComponent } from '../../components/statistic/ViewComponent';
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,20 @@ export const HomeScreen = () => {
   const [currentPost, setCurrentPost] = useState({})
   const { full } = useSelector((st) => st.fullScreen)
   const createPost = useSelector(st => st.createPost);
+  const snapPointsLike = useMemo(() => ['85%'], []);
+  const [selecteidId, setSelectidId] = useState(null)
+  const ViewRef = useRef(null)
+  const [showView, setShowView] = useState(false)
+  const handleClosePress = () => ViewRef.current?.close();
+  const handlePresentModalPressView = () => {
+    setShowView(true)
+  }
+
+
+  useEffect(() => {
+    handleClosePress()
+  }, [])
+
   useEffect(() => {
     if (!getLents.loading) {
       setLoading(false)
@@ -37,7 +52,7 @@ export const HomeScreen = () => {
       if (userData.data.show_category_pop_up == 1) {
         setShowModal(true)
       }
-    }, 20000)
+    }, 2000)
   }, [userData.data])
 
   useEffect(() => {
@@ -133,7 +148,9 @@ export const HomeScreen = () => {
   //   }, [data])
   // );
 
+  console.log(selecteidId)
   const loadingData = ['', '']
+  // console.log('22')
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (
@@ -141,6 +158,7 @@ export const HomeScreen = () => {
           <Post
             // viewableItems={viewableItems}
             userInfo={item.user}
+            setShowView={() => handlePresentModalPressView()}
             description={item.description}
             like={item.like_count}
             commentCount={item.comment_count}
@@ -154,6 +172,7 @@ export const HomeScreen = () => {
             addToblack={(e) => AddToBack(e)}
             data={item.created_at}
             deletData={(e) => deletData(index, e)}
+            setSelectidId={(id) => setSelectidId(id)}
             isLiked={item.like_auth_user.findIndex((elm, i) => elm.user_id == userData.data.id)}
           />
         </View>
@@ -191,8 +210,8 @@ export const HomeScreen = () => {
       <FlatList
         scrollEnabled={!full}
         removeClippedSubviews={false}
+        keyboardShouldPersistTaps="never"
         showsVerticalScrollIndicator={false}
-        // style={{ backgroundColor: 'rgb(237,238,240)' }}
         ref={flatListRef}
         // onViewableItemsChanged={onViewableItemsChanged}
         onScroll={({ nativeEvent }) => {
@@ -220,6 +239,14 @@ export const HomeScreen = () => {
         enableEmptySections={true}
         renderItem={renderItem}
       />
+      {showView &&
+        <ViewComponent
+          id={selecteidId}
+          token={staticdata.token}
+          snapPoints={snapPointsLike}
+          close={(e) => setShowView(e)}
+        />
+      }
     </View >
   );
 };

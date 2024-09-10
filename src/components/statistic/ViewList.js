@@ -9,7 +9,7 @@ import { Styles } from '../../styles/Styles';
 import { GetPostViewAction } from '../../store/action/action';
 import { ViewSkeleton } from './compeont/ViewSkeleton';
 
-export const ViewList = ({ id, token, close, navigation }) => {
+export const ViewList = ({ id, token, navigation }) => {
 
   const user = useSelector(st => st.userData);
   const [page, setPage] = useState(1);
@@ -53,7 +53,6 @@ export const ViewList = ({ id, token, close, navigation }) => {
         return (
           <TouchableOpacity
             onPress={() => {
-              close();
               if (user.data.id == elm.user.id) {
                 navigation.navigate('ProfileNavigation');
               }

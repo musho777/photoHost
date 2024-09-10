@@ -14,7 +14,7 @@ export const Profiesions = ({ setLocation, loaction }) => {
     <TouchableOpacity onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <Otrastel />
-        <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{loaction ? loaction : 'Отрасль/сфера'}</Text>
+        <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{loaction ? loaction : 'Сфера/отрасль'}</Text>
       </View>
       <DownArrow />
     </TouchableOpacity>

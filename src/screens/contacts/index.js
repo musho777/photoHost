@@ -30,7 +30,6 @@ export const ContactsPage = () => {
             buttonPositive: 'OK',
           }
         );
-        console.log(granted)
         return granted === PermissionsAndroid.RESULTS.GRANTED;
       } catch (err) {
         console.warn(err);

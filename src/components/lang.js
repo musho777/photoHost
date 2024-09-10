@@ -116,7 +116,7 @@ export const t = (lang = 'ru') => {
             City: 'Город',
             DateofBirth: 'Дата рождения',
             gender: 'Пол',
-            ProfessionFieldofactivity: "Профессия/Сфера деятельности",
+            ProfessionFieldofactivity: "Профессия/должность",
             Placeofwork: "Место работы",
             Website: 'Сайт',
             Mail: 'Почта',

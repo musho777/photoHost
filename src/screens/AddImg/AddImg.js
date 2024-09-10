@@ -202,7 +202,6 @@ export const AddImg = ({ navigation }) => {
     else {
       setVidio(false)
     }
-    console.log(item, uri.length)
     if (item && uri.length != 1) {
       setError("пост должен содержать только один видео")
     }
