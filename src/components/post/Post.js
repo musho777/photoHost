@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { Shadow } from 'react-native-shadow-2';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
@@ -41,7 +40,6 @@ export const Post = ({
   const [showMore, setShowMore] = useState(false)
   const [D, setD] = useState(description)
   const { full } = useSelector((st) => st.fullScreen)
-  const [textWidth, setTextWidth] = useState(0);
 
 
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
@@ -65,9 +63,6 @@ export const Post = ({
     }
     setD(t)
   }
-  const handleTextLayout = (event) => {
-    setTextWidth(event.nativeEvent.layout.width);
-  };
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => setOpenModal(false)} >
@@ -99,7 +94,6 @@ export const Post = ({
           />}
           {description && <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
             <Text
-              onLayout={handleTextLayout}
               style={[Styles.whiteSemiBold12, styles.text]}>
               {D} {description?.length > 50 &&
                 (showMore ?

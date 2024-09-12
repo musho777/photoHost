@@ -86,7 +86,6 @@ export const ContactsPage = () => {
         if (r.status) {
           setLoading(false)
           let item = data
-          console.log(r.data.next_page_url)
           r.data.data.map((elm, i) => {
             item.push(elm)
           })

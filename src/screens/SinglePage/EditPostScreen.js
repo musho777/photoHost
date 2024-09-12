@@ -31,7 +31,8 @@ export const EditPostScreen = ({ route, navigation }) => {
         description: description
       },
         staticdata.token))
-      navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
+      navigation.goBack()
+      // navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
       dispatch(ClearEditPost())
     }
   }, [editPost.status])
@@ -42,12 +43,12 @@ export const EditPostScreen = ({ route, navigation }) => {
         onCheck={() => EditPost()}
         check
         onPress={() => navigation.goBack()}
-        // disabled={uri.length === 0}
-        title={t(mainData.lang).Editprofile}
+        title={t(mainData.lang).EditPost}
       />
       <TextInput
         autoFocus
         value={description}
+        multiline
         onChangeText={e => setDescription(e)}
         style={[Styles.darkMedium14, { paddingHorizontal: 15 }]}
         placeholder={t(mainData.lang).adddescription}

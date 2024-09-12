@@ -45,7 +45,7 @@ export const Slider = ({ photo, music_name, big = false }) => {
             <TouchableOpacity activeOpacity={1} style={styles.img}>
               {!item.video ? (
                 <Image
-                  style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1 }]}
+                  style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1, }, big && { height: '100%' }]}
                   source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                   resizeMode="cover"
                 />

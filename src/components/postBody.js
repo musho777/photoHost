@@ -28,8 +28,8 @@ export const PostBody = ({
 
   const snapPointsLike = useMemo(() => ['85%'], []);
   const snapPointsShare = useMemo(() => ['85%'], []);
-  const ViewRef = useRef(null)
   const navigation = useNavigation()
+  const [showViewText, setShowViewText] = useState(false)
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
   const [openShare, setOpenShare] = useState(0)
@@ -72,7 +72,7 @@ export const PostBody = ({
         </TouchableOpacity>
         <Text style={[Styles.darkMedium14, { color: 'white' }]}> - {commentCount}</Text>
       </View>
-      <View style={styles.hover}>
+      <View style={[styles.hover, { paddingVertical: 7 }]}>
         <TouchableOpacity onPress={() => {
           dispatch(GetFollowerAction({ search: "", user_id: user.allData.data.id }, staticdata.token, 1));
           handlePresentModalPressShare()
@@ -83,20 +83,21 @@ export const PostBody = ({
       </View>
     </View>
 
-    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, position: 'absolute', right: -8 }}>
-      {/* {showView && view > 0 &&
-        <TouchableOpacity onPress={() => handlePresentModalPressView()}>
-          <Text style={Styles.whiteRegular12}>Посмотреть статистику?</Text>
-        </TouchableOpacity>
-      } */}
-      <TouchableOpacity
-        activeOpacity={my ? 0 : 1}
-        // onPress={() => }
-        onPress={() => {
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 1, position: 'absolute', right: 0 }}>
+      {showViewText && view > 0 &&
+        <TouchableOpacity onPress={() => {
           setShowView(true)
           setSelectidId(id)
+        }}>
+          <Text style={[Styles.whiteRegular12, { backgroundColor: 'rgba(0,0,0,0.8)', padding: 7, borderRadius: 20, paddingHorizontal: 8 }]}>Посмотреть статистику?</Text>
+        </TouchableOpacity>
+      }
+      <TouchableOpacity
+        activeOpacity={my ? 0 : 1}
+        onPress={() => {
+          setShowViewText(!showViewText)
         }}
-        style={[Styles.flexAlignItems, styles.hover]}>
+        style={[Styles.flexAlignItems, styles.hover, { paddingVertical: 6 }]}>
         <WhiteViewSvg />
         <Text style={[Styles.balihaiRegular14, { color: 'white' }, { marginLeft: 5 }]}>
           {view}
@@ -123,7 +124,7 @@ export const PostBody = ({
 
 const styles = StyleSheet.create({
   hover: {
-    marginRight: 15,
+    marginRight: 3,
     backgroundColor: 'rgba(0,0,0,0.8)',
     paddingHorizontal: 10,
     paddingVertical: 5,

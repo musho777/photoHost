@@ -167,7 +167,6 @@ export const RegisterAction = data => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessRegister(r));
         } else {
@@ -346,7 +345,8 @@ export const getUserInfoAction = token => {
               r.data.follower_count,
               r.data.followers_count,
               r.data.post_count,
-              r.data
+              r.data,
+
             ),
           );
         } else {

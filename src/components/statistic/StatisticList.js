@@ -80,12 +80,9 @@ export const StatisticList = ({ id, token }) => {
   useEffect(() => {
     let result = []
     if (getStatistic2.data.length >= 0) {
-
       result = getMaxCountItem(getStatistic2.data);
-      result
     }
     setTableDat(result)
-    console.log(result, 'result');
   }, [getStatistic2.data])
 
 

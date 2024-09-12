@@ -2,6 +2,7 @@ import {
   Text,
   SafeAreaView,
   View,
+  StyleSheet,
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { Slider } from './components/slider';
@@ -12,6 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { AddPostViewCount, EndViewPost } from '../../store/action/action';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
+import { AppColors } from '../../styles/AppColors';
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const user = useSelector((st) => st.userData)
@@ -36,9 +38,11 @@ export const SinglPageScreen = ({ route, navigation }) => {
     <SafeAreaView>
       <View style={{ position: 'absolute', top: 0, zIndex: 999, width: "100%" }}>
         <Header big={true} data={data} navigation={navigation} my={my} />
-        {data.description && <Text style={[Styles.darkSemiBold12, { marginTop: 5, marginBottom: 10, paddingHorizontal: 10, color: 'white' }]}>
-          {data.description}
-        </Text>}
+        <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
+          {data.description && <Text style={[Styles.darkSemiBold12, styles.text]}>
+            {data.description}
+          </Text>}
+        </View>
       </View>
       <Slider big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       <View style={{ position: 'absolute', bottom: 15, width: '100%', zIndex: 999 }}>
@@ -64,3 +68,20 @@ export const SinglPageScreen = ({ route, navigation }) => {
   );
 };
 
+
+const styles = StyleSheet.create({
+  block: {
+    borderColor: AppColors.White_Color,
+    borderRadius: 10,
+    position: 'relative',
+  },
+  text: {
+    paddingHorizontal: 15,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    borderRadius: 20,
+    paddingVertical: 3,
+    width: 'auto',
+    alignItems: 'center',
+    color: "white",
+  }
+});

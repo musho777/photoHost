@@ -7,7 +7,6 @@ import {
   Text,
   TouchableOpacity,
   Platform,
-  Dimensions,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
@@ -24,7 +23,6 @@ import { MultySelect } from '../../components/multySelect';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
 
-const windowWidth = Dimensions.get('window').width;
 
 export const AddImg = ({ navigation }) => {
   const mainData = useSelector(st => st.mainData);
@@ -152,7 +150,7 @@ export const AddImg = ({ navigation }) => {
       quality: 1,
       maxWidth: 5000,
       maxHeight: 5000,
-      selectionLimit: 3,
+      selectionLimit: 10,
       storageOptions: {
         skipBackup: true,
       },
@@ -174,7 +172,8 @@ export const AddImg = ({ navigation }) => {
             }
           }
           else {
-            item.push({ uri: elm.uri });
+            if (item.length <= 10)
+              item.push({ uri: elm.uri });
           }
         })
         setUri(item);
@@ -266,7 +265,7 @@ export const AddImg = ({ navigation }) => {
         </View>
         {error && <Text style={{ padding: 1, color: 'red' }}>{error}</Text>}
         <View style={{ marginVertical: 15, width: 233, flexDirection: 'row', alignItems: 'center' }}>
-          {uri.length < 3 &&
+          {uri.length < 10 &&
             <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
           }
           <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 4, marginTop: 3, textAlign: 'right' }]}>(не более 1-ой минуты)</Text>
@@ -305,7 +304,7 @@ const styles = StyleSheet.create({
   img: {
     height: 150,
     width: '100%',
-    borderRadius: 10,
+    borderRadius: 11,
   },
   wrapper: {
     flexDirection: 'row',

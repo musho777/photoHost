@@ -2,6 +2,7 @@ export const t = (lang = 'ru') => {
     if (lang == 'en') {
         return {
             Editprofile: "Edit profile",
+            EditPost: "Edit post",
             Contacts: "Contacts",
             Edit: "Edit",
             Deletepost: "Delete post",
@@ -84,6 +85,7 @@ export const t = (lang = 'ru') => {
     {
         return {
             Editprofile: "Редактировать профиль",
+            EditPost: "Редактировать пост",
             Contacts: "Контакты",
             Edit: "Редактировать",
             Deletepost: "Удалить пост",

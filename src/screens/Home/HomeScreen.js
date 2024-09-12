@@ -148,9 +148,7 @@ export const HomeScreen = () => {
   //   }, [data])
   // );
 
-  console.log(selecteidId)
   const loadingData = ['', '']
-  // console.log('22')
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (

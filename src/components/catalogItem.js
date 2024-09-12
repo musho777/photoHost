@@ -3,7 +3,6 @@ import { Styles } from "../styles/Styles"
 import { SelectSvg, SelectedSvg } from "../assets/svg/Svgs"
 
 export const CatalogItem = ({ data, onSelect, selected }) => {
-  console.log(data.name)
   return <TouchableOpacity
     onPress={() => onSelect(data)}
     style={[style.CatalogItem, style.shadowProp]}
