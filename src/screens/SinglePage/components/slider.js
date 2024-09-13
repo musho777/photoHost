@@ -5,21 +5,15 @@ import {
   Image,
   FlatList,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native';
 import { AppColors } from '../../../styles/AppColors';
 import { VidioComponent } from '../../../components/post/VidioComponent';
-import { VidioModal } from '../../../components/post/VidionModal';
 
 const windowWidth = Dimensions.get('window').width;
 
 export const Slider = ({ photo, music_name, big = false }) => {
   const [active, setActive] = useState(0);
-  const [openSlider, setOpenSlider] = useState(false);
   const [scroleEneble, setScrollEnabled] = useState(true)
-  const [resizeVidio, setResizeVidio] = useState(false)
-  const [selectedVidio, setSelectedVidio] = useState(false)
-
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -30,7 +24,7 @@ export const Slider = ({ photo, music_name, big = false }) => {
   };
 
   return (
-    <View>
+    <View style={{ backgroundColor: 'black', height: '100%' }}>
       <FlatList
         horizontal
         pagingEnabled
@@ -40,12 +34,12 @@ export const Slider = ({ photo, music_name, big = false }) => {
         data={photo}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         renderItem={({ item, index }) => {
-          let aspectRatio = 0.50
+          let height = (windowWidth * item.height) / item.width
           return (
-            <TouchableOpacity activeOpacity={1} style={styles.img}>
+            <View style={styles.img}>
               {!item.video ? (
                 <Image
-                  style={[{ width: '100%', aspectRatio: aspectRatio ? aspectRatio : 1, }, big && { height: '100%' }]}
+                  style={[{ width: '100%', height: height }]}
                   source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                   resizeMode="cover"
                 />
@@ -61,7 +55,7 @@ export const Slider = ({ photo, music_name, big = false }) => {
                 />
 
               )}
-            </TouchableOpacity>
+            </View>
           );
         }}
       />
@@ -85,15 +79,6 @@ export const Slider = ({ photo, music_name, big = false }) => {
               ]}></View>
           ))}
       </View>
-      {openSlider && (
-        <SliderModal
-          modalVisible={openSlider}
-          activePhoto={active}
-          photo={photo}
-          close={() => setOpenSlider(false)}
-        />
-      )}
-      <VidioModal close={() => setResizeVidio(false)} modalVisible={resizeVidio} music={music_name} item={selectedVidio} />
     </View>
   );
 };
@@ -102,6 +87,7 @@ const styles = StyleSheet.create({
   img: {
     width: windowWidth,
     flexShrink: 0,
+    justifyContent: 'center'
   },
   pagination: {
     width: 6,

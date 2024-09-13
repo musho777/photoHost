@@ -14,7 +14,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
   const [openSlider, setOpenSlider] = useState(false)
-  console.log(user.allData.data.star)
 
   const [imgUrl, setImgUrl] = useState('');
   const dispatch = useDispatch()

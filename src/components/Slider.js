@@ -50,6 +50,7 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
           } else if (aspectRatio < 1) {
             aspectRatio = single ? 0.65 : 0.60;
           }
+          let height = (windowWidth * item.height) / item.width
           return (
             <TouchableOpacity
               activeOpacity={1}
@@ -57,7 +58,7 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
               style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ?
                 <Image
-                  style={{ aspectRatio: aspectRatio ? aspectRatio : 1 }}
+                  style={{ height: height }}
                   source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                   resizeMode="cover"
                 /> :

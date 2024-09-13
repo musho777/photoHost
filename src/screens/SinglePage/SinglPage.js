@@ -38,7 +38,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
     <SafeAreaView>
       <View style={{ position: 'absolute', top: 0, zIndex: 999, width: "100%" }}>
         <Header big={true} data={data} navigation={navigation} my={my} />
-        <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
+        <View style={{ flexDirection: 'row' }}>
           {data.description && <Text style={[Styles.darkSemiBold12, styles.text]}>
             {data.description}
           </Text>}

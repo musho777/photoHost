@@ -27,9 +27,10 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                 index0={active > 0 ? active - 1 : 0}
                 data={photo}
                 renderItem={({ item, index }) => {
+                    let height = (windowWidth * item.height) / item.width
                     return (
                         <Image
-                            style={styles.img}
+                            style={[styles.img, { height: height ? height : 500 }]}
                             source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
 
                         />
@@ -52,7 +53,6 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
 
 const styles = StyleSheet.create({
     img: {
-        height: windowheight,
         width: windowWidth,
         flexShrink: 0,
     },

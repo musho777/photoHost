@@ -10,7 +10,7 @@ import { FullScreen } from '../../store/action/action';
 
 const windowHeight = Dimensions.get('window').height;
 
-export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, setResizeVidio, viewableItems, aspectRatio }) => {
+export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, viewableItems }) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
