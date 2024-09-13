@@ -7,12 +7,14 @@ import { useState } from 'react';
 import { chnageAvatarAction } from '../../../store/action/action';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { SliderModal } from '../../../components/SliderModal';
+import { CheckMarkUserSvg } from '../../../assets/svg/Svgs';
 
 export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
 
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
   const [openSlider, setOpenSlider] = useState(false)
+  console.log(user.allData.data.star)
 
   const [imgUrl, setImgUrl] = useState('');
   const dispatch = useDispatch()
@@ -117,6 +119,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
     marginBottom: 15,
     alignItems: 'center',
-    marginLeft: 10
+    marginLeft: 10,
+    flexDirection: 'row'
   }
 });

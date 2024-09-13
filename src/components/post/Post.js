@@ -22,7 +22,6 @@ export const Post = ({
   view,
   photo,
   id,
-  star,
   addToblack,
   isBook,
   isFollow,
@@ -86,7 +85,7 @@ export const Post = ({
             isFollow={isFollow}
             openModal={openModal}
             id={id}
-            star={star}
+            star={userInfo.star}
             setOpenModal={setOpenModal}
             deletData={deletData}
             isBook={isBook}

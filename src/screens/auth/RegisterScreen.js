@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ConfirmCode } from '../../components/ConfirmCode';
 import { Styles } from '../../styles/Styles';
 import { Button } from '../../ui/Button';
@@ -8,11 +8,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ClearConfirmPasswordAction, ClearRegisterAction, ConfirmRegisterCode, RegisterAction } from '../../store/action/action';
 import { t } from '../../components/lang';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppColors } from '../../styles/AppColors';
 
 export const RegisterScreen = ({ navigation, route }) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
+  const [ooo, setOoo] = useState({ value: '', error: '' })
   const [sendMail, setSnedMail] = useState(false);
   const [disableButton, setDisableButton] = useState(true)
   const [code, setCode] = useState('')
@@ -20,6 +22,7 @@ export const RegisterScreen = ({ navigation, route }) => {
   const register = useSelector(st => st.register)
   const mainData = useSelector(st => st.mainData);
   const confirm = useSelector(st => st.confirmRegister)
+  const [show, setShow] = useState(false)
   useEffect(() => {
     if (name.value && password.value && email.value) {
       setDisableButton(false)
@@ -60,12 +63,22 @@ export const RegisterScreen = ({ navigation, route }) => {
     else {
       setEmail({ ...email, error: '' })
     }
+    if (route.params.selected == 'Legal_entity') {
+      if (ooo.value == "") {
+        setOoo({ ...ooo, error: 'Введите корректный ooo' })
+        item = false
+      }
+      else {
+        setOoo({ ...ooo, error: '' })
+      }
+    }
     if (item) {
       dispatch(RegisterAction({
         name: name.value,
         email: email.value,
         password: password.value,
-        user_type: route.params.selected
+        user_type: route.params.selected,
+        ooo: ooo.value
       }))
     }
   }
@@ -85,10 +98,11 @@ export const RegisterScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if (confirm.status) {
-      dispatch(ClearConfirmPasswordAction())
-      dispatch(ClearRegisterAction())
-      navigation.navigate('Catalog');
-      ShowDesctiption()
+      setShow(true)
+      // dispatch(ClearConfirmPasswordAction())
+      // dispatch(ClearRegisterAction())
+      // navigation.navigate('Catalog');
+      // ShowDesctiption()
     }
   }, [confirm.status])
 
@@ -100,8 +114,38 @@ export const RegisterScreen = ({ navigation, route }) => {
       }))
     }
   }, [code])
+
+
+
+  const Confirm = () => {
+    setShow(false)
+    dispatch(ClearConfirmPasswordAction())
+    dispatch(ClearRegisterAction())
+    navigation.navigate('Catalog');
+    ShowDesctiption()
+  }
+
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {show &&
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={show}
+          onRequestClose={() => {
+            setModalVisible(!show);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>В данный момент проводится модерация аккаунта, после проверки всех данных мы направим информацию на Вашу почту, указанную при регистрации.</Text>
+              <TouchableOpacity onPress={() => Confirm()} style={{ width: 200, backgroundColor: AppColors.Mustard_Color, justifyContent: 'center', alignItems: 'center', paddingVertical: 8, borderRadius: 10 }}>
+                <Text style={{ color: 'white' }}>Понятно</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      }
       <View style={Styles.authScreen}>
         <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>{t(mainData.lang).Registration}</Text>
         <Input
@@ -119,6 +163,13 @@ export const RegisterScreen = ({ navigation, route }) => {
           value={email.value}
           onChange={(e) => setEmail({ ...email, value: e })}
         />
+        {route.params.selected == 'Legal_entity' && <Input
+          placeholder={"ООО"}
+          error={ooo.error}
+          value={ooo.value}
+          onChange={(e) => setOoo({ ...ooo, value: e })}
+        />
+        }
         <Input
           placeholder={t(mainData.lang).Createapassword}
           error={password.error}
@@ -143,3 +194,47 @@ export const RegisterScreen = ({ navigation, route }) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    color: 'black'
+  },
+});

@@ -80,14 +80,18 @@ export const PostHeader = ({
       user?.data.id != userId ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userId, post_id: id } }) :
         navigation.navigate('ProfileNavigation')
     } style={Styles.flexAlignItems}>
-      <Image style={styles.userImg}
-        source={{ uri: `https://chambaonline.pro/uploads/${userImg}` }} />
       <View>
-        <View style={Styles.flexAlignItems}>
-          <Text Text style={[Styles.whiteSemiBold14, { marginRight: 5 }]}>{userName}</Text>
+        <Image style={styles.userImg}
+          source={{ uri: `https://chambaonline.pro/uploads/${userImg}` }} />
+      </View>
+
+
+      <View style={{ gap: 5 }}>
+        <View style={[Styles.flexAlignItems, styles.hover, { width: 'auto', gap: 10 }]}>
+          <Text Text style={[Styles.whiteSemiBold14,]}>{userName}</Text>
           {star > 0 && <CheckMarkUserSvg />}
         </View>
-        <Text style={Styles.whiteMedium9}>{day} </Text>
+        <Text style={[Styles.whiteMedium9, styles.hover]}>{day} </Text>
       </View>
     </TouchableOpacity>
     <TouchableOpacity
@@ -174,4 +178,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     zIndex: 1
   },
+  hover: {
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    paddingHorizontal: 10,
+    borderRadius: 15,
+    width: 'auto'
+  }
 });
