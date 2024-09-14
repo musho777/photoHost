@@ -27,7 +27,7 @@ import { ClearCreatPost } from '../../store/action/clearAction';
 export const AddImg = ({ navigation }) => {
   const mainData = useSelector(st => st.mainData);
   const [uri, setUri] = useState([]);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState([]);
   const createPost = useSelector(st => st.createPost);
   const staticData = useSelector(st => st.static);
   const [vidio, setVidio] = useState('')
@@ -99,7 +99,6 @@ export const AddImg = ({ navigation }) => {
       dispatch(ClearCreatPost())
       setUri([])
       setDescription('')
-      // navigation.navigate('Home');
     }
   }, [createPost.status]);
 
@@ -130,7 +129,7 @@ export const AddImg = ({ navigation }) => {
             })
           )
       });
-    description && form.append('description', description);
+    description && form.append('description', JSON.stringify(description));
     form.append('category_id', selectedCatalog)
     musicFromVidio && form.append('music_name', musicFromVidio)
     if (selectedCatalog != '' && error == '') {
@@ -158,7 +157,8 @@ export const AddImg = ({ navigation }) => {
     launchImageLibrary(options, (response) => {
       let item = [...uri]
       if (!response.didCancel && !response.error) {
-        response.assets.map((elm, i) => {
+        console.log(response, '1---')
+        response.assets?.map((elm, i) => {
           if (elm?.type.startsWith('video')) {
             setVidio(true)
             if (elm.duration <= 60) {
@@ -209,6 +209,11 @@ export const AddImg = ({ navigation }) => {
     }
   }, [uri])
 
+  const addDescription = (e, i) => {
+    let item = [...description]
+    item[i] = e
+    setDescription(item)
+  }
   return (
     <ScrollView>
       <HeaderWhiteTitle
@@ -220,13 +225,17 @@ export const AddImg = ({ navigation }) => {
         title={t(mainData.lang).Newpublication}
       />
       <View style={styles.textWrapper}>
-        <TextInput
-          value={description}
-          onChangeText={e => setDescription(e)}
-          style={Styles.darkMedium14}
-          placeholder={t(mainData.lang).adddescription}
-          placeholderTextColor={'#8C9CAB'}
-        />
+        {uri.map((elm, i) => {
+          return <TextInput
+            key={i}
+            value={description}
+            onChangeText={e => addDescription(e, i)}
+            style={[Styles.darkMedium14, styles.input]}
+            placeholder={`${t(mainData.lang).adddescription} #${i + 1}`}
+            placeholderTextColor={'#8C9CAB'}
+          />
+        })
+        }
       </View>
       <View style={{ marginHorizontal: 10 }}>
         <View style={styles.wrapper}>
@@ -313,9 +322,14 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderBottomColor: AppColors.Solitude_Color,
+    // borderColor: AppColors.Solitude_Color,
+    // borderBottomWidth: 1,
+    // borderTopWidth: 1,
+  },
+  input: {
+    borderTopWidth: 1,
     borderBottomWidth: 1,
+    borderColor: AppColors.Solitude_Color,
   },
   textWrapper1: {
     paddingHorizontal: 15,

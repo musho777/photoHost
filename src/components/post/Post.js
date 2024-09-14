@@ -84,7 +84,7 @@ export const Post = ({
             isBook={isBook}
             addToblack={addToblack}
           />}
-          {description && <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
+          {/* {description && <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
             <Text
               style={[Styles.whiteSemiBold12, styles.text]}>
               {D} {description?.length > 30 &&
@@ -94,7 +94,7 @@ export const Post = ({
                 )
               }
             </Text>
-          </View>}
+          </View>} */}
         </View>
         <Slider
           viewableItems={viewableItems}

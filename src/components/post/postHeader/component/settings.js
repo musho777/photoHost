@@ -4,7 +4,7 @@ import { t } from '../../../lang';
 import { Styles } from "../../../../styles/Styles";
 import { useSelector } from "react-redux";
 
-export const Settings = ({ my, setOpenModal, description, id }) => {
+export const Settings = ({ my, setOpenModal, description, id, deletData }) => {
 
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()

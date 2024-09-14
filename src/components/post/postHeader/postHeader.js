@@ -81,6 +81,7 @@ export const PostHeader = ({
         id={id}
         isFollow={isFollow}
         my={true}
+        deletData={deletData}
         setOpenModal={(e) => setOpenModal(e)}
       />
     }

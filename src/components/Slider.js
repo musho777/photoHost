@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,20 +6,25 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import { AppColors } from '../styles/AppColors';
 import { SliderModal } from './SliderModal';
 import { VidioComponent } from './post/VidioComponent';
 import { VidioModal } from './post/VidionModal';
+import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, music, viewableItems, setOpenModal }) => {
+export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [resizeVidio, setResizeVidio] = useState(false)
   const [selectedVidio, setSelectedVidio] = useState(false)
+  const [D, setD] = useState(description)
   const [scrollEnabled, setScrollEnabled] = useState(false)
+  const [showMore, setShowMore] = useState(false)
+
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
       Math.floor(event.nativeEvent.contentOffset.x) /
@@ -27,6 +32,16 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal }) =>
     );
     setActive(index);
   };
+
+
+  useEffect(() => {
+    let desc = description
+    if (description && description[0] == '[') {
+      desc = JSON.parse(description)
+    }
+    console.log(desc)
+    setD(desc)
+  }, [description])
 
   return (
     <View>
@@ -51,9 +66,6 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal }) =>
             aspectRatio = single ? 0.65 : 0.60;
           }
           let height = (windowWidth * item.height) / item.width
-          if (index == 0) {
-            console.log(windowWidth, item.height, 'h')
-          }
           return (
             <TouchableOpacity
               activeOpacity={1}
@@ -63,11 +75,28 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal }) =>
               }}
               style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ?
-                <Image
-                  style={{ height: height }}
-                  source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
-                  resizeMode="cover"
-                /> :
+                <View>
+                  {description && <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
+                    <Text style={[Styles.whiteSemiBold12, styles.text]}>
+                      {Array.isArray(D) ?
+                        D[index] :
+                        D
+                      }
+                      {/* {
+                        description?.length > 60 &&
+                        (showMore ?
+                          <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(false)}>Показать ещё</Text> :
+                          <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(true)}>Скрыть</Text>
+                        )
+                      } */}
+                    </Text>
+                  </View>}
+                  <Image
+                    style={{ height: height }}
+                    source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
+                    resizeMode="cover"
+                  />
+                </View> :
                 <VidioComponent setResizeVidio={() => {
                   setSelectedVidio(item)
                   aspectRatio = { aspectRatio }
@@ -103,6 +132,7 @@ const styles = StyleSheet.create({
   img: {
     width: windowWidth,
     flexShrink: 0,
+    backgroundColor: "black"
   },
   pagination: {
     width: 6,
@@ -116,5 +146,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 5,
+  },
+  text: {
+    paddingHorizontal: 15,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    borderRadius: 20,
+    paddingVertical: 3,
+    width: 'auto',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 999,
+    top: 60
   }
 });
