@@ -71,7 +71,7 @@ export const NewPassword = ({ navigation }) => {
         pass
       />
       <Input
-        placeholder={t(mainData.lang).Createapassword}
+        placeholder={t(mainData.lang).Confirmpassword}
         error={confirmPassword.error}
         value={confirmPassword.value}
         onChange={(e) => setConfirmPassword({ ...confirmPassword, value: e })}

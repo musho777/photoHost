@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableOpacity,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
@@ -39,8 +38,6 @@ export const Post = ({
   const [showMore, setShowMore] = useState(false)
   const [D, setD] = useState(description)
   const { full } = useSelector((st) => st.fullScreen)
-
-
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
 
 
@@ -64,14 +61,9 @@ export const Post = ({
   }
 
   return (
-    <TouchableOpacity activeOpacity={1} onPress={() => setOpenModal(false)} >
-      {showSave &&
-        <ShowSave
-          saveType={saveType}
-        />
-      }
+    <View>
+      {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
-
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
           {!full && <PostHeader
             userImg={userInfo.avatar}
@@ -94,7 +86,7 @@ export const Post = ({
           {description && <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
             <Text
               style={[Styles.whiteSemiBold12, styles.text]}>
-              {D} {description?.length > 50 &&
+              {D} {description?.length > 30 &&
                 (showMore ?
                   <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(false)}>Показать ещё</Text> :
                   <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(true)}>Скрыть</Text>
@@ -103,7 +95,13 @@ export const Post = ({
             </Text>
           </View>}
         </View>
-        <Slider viewableItems={viewableItems} music={music} description={description} photo={photo} />
+        <Slider
+          viewableItems={viewableItems}
+          music={music}
+          description={description}
+          photo={photo}
+          setOpenModal={setOpenModal}
+        />
         <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
           {!full && <PostBody
             commentCount={commentCount}
@@ -119,7 +117,7 @@ export const Post = ({
           />}
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
