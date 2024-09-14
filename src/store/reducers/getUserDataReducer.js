@@ -21,17 +21,17 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'StartGetUserData':
       item.status = false
       item.error = ''
-      item.message = '',
-        item.loading = true
+      item.message = ''
+      item.loading = true
       item.data = {}
-      item.username = '',
-        item.name = '',
-        item.description = ''
+      item.username = ''
+      item.name = ''
+      item.description = ''
       item.email = ''
       item.avatar = ''
-      item.followerCount = 0,
-        item.followersCount = 0,
-        item.postCount = 0
+      item.followerCount = 0
+      item.followersCount = 0
+      item.postCount = 0
       item.allData = {}
       break
     case 'SuccessGetUserData':
@@ -50,6 +50,7 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.postCount = action.post_count
       item.allData = action.allData
       item.msgCount = action.allData.chat_count
+      console.log(action.post_count)
       break
     case 'ErrorGetUserData':
       item.error = action.data
@@ -59,9 +60,10 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.allData = {}
       break;
     case 'changeUserData':
-      item.username = action.data.nickname,
-        item.name = action.data.name,
-        item.description = action.data.description
+      item.username = action.data.nickname
+      item.name = action.data.name
+      console.log(action.data.name, '00000')
+      item.description = action.data.description
       break
     case 'ChangeMail':
       item.email = action.email
@@ -110,6 +112,13 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.description = ''
       item.email = ''
       item.avatar = ''
+      break
+
+    case 'DeletLocalPhoto':
+      item.postCount = item.postCount - 1
+      break
+    case 'CreatePostLocal':
+      item.postCount = item.postCount + 1
       break
     default:
       break;

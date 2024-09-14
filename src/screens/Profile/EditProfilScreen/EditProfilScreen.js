@@ -72,11 +72,16 @@ export const EditProfilScreen = ({ navigation }) => {
     }, [user.data])
   );
 
+  useEffect(() => {
+    setName(user.data.name);
+    console.log(user.data)
+  }, [user.data])
+
   const SetData = () => {
     if (user?.allData?.data?.user_type != 'Legal_entity') {
       setAccauntType(true)
     }
-    setName(user.name);
+    console.log(user.data.name)
     setDiscription(user.description);
     let date = ''
     let year = ''
@@ -110,8 +115,6 @@ export const EditProfilScreen = ({ navigation }) => {
     if (name === '') {
       setError('Введите корректный  имя');
     }
-
-
     else if (day == '' && (mount != '' || year != '')) {
       setError('Введите корректный дата');
     }

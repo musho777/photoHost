@@ -49,7 +49,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
         }}
       />
     </TouchableOpacity>
-    {changeAvatar && <View style={{ top: 100, position: "absolute" }}>
+    {changeAvatar && <View style={{ top: 100, position: "absolute", zIndex: 9999 }}>
       <Shadow
         style={styles.block}
         startColor={'#00000010'}

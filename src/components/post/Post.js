@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { Slider } from '../Slider';
-import { PostHeader } from './postHeader';
+import { PostHeader } from './postHeader/postHeader';
 import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
 
@@ -59,6 +59,7 @@ export const Post = ({
     }
     setD(t)
   }
+
 
   return (
     <View>

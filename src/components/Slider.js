@@ -14,7 +14,7 @@ import { VidioModal } from './post/VidionModal';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, music, viewableItems }) => {
+export const Slider = ({ photo, single, music, viewableItems, setOpenModal }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [resizeVidio, setResizeVidio] = useState(false)
@@ -51,10 +51,16 @@ export const Slider = ({ photo, single, music, viewableItems }) => {
             aspectRatio = single ? 0.65 : 0.60;
           }
           let height = (windowWidth * item.height) / item.width
+          if (index == 0) {
+            console.log(windowWidth, item.height, 'h')
+          }
           return (
             <TouchableOpacity
               activeOpacity={1}
-              onPress={() => !item.video && setOpenSlider(true)}
+              onPress={() => {
+                !item.video && setOpenSlider(true)
+                setOpenModal(false)
+              }}
               style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ?
                 <Image
