@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
+import { TouchableOpacity, ScrollView, RefreshControl, SafeAreaView } from 'react-native';
 import { MenuSvg2 } from '../../assets/svg/Svgs';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
@@ -30,51 +30,53 @@ export const ProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => setChangeAvatar(false)}
-      style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
-      <ScrollView
-        removeClippedSubviews={false}
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={getPosts?.loading}
-            onRefresh={() => {
-              if (!getPosts.loading)
-                dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1));
-              dispatch(getUserInfoAction(staticdata.token))
+    <SafeAreaView style={{ flex: 1 }}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => setChangeAvatar(false)}
+        style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
+        <ScrollView
+          removeClippedSubviews={false}
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={getPosts?.loading}
+              onRefresh={() => {
+                if (!getPosts.loading)
+                  dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1));
+                dispatch(getUserInfoAction(staticdata.token))
 
-            }}
-          />
-        }
-        onScroll={({ nativeEvent }) => {
-          if (isCloseToBottom(nativeEvent)) {
-            if (getPosts.nextPage) {
-              let pages = page + 1;
-              dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, pages));
-              setPage(pages);
-            }
+              }}
+            />
           }
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.openDrawer()}
-          style={{ marginVertical: 10 }}>
-          <MenuSvg2 />
-        </TouchableOpacity>
-        {user.loading ?
-          <ProfileImageSkeleton /> :
-          <ProfilImage
-            user={user}
-            changeAvatar={changeAvatar}
-            setChangeAvatar={(e) => setChangeAvatar(e)}
-          />
-        }
-        <ProfilInfo id={user?.allData?.data?.id} loading={getPosts.loading} postCount={user.postCount} user={user} />
-        <AlbomAndInfo />
-      </ScrollView>
-    </TouchableOpacity>
+          onScroll={({ nativeEvent }) => {
+            if (isCloseToBottom(nativeEvent)) {
+              if (getPosts.nextPage) {
+                let pages = page + 1;
+                dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, pages));
+                setPage(pages);
+              }
+            }
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.openDrawer()}
+            style={{ marginVertical: 10 }}>
+            <MenuSvg2 />
+          </TouchableOpacity>
+          {user.loading ?
+            <ProfileImageSkeleton /> :
+            <ProfilImage
+              user={user}
+              changeAvatar={changeAvatar}
+              setChangeAvatar={(e) => setChangeAvatar(e)}
+            />
+          }
+          <ProfilInfo id={user?.allData?.data?.id} loading={getPosts.loading} postCount={user.postCount} user={user} />
+          <AlbomAndInfo />
+        </ScrollView>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };

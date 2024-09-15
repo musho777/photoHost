@@ -3,6 +3,7 @@ import {
   SafeAreaView,
   FlatList,
   Text,
+  View,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChatUser } from '../../components/ChatUser';
@@ -75,33 +76,35 @@ export const ChatUsersScreen = () => {
     );
   };
   return (
-    <SafeAreaView style={{ padding: 10, marginTop: 10 }}>
-      {data.length > 0 && <Input
-        placeholder={t(mainData.lang).search}
-        search
-        value={search}
-        onChange={e => searchData(e)}
-      />}
-      <FlatList
-        data={data}
-        enableEmptySections={true}
-        renderItem={renderItem}
-        onEndReached={() => {
-          if (getMyChatRoom.nextPage) {
-            setPage(page + 1);
-          }
-        }}
-        ListEmptyComponent={() => (
-          !getMyChatRoom.loading &&
-          <Text
-            style={[
-              Styles.darkMedium16,
-              { marginTop: 10, textAlign: 'center' },
-            ]}>
-            {!search ? t(mainData.lang).Youhavenomessages : t(mainData.lang).Notfound}
-          </Text>
-        )}
-      />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ padding: 10, marginTop: 10 }}>
+        {data.length > 0 && <Input
+          placeholder={t(mainData.lang).search}
+          search
+          value={search}
+          onChange={e => searchData(e)}
+        />}
+        <FlatList
+          data={data}
+          enableEmptySections={true}
+          renderItem={renderItem}
+          onEndReached={() => {
+            if (getMyChatRoom.nextPage) {
+              setPage(page + 1);
+            }
+          }}
+          ListEmptyComponent={() => (
+            !getMyChatRoom.loading &&
+            <Text
+              style={[
+                Styles.darkMedium16,
+                { marginTop: 10, textAlign: 'center' },
+              ]}>
+              {!search ? t(mainData.lang).Youhavenomessages : t(mainData.lang).Notfound}
+            </Text>
+          )}
+        />
+      </View>
     </SafeAreaView>
   );
 }

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, SafeAreaView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { EmailSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from '../../../assets/svg/Svgs';
@@ -169,7 +169,7 @@ export const EditProfilScreen = ({ navigation }) => {
 
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderWhiteTitle
           loading={changeProfil.loading}
@@ -216,7 +216,7 @@ export const EditProfilScreen = ({ navigation }) => {
           {error || changeProfil.error}
         </Text> */}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

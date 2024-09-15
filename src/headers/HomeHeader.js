@@ -1,30 +1,38 @@
-import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, SafeAreaView, TouchableOpacity, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux';
 import { Notification } from "../assets/svg/TabBarSvg"
 import { Styles } from '../styles/Styles'
+import { Icon } from '../assets/svg/Svgs';
 
 export const HomeHeader = ({ navigation }) => {
 
     const user = useSelector(st => st.userData);
-    return <SafeAreaView style={[Styles.flexSpaceBetween, { paddingHorizontal: 10, paddingVertical: 10 }]}>
-        <Text style={Styles.homeTitle}>Chamba</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('NotificationScreen')}>
-            <Notification />
-            {user.allData.notification_count > 0 && <Text style={styles.count}>{user.allData.notification_count}</Text>}
-        </TouchableOpacity>
+    return <SafeAreaView>
+        <View style={[Styles.flexSpaceBetween, { paddingHorizontal: 10, paddingBottom: 10 }]}>
+            <Icon />
+            <TouchableOpacity onPress={() => navigation.navigate('NotificationScreen')}>
+                <Notification />
+                {user.allData.notification_count > 0 &&
+                    <View style={styles.countView}>
+                        <Text style={styles.count}>{user.allData.notification_count}</Text>
+                    </View>}
+            </TouchableOpacity>
+        </View>
     </SafeAreaView>
 }
 const styles = StyleSheet.create({
-    count: {
+    countView: {
         backgroundColor: '#FF5656',
-        borderRadius: 40,
-        textAlign: 'center',
+        borderRadius: 50,
         width: 15,
         height: 15,
-        fontSize: 10,
         position: 'absolute',
         right: -7,
         top: -5,
-        color: 'white'
+    },
+    count: {
+        textAlign: 'center',
+        fontSize: 10,
+        color: 'white',
     }
 })

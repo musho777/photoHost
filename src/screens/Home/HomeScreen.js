@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, RefreshControl, Image, Text, StyleSheet, PermissionsAndroid } from 'react-native';
+import { View, FlatList, RefreshControl, Image, Text, StyleSheet, PermissionsAndroid, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
@@ -193,59 +193,61 @@ export const HomeScreen = () => {
   }
 
   return (
-    <View>
-      {showModal && <ModalComponent
-        showModal={showModal}
-        close={() => setShowModal(false)}
-        token={staticdata.token}
-      />}
-      {createPost.loading && <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, zIndex: 999 }}>
-        <View style={styles.loadingVidio}>
-          <Image source={{ uri: createPost.localImg.uri }} style={{ width: 50, height: 50, borderRadius: 5 }} />
-          <Text style={Styles.darkMedium12}>загрузка</Text>
-        </View>
-      </View>}
-      <FlatList
-        scrollEnabled={!full}
-        removeClippedSubviews={false}
-        keyboardShouldPersistTaps="never"
-        showsVerticalScrollIndicator={false}
-        ref={flatListRef}
-        // onViewableItemsChanged={onViewableItemsChanged}
-        onScroll={({ nativeEvent }) => {
-          handleScroll({ nativeEvent })
-          if (isCloseToBottom(nativeEvent)) {
-            if (getLents?.nextPage) {
-              let p = page + 1;
-              dispatch(GetLentsAction(staticdata.token, p));
-              setPage(p);
+    <SafeAreaView>
+      <View>
+        {showModal && <ModalComponent
+          showModal={showModal}
+          close={() => setShowModal(false)}
+          token={staticdata.token}
+        />}
+        {createPost.loading && <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, zIndex: 999 }}>
+          <View style={styles.loadingVidio}>
+            <Image source={{ uri: createPost.localImg.uri }} style={{ width: 50, height: 50, borderRadius: 5 }} />
+            <Text style={Styles.darkMedium12}>загрузка</Text>
+          </View>
+        </View>}
+        <FlatList
+          scrollEnabled={!full}
+          removeClippedSubviews={false}
+          keyboardShouldPersistTaps="never"
+          showsVerticalScrollIndicator={false}
+          ref={flatListRef}
+          // onViewableItemsChanged={onViewableItemsChanged}
+          onScroll={({ nativeEvent }) => {
+            handleScroll({ nativeEvent })
+            if (isCloseToBottom(nativeEvent)) {
+              if (getLents?.nextPage) {
+                let p = page + 1;
+                dispatch(GetLentsAction(staticdata.token, p));
+                setPage(p);
+              }
             }
-          }
 
-        }}
-        refreshControl={
-          <RefreshControl
-            refreshing={getLents?.loading}
-            onRefresh={() => {
-              if (!loading)
-                dispatch(GetLentsAction(staticdata.token));
-            }}
+          }}
+          refreshControl={
+            <RefreshControl
+              refreshing={getLents?.loading}
+              onRefresh={() => {
+                if (!loading)
+                  dispatch(GetLentsAction(staticdata.token));
+              }}
+            />
+          }
+          viewabilityConfig={viewabilityConfig}
+          data={data}
+          enableEmptySections={true}
+          renderItem={renderItem}
+        />
+        {showView &&
+          <ViewComponent
+            id={selecteidId}
+            token={staticdata.token}
+            snapPoints={snapPointsLike}
+            close={(e) => setShowView(e)}
           />
         }
-        viewabilityConfig={viewabilityConfig}
-        data={data}
-        enableEmptySections={true}
-        renderItem={renderItem}
-      />
-      {showView &&
-        <ViewComponent
-          id={selecteidId}
-          token={staticdata.token}
-          snapPoints={snapPointsLike}
-          close={(e) => setShowView(e)}
-        />
-      }
-    </View >
+      </View >
+    </SafeAreaView>
   );
 };
 

@@ -3,6 +3,7 @@ import {
   SafeAreaView,
   View,
   StyleSheet,
+  Platform
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { Slider } from './components/slider';
@@ -35,8 +36,8 @@ export const SinglPageScreen = ({ route, navigation }) => {
     }, [])
   );
   return (
-    <SafeAreaView>
-      <View style={{ position: 'absolute', top: 0, zIndex: 999, width: "100%" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+      <View style={styles.header}>
         <Header big={true} data={data} navigation={navigation} my={my} />
         <View style={{ flexDirection: 'row' }}>
           {data.description && <Text style={[Styles.darkSemiBold12, styles.text]}>
@@ -74,6 +75,12 @@ const styles = StyleSheet.create({
     borderColor: AppColors.White_Color,
     borderRadius: 10,
     position: 'relative',
+  },
+  header: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 30 : 0,
+    zIndex: 999,
+    width: "100%"
   },
   text: {
     paddingHorizontal: 15,

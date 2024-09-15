@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Styles } from "../../styles/Styles"
 import { CatalogItem } from "../../components/catalogItem"
 import { useEffect, useState } from "react"
@@ -102,7 +102,7 @@ export const Catalog = () => {
     }
   };
 
-  return <View>
+  return <SafeAreaView>
     <View style={style.page}>
       <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
       {(getCatalog.loading && page == 1) ?
@@ -139,7 +139,7 @@ export const Catalog = () => {
 
       }
     </View>
-  </View>
+  </SafeAreaView>
 
 }
 

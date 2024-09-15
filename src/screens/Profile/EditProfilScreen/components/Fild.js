@@ -1,10 +1,8 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import { Styles } from "../../../../styles/Styles"
 import { AppColors } from "../../../../styles/AppColors";
-import { useState } from "react";
 
 export const Fild = ({ placeholder, value, hadnelChange, svg }) => {
-  const [height, setHeight] = useState();
 
   return <View style={styles.textWrapper}>
     {svg}
@@ -14,20 +12,19 @@ export const Fild = ({ placeholder, value, hadnelChange, svg }) => {
       multiline
       value={value}
       onChangeText={e => hadnelChange(e)}
-      onContentSizeChange={event => {
-        setHeight(event.nativeEvent.contentSize.height);
-      }}
-      style={[Styles.balihaiMedium14, { width: '90%', height: height }]}
+      style={[Styles.balihaiMedium14, { height: 'auto', width: '90%' }]}
     />
   </View>
 }
 const styles = StyleSheet.create({
   textWrapper: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: Platform.OS === 'ios' ? 20 : 5,
     borderBottomColor: AppColors.Solitude_Color,
     borderBottomWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 10,
+    height: 'auto',
   },
 });

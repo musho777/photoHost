@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { BackArrow } from '../../assets/svg/Svgs';
@@ -67,58 +68,60 @@ export const SearchProfil = ({ navigation, route }) => {
   };
 
   return (
-    <View style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-        onScroll={({ nativeEvent }) => {
-          if (isCloseToBottom(nativeEvent)) {
-            let pages = page
-            pages = page + 1
-            setPage(pages)
-            if (getPosts.nextPage) {
-              dispatch(GetPostsAction({ user_id: route.params.id, }, staticdata.token, page));
+    <SafeAreaView style={{ flex: 1, }}>
+      <View style={{ paddingHorizontal: 15 }}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+          onScroll={({ nativeEvent }) => {
+            if (isCloseToBottom(nativeEvent)) {
+              let pages = page
+              pages = page + 1
+              setPage(pages)
+              if (getPosts.nextPage) {
+                dispatch(GetPostsAction({ user_id: route.params.id, }, staticdata.token, page));
+              }
             }
-          }
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ marginVertical: 25 }}>
-          <BackArrow />
-        </TouchableOpacity>
-        {singlPage.loading ?
-          <ProfileImageSkeleton /> :
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <Image
-              style={styles.img}
-              source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.avatar}` }}
-            />
-            <View style={{ marginTop: 7, marginBottom: 15, alignItems: 'center' }}>
-              <Text style={Styles.darkMedium16}>{singlPage.data.name}</Text>
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{ marginVertical: 25 }}>
+            <BackArrow />
+          </TouchableOpacity>
+          {singlPage.loading ?
+            <ProfileImageSkeleton /> :
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <Image
+                style={styles.img}
+                source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.avatar}` }}
+              />
+              <View style={{ marginTop: 7, marginBottom: 15, alignItems: 'center' }}>
+                <Text style={Styles.darkMedium16}>{singlPage.data.name}</Text>
+              </View>
+              {singlPage.data.description && (
+                <Text style={Styles.darkRegular14}>{singlPage.data.description}</Text>
+              )}
             </View>
-            {singlPage.data.description && (
-              <Text style={Styles.darkRegular14}>{singlPage.data.description}</Text>
-            )}
+          }
+          <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={{ followersCount: followersCount, followerCount: singlPage.followerCount }} postCount={singlPage.postCount} />
+          <View
+            style={[
+              Styles.flexSpaceBetween,
+              { paddingHorizontal: 15, marginVertical: 10 },
+            ]}>
+            <Button
+              bg={isFollow}
+              onPress={() => AddDeletFollow()} paddingV={10}
+              title={isFollow ? t(mainData.lang).Unsubscribe : t(mainData.lang).subscribe}
+              width="48%"
+            />
+            <Button onPress={() => sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
           </View>
-        }
-        <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={{ followersCount: followersCount, followerCount: singlPage.followerCount }} postCount={singlPage.postCount} />
-        <View
-          style={[
-            Styles.flexSpaceBetween,
-            { paddingHorizontal: 15, marginVertical: 10 },
-          ]}>
-          <Button
-            bg={isFollow}
-            onPress={() => AddDeletFollow()} paddingV={10}
-            title={isFollow ? t(mainData.lang).Unsubscribe : t(mainData.lang).subscribe}
-            width="48%"
-          />
-          <Button onPress={() => sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
-        </View>
-        <AlbomAndInfo />
-      </ScrollView>
-    </View>
+          <AlbomAndInfo />
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
