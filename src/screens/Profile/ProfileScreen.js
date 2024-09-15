@@ -16,7 +16,6 @@ export const ProfileScreen = ({ navigation }) => {
   const user = useSelector(st => st.userData);
   const [page, setPage] = useState(1);
   const [changeAvatar, setChangeAvatar] = useState(false);
-  console.log(user.postCount)
   useEffect(() => {
     if (user.data?.id) {
       dispatch(GetPostsAction({ user_id: user.data?.id }, staticdata.token, page));

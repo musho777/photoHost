@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -7,6 +7,9 @@ import {
   Text,
   TouchableOpacity,
   Platform,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Dimensions,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
@@ -22,6 +25,10 @@ import { captureRef } from 'react-native-view-shot';
 import { MultySelect } from '../../components/multySelect';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
+import { AddImage, BackArrow, CheckMarkSvg, CloseSvg1 } from '../../assets/svg/Svgs';
+import { BootomModal } from '../../components/BootomSheet';
+
+const windowWidth = Dimensions.get('window').width;
 
 
 export const AddImg = ({ navigation }) => {
@@ -33,6 +40,7 @@ export const AddImg = ({ navigation }) => {
   const [vidio, setVidio] = useState('')
   const [musicFromVidio, setMusicFromVidio] = useState('')
   const [selectedCatalog, setSelectedCatalog] = useState('')
+  const [selectedCatalogName, setSelectedCatalogName] = useState('')
   const getCatalog = useSelector((st) => st.getCatalog)
   const videoRef = useRef(null);
   const videoRefCut = useRef(null);
@@ -46,12 +54,29 @@ export const AddImg = ({ navigation }) => {
   const videoRef8 = useRef(null);
   const videoRef9 = useRef(null);
   const videoRef10 = useRef(null);
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ['50%'], [],);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetRef.current?.present();
+  }, []);
+  const handlePresentModalClose = useCallback(() => {
+    bottomSheetRef.current?.close();
+  }, []);
+
+  const [showModal, setShowModal] = useState(false)
+  const [selectedImage, setSelectedImage] = useState()
+  const [height, setHeight] = useState(500)
+
+  const [activePhoto, setActivePhoto] = useState(0)
 
   const ref = [videoRef, videoRef1, videoRef2, videoRef3, videoRef4, videoRef5, videoRef6, videoRef7, videoRef8, videoRef9, videoRef10]
   const [screenshotUri, setScreenshotUri] = useState([]);
   const [errorCatalog, setErrorCatalog] = useState(false)
   const [error, setError] = useState('')
   const dispatch = useDispatch();
+
+
   const captureScreenshot = async (ref) => {
     try {
       const uri = await captureRef(ref, {
@@ -65,6 +90,8 @@ export const AddImg = ({ navigation }) => {
       console.error('Error capturing screenshot:', error);
     }
   };
+
+  console.log(screenshotUri, 'screenshotUri')
 
   const Camera = async () => {
     const cameraPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.CAMERA
@@ -90,6 +117,10 @@ export const AddImg = ({ navigation }) => {
       setErrorCatalog(false)
       dispatch(ClearCreatPost())
       setSelectedCatalog('')
+      addPhoto()
+      setSelectedCatalogName('')
+      setSelectedImage()
+      setUri([])
     });
     return unsubscribe;
   }, [navigation]);
@@ -157,7 +188,6 @@ export const AddImg = ({ navigation }) => {
     launchImageLibrary(options, (response) => {
       let item = [...uri]
       if (!response.didCancel && !response.error) {
-        console.log(response, '1---')
         response.assets?.map((elm, i) => {
           if (elm?.type.startsWith('video')) {
             setVidio(true)
@@ -180,6 +210,8 @@ export const AddImg = ({ navigation }) => {
       }
     });
   }
+
+  console.log(uri, 'item')
 
 
   const delateFoto = index => {
@@ -207,6 +239,26 @@ export const AddImg = ({ navigation }) => {
     else {
       setError("")
     }
+    if (uri.length > 0) {
+      const imageUrl = uri[0].uri
+      console.log(imageUrl.includes('jpg'), 'imageUrl')
+      if (imageUrl.includes('jpg'))
+        Image?.getSize(
+          imageUrl,
+          (width, height) => {
+            let height2 = (windowWidth * height) / width
+            setHeight(height2)
+          },
+          (error) => {
+            console.error('Error getting image size:', error);
+          }
+        );
+      setSelectedImage(uri[0].uri)
+    }
+    else if (uri.length == 0) {
+      setSelectedImage()
+    }
+
   }, [uri])
 
   const addDescription = (e, i) => {
@@ -214,92 +266,123 @@ export const AddImg = ({ navigation }) => {
     item[i] = e
     setDescription(item)
   }
+
+
+  const CloseScreen = () => {
+    setError('')
+    Camera()
+    setErrorCatalog(false)
+    dispatch(ClearCreatPost())
+    setSelectedCatalog('')
+    setSelectedCatalogName('')
+    setSelectedImage()
+    setUri([])
+    navigation.goBack()
+  }
+
   return (
-    <ScrollView>
-      <HeaderWhiteTitle
-        loading={createPost.loading}
-        onCheck={() => creatPost()}
-        check
-        onPress={() => { navigation.navigate('Home') }}
-        disabled={uri.length === 0}
-        title={t(mainData.lang).Newpublication}
-      />
-      <View style={styles.textWrapper}>
-        {uri.map((elm, i) => {
-          return <TextInput
-            key={i}
-            value={description}
-            onChangeText={e => addDescription(e, i)}
-            style={[Styles.darkMedium14, styles.input]}
-            placeholder={`${t(mainData.lang).adddescription} #${i + 1}`}
-            placeholderTextColor={'#8C9CAB'}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, }}>
+          <TouchableOpacity onPress={() => CloseScreen()}>
+            <CloseSvg1 />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handlePresentModalPress()} style={{ borderWidth: 1, borderColor: errorCatalog ? 'red' : 'white', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, borderRadius: 7, }}>
+            <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white' }]}>
+              {selectedCatalog ?
+                selectedCatalogName :
+                t(mainData.lang).Choosecatalog
+              }
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading || uri.length === 0} >
+            <CheckMarkSvg />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.centeredView}>
+          {console.log(selectedImage, 'selectedImage')}
+          {selectedImage ? <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
+            {!selectedImage.includes('mp4') ? <Image
+              onLoad={(event) => {
+                const { width, height } = event.nativeEvent.source;
+                let height2 = (windowWidth * height) / width
+                setHeight(height2)
+              }}
+              style={[styles.img, { height: height }]}
+              source={{ uri: selectedImage }}
+            /> :
+              <Video
+                source={{ uri: selectedImage }}
+                style={[styles.img, { height: height }]}
+                resizeMode="cover"
+                paused={false}
+                volume={0}
+              />
+            }
+          </View> :
+            <TouchableOpacity onPress={() => addPhoto()}>
+              <AddImage />
+            </TouchableOpacity>
+          }
+          <TextInput
+            placeholderTextColor="white"
+            placeholder={t(mainData.lang).adddescription}
+            style={styles.input}
+            value={description[activePhoto]}
+            multiline
+            onChangeText={(e) => addDescription(e, activePhoto)}
           />
-        })
-        }
-      </View>
-      <View style={{ marginHorizontal: 10 }}>
-        <View style={styles.wrapper}>
-          {uri?.length > 0 && uri?.map((elm, i) => {
-            return (
-              <View key={i} style={styles.imgWrapper}>
-                {(!elm.uri.includes('.mov') && !elm.uri.includes('.mp4')) ?
-                  <Image
-                    ref={ref[i]}
-                    style={styles.img}
-                    source={{ uri: elm.uri }}
-                  /> :
-                  <View>
-                    <Image
-                      ref={ref[i]}
-                      style={styles.img}
-                      source={{ uri: elm.uri }}
-                    />
-                    <Video
-                      source={{ uri: elm.uri }}
-                      style={[styles.img, { opacity: 0 }]}
-                      resizeMode="cover"
-                      paused={true}
-                      ref={videoRefCut}
-                    />
-                  </View>
-                }
+          <ScrollView horizontal={true} style={styles.list}>
+            {uri.map((elm, i) => {
+              return <TouchableOpacity o style={{ position: 'relative' }} activeOpacity={1} key={i} onPress={() => {
+                setSelectedImage(elm.uri)
+                setActivePhoto(i)
+              }
+              }>
                 <TouchableOpacity
                   onPress={() => delateFoto(i)}
                   style={styles.close}>
-                  <Text style={{ color: '#cccccc', fontSize: 14, marginTop: -4 }}>x</Text>
+                  <CloseSvg1 smole />
                 </TouchableOpacity>
-              </View>
-            );
-          })}
+                {elm.uri.includes('mp4') ?
+                  <Video
+                    source={{ uri: elm.uri }}
+                    style={[styles.vidio, { opacity: 1 }]}
+                    resizeMode="cover"
+                    paused={false}
+                    volume={0}
+                    ref={videoRefCut}
+                  /> :
+                  <Image
+                    style={{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }}
+                    source={{ uri: screenshotUri[i] ? screenshotUri[i] : elm.uri }}
+                  />
+                }
+              </TouchableOpacity>
+            })}
+          </ScrollView>
         </View>
-        {error && <Text style={{ padding: 1, color: 'red' }}>{error}</Text>}
-        <View style={{ marginVertical: 15, width: 233, flexDirection: 'row', alignItems: 'center' }}>
-          {uri.length < 10 &&
-            <Button onPress={() => addPhoto()} title={t(mainData.lang).Addphoto} />
-          }
-          <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 4, marginTop: 3, textAlign: 'right' }]}>(не более 1-ой минуты)</Text>
-        </View>
-        {vidio && <View style={styles.textWrapper1}>
-          <TextInput
-            value={musicFromVidio}
-            onChangeText={e => setMusicFromVidio(e)}
-            style={Styles.balihaiMedium10}
-            placeholder={t(mainData.lang).Musicfromthevideo}
-            placeholderTextColor={'#8C9CAB'}
-          />
-        </View>}
-        <View style={{ height: 60 }}>
-          <MultySelect value={selectedCatalog} name={t(mainData.lang).Choosecatalog} selectedValue={(e) => {
-            setErrorCatalog(false)
-            setSelectedCatalog(e)
-          }} data={getCatalog.data} />
-        </View>
-        {errorCatalog &&
-          <Text style={[{ marginBottom: 5 }, Styles.tomatoMedium10]}>{t(mainData.lang).Selectacategory}</Text>
-        }
-        <Text style={[{ width: 270 }, Styles.balihaiMedium8]}>{t(mainData.lang).Yourcontent}</Text>
-      </View>
-    </ScrollView>
+        <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{ marginBottom: 30 }}>
+              {getCatalog.data.map((elm, i) => {
+                return <TouchableOpacity onPress={() => {
+                  setSelectedCatalog(elm.id)
+                  setSelectedCatalogName(elm.name)
+                  handlePresentModalClose()
+                  setErrorCatalog('')
+                }} key={i}>
+                  <Text style={[{ padding: 10, paddingHorizontal: 15 }, Styles.darkMedium13]}>{elm.name}</Text>
+                </TouchableOpacity>
+              })}
+            </View>
+          </ScrollView>
+        </BootomModal>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -310,10 +393,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     marginTop: 20,
   },
-  img: {
-    height: 150,
-    width: '100%',
-    borderRadius: 11,
+  vidio: {
+    height: 80,
+    width: 80,
   },
   wrapper: {
     flexDirection: 'row',
@@ -322,14 +404,6 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     paddingHorizontal: 15,
-    // borderColor: AppColors.Solitude_Color,
-    // borderBottomWidth: 1,
-    // borderTopWidth: 1,
-  },
-  input: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: AppColors.Solitude_Color,
   },
   textWrapper1: {
     paddingHorizontal: 15,
@@ -340,19 +414,42 @@ const styles = StyleSheet.create({
   },
   close: {
     position: 'absolute',
-    top: 5,
-    right: 5,
-    width: 20,
-    height: 20,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white'
-
+    top: 0,
+    right: 2,
+    zIndex: 9999,
   },
   addImgButton: {
     width: '22%',
     height: 85,
     borderWidth: 1
+  },
+  centeredView: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'black',
+    height: '100%',
+    marginTop: 30,
+  },
+  img: {
+    height: 500,
+    width: '100%',
+    borderRadius: 11,
+  },
+  list: {
+    position: 'absolute',
+    zIndex: 999,
+    bottom: 90,
+  },
+  input: {
+    borderColor: 'red',
+    width: '90%',
+    height: 40,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    position: 'absolute',
+    bottom: 10,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 12,
+    color: 'white'
   }
 });

@@ -39,10 +39,8 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
     if (description && description[0] == '[') {
       desc = JSON.parse(description)
     }
-    console.log(desc)
     setD(desc)
   }, [description])
-
   return (
     <View>
       <FlatList
@@ -76,23 +74,13 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
               style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ?
                 <View>
-                  {description && <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
-                    <Text style={[Styles.whiteSemiBold12, styles.text]}>
-                      {Array.isArray(D) ?
-                        D[index] :
-                        D
-                      }
-                      {/* {
-                        description?.length > 60 &&
-                        (showMore ?
-                          <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(false)}>Показать ещё</Text> :
-                          <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(true)}>Скрыть</Text>
-                        )
-                      } */}
+                  {description && <View style={styles.hover}>
+                    <Text style={[Styles.whiteSemiBold12]}>
+                      {Array.isArray(D) ? D[index] : D}
                     </Text>
                   </View>}
                   <Image
-                    style={{ height: height }}
+                    style={{ height: height, width: windowWidth }}
                     source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                     resizeMode="cover"
                   />
@@ -132,7 +120,6 @@ const styles = StyleSheet.create({
   img: {
     width: windowWidth,
     flexShrink: 0,
-    backgroundColor: "black"
   },
   pagination: {
     width: 6,
@@ -147,15 +134,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 5,
   },
-  text: {
-    paddingHorizontal: 15,
+  hover: {
+    marginHorizontal: 15,
+    zIndex: 99999,
     backgroundColor: "rgba(0,0,0,0.7)",
+    position: 'absolute',
+    alignItems: 'center',
+    paddingHorizontal: 15,
     borderRadius: 20,
     paddingVertical: 3,
-    width: 'auto',
-    alignItems: 'center',
-    position: 'absolute',
-    zIndex: 999,
-    top: 60
+    top: 50,
+    height: 'auto',
   }
 });

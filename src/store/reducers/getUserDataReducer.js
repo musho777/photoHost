@@ -50,7 +50,6 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.postCount = action.post_count
       item.allData = action.allData
       item.msgCount = action.allData.chat_count
-      console.log(action.post_count)
       break
     case 'ErrorGetUserData':
       item.error = action.data
@@ -62,7 +61,6 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'changeUserData':
       item.username = action.data.nickname
       item.name = action.data.name
-      console.log(action.data.name, '00000')
       item.description = action.data.description
       break
     case 'ChangeMail':

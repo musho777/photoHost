@@ -15,6 +15,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [msgCount, setMsgCount] = useState('');
   const { full } = useSelector((st) => st.fullScreen)
+  const currentRouteName = state.routes[state.index].name; // Get the current route name
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -39,9 +40,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   useEffect(() => {
     setMsgCount(user.msgCount);
   }, [user.msgCount]);
-
   if (!isKeyboardVisible) {
-    if (!full) {
+    if (!full && currentRouteName != "AddImg") {
       return (
         <SafeAreaView>
           <View style={{
@@ -186,6 +186,8 @@ export const TabNavigation = () => {
         })}
         name="AddImg"
         component={AddImg}
+        screenOptions={({ route }) => ({
+        })}
       />
       <Tab.Screen
         options={() => ({

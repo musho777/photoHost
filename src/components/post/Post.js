@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
-  Text,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
-import { Styles } from '../../styles/Styles';
 import { Slider } from '../Slider';
 import { PostHeader } from './postHeader/postHeader';
 import { PostBody } from '../postBody';
@@ -84,17 +82,6 @@ export const Post = ({
             isBook={isBook}
             addToblack={addToblack}
           />}
-          {/* {description && <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
-            <Text
-              style={[Styles.whiteSemiBold12, styles.text]}>
-              {D} {description?.length > 30 &&
-                (showMore ?
-                  <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(false)}>Показать ещё</Text> :
-                  <Text style={{ color: "#fff", fontSize: 13 }} onPress={() => setShowMore(true)}>Скрыть</Text>
-                )
-              }
-            </Text>
-          </View>} */}
         </View>
         <Slider
           viewableItems={viewableItems}
