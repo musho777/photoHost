@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Slider } from '../Slider';
@@ -33,30 +30,8 @@ export const Post = ({
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
-  const [showMore, setShowMore] = useState(false)
-  const [D, setD] = useState(description)
   const { full } = useSelector((st) => st.fullScreen)
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
-
-
-  useEffect(() => {
-    CutText()
-  }, [showMore])
-
-  useEffect(() => {
-    setD(description)
-  }, [description])
-
-  const CutText = () => {
-    let t = ''
-    if (showMore) {
-      t = description?.substring(0, 50)
-    }
-    else {
-      t = description
-    }
-    setD(t)
-  }
 
 
   return (
@@ -115,12 +90,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: 'relative',
   },
-  text: {
-    paddingHorizontal: 15,
-    backgroundColor: "rgba(0,0,0,0.7)",
-    borderRadius: 20,
-    paddingVertical: 3,
-    width: 'auto',
-    alignItems: 'center'
-  }
 });

@@ -95,12 +95,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
       videoRef.current.seek(0);
     }
   };
+
   useFocusEffect(
     useCallback(() => {
-      setPaused(false);
-      return () => {
-        setPaused(true);
-      };
+      setFirst(true)
     }, [])
   );
 
@@ -114,7 +112,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   }, [])
 
   return (
-    <View style={{ position: 'relative', height: big ? width : 550, }}>
+    <View style={{ position: 'relative', height: big ? width : 550 }}>
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
@@ -123,9 +121,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           setShowStartButton(!showStartButton);
           setScrollEnabled(true);
         }}
-        onPressOut={() => {
-          setHold(false);
-        }}
+        onPressOut={() => { setHold(false) }}
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       >
         {(showStartButton || first) && (
@@ -146,6 +142,13 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
             </TouchableOpacity>
           </View>
         )}
+        {(first && paused) &&
+          <Image
+            style={styles.Vidio}
+            resizeMode={'cover'}
+            source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
+          />
+        }
         <Video
           ref={videoRef}
           paused={paused}
@@ -170,6 +173,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
             videoRef.current.seek(0);
           }}
         />
+
         {(showStartButton || first) && (
           <View style={styles.music}>
             <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>

@@ -52,17 +52,6 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
         onMomentumScrollEnd={handleMomentumScrollEnd}
         scrollEnabled={!scrollEnabled}
         renderItem={({ item, index }) => {
-          let aspectRatio = 1;
-          if (item.width > item.height) {
-            aspectRatio = 0.2 + item.width / item.height;
-          } else {
-            aspectRatio = 0.2 + item.height / item.width;
-          }
-          if (aspectRatio > 1) {
-            aspectRatio = single ? 0.65 : 0.6;
-          } else if (aspectRatio < 1) {
-            aspectRatio = single ? 0.65 : 0.60;
-          }
           let height = 580
           if (item.height) {
             height = (windowWidth * item.height) / item.width
@@ -88,14 +77,20 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
                     resizeMode="cover"
                   />
                 </View> :
-                <VidioComponent setResizeVidio={() => {
-                  setSelectedVidio(item)
-                  aspectRatio = { aspectRatio }
-                  setResizeVidio(true)
-                }}
+                <View>
+                  {description && <View style={styles.hover}>
+                    <Text style={[Styles.whiteSemiBold12]}>
+                      {Array.isArray(D) ? D[index] : D}
+                    </Text>
+                  </View>}
+                  <VidioComponent setResizeVidio={() => {
+                    setSelectedVidio(item)
+                    setResizeVidio(true)
+                  }}
 
-                  setScrollEnabled={(e) => setScrollEnabled(e)}
-                  viewableItems={viewableItems} music={music} item={item} />
+                    setScrollEnabled={(e) => setScrollEnabled(e)}
+                    viewableItems={viewableItems} music={music} item={item} />
+                </View>
               }
             </TouchableOpacity>
           );

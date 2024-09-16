@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Dimensions,
+  Keyboard,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
@@ -58,11 +59,30 @@ export const AddImg = ({ navigation }) => {
   const dispatch = useDispatch();
 
 
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardOpen(true);
+    });
+
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardOpen(false);
+    });
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+
   const captureScreenshot = async (ref) => {
     try {
       const uri = await captureRef(ref, {
         format: 'jpg',
         quality: 1,
+        width: 'auto',
+        height: 'auto'
       });
       let item = [...screenshotUri]
       item.push(uri)
@@ -258,102 +278,106 @@ export const AddImg = ({ navigation }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
-          <TouchableOpacity onPress={() => CloseScreen()}>
-            <CloseSvg1 />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handlePresentModalPress()} style={{ borderWidth: 1, borderColor: errorCatalog ? 'red' : 'white', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, borderRadius: 7, }}>
-            <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white' }]}>
-              {selectedCatalog ?
-                selectedCatalogName :
-                t(mainData.lang).Choosecatalog
-              }
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading || uri.length === 0} >
-            <CheckMarkSvg />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.centeredView}>
-          {selectedImage ? <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
-            {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
-              onLoad={(event) => {
-                const { width, height } = event.nativeEvent.source;
-                let height2 = (windowWidth * height) / width
-                setHeight(height2)
-              }}
-              style={[styles.img, { height: height }]}
-              source={{ uri: selectedImage }}
-            /> :
-              <Video
-                source={{ uri: selectedImage }}
-                style={[styles.img, { height: height }]}
-                resizeMode="cover"
-                paused={false}
-                volume={0}
-              />
-            }
-          </View> :
-            <TouchableOpacity onPress={() => addPhoto()}>
-              <AddImage />
+      <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()} style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
+            <TouchableOpacity onPress={() => CloseScreen()}>
+              <CloseSvg1 />
             </TouchableOpacity>
-          }
-          <TextInput
-            placeholderTextColor="white"
-            placeholder={t(mainData.lang).adddescription}
-            style={styles.input}
-            value={description[activePhoto]}
-            multiline
-            onChangeText={(e) => addDescription(e, activePhoto)}
-          />
-          <ScrollView horizontal={true} style={styles.list}>
-            {uri.map((elm, i) => {
-              return <TouchableOpacity o style={{ position: 'relative' }} activeOpacity={1} key={i} onPress={() => {
-                setSelectedImage(elm.uri)
-                setActivePhoto(i)
-              }
-              }>
-                <TouchableOpacity
-                  onPress={() => delateFoto(i)}
-                  style={styles.close}>
-                  <CloseSvg1 smole />
-                </TouchableOpacity>
-                {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
-                  <Video
-                    source={{ uri: elm.uri }}
-                    style={[styles.vidio, { opacity: 1 }]}
-                    resizeMode="cover"
-                    paused={false}
-                    volume={0}
-                    ref={videoRefCut}
-                  /> :
-                  <Image
-                    style={{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }}
-                    source={{ uri: screenshotUri[i] ? screenshotUri[i] : elm.uri }}
-                  />
+            <TouchableOpacity onPress={() => handlePresentModalPress()} style={{ borderWidth: 1, borderColor: errorCatalog ? 'red' : 'white', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, borderRadius: 7, }}>
+              <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white' }]}>
+                {selectedCatalog ?
+                  selectedCatalogName :
+                  t(mainData.lang).Choosecatalog
                 }
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading || uri.length === 0} >
+              <CheckMarkSvg />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.centeredView}>
+            {selectedImage ? <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
+              {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
+                onLoad={(event) => {
+                  const { width, height } = event.nativeEvent.source;
+                  console.log(width, height)
+                  let height2 = (windowWidth * height) / width
+                  setHeight(height2)
+                }}
+                style={[styles.img, { height: height }]}
+                source={{ uri: selectedImage }}
+              /> :
+                <Video
+                  source={{ uri: selectedImage }}
+                  style={[styles.img, { height: height }]}
+                  resizeMode="cover"
+                  paused={false}
+                  volume={0}
+                />
+              }
+            </View> :
+              <TouchableOpacity onPress={() => addPhoto()}>
+                <AddImage />
               </TouchableOpacity>
-            })}
-          </ScrollView>
-        </View>
-        <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ marginBottom: 30 }}>
-              {getCatalog.data.map((elm, i) => {
-                return <TouchableOpacity onPress={() => {
-                  setSelectedCatalog(elm.id)
-                  setSelectedCatalogName(elm.name)
-                  handlePresentModalClose()
-                  setErrorCatalog('')
-                }} key={i}>
-                  <Text style={[{ padding: 10, paddingHorizontal: 15 }, Styles.darkMedium13]}>{elm.name}</Text>
+            }
+
+            <ScrollView horizontal={true} style={styles.list}>
+              {uri.map((elm, i) => {
+                return <TouchableOpacity o style={{ position: 'relative' }} activeOpacity={1} key={i} onPress={() => {
+                  setSelectedImage(elm.uri)
+                  setActivePhoto(i)
+                }
+                }>
+                  <TouchableOpacity
+                    onPress={() => delateFoto(i)}
+                    style={styles.close}>
+                    <CloseSvg1 smole />
+                  </TouchableOpacity>
+                  {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
+                    <Video
+                      source={{ uri: elm.uri }}
+                      style={[styles.vidio, { opacity: 1 }]}
+                      resizeMode="cover"
+                      paused={false}
+                      volume={0}
+                      ref={videoRefCut}
+                    /> :
+                    <Image
+                      style={{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }}
+                      source={{ uri: screenshotUri[i] ? screenshotUri[i] : elm.uri }}
+                    />
+                  }
                 </TouchableOpacity>
               })}
-            </View>
-          </ScrollView>
-        </BootomModal>
-      </SafeAreaView>
+            </ScrollView>
+            <TextInput
+              placeholderTextColor="white"
+              placeholder={t(mainData.lang).adddescription}
+              style={[styles.input, { marginBottom: (!keyboardOpen && Platform.OS == "android") ? 0 : 50, zIndex: 999 }]}
+              value={description[activePhoto]}
+              multiline
+              onChangeText={(e) => addDescription(e, activePhoto)}
+            />
+          </View>
+          <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={{ marginBottom: 30 }}>
+                {getCatalog.data.map((elm, i) => {
+                  return <TouchableOpacity onPress={() => {
+                    setSelectedCatalog(elm.id)
+                    setSelectedCatalogName(elm.name)
+                    handlePresentModalClose()
+                    setErrorCatalog('')
+                  }} key={i}>
+                    <Text style={[{ padding: 10, paddingHorizontal: 15 }, Styles.darkMedium13]}>{elm.name}</Text>
+                  </TouchableOpacity>
+                })}
+              </View>
+            </ScrollView>
+          </BootomModal>
+        </SafeAreaView>
+      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };
