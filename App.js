@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
 import { NotificationLister, requestUserPermission } from './src/utils/pushnotification_helper';
-import { BackHandler, SafeAreaView, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 export default App = () => {
 
 

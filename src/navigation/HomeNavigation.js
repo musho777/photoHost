@@ -3,7 +3,6 @@ import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { HomeHeader } from '../headers/HomeHeader';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { NotificationScreen } from '../screens/Home/NotificationScreen';
-import { useSelector } from 'react-redux';
 
 export const HomeNavigation = () => {
   const Stack = createStackNavigator();

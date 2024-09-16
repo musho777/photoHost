@@ -9,7 +9,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 import { TouchableOpacity } from 'react-native';
 import { Styles } from '../styles/Styles';
 import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
-import { BackArrow } from '../assets/svg/Svgs';
+import { CloseSvg } from '../assets/svg/Svgs';
 import AccauntParametrNavigation from './AccauntParametrNavigation';
 import MyPageNavigation from './MyPageNavigation';
 import { ContactsPage } from '../screens/contacts';
@@ -28,7 +28,7 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView style={{ backgroundColor: 'white', paddingTop: 40 }} {...props}>
       <TouchableOpacity style={{ paddingLeft: 15 }} onPress={() => props.navigation.closeDrawer()}>
-        <BackArrow />
+        <CloseSvg />
       </TouchableOpacity>
       <DrawerItem
         labelStyle={[Styles.darkRegular16]}
@@ -129,7 +129,9 @@ export const ProfileNavigation = () => {
         name="Catalog"
         component={Catalog}
         options={{
-          headerShown: false,
+          header: ({ navigation }) => {
+            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Catalog} />
+          }
         }}
       />
     </Drawer.Navigator>

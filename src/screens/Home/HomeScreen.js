@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, RefreshControl, Image, Text, StyleSheet, PermissionsAndroid, SafeAreaView } from 'react-native';
+import { View, FlatList, RefreshControl, Image, Text, StyleSheet, PermissionsAndroid, SafeAreaView, StatusBar, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 
@@ -96,6 +96,16 @@ export const HomeScreen = () => {
 
 
 
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      if (Platform.OS == 'android') {
+        StatusBar.setBackgroundColor('white');
+      }
+    }, [])
+  );
+
+
   const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
     const paddingToBottom = 900;
     return layoutMeasurement.height + contentOffset.y >=
@@ -121,18 +131,13 @@ export const HomeScreen = () => {
     }
   }
 
-  // const onViewableItemsChanged = useCallback(({ viewableItems, changed }) => {
-  //   if (changed[0].index) {
-  //     End(viewableItems[0].item.id)
-  //   }
-  //   setViewableItems(changed)
-  // }, []);
-  // const onViewableItemsChanged = useRef(({ viewableItems, changed }) => {
-  //   if (changed.length > 0 && changed[0]?.index !== undefined) {
-  //     End(viewableItems[0].item.id); // Call your End function
-  //   }
-  //   setViewableItems(changed); // Update viewable items state
-  // }).current;
+  const onViewableItemsChanged = useCallback(({ viewableItems, changed }) => {
+    // if (changed[0].index) {
+    //   End(viewableItems[0].item.id)
+    // }
+    setViewableItems(changed)
+  }, []);
+
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
@@ -154,7 +159,7 @@ export const HomeScreen = () => {
       return (
         <View key={index} style={[{ marginTop: 5 }, index == data.length - 1 && { marginBottom: 5 }]}>
           <Post
-            // viewableItems={viewableItems}
+            viewableItems={viewableItems}
             userInfo={item.user}
             setShowView={() => handlePresentModalPressView()}
             description={item.description}
@@ -194,6 +199,10 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView>
+      <StatusBar
+        barStyle={'dark-content'}
+        backgroundColor={"white"}
+      />
       <View>
         {showModal && <ModalComponent
           showModal={showModal}
@@ -212,7 +221,7 @@ export const HomeScreen = () => {
           keyboardShouldPersistTaps="never"
           showsVerticalScrollIndicator={false}
           ref={flatListRef}
-          // onViewableItemsChanged={onViewableItemsChanged}
+          onViewableItemsChanged={onViewableItemsChanged}
           onScroll={({ nativeEvent }) => {
             handleScroll({ nativeEvent })
             if (isCloseToBottom(nativeEvent)) {

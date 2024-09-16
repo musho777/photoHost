@@ -151,7 +151,6 @@ const style = StyleSheet.create({
   },
   page: {
     paddingHorizontal: 35,
-    paddingTop: 30,
     gap: 20,
     height: '100%',
     position: 'relative'

@@ -24,6 +24,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
 import { AddImage, CheckMarkSvg, CloseSvg1 } from '../../assets/svg/Svgs';
 import { BootomModal } from '../../components/BootomSheet';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -193,8 +194,6 @@ export const AddImg = ({ navigation }) => {
     });
   }
 
-  console.log(uri, 'item')
-
 
   const delateFoto = index => {
     let item = [...uri];
@@ -223,7 +222,6 @@ export const AddImg = ({ navigation }) => {
     }
     if (uri.length > 0) {
       const imageUrl = uri[0].uri
-      console.log(imageUrl.includes('jpg'), 'imageUrl')
       if (imageUrl.includes('jpg'))
         Image?.getSize(
           imageUrl,
@@ -262,17 +260,26 @@ export const AddImg = ({ navigation }) => {
     navigation.goBack()
   }
 
+
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('white');
+    }, [])
+  );
+
+
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
       <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor={"#000"}
       />
       <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
           <TouchableOpacity onPress={() => CloseScreen()}>
             <CloseSvg1 />
           </TouchableOpacity>
@@ -289,7 +296,6 @@ export const AddImg = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.centeredView}>
-          {console.log(selectedImage, 'selectedImage')}
           {selectedImage ? <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
             {!selectedImage.includes('mp4') ? <Image
               onLoad={(event) => {

@@ -113,8 +113,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     }
   }, [])
 
-  console.log(paused, '222')
-
   return (
     <View style={{ position: 'relative', height: big ? width : 550, }}>
       <TouchableOpacity
@@ -166,7 +164,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
             setVolume(1)
           }}
           onEnd={() => {
-            console.log('000000')
             setCurrentTime(0);
             setPaused(true);
             videoRef.current.seek(0);
