@@ -1,11 +1,9 @@
 import {
-  Text,
   SafeAreaView,
   View,
   StyleSheet,
   Platform
 } from 'react-native';
-import { Styles } from '../../styles/Styles';
 import { Slider } from './components/slider';
 import { Header } from './components/Hedaer';
 import { PostBody } from '../../components/postBody';
@@ -39,13 +37,8 @@ export const SinglPageScreen = ({ route, navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       <View style={styles.header}>
         <Header big={true} data={data} navigation={navigation} my={my} />
-        <View style={{ flexDirection: 'row' }}>
-          {data.description && <Text style={[Styles.darkSemiBold12, styles.text]}>
-            {data.description}
-          </Text>}
-        </View>
       </View>
-      <Slider big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+      <Slider description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       <View style={{ position: 'absolute', bottom: 15, width: '100%', zIndex: 999 }}>
         {!showView && <PostBody
           my={my}

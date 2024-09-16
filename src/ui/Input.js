@@ -59,7 +59,6 @@ export const Input = forwardRef(
           onBlur={onBlur}
           style={[
             styles.Input,
-            // { paddingRight: msg ? 80 : 30 },
             { paddingRight: send ? 50 : 30 },
             { paddingRight: pdR },
             { paddingRight: pass ? 70 : 30 },
@@ -128,6 +127,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     color: AppColors.Blcak_Color,
     position: 'relative',
+    height: 40,
   },
   eye: {
     position: 'absolute',

@@ -69,7 +69,7 @@ export const LikeList = forwardRef(
           <BottomSheetScrollView
             onScroll={({ nativeEvent }) => {
               if (isCloseToBottom(nativeEvent)) {
-                if (getPosts.nextPage) {
+                if (getPostLike.nextPage) {
                   let pages = page + 1;
                   dispatch(GetPostLikeAction({ post_id: id }, token, page));
                   setPage(pages);

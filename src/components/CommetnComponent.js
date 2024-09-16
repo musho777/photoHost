@@ -23,7 +23,7 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDel
             dayOfMonth = `0${dayOfMonth}`
         }
         daysAgo = `${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`
-        return <View key={comment.comment} style={[styles.commentContainer]}>
+        return <View key={comment.comment}>
             <CommentItem
                 text={comment.comment}
                 owner={false}
@@ -87,12 +87,8 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDel
 };
 
 const styles = StyleSheet.create({
-    commentContainer: {
-        // marginBottom: 10,
-    },
     reviewContainer: {
         marginBottom: 10,
-        // marginLeft: 20,
     },
 });
 

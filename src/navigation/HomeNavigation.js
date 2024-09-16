@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 
 export const HomeNavigation = () => {
   const Stack = createStackNavigator();
-  const { full } = useSelector((st) => st.fullScreen)
   return (
     <Stack.Navigator initialRouteName={'Catalog'}>
       <Stack.Screen
@@ -16,12 +15,7 @@ export const HomeNavigation = () => {
         component={HomeScreen}
         options={{
           header: ({ navigation }) => {
-            if (!full) {
-              return <HomeHeader navigation={navigation} />;
-            }
-            else {
-              return
-            }
+            return <HomeHeader navigation={navigation} />;
           },
         }}
       />

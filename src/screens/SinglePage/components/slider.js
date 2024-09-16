@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
   Image,
   FlatList,
   Dimensions,
+  Text,
 } from 'react-native';
 import { AppColors } from '../../../styles/AppColors';
 import { VidioComponent } from '../../../components/post/VidioComponent';
+import { Styles } from '../../../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, music_name, big = false }) => {
+export const Slider = ({ photo, music_name, big = false, description }) => {
   const [active, setActive] = useState(0);
   const [scroleEneble, setScrollEnabled] = useState(true)
+  const [D, setD] = useState(description)
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -22,6 +25,14 @@ export const Slider = ({ photo, music_name, big = false }) => {
     );
     setActive(index);
   };
+
+  useEffect(() => {
+    let desc = description
+    if (description && description[0] == '[') {
+      desc = JSON.parse(description)
+    }
+    setD(desc)
+  }, [description])
 
   return (
     <View style={{ backgroundColor: 'black', height: '100%' }}>
@@ -37,24 +48,40 @@ export const Slider = ({ photo, music_name, big = false }) => {
           let height = (windowWidth * item.height) / item.width
           return (
             <View style={styles.img}>
-              {!item.video ? (
-                <Image
-                  style={[{ width: '100%', height: height }]}
-                  source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
-                  resizeMode="cover"
-                />
-              ) : (
 
-                <VidioComponent big={big} setResizeVidio={() => {
-                  setSelectedVidio(item)
-                  setResizeVidio(true)
-                }}
-                  setScrollEnabled={(e) => setScrollEnabled(false)}
-                  music={music_name}
-                  item={item}
-                />
+              {!item.video ?
+                <View>
+                  <Image
+                    style={[{ width: '100%', height: height }]}
+                    source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
+                    resizeMode="cover"
+                  />
+                  {description && <View style={styles.hover}>
+                    <Text style={[Styles.whiteSemiBold12]}>
+                      {Array.isArray(D) ? "lskdjfskjfhgsjkhgfjks hgkjshgkjdghkdfjgh kjghfsfdjhfgksjdhg kjdhgkdjfghkdjfgh kjdfghdkjfghdkjfghkdjf" : D}
+                    </Text>
+                  </View>}
+                </View>
 
-              )}
+
+                : (
+                  <View>
+                    <VidioComponent big={big} setResizeVidio={() => {
+                      setSelectedVidio(item)
+                      setResizeVidio(true)
+                    }}
+                      setScrollEnabled={(e) => setScrollEnabled(false)}
+                      music={music_name}
+                      item={item}
+                    />
+                    {description && <View style={styles.hover}>
+                      <Text style={[Styles.whiteSemiBold12]}>
+                        {Array.isArray(D) ? "lskdjfskjfhgsjkhgfjks hgkjshgkjdghkdfjgh kjghfsfdjhfgksjdhg kjdhgkdjfghkdjfgh kjdfghdkjfghdkjfghkdjf" : D}
+                      </Text>
+                    </View>}
+                  </View>
+
+                )}
             </View>
           );
         }}
@@ -87,7 +114,8 @@ const styles = StyleSheet.create({
   img: {
     width: windowWidth,
     flexShrink: 0,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    position: 'relative',
   },
   pagination: {
     width: 6,
@@ -96,4 +124,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 50,
   },
+  hover: {
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    width: 'auto',
+    position: 'absolute',
+    top: 3,
+    left: 3,
+  }
 });

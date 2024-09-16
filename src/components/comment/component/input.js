@@ -30,10 +30,6 @@ export const InputComponent = ({ parentId, user, sendComment, setSendCommet, sen
       ),
     )
     setParentId(null)
-
-    // if (!parenId) {
-    //   flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
-    // }
     setSendCommet('')
   };
   return <View style={styles.InputComponent}>
@@ -42,7 +38,6 @@ export const InputComponent = ({ parentId, user, sendComment, setSendCommet, sen
       source={{ uri: `https://chambaonline.pro/uploads/${user.data.avatar}`, }}
     />
     <Input
-      // ref={textInputRef}
       pdR={50}
       send
       sendCom={() => sendCommentFunction()}

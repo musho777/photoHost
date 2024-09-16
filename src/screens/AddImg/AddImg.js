@@ -10,22 +10,19 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Dimensions,
+  StatusBar,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { CreatePostLocal, CreatPostAction, GetCatalogAction } from '../../store/action/action';
-import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Video from 'react-native-video';
-import { Button } from './components/button';
 import { t } from '../../components/lang';
 import { captureRef } from 'react-native-view-shot';
-import { MultySelect } from '../../components/multySelect';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
-import { AddImage, BackArrow, CheckMarkSvg, CloseSvg1 } from '../../assets/svg/Svgs';
+import { AddImage, CheckMarkSvg, CloseSvg1 } from '../../assets/svg/Svgs';
 import { BootomModal } from '../../components/BootomSheet';
 
 const windowWidth = Dimensions.get('window').width;
@@ -42,18 +39,7 @@ export const AddImg = ({ navigation }) => {
   const [selectedCatalog, setSelectedCatalog] = useState('')
   const [selectedCatalogName, setSelectedCatalogName] = useState('')
   const getCatalog = useSelector((st) => st.getCatalog)
-  const videoRef = useRef(null);
   const videoRefCut = useRef(null);
-  const videoRef1 = useRef(null);
-  const videoRef2 = useRef(null);
-  const videoRef3 = useRef(null);
-  const videoRef4 = useRef(null);
-  const videoRef5 = useRef(null);
-  const videoRef6 = useRef(null);
-  const videoRef7 = useRef(null);
-  const videoRef8 = useRef(null);
-  const videoRef9 = useRef(null);
-  const videoRef10 = useRef(null);
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['50%'], [],);
 
@@ -64,13 +50,10 @@ export const AddImg = ({ navigation }) => {
     bottomSheetRef.current?.close();
   }, []);
 
-  const [showModal, setShowModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState()
   const [height, setHeight] = useState(500)
 
   const [activePhoto, setActivePhoto] = useState(0)
-
-  const ref = [videoRef, videoRef1, videoRef2, videoRef3, videoRef4, videoRef5, videoRef6, videoRef7, videoRef8, videoRef9, videoRef10]
   const [screenshotUri, setScreenshotUri] = useState([]);
   const [errorCatalog, setErrorCatalog] = useState(false)
   const [error, setError] = useState('')
@@ -91,7 +74,6 @@ export const AddImg = ({ navigation }) => {
     }
   };
 
-  console.log(screenshotUri, 'screenshotUri')
 
   const Camera = async () => {
     const cameraPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.CAMERA
@@ -285,6 +267,10 @@ export const AddImg = ({ navigation }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
+      <StatusBar
+        barStyle={'dark-content'}
+        backgroundColor={"#000"}
+      />
       <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, }}>
           <TouchableOpacity onPress={() => CloseScreen()}>
@@ -387,41 +373,15 @@ export const AddImg = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  imgWrapper: {
-    height: 150,
-    width: '31%',
-    position: 'relative',
-    marginTop: 20,
-  },
   vidio: {
     height: 80,
     width: 80,
-  },
-  wrapper: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  textWrapper: {
-    paddingHorizontal: 15,
-  },
-  textWrapper1: {
-    paddingHorizontal: 15,
-    borderColor: '#d1d3d3',
-    borderWidth: 1,
-    marginBottom: 10,
-    width: 265,
   },
   close: {
     position: 'absolute',
     top: 0,
     right: 2,
     zIndex: 9999,
-  },
-  addImgButton: {
-    width: '22%',
-    height: 85,
-    borderWidth: 1
   },
   centeredView: {
     flex: 1,

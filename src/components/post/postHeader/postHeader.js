@@ -37,7 +37,6 @@ export const PostHeader = ({
   const handlePresentModalPress = useCallback(() => { bottomSheetRef.current?.present(); }, []);
   const bottomSheetRef = useRef(null);
 
-  const navigation = useNavigation()
   const mainData = useSelector(st => st.mainData);
   const [book, setBook] = useState(isBook)
 
@@ -55,7 +54,7 @@ export const PostHeader = ({
     setBook(!book)
   }
 
-  return <View style={[{ padding: 10, position: 'relative', flexDirection: 'row', width: '100%', justifyContent: 'space-between', alignItems: 'center', backgroundColor: "rgba(0,0,0,0.2)" }]}>
+  return <View style={styles.hover}>
     <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
     <HeaderInfo
       data={data}
@@ -127,4 +126,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     zIndex: 1
   },
+  hover: {
+    padding: 10,
+    position: 'relative',
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.2)"
+  }
 });

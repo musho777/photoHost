@@ -63,10 +63,7 @@ export const CommentItem = ({
       <View >
         <Image
           style={ansswer ? styles.answerImg : styles.img}
-          source={{
-            uri: `https://chambaonline.pro/uploads/${user?.avatar
-              }`,
-          }}
+          source={{ uri: `https://chambaonline.pro/uploads/${user?.avatar}` }}
         />
       </View>
       <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>

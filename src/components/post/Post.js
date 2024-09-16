@@ -64,7 +64,7 @@ export const Post = ({
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
-          {!full && <PostHeader
+          <PostHeader
             userImg={userInfo.avatar}
             user={user}
             description={description}
@@ -81,7 +81,7 @@ export const Post = ({
             deletData={deletData}
             isBook={isBook}
             addToblack={addToblack}
-          />}
+          />
         </View>
         <Slider
           viewableItems={viewableItems}
@@ -91,7 +91,7 @@ export const Post = ({
           setOpenModal={setOpenModal}
         />
         <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
-          {!full && <PostBody
+          <PostBody
             commentCount={commentCount}
             setSelectidId={(id) => setSelectidId(id)}
             liked={isLiked >= 0}
@@ -102,7 +102,7 @@ export const Post = ({
             like={like}
             id={id}
             user={user}
-          />}
+          />
         </View>
       </View>
     </View>

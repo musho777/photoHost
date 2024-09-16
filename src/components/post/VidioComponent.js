@@ -113,8 +113,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     }
   }, [])
 
+  console.log(paused, '222')
+
   return (
-    <View style={{ position: 'relative', height: (big || full) ? width : 550, }}>
+    <View style={{ position: 'relative', height: big ? width : 550, }}>
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
@@ -152,18 +154,19 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           repeat={false}
           fullscreen={full}
           volume={volume}
-          style={[styles.Vidio, (big || full) && { height: width }]}
+          style={[styles.Vidio, big && { height: width }]}
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
           resizeMode={'cover'}
           onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
           onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
+          onProgress={(data) => ChangeCurentTime(data)}
           onLoad={(data) => {
             setPaused(true);
             setDuration(data.duration);
             setVolume(1)
           }}
-          onProgress={(data) => ChangeCurentTime(data)}
           onEnd={() => {
+            console.log('000000')
             setCurrentTime(0);
             setPaused(true);
             videoRef.current.seek(0);

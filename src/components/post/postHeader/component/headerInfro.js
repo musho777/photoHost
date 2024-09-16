@@ -29,7 +29,7 @@ export const HeaderInfo = ({ star, userName, userImg, userId, id, user, data }) 
 
   return <TouchableOpacity onPress={() =>
     user?.data.id != userId ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userId, post_id: id } }) :
-      navigation.navigate('ProfileNavigation')
+      navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
   } style={Styles.flexAlignItems}>
     <View>
       <Image style={styles.userImg}

@@ -37,7 +37,6 @@ export const PostBody = ({
   const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
   const handlePresentModalPressShare = useCallback(() => { shareRef.current?.present() }, []);
 
-
   const LikePost = () => {
     dispatch(LikePostAction({
       'post_id': id
@@ -46,8 +45,6 @@ export const PostBody = ({
       user.data.id
     ))
   }
-
-
 
   return <View
     style={[
@@ -63,15 +60,13 @@ export const PostBody = ({
           handlePresentModalPressLike()
         }
         }>
-          <Text style={[Styles.darkMedium14, { color: 'white' }]}> - {like}</Text>
+          <Text style={[Styles.darkMedium14, { color: 'white' }]}>  {like}</Text>
         </TouchableOpacity>
       </View>
-      <View style={[Styles.flexAlignItems, styles.hover]}>
-        <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })}>
-          <CommentWhite />
-        </TouchableOpacity>
-        <Text style={[Styles.darkMedium14, { color: 'white' }]}> - {commentCount}</Text>
-      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })} style={[Styles.flexAlignItems, styles.hover]}>
+        <CommentWhite />
+        <Text style={[Styles.darkMedium14, { color: 'white' }]}>  {commentCount}</Text>
+      </TouchableOpacity>
       <View style={[styles.hover, { paddingVertical: 7 }]}>
         <TouchableOpacity onPress={() => {
           dispatch(GetFollowerAction({ search: "", user_id: user.allData.data.id }, staticdata.token, 1));
@@ -88,8 +83,8 @@ export const PostBody = ({
         <TouchableOpacity onPress={() => {
           setShowView(true)
           setSelectidId(id)
-        }}>
-          <Text style={[Styles.whiteRegular12, { backgroundColor: 'rgba(0,0,0,0.8)', padding: 7, borderRadius: 20, paddingHorizontal: 8 }]}>Посмотреть статистику?</Text>
+        }} style={styles.hover}>
+          <Text style={[Styles.whiteRegular12]}>Посмотреть статистику?</Text>
         </TouchableOpacity>
       }
       <TouchableOpacity

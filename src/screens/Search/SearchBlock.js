@@ -77,7 +77,7 @@ export const SearchBlock = () => {
               autoFocus
               style={styles.Input}
               placeholder={t(mainData.lang).search}
-
+              placeholderTextColor={'black'}
             />
             <View style={styles.eye}>
               <SearchInputSvg />
@@ -86,12 +86,11 @@ export const SearchBlock = () => {
         </View>
 
         <FlatList
-          refreshControl={
-            <RefreshControl refreshing={search.loading} />
-          }
+          refreshControl={<RefreshControl refreshing={search.loading} />}
           keyExtractor={item => item.id.toString()}
           data={serchData}
           enableEmptySections={true}
+          style={{ width: '100%' }}
           ListEmptyComponent={() => {
             if (data != '' && !search.loading) {
               return <Text style={[Styles.darkMedium14, { textAlign: 'center' }]}>{t(mainData.lang).Notfound}</Text>;

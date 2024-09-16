@@ -1,7 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { SearchProfil } from '../screens/Search/SearchProfil';
 import { SearchBlock } from '../screens/Search/SearchBlock';
-import { FollowersScreen } from '../screens/Profile/FollowersScreen';
 
 export const SearchNavigation = () => {
   const Stack = createStackNavigator();

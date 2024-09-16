@@ -49,28 +49,27 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
         }}
       />
     </TouchableOpacity>
-    {changeAvatar && <View style={{ top: 100, position: "absolute", zIndex: 9999 }}>
-      <Shadow
-        style={styles.block}
-        startColor={'#00000010'}
-      >
-        <TouchableOpacity style={styles.iconWrapper} onPress={() => {
-          setChangeAvatar(false)
-          setOpenSlider(true)
-        }}>
-          <Image style={styles.icon} source={require('../../../assets/img/user1.png')} />
-          <Text style={styles.text}>Открыть фото</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconWrapper}>
-          <Image style={styles.icon} source={require('../../../assets/img/edit.png')} />
-          <Text style={styles.text} onPress={() => changeImg()}>{t(mainData.lang).ChangePhoto}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconWrapper} onPress={() => DelatePhoto()}>
-          <Image style={styles.icon} source={require('../../../assets/img/delete.png')} />
-          <Text style={styles.text}>Удалить фото</Text>
-        </TouchableOpacity>
-      </Shadow>
-    </View>}
+    {changeAvatar &&
+      <View style={{ top: 0, position: "absolute", zIndex: 9999 }}>
+        <Shadow style={styles.block} startColor={'#00000010'}>
+          <TouchableOpacity style={styles.iconWrapper} onPress={() => {
+            setChangeAvatar(false)
+            setOpenSlider(true)
+          }}>
+            <Image style={styles.icon} source={require('../../../assets/img/user1.png')} />
+            <Text style={styles.text}>Открыть фото</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconWrapper}>
+            <Image style={styles.icon} source={require('../../../assets/img/edit.png')} />
+            <Text style={styles.text} onPress={() => changeImg()}>{t(mainData.lang).ChangePhoto}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconWrapper} onPress={() => DelatePhoto()}>
+            <Image style={styles.icon} source={require('../../../assets/img/delete.png')} />
+            <Text style={styles.text}>Удалить фото</Text>
+          </TouchableOpacity>
+        </Shadow>
+      </View>
+    }
     <View style={styles.userData}>
       <View style={Styles.flexAlignItems}>
         <Text style={[Styles.darkMedium16, { marginRight: 5 }]}>{user?.name}</Text>
@@ -97,8 +96,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#fff',
     position: 'relative',
-    zIndex: 999,
-    gap: 13
+    zIndex: 99999999,
+    gap: 13,
   },
   icon: {
     width: 23,
@@ -112,7 +111,8 @@ const styles = StyleSheet.create({
   iconWrapper: {
     flexDirection: 'row',
     gap: 10,
-    width: 150
+    width: 150,
+    zIndex: 99999,
   },
   userData: {
     marginTop: 7,
