@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { Text, SafeAreaView, TouchableOpacity, StyleSheet, View, Platform } from 'react-native'
 import { useSelector } from 'react-redux';
 import { Notification } from "../assets/svg/TabBarSvg"
 import { Styles } from '../styles/Styles'
@@ -8,7 +8,7 @@ export const HomeHeader = ({ navigation }) => {
 
     const user = useSelector(st => st.userData);
     return <SafeAreaView>
-        <View style={[Styles.flexSpaceBetween, { paddingHorizontal: 10, paddingBottom: 10 }]}>
+        <View style={[Styles.flexSpaceBetween, { paddingHorizontal: 10, paddingBottom: 10 }, Platform.OS == 'android' && { paddingTop: 10 }]}>
             <Icon />
             <TouchableOpacity onPress={() => navigation.navigate('NotificationScreen')}>
                 <Notification />

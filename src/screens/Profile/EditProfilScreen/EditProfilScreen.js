@@ -74,13 +74,14 @@ export const EditProfilScreen = ({ navigation }) => {
 
   useEffect(() => {
     setName(user.data.name);
+    setDiscription(user.description);
   }, [user.data])
 
   const SetData = () => {
     if (user?.allData?.data?.user_type != 'Legal_entity') {
       setAccauntType(true)
     }
-    setDiscription(user.description);
+    // setDiscription(user.description);
     let date = ''
     let year = ''
     let month = ''

@@ -10,7 +10,6 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Dimensions,
-  StatusBar,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
@@ -24,7 +23,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
 import { AddImage, CheckMarkSvg, CloseSvg1 } from '../../assets/svg/Svgs';
 import { BootomModal } from '../../components/BootomSheet';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -35,7 +33,6 @@ export const AddImg = ({ navigation }) => {
   const [description, setDescription] = useState([]);
   const createPost = useSelector(st => st.createPost);
   const staticData = useSelector(st => st.static);
-  const [vidio, setVidio] = useState('')
   const [musicFromVidio, setMusicFromVidio] = useState('')
   const [selectedCatalog, setSelectedCatalog] = useState('')
   const [selectedCatalogName, setSelectedCatalogName] = useState('')
@@ -122,10 +119,10 @@ export const AddImg = ({ navigation }) => {
     uri.length &&
       uri.forEach((el, i) => {
         let index = 0
-        if (el.uri.includes('.mp4')) {
+        if (el.uri.includes('.mp4') || el.uri.includes('mov')) {
           index = index + 1
         }
-        !el.uri.includes('.mp4') ?
+        (!el.uri.includes('.mp4') && !el.uri.includes('mov')) ?
           form.append('photos[]', {
             uri: el.uri,
             type: 'image/jpg',
@@ -173,7 +170,6 @@ export const AddImg = ({ navigation }) => {
       if (!response.didCancel && !response.error) {
         response.assets?.map((elm, i) => {
           if (elm?.type.startsWith('video')) {
-            setVidio(true)
             if (elm.duration <= 60) {
               item.push({ uri: elm.uri })
               setTimeout(() => {
@@ -208,12 +204,6 @@ export const AddImg = ({ navigation }) => {
         item = true
       }
     })
-    if (item) {
-      setVidio(true)
-    }
-    else {
-      setVidio(false)
-    }
     if (item && uri.length != 1) {
       setError("пост должен содержать только один видео")
     }
@@ -262,22 +252,12 @@ export const AddImg = ({ navigation }) => {
 
 
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('white');
-    }, [])
-  );
-
-
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
-      <StatusBar
-      />
       <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
           <TouchableOpacity onPress={() => CloseScreen()}>
@@ -297,7 +277,7 @@ export const AddImg = ({ navigation }) => {
         </View>
         <View style={styles.centeredView}>
           {selectedImage ? <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
-            {!selectedImage.includes('mp4') ? <Image
+            {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
               onLoad={(event) => {
                 const { width, height } = event.nativeEvent.source;
                 let height2 = (windowWidth * height) / width
@@ -339,7 +319,7 @@ export const AddImg = ({ navigation }) => {
                   style={styles.close}>
                   <CloseSvg1 smole />
                 </TouchableOpacity>
-                {elm.uri.includes('mp4') ?
+                {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
                   <Video
                     source={{ uri: elm.uri }}
                     style={[styles.vidio, { opacity: 1 }]}

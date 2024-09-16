@@ -63,7 +63,10 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
           } else if (aspectRatio < 1) {
             aspectRatio = single ? 0.65 : 0.60;
           }
-          let height = (windowWidth * item.height) / item.width
+          let height = 580
+          if (item.height) {
+            height = (windowWidth * item.height) / item.width
+          }
           return (
             <TouchableOpacity
               activeOpacity={1}
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 20,
     paddingVertical: 3,
-    top: 50,
+    top: 60,
     height: 'auto',
   }
 });

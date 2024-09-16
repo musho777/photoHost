@@ -158,6 +158,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
           onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
           onProgress={(data) => ChangeCurentTime(data)}
+          useTextureView={false}
           onLoad={(data) => {
             setPaused(true);
             setDuration(data.duration);
