@@ -57,15 +57,19 @@ export const Slider = ({ photo, music_name, big = false, description }) => {
                     resizeMode="cover"
                   />
                   {description && <View style={styles.hover}>
+                    {console.log(Array.isArray(D))}
                     <Text style={[Styles.whiteSemiBold12]}>
-                      {Array.isArray(D) ? "lskdjfskjfhgsjkhgfjks hgkjshgkjdghkdfjgh kjghfsfdjhfgksjdhg kjdhgkdjfghkdjfgh kjdfghdkjfghdkjfghkdjf" : D}
+                      {Array.isArray(D) ? D[index] : D}
                     </Text>
                   </View>}
                 </View>
-
-
                 : (
                   <View>
+                    {description && <View style={styles.hover}>
+                      <Text style={[Styles.whiteSemiBold12]}>
+                        {Array.isArray(D) ? D[index] : D}
+                      </Text>
+                    </View>}
                     <VidioComponent big={big} setResizeVidio={() => {
                       setSelectedVidio(item)
                       setResizeVidio(true)
@@ -74,11 +78,6 @@ export const Slider = ({ photo, music_name, big = false, description }) => {
                       music={music_name}
                       item={item}
                     />
-                    {description && <View style={styles.hover}>
-                      <Text style={[Styles.whiteSemiBold12]}>
-                        {Array.isArray(D) ? "lskdjfskjfhgsjkhgfjks hgkjshgkjdghkdfjgh kjghfsfdjhfgksjdhg kjdhgkdjfghkdjfgh kjdfghdkjfghdkjfghkdjf" : D}
-                      </Text>
-                    </View>}
                   </View>
 
                 )}

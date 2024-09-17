@@ -1,4 +1,4 @@
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
@@ -8,7 +8,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { FullScreen } from '../../store/action/action';
 
-const windowHeight = Dimensions.get('window').height;
 
 export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, viewableItems }) => {
   const [first, setFirst] = useState(true);
@@ -22,7 +21,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   const [volume, setVolume] = useState(0);
   const dispatch = useDispatch()
   const { full } = useSelector((st) => st.fullScreen)
-  const [width, setWidth] = useState(windowHeight)
 
   const onPlayPausePress = () => {
     setFirst(false);
@@ -102,17 +100,9 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     }, [])
   );
 
-  useEffect(() => {
-    if (big) {
-      setWidth(windowHeight)
-    }
-    else {
-      setWidth(windowHeight + 45)
-    }
-  }, [])
 
   return (
-    <View style={{ position: 'relative', height: big ? width : 550 }}>
+    <View style={{ position: 'relative', height: 550 }}>
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
@@ -124,8 +114,11 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
         onPressOut={() => { setHold(false) }}
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       >
-        {(showStartButton || first) && (
-          <TouchableOpacity onPress={() => dispatch(FullScreen(!full))} style={{ position: 'absolute', top: big ? 10 : 50, right: 10, zIndex: 999 }}>
+        {((showStartButton || first) && !big) && (
+          <TouchableOpacity onPress={() => {
+            setPaused(false)
+            dispatch(FullScreen(!full))
+          }} style={{ position: 'absolute', top: 60, right: 10, zIndex: 999 }}>
             <FullScrenn />
           </TouchableOpacity>
         )}
@@ -149,13 +142,13 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
             source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
           />
         }
-        <Video
+        {!full ? <Video
           ref={videoRef}
           paused={paused}
           repeat={false}
           fullscreen={full}
           volume={volume}
-          style={[styles.Vidio, big && { height: width }]}
+          style={[styles.Vidio, first && { opacity: 0 }]}
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
           resizeMode={'cover'}
           onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
@@ -172,10 +165,122 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
             setPaused(true);
             videoRef.current.seek(0);
           }}
-        />
+        /> :
+          <Modal
+            visible={true}
+            style={{ flex: 1 }}
+          >
+            <TouchableOpacity
+              activeOpacity={1}
+              onPressIn={() => {
+                setHold(true);
+                setCurrentId(item.id);
+                setShowStartButton(!showStartButton);
+                setScrollEnabled(true);
+              }}
+              onPressOut={() => { setHold(false) }}
+
+              style={{ justifyContent: 'center', alignItems: 'center', height: '100%', backgroundColor: 'black' }}>
+              {(showStartButton || first) && (
+                <TouchableOpacity onPress={() => {
+                  setPaused(false)
+                  dispatch(FullScreen(!full))
+                }} style={{ position: 'absolute', top: big ? 10 : 50, right: 10, zIndex: 999 }}>
+                  <FullScrenn />
+                </TouchableOpacity>
+              )}
+              {(showStartButton || first) && (
+                <View style={styles.playButton}>
+                  <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>
+                    <AddSecSvg1 />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={onPlayPausePress}>
+                    {!paused ? <Pause /> : <StartSvg />}
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={AddCurrentTime}>
+                    <AddSecSvg />
+                  </TouchableOpacity>
+                </View>
+              )}
+              <Video
+                ref={videoRef}
+                paused={paused}
+                repeat={false}
+                fullscreen={full}
+                volume={volume}
+                style={[styles.Vidio]}
+                source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
+                resizeMode={'cover'}
+                onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
+                onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
+                onProgress={(data) => ChangeCurentTime(data)}
+                useTextureView={false}
+                onLoad={(data) => {
+                  setPaused(true);
+                  setDuration(data.duration);
+                  setVolume(1)
+                }}
+                onEnd={() => {
+                  setCurrentTime(0);
+                  setPaused(true);
+                  videoRef.current.seek(0);
+                }}
+              />
+              {(showStartButton || first) && (
+                <View style={styles.music}>
+                  <TouchableOpacity style={{ position: 'absolute', bottom: -10, left: 15 }} onPress={ChangeVolume}>
+                    {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
+                  </TouchableOpacity>
+                  <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
+                    {music && <MusicSvg />}
+                    <Text style={Styles.whiteSemiBold13}>{music}</Text>
+                  </View>
+                  <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
+                </View>
+              )}
+              {(showStartButton || first) && (
+                <View style={[styles.controls, { bottom: 40, justifyContent: 'center' }]}>
+                  <Slider
+                    style={styles.seekSlider}
+                    value={currentTime}
+                    minimumValue={0}
+                    maximumValue={duration}
+                    onValueChange={onSeek}
+                    minimumTrackTintColor="#FFFFFF"
+                    maximumTrackTintColor="#000000"
+                    thumbTintColor="#FFC24B"
+                  />
+                </View>
+              )}
+            </TouchableOpacity>
+          </Modal>}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         {(showStartButton || first) && (
           <View style={styles.music}>
+            <TouchableOpacity style={{ position: 'absolute', bottom: -10, left: 15 }} onPress={ChangeVolume}>
+              {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
+            </TouchableOpacity>
             <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
               {music && <MusicSvg />}
               <Text style={Styles.whiteSemiBold13}>{music}</Text>
@@ -195,9 +300,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
               maximumTrackTintColor="#000000"
               thumbTintColor="#FFC24B"
             />
-            <TouchableOpacity onPress={ChangeVolume}>
-              {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
-            </TouchableOpacity>
           </View>
         )}
       </TouchableOpacity>
@@ -237,7 +339,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 550,
     position: 'relative',
-    aspectRatio: 0.9,
   },
   controls: {
     position: 'absolute',

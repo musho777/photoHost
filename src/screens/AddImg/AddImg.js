@@ -24,6 +24,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
 import { AddImage, CheckMarkSvg, CloseSvg1 } from '../../assets/svg/Svgs';
 import { BootomModal } from '../../components/BootomSheet';
+import { Status } from './component/status';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -39,6 +40,24 @@ export const AddImg = ({ navigation }) => {
   const [selectedCatalogName, setSelectedCatalogName] = useState('')
   const getCatalog = useSelector((st) => st.getCatalog)
   const videoRefCut = useRef(null);
+  const videoRefCut1 = useRef(null);
+  const videoRefCut2 = useRef(null);
+  const videoRefCut3 = useRef(null);
+  const videoRefCut4 = useRef(null);
+  const videoRefCut5 = useRef(null);
+  const videoRefCut6 = useRef(null);
+  const videoRefCut7 = useRef(null);
+  const videoRefCut8 = useRef(null);
+  const videoRefCut9 = useRef(null);
+  const videoRefCut10 = useRef(null);
+
+
+  const [showError, setShowError] = useState(false)
+
+
+
+  const ref = [videoRefCut, videoRefCut1, videoRefCut2, videoRefCut3, videoRefCut4, videoRefCut5, videoRefCut6, videoRefCut7, videoRefCut8, videoRefCut9, videoRefCut10]
+
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['50%'], [],);
 
@@ -77,6 +96,7 @@ export const AddImg = ({ navigation }) => {
 
 
   const captureScreenshot = async (ref) => {
+    console.log(ref)
     try {
       const uri = await captureRef(ref, {
         format: 'jpg',
@@ -113,6 +133,7 @@ export const AddImg = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       setError('')
+      setShowError(false)
       Camera()
       setErrorCatalog(false)
       dispatch(ClearCreatPost())
@@ -134,6 +155,9 @@ export const AddImg = ({ navigation }) => {
   }, [createPost.status]);
 
   const creatPost = () => {
+    if (error) {
+      setShowError(true)
+    }
     setErrorCatalog(false)
     let form = new FormData();
     uri.length &&
@@ -160,6 +184,7 @@ export const AddImg = ({ navigation }) => {
             })
           )
       });
+
     description && form.append('description', JSON.stringify(description));
     form.append('category_id', selectedCatalog)
     musicFromVidio && form.append('music_name', musicFromVidio)
@@ -175,12 +200,13 @@ export const AddImg = ({ navigation }) => {
 
   const addPhoto = () => {
     setError('')
+    setShowError(false)
     const options = {
       mediaType: 'mixed',
       quality: 1,
       maxWidth: 5000,
       maxHeight: 5000,
-      selectionLimit: 10,
+      selectionLimit: 10 - uri.length,
       storageOptions: {
         skipBackup: true,
       },
@@ -193,11 +219,12 @@ export const AddImg = ({ navigation }) => {
             if (elm.duration <= 60) {
               item.push({ uri: elm.uri })
               setTimeout(() => {
-                captureScreenshot(videoRefCut)
+                captureScreenshot(ref[i])
               }, 2000)
             }
             else {
               setError('видео должен быть меньше чем 60 с')
+              setShowError(true)
             }
           }
           else {
@@ -218,21 +245,24 @@ export const AddImg = ({ navigation }) => {
   }
 
   useEffect(() => {
-    let item = false
+    let count = 0
     uri.map((elm, i) => {
       if (elm.uri.includes('.mov') || elm.uri.includes('.mp4')) {
-        item = true
+        count = count + 1
       }
     })
-    if (item && uri.length != 1) {
-      setError("пост должен содержать только один видео")
+
+    if (count > 1) {
+      setError("onliy one vidio")
+      setShowError(true)
     }
     else {
       setError("")
+      setShowError(false)
     }
     if (uri.length > 0) {
       const imageUrl = uri[0].uri
-      if (imageUrl.includes('jpg'))
+      if (imageUrl.includes('jpg') || imageUrl.includes('png'))
         Image?.getSize(
           imageUrl,
           (width, height) => {
@@ -260,6 +290,7 @@ export const AddImg = ({ navigation }) => {
 
   const CloseScreen = () => {
     setError('')
+    setShowError(false)
     Camera()
     setErrorCatalog(false)
     dispatch(ClearCreatPost())
@@ -278,6 +309,7 @@ export const AddImg = ({ navigation }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
+      <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
       <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()} style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
@@ -297,7 +329,7 @@ export const AddImg = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.centeredView}>
-            {selectedImage ? <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
+            {selectedImage && <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
               {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
                 onLoad={(event) => {
                   const { width, height } = event.nativeEvent.source;
@@ -310,19 +342,17 @@ export const AddImg = ({ navigation }) => {
               /> :
                 <Video
                   source={{ uri: selectedImage }}
-                  style={[styles.img, { height: height }]}
+                  style={[styles.img]}
                   resizeMode="cover"
                   paused={false}
                   volume={0}
                 />
               }
-            </View> :
-              <TouchableOpacity onPress={() => addPhoto()}>
+            </View>}
+            <ScrollView horizontal={true} style={styles.list}>
+              <TouchableOpacity style={{ borderWidth: 1, width: 80, height: 80, borderRadius: 10, justifyContent: 'center', alignItems: 'center', borderColor: 'white', marginRight: 10, }} onPress={() => addPhoto()}>
                 <AddImage />
               </TouchableOpacity>
-            }
-
-            <ScrollView horizontal={true} style={styles.list}>
               {uri.map((elm, i) => {
                 return <TouchableOpacity o style={{ position: 'relative' }} activeOpacity={1} key={i} onPress={() => {
                   setSelectedImage(elm.uri)
@@ -335,14 +365,23 @@ export const AddImg = ({ navigation }) => {
                     <CloseSvg1 smole />
                   </TouchableOpacity>
                   {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
-                    <Video
-                      source={{ uri: elm.uri }}
-                      style={[styles.vidio, { opacity: 1 }]}
-                      resizeMode="cover"
-                      paused={false}
-                      volume={0}
-                      ref={videoRefCut}
-                    /> :
+                    <View>
+                      <Video
+                        source={{ uri: elm.uri }}
+                        style={[styles.vidio, { marginLeft: i == 0 ? 0 : 10, }]}
+                        resizeMode="cover"
+                        paused={false}
+                        volume={0}
+                      />
+                      <Video
+                        source={{ uri: elm.uri }}
+                        style={[styles.img, { opacity: 0, position: "absolute" }]}
+                        resizeMode="cover"
+                        paused={false}
+                        volume={0}
+                        ref={ref[i]}
+                      />
+                    </View> :
                     <Image
                       style={{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }}
                       source={{ uri: screenshotUri[i] ? screenshotUri[i] : elm.uri }}
@@ -363,6 +402,7 @@ export const AddImg = ({ navigation }) => {
           <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={{ marginBottom: 30 }}>
+
                 {getCatalog.data.map((elm, i) => {
                   return <TouchableOpacity onPress={() => {
                     setSelectedCatalog(elm.id)
@@ -386,6 +426,7 @@ const styles = StyleSheet.create({
   vidio: {
     height: 80,
     width: 80,
+    borderRadius: 10,
   },
   close: {
     position: 'absolute',
@@ -402,7 +443,7 @@ const styles = StyleSheet.create({
   },
   img: {
     height: 500,
-    width: '100%',
+    width: windowWidth,
     borderRadius: 11,
   },
   list: {

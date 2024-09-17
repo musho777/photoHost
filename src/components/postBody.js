@@ -4,7 +4,7 @@ import { NotLineSvgWhite, ShearSvg } from "../assets/svg/Svgs";
 import { Styles } from "../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { GetFollowerAction, GetPostLikeAction, LikePostAction, newMessageAction } from "../store/action/action";
+import { GetFollowerAction, GetPostLikeAction, LikePostAction } from "../store/action/action";
 import { useNavigation } from "@react-navigation/native";
 import { LikeList } from "./LikeList";
 import { Share } from "./share";
@@ -46,58 +46,60 @@ export const PostBody = ({
     ))
   }
 
-  return <View
-    style={[
-      { paddingHorizontal: 5, marginBottom: 15, flexDirection: 'row', width: '100%' },
-    ]}>
-    <View style={Styles.flexAlignItems}>
-      <View style={[Styles.flexAlignItems, styles.hover]}>
-        <TouchableOpacity onPress={() => { LikePost() }}>
-          {liked ? <WhiteHeart /> : <NotLineSvgWhite />}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
-          handlePresentModalPressLike()
-        }
-        }>
-          <Text style={[Styles.darkMedium14, { color: 'white' }]}>  {like}</Text>
-        </TouchableOpacity>
+  return <View style={styles.bostBody}>
+    <View style={{ gap: 15, position: 'absolute', bottom: 0, right: 5, }}>
+      <View style={styles.hover}>
+        <View style={styles.hoverItem}>
+          <TouchableOpacity onPress={() => { LikePost() }}>
+            {liked ? <WhiteHeart /> : <NotLineSvgWhite />}
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
+            handlePresentModalPressLike()
+          }
+          }>
+            <Text style={[Styles.darkMedium14, { color: 'white' }]}>{like}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })} style={[Styles.flexAlignItems, styles.hover]}>
-        <CommentWhite />
-        <Text style={[Styles.darkMedium14, { color: 'white' }]}>  {commentCount}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })} style={styles.hover}>
+        <View style={styles.hoverItem}>
+          <CommentWhite />
+          <Text style={[Styles.darkMedium14, { color: 'white' }]}>{commentCount}</Text>
+        </View>
       </TouchableOpacity>
-      <View style={[styles.hover, { paddingVertical: 7 }]}>
-        <TouchableOpacity onPress={() => {
+      <TouchableOpacity
+        style={styles.hover}
+        onPress={() => {
           dispatch(GetFollowerAction({ search: "", user_id: user.allData.data.id }, staticdata.token, 1));
           handlePresentModalPressShare()
           setOpenShare(openShare + 1)
         }}>
-          <ShearSvg />
+        <ShearSvg />
+      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 1, right: 0 }}>
+        {showViewText && view > 0 &&
+          <TouchableOpacity onPress={() => {
+            setShowView(true)
+            setSelectidId(id)
+          }} style={[styles.hover, { position: 'absolute', right: 60, height: 36 }]}>
+            <Text style={[Styles.whiteRegular12]}>Посмотреть статистику?</Text>
+          </TouchableOpacity>
+        }
+        <TouchableOpacity
+          activeOpacity={my ? 0 : 1}
+          onPress={() => {
+            setShowViewText(!showViewText)
+          }}
+          style={styles.hover}>
+          <View style={styles.hoverItem}>
+            <View style={{ marginTop: 4 }}>
+              <WhiteViewSvg />
+            </View>
+            <Text style={[Styles.balihaiRegular14, { color: 'white' }]}>{view}</Text>
+          </View>
         </TouchableOpacity>
       </View>
-    </View>
-
-    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 1, position: 'absolute', right: 0 }}>
-      {showViewText && view > 0 &&
-        <TouchableOpacity onPress={() => {
-          setShowView(true)
-          setSelectidId(id)
-        }} style={styles.hover}>
-          <Text style={[Styles.whiteRegular12]}>Посмотреть статистику?</Text>
-        </TouchableOpacity>
-      }
-      <TouchableOpacity
-        activeOpacity={my ? 0 : 1}
-        onPress={() => {
-          setShowViewText(!showViewText)
-        }}
-        style={[Styles.flexAlignItems, styles.hover, { paddingVertical: 6 }]}>
-        <WhiteViewSvg />
-        <Text style={[Styles.balihaiRegular14, { color: 'white' }, { marginLeft: 5 }]}>
-          {view}
-        </Text>
-      </TouchableOpacity>
     </View>
     <LikeList
       close={() => CloseLike()}
@@ -120,9 +122,25 @@ export const PostBody = ({
 const styles = StyleSheet.create({
   hover: {
     marginRight: 3,
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 20,
+    height: 60,
+    justifyContent: "space-around",
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  bostBody: {
+    paddingHorizontal: 5,
+    marginBottom: 15,
+    flexDirection: 'row',
+    width: '100%'
+  },
+  hoverItem: {
+    height: '100%',
+    justifyContent: 'space-between',
+    width: 20,
+    alignItems: 'center'
   }
 })

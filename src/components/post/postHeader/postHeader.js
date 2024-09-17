@@ -70,7 +70,7 @@ export const PostHeader = ({
         setOpenModal(!openModal)
         handlePresentModalPress()
       }}
-      style={{ width: 10 }}>
+      style={{ width: 14, zIndex: 99999 }}>
       <MenuSvg />
     </TouchableOpacity>
     {

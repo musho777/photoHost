@@ -22,6 +22,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
       width: 450,
       height: 450,
       cropping: false,
+      multiple: false
     }).then(image => {
       setImgUrl(image.path);
       if (image.path) {
