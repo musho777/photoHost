@@ -30,7 +30,6 @@ export const Post = ({
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
-  const { full } = useSelector((st) => st.fullScreen)
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
 
 

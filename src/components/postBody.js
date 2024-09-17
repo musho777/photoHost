@@ -123,10 +123,10 @@ const styles = StyleSheet.create({
   hover: {
     marginRight: 3,
     backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingHorizontal: 10,
+    paddingHorizontal: 7,
     paddingVertical: 5,
     borderRadius: 20,
-    height: 60,
+    height: 55,
     justifyContent: "space-around",
     flexDirection: 'column',
     alignItems: 'center'

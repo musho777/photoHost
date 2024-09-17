@@ -3,7 +3,6 @@ import { Styles } from "../../../styles/Styles"
 import { useDispatch, useSelector } from 'react-redux';
 import { MenuSvg } from '../../../assets/svg/TabBarSvg';
 import { AddBlackListAction, AddDeleteFollowAction, AddInBookAction } from '../../../store/action/action';
-import { useNavigation } from '@react-navigation/native';
 import { t } from '../../lang';
 import { useCallback, useRef, useState } from "react";
 import { ShowSave } from "../showSave";
@@ -70,7 +69,7 @@ export const PostHeader = ({
         setOpenModal(!openModal)
         handlePresentModalPress()
       }}
-      style={{ width: 14, zIndex: 99999 }}>
+      style={{ width: 10, zIndex: 99999 }}>
       <MenuSvg />
     </TouchableOpacity>
     {
@@ -128,6 +127,7 @@ const styles = StyleSheet.create({
   },
   hover: {
     padding: 10,
+    paddingLeft: 13,
     position: 'relative',
     flexDirection: 'row',
     width: '100%',

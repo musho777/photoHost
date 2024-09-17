@@ -23,7 +23,6 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
   const [selectedVidio, setSelectedVidio] = useState(false)
   const [D, setD] = useState(description)
   const [scrollEnabled, setScrollEnabled] = useState(false)
-  const [showMore, setShowMore] = useState(false)
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -56,6 +55,10 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
           if (item.height) {
             height = (windowWidth * item.height) / item.width
           }
+          if (height > 600) {
+            height = 580
+          }
+          console.log(height, 'e')
           return (
             <TouchableOpacity
               activeOpacity={1}
