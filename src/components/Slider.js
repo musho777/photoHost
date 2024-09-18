@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   hover: {
-    marginHorizontal: 15,
+    marginHorizontal: 13,
     zIndex: 99999,
     backgroundColor: "rgba(0,0,0,0.7)",
     position: 'absolute',
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 20,
     paddingVertical: 3,
-    top: 60,
+    top: 50,
     height: 'auto',
   }
 });

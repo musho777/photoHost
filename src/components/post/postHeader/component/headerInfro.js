@@ -35,8 +35,8 @@ export const HeaderInfo = ({ star, userName, userImg, userId, id, user, data }) 
       <Image style={styles.userImg}
         source={{ uri: `https://chambaonline.pro/uploads/${userImg}` }} />
     </View>
-    <View style={{ gap: 5 }}>
-      <View style={[Styles.flexAlignItems, { width: 'auto', gap: 10 }]}>
+    <View style={{ gap: 2 }}>
+      <View style={[Styles.flexAlignItems, { width: 'auto' }]}>
         <Text Text style={[Styles.whiteSemiBold14,]}>{userName}</Text>
         {star > 0 && <CheckMarkUserSvg />}
       </View>
@@ -63,10 +63,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     zIndex: 1
   },
-  hover: {
-    backgroundColor: 'rgba(0,0,0,0.8)',
-    paddingHorizontal: 10,
-    borderRadius: 15,
-    width: 'auto'
-  }
 });

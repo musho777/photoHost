@@ -75,6 +75,7 @@ export const AddImg = ({ navigation }) => {
   const [screenshotUri, setScreenshotUri] = useState([]);
   const [errorCatalog, setErrorCatalog] = useState(false)
   const [error, setError] = useState('')
+  const [first, setFirst] = useState(false)
   const dispatch = useDispatch();
 
 
@@ -113,6 +114,14 @@ export const AddImg = ({ navigation }) => {
   };
 
 
+  React.useLayoutEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      addPhoto()
+    });
+
+    return unsubscribe; // Clean up the listener on unmount
+  }, [navigation]);
+
   const Camera = async () => {
     const cameraPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.CAMERA
     const photoLibraryPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
@@ -138,7 +147,7 @@ export const AddImg = ({ navigation }) => {
       setErrorCatalog(false)
       dispatch(ClearCreatPost())
       setSelectedCatalog('')
-      addPhoto()
+      // addPhoto()
       setSelectedCatalogName('')
       setSelectedImage()
       setUri([])
@@ -190,7 +199,11 @@ export const AddImg = ({ navigation }) => {
     musicFromVidio && form.append('music_name', musicFromVidio)
     if (selectedCatalog != '' && error == '') {
       dispatch(CreatePostLocal(uri[0]))
-      navigation.navigate('Home');
+      navigation.navigate('TabNavigation', {
+        screen: 'Home',
+        params: { param: 'add_image' },
+      });
+      setFirst(false)
       dispatch(CreatPostAction(form, staticData.token));
     }
     else if (selectedCatalog == '') {
@@ -212,8 +225,13 @@ export const AddImg = ({ navigation }) => {
       },
     };
     launchImageLibrary(options, (response) => {
+      setFirst(true)
       let item = [...uri]
-      if (!response.didCancel && !response.error) {
+      if (response.didCancel) {
+        navigation.goBack()
+        setFirst(false)
+      }
+      else if (!response.didCancel && !response.error) {
         response.assets?.map((elm, i) => {
           if (elm?.type.startsWith('video')) {
             if (elm.duration <= 60) {
@@ -298,138 +316,147 @@ export const AddImg = ({ navigation }) => {
     setSelectedCatalogName('')
     setSelectedImage()
     setUri([])
+    setFirst(false)
     navigation.goBack()
   }
+  console.log(activePhoto)
 
-
-
-
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}
-    >
-      <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
-      <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()} style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
-            <TouchableOpacity onPress={() => CloseScreen()}>
-              <CloseSvg1 />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handlePresentModalPress()} style={{ borderWidth: 1, borderColor: errorCatalog ? 'red' : 'white', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, borderRadius: 7, }}>
-              <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white' }]}>
-                {selectedCatalog ?
-                  selectedCatalogName :
-                  t(mainData.lang).Choosecatalog
-                }
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading || uri.length === 0} >
-              <CheckMarkSvg />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.centeredView}>
-            {selectedImage && <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
-              {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
-                onLoad={(event) => {
-                  const { width, height } = event.nativeEvent.source;
-                  console.log(width, height)
-                  let height2 = 570
-                  if (height) {
-                    height2 = (windowWidth * height) / width
-                  }
-                  if (height2 < 400) {
-                    height2 = 380
-                  }
-                  else {
-                    height2 = 570
-                  }
-                  setHeight(height2)
-                }}
-                style={[styles.img, { height: height }]}
-                source={{ uri: selectedImage }}
-              /> :
-                <Video
-                  source={{ uri: selectedImage }}
-                  style={[styles.img]}
-                  resizeMode="cover"
-                  paused={false}
-                  volume={0}
-                />
-              }
-            </View>}
-            <ScrollView horizontal={true} style={styles.list}>
-              <TouchableOpacity style={{ borderWidth: 1, width: 80, height: 80, borderRadius: 10, justifyContent: 'center', alignItems: 'center', borderColor: 'white', marginRight: 10, }} onPress={() => addPhoto()}>
-                <AddImage />
+  if (first)
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+      >
+        <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
+        <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()} style={{ flex: 1 }}>
+          <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
+              <TouchableOpacity onPress={() => CloseScreen()}>
+                <CloseSvg1 />
               </TouchableOpacity>
-              {uri.map((elm, i) => {
-                return <TouchableOpacity o style={{ position: 'relative' }} activeOpacity={1} key={i} onPress={() => {
-                  setSelectedImage(elm.uri)
-                  setActivePhoto(i)
-                }
-                }>
-                  <TouchableOpacity
-                    onPress={() => delateFoto(i)}
-                    style={styles.close}>
-                    <CloseSvg1 smole />
-                  </TouchableOpacity>
-                  {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
-                    <View>
-                      <Video
-                        source={{ uri: elm.uri }}
-                        style={[styles.vidio, { marginLeft: i == 0 ? 0 : 10, }]}
-                        resizeMode="cover"
-                        paused={false}
-                        volume={0}
-                      />
-                      <Video
-                        source={{ uri: elm.uri }}
-                        style={[styles.img, { opacity: 0, position: "absolute" }]}
-                        resizeMode="cover"
-                        paused={false}
-                        volume={0}
-                        ref={ref[i]}
-                      />
-                    </View> :
-                    <Image
-                      style={{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }}
-                      source={{ uri: screenshotUri[i] ? screenshotUri[i] : elm.uri }}
-                    />
+              <TouchableOpacity onPress={() => handlePresentModalPress()} style={{ borderWidth: 1, borderColor: errorCatalog ? 'red' : 'white', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, borderRadius: 7, }}>
+                <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white' }]}>
+                  {selectedCatalog ?
+                    selectedCatalogName :
+                    t(mainData.lang).Choosecatalog
                   }
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading || uri.length === 0} >
+                <CheckMarkSvg />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10 }]}>(Ваш контент дойдет точно до адресата и увидят те люди, кто выбрал данную рубрику)</Text>
+            </View>
+            <View style={styles.centeredView}>
+              {selectedImage && <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
+                {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
+                  onLoad={(event) => {
+                    const { width, height } = event.nativeEvent.source;
+                    console.log(width, height)
+                    let height2 = 570
+                    if (height) {
+                      height2 = (windowWidth * height) / width
+                    }
+                    if (height2 < 400) {
+                      height2 = 380
+                    }
+                    else {
+                      height2 = 570
+                    }
+                    setHeight(height2)
+                  }}
+                  style={[styles.img, { height: height }]}
+                  source={{ uri: selectedImage }}
+                /> :
+                  <Video
+                    source={{ uri: selectedImage }}
+                    style={[styles.img]}
+                    resizeMode="cover"
+                    paused={false}
+                    volume={0}
+                  />
+                }
+              </View>}
+              <ScrollView horizontal={true} style={styles.list}>
+                <TouchableOpacity style={{ borderWidth: 1, width: 80, height: 80, borderRadius: 10, justifyContent: 'center', alignItems: 'center', borderColor: 'white', marginRight: 10, }} onPress={() => addPhoto()}>
+                  <AddImage />
                 </TouchableOpacity>
-              })}
-            </ScrollView>
-            <TextInput
-              placeholderTextColor="white"
-              placeholder={t(mainData.lang).adddescription}
-              style={[styles.input, { marginBottom: (!keyboardOpen && Platform.OS == "android") ? 0 : 50, zIndex: 999 }]}
-              value={description[activePhoto]}
-              multiline
-              onChangeText={(e) => addDescription(e, activePhoto)}
-            />
-          </View>
-          <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={{ marginBottom: 30 }}>
-
-                {getCatalog.data.map((elm, i) => {
-                  return <TouchableOpacity onPress={() => {
-                    setSelectedCatalog(elm.id)
-                    setSelectedCatalogName(elm.name)
-                    handlePresentModalClose()
-                    setErrorCatalog('')
-                  }} key={i}>
-                    <Text style={[{ padding: 10, paddingHorizontal: 15 }, Styles.darkMedium13]}>{elm.name}</Text>
+                {uri.map((elm, i) => {
+                  console.log(activePhoto == i)
+                  return <TouchableOpacity o style={{ position: 'relative' }} activeOpacity={1} key={i} onPress={() => {
+                    setSelectedImage(elm.uri)
+                    setActivePhoto(i)
+                  }
+                  }>
+                    <TouchableOpacity
+                      onPress={() => delateFoto(i)}
+                      style={styles.close}>
+                      <CloseSvg1 smole />
+                    </TouchableOpacity>
+                    {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
+                      <View>
+                        <Video
+                          source={{ uri: elm.uri }}
+                          style={[styles.vidio, { marginLeft: i == 0 ? 0 : 10, }, activePhoto == i && { borderWidth: 3, borderColor: 'green' }]}
+                          resizeMode="cover"
+                          paused={false}
+                          volume={0}
+                        />
+                        <Video
+                          source={{ uri: elm.uri }}
+                          style={[styles.img, { opacity: 0, position: "absolute" }]}
+                          resizeMode="cover"
+                          paused={false}
+                          volume={0}
+                          ref={ref[i]}
+                        />
+                      </View> :
+                      <Image
+                        style={[{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }, activePhoto == i && { borderWidth: 3, borderColor: 'green' }]}
+                        source={{ uri: screenshotUri[i] ? screenshotUri[i] : elm.uri }}
+                      />
+                    }
                   </TouchableOpacity>
                 })}
-              </View>
-            </ScrollView>
-          </BootomModal>
-        </SafeAreaView>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
-  );
+              </ScrollView>
+              <TextInput
+                placeholderTextColor="white"
+                placeholder={t(mainData.lang).adddescription}
+                style={[styles.input, { marginBottom: (!keyboardOpen && Platform.OS == "android") ? 0 : 50, zIndex: 999 }]}
+                value={description[activePhoto]}
+                multiline
+                onChangeText={(e) => addDescription(e, activePhoto)}
+              />
+            </View>
+            <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ marginBottom: 30 }}>
+
+                  {getCatalog.data.map((elm, i) => {
+                    return <TouchableOpacity onPress={() => {
+                      setSelectedCatalog(elm.id)
+                      setSelectedCatalogName(elm.name)
+                      handlePresentModalClose()
+                      setErrorCatalog('')
+                    }} key={i}>
+                      <Text style={[{ padding: 10, paddingHorizontal: 15 }, Styles.darkMedium13]}>{elm.name}</Text>
+                    </TouchableOpacity>
+                  })}
+                </View>
+              </ScrollView>
+            </BootomModal>
+          </SafeAreaView>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    );
+  else {
+    return
+
+  }
 };
+
 
 const styles = StyleSheet.create({
   vidio: {
@@ -448,7 +475,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     height: '100%',
-    marginTop: 30,
+    marginTop: 20,
   },
   img: {
     height: 500,

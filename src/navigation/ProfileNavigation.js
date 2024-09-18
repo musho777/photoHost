@@ -5,7 +5,7 @@ import { SavedPostScreen } from '../screens/Profile/SavedPostScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from '../components/lang';
 import { Catalog } from '../screens/catalog';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { TouchableOpacity } from 'react-native';
 import { Styles } from '../styles/Styles';
 import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
@@ -103,7 +103,7 @@ export const ProfileNavigation = () => {
         component={BlackListScreen}
         options={{
           header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Blacklist} />
+            return <HeaderWhiteTitle onPress={() => navigation.navigate("Settings")} title={t(mainData.lang).Blacklist} />
           }
         }}
       />

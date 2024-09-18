@@ -13,9 +13,7 @@ export const HomeNavigation = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          header: ({ navigation }) => {
-            return <HomeHeader navigation={navigation} />;
-          },
+          headerShown: false,
         }}
       />
       <Stack.Screen

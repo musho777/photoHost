@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
+import { HomeHeader } from '../../headers/HomeHeader';
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -94,6 +95,12 @@ export const HomeScreen = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    if (createPost.loading) {
+      goTop()
+    }
+  }, [createPost.loading])
+
 
 
   useFocusEffect(
@@ -119,6 +126,12 @@ export const HomeScreen = () => {
     setIndex(index);
     setCurrentPost(data[index])
   };
+
+  const goTop = () => {
+    flatListRef.current.scrollToOffset({ offset: 0, animated: true });
+  }
+
+
 
 
   const End = async (id) => {
@@ -199,10 +212,12 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView>
+
       <StatusBar
         barStyle={'dark-content'}
         backgroundColor={"white"}
       />
+      <HomeHeader onPress={() => goTop()} />
       <View>
         {showModal && <ModalComponent
           showModal={showModal}

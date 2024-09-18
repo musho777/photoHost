@@ -47,7 +47,7 @@ export const PostBody = ({
   }
 
   return <View style={styles.bostBody}>
-    <View style={{ gap: 15, position: 'absolute', bottom: 0, right: 5, }}>
+    <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
       <View style={styles.hover}>
         <View style={styles.hoverItem}>
           <TouchableOpacity onPress={() => { LikePost() }}>
@@ -93,7 +93,7 @@ export const PostBody = ({
           }}
           style={styles.hover}>
           <View style={styles.hoverItem}>
-            <View style={{ marginTop: 4 }}>
+            <View style={{ marginTop: 1 }}>
               <WhiteViewSvg />
             </View>
             <Text style={[Styles.balihaiRegular14, { color: 'white' }]}>{view}</Text>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     paddingVertical: 5,
     borderRadius: 20,
-    height: 55,
+    height: 50,
     justifyContent: "space-around",
     flexDirection: 'column',
     alignItems: 'center'
