@@ -1,5 +1,5 @@
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import { AddSecSvg, AddSecSvg1, FullScrenn, MusicSvg, MuteSvg, Pause, StartSvg } from '../../assets/svg/Svgs';
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FullScreen } from '../../store/action/action';
 
 
-export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, viewableItems }) => {
+export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, viewableItems, active }) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
@@ -28,6 +28,12 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     setShowStartButton(false);
     setScrollEnabled(false);
   };
+
+  useEffect(() => {
+    if (!active) {
+      setPaused(false)
+    }
+  }, [active])
 
   const onSeek = (value) => {
     setHold(true);
@@ -84,7 +90,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     setVolume(volume === 0 ? 1 : 0);
   };
 
-  const ChangeCurentTime = (data) => {
+  const ChangeCurentTime = () => {
     if (currentTime <= duration) {
       setCurrentTime(currentTime + 0.251);
     } else {
@@ -101,6 +107,12 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
   );
 
 
+  const handleLoad = useCallback((data) => {
+    setPaused(true);
+    setDuration(data.duration);
+    setVolume(1)
+  }, [volume]);
+
   return (
     <View style={{ position: 'relative', height: 550 }}>
       <TouchableOpacity
@@ -109,7 +121,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           setHold(true);
           setCurrentId(item.id);
           setShowStartButton(!showStartButton);
-          setScrollEnabled(true);
+          setScrollEnabled(false);
         }}
         onPressOut={() => { setHold(false) }}
         style={{ position: 'absolute', width: '100%', height: '100%' }}
@@ -155,17 +167,14 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
           onProgress={(data) => ChangeCurentTime(data)}
           useTextureView={false}
-          onLoad={(data) => {
-            setPaused(true);
-            setDuration(data.duration);
-            setVolume(1)
-          }}
+          onLoad={(data) => handleLoad(data)}
           onEnd={() => {
             setCurrentTime(0);
             setPaused(true);
             videoRef.current.seek(0);
           }}
-        /> :
+        />
+          :
           <Modal
             visible={true}
             style={{ flex: 1 }}
@@ -239,7 +248,9 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
                 </View>
               )}
               {(showStartButton || first) && (
-                <View style={[styles.controls, { bottom: 40, justifyContent: 'center' }]}>
+                <TouchableOpacity
+
+                  style={[styles.controls, { bottom: 40, justifyContent: 'center' }]}>
                   <Slider
                     style={styles.seekSlider}
                     value={currentTime}
@@ -250,10 +261,11 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
                     maximumTrackTintColor="#000000"
                     thumbTintColor="#FFC24B"
                   />
-                </View>
+                </TouchableOpacity>
               )}
             </TouchableOpacity>
-          </Modal>}
+          </Modal>
+        }
 
 
 
@@ -268,45 +280,66 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
 
 
 
+        <TouchableOpacity
+          onPressIn={() => {
+            setHold(true);
+            setCurrentId(item.id);
+            setShowStartButton(!showStartButton);
+            setScrollEnabled(false);
+          }}
+          onPressOut={() => {
+            setScrollEnabled(true);
+            setHold(false)
+          }}
+          style={{ height: 60, width: '100%', position: 'absolute', bottom: 0 }}>
+          {(showStartButton || first) && (
+            <TouchableOpacity style={{ position: 'absolute', top: 100, right: 10 }} onPress={ChangeVolume}>
+              {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
+            </TouchableOpacity>
+          )}
 
 
-        {(showStartButton || first) && (
-          <TouchableOpacity style={{ position: 'absolute', top: 100, right: 10 }} onPress={ChangeVolume}>
-            {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
-          </TouchableOpacity>
-        )}
 
 
 
-
-
-        {(showStartButton || first) && (
-          <View style={styles.music}>
-            <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
-              {music && <MusicSvg />}
-              <Text style={Styles.whiteSemiBold13}>{music}</Text>
+          {(showStartButton || first) && (
+            <View style={styles.music}>
+              <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 0 }}>
+                {music && <MusicSvg />}
+                <Text style={Styles.whiteSemiBold13}>{music}</Text>
+              </View>
+              <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
             </View>
-            <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
-          </View>
-        )}
-        {(showStartButton || first) && (
-          <View style={[styles.controls, { bottom: 40 }]}>
-            <Slider
-              style={styles.seekSlider}
-              value={currentTime}
-              minimumValue={0}
-              maximumValue={duration}
-              onValueChange={onSeek}
-              minimumTrackTintColor="#FFFFFF"
-              maximumTrackTintColor="#000000"
-              thumbTintColor="#FFC24B"
-            />
-          </View>
-        )}
+          )}
+          {(showStartButton || first) && (
+            <TouchableOpacity
+
+              onPressIn={() => {
+                setScrollEnabled(true);
+              }}
+              onPressOut={() => {
+                setScrollEnabled(false)
+              }}
+              style={[styles.controls, { bottom: 30 }]}>
+              <Slider
+                style={styles.seekSlider}
+                value={currentTime}
+                minimumValue={0}
+                maximumValue={duration}
+                onValueChange={onSeek}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                thumbTintColor="#FFC24B"
+              />
+            </TouchableOpacity>
+          )}
+        </TouchableOpacity>
+
+
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   playButton: {
@@ -331,7 +364,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
     position: 'absolute',
     width: '100%',
-    bottom: 25,
+    bottom: 10,
     flexDirection: 'column',
     paddingHorizontal: 14,
     color: 'white',

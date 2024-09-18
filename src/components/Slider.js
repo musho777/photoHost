@@ -11,7 +11,6 @@ import {
 import { AppColors } from '../styles/AppColors';
 import { SliderModal } from './SliderModal';
 import { VidioComponent } from './post/VidioComponent';
-import { VidioModal } from './post/VidionModal';
 import { Styles } from '../styles/Styles';
 import FastImage from 'react-native-fast-image';
 import { LikePostAction } from '../store/action/action';
@@ -22,8 +21,6 @@ const windowWidth = Dimensions.get('window').width;
 export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description, id, user }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
-  const [resizeVidio, setResizeVidio] = useState(false)
-  const [selectedVidio, setSelectedVidio] = useState(false)
   const [D, setD] = useState(description)
   const [scrollEnabled, setScrollEnabled] = useState(false)
   const [showLikeIcone, setShowLikeICone] = useState(false)
@@ -143,11 +140,8 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
                       {Array.isArray(D) ? D[index] : D}
                     </Text>
                   </View>}
-                  <VidioComponent setResizeVidio={() => {
-                    setSelectedVidio(item)
-                    setResizeVidio(true)
-                  }}
-
+                  <VidioComponent
+                    active={active == index}
                     setScrollEnabled={(e) => setScrollEnabled(e)}
                     viewableItems={viewableItems} music={music} item={item} />
                 </View>
@@ -177,7 +171,6 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
           close={() => setOpenSlider(false)}
         />
       )}
-      <VidioModal close={() => setResizeVidio(false)} modalVisible={resizeVidio} music={music} item={selectedVidio} />
     </View>
   );
 };
