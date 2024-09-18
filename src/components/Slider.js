@@ -13,16 +13,74 @@ import { SliderModal } from './SliderModal';
 import { VidioComponent } from './post/VidioComponent';
 import { VidioModal } from './post/VidionModal';
 import { Styles } from '../styles/Styles';
+import FastImage from 'react-native-fast-image';
+import { LikePostAction } from '../store/action/action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description }) => {
+export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description, id, user }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [resizeVidio, setResizeVidio] = useState(false)
   const [selectedVidio, setSelectedVidio] = useState(false)
   const [D, setD] = useState(description)
   const [scrollEnabled, setScrollEnabled] = useState(false)
+  const [showLikeIcone, setShowLikeICone] = useState(false)
+  const staticdata = useSelector(st => st.static);
+
+  const [lastClickTime, setLastClickTime] = useState(0);
+  const [clickTimeout, setClickTimeout] = useState(null);
+
+  const SINGLE_CLICK_DELAY = 300; // Задержка для распознавания одиночного клика
+  const DOUBLE_CLICK_DELAY = 300;
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLikeICone(false)
+    }, 1000); // 3-second delay
+
+    return () => clearTimeout(timer); // Clean up the timer on component unmount
+  }, [showLikeIcone]);
+
+
+  const LikePost = () => {
+    dispatch(LikePostAction({
+      'post_id': id
+    },
+      staticdata.token,
+      user.data.id
+    ))
+  }
+
+  const handleClick = (event, item) => {
+    const now = new Date().getTime();
+
+    if (lastClickTime && (now - lastClickTime) < DOUBLE_CLICK_DELAY) {
+
+      if (clickTimeout) {
+        clearTimeout(clickTimeout);
+      }
+      console.log('Double click detected');
+      const { locationX, locationY } = event.nativeEvent;
+      setPosition({ x: locationX - 50, y: locationY - 50 });
+      setShowLikeICone(true)
+      LikePost()
+      console.log(`Clicked at X: ${locationX + 10}, Y: ${locationY + 100}`);
+    } else {
+      const timeoutId = setTimeout(() => {
+        console.log('Single click detected');
+        !item.video && setOpenSlider(true)
+        setOpenModal(false)
+      }, SINGLE_CLICK_DELAY);
+
+      setClickTimeout(timeoutId);
+      setLastClickTime(now);
+    }
+  };
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -58,14 +116,10 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
           if (height > 600) {
             height = 580
           }
-          console.log(height, 'e')
           return (
             <TouchableOpacity
               activeOpacity={1}
-              onPress={() => {
-                !item.video && setOpenSlider(true)
-                setOpenModal(false)
-              }}
+              onPress={(e) => handleClick(e, item)}
               style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ?
                 <View>
@@ -94,6 +148,14 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
                     setScrollEnabled={(e) => setScrollEnabled(e)}
                     viewableItems={viewableItems} music={music} item={item} />
                 </View>
+              }
+              {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
+                <FastImage
+                  source={require('../assets/img/Animation3.gif')} // Ensure this path is correct
+                  style={{ width: 130, height: 130 }}
+                  resizeMode={FastImage.resizeMode.contain} // Can also use 'cover', 'stretch', etc.
+                />
+              </View>
               }
             </TouchableOpacity>
           );

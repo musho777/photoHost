@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Slider } from '../Slider';
@@ -63,6 +63,8 @@ export const Post = ({
           description={description}
           photo={photo}
           setOpenModal={setOpenModal}
+          id={id}
+          user={user}
         />
         <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
           <PostBody

@@ -270,7 +270,11 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
 
 
 
-
+        {(showStartButton || first) && (
+          <TouchableOpacity style={{ position: 'absolute', top: 100, right: 10 }} onPress={ChangeVolume}>
+            {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
+          </TouchableOpacity>
+        )}
 
 
 
@@ -278,9 +282,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
 
         {(showStartButton || first) && (
           <View style={styles.music}>
-            <TouchableOpacity style={{ position: 'absolute', bottom: -10, left: 15 }} onPress={ChangeVolume}>
-              {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
-            </TouchableOpacity>
             <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
               {music && <MusicSvg />}
               <Text style={Styles.whiteSemiBold13}>{music}</Text>

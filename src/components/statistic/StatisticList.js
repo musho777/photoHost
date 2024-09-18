@@ -29,7 +29,15 @@ export const StatisticList = ({ id, token }) => {
     }
   }, [id])
   const getRandomNumber = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    let sec = Math.floor(Math.random() * (max - min + 1)) + min;
+    let word = 'секунд'
+    if (sec == 1) {
+      word = "секунда"
+    }
+    else if (sec >= 2 && sec <= 4) {
+      word = "секунды"
+    }
+    return `${sec} ${word}`
   };
 
 
@@ -96,13 +104,13 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(4, 25)} секунды</Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(4, 25)} </Text>
             <Text style={Styles.darkSemiBold14}>Переход (с ленты на Ваш аккаунт)
               - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>
           <View style={styles.line}></View>
-          <Accordion headerTitleStyle={Styles.darkMedium12} headerTitle="Просмотрели предыдущие публикации">
+          <Accordion headerTitleStyle={Styles.darkMedium12} style={{ width: '100%', marginLeft: 0 }} headerTitle="Просмотрели предыдущие публикации">
             <BottomSheetScrollView
               style={{ marginTop: 20 }}
               onScroll={({ nativeEvent }) => {
@@ -127,7 +135,7 @@ export const StatisticList = ({ id, token }) => {
                       }
                     }}
                     key={i}
-                    style={styles.block}>
+                    style={[styles.block, { marginBottom: 5 }]}>
                     <View style={Styles.flexAlignItems}>
                       <Image
                         style={styles.img}
@@ -144,12 +152,14 @@ export const StatisticList = ({ id, token }) => {
               })}
             </BottomSheetScrollView>
           </Accordion>
-          <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом- {getStatistic1.data.get_comment_count}</Text>
-          <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getRandomNumber(10, 25)} </Text>
+          <View style={{ gap: 10 }}>
+            <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом- {getStatistic1.data.get_comment_count}</Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getRandomNumber(10, 25)} </Text>
+          </View>
 
 
         </Accordion>
-        <Accordion style={{ borderBottomWidth: 1 }} headerTitleStyle={[Styles.darkMedium12, { textAlign: "center" }]} headerTitle="Активность просмотров">
+        <Accordion headerTitleStyle={[Styles.darkMedium12, { textAlign: "center" }]} headerTitle="Активность просмотров">
           <ScrollView style={{ marginTop: 20 }} horizontal={true}>
             <View>
               <Table >
