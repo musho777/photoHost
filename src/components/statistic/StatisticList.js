@@ -28,6 +28,7 @@ export const StatisticList = ({ id, token }) => {
       dispatch(GetStatisitc2(id, token))
     }
   }, [id])
+
   const getRandomNumber = (min, max) => {
     let sec = Math.floor(Math.random() * (max - min + 1)) + min;
     let word = 'секунд'
@@ -47,37 +48,17 @@ export const StatisticList = ({ id, token }) => {
         current.count > max.count ? current : max, item.statistics[0]);
 
       const gender = maxStatistic.gender === "men" ? "M" : "Ж";
+      let date = new Date(item.date)
+      console.log(item.date)
+      const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if necessary
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+      const year = String(date.getFullYear()).slice(2);
       if (maxStatistic.count > 0)
-        return [item.date, item.hour_range, gender, maxStatistic.year, maxStatistic.count];
+        return [`${day}.${month}.${year}`, item.hour_range, gender, maxStatistic.year, maxStatistic.count];
     });
   }
 
 
-
-
-  // useEffect(() => {
-  //   let item = [...tableData]
-  //   if (getStatistic2.data.length >= 0) {
-  //     getStatistic2.data.map((elm, i) => {
-  //       elm.statistics.map((el, i) => {
-  //         let gender = el.gender
-  //         if (gender == 'men') {
-  //           gender = "М"
-  //         }
-  //         else if (gender == 'women') {
-  //           gender = "Ж"
-  //         }
-
-  //         let year = elm.date.slice(2, 4)
-  //         let mounth = elm.date.slice(5, 7)
-  //         let day = elm.date.slice(8, 10)
-  //         const newDateString = `${day}.${mounth}.${year}`;
-  //         item.push([newDateString, elm.hour_range, gender, el.year, el.count])
-  //       })
-  //     })
-  //   }
-  //   setTableDat(item)
-  // }, [getStatistic2.data])
   const formatTime = (totalSeconds) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -153,7 +134,7 @@ export const StatisticList = ({ id, token }) => {
             </BottomSheetScrollView>
           </Accordion>
           <View style={{ gap: 10 }}>
-            <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом- {getStatistic1.data.get_comment_count}</Text>
+            <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getRandomNumber(10, 25)} </Text>
           </View>
 
@@ -175,7 +156,6 @@ export const StatisticList = ({ id, token }) => {
                         widthArr={widthArr}
                         style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
                         textStyle={styles.textStyle}
-
                       />
                     ))
                   }

@@ -334,7 +334,16 @@ export const AddImg = ({ navigation }) => {
                 onLoad={(event) => {
                   const { width, height } = event.nativeEvent.source;
                   console.log(width, height)
-                  let height2 = (windowWidth * height) / width
+                  let height2 = 570
+                  if (height) {
+                    height2 = (windowWidth * height) / width
+                  }
+                  if (height2 < 400) {
+                    height2 = 380
+                  }
+                  else {
+                    height2 = 570
+                  }
                   setHeight(height2)
                 }}
                 style={[styles.img, { height: height }]}

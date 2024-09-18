@@ -109,12 +109,15 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
         onMomentumScrollEnd={handleMomentumScrollEnd}
         scrollEnabled={!scrollEnabled}
         renderItem={({ item, index }) => {
-          let height = 580
+          let height = 570
           if (item.height) {
             height = (windowWidth * item.height) / item.width
           }
-          if (height > 600) {
-            height = 580
+          if (height < 400) {
+            height = 380
+          }
+          else {
+            height = 570
           }
           return (
             <TouchableOpacity
