@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   hover: {
     padding: 5,
-    paddingLeft: 10,
+    paddingLeft: 7,
     position: 'relative',
     flexDirection: 'row',
     width: '100%',

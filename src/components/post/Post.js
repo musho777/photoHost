@@ -24,7 +24,8 @@ export const Post = ({
   music,
   isLiked,
   setSelectidId,
-  setShowView
+  setShowView,
+  postCount
 }) => {
 
   const user = useSelector((st) => st.userData)
@@ -68,6 +69,7 @@ export const Post = ({
         />
         <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
           <PostBody
+            postCount={postCount}
             commentCount={commentCount}
             setSelectidId={(id) => setSelectidId(id)}
             liked={isLiked >= 0}

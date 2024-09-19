@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
-import { View, Text, RefreshControl, FlatList } from "react-native"
+import { View, Text, RefreshControl, FlatList, BackHandler } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import { BlackListBlock } from "../../components/blackListBlock"
 import { AddBlackListAction, GetBlackListAction } from "../../store/action/action"
 import { Styles } from "../../styles/Styles"
 import { t } from '../../components/lang';
+import { useIsFocused } from "@react-navigation/native"
 
 export const BlackListScreen = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -21,6 +22,27 @@ export const BlackListScreen = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    const backAction = () => {
+      if (isFocused) {
+        navigation.goBack(); // Perform back action only if this is the active screen
+        navigation.openDrawer()
+        return true;
+      }
+      return false; // Let the default behavior happen if this screen isn't focused
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove(); // Cleanup the listener when the screen is not active
+  }, [isFocused]);
+
+
   useEffect(() => {
     setData(blackList.data)
   }, [blackList.data])

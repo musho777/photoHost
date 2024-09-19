@@ -103,7 +103,10 @@ export const ProfileNavigation = () => {
         component={BlackListScreen}
         options={{
           header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.navigate("Settings")} title={t(mainData.lang).Blacklist} />
+            return <HeaderWhiteTitle onPress={() => {
+              navigation.goBack()
+              navigation.openDrawer()
+            }} title={t(mainData.lang).Blacklist} />
           }
         }}
       />
@@ -112,7 +115,10 @@ export const ProfileNavigation = () => {
         component={ContactsPage}
         options={{
           header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={'Синхронизация контактов'} />
+            return <HeaderWhiteTitle onPress={() => {
+              navigation.goBack()
+              navigation.openDrawer()
+            }} title={'Синхронизация контактов'} />
           }
         }}
       />
@@ -121,7 +127,10 @@ export const ProfileNavigation = () => {
         component={SavedPostScreen}
         options={{
           header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Bookmarks} />
+            return <HeaderWhiteTitle onPress={() => {
+              navigation.goBack()
+              navigation.openDrawer()
+            }} title={t(mainData.lang).Bookmarks} />
           }
         }}
       />
@@ -130,7 +139,10 @@ export const ProfileNavigation = () => {
         component={Catalog}
         options={{
           header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Catalog} />
+            return <HeaderWhiteTitle onPress={() => {
+              navigation.goBack()
+              navigation.openDrawer()
+            }} title={t(mainData.lang).Catalog} />
           }
         }}
       />

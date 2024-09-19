@@ -3,7 +3,7 @@ import { CommentWhite, WhiteHeart, WhiteViewSvg } from "../assets/svg/TabBarSvg"
 import { NotLineSvgWhite, ShearSvg } from "../assets/svg/Svgs";
 import { Styles } from "../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GetFollowerAction, GetPostLikeAction, LikePostAction } from "../store/action/action";
 import { useNavigation } from "@react-navigation/native";
 import { LikeList } from "./LikeList";
@@ -18,6 +18,7 @@ export const PostBody = ({
   user,
   my,
   setShowView,
+  postCount,
   setSelectidId = () => { }
 }) => {
   const likeRef = useRef(null)
@@ -46,6 +47,12 @@ export const PostBody = ({
       user.data.id
     ))
   }
+
+  useEffect(() => {
+    if (postCount <= 3) {
+      setShowViewText(true)
+    }
+  }, [postCount])
 
   return <View style={styles.bostBody}>
     <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
@@ -83,7 +90,7 @@ export const PostBody = ({
           <TouchableOpacity onPress={() => {
             setShowView(true)
             setSelectidId(id)
-          }} style={[styles.hover, { position: 'absolute', right: 60, height: 36 }]}>
+          }} style={[styles.hover, { position: 'absolute', right: 50, height: 36 }]}>
             <Text style={[Styles.whiteRegular12]}>Посмотреть статистику?</Text>
           </TouchableOpacity>
         }
@@ -125,7 +132,7 @@ export const PostBody = ({
 
 const styles = StyleSheet.create({
   hover: {
-    marginRight: 3,
+    marginRight: 0,
     backgroundColor: 'rgba(0,0,0,0.5)',
     paddingHorizontal: 7,
     paddingVertical: 5,

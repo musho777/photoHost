@@ -57,8 +57,8 @@ export const SearchProfil = ({ navigation, route }) => {
     useCallback(() => {
       if (singlPage.data.id != route?.params?.id) {
         dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
+        dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
       }
-      dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
     }, [route.params.id, staticdata.token, page, singlPage.data.id])
   );
 
@@ -69,6 +69,13 @@ export const SearchProfil = ({ navigation, route }) => {
     setIsFollow(index >= 0)
     setFollowersCount(singlPage.followersCount)
   }, [singlPage.data])
+
+
+  useEffect(() => {
+    if (page > 1) {
+      dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
+    }
+  }, [page])
 
 
   const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {

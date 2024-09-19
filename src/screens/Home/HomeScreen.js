@@ -6,7 +6,7 @@ import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyC
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { HomeHeader } from '../../headers/HomeHeader';
@@ -53,7 +53,7 @@ export const HomeScreen = () => {
       if (userData.data.show_category_pop_up == 1) {
         setShowModal(true)
       }
-    }, 2000)
+    }, 20000)
   }, [userData.data])
 
   useEffect(() => {
@@ -181,6 +181,7 @@ export const HomeScreen = () => {
             music={item.music_name}
             photo={item.photo}
             id={item.id}
+            postCount={userData.postCount}
             star={item.user.star}
             isBook={item.auth_user_book.length > 0}
             isFollow={item.user.follow_status_sender.length}

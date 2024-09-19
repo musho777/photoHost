@@ -31,11 +31,12 @@ export const StatisticList = ({ id, token }) => {
 
   const getRandomNumber = (min, max) => {
     let sec = Math.floor(Math.random() * (max - min + 1)) + min;
+    console.log(JSON.stringify(sec)[1], '22')
     let word = 'секунд'
-    if (sec == 1) {
+    if (JSON.stringify(sec)[1] == 1) {
       word = "секунда"
     }
-    else if (sec >= 2 && sec <= 4) {
+    else if (JSON.stringify(sec)[1] >= 2 && JSON.stringify(sec)[1] <= 4) {
       word = "секунды"
     }
     return `${sec} ${word}`
@@ -84,7 +85,7 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(4, 25)} </Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(17, 25)} </Text>
             <Text style={Styles.darkSemiBold14}>Переход (с ленты на Ваш аккаунт)
               - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
@@ -134,7 +135,7 @@ export const StatisticList = ({ id, token }) => {
           </Accordion>
           <View style={{ gap: 10 }}>
             <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом - {getStatistic1.data.get_comment_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getRandomNumber(10, 25)} </Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getRandomNumber(18, 25)} </Text>
           </View>
 
 

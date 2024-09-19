@@ -22,7 +22,10 @@ export default AccauntParametrNavigation = () => {
         component={ParametrScreen}
         options={{
           header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).Accountsettings} />
+            return <HeaderWhiteTitle onPress={() => {
+              navigation.goBack()
+              navigation.openDrawer()
+            }} title={t(mainData.lang).Accountsettings} />
           }
         }}
       />
