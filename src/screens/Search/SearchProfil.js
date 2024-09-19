@@ -33,6 +33,8 @@ export const SearchProfil = ({ navigation, route }) => {
 
 
 
+
+
   const AddDeletFollow = () => {
     if (isFollow) {
       setFollowersCount(followersCount - 1)
@@ -51,18 +53,16 @@ export const SearchProfil = ({ navigation, route }) => {
     navigation.navigate('ChatScreen', { id: route.params.id })
   }
 
-
   useFocusEffect(
     useCallback(() => {
-      dispatch(GetSinglPageAction({ user_id: route?.params?.id, post_id: route?.params?.post_id }, staticdata.token));
+      if (singlPage.data.id != route?.params?.id) {
+        dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
+      }
       dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
-    }, [route.params.id, route.params.post_id, staticdata.token, page])
+    }, [route.params.id, staticdata.token, page, singlPage.data.id])
   );
 
-  // useEffect(() => {
-  //   dispatch(GetSinglPageAction({ user_id: route?.params?.id, post_id: route?.params?.post_id }, staticdata.token));
-  //   dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
-  // }, [route.params.id, route.params.post_id, staticdata.token, page])
+
 
   useEffect(() => {
     let index = singlPage.data?.follow_status_sender?.findIndex((elm) => elm.sender_id == user.data.id)
