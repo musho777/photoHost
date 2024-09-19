@@ -413,7 +413,7 @@ export const AddImg = ({ navigation }) => {
                       </View> :
                       <Image
                         style={[{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }, activePhoto == i && { borderWidth: 3, borderColor: 'green' }]}
-                        source={{ uri: screenshotUri[i] ? screenshotUri[i] : elm.uri }}
+                        source={{ uri: elm.uri }}
                       />
                     }
                   </TouchableOpacity>

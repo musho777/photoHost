@@ -121,6 +121,9 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'ClearChatNumber':
       item.msgCount = 0
       break
+    case 'AddMessageCount':
+      item.msgCount = item.msgCount + 1
+      break
     default:
       break;
   }

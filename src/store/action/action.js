@@ -1860,3 +1860,9 @@ export const ClearSinglChatNumber = (id) => {
     id
   }
 }
+
+export const AddMessageCount = () => {
+  return {
+    type: 'AddMessageCount'
+  }
+}

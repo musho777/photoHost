@@ -11,6 +11,7 @@ import Sound from 'react-native-sound';
 import { Comments } from '../components/comment/Comment';
 import {
   AddBlackListPusherAction,
+  AddMessageCount,
   AddMsgAction,
   ChnageLanguage,
   DeleteChatPusherAction,
@@ -85,6 +86,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             );
           }
           else {
+            dispatch(AddMessageCount())
             dispatch(
               AddMsgAction({
                 message: JSON.parse(event.data)?.message?.message,
