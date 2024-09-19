@@ -1,4 +1,4 @@
-import { Keyboard, TouchableOpacity, View } from "react-native";
+import { Keyboard, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import { InputComponent } from "./input";
 import { Emojy, Sticker } from "../../../assets/svg/Svgs";
 import EmojiPicker from "rn-emoji-keyboard";
@@ -25,8 +25,8 @@ export const BottomWrapper = forwardRef(({ addToblackList, setAddToBlackList, ro
   const handlePick = (e) => {
     setSendMsg(sendMSg + e.emoji)
   }
-
-  return <View style={{ marginBottom: !keyboardOpen ? 10 : 60, width: '100%', paddingHorizontal: 15, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+  // marginBottom: !keyboardOpen ? 10 : 60
+  return <View style={[styles.input, (keyboardOpen && Platform.OS == 'android') && { marginBottom: 60 }]}>
     <InputComponent sendMSg={sendMSg} setSendMsg={(e) => setSendMsg(e)} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
     <View style={{ flexDirection: 'row', gap: 5 }}>
       <TouchableOpacity onPress={() => ref.current?.present()}>
@@ -38,4 +38,15 @@ export const BottomWrapper = forwardRef(({ addToblackList, setAddToBlackList, ro
     </View>
     <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
   </View>
+})
+
+const styles = StyleSheet.create({
+  input: {
+    width: '100%',
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 10,
+  }
 })

@@ -171,7 +171,6 @@ export const EditProfilScreen = ({ navigation }) => {
   useEffect(() => {
     const backAction = () => {
       if (isFocused) {
-        console.log('---1')
         navigation.goBack(); // Perform back action only if this is the active screen
         navigation.openDrawer()
         return true;

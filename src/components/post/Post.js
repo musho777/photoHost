@@ -32,7 +32,18 @@ export const Post = ({
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
+  const [long, setLong] = useState(false)
 
+
+  const onLongClikc = () => {
+    setLong(true)
+    console.log('long')
+
+  }
+  const onPressOut = () => {
+    setLong(false)
+    console.log('false')
+  }
 
   return (
     <View>
@@ -61,13 +72,16 @@ export const Post = ({
         <Slider
           viewableItems={viewableItems}
           music={music}
+          long={long}
+          onPressOut={() => onPressOut()}
+          onLongClikc={() => onLongClikc()}
           description={description}
           photo={photo}
           setOpenModal={setOpenModal}
           id={id}
           user={user}
         />
-        <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
+        {!long && <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
           <PostBody
             postCount={postCount}
             commentCount={commentCount}
@@ -81,7 +95,7 @@ export const Post = ({
             id={id}
             user={user}
           />
-        </View>
+        </View>}
       </View>
     </View>
   );

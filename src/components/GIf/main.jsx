@@ -5,14 +5,16 @@ import Gif from './Gif';
 import { GifSvg, GifSvg1, StickerSvg, StickerSvg1 } from '../../assets/svg/Svgs';
 import Sticker from './Stickers';
 import Sound from 'react-native-sound';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { newMessageAction } from '../../store/action/action';
 
-const Main = forwardRef(({ }, ref) => {
+const Main = forwardRef(({ route }, ref) => {
 
   const [showGif, setShowGif] = useState(false)
   const snapPoints = useMemo(() => ['80%'], []);
   const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
   const staticdata = useSelector(st => st.static);
+  const dispatch = useDispatch()
 
   const SendSticker = (e) => {
     music.play()

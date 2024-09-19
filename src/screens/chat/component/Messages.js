@@ -3,9 +3,9 @@ import { MsgBlock } from "../../../components/MsgBlock";
 import { SharePost } from "../SharePost";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { GetSinglePageChatAction } from "../../../store/action/action";
+import { ClearSinglChatNumber, GetSinglePageChatAction } from "../../../store/action/action";
 
-export const Messages = ({ route }) => {
+export const Messages = ({ route, id }) => {
 
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const [page, setPage] = useState(1);
@@ -17,6 +17,10 @@ export const Messages = ({ route }) => {
     dispatch(GetSinglePageChatAction({ receiver_id: route.params.id }, staticdata.token, page,),);
   }, [page]);
 
+  useEffect(() => {
+    console.log('aaaaa')
+    dispatch(ClearSinglChatNumber(id))
+  }, [getSinglePageChat.message.length])
 
   return <FlatList
     snapToEnd

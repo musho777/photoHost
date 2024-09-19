@@ -13,7 +13,6 @@ import { useEffect, useState } from 'react';
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const user = useSelector((st) => st.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const [msgCount, setMsgCount] = useState('');
   const currentRouteName = state.routes[state.index].name; // Get the current route name
 
   useEffect(() => {
@@ -36,9 +35,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
     };
   }, []);
 
-  useEffect(() => {
-    setMsgCount(user.msgCount);
-  }, [user.msgCount]);
   if (!isKeyboardVisible) {
     if (currentRouteName != "AddImg") {
       return (
@@ -74,7 +70,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
               } else if (label === 'ChatNavigation') {
                 tabIcon = (
                   <View>
-                    {msgCount > 0 && (
+                    {user.msgCount > 0 && (
                       <View
                         style={{
                           position: 'absolute',
@@ -89,7 +85,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                           textAlign: 'center',
                         }}
                       >
-                        <Text style={{ color: '#FFF', fontSize: 10 }}>{msgCount}</Text>
+                        <Text style={{ color: '#FFF', fontSize: 10 }}>{user.msgCount}</Text>
                       </View>
                     )}
                     <ChatSvg focused={isFocused} />
@@ -151,12 +147,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
 export const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
-  const user = useSelector((st) => st.userData);
-  const [msgCount, setMsgCount] = useState('');
-
-  useEffect(() => {
-    setMsgCount(user.msgCount);
-  }, [user.msgCount]);
 
   return (
     <Tab.Navigator

@@ -1846,3 +1846,17 @@ export const FullScreen = (data) => {
     data
   }
 }
+
+export const ClearChatNumber = () => {
+  return {
+    type: 'ClearChatNumber'
+  }
+}
+
+export const ClearSinglChatNumber = (id) => {
+  console.log(id)
+  return {
+    type: 'ClearSinglChatNumber',
+    id
+  }
+}

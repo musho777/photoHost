@@ -31,7 +31,6 @@ export const StatisticList = ({ id, token }) => {
 
   const getRandomNumber = (min, max) => {
     let sec = Math.floor(Math.random() * (max - min + 1)) + min;
-    console.log(JSON.stringify(sec)[1], '22')
     let word = 'секунд'
     if (JSON.stringify(sec)[1] == 1) {
       word = "секунда"

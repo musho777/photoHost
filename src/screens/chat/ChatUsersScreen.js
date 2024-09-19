@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   SafeAreaView,
   FlatList,
@@ -7,10 +7,11 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChatUser } from '../../components/ChatUser';
-import { GetMyChatRoom } from '../../store/action/action';
+import { ClearChatNumber, GetMyChatRoom } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import { Input } from '../../ui/Input';
 import { t } from '../../components/lang';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const ChatUsersScreen = () => {
   const [data, setData] = useState([]);
@@ -24,11 +25,17 @@ export const ChatUsersScreen = () => {
   const mainData = useSelector(st => st.mainData);
 
 
-
   useEffect(() => {
     setData(getMyChatRoom.data);
   }, [getMyChatRoom]);
 
+  useFocusEffect(
+    useCallback(() => {
+      if (user.msgCount > 0) {
+        dispatch(ClearChatNumber())
+      }
+    }, [])
+  );
 
 
   const searchData = e => {
@@ -63,6 +70,7 @@ export const ChatUsersScreen = () => {
     }
     return (
       <ChatUser
+        id={item.id}
         name={name}
         img={`https://chambaonline.pro/uploads/${avatar}`}
         sendWhiteMe={item.sendWhiteMe}

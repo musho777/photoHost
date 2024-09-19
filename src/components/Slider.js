@@ -18,18 +18,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description, id, user }) => {
+export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description, id, user, onLongClikc, long, onPressOut }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [D, setD] = useState(description)
   const [scrollEnabled, setScrollEnabled] = useState(false)
   const [showLikeIcone, setShowLikeICone] = useState(false)
   const staticdata = useSelector(st => st.static);
-
   const [lastClickTime, setLastClickTime] = useState(0);
   const [clickTimeout, setClickTimeout] = useState(null);
 
-  const SINGLE_CLICK_DELAY = 300; // Задержка для распознавания одиночного клика
+  const SINGLE_CLICK_DELAY = 300;
   const DOUBLE_CLICK_DELAY = 300;
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -38,9 +37,9 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLikeICone(false)
-    }, 1000); // 3-second delay
+    }, 500);
 
-    return () => clearTimeout(timer); // Clean up the timer on component unmount
+    return () => clearTimeout(timer);
   }, [showLikeIcone]);
 
 
@@ -92,6 +91,7 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
     }
     setD(desc)
   }, [description])
+
   return (
     <View>
       <FlatList
@@ -115,16 +115,19 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
           }
           return (
             <TouchableOpacity
+              onLongPress={() => onLongClikc()}
               activeOpacity={1}
+              onPressOut={() => onPressOut()}
               onPress={(e) => handleClick(e, item)}
               style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ?
                 <View>
-                  {description && <View style={styles.hover}>
-                    <Text style={[Styles.whiteSemiBold12]}>
-                      {Array.isArray(D) ? D[index] : D}
-                    </Text>
-                  </View>}
+                  {(!long && description) &&
+                    <View style={styles.hover}>
+                      <Text style={[Styles.whiteSemiBold12]}>
+                        {Array.isArray(D) ? D[index] : D}
+                      </Text>
+                    </View>}
                   <Image
                     style={{ height: height, width: windowWidth }}
                     source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
@@ -132,7 +135,7 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
                   />
                 </View> :
                 <View>
-                  {description && <View style={styles.hover}>
+                  {(long && description) && <View style={styles.hover}>
                     <Text style={[Styles.whiteSemiBold12]}>
                       {Array.isArray(D) ? D[index] : D}
                     </Text>

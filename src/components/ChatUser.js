@@ -12,15 +12,15 @@ export const ChatUser = ({
   text,
   sendr_id,
   user_id,
-  otherUserId
+  otherUserId,
+  id
 }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('ChatScreen', { id: otherUserId })
-      }
-      }
+        navigation.navigate('ChatScreen', { id: otherUserId, chatId: id })
+      }}
       style={[Styles.flexSpaceBetween, { marginVertical: 20 }]}>
       <View style={Styles.flexAlignItems}>
         <View>

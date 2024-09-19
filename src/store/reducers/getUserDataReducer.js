@@ -118,6 +118,9 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'CreatePostLocal':
       item.postCount = item.postCount + 1
       break
+    case 'ClearChatNumber':
+      item.msgCount = 0
+      break
     default:
       break;
   }
