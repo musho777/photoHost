@@ -41,7 +41,7 @@ export const ViewList = ({ id, token, navigation }) => {
     <BottomSheetScrollView
       onScroll={({ nativeEvent }) => {
         if (isCloseToBottom(nativeEvent)) {
-          if (getPosts.nextPage) {
+          if (getPostView.nextPage) {
             let pages = page + 1;
             dispatch(GetPostViewAction({ post_id: id }, token, page));
             setPage(pages);
@@ -77,6 +77,7 @@ export const ViewList = ({ id, token, navigation }) => {
           </TouchableOpacity>
         );
       })}
+
     </BottomSheetScrollView>
   );
 }

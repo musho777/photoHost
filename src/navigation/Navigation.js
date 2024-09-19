@@ -22,23 +22,15 @@ import {
 } from '../store/action/action';
 import {
   Pusher,
-  PusherMember,
-  PusherChannel,
-  PusherEvent,
 } from '@pusher/pusher-websocket-react-native';
 import { ChatScreen } from '../screens/chat/ChatScreen';
-import { FollowersScreen } from '../screens/Profile/FollowersScreen';
-import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { SinglPageScreen } from '../screens/SinglePage/SinglPage';
 import { EditPostScreen } from '../screens/SinglePage/EditPostScreen';
-import { SearchProfil } from '../screens/Search/SearchProfil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CheckBlack } from '../../CheckBlack';
 import { LoginNavigation } from './LoginNavigation';
 import { Catalog } from '../screens/catalog';
-import { SearchNavigation } from './SearchNavigation';
 import { OtherUserScreenNavigation } from './OtherUserScreenNavigation';
-import { RegisterType } from '../screens/auth/RegisterType';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();

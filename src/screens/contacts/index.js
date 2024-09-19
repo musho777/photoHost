@@ -56,7 +56,6 @@ export const ContactsPage = () => {
           console.error(error);
         });
     } else {
-      console.log('Permission to access contacts was denied');
     }
   };
 

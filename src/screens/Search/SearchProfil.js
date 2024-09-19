@@ -12,7 +12,7 @@ import { Styles } from '../../styles/Styles';
 import { BackArrow } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddDeleteFollowAction, AddDeletFollowAction, GetOtherPostsAction, GetPostsAction, GetSinglPageAction } from '../../store/action/action';
+import { AddDeleteFollowAction, AddDeletFollowAction, GetOtherPostsAction, GetSinglPageAction } from '../../store/action/action';
 import { t } from '../../components/lang';
 import { AlbomAndInfo } from './component/albomAndInfo';
 import { useFocusEffect } from '@react-navigation/native';
@@ -29,6 +29,10 @@ export const SearchProfil = ({ navigation, route }) => {
   const mainData = useSelector(st => st.mainData);
   const [isFollow, setIsFollow] = useState(false)
   const [followersCount, setFollowersCount] = useState(0)
+  const user = useSelector(st => st.userData);
+
+
+
   const AddDeletFollow = () => {
     if (isFollow) {
       setFollowersCount(followersCount - 1)
@@ -47,20 +51,26 @@ export const SearchProfil = ({ navigation, route }) => {
     navigation.navigate('ChatScreen', { id: route.params.id })
   }
 
-  const user = useSelector(st => st.userData);
 
   useFocusEffect(
     useCallback(() => {
       dispatch(GetSinglPageAction({ user_id: route?.params?.id, post_id: route?.params?.post_id }, staticdata.token));
-      dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
-    }, [route.params.id, route.params.post_id, dispatch, staticdata.token])
+      dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
+    }, [route.params.id, route.params.post_id, staticdata.token, page])
   );
+
+  // useEffect(() => {
+  //   dispatch(GetSinglPageAction({ user_id: route?.params?.id, post_id: route?.params?.post_id }, staticdata.token));
+  //   dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
+  // }, [route.params.id, route.params.post_id, staticdata.token, page])
 
   useEffect(() => {
     let index = singlPage.data?.follow_status_sender?.findIndex((elm) => elm.sender_id == user.data.id)
     setIsFollow(index >= 0)
     setFollowersCount(singlPage.followersCount)
   }, [singlPage.data])
+
+
   const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
     const paddingToBottom = 900;
     return layoutMeasurement.height + contentOffset.y >=
@@ -68,25 +78,22 @@ export const SearchProfil = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ paddingHorizontal: 15 }}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
           onScroll={({ nativeEvent }) => {
             if (isCloseToBottom(nativeEvent)) {
-              let pages = page
-              pages = page + 1
-              setPage(pages)
               if (getPosts.nextPage) {
-                dispatch(GetPostsAction({ user_id: route.params.id, }, staticdata.token, page));
+                let pages = page
+                pages = page + 1
+                setPage(pages)
               }
             }
           }}
         >
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{ marginVertical: 25 }}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginVertical: 15 }}>
             <BackArrow />
           </TouchableOpacity>
           {singlPage.loading ?
@@ -96,11 +103,9 @@ export const SearchProfil = ({ navigation, route }) => {
                 style={styles.img}
                 source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.avatar}` }}
               />
-              <View style={{ marginTop: 7, marginBottom: 15, alignItems: 'center' }}>
-                <Text style={Styles.darkMedium16}>{singlPage.data.name}</Text>
-              </View>
+              <Text style={[Styles.darkMedium16, { margin: 7 }]}>{singlPage.data.name}</Text>
               {singlPage.data.description && (
-                <Text style={Styles.darkRegular14}>{singlPage.data.description}</Text>
+                <Text style={[Styles.darkRegular14, { textAlign: 'center' }]}>{singlPage.data.description}</Text>
               )}
             </View>
           }

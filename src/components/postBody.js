@@ -23,6 +23,7 @@ export const PostBody = ({
   const likeRef = useRef(null)
   const shareRef = useRef(null)
 
+
   const CloseLike = () => { likeRef.current?.close() }
   const CloseShare = () => { shareRef.current?.close() }
 
@@ -50,7 +51,7 @@ export const PostBody = ({
     <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
       <View style={styles.hover}>
         <View style={styles.hoverItem}>
-          <TouchableOpacity onPress={() => { LikePost() }}>
+          <TouchableOpacity onPress={() => LikePost()}>
             {liked ? <WhiteHeart /> : <NotLineSvgWhite />}
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
@@ -89,7 +90,10 @@ export const PostBody = ({
         <TouchableOpacity
           activeOpacity={my ? 0 : 1}
           onPress={() => {
-            setShowViewText(!showViewText)
+            if (my) {
+              setShowViewText(!showViewText)
+            }
+
           }}
           style={styles.hover}>
           <View style={styles.hoverItem}>

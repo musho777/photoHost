@@ -59,7 +59,8 @@ const GetOtherPostsReducer = (state = initialState, action) => {
         else {
           if (item.data[iid]) {
             item.data[iid].like_count = item.data[iid]?.like_count - 1
-            item.data[iid].like_auth_user.splice(iid, 1)
+            let ids = item.data[iid].like_auth_user.findIndex((elm, i) => elm.user_id == action.id)
+            item.data[iid].like_auth_user.splice(ids, 1)
           }
         }
       }

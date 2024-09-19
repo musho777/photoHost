@@ -57,7 +57,6 @@ export const Slider = ({ photo, music_name, big = false, description }) => {
                     resizeMode="cover"
                   />
                   {description && <View style={styles.hover}>
-                    {console.log(Array.isArray(D))}
                     <Text style={[Styles.whiteSemiBold12]}>
                       {Array.isArray(D) ? D[index] : D}
                     </Text>

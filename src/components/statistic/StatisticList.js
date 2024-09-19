@@ -13,7 +13,7 @@ import { AppColors } from '../../styles/AppColors';
 
 
 export const StatisticList = ({ id, token }) => {
-  const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'кол во просмотров ']
+  const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'Кол во просмотров ']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
@@ -49,7 +49,6 @@ export const StatisticList = ({ id, token }) => {
 
       const gender = maxStatistic.gender === "men" ? "M" : "Ж";
       let date = new Date(item.date)
-      console.log(item.date)
       const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if necessary
       const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
       const year = String(date.getFullYear()).slice(2);

@@ -25,7 +25,6 @@ async function GetFCMToke() {
 
       }
     } catch (error) {
-      console.log(error, "error in fcmtoken")
     }
 
   }
@@ -51,7 +50,6 @@ export const NotificationLister = () => {
     });
 
   messaging().onMessage(async remoteMessage => {
-    console.log('notification on froground state ...........', remoteMessage);
   })
 
 }

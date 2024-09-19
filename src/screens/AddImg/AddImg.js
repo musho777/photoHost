@@ -97,7 +97,6 @@ export const AddImg = ({ navigation }) => {
 
 
   const captureScreenshot = async (ref) => {
-    console.log(ref)
     try {
       const uri = await captureRef(ref, {
         format: 'jpg',
@@ -319,7 +318,6 @@ export const AddImg = ({ navigation }) => {
     setFirst(false)
     navigation.goBack()
   }
-  console.log(activePhoto)
 
   if (first)
     return (
@@ -347,14 +345,13 @@ export const AddImg = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View>
-              <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10 }]}>(Ваш контент дойдет точно до адресата и увидят те люди, кто выбрал данную рубрику)</Text>
+              <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10 }]}>{t(mainData.lang).Yourcontent}</Text>
             </View>
             <View style={styles.centeredView}>
               {selectedImage && <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
                 {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
                   onLoad={(event) => {
                     const { width, height } = event.nativeEvent.source;
-                    console.log(width, height)
                     let height2 = 570
                     if (height) {
                       height2 = (windowWidth * height) / width
@@ -384,7 +381,6 @@ export const AddImg = ({ navigation }) => {
                   <AddImage />
                 </TouchableOpacity>
                 {uri.map((elm, i) => {
-                  console.log(activePhoto == i)
                   return <TouchableOpacity o style={{ position: 'relative' }} activeOpacity={1} key={i} onPress={() => {
                     setSelectedImage(elm.uri)
                     setActivePhoto(i)

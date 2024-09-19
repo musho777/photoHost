@@ -5,10 +5,10 @@ import React from "react";
 
 const windowWidth = Dimensions.get('window').width;
 
-export const ImageComponent = React.memo(({ video, photo, my, data }) => {
+export const ImageComponent = React.memo(({ video, photo, onPress }) => {
 
   const navigation = useNavigation()
-  return <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate('SinglPageScreen', { data: data, my: my })}>
+  return <TouchableOpacity activeOpacity={1} onPress={onPress}>
     {video &&
       <View style={styles.playerIcone}>
         <StartSvg />

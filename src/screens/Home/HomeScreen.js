@@ -165,7 +165,6 @@ export const HomeScreen = () => {
   //     };
   //   }, [data])
   // );
-
   const loadingData = ['', '']
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
@@ -212,7 +211,6 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-
       <StatusBar
         barStyle={'dark-content'}
         backgroundColor={"white"}

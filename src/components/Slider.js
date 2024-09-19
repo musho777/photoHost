@@ -61,15 +61,12 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
       if (clickTimeout) {
         clearTimeout(clickTimeout);
       }
-      console.log('Double click detected');
       const { locationX, locationY } = event.nativeEvent;
       setPosition({ x: locationX - 50, y: locationY - 50 });
       setShowLikeICone(true)
       LikePost()
-      console.log(`Clicked at X: ${locationX + 10}, Y: ${locationY + 100}`);
     } else {
       const timeoutId = setTimeout(() => {
-        console.log('Single click detected');
         !item.video && setOpenSlider(true)
         setOpenModal(false)
       }, SINGLE_CLICK_DELAY);

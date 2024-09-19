@@ -76,7 +76,7 @@ export const ModalComponent = ({ showModal, token, close }) => {
         <View style={[styles.card, styles.shadowProp]}>
           <View style={{ justifyContent: 'center', alignItems: 'center', gap: 6 }}>
             <Text style={Styles.darkMedium16}>Предложить Вам попутный контент?</Text>
-            {showDescrition && <Text onPress={() => setShowText(true)} style={[Styles.balihaiMedium10, { borderBottomWidth: 0.5, paddingBottom: 2, borderColor: '#8C9CAB' }]}>(что такое попутный контент?)</Text>}
+            {showDescrition && <Text onPress={() => setShowText(true)} style={[Styles.balihaiMedium10, { borderBottomWidth: 0.5, paddingBottom: 2, borderColor: '#8C9CAB' }]}>(Что такое попутный контент?)</Text>}
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
             <TouchableOpacity
@@ -116,14 +116,14 @@ export const ModalComponent = ({ showModal, token, close }) => {
               <View style={{ gap: 10 }}>
                 <Text style={[{ textDecorationLine: 'underline' }, Styles.balihaiSemiBold16]}>Пример:</Text>
                 <View style={{ gap: 6 }}>
-                  <Text style={Styles.balihaiMedium13}>Вы выбрали категорию Транспорт, к ней будут предлагаться:</Text>
+                  <Text style={Styles.balihaiMedium13}>Вы выбрали категорию Транспорт, к ней будут предлагаться такой контент как:</Text>
                   <Text style={Styles.balihaiMedium13}>-Путешествия и туризм (путешествия на личном и другом транспорте)</Text>
                   <Text style={Styles.balihaiMedium13}>-Города и страны (города и страны, которые можно и нужно посетить)</Text>
                   <Text style={Styles.balihaiMedium13}>-Одежда и обувь (какую удобную одежду и обувь взять с собой)</Text>
-                  <Text style={Styles.balihaiMedium13}>-Активный отдых (информация о всех видах отдыха)</Text>
-                  <Text style={Styles.balihaiMedium13}>-Квадрокоптер (разные фото и видео с высоты птичьего полета)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Активный отдых (о всех видах отдыха)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Квадрокоптер (Всё с высоты птичьего полета)</Text>
                   <Text style={Styles.balihaiMedium13}>-Природа (самые лучшие уголки планеты)</Text>
-                  <Text style={Styles.balihaiMedium13}>-Релакс (самые лучшие расслабления которые можно получить на отдыхе)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Релакс (расслабления которые можно получить на отдыхе)</Text>
                 </View>
               </View>
             </View>

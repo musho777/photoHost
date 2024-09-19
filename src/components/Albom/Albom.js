@@ -2,10 +2,12 @@ import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Empty } from "./component/empty";
 import { Skeleton } from "../Skeleton";
 import { ImageComponent } from "../Image/image";
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
 export const Albom = ({ data, seved, my = false, loading }) => {
+  const navigation = useNavigation()
   const Loadingdata = ['', '', '', '']
   if (loading) {
     return <View activeOpacity={1} style={styles.block}>
@@ -27,10 +29,13 @@ export const Albom = ({ data, seved, my = false, loading }) => {
         {data.map((elm, i) => {
           return (
             <ImageComponent
+              onPress={() => {
+                my ?
+                  navigation.navigate('SinglPageScreen', { data: seved ? elm.post : elm, my: my }) :
+                  navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { data: seved ? elm.post : elm, my: my } })
+              }}
               video={elm.photo ? elm.photo[0].video : elm.post.photo[0].video}
               photo={elm.photo ? elm?.photo[0]?.photo : elm?.post.photo[0]?.photo}
-              data={seved ? elm.post : elm}
-              my={my}
               key={i}
             />
           );
