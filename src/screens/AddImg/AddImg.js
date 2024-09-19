@@ -118,7 +118,7 @@ export const AddImg = ({ navigation }) => {
       addPhoto()
     });
 
-    return unsubscribe; // Clean up the listener on unmount
+    return unsubscribe;
   }, [navigation]);
 
   const Camera = async () => {
@@ -227,8 +227,10 @@ export const AddImg = ({ navigation }) => {
       setFirst(true)
       let item = [...uri]
       if (response.didCancel) {
-        navigation.goBack()
-        setFirst(false)
+        if (uri.length == 0) {
+          navigation.goBack()
+          setFirst(false)
+        }
       }
       else if (!response.didCancel && !response.error) {
         response.assets?.map((elm, i) => {
