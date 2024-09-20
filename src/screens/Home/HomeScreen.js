@@ -6,7 +6,6 @@ import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyC
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { HomeHeader } from '../../headers/HomeHeader';
@@ -71,7 +70,9 @@ export const HomeScreen = () => {
   }, [index, getLents?.data]);
 
   useEffect(() => {
-    setData(getLents.data)
+    if (getLents.data) {
+      setData(getLents.data)
+    }
   }, [getLents.data])
 
   const deletData = (i, post_id) => {
@@ -94,16 +95,6 @@ export const HomeScreen = () => {
     }
   }, [createPost.loading])
 
-
-
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      if (Platform.OS == 'android') {
-        StatusBar.setBackgroundColor('white');
-      }
-    }, [])
-  );
 
 
 
@@ -200,10 +191,6 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-      <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor={"white"}
-      />
       <HomeHeader onPress={() => goTop()} />
       <View>
         {showModal && <ModalComponent
@@ -239,8 +226,8 @@ export const HomeScreen = () => {
             <RefreshControl
               refreshing={getLents?.loading || getLents.secondLoading}
               onRefresh={() => {
-                if (!loading)
-                  dispatch(GetLentsAction(staticdata.token, 1));
+                setPage(1)
+                dispatch(GetLentsAction(staticdata.token, 1));
               }}
             />
           }

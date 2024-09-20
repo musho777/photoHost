@@ -66,11 +66,12 @@ export const PostHeader = ({
       userName={userName}
     />
     <TouchableOpacity
+      activeOpacity={1}
       onPress={() => {
         setOpenModal(!openModal)
         handlePresentModalPress()
       }}
-      style={{ width: 10, zIndex: 99999 }}>
+      style={{ width: 50, zIndex: 99999, justifyContent: 'flex-end', alignItems: 'flex-end', paddingRight: 10, }}>
       <MenuSvg />
     </TouchableOpacity>
     {
