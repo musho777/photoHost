@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description, id, user, onLongClikc, long, onPressOut, setActiveImage }) => {
+export const Slider = React.memo(({ photo, single, music, viewableItems, setOpenModal, description, id, user, onLongClikc, long, onPressOut, setActiveImage }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [D, setD] = useState(description)
@@ -43,14 +43,13 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
   }, [showLikeIcone]);
 
 
-  const LikePost = () => {
+
+  const LikePost = useCallback(() => {
     dispatch(LikePostAction({
-      'post_id': id
-    },
-      staticdata.token,
-      user.data.id
-    ))
-  }
+      post_id: id
+    }, staticdata.token, user.data.id));
+  }, [dispatch, id, staticdata.token, user.data.id]);
+
 
   const handleClick = (event, item) => {
     const now = new Date().getTime();
@@ -99,6 +98,7 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
+        keyExtractor={(item) => item.id.toString()}
         data={photo}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         scrollEnabled={!scrollEnabled}
@@ -123,16 +123,17 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
               {!item.video ?
                 <View>
                   {!long && (Array.isArray(D) ? D[index] : D) &&
-
                     <View style={styles.hover}>
                       <Text style={[Styles.whiteSemiBold12]}>
                         {Array.isArray(D) ? D[index] : D}
                       </Text>
                     </View>}
-                  <Image
+                  <FastImage
                     style={{ height: height, width: windowWidth }}
-                    source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
-                    resizeMode="cover"
+                    source={{
+                      uri: `https://chambaonline.pro/uploads/${item.photo}`,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
                   />
                 </View> :
                 <View>
@@ -174,7 +175,7 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
       )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   img: {

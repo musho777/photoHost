@@ -87,13 +87,6 @@ export const HomeScreen = () => {
     setBlackList(item);
   }
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      End()
-    }, 30000);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   useEffect(() => {
     if (createPost.loading) {
@@ -113,11 +106,6 @@ export const HomeScreen = () => {
   );
 
 
-  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
-    const paddingToBottom = 900;
-    return layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom;
-  };
 
   const handleScroll = event => {
     const offsetY = event.nativeEvent.contentOffset.y;
@@ -232,27 +220,27 @@ export const HomeScreen = () => {
         <FlatList
           scrollEnabled={!full}
           removeClippedSubviews={false}
+          keyExtractor={(item) => item.id.toString()}
           keyboardShouldPersistTaps="never"
           showsVerticalScrollIndicator={false}
           ref={flatListRef}
           onViewableItemsChanged={onViewableItemsChanged}
+          onEndReached={() => {
+            if (getLents?.nextPage) {
+              let p = page + 1;
+              dispatch(GetLentsAction(staticdata.token, p));
+              setPage(p);
+            }
+          }}
           onScroll={({ nativeEvent }) => {
             handleScroll({ nativeEvent })
-            if (isCloseToBottom(nativeEvent)) {
-              if (getLents?.nextPage) {
-                let p = page + 1;
-                dispatch(GetLentsAction(staticdata.token, p));
-                setPage(p);
-              }
-            }
-
           }}
           refreshControl={
             <RefreshControl
               refreshing={getLents?.loading}
               onRefresh={() => {
                 if (!loading)
-                  dispatch(GetLentsAction(staticdata.token));
+                  dispatch(GetLentsAction(staticdata.token, 1));
               }}
             />
           }

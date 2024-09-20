@@ -7,7 +7,7 @@ import { PostHeader } from './postHeader/postHeader';
 import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
 
-export const Post = ({
+export const Post = React.memo(({
   description,
   userInfo,
   like,
@@ -101,7 +101,7 @@ export const Post = ({
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   block: {
