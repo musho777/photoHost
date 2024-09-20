@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
-  Image,
   FlatList,
   Dimensions,
   TouchableOpacity,
@@ -18,10 +17,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = React.memo(({ photo, single, music, viewableItems, setOpenModal, description, id, user, onLongClikc, long, onPressOut, setActiveImage }) => {
+export const Slider = React.memo(({ photo, single, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
-  const [D, setD] = useState(description)
+  const [D, setD] = useState(data.description)
   const [scrollEnabled, setScrollEnabled] = useState(false)
   const [showLikeIcone, setShowLikeICone] = useState(false)
   const staticdata = useSelector(st => st.static);
@@ -46,9 +45,9 @@ export const Slider = React.memo(({ photo, single, music, viewableItems, setOpen
 
   const LikePost = useCallback(() => {
     dispatch(LikePostAction({
-      post_id: id
+      post_id: data.id
     }, staticdata.token, user.data.id));
-  }, [dispatch, id, staticdata.token, user.data.id]);
+  }, [dispatch, data.id, staticdata.token, user.data.id]);
 
 
   const handleClick = (event, item) => {
@@ -85,12 +84,12 @@ export const Slider = React.memo(({ photo, single, music, viewableItems, setOpen
 
 
   useEffect(() => {
-    let desc = description
-    if (description && description[0] == '[') {
-      desc = JSON.parse(description)
+    let desc = data.description
+    if (data.description && data.description[0] == '[') {
+      desc = JSON.parse(data.description)
     }
     setD(desc)
-  }, [description])
+  }, [data.description])
   return (
     <View>
       <FlatList
@@ -145,7 +144,7 @@ export const Slider = React.memo(({ photo, single, music, viewableItems, setOpen
                   <VidioComponent
                     active={active == index}
                     setScrollEnabled={(e) => setScrollEnabled(e)}
-                    viewableItems={viewableItems} music={music} item={item} />
+                    viewableItems={viewableItems} music={data.music_name} item={item} />
                 </View>
               }
               {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>

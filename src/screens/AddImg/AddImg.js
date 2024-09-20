@@ -350,9 +350,7 @@ export const AddImg = ({ navigation }) => {
 
 
 
-              <View>
-                <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10 }]}>{t(mainData.lang).Yourcontent}</Text>
-              </View>
+              <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
               <View style={styles.centeredView}>
                 {selectedImage && <View style={{ height: 'auto', width: '100%', position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
                   {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
@@ -423,6 +421,9 @@ export const AddImg = ({ navigation }) => {
                     </TouchableOpacity>
                   })}
                 </ScrollView>
+
+              </View>
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <TextInput
                   placeholderTextColor="white"
                   placeholder={t(mainData.lang).adddescription}

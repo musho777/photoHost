@@ -150,25 +150,12 @@ export const HomeScreen = () => {
       return (
         <View key={index} style={[{ marginTop: 5 }, index == data.length - 1 && { marginBottom: 80 }]}>
           <Post
+            data={item}
             viewableItems={viewableItems}
-            userInfo={item.user}
             setShowView={() => handlePresentModalPressView()}
-            description={item.description}
-            like={item.like_count}
-            commentCount={item.comment_count}
-            view={item.view_count}
-            music={item.music_name}
-            photo={item.photo}
-            id={item.id}
-            postCount={userData.postCount}
-            star={item.user.star}
-            isBook={item.auth_user_book.length > 0}
-            isFollow={item.user.follow_status_sender.length}
             addToblack={(e) => AddToBack(e)}
-            data={item.created_at}
             deletData={(e) => deletData(index, e)}
             setSelectidId={(id) => setSelectidId(id)}
-            isLiked={item.like_auth_user.findIndex((elm, i) => elm.user_id == userData.data.id)}
           />
         </View>
       );

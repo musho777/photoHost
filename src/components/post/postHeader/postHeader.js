@@ -10,24 +10,16 @@ import { HeaderInfo } from "./component/headerInfro";
 import { Settings } from "./component/settings";
 
 export const PostHeader = ({
-  userImg,
-  userName,
-  description,
-  star,
   user,
-  userId,
-  data,
-  isFollow,
   openModal,
   setOpenModal,
-  id,
   deletData,
-  isBook,
   addToblack,
-  activeImage
+  activeImage,
+  data,
 }
 ) => {
-  const [follow, setFollow] = useState(isFollow)
+  const [follow, setFollow] = useState(data.user.follow_status_sender.length)
   const staticdata = useSelector(st => st.static);
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [showSave, setShowSave] = useState(false)
@@ -38,32 +30,32 @@ export const PostHeader = ({
   const bottomSheetRef = useRef(null);
 
   const mainData = useSelector(st => st.mainData);
-  const [book, setBook] = useState(isBook)
+  const [book, setBook] = useState(data.auth_user_book.length > 0)
 
   const addToBlackList = () => {
-    addToblack(userId)
+    addToblack(data.user.id)
     bottomSheetRef.current?.close();
-    dispatch(AddBlackListAction({ 'user_id': userId }, staticdata.token))
+    dispatch(AddBlackListAction({ 'user_id': data.user.id }, staticdata.token))
   }
 
 
   const addToBook = () => {
     setShowSave(true)
     bottomSheetRef.current?.close();
-    dispatch(AddInBookAction({ 'post_id': id }, staticdata.token))
+    dispatch(AddInBookAction({ 'post_id': data.id }, staticdata.token))
     setBook(!book)
   }
 
   return <View style={styles.hover}>
     <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
     <HeaderInfo
-      data={data}
+      data={data.created_at}
       user={user}
-      userId={userId}
-      id={id}
-      star={star}
-      userImg={userImg}
-      userName={userName}
+      userId={data.user.id}
+      id={data.id}
+      star={data.user.star}
+      userImg={data.user.avatar}
+      userName={data.user.name}
     />
     <TouchableOpacity
       activeOpacity={1}
@@ -75,11 +67,11 @@ export const PostHeader = ({
       <MenuSvg />
     </TouchableOpacity>
     {
-      (user?.data.id == userId && openModal) &&
+      (user?.data.id == data.user.id && openModal) &&
       <Settings
-        description={description}
-        id={id}
-        isFollow={isFollow}
+        description={data.description}
+        id={data.id}
+        isFollow={data.user.follow_status_sender.length}
         my={true}
         deletData={deletData}
         setOpenModal={(e) => setOpenModal(e)}
@@ -87,7 +79,7 @@ export const PostHeader = ({
       />
     }
     {
-      (user?.data.id != userId && openModal) &&
+      (user?.data.id != data.user.id && openModal) &&
       <View style={styles.infoBlock}>
         <TouchableOpacity style={{ marginVertical: 20 }} onPress={() => {
           setOpenModal(false)
@@ -100,7 +92,7 @@ export const PostHeader = ({
           onPress={() => {
             setOpenModal(false)
             setFollow(!follow)
-            dispatch(AddDeleteFollowAction({ user_id: userId }, staticdata.token))
+            dispatch(AddDeleteFollowAction({ user_id: data.user.id }, staticdata.token))
           }}
           style={{ marginBottom: 20 }} >
           <Text style={Styles.darkRegular14}>{!follow ? t(mainData.lang).subscribe : t(mainData.lang).Unsubscribe}</Text>

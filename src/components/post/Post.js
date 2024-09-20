@@ -8,24 +8,12 @@ import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
 
 export const Post = React.memo(({
-  description,
-  userInfo,
-  like,
   viewableItems,
-  commentCount,
-  view,
-  photo,
-  id,
   addToblack,
-  isBook,
-  isFollow,
   deletData,
-  data,
-  music,
-  isLiked,
   setSelectidId,
   setShowView,
-  postCount
+  data
 }) => {
 
   const user = useSelector((st) => st.userData)
@@ -51,50 +39,41 @@ export const Post = React.memo(({
       <View style={styles.block}>
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
           <PostHeader
-            userImg={userInfo.avatar}
-            user={user}
-            description={description}
-            setShowSave={(e) => setShowSave(true)}
-            userName={userInfo.name}
-            setSaveType={(e) => setSaveType(e)}
-            userId={userInfo.id}
             data={data}
-            isFollow={isFollow}
+            user={user}
+            setShowSave={(e) => setShowSave(true)}
+            setSaveType={(e) => setSaveType(e)}
             openModal={openModal}
-            id={id}
-            star={userInfo.star}
+            star={data.user.star}
             setOpenModal={setOpenModal}
             deletData={deletData}
-            isBook={isBook}
             addToblack={addToblack}
             activeImage={activeImage}
           />
         </View>
         <Slider
           viewableItems={viewableItems}
-          music={music}
           long={long}
           setActiveImage={(e) => setActiveImage(e)}
           onPressOut={() => onPressOut()}
           onLongClikc={() => onLongClikc()}
-          description={description}
-          photo={photo}
+          photo={data.photo}
           setOpenModal={setOpenModal}
-          id={id}
+          data={data}
           user={user}
         />
         {!long && <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
           <PostBody
-            postCount={postCount}
-            commentCount={commentCount}
+            postCount={user.postCount}
+            commentCount={data.comment_count}
             setSelectidId={(id) => setSelectidId(id)}
-            liked={isLiked >= 0}
+            liked={data.like_auth_user.findIndex((elm, i) => elm.user_id == user.data.id) >= 0}
             setShowView={(e) => setShowView(e)}
-            view={view}
-            my={user?.data.id != userInfo.id ? false : true}
-            userId={userInfo.id}
-            like={like}
-            id={id}
+            view={data.view_count}
+            my={user?.data.id != data.user.id ? false : true}
+            userId={data.user.id}
+            like={data.like_count}
+            id={data.id}
             user={user}
           />
         </View>}
