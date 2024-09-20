@@ -92,7 +92,6 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
     }
     setD(desc)
   }, [description])
-
   return (
     <View>
       <FlatList
@@ -123,7 +122,8 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
               style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
               {!item.video ?
                 <View>
-                  {(!long && description) &&
+                  {!long && (Array.isArray(D) ? D[index] : D) &&
+
                     <View style={styles.hover}>
                       <Text style={[Styles.whiteSemiBold12]}>
                         {Array.isArray(D) ? D[index] : D}
@@ -136,7 +136,7 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
                   />
                 </View> :
                 <View>
-                  {(long && description) && <View style={styles.hover}>
+                  {(long && (Array.isArray(D) ? D[index] : D)) && <View style={styles.hover}>
                     <Text style={[Styles.whiteSemiBold12]}>
                       {Array.isArray(D) ? D[index] : D}
                     </Text>

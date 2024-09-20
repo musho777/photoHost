@@ -57,7 +57,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                     source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                     resizeMode="cover"
                   />
-                  {description && <View style={styles.hover}>
+                  {(description && (Array.isArray(D) ? D[index] : D)) && <View style={styles.hover}>
                     <Text style={[Styles.whiteSemiBold12]}>
                       {Array.isArray(D) ? D[index] : D}
                     </Text>
@@ -65,7 +65,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                 </View>
                 : (
                   <View>
-                    {description && <View style={styles.hover}>
+                    {(description && (Array.isArray(D) ? D[index] : D)) && <View style={styles.hover}>
                       <Text style={[Styles.whiteSemiBold12]}>
                         {Array.isArray(D) ? D[index] : D}
                       </Text>

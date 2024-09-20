@@ -5,14 +5,20 @@ const initialState = {
   data: [],
   message: '',
   nextPage: '',
+  secondLoading: false,
 };
 const GetPostsReducer = (state = initialState, action) => {
   let item = { ...state };
   switch (action.type) {
     case 'StartGetPosts':
-      item.status = false;
-      item.error = '';
-      item.loading = true;
+      if (action.loadingType == 'first') {
+        item.loading = true;
+        item.status = false;
+        item.error = '';
+      }
+      else {
+        item.secondLoading = true
+      }
       break;
     case 'SuccessGetPosts':
       item.status = true;
@@ -21,15 +27,22 @@ const GetPostsReducer = (state = initialState, action) => {
         item.data = action.data.data.data;
       }
       else if (item.nextPage != action.data.data.next_page_url) {
-        item.data = [...item.data, ...action.data.data.data];
+        action.data.data.data.map((elm, i) => {
+          if (item.data.findIndex((el) => el.id == elm.id) == -1) {
+            item.data.push(elm)
+          }
+        })
+        // item.data = [...item.data, ...action.data.data.data];
       }
       item.nextPage = action.data.data.next_page_url;
       item.loading = false;
+      item.secondLoading = false
       break;
     case 'ErrorGetPosts':
       item.error = action.data;
       item.loading = false;
       item.status = false;
+      item.secondLoading = false
       break;
     case 'DeletLocalPhoto':
       let data = item.data

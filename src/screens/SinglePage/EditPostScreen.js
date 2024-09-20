@@ -42,30 +42,35 @@ export const EditPostScreen = ({ route, navigation }) => {
 
   const changeDescription = (e) => {
     let item = description
-    if (description[0] = '[') {
-      item = JSON.parse(description)
-      console.log(item[index])
-      item[index] = e
-      setDescription(JSON.stringify(item))
-      // setActiveDescription(item[index])
+    if (description) {
+      if (description[0] = '[') {
+        item = JSON.parse(description)
+        item[index] = e
+        setDescription(JSON.stringify(item))
+        // setActiveDescription(item[index])
+      }
+      else {
+        setDescription(e)
+      }
     }
     else {
-      setDescription(e)
+      let temp = []
+      temp[index] = e
+      setDescription(JSON.stringify(temp))
     }
   }
 
   useEffect(() => {
-    if (description[0] = '[') {
-      let item = JSON.parse(description)
-      console.log('----')
-      console.log(item[index])
-      setActiveDescription(item[index])
-    }
-    else {
-      setActiveDescription(item)
+    if (description) {
+      if (description[0] = '[') {
+        let item = JSON.parse(description)
+        setActiveDescription(item[index])
+      }
+      else {
+        setActiveDescription(item)
+      }
     }
   }, [description])
-  console.log(description[0], 'dees')
 
   return (
     <View>

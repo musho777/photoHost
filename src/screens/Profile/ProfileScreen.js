@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TouchableOpacity, ScrollView, RefreshControl, SafeAreaView } from 'react-native';
+import { TouchableOpacity, ScrollView, RefreshControl, SafeAreaView, ActivityIndicator, StyleSheet } from 'react-native';
 import { MenuSvg2 } from '../../assets/svg/Svgs';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
@@ -76,8 +76,15 @@ export const ProfileScreen = ({ navigation }) => {
           }
           <ProfilInfo id={user?.allData?.data?.id} loading={getPosts.loading} postCount={user.postCount} user={user} />
           <AlbomAndInfo />
+          {getPosts.secondLoading && <ActivityIndicator style={styles.loading} size="small" color="#FFC24B" />}
         </ScrollView>
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  loading: {
+    marginVertical: 20,
+  },
+});

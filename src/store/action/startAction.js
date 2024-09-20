@@ -141,9 +141,10 @@ export const StartCreatePost = () => {
     }
 }
 
-export const StartGetPosts = () => {
+export const StartGetPosts = (loadingType) => {
     return {
-        type: "StartGetPosts"
+        type: "StartGetPosts",
+        loadingType: loadingType
     }
 }
 

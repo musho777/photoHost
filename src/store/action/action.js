@@ -902,7 +902,10 @@ export const GetPostsAction = (data, token, page) => {
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
     if (page == 1 || !page) {
-      dispatch(StartGetPosts());
+      dispatch(StartGetPosts('first'));
+    }
+    else {
+      dispatch(StartGetPosts('second'));
     }
     fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
       method: 'POST',
