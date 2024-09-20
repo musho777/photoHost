@@ -37,12 +37,10 @@ export const Post = ({
 
   const onLongClikc = () => {
     setLong(true)
-    console.log('long')
 
   }
   const onPressOut = () => {
     setLong(false)
-    console.log('false')
   }
 
   return (

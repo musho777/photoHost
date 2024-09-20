@@ -72,7 +72,7 @@ export const SearchProfil = ({ navigation, route }) => {
 
 
   useEffect(() => {
-    if (page > 1) {
+    if (page >= 1) {
       dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
     }
   }, [page])

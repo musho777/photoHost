@@ -5,7 +5,7 @@ import { CommentItem } from './CommentItem';
 const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDeletComment }) => {
     const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
 
-    const renderComment = (comment) => {
+    const renderComment = (comment, index) => {
         const givenDate = new Date(comment.created_at);
         const currentDate = new Date();
         const timeDifference = currentDate - givenDate;
@@ -22,13 +22,15 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDel
         if (dayOfMonth <= 9) {
             dayOfMonth = `0${dayOfMonth}`
         }
+        console.log(comment, 'comment.parent_id')
         daysAgo = `${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`
-        return <View key={comment.comment}>
+        return <View key={index}>
             <CommentItem
                 text={comment.comment}
                 owner={false}
                 ansswer={true}
                 replay={comment.replay}
+                parent_id={comment.parent_id}
                 user={comment.user}
                 like_count={comment.likes_count}
                 isLiked={comment.like_auth_user?.length}
@@ -38,9 +40,9 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDel
                 onPressAnsswer={onPressAnsswer}
                 onDeletComment={onDeletComment}
             />
-            <View style={{ marginLeft: 20 }}>
+            {/* <View style={{ marginLeft: 20 }}>
                 {comment.replay.map(review => renderCommentReview(review, depth + 1))}
-            </View>
+            </View> */}
         </View>
     };
 
@@ -81,7 +83,7 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDel
 
     return (
         <View style={{ marginLeft: 10 }}>
-            {commentData.map(comment => renderComment(comment))}
+            {commentData.map((comment, index) => renderComment(comment, index))}
         </View>
     );
 };

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CommentLikeSvg } from '../assets/svg/Svgs';
-import { LikeCommentAction } from '../store/action/action';
-import { AppColors } from '../styles/AppColors';
-import { Styles } from '../styles/Styles';
 import FastImage from 'react-native-fast-image';
 import emojiRegex from 'emoji-regex';
+import { Styles } from '../../../styles/Styles';
+import { LikeCommentAction } from '../../../store/action/action';
+import { CommentLikeSvg } from '../../../assets/svg/Svgs';
+import { AppColors } from '../../../styles/AppColors';
 
 export const CommentItem = ({
   text,
@@ -19,7 +19,8 @@ export const CommentItem = ({
   token,
   onPressAnsswer,
   daysAgo,
-  onDeletComment
+  onDeletComment,
+  parent_id
 }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState();
@@ -45,12 +46,12 @@ export const CommentItem = ({
     }
     else if (checkIfEmoji(text)) {
       return <Text style={[Styles.darkSemiBold12, { marginTop: -5, fontSize: 40 }]}>
-        {text}
+        {user?.name}:{text}
       </Text>
     }
     else {
       return <Text style={[Styles.darkSemiBold12, { marginTop: 5, fontSize: 15 }]}>
-        {text}
+        {user?.name}:<Text style={[Styles.darkMedium12, { fontSize: 13 }]}>{text}</Text>
       </Text>
     }
   }
@@ -69,19 +70,17 @@ export const CommentItem = ({
       <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>
         {TextType(text)}
         <View style={Styles.flexAlignItems}></View>
-        {owner && (
-          <View style={{ flexDirection: 'row', marginTop: 5, gap: 20 }}>
-            <Text >{daysAgo}</Text>
-            {!owner && <TouchableOpacity
-              onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
-              <Text>ответить</Text>
-            </TouchableOpacity>}
-            {myuser.allData?.data?.id == user?.id && <TouchableOpacity
-              onPress={() => onDeletComment(id)}>
-              <Text>удалить</Text>
-            </TouchableOpacity>}
-          </View>
-        )}
+        <View style={{ flexDirection: 'row', marginTop: 5, gap: 20 }}>
+          <Text >{daysAgo}</Text>
+          {(!owner && !ansswer) && <TouchableOpacity
+            onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
+            <Text>ответить</Text>
+          </TouchableOpacity>}
+          {myuser.allData?.data?.id == user?.id && <TouchableOpacity
+            onPress={() => onDeletComment(id, parent_id)}>
+            <Text>удалить</Text>
+          </TouchableOpacity>}
+        </View>
       </View>
       <View style={[styles.like]}>
         <TouchableOpacity
@@ -98,9 +97,7 @@ export const CommentItem = ({
           <CommentLikeSvg liked={liked} />
         </TouchableOpacity>
         <Text
-          style={[
-            [Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5 }],
-          ]}>
+          style={[Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5 }]}>
           {likeCount}
         </Text>
       </View>

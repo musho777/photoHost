@@ -18,7 +18,6 @@ export const Messages = ({ route, id }) => {
   }, [page]);
 
   useEffect(() => {
-    console.log('aaaaa')
     dispatch(ClearSinglChatNumber(id))
   }, [getSinglePageChat.message.length])
 

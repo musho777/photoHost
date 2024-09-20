@@ -1,37 +1,12 @@
 import { Input } from '../../../ui/Input';
 import { Image, StyleSheet, View } from "react-native"
-import { AddCommentAction, AddCommentLocal } from "../../../store/action/action";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { t } from '../../lang';
 
 
-export const InputComponent = ({ parentId, user, sendComment, setSendCommet, senderName, parenId, setParentId }) => {
-  const dispatch = useDispatch()
+export const InputComponent = ({ user, sendComment, setSendCommet, sendCommentFunction }) => {
   const mainData = useSelector(st => st.mainData);
-  const staticdata = useSelector(st => st.static);
 
-
-  const sendCommentFunction = () => {
-    let send = sendComment
-    if (senderName) {
-      let regex = new RegExp(senderName, "gi");
-      send = send.replace(regex, "");
-    }
-    // dispatch(AddCommentLocal({ id: data.post_id }))
-    dispatch(
-      AddCommentAction(
-        {
-          comment: send,
-          parent_id: parenId,
-          post_id: parentId,
-        },
-        staticdata.token,
-        { post_id: parentId }
-      ),
-    )
-    setParentId(null)
-    setSendCommet('')
-  };
   return <View style={styles.InputComponent}>
     <Image
       style={styles.image}

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Styles } from '../styles/Styles';
 import { CommentItem } from './CommentItem';
 import CommentComponent from './CommetnComponent';
+import { Styles } from '../../../styles/Styles';
 
 export const CommentBlock = ({
   text,
@@ -23,7 +23,6 @@ export const CommentBlock = ({
 }) => {
   const [showAnswrs, setShowAnswers] = useState(false);
   const staticdata = useSelector(st => st.static);
-
   return (
     <View>
       <CommentItem

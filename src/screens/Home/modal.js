@@ -14,7 +14,6 @@ export const ModalComponent = ({ showModal, token, close }) => {
   const [ShowText, setShowText] = useState(false)
   const [showCatalog, setSHowCatalog] = useState(false)
   const [catalog, setCatalog] = useState([])
-  const [showDescrition, setShowDescription] = useState(true)
 
   useEffect(() => {
     if (userData.data.categories) {
@@ -28,18 +27,6 @@ export const ModalComponent = ({ showModal, token, close }) => {
       dispatch(GetRelationCategory(token))
     }
   }, [token, showModal])
-
-
-  const ShowDescrition = async () => {
-    let show = await AsyncStorage.getItem('showDescription')
-    if (show == 'no') {
-      setShowDescription(false)
-    }
-  }
-
-  useEffect(() => {
-    ShowDescrition()
-  }, [])
 
 
   const SendData = async () => {
@@ -76,9 +63,9 @@ export const ModalComponent = ({ showModal, token, close }) => {
         <View style={[styles.card, styles.shadowProp]}>
           <View style={{ justifyContent: 'center', alignItems: 'center', gap: 6 }}>
             <Text style={Styles.darkMedium16}>Предложить Вам попутный контент?</Text>
-            {showDescrition && <Text onPress={() => setShowText(true)} style={[Styles.balihaiMedium10, { borderBottomWidth: 0.5, paddingBottom: 2, borderColor: '#8C9CAB' }]}>(Что такое попутный контент?)</Text>}
+            <Text onPress={() => setShowText(true)} style={[Styles.balihaiMedium10, { borderBottomWidth: 0.5, paddingBottom: 2, borderColor: '#8C9CAB' }]}>(Что такое попутный контент?)</Text>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 30 }}>
             <TouchableOpacity
               onPress={() => SendData()}
               style={{ padding: 8, width: 100, backgroundColor: '#FFD953', borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>

@@ -1190,7 +1190,7 @@ export const GetNotificationAction = (token, page) => {
   };
 }
 
-export const AddCommentAction = (data, token, data2) => {
+export const AddCommentAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1200,21 +1200,15 @@ export const AddCommentAction = (data, token, data2) => {
     body: JSON.stringify(data),
     redirect: 'follow',
   };
-  return dispatch => {
+  return (dispatch) => {
     dispatch(StartAddComment());
+    dispatch(AddCommentLocal({ id: data.post_id }))
     fetch(`${Api}/add_comment`, requestOptions)
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(AddCommentLocal({ id: data.post_id }))
-          dispatch(
-            GelPostCommentsAction(
-              data2,
-              token,
-              1,
-            ),
-          );
           dispatch(SuccessAddComment())
+          // dispatch(AddCommentInPost(data2))
         }
         else {
           dispatch(ErrorAddComment('server error'))
@@ -1531,7 +1525,7 @@ export const MsgCountAction = (data) => {
   }
 }
 
-export const DeletComment = (data, token, data2) => {
+export const DeletComment = (data, token) => {
   return (dispatch) => {
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -1546,7 +1540,6 @@ export const DeletComment = (data, token, data2) => {
     fetch(`${Api}/delete_comment`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        dispatch(GelPostCommentsAction(data2, token))
       })
       .catch(error => {
       });
@@ -1711,7 +1704,7 @@ export const DelateCommentLocal = (data) => {
 export const AddCommentLocal = (data) => {
   return {
     type: 'AddCommentLocal',
-    data
+    data,
   }
 }
 
@@ -1854,7 +1847,6 @@ export const ClearChatNumber = () => {
 }
 
 export const ClearSinglChatNumber = (id) => {
-  console.log(id)
   return {
     type: 'ClearSinglChatNumber',
     id
@@ -1864,5 +1856,13 @@ export const ClearSinglChatNumber = (id) => {
 export const AddMessageCount = () => {
   return {
     type: 'AddMessageCount'
+  }
+}
+
+export const AddCommentInPost = (data) => {
+  console.log('-------')
+  return {
+    type: 'AddCommentInPost',
+    data
   }
 }

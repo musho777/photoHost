@@ -97,10 +97,11 @@ export const PostBody = ({
         <TouchableOpacity
           activeOpacity={my ? 0 : 1}
           onPress={() => {
-            if (my) {
-              setShowViewText(!showViewText)
+            if (my && view > 0) {
+              setShowView(true)
+              setSelectidId(id)
+              // setShowViewText(!showViewText)
             }
-
           }}
           style={styles.hover}>
           <View style={styles.hoverItem}>

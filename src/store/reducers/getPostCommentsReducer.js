@@ -36,6 +36,46 @@ const GetPostCommentsReducer = (state = initialState, action) => {
     case 'ClearSinglpAgeComment':
       item.data = []
       break
+    case 'AddCommentInPost':
+      if (!action.data.parent_id) {
+        item.data.unshift(action.data)
+      }
+      else {
+        let index = item.data.findIndex((elm) => elm.id == action.data.parent_id)
+        console.log(index)
+        if (index >= 0) {
+          item.data[index].replay.unshift(action.data1)
+          item.data[index].replay_count += 1
+        }
+      }
+      break
+
+
+    case 'DelateCommentLocal':
+      console.log(action.data.parent_id, '2')
+      if (!action.data.parent_id) {
+        let index = item.data.findIndex((elm) => elm.id == action.data.comment_id)
+        console.log(index, 'index')
+        if (index >= 0) {
+          item.data.splice(index, 1)
+        }
+      }
+      else {
+        let index = item.data.findIndex((elm) => elm.id == action.data.parent_id)
+        console.log(index, '21')
+        if (index >= 0) {
+          let sub_comment = item.data[index]
+          console.log(sub_comment, 'sub_comment')
+          let sub_index = sub_comment.replay.findIndex((elm) => elm.id == action.data.comment_id)
+          console.log(sub_index, 'index')
+          if (sub_index >= 0) {
+            item.data[index].replay.splice(sub_index, 1)
+            item.data[index].replay_count -= 1
+
+          }
+        }
+      }
+      break
     default:
       break;
   }

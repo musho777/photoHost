@@ -5,12 +5,13 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { ClearSinglChatNumber, SinglChatPageId, } from '../../store/action/action';
+import { ClearSinglChatNumber, newMessageAction, SinglChatPageId, } from '../../store/action/action';
 import { ClearChat, ClearDeletChat } from '../../store/action/clearAction';
 import { Header } from './component/header';
 import Main from '../../components/GIf/main';
 import { BottomWrapper } from './component/bottomWrapper';
 import { Messages } from './component/Messages';
+import Sound from 'react-native-sound';
 
 
 export const ChatScreen = ({ route }) => {
@@ -20,13 +21,24 @@ export const ChatScreen = ({ route }) => {
   const [addToblackList, setAddToBlackList] = useState('')
   const user = useSelector(st => st.userData);
 
+  const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
+  const staticdata = useSelector(st => st.static);
+
 
   useEffect(() => {
     dispatch(SinglChatPageId(route.params.id, user.data.id))
     dispatch(ClearDeletChat())
     dispatch(ClearChat())
-    // dispatch(ClearSinglChatNumber(route.params.chatId))
   }, [])
+
+  const SendSticker = (e) => {
+    music.play()
+    setTimeout(() => {
+      music.stop()
+    }, 2000);
+    dispatch(newMessageAction({ message: e, receiver_id: route.params.id }, staticdata.token));
+    bottomSheetRef.current?.close()
+  }
 
   return (
     <SafeAreaView style={styles.body}>
@@ -35,7 +47,7 @@ export const ChatScreen = ({ route }) => {
         <Messages id={route.params.chatId} route={route} />
         <BottomWrapper ref={bottomSheetRef} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
       </KeyboardAvoidingView>
-      <Main route={route} ref={bottomSheetRef} />
+      <Main SendSticker={(e) => SendSticker(e)} route={route} ref={bottomSheetRef} />
     </SafeAreaView >
   );
 };

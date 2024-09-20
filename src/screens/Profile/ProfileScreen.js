@@ -43,9 +43,10 @@ export const ProfileScreen = ({ navigation }) => {
             <RefreshControl
               refreshing={getPosts?.loading}
               onRefresh={() => {
-                if (!getPosts.loading)
-                  dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1));
-                dispatch(getUserInfoAction(staticdata.token))
+                if (!getPosts.loading) {
+                  dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1))
+                  dispatch(getUserInfoAction(staticdata.token))
+                }
 
               }}
             />

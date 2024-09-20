@@ -31,7 +31,6 @@ export const ChatUsersScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log(user.msgCount, 'user')
       if (user.msgCount > 0) {
         dispatch(ClearChatNumber())
       }

@@ -3,8 +3,6 @@ import {
   View,
   Text,
   FlatList,
-  RefreshControl,
-  Dimensions,
   StyleSheet,
   KeyboardAvoidingView,
   Keyboard,
@@ -14,20 +12,19 @@ import {
 } from 'react-native';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { Styles } from '../../styles/Styles';
-import { CommentBlock } from '../CommentBlock';
+import { CommentBlock } from './component/CommentBlock';
 import { t } from '../lang';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddCommentAction, DelateComment, DelateCommentLocal, DeletComment, GelPostCommentsAction } from '../../store/action/action';
+import { AddCommentAction, AddCommentInPost, DelateCommentLocal, DeletComment, GelPostCommentsAction } from '../../store/action/action';
 import { ClearSinglpAgeComment } from '../../store/action/clearAction';
 import { useNavigation } from '@react-navigation/native';
 import { InputComponent } from './component/input';
 import Main from '../GIf/main';
 import { Emojy, Sticker } from '../../assets/svg/Svgs';
 import EmojiPicker from 'rn-emoji-keyboard';
-import emojiRegex from 'emoji-regex';
+import { RefreshControl } from 'react-native-gesture-handler';
 
 
-const screenWidth = Dimensions.get('window').height;
 export const Comments = ({ route, }) => {
   let parentId = route?.params?.parentId
   const [sendComment, setSendCommet] = useState('');
@@ -37,7 +34,6 @@ export const Comments = ({ route, }) => {
   const [keyboardOpen, setKeyboardOpen] = useState(10);
   const bottomSheetRef = useRef(null);
 
-
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
   const getComments = useSelector(st => st.getComments);
@@ -45,7 +41,6 @@ export const Comments = ({ route, }) => {
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()
 
-  const [data, setData] = useState([]);
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false)
@@ -59,7 +54,6 @@ export const Comments = ({ route, }) => {
       setKeyboardOpen(10);
     });
 
-    // Cleanup listeners on component unmount
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
@@ -71,15 +65,11 @@ export const Comments = ({ route, }) => {
     dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
   }, []);
 
-  const deletComment = (id) => {
-    dispatch(DelateCommentLocal({ id: parentId }))
-    dispatch(DeletComment({ comment_id: id }, staticdata.token, { post_id: parentId }))
+  const deletComment = (id, parent_id) => {
+    dispatch(DelateCommentLocal({ id: parentId, comment_id: id, parent_id: parent_id, }))
+    dispatch(DeletComment({ comment_id: id }, staticdata.token))
   }
 
-
-  useEffect(() => {
-    setData(getComments.data);
-  }, [getComments.data]);
 
 
   const Answer = (e) => {
@@ -91,17 +81,11 @@ export const Comments = ({ route, }) => {
     }
   }
 
-  const Refresh = () => {
-    dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
-  }
+
   const onEndReached = () => {
     if (getComments?.nextPage) {
       let p = page + 1;
-      dispatch(
-        GelPostCommentsAction(
-          { post_id: parentId },
-          staticdata.token,
-          p));
+      dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, p));
       setPage(p);
     }
   }
@@ -119,29 +103,61 @@ export const Comments = ({ route, }) => {
   }
 
 
-  const sendCommentFunction = (e) => {
-
+  const sendCommentFunction = (sticker) => {
+    const date = new Date();
+    const isoDate = date.toISOString().replace('Z', '') + '000Z';
+    let send = ''
+    if (sticker) {
+      send = sticker
+      bottomSheetRef.current?.close()
+    }
+    else {
+      send = sendComment
+    }
+    if (senderName) {
+      let regex = new RegExp(senderName, "gi");
+      send = send.replace(regex, "");
+    }
+    dispatch(AddCommentInPost(
+      {
+        comment: send,
+        parent_id: parenId,
+        post_id: parentId,
+        created_at: isoDate,
+        like_auth_user: [],
+        likes_count: 0,
+        replay: [],
+        replay_count: 0,
+        user: user.allData.data,
+      }
+    ))
     dispatch(
       AddCommentAction(
         {
-          comment: e,
+          comment: send,
           parent_id: parenId,
           post_id: parentId,
-        },
-        staticdata.token,
-        { post_id: parentId }
+        }, staticdata.token,
+        {
+          comment: send,
+          parent_id: parenId,
+          post_id: parentId,
+          created_at: isoDate,
+          like_auth_user: [],
+          likes_count: 0,
+          replay: [],
+          replay_count: 0,
+          user: user.allData.data,
+        }
       ),
     )
     setParentId(null)
-    bottomSheetRef.current?.close()
-
+    setSendCommet('')
   };
 
   const handlePick = (e) => {
     setSendCommet(sendComment + e.emoji)
-    // setSendMsg(sendMSg + e.emoji)
   }
-
 
   const renderItem = ({ item, index }) => {
     const currentDate = new Date(item.created_at);
@@ -162,6 +178,7 @@ export const Comments = ({ route, }) => {
     return (
       <View style={{ marginVertical: 10, }}>
         <CommentBlock
+          key={index}
           text={item.comment}
           replay={item.replay}
           user={item.user}
@@ -172,10 +189,8 @@ export const Comments = ({ route, }) => {
           owner={item.user.id == user.allData?.data?.id}
           daysAgo={daysAgo}
           replay_count={item.replay_count}
-          deletComment={(e) => { deletComment(e) }}
-          onPressAnsswer={(e) => {
-            Answer(e)
-          }}
+          deletComment={(id, parent_id) => { deletComment(id, parent_id) }}
+          onPressAnsswer={(e) => { Answer(e) }}
         />
       </View >
     );
@@ -190,14 +205,29 @@ export const Comments = ({ route, }) => {
       >
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data}
+          data={getComments.data}
           contentContainerStyle={styles.scrollViewContent}
           onEndReached={() => { onEndReached() }}
           ListEmptyComponent={() => Empty()}
           renderItem={renderItem}
+          refreshControl={
+            <RefreshControl
+              refreshing={getComments?.loading}
+              onRefresh={() => {
+                if (getComments?.loading) {
+                  dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
+                }
+              }}
+            />
+          }
         />
         <View style={{ marginBottom: keyboardOpen, width: '100%', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <InputComponent setParentId={(e) => setParentId(e)} parentId={parentId} parenId={parenId} sendComment={sendComment} setSendCommet={(e) => setSendCommet(e)} senderName={senderName} user={user} />
+          <InputComponent
+            sendCommentFunction={() => sendCommentFunction()}
+            sendComment={sendComment}
+            setSendCommet={(e) => setSendCommet(e)}
+            user={user}
+          />
           <View style={{ flexDirection: 'row', gap: 5 }}>
             <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
               <Sticker />
@@ -209,7 +239,7 @@ export const Comments = ({ route, }) => {
           <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
         </View>
       </KeyboardAvoidingView>
-      <Main setSelected={(e) => sendCommentFunction(e)} route={route} ref={bottomSheetRef} />
+      <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
     </SafeAreaView >
   );
 };
@@ -224,7 +254,6 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flexGrow: 1,
-    // justifyContent: 'flex-end',
   },
   content: {
     flex: 1,

@@ -4,26 +4,10 @@ import { BootomModal } from '../BootomSheet';
 import Gif from './Gif';
 import { GifSvg, GifSvg1, StickerSvg, StickerSvg1 } from '../../assets/svg/Svgs';
 import Sticker from './Stickers';
-import Sound from 'react-native-sound';
-import { useDispatch, useSelector } from 'react-redux';
-import { newMessageAction } from '../../store/action/action';
 
-const Main = forwardRef(({ route }, ref) => {
-
+const Main = forwardRef(({ SendSticker }, ref) => {
   const [showGif, setShowGif] = useState(false)
   const snapPoints = useMemo(() => ['80%'], []);
-  const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
-  const staticdata = useSelector(st => st.static);
-  const dispatch = useDispatch()
-
-  const SendSticker = (e) => {
-    music.play()
-    setTimeout(() => {
-      music.stop()
-    }, 2000);
-    dispatch(newMessageAction({ message: e, receiver_id: route.params.id }, staticdata.token));
-    ref.current?.close()
-  }
 
   return (
     <View>
