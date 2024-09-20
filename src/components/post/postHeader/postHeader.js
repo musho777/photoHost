@@ -24,6 +24,7 @@ export const PostHeader = ({
   deletData,
   isBook,
   addToblack,
+  activeImage
 }
 ) => {
   const [follow, setFollow] = useState(isFollow)
@@ -81,6 +82,7 @@ export const PostHeader = ({
         my={true}
         deletData={deletData}
         setOpenModal={(e) => setOpenModal(e)}
+        activeImage={activeImage}
       />
     }
     {

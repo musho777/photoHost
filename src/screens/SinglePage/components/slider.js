@@ -13,7 +13,7 @@ import { Styles } from '../../../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, music_name, big = false, description }) => {
+export const Slider = ({ photo, music_name, big = false, description, setActiveImage }) => {
   const [active, setActive] = useState(0);
   const [scroleEneble, setScrollEnabled] = useState(true)
   const [D, setD] = useState(description)
@@ -24,6 +24,7 @@ export const Slider = ({ photo, music_name, big = false, description }) => {
       Math.floor(event.nativeEvent.layoutMeasurement.width)
     );
     setActive(index);
+    setActiveImage(index)
   };
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { t } from '../../../lang';
 import { Styles } from "../../../../styles/Styles";
 import { useSelector } from "react-redux";
 
-export const Settings = ({ my, setOpenModal, description, id, deletData }) => {
+export const Settings = ({ my, setOpenModal, description, id, deletData, activeImage }) => {
 
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()
@@ -17,6 +17,7 @@ export const Settings = ({ my, setOpenModal, description, id, deletData }) => {
           navigation.navigate('EditPostScreen', {
             description: description,
             id: id,
+            index: activeImage
           });
         }}>
         <Text style={Styles.darkRegular14}>

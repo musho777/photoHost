@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
     zIndex: 22,
     left: 5,
     width: 45,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: AppColors.BaliHai_Color,
   },
   clandarTochable: {
     justifyContent: 'center',
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     height: '100%',
     top: 10,
     left: 10,
+    color: AppColors.BaliHai_Color,
   },
 });
 

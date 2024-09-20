@@ -7,7 +7,7 @@ import { DelatePostAction } from "../../../store/action/action";
 import { ClearDelatePhost } from "../../../store/action/clearAction";
 
 
-export const MyBootomModal = forwardRef(({ navigation, id, description }, ref) => {
+export const MyBootomModal = forwardRef(({ navigation, id, description, activeImage }, ref) => {
   const dispatch = useDispatch()
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
@@ -30,7 +30,7 @@ export const MyBootomModal = forwardRef(({ navigation, id, description }, ref) =
 
   const EditImage = () => {
     ref.current?.close();
-    navigation.navigate('EditPostScreen', { description: description, id: id, });
+    navigation.navigate('EditPostScreen', { description: description, id: id, index: activeImage });
   }
 
   return <View style={{ paddingHorizontal: 20, gap: 20 }}>

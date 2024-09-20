@@ -19,6 +19,9 @@ const GetCityesReducer = (state = initialState, action) => {
             action.data.data.map((elm, i) => {
                 item.data.push(elm)
             })
+            if (action.data.current_page == 1) {
+                item.data = action.data.data
+            }
             item.nextPage = action.data.next_page_url
             item.loading = false
             break

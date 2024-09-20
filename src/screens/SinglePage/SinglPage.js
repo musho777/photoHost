@@ -21,6 +21,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const my = route.params.my
   const dispatch = useDispatch()
   const [showView, setShowView] = useState(null)
+  const [activeImage, setActiveImage] = useState(0)
 
   const End = async (id) => {
     dispatch(EndViewPost({ post_id: id }, staticdata.token))
@@ -36,9 +37,9 @@ export const SinglPageScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       <View style={styles.header}>
-        <Header big={true} data={data} navigation={navigation} my={my} />
+        <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={my} />
       </View>
-      <Slider description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+      <Slider setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       <View style={{ position: 'absolute', bottom: 15, width: '100%', zIndex: 999 }}>
         {!showView && <PostBody
           my={my}

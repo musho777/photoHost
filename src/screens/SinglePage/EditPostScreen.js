@@ -10,8 +10,9 @@ import { t } from '../../components/lang';
 
 export const EditPostScreen = ({ route, navigation }) => {
   const [description, setDescription] = useState(route.params.description);
+  const index = route.params.index
   const mainData = useSelector(st => st.mainData);
-
+  const [activeDescription, setActiveDescription] = useState()
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const editPost = useSelector((st) => st.editPost)
@@ -36,6 +37,36 @@ export const EditPostScreen = ({ route, navigation }) => {
       dispatch(ClearEditPost())
     }
   }, [editPost.status])
+
+
+
+  const changeDescription = (e) => {
+    let item = description
+    if (description[0] = '[') {
+      item = JSON.parse(description)
+      console.log(item[index])
+      item[index] = e
+      setDescription(JSON.stringify(item))
+      // setActiveDescription(item[index])
+    }
+    else {
+      setDescription(e)
+    }
+  }
+
+  useEffect(() => {
+    if (description[0] = '[') {
+      let item = JSON.parse(description)
+      console.log('----')
+      console.log(item[index])
+      setActiveDescription(item[index])
+    }
+    else {
+      setActiveDescription(item)
+    }
+  }, [description])
+  console.log(description[0], 'dees')
+
   return (
     <View>
       <HeaderWhiteTitle
@@ -47,9 +78,9 @@ export const EditPostScreen = ({ route, navigation }) => {
       />
       <TextInput
         autoFocus
-        value={description}
+        value={activeDescription}
         multiline
-        onChangeText={e => setDescription(e)}
+        onChangeText={e => changeDescription(e)}
         style={[Styles.darkMedium14, { paddingHorizontal: 15 }]}
         placeholder={t(mainData.lang).adddescription}
         placeholderTextColor={'#8C9CAB'}

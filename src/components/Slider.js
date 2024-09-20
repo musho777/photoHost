@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description, id, user, onLongClikc, long, onPressOut }) => {
+export const Slider = ({ photo, single, music, viewableItems, setOpenModal, description, id, user, onLongClikc, long, onPressOut, setActiveImage }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [D, setD] = useState(description)
@@ -81,6 +81,7 @@ export const Slider = ({ photo, single, music, viewableItems, setOpenModal, desc
       Math.floor(event.nativeEvent.layoutMeasurement.width)
     );
     setActive(index);
+    setActiveImage(index)
   };
 
 

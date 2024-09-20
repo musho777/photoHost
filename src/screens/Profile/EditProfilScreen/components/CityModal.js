@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
-        color: 'black',
         color: AppColors.BaliHai_Color,
     },
     loadingMore: {

@@ -10,7 +10,7 @@ import { BootomModal } from "../../../components/BootomSheet";
 import { useSelector } from "react-redux";
 
 
-export const Header = ({ data, navigation, my, big = false }) => {
+export const Header = ({ data, navigation, my, big = false, activeImage }) => {
   const user = useSelector(st => st.userData);
   const [showSave, setShowSave] = useState(false)
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
@@ -49,6 +49,7 @@ export const Header = ({ data, navigation, my, big = false }) => {
             navigation={navigation}
             id={data.id}
             description={data.description}
+            activeImage={activeImage}
           />
           :
           <BootomModalComponent

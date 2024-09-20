@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Slider } from '../Slider';
@@ -34,6 +34,8 @@ export const Post = ({
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [long, setLong] = useState(false)
 
+  const [activeImage, setActiveImage] = useState(0)
+
 
   const onLongClikc = () => {
     setLong(true)
@@ -65,12 +67,14 @@ export const Post = ({
             deletData={deletData}
             isBook={isBook}
             addToblack={addToblack}
+            activeImage={activeImage}
           />
         </View>
         <Slider
           viewableItems={viewableItems}
           music={music}
           long={long}
+          setActiveImage={(e) => setActiveImage(e)}
           onPressOut={() => onPressOut()}
           onLongClikc={() => onLongClikc()}
           description={description}
