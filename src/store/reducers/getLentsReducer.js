@@ -5,14 +5,20 @@ const initialState = {
   data: [],
   message: '',
   nextPage: '',
+  secondLoading: false
 };
 const GetLentsReducer = (state = initialState, action) => {
   let item = { ...state };
   switch (action.type) {
     case 'StartGetLents':
-      item.status = false;
-      item.error = '';
-      item.loading = true;
+      if (action.StartGetLents == 'first') {
+        item.status = false;
+        item.error = '';
+        item.loading = true;
+      }
+      else {
+        item.secondLoading = true;
+      }
       break;
     case 'SuccessGetLents':
       item.status = true;
@@ -25,11 +31,14 @@ const GetLentsReducer = (state = initialState, action) => {
       }
       item.nextPage = action.data.data.next_page_url;
       item.loading = false;
+      item.secondLoading = false;
+
       break;
     case 'ErrorGetLents':
       item.error = action.data;
       item.loading = false;
       item.status = false;
+      item.secondLoading = false;
       break;
     case 'EditLentPhot':
       let index = item.data.findIndex(elm => elm.id === action.data.post_id)

@@ -237,7 +237,7 @@ export const HomeScreen = () => {
           }}
           refreshControl={
             <RefreshControl
-              refreshing={getLents?.loading}
+              refreshing={getLents?.loading || getLents.secondLoading}
               onRefresh={() => {
                 if (!loading)
                   dispatch(GetLentsAction(staticdata.token, 1));

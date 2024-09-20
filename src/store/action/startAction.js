@@ -148,9 +148,10 @@ export const StartGetPosts = (loadingType) => {
     }
 }
 
-export const StartGetLents = () => {
+export const StartGetLents = (loadingType) => {
     return {
-        type: 'StartGetLents'
+        type: 'StartGetLents',
+        loadingType
     }
 }
 

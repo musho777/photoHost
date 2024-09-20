@@ -956,7 +956,10 @@ export const GetLentsAction = (token, page) => {
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
     if (page == 1 || !page) {
-      dispatch(StartGetLents());
+      dispatch(StartGetLents('first'));
+    }
+    else {
+      dispatch(StartGetLents('second'));
     }
     fetch(`${Api}/lents?page=${page}`, {
       method: 'GET',
