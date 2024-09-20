@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { t } from '../components/lang';
 import { Catalog } from '../screens/catalog';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Styles } from '../styles/Styles';
 import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
 import { CloseSvg } from '../assets/svg/Svgs';
 import AccauntParametrNavigation from './AccauntParametrNavigation';
 import MyPageNavigation from './MyPageNavigation';
 import { ContactsPage } from '../screens/contacts';
+import { AboutApplication } from '../screens/Profile/AboutApplication';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
@@ -26,47 +27,60 @@ function CustomDrawerContent(props) {
     props.navigation.navigate('LoginScreen1', { screen: 'LoginScreen' })
   }
   return (
-    <DrawerContentScrollView style={{ backgroundColor: 'white', paddingTop: 40 }} {...props}>
-      <TouchableOpacity style={{ paddingLeft: 15 }} onPress={() => props.navigation.closeDrawer()}>
-        <CloseSvg />
+    <View style={{ height: '100%', backgroundColor: 'white', }}>
+      <DrawerContentScrollView style={{ paddingTop: 40 }} {...props}>
+        <TouchableOpacity style={{ paddingLeft: 15 }} onPress={() => props.navigation.closeDrawer()}>
+          <CloseSvg />
+        </TouchableOpacity>
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16]}
+          label={t(mainData.lang).Catalog}
+          onPress={() => props.navigation.navigate('Catalog', { id: 'accaunt' })}
+        />
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16]}
+          label={t(mainData.lang).Bookmarks}
+          onPress={() => props.navigation.navigate('SavedPostScreen')}
+        />
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16]}
+          label={t(mainData.lang).Contacts}
+          onPress={() => props.navigation.navigate('Contacts')}
+        />
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16]}
+          label={t(mainData.lang).Editprofile}
+          onPress={() => props.navigation.navigate('EditProfilScreen')}
+        />
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16]}
+          label={t(mainData.lang).Accountsettings}
+          onPress={() => props.navigation.navigate('ParametrScreen')}
+        />
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16]}
+          label={t(mainData.lang).Blacklist}
+          onPress={() => props.navigation.navigate('BlackListScreen')}
+        />
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16]}
+          label={t(mainData.lang).logOut}
+          onPress={() => LogOut()}
+        />
+      </DrawerContentScrollView>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('AboutApplication')}
+        style={[{ marginBottom: 70, height: 20, paddingLeft: 15 }]}>
+        <Text style={Styles.darkRegular16}>{t(mainData.lang).AboutProgram}</Text>
       </TouchableOpacity>
-      <DrawerItem
-        labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).Catalog}
-        onPress={() => props.navigation.navigate('Catalog', { id: 'accaunt' })}
-      />
-      <DrawerItem
-        labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).Bookmarks}
-        onPress={() => props.navigation.navigate('SavedPostScreen')}
-      />
-      <DrawerItem
-        labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).Contacts}
-        onPress={() => props.navigation.navigate('Contacts')}
-      />
-      <DrawerItem
-        labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).Editprofile}
-        onPress={() => props.navigation.navigate('EditProfilScreen')}
-      />
-      <DrawerItem
-        labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).Accountsettings}
-        onPress={() => props.navigation.navigate('ParametrScreen')}
-      />
-      <DrawerItem
-        labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).Blacklist}
-        onPress={() => props.navigation.navigate('BlackListScreen')}
-      />
-      <DrawerItem
-        labelStyle={[Styles.darkRegular16]}
-        label={t(mainData.lang).logOut}
-        onPress={() => LogOut()}
-      />
-    </DrawerContentScrollView>
-  );
+      {/* <View style={{ borderWidth: 1, height: 50, marginBottom: 100 }}>
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16, { marginBottom: -100, borderWidth: 1, }]}
+          label={t(mainData.lang).AboutProgram}
+          onPress={() => props.navigation.navigate('BlackListScreen')}
+        />
+      </View> */}
+    </View>);
 }
 
 export const ProfileNavigation = () => {
@@ -143,6 +157,18 @@ export const ProfileNavigation = () => {
               navigation.goBack()
               navigation.openDrawer()
             }} title={t(mainData.lang).Catalog} />
+          }
+        }}
+      />
+      <Drawer.Screen
+        name="AboutApplication"
+        component={AboutApplication}
+        options={{
+          header: ({ navigation }) => {
+            return <HeaderWhiteTitle onPress={() => {
+              navigation.goBack()
+              navigation.openDrawer()
+            }} title={t(mainData.lang).AboutProgram} />
           }
         }}
       />

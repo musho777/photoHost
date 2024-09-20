@@ -13,10 +13,10 @@ export const InputComponent = ({ user, sendComment, setSendCommet, sendCommentFu
       source={{ uri: `https://chambaonline.pro/uploads/${user.data.avatar}`, }}
     />
     <Input
-      pdR={50}
       send
+      pdR={50}
       sendCom={() => sendCommentFunction()}
-      value={sendComment}
+      data={sendComment}
       onChange={e => setSendCommet(e)}
       width={'85%'}
       placeholder={t(mainData.lang).Leaveacomment}

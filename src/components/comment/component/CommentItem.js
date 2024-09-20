@@ -59,7 +59,7 @@ export const CommentItem = ({
     <View
       style={[
         Styles.flexAlignItems,
-        { alignItems: 'flex-start', marginTop: 20 },
+        { alignItems: 'flex-start', marginTop: 15 },
       ]}>
       <View >
         <Image
@@ -82,7 +82,7 @@ export const CommentItem = ({
           </TouchableOpacity>}
         </View>
       </View>
-      <View style={[styles.like]}>
+      <View style={styles.like}>
         <TouchableOpacity
           onPress={() => {
             if (liked) {
@@ -96,10 +96,7 @@ export const CommentItem = ({
           }}>
           <CommentLikeSvg liked={liked} />
         </TouchableOpacity>
-        <Text
-          style={[Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5 }]}>
-          {likeCount}
-        </Text>
+        <Text style={[Styles.eslipesMedium10, { textAlign: 'center', marginTop: -5, width: '100%' }]}>{likeCount}</Text>
       </View>
     </View >
   );

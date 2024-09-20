@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text, ActivityIndicator, SafeAreaView } from 'react-native';
+import { TouchableOpacity, View, Text, ActivityIndicator, SafeAreaView, Platform } from 'react-native';
 import { BackArrow, CheckMarkSvg } from '../assets/svg/Svgs';
 import { Styles } from '../styles/Styles';
 
@@ -16,7 +16,7 @@ export const HeaderWhiteTitle = ({
       <View
         style={[
           Styles.flexAlignItems,
-          { height: 70, paddingHorizontal: 10, backgroundColor: '#FFF' },
+          { height: Platform.OS == 'android' ? 70 : 50, paddingHorizontal: 10, backgroundColor: '#FFF' },
           transparent && { backgroundColor: 'transparent' },
         ]}>
         <TouchableOpacity onPress={onPress}>

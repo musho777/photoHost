@@ -62,9 +62,10 @@ export const Input = forwardRef(
             { paddingRight: send ? 50 : 30 },
             { paddingRight: pdR },
             { paddingRight: pass ? 70 : 30 },
-            msg && { paddingRight: 80 },
+            (msg || send) && { paddingRight: 50 },
 
           ]}
+          multiline={msg || send}
           placeholder={placeholder}
           placeholderTextColor={AppColors.BaliHai_Color}
           secureTextEntry={pass && securyty}
@@ -87,7 +88,7 @@ export const Input = forwardRef(
         )}
         {msg && (
           <View style={[Styles.flexAlignItems, styles.eye, { height: '100%' }]}>
-            {data.length > 0 &&
+            {data?.length > 0 &&
               <TouchableOpacity onPress={sendMsg} style={{ marginLeft: 10 }}>
                 <SendMsgSvg />
               </TouchableOpacity>

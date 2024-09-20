@@ -49,7 +49,7 @@ export const PostBody = ({
   }
 
   useEffect(() => {
-    if (postCount <= 3) {
+    if (postCount <= 3 && my) {
       setShowViewText(true)
     }
   }, [postCount])
@@ -86,7 +86,7 @@ export const PostBody = ({
         <ShearSvg />
       </TouchableOpacity>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 1, right: 0 }}>
-        {showViewText && view > 0 &&
+        {(showViewText && view > 0) &&
           <TouchableOpacity onPress={() => {
             setShowView(true)
             setSelectidId(id)

@@ -80,7 +80,8 @@ export const t = (lang = 'ru') => {
             Leaveacomment: 'Leave a comment',
             Women: 'Women',
             Men: "Men",
-            Unspecifiedgender: 'Unspecified gender'
+            Unspecifiedgender: 'Unspecified gender',
+            AboutProgram: "About the Application",
         }
     }
     {
@@ -164,7 +165,8 @@ export const t = (lang = 'ru') => {
             Leaveacomment: 'Оставьте комментарий',
             Women: 'Женщины',
             Men: "Mужчины",
-            Unspecifiedgender: 'Неуказанные гендере'
+            Unspecifiedgender: 'Неуказанные гендере',
+            AboutProgram: "О приложении",
         }
     }
 }

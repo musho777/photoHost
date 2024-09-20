@@ -104,7 +104,6 @@ import {
 } from './startAction';
 import {
   SuccessAddBlackList,
-  SuccessAddComment,
   SuccessAddDeleteFollow,
   SuccessAddInBook,
   SuccessChangeAvatar,
@@ -1190,7 +1189,7 @@ export const GetNotificationAction = (token, page) => {
   };
 }
 
-export const AddCommentAction = (data, token) => {
+export const AddCommentAction = (data, token, data2) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1206,9 +1205,11 @@ export const AddCommentAction = (data, token) => {
     fetch(`${Api}/add_comment`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
-          dispatch(SuccessAddComment())
-          // dispatch(AddCommentInPost(data2))
+          let new_data = { ...data2 }
+          new_data.id = r.comment_id
+          dispatch(AddCommentInPost(new_data))
         }
         else {
           dispatch(ErrorAddComment('server error'))
@@ -1860,7 +1861,6 @@ export const AddMessageCount = () => {
 }
 
 export const AddCommentInPost = (data) => {
-  console.log('-------')
   return {
     type: 'AddCommentInPost',
     data

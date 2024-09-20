@@ -5,6 +5,7 @@ const initialState = {
   data: [],
   message: '',
   nextPage: '',
+  addCommentLoading: false,
 };
 const GetPostCommentsReducer = (state = initialState, action) => {
   let item = { ...state };
@@ -36,6 +37,14 @@ const GetPostCommentsReducer = (state = initialState, action) => {
     case 'ClearSinglpAgeComment':
       item.data = []
       break
+
+
+    case 'StartAddComment':
+      item.addCommentLoading = true
+      break
+    case 'ErrorAddComment':
+      item.addCommentLoading = false
+      break
     case 'AddCommentInPost':
       if (!action.data.parent_id) {
         item.data.unshift(action.data)
@@ -48,6 +57,7 @@ const GetPostCommentsReducer = (state = initialState, action) => {
           item.data[index].replay_count += 1
         }
       }
+      item.addCommentLoading = false
       break
 
 

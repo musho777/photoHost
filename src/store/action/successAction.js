@@ -217,12 +217,6 @@ export const SuccessGetNotification = (data) => {
     }
 }
 
-export const SuccessAddComment = (data) => {
-    return {
-        type: "SuccessAddComment",
-        data
-    }
-}
 
 export const SuccessGetPostComment = (data) => {
     return {

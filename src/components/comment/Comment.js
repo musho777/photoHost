@@ -44,10 +44,15 @@ export const Comments = ({ route, }) => {
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false)
+  console.log(getComments.addCommentLoading)
+
+
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardOpen(60);
+      if (Platform.OS == 'android') {
+        setKeyboardOpen(60);
+      }
     });
 
     const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
@@ -118,19 +123,6 @@ export const Comments = ({ route, }) => {
       let regex = new RegExp(senderName, "gi");
       send = send.replace(regex, "");
     }
-    dispatch(AddCommentInPost(
-      {
-        comment: send,
-        parent_id: parenId,
-        post_id: parentId,
-        created_at: isoDate,
-        like_auth_user: [],
-        likes_count: 0,
-        replay: [],
-        replay_count: 0,
-        user: user.allData.data,
-      }
-    ))
     dispatch(
       AddCommentAction(
         {
@@ -149,8 +141,7 @@ export const Comments = ({ route, }) => {
           replay_count: 0,
           user: user.allData.data,
         }
-      ),
-    )
+      ))
     setParentId(null)
     setSendCommet('')
   };
@@ -176,7 +167,7 @@ export const Comments = ({ route, }) => {
     }
     daysAgo = `${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`
     return (
-      <View style={{ marginVertical: 10, }}>
+      <View style={{ marginBottom: 10 }}>
         <CommentBlock
           key={index}
           text={item.comment}
@@ -198,48 +189,50 @@ export const Comments = ({ route, }) => {
 
   return (
     <SafeAreaView style={styles.body}>
-      <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoidingView}
       >
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={getComments.data}
-          contentContainerStyle={styles.scrollViewContent}
-          onEndReached={() => { onEndReached() }}
-          ListEmptyComponent={() => Empty()}
-          renderItem={renderItem}
-          refreshControl={
-            <RefreshControl
-              refreshing={getComments?.loading}
-              onRefresh={() => {
-                if (getComments?.loading) {
-                  dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
-                }
-              }}
-            />
-          }
-        />
-        <View style={{ marginBottom: keyboardOpen, width: '100%', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <InputComponent
-            sendCommentFunction={() => sendCommentFunction()}
-            sendComment={sendComment}
-            setSendCommet={(e) => setSendCommet(e)}
-            user={user}
+        <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
+        <View style={{ flex: 1, paddingHorizontal: 15 }}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={getComments.data}
+            contentContainerStyle={styles.scrollViewContent}
+            onEndReached={() => { onEndReached() }}
+            ListEmptyComponent={() => Empty()}
+            renderItem={renderItem}
+            refreshControl={
+              <RefreshControl
+                refreshing={getComments?.loading}
+                onRefresh={() => {
+                  if (getComments?.loading) {
+                    dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
+                  }
+                }}
+              />
+            }
           />
-          <View style={{ flexDirection: 'row', gap: 5 }}>
-            <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
-              <Sticker />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setIsOpen(true)}>
-              <Emojy />
-            </TouchableOpacity>
+          <View style={{ marginBottom: keyboardOpen, width: '100%', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            <InputComponent
+              sendCommentFunction={() => sendCommentFunction()}
+              sendComment={sendComment}
+              setSendCommet={(e) => setSendCommet(e)}
+              user={user}
+            />
+            <View style={{ flexDirection: 'row', gap: 5 }}>
+              <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
+                <Sticker />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setIsOpen(true)}>
+                <Emojy />
+              </TouchableOpacity>
+            </View>
+            <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
           </View>
-          <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
+          <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
         </View>
       </KeyboardAvoidingView>
-      <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
     </SafeAreaView >
   );
 };
@@ -247,7 +240,6 @@ export const Comments = ({ route, }) => {
 const styles = StyleSheet.create({
   body: {
     height: '100%',
-    paddingHorizontal: 15,
   },
   keyboardAvoidingView: {
     flex: 1,
