@@ -21,6 +21,8 @@ export const PostBody = ({
   postCount,
   setShowLike,
   setShowShare,
+  likeClose,
+  showShare,
   setSelectidId = () => { }
 }) => {
 
@@ -46,7 +48,7 @@ export const PostBody = ({
   }, [postCount])
 
   return <View style={styles.bostBody}>
-    <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
+    {(!likeClose && !showShare) && <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
       <View style={styles.hover}>
         <View style={styles.hoverItem}>
           <TouchableOpacity onPress={() => LikePost()}>
@@ -104,7 +106,7 @@ export const PostBody = ({
           </View>
         </TouchableOpacity>
       </View>
-    </View>
+    </View>}
   </View>
 }
 

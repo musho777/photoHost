@@ -47,7 +47,7 @@ export const LikeList = forwardRef(
       <BottomSheet
         ref={ref}
         index={0}
-        snapPoints={snapPoints}
+        snapPoints={['80%']}
         onClose={() => close()}
         backdropComponent={renderBackdrop}>
         <View

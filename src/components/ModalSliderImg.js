@@ -45,7 +45,7 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
             />
             <View
                 style={styles.paginationWrapper}>
-                {photo?.map((elm, i) => (
+                {photo.length > 1 && photo?.map((elm, i) => (
                     <View key={i}
                         style={[
                             styles.pagination,

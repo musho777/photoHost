@@ -13,7 +13,7 @@ import { GetFollowerAction, newMessageAction } from '../../store/action/action';
 import BottomSheet from '@gorhom/bottom-sheet';
 
 
-export const Share = ({ snapPoints, postId, close, open, user_id }) => {
+export const Share = ({ big, postId, close, open, user_id }) => {
   const [select, setSelect] = useState([])
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
@@ -69,7 +69,7 @@ export const Share = ({ snapPoints, postId, close, open, user_id }) => {
   return (
     <BottomSheet
       index={0}
-      snapPoints={snapPoints}
+      snapPoints={['80%']}
       onClose={() => close()}
       backdropComponent={renderBackdrop}>
       <View
@@ -125,7 +125,7 @@ export const Share = ({ snapPoints, postId, close, open, user_id }) => {
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 10,
-            marginBottom: 70
+            marginBottom: big ? 0 : 70
           }}>
           <Text style={Styles.darkRegular14}>Отправить {select.length}</Text>
         </TouchableOpacity>

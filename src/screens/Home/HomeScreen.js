@@ -26,7 +26,6 @@ export const HomeScreen = () => {
   const [currentPost, setCurrentPost] = useState({})
   const { full } = useSelector((st) => st.fullScreen)
   const createPost = useSelector(st => st.createPost);
-  const snapPointsLike = useMemo(() => ['85%'], []);
   const [selecteidId, setSelectidId] = useState(null)
   const ViewRef = useRef(null)
   const [showView, setShowView] = useState(false)
@@ -34,13 +33,6 @@ export const HomeScreen = () => {
   const [showShare, setShowShare] = useState(false)
 
   const handleClosePress = () => ViewRef.current?.close();
-  const handlePresentModalPressView = () => {
-    setShowView(true)
-  }
-  const handlePresentModalPressLike = () => {
-    setLikeClose(true)
-  }
-
 
   useEffect(() => {
     handleClosePress()
@@ -145,8 +137,8 @@ export const HomeScreen = () => {
           <Post
             data={item}
             viewableItems={viewableItems}
-            setShowLike={() => handlePresentModalPressLike()}
-            setShowView={() => handlePresentModalPressView()}
+            setShowLike={() => setLikeClose(true)}
+            setShowView={() => setShowView(true)}
             addToblack={(e) => AddToBack(e)}
             deletData={(e) => deletData(index, e)}
             setSelectidId={(id) => setSelectidId(id)}
@@ -225,7 +217,6 @@ export const HomeScreen = () => {
           <ViewComponent
             id={selecteidId}
             token={staticdata.token}
-            snapPoints={snapPointsLike}
             close={(e) => setShowView(e)}
           />
         }
@@ -233,14 +224,12 @@ export const HomeScreen = () => {
           close={(e) => setLikeClose(false)}
           token={staticdata.token}
           id={selecteidId}
-          snapPoints={snapPointsLike}
         />}
         {showShare && <Share
           close={() => setShowShare(false)}
           postId={selecteidId}
           open={showShare}
           user_id={userData?.allData.data?.id}
-          snapPoints={snapPointsLike}
         />}
       </View >
     </SafeAreaView>

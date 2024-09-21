@@ -13,6 +13,8 @@ import { useCallback, useState } from 'react';
 import { AddPostViewCount, EndViewPost } from '../../store/action/action';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { AppColors } from '../../styles/AppColors';
+import { LikeList } from '../../components/LikeList';
+import { Share } from '../../components/share';
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const user = useSelector((st) => st.userData)
@@ -21,7 +23,10 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const my = route.params.my
   const dispatch = useDispatch()
   const [showView, setShowView] = useState(null)
+  const [likeClose, setLikeClose] = useState(false)
   const [activeImage, setActiveImage] = useState(0)
+
+  const [showShare, setShowShare] = useState(false)
 
   const End = async (id) => {
     dispatch(EndViewPost({ post_id: id }, staticdata.token))
@@ -49,8 +54,12 @@ export const SinglPageScreen = ({ route, navigation }) => {
           like={data.like_count}
           id={data.id}
           user={user}
+          setShowLike={() => setLikeClose(true)}
           big={true}
+          likeClose={likeClose}
+          showShare={showShare}
           setShowView={(e) => setShowView(e)}
+          setShowShare={(e) => setShowShare(e)}
         />}
       </View>
       {showView && <ViewComponent
@@ -58,6 +67,18 @@ export const SinglPageScreen = ({ route, navigation }) => {
         big={true}
         token={staticdata.token}
         close={(e) => setShowView(e)}
+      />}
+      {likeClose && <LikeList
+        close={(e) => setLikeClose(false)}
+        token={staticdata.token}
+        id={data.id}
+      />}
+      {showShare && <Share
+        close={() => setShowShare(false)}
+        postId={data.id}
+        open={showShare}
+        big={true}
+        user_id={user?.allData.data?.id}
       />}
     </SafeAreaView>
   );
