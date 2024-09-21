@@ -11,6 +11,7 @@ import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { HomeHeader } from '../../headers/HomeHeader';
 import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
+import debounce from 'lodash/debounce';
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -27,51 +28,44 @@ export const HomeScreen = () => {
   const { full } = useSelector((st) => st.fullScreen)
   const createPost = useSelector(st => st.createPost);
   const [selecteidId, setSelectidId] = useState(null)
-  const ViewRef = useRef(null)
   const [showView, setShowView] = useState(false)
   const [likeClose, setLikeClose] = useState(false)
   const [showShare, setShowShare] = useState(false)
-
-  const handleClosePress = () => ViewRef.current?.close();
-
-  useEffect(() => {
-    handleClosePress()
-  }, [])
+  const [isFetching, setIsFetching] = useState(false);
 
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       if (userData.data.show_category_pop_up == 1) {
-        setShowModal(true)
+        setShowModal(true);
       }
-    }, 20000)
-  }, [userData.data])
+    }, 20000);
+
+    return () => clearTimeout(timer);
+  }, [userData.data]);
 
   useEffect(() => {
     if (staticdata.token) {
       dispatch(GetLentsAction(staticdata.token, 1));
       dispatch(getUserInfoAction(staticdata.token))
-      dispatch(GetMyChatRoom({ search: "" }, staticdata.token, 1))
     }
-  }, [staticdata.token]);
+  }, [staticdata.token, dispatch]);
 
   useEffect(() => {
-    if (index != -1) {
+    if (index != -1 && getLents?.data.length) {
       dispatch(AddPostViewCount({ post_id: getLents?.data[index]?.id }, staticdata.token))
     }
   }, [index, getLents?.data]);
 
 
-  const deletData = (i, post_id) => {
-    dispatch(DeletePhotoFromHome({ post_id: post_id }))
-    dispatch(DelatePostAction({ post_id: post_id }, staticdata.token))
-  }
+  const deletData = useCallback((i, post_id) => {
+    dispatch(DeletePhotoFromHome({ post_id }))
+    dispatch(DelatePostAction({ post_id }, staticdata.token))
+  }, [dispatch, staticdata.token]);
 
-  const AddToBack = (e) => {
-    let item = [...blackList];
-    item.push(e);
-    setBlackList(item);
-  }
+  const AddToBack = useCallback((e) => {
+    setBlackList(prev => [...prev, e]);
+  }, []);
 
 
   useEffect(() => {
@@ -83,13 +77,15 @@ export const HomeScreen = () => {
 
 
 
-  const handleScroll = event => {
+  const handleScroll = debounce(event => {
     const offsetY = event.nativeEvent.contentOffset.y;
     const itemHeight = 400;
     const index = Math.floor(offsetY / itemHeight);
     setIndex(index);
-    setCurrentPost(getLents.data[index])
-  };
+    setCurrentPost(getLents.data[index]);
+  }, 300);
+
+
 
   const goTop = () => {
     flatListRef.current.scrollToOffset({ offset: 0, animated: true });
@@ -120,15 +116,23 @@ export const HomeScreen = () => {
     itemVisiblePercentThreshold: 50,
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     return () => {
-  //       if (data[index]?.id) {
-  //         End(data[index]?.id)
-  //       }
-  //     };
-  //   }, [data])
-  // );
+
+  const handleEndReached = useCallback(() => {
+    if (getLents?.nextPage && !getLents.loading && !getLents.secondLoading && !isFetching) {
+      setIsFetching(true)
+      console.log('-23')
+      let p = page + 1;
+      dispatch(GetLentsAction(staticdata.token, p));
+      setPage(p);
+
+      setTimeout(() => {
+        setIsFetching(false);
+      }, 1000);
+    }
+  }, [getLents, page, isFetching]);
+
+
+
   const loadingData = ['', '']
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
@@ -151,11 +155,6 @@ export const HomeScreen = () => {
   if (getLents.loading) {
     return (
       <View style={{ gap: 5, paddingVertical: 5 }}>
-        {showModal && <ModalComponent
-          showModal={showModal}
-          close={() => setShowModal(false)}
-          token={staticdata.token}
-        />}
         {loadingData.map((elm, i) => {
           return <PostLoading key={i} />
         })}
@@ -184,13 +183,7 @@ export const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           ref={flatListRef}
           onViewableItemsChanged={onViewableItemsChanged}
-          onEndReached={() => {
-            if (getLents?.nextPage && !getLents.loading && !getLents.secondLoading) {
-              let p = page + 1;
-              dispatch(GetLentsAction(staticdata.token, p));
-              setPage(p);
-            }
-          }}
+          onEndReached={debounce(handleEndReached, 300)}
           onScroll={({ nativeEvent }) => {
             handleScroll({ nativeEvent })
           }}
@@ -204,13 +197,13 @@ export const HomeScreen = () => {
             />
           }
           viewabilityConfig={viewabilityConfig}
-          ListFooterComponent={getLents.secondLoading ? <ActivityIndicator /> : null}
           data={getLents.data}
           enableEmptySections={true}
           renderItem={renderItem}
-          initialNumToRender={7}
-          maxToRenderPerBatch={10}
-          windowSize={4}
+          initialNumToRender={5}
+          maxToRenderPerBatch={5}
+          windowSize={5}
+          decelerationRate="normal"
         />
         {showView &&
           <ViewComponent

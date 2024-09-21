@@ -40,8 +40,14 @@ export const ChatUsersScreen = () => {
 
   const searchData = e => {
     setSearch(e)
-    dispatch(GetMyChatRoom({ search: e }, staticdata.token, page));
+    dispatch(GetMyChatRoom({ search: e }, staticdata.token, 1));
   };
+
+
+  useEffect(() => {
+    dispatch(GetMyChatRoom({ search: "" }, staticdata.token, page))
+  }, [page])
+
 
   useEffect(() => {
     if (Object.keys(deletChat.deletChatPusher).length) {

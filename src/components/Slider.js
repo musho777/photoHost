@@ -30,9 +30,12 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowLikeICone(false)
-    }, 500);
+    let timer = null
+    if (showLikeIcone) {
+      timer = setTimeout(() => {
+        setShowLikeICone(false)
+      }, 500);
+    }
 
     return () => clearTimeout(timer);
   }, [showLikeIcone]);
@@ -40,9 +43,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
 
 
   const LikePost = useCallback(() => {
-    dispatch(LikePostAction({
-      post_id: data.id
-    }, staticdata.token, user.data.id));
+    dispatch(LikePostAction({ post_id: data.id }, staticdata.token, user.data.id));
   }, [dispatch, data.id, staticdata.token, user.data.id]);
 
 
@@ -128,7 +129,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         keyExtractor={(item) => item.id.toString()}
         data={photo}
         windowSize={5}
-        initialNumToRender={2}
+        initialNumToRender={5}
         maxToRenderPerBatch={10}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         scrollEnabled={!scrollEnabled}
