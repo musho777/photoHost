@@ -380,11 +380,11 @@ export const AddImg = ({ navigation }) => {
                 }
               </View>}
               <ScrollView horizontal={true} style={[styles.list, keyboardOpen && { marginBottom: 30 }]}>
-                <TouchableOpacity style={{ borderWidth: 1, width: 80, height: 80, borderRadius: 10, justifyContent: 'center', alignItems: 'center', borderColor: 'white', marginRight: 10, }} onPress={() => addPhoto()}>
+                {uri.length < 10 && < TouchableOpacity style={[styles.itemImage]} onPress={() => addPhoto()}>
                   <AddImage />
-                </TouchableOpacity>
+                </TouchableOpacity>}
                 {uri.map((elm, i) => {
-                  return <TouchableOpacity o style={{ position: 'relative' }} activeOpacity={1} key={i} onPress={() => {
+                  return <TouchableOpacity o style={[{ position: 'relative' }, (i == uri.length - 1) && { marginRight: 40 }]} activeOpacity={1} key={i} onPress={() => {
                     setSelectedImage(elm.uri)
                     setActivePhoto(i)
                   }
@@ -451,7 +451,7 @@ export const AddImg = ({ navigation }) => {
             </BootomModal>
           </TouchableOpacity>
         </SafeAreaView>
-      </KeyboardAvoidingView>
+      </KeyboardAvoidingView >
     );
   else {
     return
@@ -506,6 +506,16 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 25
+  },
+  itemImage: {
+    borderWidth: 1,
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'white',
+    marginRight: 10,
   }
 });

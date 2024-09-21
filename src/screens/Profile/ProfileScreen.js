@@ -29,6 +29,21 @@ export const ProfileScreen = ({ navigation }) => {
       contentSize.height - paddingToBottom;
   };
 
+  const [loading, setLoading] = useState(false);
+
+  const handleScroll = ({ nativeEvent }) => {
+    if (isCloseToBottom(nativeEvent) && !loading) {
+      if (getPosts.nextPage && !getPosts.secondLoading) {
+        setLoading(true);
+        let pages = page + 1;
+        dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, pages));
+        setPage(pages);
+        setLoading(false);
+      }
+    }
+  };
+
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TouchableOpacity
@@ -52,15 +67,7 @@ export const ProfileScreen = ({ navigation }) => {
               }}
             />
           }
-          onScroll={({ nativeEvent }) => {
-            if (isCloseToBottom(nativeEvent)) {
-              if (getPosts.nextPage) {
-                let pages = page + 1;
-                dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, pages));
-                setPage(pages);
-              }
-            }
-          }}
+          onScroll={handleScroll}
         >
           <TouchableOpacity
             onPress={() => navigation.openDrawer()}

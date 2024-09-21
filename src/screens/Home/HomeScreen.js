@@ -45,9 +45,8 @@ export const HomeScreen = () => {
   }, [userData.data]);
 
   useEffect(() => {
-    if (staticdata.token) {
+    if (staticdata.token && !getLents?.data.length) {
       dispatch(GetLentsAction(staticdata.token, 1));
-      dispatch(getUserInfoAction(staticdata.token))
     }
   }, [staticdata.token, dispatch]);
 
