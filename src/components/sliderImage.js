@@ -42,7 +42,7 @@ const SliderImage = React.memo(({ data, item, long, height, index, setScrollEnab
     prevProps.item.photo === nextProps.item.photo &&
     prevProps.long === nextProps.long &&
     prevProps.index === nextProps.index &&
-    prevProps.data === nextProps.prevProps &&
+    prevProps.data === nextProps.data &&
     process.viewableItems === nextProps.viewableItems
   )
 });
