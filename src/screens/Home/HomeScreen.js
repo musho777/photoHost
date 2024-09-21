@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, RefreshControl, Image, Text, StyleSheet, PermissionsAndroid, SafeAreaView, StatusBar, Platform } from 'react-native';
+import { View, FlatList, RefreshControl, Image, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, DeletePhotoFromHome, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,7 +16,6 @@ export const HomeScreen = () => {
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents);
-  const [data, setData] = useState([])
   const [page, setPage] = useState(1);
   const [blackList, setBlackList] = useState([]);
   const [index, setIndex] = useState(0);
@@ -24,7 +23,6 @@ export const HomeScreen = () => {
   const [showModal, setShowModal] = useState(false)
   const userData = useSelector((st) => st.userData)
   const [viewableItems, setViewableItems] = useState([])
-  const [loading, setLoading] = useState(true)
   const [currentPost, setCurrentPost] = useState({})
   const { full } = useSelector((st) => st.fullScreen)
   const createPost = useSelector(st => st.createPost);
@@ -47,12 +45,6 @@ export const HomeScreen = () => {
   useEffect(() => {
     handleClosePress()
   }, [])
-
-  useEffect(() => {
-    if (!getLents.loading) {
-      setLoading(false)
-    }
-  }, [getLents.loading])
 
 
   useEffect(() => {
@@ -77,17 +69,10 @@ export const HomeScreen = () => {
     }
   }, [index, getLents?.data]);
 
-  useEffect(() => {
-    if (getLents.data) {
-      setData(getLents.data)
-    }
-  }, [getLents.data])
 
   const deletData = (i, post_id) => {
-    let item = [...data]
-    item.splice(i, 1)
+    dispatch(DeletePhotoFromHome({ post_id: post_id }))
     dispatch(DelatePostAction({ post_id: post_id }, staticdata.token))
-    setData(item)
   }
 
   const AddToBack = (e) => {
@@ -111,7 +96,7 @@ export const HomeScreen = () => {
     const itemHeight = 400;
     const index = Math.floor(offsetY / itemHeight);
     setIndex(index);
-    setCurrentPost(data[index])
+    setCurrentPost(getLents.data[index])
   };
 
   const goTop = () => {
@@ -156,7 +141,7 @@ export const HomeScreen = () => {
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (
-        <View key={index} style={[{ marginTop: 5 }, index == data.length - 1 && { marginBottom: 80 }]}>
+        <View key={index} style={[{ marginTop: 5 }, index == getLents.data.length - 1 && { marginBottom: 80 }]}>
           <Post
             data={item}
             viewableItems={viewableItems}
@@ -171,7 +156,7 @@ export const HomeScreen = () => {
       );
     }
   };
-  if (loading) {
+  if (getLents.loading) {
     return (
       <View style={{ gap: 5, paddingVertical: 5 }}>
         {showModal && <ModalComponent
@@ -229,12 +214,12 @@ export const HomeScreen = () => {
             />
           }
           viewabilityConfig={viewabilityConfig}
-          data={data}
+          data={getLents.data}
           enableEmptySections={true}
           renderItem={renderItem}
-          initialNumToRender={10}
-          maxToRenderPerBatch={5}
-          windowSize={5}
+          initialNumToRender={7}
+          maxToRenderPerBatch={4}
+          windowSize={4}
         />
         {showView &&
           <ViewComponent

@@ -1517,6 +1517,14 @@ export const DelatePostAction = (data, token) => {
   };
 }
 
+export const DeletePhotoFromHome = (data) => {
+  return {
+    type: 'DeletePhotoFromHome',
+    data
+  }
+}
+
+
 const DeletLocalPhoto = (data) => {
   return {
     type: 'DeletLocalPhoto',

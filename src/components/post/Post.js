@@ -6,7 +6,6 @@ import { Slider } from '../Slider';
 import { PostHeader } from './postHeader/postHeader';
 import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
-import { compareSpecificity } from 'native-base/lib/typescript/hooks/useThemeProps/propsFlattener';
 
 export const Post = React.memo(({
   viewableItems,
