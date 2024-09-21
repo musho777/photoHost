@@ -44,8 +44,6 @@ export const Comments = ({ route, }) => {
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false)
-  console.log(getComments.addCommentLoading)
-
 
 
   useEffect(() => {

@@ -45,7 +45,6 @@ const GetMyChatRoomReducer = (state = initialState, action) => {
       break;
     case 'ClearSinglChatNumber':
       let index = item.data.findIndex((elm) => elm.id == action.id)
-      console.log(index, '222')
       if (index >= 0) {
         item.data[index].message_sum = 0
       }

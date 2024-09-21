@@ -31,10 +31,6 @@ async function GetFCMToke() {
 }
 export const NotificationLister = () => {
   messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log(
-      'Notification caused app to open from background state:',
-      remoteMessage.notification,
-    );
   });
 
   // Check whether an initial notification is available
@@ -42,10 +38,6 @@ export const NotificationLister = () => {
     .getInitialNotification()
     .then(remoteMessage => {
       if (remoteMessage) {
-        console.log(
-          'Notification caused app to open from quit state:',
-          remoteMessage.notification,
-        );
       }
     });
 

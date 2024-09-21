@@ -22,7 +22,6 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDel
         if (dayOfMonth <= 9) {
             dayOfMonth = `0${dayOfMonth}`
         }
-        console.log(comment, 'comment.parent_id')
         daysAgo = `${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`
         return <View key={index}>
             <CommentItem

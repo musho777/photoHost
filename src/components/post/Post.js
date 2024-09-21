@@ -6,6 +6,7 @@ import { Slider } from '../Slider';
 import { PostHeader } from './postHeader/postHeader';
 import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
+import { compareSpecificity } from 'native-base/lib/typescript/hooks/useThemeProps/propsFlattener';
 
 export const Post = React.memo(({
   viewableItems,
@@ -13,7 +14,9 @@ export const Post = React.memo(({
   deletData,
   setSelectidId,
   setShowView,
-  data
+  data,
+  setShowLike,
+  setShowShare
 }) => {
 
   const user = useSelector((st) => st.userData)
@@ -27,7 +30,6 @@ export const Post = React.memo(({
 
   const onLongClikc = () => {
     setLong(true)
-
   }
   const onPressOut = () => {
     setLong(false)
@@ -69,6 +71,8 @@ export const Post = React.memo(({
             setSelectidId={(id) => setSelectidId(id)}
             liked={data.like_auth_user.findIndex((elm, i) => elm.user_id == user.data.id) >= 0}
             setShowView={(e) => setShowView(e)}
+            setShowLike={(e) => setShowLike(e)}
+            setShowShare={(e) => setShowShare(e)}
             view={data.view_count}
             my={user?.data.id != data.user.id ? false : true}
             userId={data.user.id}
@@ -80,7 +84,12 @@ export const Post = React.memo(({
       </View>
     </View>
   );
+}, (prevProps, nextProps) => {
+  return (
+    prevProps.data.id === nextProps.data.id
+  )
 });
+
 
 const styles = StyleSheet.create({
   block: {

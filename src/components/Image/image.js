@@ -2,6 +2,7 @@ import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from "react-nat
 import { StartSvg } from "../../assets/svg/Svgs"
 import { useNavigation } from "@react-navigation/native"
 import React from "react";
+import FastImage from "react-native-fast-image";
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -14,9 +15,10 @@ export const ImageComponent = React.memo(({ video, photo, onPress }) => {
         <StartSvg />
       </View>
     }
-    <Image
+    <FastImage
       style={styles.img}
       source={{ uri: `https://chambaonline.pro/uploads/${photo}`, }}
+      resizeMode={FastImage.resizeMode.cover}
     />
 
   </TouchableOpacity>

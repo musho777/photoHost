@@ -9,6 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Styles } from '../../styles/Styles';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { HomeHeader } from '../../headers/HomeHeader';
+import { LikeList } from '../../components/LikeList';
+import { Share } from '../../components/share';
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -30,9 +32,15 @@ export const HomeScreen = () => {
   const [selecteidId, setSelectidId] = useState(null)
   const ViewRef = useRef(null)
   const [showView, setShowView] = useState(false)
+  const [likeClose, setLikeClose] = useState(false)
+  const [showShare, setShowShare] = useState(false)
+
   const handleClosePress = () => ViewRef.current?.close();
   const handlePresentModalPressView = () => {
     setShowView(true)
+  }
+  const handlePresentModalPressLike = () => {
+    setLikeClose(true)
   }
 
 
@@ -152,10 +160,12 @@ export const HomeScreen = () => {
           <Post
             data={item}
             viewableItems={viewableItems}
+            setShowLike={() => handlePresentModalPressLike()}
             setShowView={() => handlePresentModalPressView()}
             addToblack={(e) => AddToBack(e)}
             deletData={(e) => deletData(index, e)}
             setSelectidId={(id) => setSelectidId(id)}
+            setShowShare={(e) => setShowShare(e)}
           />
         </View>
       );
@@ -222,6 +232,9 @@ export const HomeScreen = () => {
           data={data}
           enableEmptySections={true}
           renderItem={renderItem}
+          initialNumToRender={10}
+          maxToRenderPerBatch={5}
+          windowSize={5}
         />
         {showView &&
           <ViewComponent
@@ -231,6 +244,19 @@ export const HomeScreen = () => {
             close={(e) => setShowView(e)}
           />
         }
+        {likeClose && <LikeList
+          close={(e) => setLikeClose(false)}
+          token={staticdata.token}
+          id={selecteidId}
+          snapPoints={snapPointsLike}
+        />}
+        {showShare && <Share
+          close={() => setShowShare(false)}
+          postId={selecteidId}
+          open={showShare}
+          user_id={userData?.allData.data?.id}
+          snapPoints={snapPointsLike}
+        />}
       </View >
     </SafeAreaView>
   );

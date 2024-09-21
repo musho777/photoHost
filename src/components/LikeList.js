@@ -2,16 +2,14 @@ import React, { useCallback, forwardRef } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import {
   BottomSheetBackdrop,
-  BottomSheetModal,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostLikeAction } from '../store/action/action';
 import { useNavigation } from '@react-navigation/native';
-
+import BottomSheet from '@gorhom/bottom-sheet';
 import { HearSvg2 } from '../assets/svg/Svgs';
-
 import { Styles } from '../styles/Styles';
 
 export const LikeList = forwardRef(
@@ -28,7 +26,7 @@ export const LikeList = forwardRef(
           animatedIndex={{
             value: 1,
           }}
-          opacity={0.85}
+          opacity={0.1}
         />
       ),
       [],
@@ -46,10 +44,11 @@ export const LikeList = forwardRef(
       );
     };
     return (
-      <BottomSheetModal
+      <BottomSheet
         ref={ref}
         index={0}
         snapPoints={snapPoints}
+        onClose={() => close()}
         backdropComponent={renderBackdrop}>
         <View
           style={[
@@ -107,7 +106,7 @@ export const LikeList = forwardRef(
               );
             })}
           </BottomSheetScrollView>}
-      </BottomSheetModal>
+      </BottomSheet>
     );
   },
 );

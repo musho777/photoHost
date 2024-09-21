@@ -19,25 +19,16 @@ export const PostBody = ({
   my,
   setShowView,
   postCount,
+  setShowLike,
+  setShowShare,
   setSelectidId = () => { }
 }) => {
-  const likeRef = useRef(null)
-  const shareRef = useRef(null)
 
-
-  const CloseLike = () => { likeRef.current?.close() }
-  const CloseShare = () => { shareRef.current?.close() }
-
-  const snapPointsLike = useMemo(() => ['85%'], []);
-  const snapPointsShare = useMemo(() => ['85%'], []);
   const navigation = useNavigation()
   const [showViewText, setShowViewText] = useState(false)
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
-  const [openShare, setOpenShare] = useState(0)
 
-  const handlePresentModalPressLike = useCallback(() => { likeRef.current?.present() }, []);
-  const handlePresentModalPressShare = useCallback(() => { shareRef.current?.present() }, []);
 
   const LikePost = () => {
     dispatch(LikePostAction({
@@ -63,7 +54,7 @@ export const PostBody = ({
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
-            handlePresentModalPressLike()
+            setShowLike(true)
           }
           }>
             <Text style={[Styles.darkMedium14, { color: 'white' }]}>{like}</Text>
@@ -80,8 +71,10 @@ export const PostBody = ({
         style={styles.hover}
         onPress={() => {
           dispatch(GetFollowerAction({ search: "", user_id: user.allData.data.id }, staticdata.token, 1));
-          handlePresentModalPressShare()
-          setOpenShare(openShare + 1)
+          // handlePresentModalPressShare()
+          setShowShare(true)
+          setSelectidId(id)
+          // setOpenShare(openShare + 1)
         }}>
         <ShearSvg />
       </TouchableOpacity>
@@ -100,7 +93,6 @@ export const PostBody = ({
             if (my && view > 0) {
               setShowView(true)
               setSelectidId(id)
-              // setShowViewText(!showViewText)
             }
           }}
           style={styles.hover}>
@@ -113,21 +105,6 @@ export const PostBody = ({
         </TouchableOpacity>
       </View>
     </View>
-    <LikeList
-      close={() => CloseLike()}
-      token={staticdata.token}
-      id={id}
-      ref={likeRef}
-      snapPoints={snapPointsLike}
-    />
-    <Share
-      close={() => CloseShare()}
-      postId={id}
-      ref={shareRef}
-      user_id={user?.allData.data?.id}
-      snapPoints={snapPointsShare}
-      open={openShare}
-    />
   </View>
 }
 

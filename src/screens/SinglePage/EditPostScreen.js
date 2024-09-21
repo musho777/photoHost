@@ -63,7 +63,6 @@ export const EditPostScreen = ({ route, navigation }) => {
   useEffect(() => {
     if (description) {
       if (description[0] == '[') {
-        console.log(description, 'des')
         let item = JSON.parse(description)
         setActiveDescription(item[index])
       }

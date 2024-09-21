@@ -1211,7 +1211,6 @@ export const AddCommentAction = (data, token, data2) => {
     fetch(`${Api}/add_comment`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           let new_data = { ...data2 }
           new_data.id = r.comment_id

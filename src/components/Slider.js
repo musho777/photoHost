@@ -5,28 +5,24 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
-  Text,
 } from 'react-native';
 import { AppColors } from '../styles/AppColors';
 import { SliderModal } from './SliderModal';
-import { VidioComponent } from './post/VidioComponent';
-import { Styles } from '../styles/Styles';
 import FastImage from 'react-native-fast-image';
 import { LikePostAction } from '../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
+import SliderImage from './sliderImage';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = React.memo(({ photo, single, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data }) => {
+export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
-  const [D, setD] = useState(data.description)
   const [scrollEnabled, setScrollEnabled] = useState(false)
   const [showLikeIcone, setShowLikeICone] = useState(false)
   const staticdata = useSelector(st => st.static);
   const [lastClickTime, setLastClickTime] = useState(0);
   const [clickTimeout, setClickTimeout] = useState(null);
-
   const SINGLE_CLICK_DELAY = 300;
   const DOUBLE_CLICK_DELAY = 300;
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -83,13 +79,45 @@ export const Slider = React.memo(({ photo, single, viewableItems, setOpenModal, 
   };
 
 
-  useEffect(() => {
-    let desc = data.description
-    if (data.description && data.description[0] == '[') {
-      desc = JSON.parse(data.description)
+
+  const renderItem = ({ item, index }) => {
+    let height = 570
+    if (item.height) {
+      height = (windowWidth * item.height) / item.width
     }
-    setD(desc)
-  }, [data.description])
+    if (height < 400) {
+      height = 380
+    }
+    else {
+      height = 570
+    }
+    return (
+      <TouchableOpacity
+        onLongPress={() => onLongClikc()}
+        activeOpacity={1}
+        onPressOut={() => onPressOut()}
+        onPress={(e) => handleClick(e, item)}
+        style={styles.img}>
+        <SliderImage
+          data={data}
+          long={long}
+          index={index}
+          setScrollEnabled={(e) => setScrollEnabled(e)}
+          item={item}
+          height={height}
+          viewableItems={viewableItems}
+        />
+        {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
+          <FastImage
+            source={require('../assets/img/Animation3.gif')} // Ensure this path is correct
+            style={{ width: 130, height: 130 }}
+            resizeMode={FastImage.resizeMode.contain} // Can also use 'cover', 'stretch', etc.
+          />
+        </View>}
+      </TouchableOpacity>
+    );
+  }
+
   return (
     <View>
       <FlatList
@@ -104,64 +132,7 @@ export const Slider = React.memo(({ photo, single, viewableItems, setOpenModal, 
         maxToRenderPerBatch={10}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         scrollEnabled={!scrollEnabled}
-        renderItem={({ item, index }) => {
-          let height = 570
-          if (item.height) {
-            height = (windowWidth * item.height) / item.width
-          }
-          if (height < 400) {
-            height = 380
-          }
-          else {
-            height = 570
-          }
-          return (
-            <TouchableOpacity
-              key={index}
-              onLongPress={() => onLongClikc()}
-              activeOpacity={1}
-              onPressOut={() => onPressOut()}
-              onPress={(e) => handleClick(e, item)}
-              style={!single ? styles.img : { ...styles.img, width: windowWidth }}>
-              {!item.video ?
-                <View>
-                  {!long && (Array.isArray(D) ? D[index] : D) &&
-                    <View style={styles.hover}>
-                      <Text style={[Styles.whiteSemiBold12]}>
-                        {Array.isArray(D) ? D[index] : D}
-                      </Text>
-                    </View>}
-                  <FastImage
-                    style={{ height: height, width: windowWidth }}
-                    source={{
-                      uri: `https://chambaonline.pro/uploads/${item.photo}`,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
-                </View> :
-                <View>
-                  {(long && (Array.isArray(D) ? D[index] : D)) && <View style={styles.hover}>
-                    <Text style={[Styles.whiteSemiBold12]}>
-                      {Array.isArray(D) ? D[index] : D}
-                    </Text>
-                  </View>}
-                  <VidioComponent
-                    active={active == index}
-                    setScrollEnabled={(e) => setScrollEnabled(e)}
-                    viewableItems={viewableItems} music={data.music_name} item={item} />
-                </View>
-              }
-              {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
-                <FastImage
-                  source={require('../assets/img/Animation3.gif')} // Ensure this path is correct
-                  style={{ width: 130, height: 130 }}
-                  resizeMode={FastImage.resizeMode.contain} // Can also use 'cover', 'stretch', etc.
-                />
-              </View>
-              }
-            </TouchableOpacity>
-          );
-        }}
+        renderItem={renderItem}
       />
       <View style={styles.paginationWrapper}>
         {photo?.length > 1 && photo?.map((elm, i) => (
@@ -178,6 +149,14 @@ export const Slider = React.memo(({ photo, single, viewableItems, setOpenModal, 
       )}
     </View>
   );
+}, (prevProps, nextProps) => {
+  return (
+    prevProps.photo.id === nextProps.photo.id &&
+    prevProps.index === nextProps.index &&
+    prevProps.data === nextProps.prevProps &&
+    process.viewableItems === nextProps.viewableItems &&
+    prevProps.long === nextProps.long
+  )
 });
 
 const styles = StyleSheet.create({
