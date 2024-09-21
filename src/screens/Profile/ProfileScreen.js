@@ -44,6 +44,7 @@ export const ProfileScreen = ({ navigation }) => {
               refreshing={getPosts?.loading}
               onRefresh={() => {
                 if (!getPosts.loading) {
+                  setPage(1)
                   dispatch(GetPostsAction({ user_id: user.data.id }, staticdata.token, 1))
                   dispatch(getUserInfoAction(staticdata.token))
                 }

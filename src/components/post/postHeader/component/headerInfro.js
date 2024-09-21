@@ -27,10 +27,12 @@ export const HeaderInfo = ({ star, userName, userImg, userId, id, user, data }) 
     setDay(`${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`)
   }, [data])
 
-  return <TouchableOpacity onPress={() =>
-    user?.data.id != userId ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userId, post_id: id } }) :
-      navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
-  } style={Styles.flexAlignItems}>
+  return <TouchableOpacity
+    activeOpacity={1}
+    onPress={() =>
+      user?.data.id != userId ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userId, post_id: id } }) :
+        navigation.navigate('TabNavigation', { screen: "ProfileNavigation" })
+    } style={Styles.flexAlignItems}>
     <View>
       <Image style={styles.userImg}
         source={{ uri: `https://chambaonline.pro/uploads/${userImg}` }} />

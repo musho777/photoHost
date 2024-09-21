@@ -96,9 +96,12 @@ export const Slider = React.memo(({ photo, single, viewableItems, setOpenModal, 
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        decelerationRate="fast"
+        decelerationRate="normal"
         keyExtractor={(item) => item.id.toString()}
         data={photo}
+        windowSize={5}
+        initialNumToRender={2}
+        maxToRenderPerBatch={10}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         scrollEnabled={!scrollEnabled}
         renderItem={({ item, index }) => {
@@ -114,6 +117,7 @@ export const Slider = React.memo(({ photo, single, viewableItems, setOpenModal, 
           }
           return (
             <TouchableOpacity
+              key={index}
               onLongPress={() => onLongClikc()}
               activeOpacity={1}
               onPressOut={() => onPressOut()}
