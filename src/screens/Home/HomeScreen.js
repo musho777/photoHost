@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, RefreshControl, Image, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, FlatList, RefreshControl, Image, Text, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, DeletePhotoFromHome, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
@@ -49,7 +49,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (staticdata.token) {
-      dispatch(GetLentsAction(staticdata.token));
+      dispatch(GetLentsAction(staticdata.token, 1));
       dispatch(getUserInfoAction(staticdata.token))
       dispatch(GetMyChatRoom({ search: "" }, staticdata.token, 1))
     }
@@ -180,14 +180,12 @@ export const HomeScreen = () => {
         </View>}
         <FlatList
           scrollEnabled={!full}
-          removeClippedSubviews={false}
           keyExtractor={(item) => item.id.toString()}
-          keyboardShouldPersistTaps="never"
           showsVerticalScrollIndicator={false}
           ref={flatListRef}
           onViewableItemsChanged={onViewableItemsChanged}
           onEndReached={() => {
-            if (getLents?.nextPage) {
+            if (getLents?.nextPage && !getLents.loading && !getLents.secondLoading) {
               let p = page + 1;
               dispatch(GetLentsAction(staticdata.token, p));
               setPage(p);
@@ -206,11 +204,12 @@ export const HomeScreen = () => {
             />
           }
           viewabilityConfig={viewabilityConfig}
+          ListFooterComponent={getLents.secondLoading ? <ActivityIndicator /> : null}
           data={getLents.data}
           enableEmptySections={true}
           renderItem={renderItem}
           initialNumToRender={7}
-          maxToRenderPerBatch={4}
+          maxToRenderPerBatch={10}
           windowSize={4}
         />
         {showView &&

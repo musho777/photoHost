@@ -11,10 +11,14 @@ const GetLentsReducer = (state = initialState, action) => {
   let item = { ...state };
   switch (action.type) {
     case 'StartGetLents':
-      if (action.StartGetLents == 'first') {
-        item.status = false;
-        item.error = '';
-        item.loading = true;
+      if (action.loadingType == 'first') {
+        item.error = ''
+        item.status = false
+        item.loading = true
+        item.data = []
+        item.message = ''
+        item.nextPage = ''
+        item.secondLoading = false
       }
       else {
         item.secondLoading = true;

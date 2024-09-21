@@ -24,7 +24,7 @@ const CreatePostReducer = (state = initialState, action) => {
       item.localImg = action.form
       break
     case 'ErrorCreatePost':
-      item.error = action.data
+      item.error = 'error'
       item.loading = false
       item.status = false
       break;

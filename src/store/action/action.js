@@ -329,7 +329,7 @@ export const NewPasswordAction = data => {
   };
 };
 
-export const getUserInfoAction = token => {
+export const getUserInfoAction = (token) => {
   return dispatch => {
     dispatch(StartGetUserData());
     axios
@@ -345,7 +345,6 @@ export const getUserInfoAction = token => {
               r.data.followers_count,
               r.data.post_count,
               r.data,
-
             ),
           );
         } else {
@@ -879,8 +878,7 @@ export const CreatPostAction = (data, token) => {
           dispatch(getUserInfoAction(token))
 
         } else {
-
-          dispatch(ErrorCreatePost(error));
+          dispatch(ErrorCreatePost());
         }
       })
       .catch(error => {
@@ -974,6 +972,7 @@ export const GetLentsAction = (token, page) => {
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorGetLents('server error'));
       });
   };
