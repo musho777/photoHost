@@ -26,12 +26,14 @@ export const AlbomAndInfo = () => {
     <View style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={styles.tabContainer}>
         <TouchableOpacity
+          activeOpacity={1}
           style={[styles.tab, selectedTab === 'first' && styles.activeTab]}
           onPress={() => setSelectedTab('first')}
         >
           <Text style={Styles.balihaiRegular15}>{t(mainData.lang).Album}</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          activeOpacity={1}
           style={[styles.tab, selectedTab === 'second' && styles.activeTab]}
           onPress={() => setSelectedTab('second')}
         >

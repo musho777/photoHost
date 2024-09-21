@@ -71,6 +71,7 @@ export const Share = ({ big, postId, close, open, user_id }) => {
       index={0}
       snapPoints={['80%']}
       onClose={() => close()}
+      enablePanDownToClose={true}
       backdropComponent={renderBackdrop}>
       <View
         style={[

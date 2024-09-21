@@ -48,6 +48,7 @@ export const LikeList = forwardRef(
         ref={ref}
         index={0}
         snapPoints={['80%']}
+        enablePanDownToClose={true}
         onClose={() => close()}
         backdropComponent={renderBackdrop}>
         <View

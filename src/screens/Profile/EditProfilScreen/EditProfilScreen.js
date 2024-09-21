@@ -210,7 +210,7 @@ export const EditProfilScreen = ({ navigation }) => {
           />
         </View>
         <Fild value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
-        {!accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
+        {accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
           (чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
           Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)
         </Text> :
@@ -222,12 +222,10 @@ export const EditProfilScreen = ({ navigation }) => {
         <View>
           {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
           <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
-          {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
-          {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
+          <Profiesions setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
           <Fild value={profation} hadnelChange={(e) => setProfation(e)} svg={<ProfetionsSvg />} placeholder={t(mainData.lang).ProfessionFieldofactivity} />
-          {!accauntType &&
-            <Profiesions setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
-          }
+          {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
+          {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
           {!accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
           {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />}
           {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
