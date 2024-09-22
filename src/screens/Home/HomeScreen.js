@@ -133,9 +133,8 @@ export const HomeScreen = () => {
     if (getLents.secondLoading) {
       return <View style={{ height: 50, marginTop: 0, zIndex: 999999, justifyContent: 'flex-start', alignItems: 'center' }}>
         <View style={{ color: 'black', marginTop: -70 }}>
-          <ActivityIndicator size="small" color="#000" />
+          <ActivityIndicator size="small" color='#FFC24B' />
         </View>
-        {/* <Text style={{ color: 'black', marginTop: -70 }}>Loading !!!</Text> */}
       </View>
     }
   };

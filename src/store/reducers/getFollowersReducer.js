@@ -12,7 +12,8 @@ const GetFollowersReducer = (state = initialState, action) => {
     case 'StartGetFollowersAction':
       item.status = false;
       item.error = '';
-      (item.message = ''), (item.loading = true);
+      item.message = ''
+      item.loading = true;
       break;
     case 'SucessGetFollowersAction':
       item.status = true;

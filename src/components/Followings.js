@@ -20,9 +20,8 @@ export const Followings = ({ id }) => {
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch()
   const loadingData = ['', '', '', '', '', '']
-  useEffect(() => {
-    dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
-  }, [data, id])
+
+
   useFocusEffect(
     useCallback(() => {
       dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
@@ -87,7 +86,9 @@ export const Followings = ({ id }) => {
           renderItem={renderItem}
           onEndReached={() => {
             if (getFollowers?.nextPage) {
-              dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
+              let p = page + 1
+              setPage(p)
+              dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, p))
             }
           }}
         />

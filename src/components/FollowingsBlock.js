@@ -37,6 +37,7 @@ export const FollowingsBlock = ({
   };
   return (
     <TouchableOpacity
+      activeOpacity={1}
       onPress={onPress}
       style={[{ marginBottom: 20 }, Styles.flexSpaceBetween]}>
       <View style={Styles.flexAlignItems}>

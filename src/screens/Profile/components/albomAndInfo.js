@@ -37,7 +37,7 @@ export const AlbomAndInfo = () => {
           style={[styles.tab, selectedTab === 'second' && styles.activeTab]}
           onPress={() => setSelectedTab('second')}
         >
-          <Text style={Styles.balihaiRegular15}>{t(mainData.lang).Information}</Text>
+          <Text style={[Styles.balihaiRegular15, selectedTab === 'second' && { marginBottom: -4, }]}>{t(mainData.lang).Information}</Text>
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={{ flexGrow: 1 }}>

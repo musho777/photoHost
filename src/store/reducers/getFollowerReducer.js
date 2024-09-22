@@ -18,8 +18,8 @@ const GetFollowerReducer = (state = initialState, action) => {
     case 'SuccessGetFollower':
       item.status = true;
       item.error = '';
-      item.message = action.data?.message,
-        item.loading = false;
+      item.message = action.data?.message
+      item.loading = false;
       if (action.data.data.current_page == 1) {
         item.data = action.data.data.data;
       }

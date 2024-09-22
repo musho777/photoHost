@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, FlatList, RefreshControl, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDeletFollowAction, GetFollowerAction, GetFollowersAction } from '../store/action/action';
@@ -10,7 +10,7 @@ import { Styles } from '../styles/Styles';
 import { t } from '../components/lang';
 import { FollowerSkeleton } from './skeleton/followerSkeleton';
 
-export const Followers = ({ id }) => {
+export const Followers = React.memo(({ id }) => {
   const navigation = useNavigation();
   const [data, setData] = useState('');
   let getFollowers = useSelector(st => st.getFollower);
@@ -21,14 +21,13 @@ export const Followers = ({ id }) => {
   const loadingData = ['', '', '', '', '', '', '', '']
   const user = useSelector(st => st.userData);
 
-  // useEffect(() => {
-  //   dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
-  // }, [data, id]);
+
   useFocusEffect(
     useCallback(() => {
       dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
     }, [data, id])
   );
+
 
   const addClick = id => {
     let remove = false
@@ -89,9 +88,7 @@ export const Followers = ({ id }) => {
         <FlatList
           refreshControl={
             <RefreshControl
-              // refreshing={getFollowers?.loading}
               onRefresh={() => {
-                // dispatch(clearGetFollowersAction());
                 dispatch(
                   GetFollowerAction(
                     { search: data, user_id: id },
@@ -112,17 +109,17 @@ export const Followers = ({ id }) => {
           renderItem={renderItem}
           onEndReached={() => {
             if (getFollowers?.nextPage) {
-              dispatch(
-                GetFollowerAction(
-                  { search: data, user_id: id },
-                  staticdata.token,
-                  page,
-                ),
-              );
+              let p = page + 1
+              setPage(p)
+              dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, p))
             }
           }}
         />
       }
     </View>
   );
-};
+}, (prevProps, nextProps) => {
+  return (
+    prevProps.id === nextProps.id
+  )
+});

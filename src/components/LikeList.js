@@ -13,7 +13,7 @@ import { HearSvg2 } from '../assets/svg/Svgs';
 import { Styles } from '../styles/Styles';
 
 export const LikeList = forwardRef(
-  ({ snapPoints, id, token, close }, ref) => {
+  ({ id, token, close }, ref) => {
     const navigation = useNavigation();
     const user = useSelector(st => st.userData);
     const [page, setPage] = useState(1);

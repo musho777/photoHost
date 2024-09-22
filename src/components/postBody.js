@@ -49,7 +49,10 @@ export const PostBody = ({
 
   return <View style={styles.bostBody}>
     {(!likeClose && !showShare) && <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
-      <View style={styles.hover}>
+      <TouchableOpacity activeOpacity={1} onLongPress={() => {
+        dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
+        setShowLike(true)
+      }} style={styles.hover}>
         <View style={styles.hoverItem}>
           <TouchableOpacity onPress={() => LikePost()}>
             {liked ? <WhiteHeart /> : <NotLineSvgWhite />}
@@ -62,7 +65,7 @@ export const PostBody = ({
             <Text style={[Styles.darkMedium14, { color: 'white' }]}>{like}</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })} style={styles.hover}>
         <View style={styles.hoverItem}>
           <CommentWhite />

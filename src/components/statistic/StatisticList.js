@@ -10,7 +10,8 @@ import Accordion from "@gapur/react-native-accordion";
 import { Table, Row, } from 'react-native-table-component';
 import { GetStatisitc2, Getstatistic1 } from '../../store/action/action';
 import { AppColors } from '../../styles/AppColors';
-import { DonwSvg, UpSvg } from '../../assets/svg/Svgs';
+import { DonwSvg } from '../../assets/svg/Svgs';
+import { useNavigation } from '@react-navigation/native';
 
 
 export const StatisticList = ({ id, token }) => {
@@ -22,8 +23,8 @@ export const StatisticList = ({ id, token }) => {
   const getPostView = useSelector(st => st.getPostView);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch()
-  const [showArrow, setShowArrow] = useState(false)
-
+  const user = useSelector((st) => st.userData)
+  const navigation = useNavigation()
 
   useEffect(() => {
     if (id) {
@@ -95,9 +96,7 @@ export const StatisticList = ({ id, token }) => {
           <View style={styles.line}></View>
           <TouchableOpacity activeOpacity={1} style={{ position: 'relative', width: '100%' }}>
             <View style={{ position: 'absolute', zIndex: 9999, right: 10, top: 23 }}>
-              <View style={showArrow && { transform: [{ rotate: '180deg' }] }}>
-                <DonwSvg />
-              </View >
+              <DonwSvg />
             </View>
             <Accordion headerTitleStyle={Styles.darkMedium12} style={{ width: '100%', marginLeft: 0 }} headerTitle="Просмотрели предыдущие публикации">
               <BottomSheetScrollView
@@ -114,8 +113,8 @@ export const StatisticList = ({ id, token }) => {
                 {getPostView.data.map((elm, i) => {
                   return (
                     <TouchableOpacity
+                      activeOpacity={1}
                       onPress={() => {
-                        close();
                         if (user.data.id == elm.user.id) {
                           navigation.navigate('ProfileNavigation');
                         }

@@ -707,7 +707,7 @@ export const GetFollowerAction = (data, token, page) => {
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    // dispatch(StartGetFollower());
+    dispatch(StartGetFollower());
     fetch(`${Api}/get_follower?page=${page}`, {
       method: 'POST',
       headers: myHeaders,
