@@ -1377,3 +1377,41 @@ export const AddImage = () => {
     </G>
   </Svg>
 }
+
+
+export const DonwSvg = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20px"
+    height="20px"
+    viewBox="0 0 24 24"
+  >
+    <G data-name="24x24/On Light/Arrow-Bottom" transform="rotate(-90 12 12)">
+      <Path fill="none" d="M0 0H24V24H0z" />
+      <Path
+        d="M.22 10.22a.75.75 0 001.06 1.06l5-5a.75.75 0 000-1.061l-5-5A.75.75 0 00.22 1.28l4.47 4.47z"
+        transform="rotate(180 7.375 8.875)"
+        fill="#000"
+      />
+    </G>
+  </Svg>
+}
+
+export const UpSvg = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20px"
+    height="20px"
+    viewBox="0 0 24 24"
+  // transform="rotate(180)"
+  >
+    <G data-name="24x24/On Light/Arrow-Bottom" transform="rotate(-90 12 12)">
+      <Path fill="none" d="M0 0H24V24H0z" />
+      <Path
+        d="M.22 10.22a.75.75 0 001.06 1.06l5-5a.75.75 0 000-1.061l-5-5A.75.75 0 00.22 1.28l4.47 4.47z"
+        transform="rotate(180 7.375 8.875)"
+        fill="#000"
+      />
+    </G>
+  </Svg>
+}

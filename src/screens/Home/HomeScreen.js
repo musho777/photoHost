@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { View, FlatList, RefreshControl, Image, Text, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
@@ -119,7 +119,6 @@ export const HomeScreen = () => {
   const handleEndReached = useCallback(() => {
     if (getLents?.nextPage && !getLents.loading && !getLents.secondLoading && !isFetching) {
       setIsFetching(true)
-      console.log('-23')
       let p = page + 1;
       dispatch(GetLentsAction(staticdata.token, p));
       setPage(p);
@@ -130,7 +129,16 @@ export const HomeScreen = () => {
     }
   }, [getLents, page, isFetching]);
 
-
+  const ListEndLoader = () => {
+    if (getLents.secondLoading) {
+      return <View style={{ height: 50, marginTop: 0, zIndex: 999999, justifyContent: 'flex-start', alignItems: 'center' }}>
+        <View style={{ color: 'black', marginTop: -70 }}>
+          <ActivityIndicator size="small" color="#000" />
+        </View>
+        {/* <Text style={{ color: 'black', marginTop: -70 }}>Loading !!!</Text> */}
+      </View>
+    }
+  };
 
   const loadingData = ['', '']
   const renderItem = ({ item, index }) => {
@@ -178,6 +186,7 @@ export const HomeScreen = () => {
         </View>}
         <FlatList
           scrollEnabled={!full}
+          ListFooterComponent={ListEndLoader}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           ref={flatListRef}
@@ -188,7 +197,7 @@ export const HomeScreen = () => {
           }}
           refreshControl={
             <RefreshControl
-              refreshing={getLents?.loading || getLents.secondLoading}
+              refreshing={getLents?.loading}
               onRefresh={() => {
                 setPage(1)
                 dispatch(GetLentsAction(staticdata.token, 1));

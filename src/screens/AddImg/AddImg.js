@@ -62,6 +62,7 @@ export const AddImg = ({ navigation }) => {
   const snapPoints = useMemo(() => ['50%'], [],);
 
   const handlePresentModalPress = useCallback(() => {
+    Keyboard.dismiss()
     bottomSheetRef.current?.present();
   }, []);
   const handlePresentModalClose = useCallback(() => {

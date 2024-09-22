@@ -10,6 +10,7 @@ import Accordion from "@gapur/react-native-accordion";
 import { Table, Row, } from 'react-native-table-component';
 import { GetStatisitc2, Getstatistic1 } from '../../store/action/action';
 import { AppColors } from '../../styles/AppColors';
+import { DonwSvg, UpSvg } from '../../assets/svg/Svgs';
 
 
 export const StatisticList = ({ id, token }) => {
@@ -21,6 +22,8 @@ export const StatisticList = ({ id, token }) => {
   const getPostView = useSelector(st => st.getPostView);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch()
+  const [showArrow, setShowArrow] = useState(false)
+
 
   useEffect(() => {
     if (id) {
@@ -90,48 +93,55 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>
           <View style={styles.line}></View>
-          <Accordion headerTitleStyle={Styles.darkMedium12} style={{ width: '100%', marginLeft: 0 }} headerTitle="Просмотрели предыдущие публикации">
-            <BottomSheetScrollView
-              style={{ marginTop: 20 }}
-              onScroll={({ nativeEvent }) => {
-                if (isCloseToBottom(nativeEvent)) {
-                  if (getPosts.nextPage) {
-                    let pages = page + 1;
-                    dispatch(GetPostViewAction({ post_id: id }, token, page));
-                    setPage(pages);
+          <TouchableOpacity activeOpacity={1} style={{ position: 'relative', width: '100%' }}>
+            <View style={{ position: 'absolute', zIndex: 9999, right: 10, top: 23 }}>
+              <View style={showArrow && { transform: [{ rotate: '180deg' }] }}>
+                <DonwSvg />
+              </View >
+            </View>
+            <Accordion headerTitleStyle={Styles.darkMedium12} style={{ width: '100%', marginLeft: 0 }} headerTitle="Просмотрели предыдущие публикации">
+              <BottomSheetScrollView
+                style={{ marginTop: 20 }}
+                onScroll={({ nativeEvent }) => {
+                  if (isCloseToBottom(nativeEvent)) {
+                    if (getPosts.nextPage) {
+                      let pages = page + 1;
+                      dispatch(GetPostViewAction({ post_id: id }, token, page));
+                      setPage(pages);
+                    }
                   }
-                }
-              }}>
-              {getPostView.data.map((elm, i) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      close();
-                      if (user.data.id == elm.user.id) {
-                        navigation.navigate('ProfileNavigation');
-                      }
-                      else {
-                        navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: elm.user.id } });
-                      }
-                    }}
-                    key={i}
-                    style={[styles.block, { marginBottom: 5 }]}>
-                    <View style={Styles.flexAlignItems}>
-                      <Image
-                        style={styles.img}
-                        source={{
-                          uri: `https://chambaonline.pro/uploads/${elm.user.avatar}`,
-                        }}
-                      />
-                      <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
-                        {elm.user.name}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
-            </BottomSheetScrollView>
-          </Accordion>
+                }}>
+                {getPostView.data.map((elm, i) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => {
+                        close();
+                        if (user.data.id == elm.user.id) {
+                          navigation.navigate('ProfileNavigation');
+                        }
+                        else {
+                          navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: elm.user.id } });
+                        }
+                      }}
+                      key={i}
+                      style={[styles.block, { marginBottom: 5 }]}>
+                      <View style={Styles.flexAlignItems}>
+                        <Image
+                          style={styles.img}
+                          source={{
+                            uri: `https://chambaonline.pro/uploads/${elm.user.avatar}`,
+                          }}
+                        />
+                        <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
+                          {elm.user.name}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </BottomSheetScrollView>
+            </Accordion>
+          </TouchableOpacity>
           <View style={{ gap: 10 }}>
             <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getRandomNumber(18, 25)} </Text>
