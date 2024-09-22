@@ -183,6 +183,7 @@ export const HomeScreen = () => {
           ref={flatListRef}
           onViewableItemsChanged={onViewableItemsChanged}
           onEndReached={debounce(handleEndReached, 300)}
+          ListFooterComponent={getLents.secondLoading ? <ActivityIndicator size={'small'} color={'#FFC24B'} /> : null}
           onScroll={({ nativeEvent }) => {
             handleScroll({ nativeEvent })
           }}

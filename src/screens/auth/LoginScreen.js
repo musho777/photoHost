@@ -111,7 +111,7 @@ export const LoginScreen = ({ navigation }) => {
           <Text style={Styles.darkSemiBold12}>{t(mainData.lang).Registration}</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => setChecked(!checked)} style={{ flexDirection: 'row', alignItems: "center", gap: 10, marginTop: 30 }}>
+      <TouchableOpacity activeOpacity={1} onPress={() => setChecked(!checked)} style={{ flexDirection: 'row', alignItems: "center", gap: 10, marginTop: 30 }}>
         {!checked ?
           <ChecboxUNchekedSvg /> :
           <CheckedChexbox />

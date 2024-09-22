@@ -211,11 +211,11 @@ export const EditProfilScreen = ({ navigation }) => {
         </View>
         <Fild value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
         {accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
-          (чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
+          (Чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
           Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)
         </Text> :
           <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
-            (чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
+            (Чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
             Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города)
           </Text>
         }
