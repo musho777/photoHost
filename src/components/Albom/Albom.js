@@ -33,7 +33,6 @@ export const Albom = ({ data, seved, my = false, loading }) => {
           return (
             <ImageComponent
               onPress={() => {
-                dispatch(LocalSinglImage(seved ? elm.post : elm))
                 my ?
                   navigation.navigate('SinglPageScreen', { data: seved ? elm.post : elm, my: my }) :
                   navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { data: seved ? elm.post : elm, my: my } })

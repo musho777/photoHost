@@ -237,7 +237,7 @@ export const HomeScreen = () => {
           windowSize={windowSize}
 
 
-          decelerationRate={0.8}
+          decelerationRate={0.7}
         />
         {showView &&
           <ViewComponent
