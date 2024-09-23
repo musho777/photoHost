@@ -160,7 +160,8 @@ export const HomeScreen = () => {
   };
   if (getLents.loading) {
     return (
-      <View style={{ gap: 5, paddingVertical: 5 }}>
+      <View >
+        <HomeHeader onPress={() => goTop()} />
         {loadingData.map((elm, i) => {
           return <PostLoading key={i} />
         })}
@@ -168,6 +169,16 @@ export const HomeScreen = () => {
     );
   }
 
+  const ITEM_HEIGHT = 65; // fixed height of item component
+  const getItemLayout = (data, index) => {
+    return {
+      length: ITEM_HEIGHT,
+      offset: ITEM_HEIGHT * index,
+      index,
+    };
+  };
+  const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 21;
+  const keyExtractor = (item) => item.id;
   return (
     <SafeAreaView>
       <HomeHeader onPress={() => goTop()} />
@@ -186,9 +197,15 @@ export const HomeScreen = () => {
         <FlatList
           scrollEnabled={!full}
           ListFooterComponent={ListEndLoader}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={keyExtractor}
           showsVerticalScrollIndicator={false}
           ref={flatListRef}
+          removeClippedSubviews={true}
+
+          scrollEventThrottle={16}
+
+          getItemLayout={getItemLayout}
+
           onViewableItemsChanged={onViewableItemsChanged}
           onEndReached={debounce(handleEndReached, 300)}
           onScroll={({ nativeEvent }) => {
@@ -208,9 +225,18 @@ export const HomeScreen = () => {
           enableEmptySections={true}
           renderItem={renderItem}
           initialNumToRender={5}
-          maxToRenderPerBatch={5}
+
+
+          maxToRenderPerBatch={windowSize}
+
+
           onEndReachedThreshold={0.5}
-          windowSize={5}
+          disableVirtualization={true}
+
+
+          windowSize={windowSize}
+
+
           decelerationRate="normal"
         />
         {showView &&
