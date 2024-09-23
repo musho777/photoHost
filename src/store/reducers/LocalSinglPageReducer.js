@@ -8,15 +8,17 @@ const LocalSinglPageReducer = (state = initialState, action) => {
       item.data = action.data
       break
     case 'LocalLike':
-      let indx = item.data?.like_auth_user.findIndex((elm) => elm.user_id == action.id)
-      if (indx == -1) {
-        item.data.like_count = item.data?.like_count + 1
-        item.data.like_auth_user.push({ user_id: action.id })
-      }
-      else {
-        item.data.like_count = item.data?.like_count - 1
-        let ids = item.data.like_auth_user.findIndex((elm, i) => elm.user_id == action.id)
-        item.data.like_auth_user.splice(ids, 1)
+      let indx = item.data?.like_auth_user?.findIndex((elm) => elm.user_id == action.id)
+      if (indx >= -1) {
+        if (indx == -1) {
+          item.data.like_count = item.data?.like_count + 1
+          item.data.like_auth_user.push({ user_id: action.id })
+        }
+        else {
+          item.data.like_count = item.data?.like_count - 1
+          let ids = item.data.like_auth_user.findIndex((elm, i) => elm.user_id == action.id)
+          item.data.like_auth_user.splice(ids, 1)
+        }
       }
       break
 

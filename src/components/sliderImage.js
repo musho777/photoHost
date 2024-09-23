@@ -37,7 +37,7 @@ const SliderImage = React.memo(({ data, item, long, height, index, setScrollEnab
         style={[{ height: height }, styles.img]}
         source={{
           uri: `https://chambaonline.pro/uploads/${item.photo}`,
-          priority: FastImage.priority.high,  // Control load priority
+          priority: FastImage.priority.high,
           cache: FastImage.cacheControl.immutable
         }}
         fallback={true}

@@ -110,9 +110,9 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         />
         {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
           <FastImage
-            source={require('../assets/img/Animation3.gif')} // Ensure this path is correct
+            source={require('../assets/img/Animation3.gif')}
             style={{ width: 130, height: 130 }}
-            resizeMode={FastImage.resizeMode.contain} // Can also use 'cover', 'stretch', etc.
+            resizeMode={FastImage.resizeMode.contain}
           />
         </View>}
       </TouchableOpacity>

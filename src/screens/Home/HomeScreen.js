@@ -226,7 +226,6 @@ export const HomeScreen = () => {
           renderItem={renderItem}
           initialNumToRender={5}
 
-
           maxToRenderPerBatch={windowSize}
 
 
@@ -237,7 +236,7 @@ export const HomeScreen = () => {
           windowSize={windowSize}
 
 
-          decelerationRate="normal"
+          decelerationRate={0.8}
         />
         {showView &&
           <ViewComponent
