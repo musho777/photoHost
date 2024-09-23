@@ -34,7 +34,7 @@ export const Header = ({ data, navigation, my, big = false, activeImage }) => {
   return <View >
     <ShowSave showSave={showSave} saveType={saveType} setShowSave={(e) => setShowSave(e)} />
     <View style={[Styles.flexSpaceBetween, styles.header]}>
-      <TouchableOpacity onPress={() => { navigation.goBack() }}>
+      <TouchableOpacity style={styles.goBack} onPress={() => { navigation.goBack() }}>
         {big ? <WhiteBackArrow /> : <BackArrow />}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePresentModalPress()} style={styles.MenuSvg}>
@@ -78,5 +78,9 @@ const styles = StyleSheet.create({
   MenuSvg: {
     marginTop: -5,
     paddingLeft: 15
+  },
+  goBack: {
+    height: 50,
+    width: 50
   }
 })

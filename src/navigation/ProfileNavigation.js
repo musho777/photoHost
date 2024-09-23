@@ -29,7 +29,7 @@ function CustomDrawerContent(props) {
   return (
     <View style={{ height: '100%', backgroundColor: 'white', }}>
       <DrawerContentScrollView style={{ paddingTop: 40 }} {...props}>
-        <TouchableOpacity style={{ paddingLeft: 15 }} onPress={() => props.navigation.closeDrawer()}>
+        <TouchableOpacity style={{ paddingLeft: 15, width: 70, height: 30 }} onPress={() => props.navigation.closeDrawer()}>
           <CloseSvg />
         </TouchableOpacity>
         <DrawerItem

@@ -46,9 +46,9 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
         data={photo}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         renderItem={({ item, index }) => {
-          let height = (windowWidth * item.height) / item.width
-          if (height < 400) {
-            height = 400;
+          let height = 570
+          if (item.height < 650) {
+            height = 400
           }
           else {
             height = 700

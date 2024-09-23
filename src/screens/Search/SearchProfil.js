@@ -100,7 +100,7 @@ export const SearchProfil = ({ navigation, route }) => {
             }
           }}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginVertical: 15 }}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBack}>
             <BackArrow />
           </TouchableOpacity>
           {singlPage.loading ?
@@ -150,6 +150,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingBottom: 10,
     borderColor: '#E7EEF5',
+  },
+  goBack: {
+    marginVertical: 15,
+    width: 50,
+    height: 30
+
   }
 });
 

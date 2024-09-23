@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   userData: {
     marginTop: 7,
-    marginBottom: 15,
+    marginBottom: 5,
     alignItems: 'center',
     marginLeft: 10,
     flexDirection: 'row'

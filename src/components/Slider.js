@@ -83,11 +83,8 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
 
   const renderItem = ({ item, index }) => {
     let height = 570
-    if (item.height) {
-      height = (windowWidth * item.height) / item.width
-    }
-    if (height < 400) {
-      height = 380
+    if (item.height < 650) {
+      height = 370
     }
     else {
       height = 570

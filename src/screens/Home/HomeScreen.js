@@ -214,6 +214,7 @@ export const HomeScreen = () => {
           refreshControl={
             <RefreshControl
               refreshing={getLents?.loading}
+              tintColor="#FFC24B"
               onRefresh={() => {
                 setPage(1)
                 dispatch(GetLentsAction(staticdata.token, 1));

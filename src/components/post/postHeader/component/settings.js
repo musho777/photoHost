@@ -38,13 +38,13 @@ export const Settings = ({ my, setOpenModal, description, id, deletData, activeI
 const styles = StyleSheet.create({
   infoBlock: {
     position: 'absolute',
-    right: 20,
+    right: 10,
     top: 50,
     elevation: 5,
     backgroundColor: 'white',
     padding: 5,
     paddingHorizontal: 10,
     borderRadius: 10,
-    zIndex: 1
+    zIndex: 999999999,
   },
 });
