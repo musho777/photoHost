@@ -3,12 +3,15 @@ import { Empty } from "./component/empty";
 import { Skeleton } from "../Skeleton";
 import { ImageComponent } from "../Image/image";
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { LocalSinglImage } from '../../store/action/action';
 
 const windowWidth = Dimensions.get('window').width;
 
 export const Albom = ({ data, seved, my = false, loading }) => {
   const navigation = useNavigation()
   const Loadingdata = ['', '', '', '']
+  const dispatch = useDispatch()
   if (loading) {
     return <View activeOpacity={1} style={styles.block}>
       <View style={styles.albom}>
@@ -30,6 +33,7 @@ export const Albom = ({ data, seved, my = false, loading }) => {
           return (
             <ImageComponent
               onPress={() => {
+                dispatch(LocalSinglImage(seved ? elm.post : elm))
                 my ?
                   navigation.navigate('SinglPageScreen', { data: seved ? elm.post : elm, my: my }) :
                   navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { data: seved ? elm.post : elm, my: my } })

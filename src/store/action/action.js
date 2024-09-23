@@ -1877,3 +1877,11 @@ export const AddCommentInPost = (data) => {
     data
   }
 }
+
+
+export const LocalSinglImage = (data) => {
+  return {
+    type: 'LocalSinglImage',
+    data
+  }
+}

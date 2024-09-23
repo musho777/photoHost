@@ -80,7 +80,7 @@ export const ParametrScreen = ({ navigation }) => {
     }} style={[Styles.flexSpaceBetween, { paddingVertical: 20, borderBottomWidth: 1, borderBottomColor: AppColors.Solitude_Color, paddingRight: 15 }]}>
       <View style={Styles.flexAlignItems}>
         <Text style={[Styles.darkSemiBold14, { paddingHorizontal: 15 }]}>{t(mainData.lang).Changemail}</Text>
-        <Text style={[Styles.balihaiMedium13,]}>{user.email}</Text>
+        <Text style={[Styles.balihaiMedium13,]}>{user.email.length > 20 ? `${user.email.substring(0, 20)}...` : user.email}</Text>
       </View>
       <ArrowSvg />
     </TouchableOpacity>

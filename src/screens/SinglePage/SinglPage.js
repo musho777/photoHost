@@ -18,7 +18,8 @@ import { Share } from '../../components/share';
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const user = useSelector((st) => st.userData)
-  let data = route.params.data
+  const localSinglPage = useSelector((st) => st.localSinglPage)
+  let data = localSinglPage.data
   const staticdata = useSelector(st => st.static);
   const my = route.params.my
   const dispatch = useDispatch()
@@ -31,6 +32,10 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const End = async (id) => {
     dispatch(EndViewPost({ post_id: id }, staticdata.token))
   }
+
+
+  console.log(localSinglPage.data.comment_count)
+
   useFocusEffect(
     useCallback(() => {
       dispatch(AddPostViewCount({ post_id: data.id }, staticdata.token))
