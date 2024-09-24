@@ -39,7 +39,7 @@ export const HomeScreen = () => {
       if (userData.data.show_category_pop_up == 1) {
         setShowModal(true);
       }
-    }, 20000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [userData.data]);
@@ -169,7 +169,7 @@ export const HomeScreen = () => {
     );
   }
 
-  const ITEM_HEIGHT = 65; // fixed height of item component
+  const ITEM_HEIGHT = 65;
   const getItemLayout = (data, index) => {
     return {
       length: ITEM_HEIGHT,
@@ -237,7 +237,7 @@ export const HomeScreen = () => {
           windowSize={windowSize}
 
 
-          decelerationRate={0.7}
+          decelerationRate={"normal"}
         />
         {showView &&
           <ViewComponent

@@ -15,7 +15,6 @@ import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { AppColors } from '../../styles/AppColors';
 import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
-import { useEvent } from 'react-native-reanimated';
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const user = useSelector((st) => st.userData)
@@ -42,7 +41,6 @@ export const SinglPageScreen = ({ route, navigation }) => {
   }, [])
 
   useEffect(() => {
-    console.log(data)
     if (data) {
       setLoading(false)
     }
@@ -59,9 +57,9 @@ export const SinglPageScreen = ({ route, navigation }) => {
   );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
-      <View style={styles.header}>
+      {!loading && <View style={styles.header}>
         <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={my} />
-      </View>
+      </View>}
       {!loading &&
         <Slider setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       }

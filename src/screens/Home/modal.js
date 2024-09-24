@@ -97,19 +97,20 @@ export const ModalComponent = ({ showModal, token, close }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{ gap: 20 }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
-                <Text style={Styles.darkMedium13}>Попутный контент – это контент, который косвенно имеет отношение к выбранными Вами рубриками и будет предлагаться в ленте событий.
+                <Text style={Styles.darkMedium13}>Попутный контент – это контент, который косвенно имеет отношение к выбранным Вами рубриками и будет предлагаться в ленте событий.
                 </Text>
               </View>
               <View style={{ gap: 10 }}>
                 <Text style={[{ textDecorationLine: 'underline' }, Styles.balihaiSemiBold16]}>Пример:</Text>
                 <View style={{ gap: 6 }}>
-                  <Text style={Styles.balihaiMedium13}>Вы выбрали категорию Транспорт, к ней будут предлагаться такой контент как:</Text>
-                  <Text style={Styles.balihaiMedium13}>-Путешествия и туризм (путешествия на личном и другом транспорте)</Text>
-                  <Text style={Styles.balihaiMedium13}>-Города и страны (города и страны, которые можно и нужно посетить)</Text>
+                  <Text style={Styles.balihaiMedium13}>Вы выбрали рубрику «Транспорт», к ней будет предлагаться такой контент как:</Text>
                   <Text style={Styles.balihaiMedium13}>-Одежда и обувь (какую удобную одежду и обувь взять с собой)</Text>
-                  <Text style={Styles.balihaiMedium13}>-Активный отдых (О всех видах отдыха)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Путешествия и туризм (путешествия на личном и других видах транспорта)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Города и страны (города и страны, которые можно и нужно посетить)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Активный отдых (о видах экстремального отдыха)</Text>
                   <Text style={Styles.balihaiMedium13}>-Природа (самые красивые и сказочные места)</Text>
-                  <Text style={Styles.balihaiMedium13}>-Релакс (расслабления которые можно получить на отдыхе)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Релакс (расслабления на отдыхе)</Text>
+                  <Text style={Styles.balihaiMedium13}>-Охота и рыбалка (о рыбных местах и охоте)</Text>
                 </View>
               </View>
             </View>

@@ -349,26 +349,23 @@ export const AddImg = ({ navigation }) => {
             </View>
 
 
-
+            {console.log(height, 'height')}
             <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
             <View style={styles.centeredView}>
               {selectedImage && <View style={styles.selectImage}>
                 {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
                   onLoad={(event) => {
-                    const { width, height } = event.nativeEvent.source;
-                    let height2 = 570
-                    if (height) {
-                      height2 = (windowWidth * height) / width
-                    }
-                    if (height2 < 400) {
-                      height2 = 380
+                    let { width, height } = event.nativeEvent.source;
+                    if (height < 700) {
+                      height = 380
                     }
                     else {
-                      height2 = 570
+                      height = 570
                     }
-                    setHeight(height2)
+                    setHeight(height)
                   }}
-                  style={[styles.img, { height: height }]}
+
+                  style={[styles.img, { height: 570 }]}
                   source={{ uri: selectedImage }}
                 /> :
                   <Video

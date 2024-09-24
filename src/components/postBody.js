@@ -30,9 +30,14 @@ export const PostBody = ({
   const [showViewText, setShowViewText] = useState(false)
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
+  const [isliked, setIsliked] = useState(like)
 
+  useEffect(() => {
+    setIsliked(liked)
+  }, [liked])
 
   const LikePost = () => {
+    setIsliked(!isliked)
     dispatch(LikePostAction({
       'post_id': id
     },
@@ -49,13 +54,13 @@ export const PostBody = ({
 
   return <View style={styles.bostBody}>
     {(!likeClose && !showShare) && <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
-      <TouchableOpacity activeOpacity={1} onLongPress={() => {
+      <TouchableOpacity onLongPress={() => {
         dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
         setShowLike(true)
       }} style={styles.hover}>
         <View style={styles.hoverItem}>
           <TouchableOpacity onPress={() => LikePost()}>
-            {liked ? <WhiteHeart /> : <NotLineSvgWhite />}
+            {isliked ? <WhiteHeart /> : <NotLineSvgWhite />}
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
@@ -76,10 +81,8 @@ export const PostBody = ({
         style={styles.hover}
         onPress={() => {
           dispatch(GetFollowerAction({ search: "", user_id: user.allData.data.id }, staticdata.token, 1));
-          // handlePresentModalPressShare()
           setShowShare(true)
           setSelectidId(id)
-          // setOpenShare(openShare + 1)
         }}>
         <ShearSvg />
       </TouchableOpacity>
