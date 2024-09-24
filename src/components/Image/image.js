@@ -1,15 +1,22 @@
 import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import { StartSvg } from "../../assets/svg/Svgs"
-import { useNavigation } from "@react-navigation/native"
-import React from "react";
+import React, { useCallback, useState } from "react";
 import FastImage from "react-native-fast-image";
+import { useFocusEffect } from "@react-navigation/native";
 
 const windowWidth = Dimensions.get('window').width;
 
 export const ImageComponent = React.memo(({ video, photo, onPress }) => {
-
-  const navigation = useNavigation()
-  return <TouchableOpacity activeOpacity={1} onPress={onPress}>
+  const [disabled, setDisabled] = useState(false)
+  useFocusEffect(
+    useCallback(() => {
+      setDisabled(false)
+    }, [])
+  );
+  return <TouchableOpacity disabled={disabled} activeOpacity={1} onPress={() => {
+    onPress()
+    setDisabled(true)
+  }}>
     {video &&
       <View style={styles.playerIcone}>
         <StartSvg />

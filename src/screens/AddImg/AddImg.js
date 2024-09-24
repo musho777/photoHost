@@ -70,7 +70,6 @@ export const AddImg = ({ navigation }) => {
   }, []);
 
   const [selectedImage, setSelectedImage] = useState()
-  const [height, setHeight] = useState(500)
 
   const [activePhoto, setActivePhoto] = useState(0)
   const [screenshotUri, setScreenshotUri] = useState([]);
@@ -260,8 +259,11 @@ export const AddImg = ({ navigation }) => {
 
   const delateFoto = index => {
     let item = [...uri];
+    let temp = [...description]
+    temp.splice(index, 1);
     item.splice(index, 1);
     setUri(item);
+    setDescription(temp)
   }
 
   useEffect(() => {
@@ -281,18 +283,6 @@ export const AddImg = ({ navigation }) => {
       setShowError(false)
     }
     if (uri.length > 0) {
-      const imageUrl = uri[0].uri
-      if (imageUrl.includes('jpg') || imageUrl.includes('png'))
-        Image?.getSize(
-          imageUrl,
-          (width, height) => {
-            let height2 = (windowWidth * height) / width
-            setHeight(height2)
-          },
-          (error) => {
-            console.error('Error getting image size:', error);
-          }
-        );
       setSelectedImage(uri[0].uri)
     }
     else if (uri.length == 0) {
@@ -347,9 +337,6 @@ export const AddImg = ({ navigation }) => {
                 <CheckMarkSvg />
               </TouchableOpacity>
             </View>
-
-
-            {console.log(height, 'height')}
             <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
             <View style={styles.centeredView}>
               {selectedImage && <View style={styles.selectImage}>
@@ -362,7 +349,6 @@ export const AddImg = ({ navigation }) => {
                     else {
                       height = 570
                     }
-                    setHeight(height)
                   }}
 
                   style={[styles.img, { height: 570 }]}
