@@ -7,23 +7,23 @@ import isEqual from 'lodash.isequal';
 
 const windowWidth = Dimensions.get('window').width;
 
-const SliderImage = React.memo(({ data, item, long, height, index, setScrollEnabled, viewableItems }) => {
-  const description = useMemo(() => {
-    let desc = data.description;
-    if (data.description && data.description[0] === '[') {
+const SliderImage = React.memo(({ description, data, item, long, height, index, setScrollEnabled, viewableItems }) => {
+  const Description = useMemo(() => {
+    let desc = description;
+    if (description && description[0] === '[') {
       try {
-        desc = JSON.parse(data.description);
+        desc = JSON.parse(description);
       } catch (error) {
         console.error('Failed to parse description:', error);
       }
     }
     return desc;
-  }, [data.description]);
+  }, [description]);
 
   return <View>
-    {(!long && (Array.isArray(description) ? description[index] : description)) && <View style={styles.hover}>
+    {(!long && (Array.isArray(Description) ? Description[index] : Description)) && <View style={styles.hover}>
       <Text style={[Styles.whiteSemiBold12]}>
-        {Array.isArray(description) ? description[index] : description}
+        {Array.isArray(Description) ? Description[index] : Description}
       </Text>
     </View>}
     {item.video ?
@@ -52,6 +52,7 @@ const SliderImage = React.memo(({ data, item, long, height, index, setScrollEnab
     prevProps.long === nextProps.long &&
     prevProps.index === nextProps.index &&
     prevProps.data === nextProps.data &&
+    prevProps.description === nextProps.description &&
     isEqual(prevProps.viewableItems, nextProps.viewableItems)
   )
 });

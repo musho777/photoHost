@@ -105,7 +105,6 @@ export const SearchProfil = ({ navigation, route }) => {
   };
 
   const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
-  console.log(getPosts.secondLoading)
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

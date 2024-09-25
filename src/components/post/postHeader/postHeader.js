@@ -23,7 +23,6 @@ export const PostHeader = ({
   const staticdata = useSelector(st => st.static);
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [showSave, setShowSave] = useState(false)
-
   const dispatch = useDispatch()
 
   const handlePresentModalPress = useCallback(() => { bottomSheetRef.current?.present(); }, []);

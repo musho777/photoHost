@@ -26,7 +26,6 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   const SINGLE_CLICK_DELAY = 300;
   const DOUBLE_CLICK_DELAY = 300;
   const [position, setPosition] = useState({ x: 0, y: 0 });
-
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -115,6 +114,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         <SliderImage
           data={data}
           long={long}
+          description={data.description}
           index={index}
           setScrollEnabled={(e) => setScrollEnabled(e)}
           item={item}
@@ -172,7 +172,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   return (
     prevProps.photo.id === nextProps.photo.id &&
     prevProps.index === nextProps.index &&
-    prevProps.data === nextProps.prevProps &&
+    prevProps.data === nextProps.data &&
     process.viewableItems === nextProps.viewableItems &&
     prevProps.long === nextProps.long
   )

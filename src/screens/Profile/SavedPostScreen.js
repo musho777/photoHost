@@ -4,6 +4,7 @@ import {
   Dimensions,
   ScrollView,
   BackHandler,
+  ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Albom } from '../../components/Albom/Albom';
@@ -53,26 +54,30 @@ export const SavedPostScreen = ({ navigation }) => {
     );
   };
 
+
   return (
     <View style={{ marginTop: 10, alignItems: 'center' }}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-        onScroll={({ nativeEvent }) => {
-          if (isCloseToBottom(nativeEvent)) {
-            if (books.nextPage) {
-              let pages = page + 1;
-              dispatch(GetMyBooksAction(staticdata.token, pages));
-              setPage(pages);
+      {books.loading ?
+        <ActivityIndicator color='#FFC24B' /> :
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+          onScroll={({ nativeEvent }) => {
+            if (isCloseToBottom(nativeEvent)) {
+              if (books.nextPage) {
+                let pages = page + 1;
+                dispatch(GetMyBooksAction(staticdata.token, pages));
+                setPage(pages);
+              }
             }
-          }
-        }}>
-        <View style={{ width: windowWidth - 32, flexDirection: "column", }}>
-          {books.data.map((elm, i) => {
-            return <Albom key={i} data={books.data} seved elm={elm} />
-          })}
-        </View>
-      </ScrollView>
+          }}>
+          <View style={{ width: windowWidth - 32, flexDirection: "column", }}>
+            {books.data.map((elm, i) => {
+              return <Albom key={i} data={books.data} seved elm={elm} />
+            })}
+          </View>
+        </ScrollView>
+      }
     </View>
   );
 };

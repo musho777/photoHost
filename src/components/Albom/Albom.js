@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Dimensions, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Text, FlatList } from 'react-native';
 import { Empty } from "./component/empty";
 import { Skeleton } from "../Skeleton";
 import { ImageComponent } from "../Image/image";
@@ -8,18 +8,26 @@ const windowWidth = Dimensions.get('window').width;
 
 export const Albom = ({ data, seved, my = false, loading, elm }) => {
   const navigation = useNavigation()
-  const Loadingdata = ['', '', '', '']
+  const Loadingdata = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
+
+  const renderItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <Skeleton
+        width={windowWidth / 2 - 25}
+        height={windowWidth / 2 - 25}
+        style={{ borderRadius: 15, margin: 5 }}
+      />
+    </View>
+  );
   if (loading) {
     return <View activeOpacity={1} style={styles.block}>
       <View style={styles.albom}>
-        {Loadingdata.map((elm, i) => {
-          return <Skeleton
-            key={i}
-            width={windowWidth / 2 - 25}
-            height={windowWidth / 2 - 25}
-            style={{ borderRadius: 15 }}
-          />
-        })}
+        <FlatList
+          data={Loadingdata}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          numColumns={2} // This will make two items per row
+        />
       </View >
     </View>
   }
@@ -43,6 +51,10 @@ const styles = StyleSheet.create({
   block: {
     margin: 5,
   },
+  albom: {
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  }
 });
 
 

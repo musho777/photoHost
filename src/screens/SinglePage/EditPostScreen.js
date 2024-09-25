@@ -33,7 +33,6 @@ export const EditPostScreen = ({ route, navigation }) => {
       },
         staticdata.token))
       navigation.goBack()
-      // navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
       dispatch(ClearEditPost())
     }
   }, [editPost.status])
@@ -47,7 +46,7 @@ export const EditPostScreen = ({ route, navigation }) => {
         item = JSON.parse(description)
         item[index] = e
         setDescription(JSON.stringify(item))
-        // setActiveDescription(item[index])
+        setActiveDescription(e)
       }
       else {
         setDescription(e)
@@ -57,6 +56,7 @@ export const EditPostScreen = ({ route, navigation }) => {
       let temp = []
       temp[index] = e
       setDescription(JSON.stringify(temp))
+      setActiveDescription(e)
     }
   }
 
@@ -70,7 +70,7 @@ export const EditPostScreen = ({ route, navigation }) => {
         setActiveDescription(description)
       }
     }
-  }, [description])
+  }, [])
 
   return (
     <View>
