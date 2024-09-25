@@ -17,7 +17,7 @@ export const InfoBlock = ({ user }) => {
     const [graf, setGraf] = useState('')
     const [otrastel, setOtrasel] = useState('')
 
-
+    console.log(user)
     const GetData = () => {
         let date = new Date(user.date_of_birth);
         let year = ''

@@ -7,42 +7,40 @@ import { InfoBlock } from "../InfoBlock";
 import { AppColors } from "../../../styles/AppColors";
 import { t } from "../../../components/lang";
 
-export const AlbomAndInfo = () => {
+export const AlbomAndInfo = ({ seletedScreen, setSelectedScreen }) => {
   const mainData = useSelector(st => st.mainData);
   const getPosts = useSelector(st => st.getPosts);
   const user = useSelector(st => st.userData);
   const [selectedTab, setSelectedTab] = useState('first');
+  console.log(seletedScreen)
 
-  const renderContent = () => {
-    if (selectedTab === 'first') {
-      return <Albom loading={getPosts.loading} my={true} data={getPosts.data} />;
-    }
-    if (selectedTab === 'second') {
-      return <InfoBlock user={user.data} />;
-    }
-  };
+  // const renderContent = () => {
+  //   if (selectedTab === 'first') {
+  //     return <Albom loading={getPosts.loading} my={true} data={getPosts.data} />;
+  //   }
+  //   if (selectedTab === 'second') {
+  //     return <InfoBlock user={user.data} />;
+  //   }
+  // };
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={styles.tabContainer}>
         <TouchableOpacity
           activeOpacity={1}
-          style={[styles.tab, selectedTab === 'first' && styles.activeTab]}
-          onPress={() => setSelectedTab('first')}
+          style={[styles.tab, seletedScreen && styles.activeTab]}
+          onPress={() => setSelectedScreen(true)}
         >
           <Text style={Styles.balihaiRegular15}>{t(mainData.lang).Album}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
-          style={[styles.tab, selectedTab === 'second' && styles.activeTab]}
-          onPress={() => setSelectedTab('second')}
+          style={[styles.tab, !seletedScreen && styles.activeTab]}
+          onPress={() => setSelectedScreen(false)}
         >
-          <Text style={[Styles.balihaiRegular15, selectedTab === 'second' && { marginBottom: -4, }]}>{t(mainData.lang).Information}</Text>
+          <Text style={[Styles.balihaiRegular15, !seletedScreen && { marginBottom: -4, }]}>{t(mainData.lang).Information}</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={{ flexGrow: 1 }}>
-        {renderContent()}
-      </ScrollView>
     </View>
   );
 };

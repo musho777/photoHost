@@ -1,17 +1,14 @@
-import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Text } from 'react-native';
 import { Empty } from "./component/empty";
 import { Skeleton } from "../Skeleton";
 import { ImageComponent } from "../Image/image";
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { LocalSinglImage } from '../../store/action/action';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Albom = ({ data, seved, my = false, loading }) => {
+export const Albom = ({ data, seved, my = false, loading, elm }) => {
   const navigation = useNavigation()
   const Loadingdata = ['', '', '', '']
-  const dispatch = useDispatch()
   if (loading) {
     return <View activeOpacity={1} style={styles.block}>
       <View style={styles.albom}>
@@ -28,38 +25,24 @@ export const Albom = ({ data, seved, my = false, loading }) => {
   }
   return (
     <TouchableOpacity activeOpacity={1} style={styles.block}>
-      <View style={styles.albom}>
-        {data.map((elm, i) => {
-          return (
-            <ImageComponent
-              onPress={() => {
-                my ?
-                  navigation.navigate('SinglPageScreen', { data: seved ? elm.post : elm, my: my, seved: seved }) :
-                  navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { data: seved ? elm.post : elm, my: my, seved: seved } })
-              }}
-              video={elm.photo ? elm.photo[0].video : elm.post.photo[0].video}
-              photo={elm.photo ? elm?.photo[0]?.photo : elm?.post.photo[0]?.photo}
-              key={i}
-            />
-          );
-        })}
-        {data.length === 0 && !loading && <Empty seved={seved} />}
-      </View>
+      <ImageComponent
+        onPress={() => {
+          my ?
+            navigation.navigate('SinglPageScreen', { data: seved ? elm.post : elm, my: my, seved: seved }) :
+            navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { data: seved ? elm.post : elm, my: my, seved: seved } })
+        }}
+        video={elm?.photo ? elm.photo[0].video : elm.post.photo[0].video}
+        photo={elm?.photo ? elm?.photo[0]?.photo : elm?.post.photo[0]?.photo}
+      />
+      {data.length === 0 && !loading && <Empty seved={seved} />}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   block: {
-    marginTop: 5,
-    width: '100%',
-    marginBottom: 10
+    margin: 5,
   },
-  albom: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    gap: 14,
-  }
 });
 
 
