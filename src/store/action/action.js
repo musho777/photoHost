@@ -1497,12 +1497,12 @@ export const DelatePostAction = (data, token) => {
     redirect: 'follow',
   };
   return dispatch => {
+    dispatch(DeletLocalPhoto(data))
     dispatch(StartDeletePost());
     fetch(`${Api}/delete_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(DeletLocalPhoto(data))
           dispatch(SuccessDelatePhost(r.data))
         }
         else {
@@ -1514,14 +1514,6 @@ export const DelatePostAction = (data, token) => {
       });
   };
 }
-
-export const DeletePhotoFromHome = (data) => {
-  return {
-    type: 'DeletePhotoFromHome',
-    data
-  }
-}
-
 
 const DeletLocalPhoto = (data) => {
   return {

@@ -87,7 +87,7 @@ const GetLentsReducer = (state = initialState, action) => {
     case 'ClearLoginAction':
       item.data = []
       break
-    case 'DeletePhotoFromHome':
+    case 'DeletLocalPhoto':
       let ind = item.data.findIndex((elm) => elm.id == action.data.post_id)
       if (ind >= 0) {
         item.data.splice(ind, 1)

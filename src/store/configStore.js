@@ -38,7 +38,6 @@ import MsgCountReducer from './reducers/MsgCountReducer';
 import MainReducer from './reducers/MainReducer';
 import GetCatalogReducer from './reducers/GetCatalogReducer';
 import ChangeCatalogReducer from './reducers/changeCatalogReducer';
-import GetLentsActionRecReducer from './reducers/GetLentsActionRecReducer';
 import GetRelationCategoryReducer from './reducers/GetRelationCategoryReducer';
 import DelatePhotoReducer from './reducers/delatePhotoReducer';
 import UpdateUserInfoReducer from './reducers/updateUserInfoReducer';
@@ -88,7 +87,6 @@ const rootReducer = combineReducers({
     mainData: MainReducer,
     getCatalog: GetCatalogReducer,
     changeCatalog: ChangeCatalogReducer,
-    getLentsAction: GetLentsActionRecReducer,
     getRelationCategory: GetRelationCategoryReducer,
     delatePhoto: DelatePhotoReducer,
     updateUserInfo: UpdateUserInfoReducer,

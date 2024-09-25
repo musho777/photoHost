@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { View, FlatList, RefreshControl, Image, Text, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, DeletePhotoFromHome, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -60,8 +60,8 @@ export const HomeScreen = () => {
 
 
   const deletData = useCallback((i, post_id) => {
-    dispatch(DeletePhotoFromHome({ post_id }))
     dispatch(DelatePostAction({ post_id }, staticdata.token))
+
   }, [dispatch, staticdata.token]);
 
   const AddToBack = useCallback((e) => {
