@@ -77,7 +77,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
         </View>}
       </View>}
       {!loading &&
-        <Slider setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+        <Slider save={save} setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       }
       {!loading &&
         <View style={{ position: 'absolute', bottom: 15, width: '100%', zIndex: 999 }}>

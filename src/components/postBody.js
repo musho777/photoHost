@@ -58,18 +58,19 @@ export const PostBody = ({
         dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
         setShowLike(true)
       }} style={styles.hover}>
-        <View style={styles.hoverItem}>
-          <TouchableOpacity onPress={() => LikePost()}>
+        <TouchableOpacity onPress={() => LikePost()} style={styles.hoverItem}>
+          <View >
             {isliked ? <WhiteHeart /> : <NotLineSvgWhite />}
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
+          </View>
+          <TouchableOpacity onPress={(e) => {
+            e.preventDefault()
             dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
             setShowLike(true)
           }
           }>
             <Text style={[Styles.darkMedium14, { color: 'white' }]}>{like}</Text>
           </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('coment', { parentId: id })} style={styles.hover}>
         <View style={styles.hoverItem}>

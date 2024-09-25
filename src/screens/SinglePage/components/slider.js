@@ -13,7 +13,7 @@ import { Styles } from '../../../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, music_name, big = false, description, setActiveImage }) => {
+export const Slider = ({ photo, music_name, big = false, description, setActiveImage, save }) => {
   const [active, setActive] = useState(0);
   const [scroleEneble, setScrollEnabled] = useState(true)
   const [D, setD] = useState(description)
@@ -63,7 +63,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                     source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                     resizeMode="cover"
                   />
-                  {(description && (Array.isArray(D) ? D[index] : D)) && <View style={styles.hover}>
+                  {(description && (Array.isArray(D) ? D[index] : D)) && <View style={[styles.hover, { top: save ? 40 : 10 }]}>
                     <Text style={[Styles.whiteSemiBold12]}>
                       {Array.isArray(D) ? D[index] : D}
                     </Text>
@@ -71,7 +71,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                 </View>
                 : (
                   <View>
-                    {(description && (Array.isArray(D) ? D[index] : D)) && <View style={styles.hover}>
+                    {(description && (Array.isArray(D) ? D[index] : D)) && <View style={[styles.hover, { top: save ? 40 : 10 }]}>
                       <Text style={[Styles.whiteSemiBold12]}>
                         {Array.isArray(D) ? D[index] : D}
                       </Text>
@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 'auto',
     position: 'absolute',
-    top: 60,
     left: 3,
   }
 });
