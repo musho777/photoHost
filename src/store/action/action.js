@@ -333,7 +333,6 @@ export const getUserInfoAction = (token) => {
     dispatch(StartGetUserData());
     axios.get(`${Api}/auth_user_info`, { headers: { Authorization: `Bearer ${token}` }, })
       .then(r => {
-        console.log(r.data.status, 'user')
         if (r.data.status) {
           dispatch(
             SuccessGetUserData(
@@ -349,7 +348,6 @@ export const getUserInfoAction = (token) => {
         }
       })
       .catch(error => {
-        console.log(error, 'user')
         dispatch(ErrorGetUserData());
       });
   };
@@ -947,7 +945,6 @@ export const GetOtherPostsAction = (data, token, page) => {
 };
 
 export const GetLentsAction = (token, page) => {
-  console.log('page ---', page)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -971,7 +968,6 @@ export const GetLentsAction = (token, page) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorGetLents('server error'));
       });
   };

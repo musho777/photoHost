@@ -267,7 +267,6 @@ export const AddImg = ({ navigation }) => {
         setActivePhoto(index - 1)
       }
       else if (index == 0 && item.length >= 1) {
-        console.log("333")
         setActivePhoto(0)
       }
       else {

@@ -27,7 +27,6 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const staticdata = useSelector(st => st.static);
   const my = route.params.my
   const save = route.params.seved
-  console.log("12", save)
   const post = route.params.data
   const dispatch = useDispatch()
   const [showView, setShowView] = useState(null)
@@ -36,7 +35,6 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(true)
 
   const [showShare, setShowShare] = useState(false)
-  console.log(data)
   const End = async (id) => {
     dispatch(EndViewPost({ post_id: id }, staticdata.token))
   }
