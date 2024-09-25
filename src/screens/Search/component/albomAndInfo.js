@@ -14,14 +14,14 @@ export const AlbomAndInfo = () => {
   const singlPage = useSelector(st => st.singlPage);
   const [selectedTab, setSelectedTab] = useState('first');
 
-  const renderContent = () => {
-    if (selectedTab === 'first') {
-      return <Albom loading={getPosts.loading} my={false} data={getPosts.data} />;
-    }
-    if (selectedTab === 'second') {
-      return <InfoBlock user={singlPage.data} />;
-    }
-  };
+  // const renderContent = () => {
+  //   if (selectedTab === 'first') {
+  //     return <Albom loading={getPosts.loading} my={false} data={getPosts.data} />;
+  //   }
+  //   if (selectedTab === 'second') {
+  //     return <InfoBlock user={singlPage.data} />;
+  //   }
+  // };
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -41,9 +41,9 @@ export const AlbomAndInfo = () => {
           <Text style={[Styles.balihaiRegular15, selectedTab === 'second' && { marginBottom: -4, }]}>{t(mainData.lang).Information}</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={{ flexGrow: 1 }}>
+      {/* <ScrollView style={styles.scrollView} contentContainerStyle={{ flexGrow: 1 }}>
         {renderContent()}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 };

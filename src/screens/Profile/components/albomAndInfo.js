@@ -9,19 +9,6 @@ import { t } from "../../../components/lang";
 
 export const AlbomAndInfo = ({ seletedScreen, setSelectedScreen }) => {
   const mainData = useSelector(st => st.mainData);
-  const getPosts = useSelector(st => st.getPosts);
-  const user = useSelector(st => st.userData);
-  const [selectedTab, setSelectedTab] = useState('first');
-  console.log(seletedScreen)
-
-  // const renderContent = () => {
-  //   if (selectedTab === 'first') {
-  //     return <Albom loading={getPosts.loading} my={true} data={getPosts.data} />;
-  //   }
-  //   if (selectedTab === 'second') {
-  //     return <InfoBlock user={user.data} />;
-  //   }
-  // };
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>

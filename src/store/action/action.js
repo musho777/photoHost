@@ -924,7 +924,13 @@ export const GetOtherPostsAction = (data, token, page) => {
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    if (page == 1 || !page) { dispatch(StartOtherPostsAction()) }
+    if (page == 1 || !page) {
+      dispatch(StartOtherPostsAction("first"))
+    }
+    else {
+      dispatch(StartOtherPostsAction("second"))
+    }
+
     fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
       method: 'POST',
       headers: myHeaders,

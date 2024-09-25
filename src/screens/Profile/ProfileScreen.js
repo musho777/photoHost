@@ -117,8 +117,7 @@ export const ProfileScreen = ({ navigation }) => {
           ListFooterComponent={
             getPosts.secondLoading && (
               <ActivityIndicator style={styles.loading} size="small" color="#FFC24B" />
-            )
-          }
+            )}
         />
 
       </TouchableOpacity>

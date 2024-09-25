@@ -5,8 +5,9 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  ScrollView,
   SafeAreaView,
+  FlatList,
+  ActivityIndicator
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { BackArrow } from '../../assets/svg/Svgs';
@@ -14,10 +15,14 @@ import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDeleteFollowAction, AddDeletFollowAction, GetOtherPostsAction, GetSinglPageAction } from '../../store/action/action';
 import { t } from '../../components/lang';
-import { AlbomAndInfo } from './component/albomAndInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { ProfileImageSkeleton } from '../../components/skeleton/profileImageSkeleton';
 import { ProfilInfo } from '../Profile/components/profilInfo';
+import { Albom } from '../../components/Albom/Albom';
+import { InfoBlock } from '../Profile/InfoBlock';
+import debounce from 'lodash/debounce';
+import { AlbomAndInfo } from '../Profile/components/albomAndInfo';
+
 
 
 export const SearchProfil = ({ navigation, route }) => {
@@ -30,8 +35,7 @@ export const SearchProfil = ({ navigation, route }) => {
   const [isFollow, setIsFollow] = useState(false)
   const [followersCount, setFollowersCount] = useState(0)
   const user = useSelector(st => st.userData);
-
-
+  const [seletedScreen, setSelectedScreen] = useState(true)
 
 
 
@@ -71,67 +75,104 @@ export const SearchProfil = ({ navigation, route }) => {
   }, [singlPage.data])
 
 
-  useEffect(() => {
-    if (page >= 1) {
-      dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
-    }
-  }, [page])
 
+  const handleEndReached = useCallback(() => {
+    if (seletedScreen)
+      if (getPosts.nextPage && !getPosts.secondLoading) {
+        let pages = page
+        pages = page + 1
+        setPage(pages)
+        dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, pages));
+      }
+  }, [getPosts, page, seletedScreen]);
 
-  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
-    const paddingToBottom = 900;
-    return layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom;
+  const renderItem1 = ({ item, index }) => {
+    return <Albom elm={item} loading={getPosts.loading} my={true} data={getPosts.data} />;
   };
+  const renderItem2 = ({ item, index }) => {
+    return <InfoBlock user={singlPage.data} />
+  };
+
+  const renderItem = seletedScreen ? renderItem1 : renderItem2;
+
+  const ITEM_HEIGHT = 65;
+  const getItemLayout = (data, index) => {
+    return {
+      length: ITEM_HEIGHT,
+      offset: ITEM_HEIGHT * index,
+      index,
+    };
+  };
+
+  const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
+  console.log(getPosts.secondLoading)
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ paddingHorizontal: 15 }}>
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
+        <FlatList
+          data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
+          scrollEnabled={seletedScreen}
+          keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          onScroll={({ nativeEvent }) => {
-            if (isCloseToBottom(nativeEvent)) {
-              if (getPosts.nextPage) {
-                let pages = page
-                pages = page + 1
-                setPage(pages)
-              }
+          refreshing={getPosts?.loading}
+          renderItem={renderItem}
+          numColumns={2}
+          scrollEventThrottle={16}
+          getItemLayout={getItemLayout}
+          onEndReached={debounce(handleEndReached, 300)}
+          initialNumToRender={5}
+          maxToRenderPerBatch={windowSize}
+          onEndReachedThreshold={0.5}
+
+          onRefresh={() => {
+            if (!getPosts.loading) {
+              dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
+              dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
+              setPage(1);
             }
           }}
-        >
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBack}>
-            <BackArrow />
-          </TouchableOpacity>
-          {singlPage.loading ?
-            <ProfileImageSkeleton /> :
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-              <Image
-                style={styles.img}
-                source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.avatar}` }}
-              />
-              <Text style={[Styles.darkMedium16, { margin: 7 }]}>{singlPage.data.name}</Text>
-              {singlPage.data.description && (
-                <Text style={[Styles.darkRegular14, { textAlign: 'center' }]}>{singlPage.data.description}</Text>
-              )}
-            </View>
+
+          ListHeaderComponent={
+            <>
+              <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBack}>
+                <BackArrow />
+              </TouchableOpacity>
+              {singlPage.loading ?
+                <ProfileImageSkeleton /> :
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                  <Image
+                    style={styles.img}
+                    source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.avatar}` }}
+                  />
+                  <Text style={[Styles.darkMedium16, { margin: 7 }]}>{singlPage.data.name}</Text>
+                  {singlPage.data.description && (
+                    <Text style={[Styles.darkRegular14, { textAlign: 'center' }]}>{singlPage.data.description}</Text>
+                  )}
+                </View>
+              }
+              <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={{ followersCount: followersCount, followerCount: singlPage.followerCount }} postCount={singlPage.postCount} />
+              <View
+                style={[
+                  Styles.flexSpaceBetween,
+                  { paddingHorizontal: 15, marginVertical: 10 },
+                ]}>
+                <Button
+                  bg={isFollow}
+                  onPress={() => AddDeletFollow()} paddingV={10}
+                  title={isFollow ? t(mainData.lang).Unsubscribe : t(mainData.lang).subscribe}
+                  width="48%"
+                />
+                <Button onPress={() => sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
+              </View>
+              <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+            </>
           }
-          <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={{ followersCount: followersCount, followerCount: singlPage.followerCount }} postCount={singlPage.postCount} />
-          <View
-            style={[
-              Styles.flexSpaceBetween,
-              { paddingHorizontal: 15, marginVertical: 10 },
-            ]}>
-            <Button
-              bg={isFollow}
-              onPress={() => AddDeletFollow()} paddingV={10}
-              title={isFollow ? t(mainData.lang).Unsubscribe : t(mainData.lang).subscribe}
-              width="48%"
-            />
-            <Button onPress={() => sendMsg()} bg paddingV={10} title={'Сообщение'} width="48%" />
-          </View>
-          <AlbomAndInfo />
-        </ScrollView>
+          ListFooterComponent={
+            getPosts.secondLoading && (
+              <ActivityIndicator style={styles.loading} size="small" color="#FFC24B" />
+            )}
+        />
       </View>
     </SafeAreaView>
   );

@@ -5,6 +5,7 @@ const initialState = {
   data: [],
   message: '',
   nextPage: '',
+  secondLoading: false
 };
 const GetOtherPostsReducer = (state = initialState, action) => {
   let item = { ...state };
@@ -12,7 +13,12 @@ const GetOtherPostsReducer = (state = initialState, action) => {
     case 'StartOtherPostsAction':
       item.status = false;
       item.error = '';
-      item.loading = true;
+      if (action.value == 'second') {
+        item.secondLoading = true
+      }
+      else {
+        item.loading = true;
+      }
       break;
     case 'SuccessOtherPostsAction':
       item.status = true;
@@ -25,10 +31,13 @@ const GetOtherPostsReducer = (state = initialState, action) => {
       }
       item.nextPage = action.data.data.next_page_url;
       item.loading = false;
+      item.secondLoading = false
+
       break;
     case 'ErrorOtherPostsAction':
       item.error = action.data;
       item.loading = false;
+      item.secondLoading = false
       item.status = false;
       break;
 
