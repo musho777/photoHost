@@ -68,7 +68,9 @@ export const SavedPostScreen = ({ navigation }) => {
           }
         }}>
         <View style={{ width: windowWidth - 32, flexDirection: "column", }}>
-          <Albom seved data={books.data} />
+          {books.data.map((elm, i) => {
+            return <Albom key={i} data={books.data} seved elm={elm} />
+          })}
         </View>
       </ScrollView>
     </View>
