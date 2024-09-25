@@ -73,14 +73,14 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 10,
     marginTop: 20,
-    marginBottom: 10
   },
   MenuSvg: {
-    marginTop: -5,
-    paddingLeft: 15
+    marginTop: -7,
+    paddingLeft: 15,
+    height: 40,
   },
   goBack: {
-    height: 50,
+    height: 45,
     width: 50
   }
 })

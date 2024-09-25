@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 'auto',
     position: 'absolute',
-    top: 3,
+    top: 60,
     left: 3,
   }
 });

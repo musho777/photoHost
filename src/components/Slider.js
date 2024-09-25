@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -21,8 +21,8 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   const [scrollEnabled, setScrollEnabled] = useState(false)
   const [showLikeIcone, setShowLikeICone] = useState(false)
   const staticdata = useSelector(st => st.static);
-  const [lastClickTime, setLastClickTime] = useState(0);
-  const [clickTimeout, setClickTimeout] = useState(null);
+  const lastClickTime = useRef(0); // Use ref instead of state
+  const clickTimeout = useRef(null);
   const SINGLE_CLICK_DELAY = 300;
   const DOUBLE_CLICK_DELAY = 300;
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -47,26 +47,48 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   }, [dispatch, data.id, staticdata.token, user.data.id]);
 
 
+  // const handleClick = (event, item) => {
+  //   const now = new Date().getTime();
+
+  //   if (lastClickTime && (now - lastClickTime) < DOUBLE_CLICK_DELAY) {
+
+  //     if (clickTimeout) {
+  //       clearTimeout(clickTimeout);
+  //     }
+  //     const { locationX, locationY } = event.nativeEvent;
+  //     setPosition({ x: locationX - 50, y: locationY - 50 });
+  //     setShowLikeICone(true)
+  //     LikePost()
+  //   } else {
+  //     const timeoutId = setTimeout(() => {
+  //       !item.video && setOpenSlider(true)
+  //       setOpenModal(false)
+  //     }, SINGLE_CLICK_DELAY);
+
+  //     setClickTimeout(timeoutId);
+  //     setLastClickTime(now);
+  //   }
+  // };
+
+
   const handleClick = (event, item) => {
     const now = new Date().getTime();
-
-    if (lastClickTime && (now - lastClickTime) < DOUBLE_CLICK_DELAY) {
-
-      if (clickTimeout) {
-        clearTimeout(clickTimeout);
+    if (lastClickTime.current && now - lastClickTime.current < DOUBLE_CLICK_DELAY) {
+      if (clickTimeout.current) {
+        clearTimeout(clickTimeout.current);
       }
       const { locationX, locationY } = event.nativeEvent;
       setPosition({ x: locationX - 50, y: locationY - 50 });
-      setShowLikeICone(true)
-      LikePost()
+      setShowLikeICone(true);
+      LikePost();
     } else {
-      const timeoutId = setTimeout(() => {
-        !item.video && setOpenSlider(true)
-        setOpenModal(false)
+      clickTimeout.current = setTimeout(() => {
+        if (!item.video) {
+          setOpenSlider(true);
+          setOpenModal(false);
+        }
       }, SINGLE_CLICK_DELAY);
-
-      setClickTimeout(timeoutId);
-      setLastClickTime(now);
+      lastClickTime.current = now;
     }
   };
 
@@ -82,13 +104,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
 
 
   const renderItem = ({ item, index }) => {
-    let height = 570
-    if (item.height < 650) {
-      height = 370
-    }
-    else {
-      height = 570
-    }
+    const height = item.height < 650 ? 370 : 570;
     return (
       <TouchableOpacity
         onLongPress={() => onLongClikc()}
@@ -131,6 +147,11 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         onMomentumScrollEnd={handleMomentumScrollEnd}
         scrollEnabled={!scrollEnabled}
         renderItem={renderItem}
+        getItemLayout={(data, index) => ({
+          length: windowWidth,
+          offset: windowWidth * index,
+          index,
+        })}
       />
       <View style={styles.paginationWrapper}>
         {photo?.length > 1 && photo?.map((elm, i) => (

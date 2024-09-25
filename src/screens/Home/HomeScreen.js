@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { View, FlatList, RefreshControl, Image, Text, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, DeletePhotoFromHome, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
@@ -16,13 +16,15 @@ import debounce from 'lodash/debounce';
 export const HomeScreen = () => {
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
-  const getLents = useSelector(st => st.getLents);
+  // const getLents = useSelector(st => st.getLents);
+  const getLents = useSelector(st => st.getLents, shallowEqual);
+  const userData = useSelector(st => st.userData, shallowEqual);
   const [page, setPage] = useState(1);
   const [blackList, setBlackList] = useState([]);
   const [index, setIndex] = useState(0);
   const flatListRef = useRef(null);
   const [showModal, setShowModal] = useState(false)
-  const userData = useSelector((st) => st.userData)
+  // const userData = useSelector((st) => st.userData)
   const [viewableItems, setViewableItems] = useState([])
   const [currentPost, setCurrentPost] = useState({})
   const { full } = useSelector((st) => st.fullScreen)

@@ -3,6 +3,7 @@ import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { VidioComponent } from './post/VidioComponent';
 import { Styles } from '../styles/Styles';
+import isEqual from 'lodash.isequal';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -51,7 +52,7 @@ const SliderImage = React.memo(({ data, item, long, height, index, setScrollEnab
     prevProps.long === nextProps.long &&
     prevProps.index === nextProps.index &&
     prevProps.data === nextProps.data &&
-    process.viewableItems === nextProps.viewableItems
+    isEqual(prevProps.viewableItems, nextProps.viewableItems)
   )
 });
 

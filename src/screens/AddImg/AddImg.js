@@ -262,6 +262,18 @@ export const AddImg = ({ navigation }) => {
     let temp = [...description]
     temp.splice(index, 1);
     item.splice(index, 1);
+    if (activePhoto == index) {
+      if (index != 0) {
+        setActivePhoto(index - 1)
+      }
+      else if (index == 0 && item.length >= 1) {
+        console.log("333")
+        setActivePhoto(0)
+      }
+      else {
+        setActivePhoto(null)
+      }
+    }
     setUri(item);
     setDescription(temp)
   }
@@ -363,7 +375,7 @@ export const AddImg = ({ navigation }) => {
                   />
                 }
               </View>}
-              <ScrollView horizontal={true} style={[styles.list, keyboardOpen && { marginBottom: 30 }]}>
+              <ScrollView showsHorizontalScrollIndicator={false} keyboardShouldPersistTaps="handled" horizontal={true} style={[styles.list, keyboardOpen && { marginBottom: 30 }]}>
                 {uri.length < 10 && < TouchableOpacity style={[styles.itemImage]} onPress={() => addPhoto()}>
                   <AddImage />
                 </TouchableOpacity>}

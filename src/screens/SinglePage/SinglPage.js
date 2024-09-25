@@ -2,7 +2,10 @@ import {
   SafeAreaView,
   View,
   StyleSheet,
-  Platform
+  Platform,
+  TouchableOpacity,
+  Image,
+  Text
 } from 'react-native';
 import { Slider } from './components/slider';
 import { Header } from './components/Hedaer';
@@ -15,6 +18,7 @@ import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { AppColors } from '../../styles/AppColors';
 import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
+import { HeaderInfo } from '../../components/post/postHeader/component/headerInfro';
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const user = useSelector((st) => st.userData)
@@ -22,6 +26,8 @@ export const SinglPageScreen = ({ route, navigation }) => {
   let data = localSinglPage.data
   const staticdata = useSelector(st => st.static);
   const my = route.params.my
+  const save = route.params.seved
+  console.log("12", save)
   const post = route.params.data
   const dispatch = useDispatch()
   const [showView, setShowView] = useState(null)
@@ -30,7 +36,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(true)
 
   const [showShare, setShowShare] = useState(false)
-
+  console.log(data)
   const End = async (id) => {
     dispatch(EndViewPost({ post_id: id }, staticdata.token))
   }
@@ -55,10 +61,22 @@ export const SinglPageScreen = ({ route, navigation }) => {
       };
     }, [])
   );
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       {!loading && <View style={styles.header}>
         <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={my} />
+        {save && <View style={styles.headerWrapper}>
+          <HeaderInfo
+            id={data.user.id}
+            userImg={data.user.avatar}
+            data={data.created_at}
+            user={user}
+            userId={data.user.id}
+            star={data.user.star}
+            userName={data.user.name}
+          />
+        </View>}
       </View>}
       {!loading &&
         <Slider setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
@@ -115,7 +133,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: Platform.OS === 'ios' ? 30 : 0,
     zIndex: 999,
-    width: "100%"
+    width: "100%",
   },
   text: {
     paddingHorizontal: 15,
@@ -125,5 +143,12 @@ const styles = StyleSheet.create({
     width: 'auto',
     alignItems: 'center',
     color: "white",
+  },
+  headerWrapper: {
+    paddingHorizontal: 5,
+    width: '100%',
+    backgroundColor: "rgba(0,0,0,0.5)",
+    paddingVertical: 10,
+    marginTop: -15
   }
 });
