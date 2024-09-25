@@ -1,15 +1,14 @@
 import { useCallback, useState } from 'react';
-import { View, StyleSheet, TextInput, Text, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ActivityIndicator } from 'react-native';
 import { FlatList, RefreshControl } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { SearchInputSvg } from '../../assets/svg/Svgs';
 import { SearchAction } from '../../store/action/action';
 import { clearSearchData } from '../../store/action/clearAction';
-import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { t } from '../../components/lang';
 import { SearchItem } from './component/searchItem';
 import _ from 'lodash';
+import { SearchInput } from './component/SearchInput';
 
 export const SearchBlock = () => {
   const [data, setData] = useState('');
@@ -28,6 +27,8 @@ export const SearchBlock = () => {
     }, 500),
     []
   );
+
+
   const handleSearchInput = (e) => {
     setData(e);
     debouncedSearchData(e);
@@ -49,23 +50,10 @@ export const SearchBlock = () => {
   return (
     <SafeAreaView >
       <View style={styles.centeredView}>
-        <View style={[styles.header, { marginBottom: 20 }]}>
-          <View style={{ marginBottom: 10, width: '100%' }}>
-            <TextInput
-              onChangeText={handleSearchInput}
-              value={data}
-              autoFocus
-              style={styles.Input}
-              placeholder={t(mainData.lang).search}
-              placeholderTextColor={'black'}
-            />
-            <View style={styles.eye}>
-              <SearchInputSvg />
-            </View>
-          </View>
-        </View>
-
-
+        <SearchInput
+          data={data}
+          handleSearchInput={(e) => handleSearchInput(e)}
+        />
         <FlatList
           refreshControl={<RefreshControl refreshing={search.loading} />}
           keyExtractor={item => item.id.toString()}
@@ -94,31 +82,10 @@ export const SearchBlock = () => {
   );
 };
 const styles = StyleSheet.create({
-  Input: {
-    backgroundColor: AppColors.AliceBlue_Color,
-    borderRadius: 50,
-    padding: 6,
-    paddingHorizontal: 20,
-    color: AppColors.Blcak_Color,
-    position: 'relative',
-  },
   centeredView: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-  },
-  header: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingTop: 15,
-    flexDirection: 'row',
-  },
-  eye: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    right: 20,
-    height: '100%',
   },
 });
