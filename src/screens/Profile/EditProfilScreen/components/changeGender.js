@@ -17,8 +17,10 @@ export const ChnageGender = ({ value, setValue }) => {
   return <View>
     <TouchableOpacity onPress={() => handlePresentModalPress()} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <GenderSvg />
-        <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{value ? value : t(mainData.lang).gender}</Text>
+        <View style={{ width: 20, marginRight: 10 }}>
+          <GenderSvg />
+        </View>
+        <Text style={[Styles.balihaiRegular14]}>{value ? value : t(mainData.lang).gender}</Text>
       </View>
       <DownArrow />
     </TouchableOpacity>
@@ -53,12 +55,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -5,
     right: 0,
-  },
-  textWrapper: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderBottomColor: AppColors.Solitude_Color,
-    borderBottomWidth: 1,
   },
   textWrapper2: {
     paddingHorizontal: 15,

@@ -1,28 +1,24 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { DownArrow, LocationSvg } from "../../../../assets/svg/Svgs"
+import { DownArrow, ProfetionsSvg } from "../../../../assets/svg/Svgs"
 import { useState } from "react"
-import { CityModal } from "./CityModal"
 import { Styles } from "../../../../styles/Styles"
 import { AppColors } from "../../../../styles/AppColors"
-import { t } from '../../../../components/lang';
-import { useSelector } from "react-redux"
+import { Position_professionModal } from "./position_professionModal"
 
-export const Location = ({ setLocation, loaction }) => {
+export const Position_profession = ({ setLocation, loaction }) => {
   const [city, setCity] = useState(false)
-  const mainData = useSelector(st => st.mainData);
-
   return <View>
     <TouchableOpacity onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ width: 20, marginRight: 10 }}>
-          <LocationSvg />
+          <ProfetionsSvg />
         </View>
-        <Text style={[Styles.balihaiRegular14]}>{loaction.name ? loaction.name : t(mainData.lang).City}</Text>
+        <Text style={[Styles.balihaiRegular14]}>{loaction ? loaction : 'Сфера/отрасль'}</Text>
       </View>
       <DownArrow />
     </TouchableOpacity>
     <View style={{ position: 'absolute' }}>
-      {city && <CityModal onPress={(e) => setLocation({ name: e.name, id: e.id })} close={() => setCity(false)} visible={city} />}
+      {city && <Position_professionModal onPress={(e) => setLocation(e)} close={() => setCity(false)} visible={city} />}
     </View>
   </View>
 }

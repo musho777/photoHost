@@ -13,8 +13,10 @@ export const Profiesions = ({ setLocation, loaction }) => {
   return <View>
     <TouchableOpacity onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <Otrastel />
-        <Text style={[Styles.balihaiRegular14, { marginHorizontal: 10 }]}>{loaction ? loaction : 'Сфера/отрасль'}</Text>
+        <View style={{ width: 20, marginRight: 10 }}>
+          <Otrastel />
+        </View>
+        <Text style={[Styles.balihaiRegular14]}>{loaction ? loaction : 'Сфера/отрасль'}</Text>
       </View>
       <DownArrow />
     </TouchableOpacity>
@@ -33,12 +35,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -5,
     right: 0,
-  },
-  textWrapper: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderBottomColor: AppColors.Solitude_Color,
-    borderBottomWidth: 1,
   },
   textWrapper2: {
     paddingHorizontal: 15,

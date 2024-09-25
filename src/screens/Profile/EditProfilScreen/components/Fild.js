@@ -2,14 +2,16 @@ import { StyleSheet, TextInput, View } from "react-native";
 import { Styles } from "../../../../styles/Styles"
 import { AppColors } from "../../../../styles/AppColors";
 
-export const Fild = ({ placeholder, value, hadnelChange, svg }) => {
+export const Fild = ({ placeholder, value, hadnelChange, svg, multiline }) => {
 
   return <View style={styles.textWrapper}>
-    {svg}
+    {svg && <View style={{ width: 20, marginRight: 10 }}>
+      {svg}
+    </View>}
     <TextInput
       placeholder={placeholder}
       placeholderTextColor={'#8C9CAB'}
-      multiline
+      multiline={multiline}
       value={value}
       onChangeText={e => hadnelChange(e)}
       style={[Styles.balihaiMedium14, { height: 'auto', width: '90%' }]}
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    // gap: 10,
     height: 'auto',
   },
 });
