@@ -37,7 +37,7 @@ export const Albom = ({ data, seved, my = false, loading, elm }) => {
         onPress={() => {
           my ?
             navigation.navigate('SinglPageScreen', { data: seved ? elm.post : elm, my: my, seved: seved }) :
-            navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { data: seved ? elm.post : elm, my: my, seved: seved } })
+            navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { data: seved ? elm.post : elm, my: false, seved: seved } })
         }}
         video={elm?.photo ? elm.photo[0].video : elm.post.photo[0].video}
         photo={elm?.photo ? elm?.photo[0]?.photo : elm?.post.photo[0]?.photo}

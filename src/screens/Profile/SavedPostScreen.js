@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import {
   View,
   Dimensions,
-  ScrollView,
   BackHandler,
   ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Albom } from '../../components/Albom/Albom';
@@ -46,37 +46,29 @@ export const SavedPostScreen = ({ navigation }) => {
     return () => backHandler.remove(); // Cleanup the listener when the screen is not active
   }, [isFocused]);
 
-  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
-    const paddingToBottom = 20;
-    return (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    );
+  const handleLoadMore = () => {
+    if (books.nextPage) {
+      const nextPage = page + 1;
+      dispatch(GetMyBooksAction(staticdata.token, nextPage));
+      setPage(nextPage);
+    }
   };
-
+  const renderItem = ({ item }) => <Albom data={books.data} seved elm={item} />;
 
   return (
     <View style={{ marginTop: 10, alignItems: 'center' }}>
       {books.loading ?
         <ActivityIndicator color='#FFC24B' /> :
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
+        <FlatList
+          data={books.data}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={2} // Set the number of columns
+          contentContainerStyle={{ paddingHorizontal: 16 }} // Adjust horizontal padding as needed
           showsVerticalScrollIndicator={false}
-          onScroll={({ nativeEvent }) => {
-            if (isCloseToBottom(nativeEvent)) {
-              if (books.nextPage) {
-                let pages = page + 1;
-                dispatch(GetMyBooksAction(staticdata.token, pages));
-                setPage(pages);
-              }
-            }
-          }}>
-          <View style={{ width: windowWidth - 32, flexDirection: "column", }}>
-            {books.data.map((elm, i) => {
-              return <Albom key={i} data={books.data} seved elm={elm} />
-            })}
-          </View>
-        </ScrollView>
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.1}
+        />
       }
     </View>
   );

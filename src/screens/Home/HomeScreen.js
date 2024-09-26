@@ -131,11 +131,8 @@ export const HomeScreen = () => {
 
   const ListEndLoader = () => {
     if (getLents.secondLoading) {
-      return <View style={{ height: 50, marginTop: 0, zIndex: 999999, justifyContent: 'flex-start', alignItems: 'center' }}>
-        <View style={{ color: 'black', marginTop: -70 }}>
-          <ActivityIndicator size="small" color='#FFC24B' />
-        </View>
-      </View>
+      return <ActivityIndicator size="small" color='#FFC24B' />
+
     }
   };
 
@@ -143,7 +140,7 @@ export const HomeScreen = () => {
   const renderItem = ({ item, index }) => {
     if (!blackList.includes(item.user.id)) {
       return (
-        <View key={index} style={[{ marginTop: 5 }, index == getLents.data.length - 1 && { marginBottom: 80 }]}>
+        <View key={index} style={[{ marginTop: 5 }, index == getLents.data.length - 1 && { marginBottom: 20 }]}>
           <Post
             data={item}
             viewableItems={viewableItems}
@@ -169,7 +166,7 @@ export const HomeScreen = () => {
     );
   }
 
-  const ITEM_HEIGHT = 700;
+  const ITEM_HEIGHT = 500;
   const getItemLayout = (data, index) => {
     return {
       length: ITEM_HEIGHT,
@@ -178,79 +175,77 @@ export const HomeScreen = () => {
     };
   };
   // const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 21;
-  const windowSize = 15
+  const windowSize = 10
 
   const keyExtractor = (item) => item.id;
   return (
     <SafeAreaView>
       <HomeHeader onPress={() => goTop()} />
-      <View>
-        {showModal && <ModalComponent
-          showModal={showModal}
-          close={() => setShowModal(false)}
-          token={staticdata.token}
-        />}
-        {createPost.loading && <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, zIndex: 999 }}>
-          <View style={styles.loadingVidio}>
-            <Image source={{ uri: createPost.localImg.uri }} style={{ width: 50, height: 50, borderRadius: 5 }} />
-            <Text style={Styles.darkMedium12}>загрузка</Text>
-          </View>
-        </View>}
-        <FlatList
-          scrollEnabled={!full}
-          ListFooterComponent={ListEndLoader}
-          keyExtractor={keyExtractor}
-          showsVerticalScrollIndicator={false}
-          ref={flatListRef}
-          removeClippedSubviews={true}
-          updateCellsBatchingPeriod={100}
-          scrollEventThrottle={16}
-          getItemLayout={getItemLayout}
-          onViewableItemsChanged={onViewableItemsChanged}
-          onEndReached={debounce(handleEndReached, 300)}
-          onScroll={({ nativeEvent }) => {
-            handleScroll({ nativeEvent })
-          }}
-          refreshControl={
-            <RefreshControl
-              refreshing={getLents?.loading}
-              tintColor="#FFC24B"
-              onRefresh={() => {
-                setPage(1)
-                dispatch(GetLentsAction(staticdata.token, 1));
-              }}
-            />
-          }
-          viewabilityConfig={viewabilityConfig}
-          data={getLents.data}
-          enableEmptySections={true}
-          renderItem={renderItem}
-          initialNumToRender={5}
-          maxToRenderPerBatch={windowSize}
-          onEndReachedThreshold={0.5}
-          disableVirtualization={true}
-          windowSize={windowSize}
-          decelerationRate={"normal"}
-        />
-        {showView &&
-          <ViewComponent
-            id={selecteidId}
-            token={staticdata.token}
-            close={(e) => setShowView(e)}
+      {showModal && <ModalComponent
+        showModal={showModal}
+        close={() => setShowModal(false)}
+        token={staticdata.token}
+      />}
+      {createPost.loading && <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, zIndex: 999 }}>
+        <View style={styles.loadingVidio}>
+          <Image source={{ uri: createPost.localImg.uri }} style={{ width: 50, height: 50, borderRadius: 5 }} />
+          <Text style={Styles.darkMedium12}>загрузка</Text>
+        </View>
+      </View>}
+      <FlatList
+        scrollEnabled={!full}
+        ListFooterComponent={ListEndLoader}
+        keyExtractor={keyExtractor}
+        showsVerticalScrollIndicator={false}
+        ref={flatListRef}
+        removeClippedSubviews={true}
+        updateCellsBatchingPeriod={100}
+        scrollEventThrottle={16}
+        getItemLayout={getItemLayout}
+        onViewableItemsChanged={onViewableItemsChanged}
+        onEndReached={debounce(handleEndReached, 300)}
+        onScroll={({ nativeEvent }) => {
+          handleScroll({ nativeEvent })
+        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={getLents?.loading}
+            tintColor="#FFC24B"
+            onRefresh={() => {
+              setPage(1)
+              dispatch(GetLentsAction(staticdata.token, 1));
+            }}
           />
         }
-        {likeClose && <LikeList
-          close={(e) => setLikeClose(false)}
-          token={staticdata.token}
+        viewabilityConfig={viewabilityConfig}
+        data={getLents.data}
+        enableEmptySections={true}
+        renderItem={renderItem}
+        initialNumToRender={5}
+        maxToRenderPerBatch={windowSize}
+        onEndReachedThreshold={0.1}
+        disableVirtualization={true}
+        windowSize={windowSize}
+        decelerationRate={"normal"}
+      />
+      {showView &&
+        <ViewComponent
           id={selecteidId}
-        />}
-        {showShare && <Share
-          close={() => setShowShare(false)}
-          postId={selecteidId}
-          open={showShare}
-          user_id={userData?.allData.data?.id}
-        />}
-      </View >
+          token={staticdata.token}
+          close={(e) => setShowView(e)}
+        />
+      }
+      {likeClose && <LikeList
+        close={(e) => setLikeClose(false)}
+        token={staticdata.token}
+        id={selecteidId}
+      />}
+      {showShare && <Share
+        close={() => setShowShare(false)}
+        postId={selecteidId}
+        open={showShare}
+        user_id={userData?.allData.data?.id}
+      />}
     </SafeAreaView>
   );
 };
