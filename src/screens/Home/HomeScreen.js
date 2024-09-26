@@ -171,7 +171,7 @@ export const HomeScreen = () => {
     );
   }
 
-  const ITEM_HEIGHT = 65;
+  const ITEM_HEIGHT = 400;
   const getItemLayout = (data, index) => {
     return {
       length: ITEM_HEIGHT,
