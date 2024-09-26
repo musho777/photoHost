@@ -19,7 +19,7 @@ export const HeaderWhiteTitle = ({
           { height: Platform.OS == 'android' ? 70 : 50, paddingHorizontal: 10, backgroundColor: '#FFF' },
           transparent && { backgroundColor: 'transparent' },
         ]}>
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity style={{ width: 50 }} onPress={onPress}>
           <BackArrow />
         </TouchableOpacity>
         <Text style={[Styles.darkSemiBold16, { marginHorizontal: 15 }]}>

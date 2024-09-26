@@ -61,9 +61,9 @@ export const SearchProfil = ({ navigation, route }) => {
     useCallback(() => {
       if (singlPage.data.id != route?.params?.id) {
         dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
-        dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, page));
+        dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
       }
-    }, [route.params.id, staticdata.token, page, singlPage.data.id])
+    }, [route.params.id, staticdata.token, singlPage.data.id])
   );
 
 
@@ -73,8 +73,6 @@ export const SearchProfil = ({ navigation, route }) => {
     setIsFollow(index >= 0)
     setFollowersCount(singlPage.followersCount)
   }, [singlPage.data])
-
-
 
   const handleEndReached = useCallback(() => {
     if (seletedScreen)
