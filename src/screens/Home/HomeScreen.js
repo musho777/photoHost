@@ -16,7 +16,6 @@ import debounce from 'lodash/debounce';
 export const HomeScreen = () => {
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
-  // const getLents = useSelector(st => st.getLents);
   const getLents = useSelector(st => st.getLents, shallowEqual);
   const userData = useSelector(st => st.userData, shallowEqual);
   const [page, setPage] = useState(1);
@@ -24,7 +23,6 @@ export const HomeScreen = () => {
   const [index, setIndex] = useState(0);
   const flatListRef = useRef(null);
   const [showModal, setShowModal] = useState(false)
-  // const userData = useSelector((st) => st.userData)
   const [viewableItems, setViewableItems] = useState([])
   const [currentPost, setCurrentPost] = useState({})
   const { full } = useSelector((st) => st.fullScreen)
@@ -41,7 +39,7 @@ export const HomeScreen = () => {
       if (userData.data.show_category_pop_up == 1) {
         setShowModal(true);
       }
-    }, 2000);
+    }, 20000);
 
     return () => clearTimeout(timer);
   }, [userData.data]);
@@ -171,7 +169,7 @@ export const HomeScreen = () => {
     );
   }
 
-  const ITEM_HEIGHT = 400;
+  const ITEM_HEIGHT = 700;
   const getItemLayout = (data, index) => {
     return {
       length: ITEM_HEIGHT,
@@ -179,7 +177,9 @@ export const HomeScreen = () => {
       index,
     };
   };
-  const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 21;
+  // const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 21;
+  const windowSize = 15
+
   const keyExtractor = (item) => item.id;
   return (
     <SafeAreaView>
@@ -203,11 +203,9 @@ export const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           ref={flatListRef}
           removeClippedSubviews={true}
-
+          updateCellsBatchingPeriod={100}
           scrollEventThrottle={16}
-
           getItemLayout={getItemLayout}
-
           onViewableItemsChanged={onViewableItemsChanged}
           onEndReached={debounce(handleEndReached, 300)}
           onScroll={({ nativeEvent }) => {
@@ -228,17 +226,10 @@ export const HomeScreen = () => {
           enableEmptySections={true}
           renderItem={renderItem}
           initialNumToRender={5}
-
           maxToRenderPerBatch={windowSize}
-
-
           onEndReachedThreshold={0.5}
           disableVirtualization={true}
-
-
           windowSize={windowSize}
-
-
           decelerationRate={"normal"}
         />
         {showView &&

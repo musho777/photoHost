@@ -781,13 +781,13 @@ export const StartSvg2 = () => {
 
 export const SelectSvg = () => {
   return <Svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={14}
-    height={14}
+    width={9}
+    height={9}
     viewBox="0 0 14 14"
     fill="none"
+    xmlns="http://www.w3.org/2000/svg"
   >
-    <Circle cx={7} cy={7} r={7} fill="#fff" />
+    <Circle cx={7} cy={7} r={6.5} fill="#fff" stroke="#000" />
   </Svg>
 }
 

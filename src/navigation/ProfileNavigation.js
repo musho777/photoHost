@@ -70,16 +70,9 @@ function CustomDrawerContent(props) {
       </DrawerContentScrollView>
       <TouchableOpacity
         onPress={() => props.navigation.navigate('AboutApplication')}
-        style={[{ marginBottom: 70, height: 20, paddingLeft: 15 }]}>
+        style={[{ marginBottom: 20, height: 40, paddingLeft: 10, borderWidth: 1, justifyContent: 'center', borderColor: "#FFC24B", width: 150, marginLeft: 15 }]}>
         <Text style={Styles.darkRegular16}>{t(mainData.lang).AboutProgram}</Text>
       </TouchableOpacity>
-      {/* <View style={{ borderWidth: 1, height: 50, marginBottom: 100 }}>
-        <DrawerItem
-          labelStyle={[Styles.darkRegular16, { marginBottom: -100, borderWidth: 1, }]}
-          label={t(mainData.lang).AboutProgram}
-          onPress={() => props.navigation.navigate('BlackListScreen')}
-        />
-      </View> */}
     </View>);
 }
 
