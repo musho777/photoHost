@@ -75,16 +75,6 @@ export const HomeScreen = () => {
 
 
 
-  const handleScroll = debounce(event => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const itemHeight = 400;
-    const index = Math.floor(offsetY / itemHeight);
-    setIndex(index);
-    setCurrentPost(getLents.data[index]);
-  }, 300);
-
-
-
   const goTop = () => {
     flatListRef.current.scrollToOffset({ offset: 0, animated: true });
   }
@@ -106,6 +96,12 @@ export const HomeScreen = () => {
     // if (changed[0].index) {
     //   End(viewableItems[0].item.id)
     // }
+    if (viewableItems.length > 0) {
+      const index = viewableItems[0].index;
+      console.log('Current Index:', index);
+      setIndex(index);
+      setCurrentPost(getLents.data[index]);
+    }
     setViewableItems(changed)
   }, []);
 
@@ -216,49 +212,13 @@ export const HomeScreen = () => {
           refreshControl={refreshControl}
           viewabilityConfig={viewabilityConfig}
         />
-        // <FlatList
-        //   ListFooterComponent={ListEndLoader}
-        //   keyExtractor={keyExtractor}
-        //   showsVerticalScrollIndicator={false}
-        //   ref={flatListRef}
-        //   removeClippedSubviews={false}
-        //   scrollEventThrottle={16}
-        //   getItemLayout={getItemLayout}
-        //   onViewableItemsChanged={onViewableItemsChanged}
-        //   onEndReached={debounce(handleEndReached, 300)}
-        //   onScroll={({ nativeEvent }) => {
-        //     handleScroll({ nativeEvent })
-        //   }}
-        //   refreshControl={
-        //     <RefreshControl
-        //       refreshing={getLents?.loading}
-        //       tintColor="#FFC24B"
-        //       onRefresh={() => {
-        //         setPage(1)
-        //         dispatch(GetLentsAction(staticdata.token, 1));
-        //       }}
-        //     />
-        //   }
-        //   viewabilityConfig={viewabilityConfig}
-        //   data={getLents.data}
-        //   enableEmptySections={true}
-        //   renderItem={renderItem}
-        //   initialNumToRender={5}
-        //   maxToRenderPerBatch={windowSize}
-        //   onEndReachedThreshold={0.5}
-        //   disableVirtualization={false}
-        //   windowSize={windowSize}
-        //   decelerationRate={"normal"}
-        // /> 
-
         :
-        <View >
+        <View>
           {loadingData.map((elm, i) => {
             return <PostLoading key={i} />
           })}
         </View>
       }
-
       {showView &&
         <ViewComponent
           id={selecteidId}
