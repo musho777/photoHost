@@ -120,7 +120,6 @@ export const HomeScreen = () => {
     }
     else if ((!getLents?.nextPage && getLents.data.length > 5 && !getLents.secondLoading)) {
       return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 10 }]}>Больше нет публикаций</Text>
-
     }
   };
 
@@ -188,7 +187,7 @@ export const HomeScreen = () => {
           windowSize={5}
           removeClippedSubviews={false}
           ref={flatListRef}
-          getItemLayout={getItemLayout}
+          // getItemLayout={getItemLayout}
           onViewableItemsChanged={onViewableItemsChanged}
           refreshControl={refreshControl}
           viewabilityConfig={viewabilityConfig}
