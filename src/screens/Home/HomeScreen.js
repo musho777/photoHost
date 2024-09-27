@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { View, FlatList, RefreshControl, Image, Text, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
@@ -132,29 +132,36 @@ export const HomeScreen = () => {
   const ListEndLoader = () => {
     if (getLents.secondLoading) {
       return <ActivityIndicator size="small" color='#FFC24B' />
-
     }
   };
 
   const loadingData = ['', '']
-  const renderItem = ({ item, index }) => {
-    if (!blackList.includes(item.user.id)) {
-      return (
-        <View key={index} style={[{ marginTop: 5 }, index == getLents.data.length - 1 && { marginBottom: 20 }]}>
-          <Post
-            data={item}
-            viewableItems={viewableItems}
-            setShowLike={() => setLikeClose(true)}
-            setShowView={() => setShowView(true)}
-            addToblack={(e) => AddToBack(e)}
-            deletData={(e) => deletData(index, e)}
-            setSelectidId={(id) => setSelectidId(id)}
-            setShowShare={(e) => setShowShare(e)}
-          />
-        </View>
-      );
-    }
-  };
+  const renderItem = useMemo(
+    () => ({ item, index }) => {
+      if (!blackList.includes(item.user.id)) {
+        return (
+          <View
+            key={index}
+            style={{ marginTop: 5 }}
+          >
+            <Post
+              data={item}
+              viewableItems={viewableItems}
+              setShowLike={() => setLikeClose(true)}
+              setShowView={() => setShowView(true)}
+              addToblack={(e) => AddToBack(e)}
+              deletData={(e) => deletData(index, e)}
+              setSelectidId={(id) => setSelectidId(id)}
+              setShowShare={(e) => setShowShare(e)}
+            />
+          </View>
+        );
+      }
+      return null;
+    },
+    [blackList, getLents.data.length, viewableItems] // Memoized dependencies
+  );
+
   if (getLents.loading) {
     return (
       <View >
@@ -174,12 +181,12 @@ export const HomeScreen = () => {
       index,
     };
   };
-  // const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 21;
-  const windowSize = 10
+  const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 21;
+  // const windowSize = 10
 
   const keyExtractor = (item) => item.id;
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <HomeHeader onPress={() => goTop()} />
       {showModal && <ModalComponent
         showModal={showModal}
@@ -194,12 +201,14 @@ export const HomeScreen = () => {
       </View>}
       <FlatList
         scrollEnabled={!full}
+        // ListHeaderComponent={
+        //   <HomeHeader onPress={() => goTop()} />
+        // }
         ListFooterComponent={ListEndLoader}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
         ref={flatListRef}
         removeClippedSubviews={true}
-        updateCellsBatchingPeriod={100}
         scrollEventThrottle={16}
         getItemLayout={getItemLayout}
         onViewableItemsChanged={onViewableItemsChanged}
@@ -223,7 +232,7 @@ export const HomeScreen = () => {
         renderItem={renderItem}
         initialNumToRender={5}
         maxToRenderPerBatch={windowSize}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.5}
         disableVirtualization={true}
         windowSize={windowSize}
         decelerationRate={"normal"}

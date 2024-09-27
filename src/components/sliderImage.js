@@ -41,7 +41,7 @@ const SliderImage = React.memo(({ description, data, item, long, height, index, 
           priority: FastImage.priority.high,
           cache: FastImage.cacheControl.immutable
         }}
-        fallback={true}
+        fallback={false}
         resizeMode={FastImage.resizeMode.cover}
       />
     }

@@ -11252,6 +11252,7 @@ __metadata:
     redux: ^4.2.1
     redux-thunk: ^2.4.2
     rn-emoji-keyboard: ^1.7.0
+    rn-progressive-image: ^3.0.0
     typescript: ^5.5.2
   languageName: unknown
   linkType: soft
@@ -12703,6 +12704,18 @@ react-native-snap-carousel@latest:
     react: "*"
     react-native: "*"
   checksum: a949b72b40358561c8c95a878aa873fb4186540c39980ca2087b43022303f807b4481563049e2d414b6de4fefeb19d91cf470d49332d4e075824641e7c3702da
+  languageName: node
+  linkType: hard
+
+"rn-progressive-image@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "rn-progressive-image@npm:3.0.0"
+  peerDependencies:
+    react: ">=17.0.0"
+    react-native: ">=0.67.2"
+    react-native-linear-gradient: ">=2.5.6"
+    react-native-reanimated: ">=2.4.0"
+  checksum: 6780d41e6bbca52f1b91f6c93f7ab5acc22c1914354e54aa24dfc28d77cf61fc532c6734dd18342163f93c37537e7613112914ce1a13d3b6d505cab4bf05efca
   languageName: node
   linkType: hard
 
