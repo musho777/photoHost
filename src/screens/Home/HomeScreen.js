@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, RefreshControl, Image, Text, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetMyChatRoom, getUserInfoAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,6 +12,7 @@ import { HomeHeader } from '../../headers/HomeHeader';
 import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
 import debounce from 'lodash/debounce';
+import { AddImageLoading } from '../../components/addImageLoading';
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -20,11 +21,9 @@ export const HomeScreen = () => {
   const userData = useSelector(st => st.userData, shallowEqual);
   const [page, setPage] = useState(1);
   const [blackList, setBlackList] = useState([]);
-  const [index, setIndex] = useState(0);
   const flatListRef = useRef(null);
   const [showModal, setShowModal] = useState(false)
   const [viewableItems, setViewableItems] = useState([])
-  const [currentPost, setCurrentPost] = useState({})
   const createPost = useSelector(st => st.createPost);
   const [selecteidId, setSelectidId] = useState(null)
   const [showView, setShowView] = useState(false)
@@ -48,12 +47,6 @@ export const HomeScreen = () => {
       dispatch(GetLentsAction(staticdata.token, 1));
     }
   }, [staticdata.token, dispatch]);
-
-  useEffect(() => {
-    if (index != -1 && getLents?.data.length) {
-      dispatch(AddPostViewCount({ post_id: getLents?.data[index]?.id }, staticdata.token))
-    }
-  }, [index, getLents?.data]);
 
 
   const deletData = useCallback((i, post_id) => {
@@ -82,38 +75,31 @@ export const HomeScreen = () => {
 
 
 
-  const End = async (id) => {
-    let token = await AsyncStorage.getItem('token')
-    if (id) {
-      dispatch(EndViewPost({ post_id: id }, token))
-    }
-    else {
-      dispatch(EndViewPost({ post_id: currentPost?.id }, token))
-    }
-  }
+  // const End = async (id) => {
+  //   let token = await AsyncStorage.getItem('token')
+  //   if (id) {
+  //     dispatch(EndViewPost({ post_id: id }, token))
+  //   }
+  //   else {
+  //     dispatch(EndViewPost({ post_id: currentPost?.id }, token))
+  //   }
+  // }
 
   const onViewableItemsChanged = useCallback(({ viewableItems, changed }) => {
     // if (changed[0].index) {
     //   End(viewableItems[0].item.id)
     // }
     if (viewableItems.length > 0) {
-      const index = viewableItems[0].index;
-      console.log('Current Index:', index);
-      setIndex(index);
-      setCurrentPost(getLents.data[index]);
+      dispatch(AddPostViewCount({ post_id: viewableItems[0].item.id }, staticdata.token))
     }
     setViewableItems(changed)
-  }, []);
+  }, [staticdata.token]);
 
 
-  // const viewabilityConfig = {
-  //   itemVisiblePercentThreshold: 50,
-  // };
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+  };
 
-  const viewabilityConfig = React.useRef({
-    viewAreaCoveragePercentThreshold: 50, // Increase threshold for fewer viewability callbacks
-    minimumViewTime: 300, // Ensure an item is viewed for at least 300ms before triggering
-  }).current;
 
   const handleEndReached = useCallback(() => {
     if (getLents?.nextPage && !getLents.loading && !getLents.secondLoading && !isFetching) {
@@ -168,8 +154,7 @@ export const HomeScreen = () => {
       index,
     };
   };
-  const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 10;
-  // const keyExtractor = (item) => item.id;
+  const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 15;
   const keyExtractor = React.useCallback((item) => item.id.toString(), []);
 
   const refreshControl = <RefreshControl
@@ -189,12 +174,7 @@ export const HomeScreen = () => {
         close={() => setShowModal(false)}
         token={staticdata.token}
       />}
-      {createPost.loading && <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, zIndex: 999 }}>
-        <View style={styles.loadingVidio}>
-          <Image source={{ uri: createPost.localImg.uri }} style={{ width: 50, height: 50, borderRadius: 5 }} />
-          <Text style={Styles.darkMedium12}>загрузка</Text>
-        </View>
-      </View>}
+      {createPost.loading && <AddImageLoading uri={createPost.localImg.uri} />}
       {!getLents.loading ?
         <FlatList
           keyExtractor={keyExtractor}
@@ -203,9 +183,10 @@ export const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
           onEndReached={debounce(handleEndReached, 300)}
-          initialNumToRender={5}
-          maxToRenderPerBatch={windowSize}
-          windowSize={windowSize}
+          initialNumToRender={2}
+          maxToRenderPerBatch={2}
+          windowSize={5}
+          removeClippedSubviews={false}
           ref={flatListRef}
           getItemLayout={getItemLayout}
           onViewableItemsChanged={onViewableItemsChanged}
@@ -240,23 +221,3 @@ export const HomeScreen = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  loadingVidio: {
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    borderRadius: 5,
-    width: '60%',
-    paddingHorizontal: 10,
-    height: 70,
-    flexDirection: "row",
-    alignItems: 'center',
-    gap: 20,
-    borderRadius: 10,
-  }
-})
-
