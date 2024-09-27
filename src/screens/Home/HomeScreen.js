@@ -110,10 +110,14 @@ export const HomeScreen = () => {
   }, []);
 
 
-  const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50,
-  };
+  // const viewabilityConfig = {
+  //   itemVisiblePercentThreshold: 50,
+  // };
 
+  const viewabilityConfig = React.useRef({
+    viewAreaCoveragePercentThreshold: 50, // Increase threshold for fewer viewability callbacks
+    minimumViewTime: 300, // Ensure an item is viewed for at least 300ms before triggering
+  }).current;
 
   const handleEndReached = useCallback(() => {
     if (getLents?.nextPage && !getLents.loading && !getLents.secondLoading && !isFetching) {
@@ -169,7 +173,9 @@ export const HomeScreen = () => {
     };
   };
   const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 10;
-  const keyExtractor = (item) => item.id;
+  // const keyExtractor = (item) => item.id;
+  const keyExtractor = React.useCallback((item) => item.id.toString(), []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HomeHeader onPress={() => goTop()} />
@@ -194,6 +200,20 @@ export const HomeScreen = () => {
           initialNumToRender={5}
           maxToRenderPerBatch={windowSize}
           windowSize={windowSize}
+          ref={flatListRef}
+          getItemLayout={getItemLayout}
+          onViewableItemsChanged={onViewableItemsChanged}
+          refreshControl={
+            <RefreshControl
+              refreshing={getLents?.loading}
+              tintColor="#FFC24B"
+              onRefresh={() => {
+                setPage(1)
+                dispatch(GetLentsAction(staticdata.token, 1));
+              }}
+            />
+          }
+          viewabilityConfig={viewabilityConfig}
         />
         // <FlatList
         //   ListFooterComponent={ListEndLoader}
