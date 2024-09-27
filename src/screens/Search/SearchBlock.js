@@ -21,7 +21,7 @@ export const SearchBlock = () => {
   const debouncedSearchData = useCallback(
     _.debounce((e) => {
       dispatch(clearSearchData())
-      if (e != '') {
+      if (e) {
         dispatch(SearchAction({ search: e }, 1, staticdata.token));
       }
     }, 500),
@@ -30,8 +30,9 @@ export const SearchBlock = () => {
 
 
   const handleSearchInput = (e) => {
-    setData(e);
-    debouncedSearchData(e);
+    const formattedText = e.replace(/^\s+/, '');
+    setData(formattedText);
+    debouncedSearchData(formattedText);
   };
 
 

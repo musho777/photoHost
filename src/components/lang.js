@@ -82,7 +82,7 @@ export const t = (lang = 'ru') => {
             Women: 'Women',
             Men: "Men",
             Unspecifiedgender: 'Unspecified gender',
-            AboutProgram: "About the Application",
+            AboutProgram: "Who we are",
         }
     }
     {
@@ -168,7 +168,7 @@ export const t = (lang = 'ru') => {
             Women: 'Женщины',
             Men: "Mужчины",
             Unspecifiedgender: 'Неуказанные гендере',
-            AboutProgram: "О приложении",
+            AboutProgram: "Кто мы?",
         }
     }
 }

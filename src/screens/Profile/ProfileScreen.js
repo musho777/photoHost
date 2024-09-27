@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { TouchableOpacity, SafeAreaView, ActivityIndicator, StyleSheet, FlatList, Text } from 'react-native';
+import { TouchableOpacity, SafeAreaView, ActivityIndicator, StyleSheet, FlatList, Text, Dimensions } from 'react-native';
 import { MenuSvg2 } from '../../assets/svg/Svgs';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
@@ -10,6 +10,9 @@ import { ProfileImageSkeleton } from '../../components/skeleton/profileImageSkel
 import { Albom } from '../../components/Albom/Albom';
 import debounce from 'lodash/debounce';
 import { InfoBlock } from './InfoBlock';
+
+const windowWidth = Dimensions.get('window').width;
+
 
 
 export const ProfileScreen = ({ navigation }) => {
@@ -47,7 +50,7 @@ export const ProfileScreen = ({ navigation }) => {
 
   const renderItem = seletedScreen ? renderItem1 : renderItem2;
 
-  const ITEM_HEIGHT = 65;
+  const ITEM_HEIGHT = windowWidth / 2 - 25;
   const getItemLayout = (data, index) => {
     return {
       length: ITEM_HEIGHT,

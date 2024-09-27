@@ -7,7 +7,8 @@ import {
   Image,
   SafeAreaView,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { BackArrow } from '../../assets/svg/Svgs';
@@ -22,6 +23,8 @@ import { Albom } from '../../components/Albom/Albom';
 import { InfoBlock } from '../Profile/InfoBlock';
 import debounce from 'lodash/debounce';
 import { AlbomAndInfo } from '../Profile/components/albomAndInfo';
+const windowWidth = Dimensions.get('window').width;
+
 
 
 
@@ -93,7 +96,7 @@ export const SearchProfil = ({ navigation, route }) => {
 
   const renderItem = seletedScreen ? renderItem1 : renderItem2;
 
-  const ITEM_HEIGHT = 65;
+  const ITEM_HEIGHT = windowWidth / 2 - 25;
   const getItemLayout = (data, index) => {
     return {
       length: ITEM_HEIGHT,

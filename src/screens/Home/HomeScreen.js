@@ -130,8 +130,12 @@ export const HomeScreen = () => {
   }, [getLents, page, isFetching]);
 
   const ListEndLoader = () => {
-    if (getLents.secondLoading) {
+    if (getLents.secondLoading && getLents?.nextPage) {
       return <ActivityIndicator size="small" color='#FFC24B' />
+    }
+    else if ((!getLents?.nextPage && getLents.data.length > 5 && !getLents.secondLoading)) {
+      return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 10 }]}>Больше нет публикаций</Text>
+
     }
   };
 
@@ -162,17 +166,6 @@ export const HomeScreen = () => {
     [blackList, getLents.data.length, viewableItems] // Memoized dependencies
   );
 
-  if (getLents.loading) {
-    return (
-      <View >
-        <HomeHeader onPress={() => goTop()} />
-        {loadingData.map((elm, i) => {
-          return <PostLoading key={i} />
-        })}
-      </View>
-    );
-  }
-
   const ITEM_HEIGHT = 500;
   const getItemLayout = (data, index) => {
     return {
@@ -182,8 +175,6 @@ export const HomeScreen = () => {
     };
   };
   const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 21;
-  // const windowSize = 10
-
   const keyExtractor = (item) => item.id;
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -199,11 +190,8 @@ export const HomeScreen = () => {
           <Text style={Styles.darkMedium12}>загрузка</Text>
         </View>
       </View>}
-      <FlatList
+      {!getLents.loading ? <FlatList
         scrollEnabled={!full}
-        // ListHeaderComponent={
-        //   <HomeHeader onPress={() => goTop()} />
-        // }
         ListFooterComponent={ListEndLoader}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
@@ -236,7 +224,14 @@ export const HomeScreen = () => {
         disableVirtualization={true}
         windowSize={windowSize}
         decelerationRate={"normal"}
-      />
+      /> :
+        <View >
+          {loadingData.map((elm, i) => {
+            return <PostLoading key={i} />
+          })}
+        </View>
+      }
+
       {showView &&
         <ViewComponent
           id={selecteidId}
