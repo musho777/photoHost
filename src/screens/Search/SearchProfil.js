@@ -128,7 +128,6 @@ export const SearchProfil = ({ navigation, route }) => {
           onRefresh={() => {
             if (!getPosts.loading) {
               dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
-              dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
               setPage(1);
             }
           }}

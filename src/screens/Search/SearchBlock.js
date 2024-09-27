@@ -9,6 +9,7 @@ import { t } from '../../components/lang';
 import { SearchItem } from './component/searchItem';
 import _ from 'lodash';
 import { SearchInput } from './component/SearchInput';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const SearchBlock = () => {
   const [data, setData] = useState('');
@@ -34,6 +35,14 @@ export const SearchBlock = () => {
     setData(formattedText);
     debouncedSearchData(formattedText);
   };
+
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(clearSearchData())
+      setData("")
+    }, [])
+  );
 
 
   const renderItem = ({ item }) => {

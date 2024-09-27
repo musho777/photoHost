@@ -176,6 +176,15 @@ export const HomeScreen = () => {
   // const keyExtractor = (item) => item.id;
   const keyExtractor = React.useCallback((item) => item.id.toString(), []);
 
+  const refreshControl = <RefreshControl
+    refreshing={getLents?.loading}
+    tintColor="#FFC24B"
+    onRefresh={() => {
+      setPage(1)
+      dispatch(GetLentsAction(staticdata.token, 1));
+    }}
+  />
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HomeHeader onPress={() => goTop()} />
@@ -195,6 +204,7 @@ export const HomeScreen = () => {
           keyExtractor={keyExtractor}
           ListFooterComponent={ListEndLoader}
           data={getLents.data}
+          showsVerticalScrollIndicator={false}
           renderItem={renderItem}
           onEndReached={debounce(handleEndReached, 300)}
           initialNumToRender={5}
@@ -203,16 +213,7 @@ export const HomeScreen = () => {
           ref={flatListRef}
           getItemLayout={getItemLayout}
           onViewableItemsChanged={onViewableItemsChanged}
-          refreshControl={
-            <RefreshControl
-              refreshing={getLents?.loading}
-              tintColor="#FFC24B"
-              onRefresh={() => {
-                setPage(1)
-                dispatch(GetLentsAction(staticdata.token, 1));
-              }}
-            />
-          }
+          refreshControl={refreshControl}
           viewabilityConfig={viewabilityConfig}
         />
         // <FlatList

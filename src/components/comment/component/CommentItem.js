@@ -45,12 +45,17 @@ export const CommentItem = ({
       return <FastImage source={{ uri: text }} style={styles.image} />
     }
     else if (checkIfEmoji(text)) {
-      return <Text style={[Styles.darkSemiBold12, { marginTop: -5, fontSize: 40 }]}>
-        {user?.name}:{text}
-      </Text>
+      return <View >
+        <Text style={[Styles.darkSemiBold12, { marginTop: -5, fontSize: 15, marginBottom: 7 }]}>
+          {user?.name}
+        </Text>
+        <Text style={[Styles.darkSemiBold12, { marginTop: -5, fontSize: 40 }]}>
+          {text}
+        </Text>
+      </View>
     }
     else {
-      return <Text style={[Styles.darkSemiBold12, { marginTop: 5, fontSize: 15 }]}>
+      return <Text style={[Styles.darkSemiBold12, { marginTop: 5, fontSize: 15, color: 'red' }]}>
         {user?.name}:<Text style={[Styles.darkMedium12, { fontSize: 13 }]}>{text}</Text>
       </Text>
     }
