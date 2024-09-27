@@ -25,7 +25,6 @@ export const HomeScreen = () => {
   const [showModal, setShowModal] = useState(false)
   const [viewableItems, setViewableItems] = useState([])
   const [currentPost, setCurrentPost] = useState({})
-  const { full } = useSelector((st) => st.fullScreen)
   const createPost = useSelector(st => st.createPost);
   const [selecteidId, setSelectidId] = useState(null)
   const [showView, setShowView] = useState(false)
@@ -144,29 +143,24 @@ export const HomeScreen = () => {
     () => ({ item, index }) => {
       if (!blackList.includes(item.user.id)) {
         return (
-          <View
-            key={index}
-            style={{ marginTop: 5 }}
-          >
-            <Post
-              data={item}
-              viewableItems={viewableItems}
-              setShowLike={() => setLikeClose(true)}
-              setShowView={() => setShowView(true)}
-              addToblack={(e) => AddToBack(e)}
-              deletData={(e) => deletData(index, e)}
-              setSelectidId={(id) => setSelectidId(id)}
-              setShowShare={(e) => setShowShare(e)}
-            />
-          </View>
+          <Post
+            data={item}
+            viewableItems={viewableItems}
+            setShowLike={() => setLikeClose(true)}
+            setShowView={() => setShowView(true)}
+            addToblack={(e) => AddToBack(e)}
+            deletData={(e) => deletData(index, e)}
+            setSelectidId={(id) => setSelectidId(id)}
+            setShowShare={(e) => setShowShare(e)}
+          />
         );
       }
       return null;
     },
-    [blackList, getLents.data.length, viewableItems] // Memoized dependencies
+    [blackList, getLents.data.length, viewableItems]
   );
 
-  const ITEM_HEIGHT = 500;
+  const ITEM_HEIGHT = 600;
   const getItemLayout = (data, index) => {
     return {
       length: ITEM_HEIGHT,
@@ -174,7 +168,7 @@ export const HomeScreen = () => {
       index,
     };
   };
-  const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 21;
+  const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 10;
   const keyExtractor = (item) => item.id;
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -190,41 +184,53 @@ export const HomeScreen = () => {
           <Text style={Styles.darkMedium12}>загрузка</Text>
         </View>
       </View>}
-      {!getLents.loading ? <FlatList
-        scrollEnabled={!full}
-        ListFooterComponent={ListEndLoader}
-        keyExtractor={keyExtractor}
-        showsVerticalScrollIndicator={false}
-        ref={flatListRef}
-        removeClippedSubviews={true}
-        scrollEventThrottle={16}
-        getItemLayout={getItemLayout}
-        onViewableItemsChanged={onViewableItemsChanged}
-        onEndReached={debounce(handleEndReached, 300)}
-        onScroll={({ nativeEvent }) => {
-          handleScroll({ nativeEvent })
-        }}
-        refreshControl={
-          <RefreshControl
-            refreshing={getLents?.loading}
-            tintColor="#FFC24B"
-            onRefresh={() => {
-              setPage(1)
-              dispatch(GetLentsAction(staticdata.token, 1));
-            }}
-          />
-        }
-        viewabilityConfig={viewabilityConfig}
-        data={getLents.data}
-        enableEmptySections={true}
-        renderItem={renderItem}
-        initialNumToRender={5}
-        maxToRenderPerBatch={windowSize}
-        onEndReachedThreshold={0.5}
-        disableVirtualization={true}
-        windowSize={windowSize}
-        decelerationRate={"normal"}
-      /> :
+      {!getLents.loading ?
+        <FlatList
+          keyExtractor={keyExtractor}
+          ListFooterComponent={ListEndLoader}
+          data={getLents.data}
+          renderItem={renderItem}
+          onEndReached={debounce(handleEndReached, 300)}
+          initialNumToRender={5}
+          maxToRenderPerBatch={windowSize}
+          windowSize={windowSize}
+        />
+        // <FlatList
+        //   ListFooterComponent={ListEndLoader}
+        //   keyExtractor={keyExtractor}
+        //   showsVerticalScrollIndicator={false}
+        //   ref={flatListRef}
+        //   removeClippedSubviews={false}
+        //   scrollEventThrottle={16}
+        //   getItemLayout={getItemLayout}
+        //   onViewableItemsChanged={onViewableItemsChanged}
+        //   onEndReached={debounce(handleEndReached, 300)}
+        //   onScroll={({ nativeEvent }) => {
+        //     handleScroll({ nativeEvent })
+        //   }}
+        //   refreshControl={
+        //     <RefreshControl
+        //       refreshing={getLents?.loading}
+        //       tintColor="#FFC24B"
+        //       onRefresh={() => {
+        //         setPage(1)
+        //         dispatch(GetLentsAction(staticdata.token, 1));
+        //       }}
+        //     />
+        //   }
+        //   viewabilityConfig={viewabilityConfig}
+        //   data={getLents.data}
+        //   enableEmptySections={true}
+        //   renderItem={renderItem}
+        //   initialNumToRender={5}
+        //   maxToRenderPerBatch={windowSize}
+        //   onEndReachedThreshold={0.5}
+        //   disableVirtualization={false}
+        //   windowSize={windowSize}
+        //   decelerationRate={"normal"}
+        // /> 
+
+        :
         <View >
           {loadingData.map((elm, i) => {
             return <PostLoading key={i} />
