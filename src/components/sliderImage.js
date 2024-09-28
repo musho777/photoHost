@@ -7,7 +7,7 @@ import isEqual from 'lodash.isequal';
 
 const windowWidth = Dimensions.get('window').width;
 
-const SliderImage = React.memo(({ description, data, item, long, height, index, setScrollEnabled, viewableItems }) => {
+const SliderImage = React.memo(({ description, data, item, long, height, index, setScrollEnabled, viewableItems, active }) => {
   const Description = useMemo(() => {
     let desc = description;
     if (description && description[0] === '[') {

@@ -61,7 +61,6 @@ export const ProfileScreen = ({ navigation }) => {
 
   const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
 
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TouchableOpacity

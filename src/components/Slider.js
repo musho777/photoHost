@@ -120,6 +120,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
           item={item}
           height={height}
           viewableItems={viewableItems}
+          active={active}
         />
         {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
           <FastImage

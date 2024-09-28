@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetPostsAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -61,6 +61,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (createPost.loading) {
+      dispatch(GetPostsAction({ user_id: userData.data?.id }, staticdata.token, 1));
       goTop()
     }
   }, [createPost.loading])
