@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, SafeAreaView, BackHandler } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, SafeAreaView, BackHandler, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { EmailSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from '../../../assets/svg/Svgs';
@@ -191,53 +191,57 @@ export const EditProfilScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <HeaderWhiteTitle
-          loading={changeProfil.loading}
-          onCheck={() => chnageProfil()}
-          check
-          onPress={() => {
-            navigation.goBack()
-            navigation.openDrawer()
-          }}
-          title=
-          {t(mainData.lang).Editprofile}
-        />
-        <View style={styles.textWrapper}>
-          <TextInput
-            value={name}
-            onChangeText={e => setName(e)}
-            style={Styles.darkMedium14}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}>
+          <HeaderWhiteTitle
+            loading={changeProfil.loading}
+            onCheck={() => chnageProfil()}
+            check
+            onPress={() => {
+              navigation.goBack()
+              navigation.openDrawer()
+            }}
+            title=
+            {t(mainData.lang).Editprofile}
           />
-        </View>
-        <Fild multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
-        {accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
-          (Чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
-          Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)
-        </Text> :
-          <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
-            (Чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
-            Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города)
-          </Text>
-        }
-        <View>
-          {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
-          <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
-          <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
-          <Profiesions setLocation={(e) => setProfation(e)} loaction={profation} />
-          {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
-          {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
-          {!accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
-          {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />}
-          {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
-          <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />
-          <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
-        </View>
-        {/* <Text
+          <View style={styles.textWrapper}>
+            <TextInput
+              value={name}
+              onChangeText={e => setName(e)}
+              style={Styles.darkMedium14}
+            />
+          </View>
+          <Fild multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
+          {accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
+            (Чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
+            Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)
+          </Text> :
+            <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
+              (Чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
+              Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города)
+            </Text>
+          }
+          <View>
+            {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
+            <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
+            <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
+            <Profiesions setLocation={(e) => setProfation(e)} loaction={profation} />
+            {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
+            {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
+            {!accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
+            {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />}
+            {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
+            <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />
+            <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
+          </View>
+          {/* <Text
           style={[[Styles.tomatoMedium10, { textAlign: 'center', marginTop: 10 }]]}>
           {error || changeProfil.error}
         </Text> */}
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

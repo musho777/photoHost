@@ -67,16 +67,18 @@ export const Position_professionModal = ({ visible, close, onPress }) => {
               placeholder={t(mainData.lang).search}
             />
             <ScrollView
+              keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
               scrollEventThrottle={400}
             >
               {profesions.map((elm, i) => (
-                <TouchableOpacity key={i} onPress={() => {
-                  onPress(elm);
-                  close();
-                }}>
-                  <Text key={i} style={styles.modalText}>{elm}</Text>
-                </TouchableOpacity>
+                <Text
+                  key={i}
+                  onPress={() => {
+                    onPress(elm);
+                    close();
+                  }}
+                  style={styles.modalText}>{elm}</Text>
               ))}
             </ScrollView>
           </View>

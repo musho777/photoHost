@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, View, ScrollView, TouchableOpacity, Text } from "react-native";
+import { Modal, StyleSheet, View, ScrollView, TouchableOpacity, Text, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { Input } from "../../../../ui/Input";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -587,19 +587,24 @@ export const ProfesionsModal = ({ visible, close, onPress }) => {
               value={search}
               placeholder={t(mainData.lang).search}
             />
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              scrollEventThrottle={400}
-            >
-              {profesions.map((elm, i) => (
-                <TouchableOpacity key={i} onPress={() => {
-                  onPress(elm);
-                  close();
-                }}>
-                  <Text key={i} style={styles.modalText}>{elm}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <ScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                scrollEventThrottle={400}
+              >
+                {profesions.map((elm, i) => (
+                  <Text
+                    onPress={() => {
+                      onPress(elm);
+                      close();
+                    }}
+                    key={i}
+                    style={styles.modalText}
+                  >{elm}</Text>
+                ))}
+              </ScrollView>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableOpacity>
       </Modal>
