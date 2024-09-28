@@ -115,7 +115,7 @@ export const Share = ({ big, postId, close, open, user_id }) => {
         width: '100%',
         justifyContent: 'center',
         position: 'absolute',
-        bottom: 30,
+        bottom: 15,
       }}>
         <TouchableOpacity
           onPress={() => ShareFunction()}
@@ -126,7 +126,6 @@ export const Share = ({ big, postId, close, open, user_id }) => {
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 10,
-            marginBottom: big ? 0 : 70
           }}>
           <Text style={Styles.darkRegular14}>Отправить {select.length}</Text>
         </TouchableOpacity>

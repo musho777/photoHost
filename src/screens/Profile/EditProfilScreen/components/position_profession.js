@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { DownArrow, ProfetionsSvg } from "../../../../assets/svg/Svgs"
+import { DownArrow, Otrastel } from "../../../../assets/svg/Svgs"
 import { useState } from "react"
 import { Styles } from "../../../../styles/Styles"
 import { AppColors } from "../../../../styles/AppColors"
@@ -11,7 +11,7 @@ export const Position_profession = ({ setLocation, loaction }) => {
     <TouchableOpacity onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ width: 20, marginRight: 10 }}>
-          <ProfetionsSvg />
+          <Otrastel />
         </View>
         <Text style={[Styles.balihaiRegular14]}>{loaction ? loaction : 'Сфера/отрасль'}</Text>
       </View>

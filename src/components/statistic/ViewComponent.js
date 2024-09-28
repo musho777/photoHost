@@ -55,7 +55,7 @@ export const ViewComponent = ({ id, token, close, big = false }) => {
       onClose={() => close()}
       style={{ zIndex: 999993, postion: 'absalute' }}
     >
-      <View style={{ height: big ? '100%' : '85%' }}>
+      <View style={{ height: '100%' }}>
         <View
           style={[Styles.flexAlignItems, { justifyContent: 'center', marginVertical: 20 },]}>
           <StatisticSvg />
