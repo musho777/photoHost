@@ -223,9 +223,8 @@ export const EditProfilScreen = ({ navigation }) => {
         <View>
           {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
           <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
-          <Profiesions setLocation={(e) => setProfation(e)} loaction={profation} />
           <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
-          {/* <Fild value={profation} hadnelChange={(e) => setProfation(e)} svg={<ProfetionsSvg />} placeholder={t(mainData.lang).ProfessionFieldofactivity} /> */}
+          <Profiesions setLocation={(e) => setProfation(e)} loaction={profation} />
           {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
           {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
           {!accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
