@@ -53,6 +53,7 @@ export const StatisticList = ({ id, token }) => {
 
       const gender = maxStatistic.gender === "men" ? "M" : "Ж";
       let date = new Date(item.date)
+      console.log(item, '2')
       const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if necessary
       const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
       const year = String(date.getFullYear()).slice(2);

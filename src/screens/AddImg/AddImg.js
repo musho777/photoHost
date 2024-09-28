@@ -50,6 +50,7 @@ export const AddImg = ({ navigation }) => {
   const videoRefCut8 = useRef(null);
   const videoRefCut9 = useRef(null);
   const videoRefCut10 = useRef(null);
+  const [loading, setLoading] = useState(false)
 
 
   const [showError, setShowError] = useState(false)
@@ -146,7 +147,6 @@ export const AddImg = ({ navigation }) => {
       setErrorCatalog(false)
       dispatch(ClearCreatPost())
       setSelectedCatalog('')
-      // addPhoto()
       setSelectedCatalogName('')
       setSelectedImage()
       setUri([])
@@ -210,6 +210,8 @@ export const AddImg = ({ navigation }) => {
     }
   };
 
+
+
   const addPhoto = () => {
     setError('')
     setShowError(false)
@@ -223,8 +225,9 @@ export const AddImg = ({ navigation }) => {
         skipBackup: true,
       },
     };
+    setLoading(true)
+    setFirst(true)
     launchImageLibrary(options, (response) => {
-      setFirst(true)
       let item = [...uri]
       if (response.didCancel) {
         if (uri.length == 0) {
@@ -323,6 +326,11 @@ export const AddImg = ({ navigation }) => {
     navigation.goBack()
   }
 
+  const handleVideoLoad = (data) => {
+    console.log('Video Loaded:', data)
+    setLoading(false);
+  };
+
   if (first)
     return (
       <KeyboardAvoidingView
@@ -365,11 +373,14 @@ export const AddImg = ({ navigation }) => {
                   style={[styles.img, { height: 570 }]}
                   source={{ uri: selectedImage }}
                 /> :
+                  // {
+
+                  // }
                   <Video
                     source={{ uri: selectedImage }}
                     style={[styles.img]}
                     resizeMode="cover"
-                    paused={false}
+                    onLoad={handleVideoLoad}
                     volume={0}
                   />
                 }
