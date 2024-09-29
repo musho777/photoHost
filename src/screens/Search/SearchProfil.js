@@ -14,7 +14,7 @@ import { Styles } from '../../styles/Styles';
 import { BackArrow } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddDeleteFollowAction, AddDeletFollowAction, GetOtherPostsAction, GetSinglPageAction } from '../../store/action/action';
+import { AddDeleteFollowAction, AddDeletFollowAction, ClearFollowrs, GetOtherPostsAction, GetSinglPageAction } from '../../store/action/action';
 import { t } from '../../components/lang';
 import { useFocusEffect } from '@react-navigation/native';
 import { ProfileImageSkeleton } from '../../components/skeleton/profileImageSkeleton';
@@ -63,6 +63,7 @@ export const SearchProfil = ({ navigation, route }) => {
   useFocusEffect(
     useCallback(() => {
       if (singlPage.data.id != route?.params?.id) {
+        dispatch(ClearFollowrs())
         dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
         dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
       }

@@ -39,6 +39,14 @@ const GetFollowersReducer = (state = initialState, action) => {
         item.data.splice(index, 1);
       }
       break
+    case "ClearFollowrs":
+      item.error = ''
+      item.status = false
+      item.message = ''
+      item.loading = true
+      item.nextPage = null
+      item.data = []
+      break
     default:
       break;
   }

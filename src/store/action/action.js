@@ -1880,3 +1880,9 @@ export const LocalSinglImage = (data) => {
     data
   }
 }
+
+export const ClearFollowrs = () => {
+  return {
+    type: 'ClearFollowrs'
+  }
+}
