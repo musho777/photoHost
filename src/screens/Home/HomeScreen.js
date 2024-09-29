@@ -41,7 +41,7 @@ export const HomeScreen = () => {
     }, 20000);
 
     return () => clearTimeout(timer);
-  }, [userData.data]);
+  }, [userData.data.show_category_pop_up]);
 
   useEffect(() => {
     if (staticdata.token && !getLents?.data.length) {

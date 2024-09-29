@@ -151,6 +151,7 @@ export const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
   const navigation = useNavigation()
   const userData = useSelector((st) => st.userData)
+  const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
   const LogOut = async () => {
     dispatch(LogoutAction(staticdata.token))

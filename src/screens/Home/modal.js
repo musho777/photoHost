@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { StyleSheet, View, Modal, Text, TouchableOpacity, ScrollView } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
-import { ChangeCatalog, ClearChangeCatalog, GetRelationCategory, NoShowPopup } from "../../store/action/action"
+import { ChangeCatalog, ClearChangeCatalog, ClosePopUpLocal, GetRelationCategory, NoShowPopup } from "../../store/action/action"
 import { Styles } from "../../styles/Styles"
 import { BackArrow } from "../../assets/svg/Svgs"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -9,18 +9,23 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 export const ModalComponent = ({ showModal, token, close }) => {
   const dispatch = useDispatch()
   const getRelationCategory = useSelector((st) => st.getRelationCategory)
-  const [selected, setSelected] = useState([])
   const userData = useSelector((st) => st.userData)
   const [ShowText, setShowText] = useState(false)
-  const [showCatalog, setSHowCatalog] = useState(false)
-  const [catalog, setCatalog] = useState([])
+  const [firstTime, setFirstTeme] = useState(false)
+
+  const GetFirstTime = async () => {
+    let item = await AsyncStorage.getItem('showDescription')
+    if (item == 'no') {
+      setFirstTeme(false)
+    }
+    else {
+      setFirstTeme(true)
+    }
+  }
 
   useEffect(() => {
-    if (userData.data.categories) {
-      setCatalog(userData.data.categories)
-    }
-  }, [userData.data])
-
+    GetFirstTime()
+  }, [])
 
   useEffect(() => {
     if (token) {
@@ -29,14 +34,16 @@ export const ModalComponent = ({ showModal, token, close }) => {
   }, [token, showModal])
 
 
+
   const SendData = async () => {
-    let item = [...selected]
+    let item = []
     userData.data?.categories.map((elm, i) => {
       item.push(elm.id)
     })
     getRelationCategory?.data?.map((elm, i) => {
       item.push(elm.id)
     })
+    dispatch(ClosePopUpLocal())
     dispatch(ChangeCatalog(token, {
       category_ids: item,
       settings: 0,
@@ -49,20 +56,21 @@ export const ModalComponent = ({ showModal, token, close }) => {
 
   const Reject = async () => {
     close()
+    dispatch(ClosePopUpLocal())
     dispatch(NoShowPopup(token))
     await AsyncStorage.setItem('showDescription', 'no')
   }
 
-  if (!ShowText && !showCatalog) {
+  if (!ShowText) {
     return <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={showModal}
     >
       <View style={styles.popup}>
         <View style={[styles.card, styles.shadowProp]}>
           <View style={{ justifyContent: 'center', alignItems: 'center', gap: 6 }}>
-            <Text style={Styles.darkMedium16}>Вы поменяли рубрики!</Text>
+            {!firstTime && <Text style={Styles.darkMedium16}>Вы поменяли рубрики!</Text>}
             <Text style={[Styles.darkMedium14, { marginTop: -5 }]}>Предложить Вам попутный контент?</Text>
             <Text onPress={() => setShowText(true)} style={[Styles.balihaiMedium10, { borderBottomWidth: 0.5, paddingBottom: 2, borderColor: '#8C9CAB' }]}>(Что такое попутный контент?)</Text>
           </View>
@@ -126,7 +134,7 @@ const styles = StyleSheet.create({
   popup: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.2)',
     alignItems: 'center',
   },
   catalogWrapper: {

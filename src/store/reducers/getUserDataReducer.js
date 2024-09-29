@@ -125,6 +125,12 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'AddMessageCount':
       item.msgCount = item.msgCount + 1
       break
+    case "ShowPopUpLocal":
+      item.data.show_category_pop_up = 1
+      break
+    case "ClosePopUpLocal":
+      item.data.show_category_pop_up = 0
+      break
     default:
       break;
   }

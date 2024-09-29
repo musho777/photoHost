@@ -3,7 +3,7 @@ import { Styles } from "../../styles/Styles"
 import { CatalogItem } from "../../components/catalogItem"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction } from "../../store/action/action"
+import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction, ShowPopUpLocal } from "../../store/action/action"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { Skeleton } from "../../components/Skeleton"
 
@@ -82,6 +82,7 @@ export const Catalog = () => {
 
   const SendData = () => {
     setLiading(true)
+    dispatch(ShowPopUpLocal())
     dispatch(ChangeCatalog(staticdata.token, {
       category_ids: selected,
       settings: 1,
