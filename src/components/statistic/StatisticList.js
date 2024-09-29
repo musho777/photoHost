@@ -26,10 +26,20 @@ export const StatisticList = ({ id, token }) => {
   const user = useSelector((st) => st.userData)
   const navigation = useNavigation()
 
+
+  function getTimezoneOffset() {
+    const offset = new Date().getTimezoneOffset();
+    const sign = offset > 0 ? '-' : '+';
+    const absOffset = Math.abs(offset);
+    const hours = String(Math.floor(absOffset / 60)).padStart(2, '0');
+    const minutes = String(absOffset % 60).padStart(2, '0');
+
+    return `${sign}${hours}:${minutes}`;
+  }
   useEffect(() => {
     if (id) {
       dispatch(Getstatistic1(id, token))
-      dispatch(GetStatisitc2(id, token))
+      dispatch(GetStatisitc2(id, token, { timezone_offset: getTimezoneOffset() }))
     }
   }, [id])
 

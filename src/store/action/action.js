@@ -1806,14 +1806,15 @@ export const EndViewPost = (data, token) => {
   };
 }
 
-export const GetStatisitc2 = (id, token) => {
+export const GetStatisitc2 = (id, token, data) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   var requestOptions = {
-    method: 'GET',
+    method: 'POST',
     headers: myHeaders,
     redirect: 'follow',
+    body: JSON.stringify(data),
   };
   return dispatch => {
     dispatch(StartGetStatisitc2());
