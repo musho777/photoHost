@@ -24,7 +24,10 @@ function CustomDrawerContent(props) {
     dispatch(LogoutAction(staticdata.token))
     dispatch(ClearLoginAction())
     dispatch(ClearUser())
-    props.navigation.navigate('LoginScreen1', { screen: 'LoginScreen' })
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: 'LoginScreen1', params: { screen: 'LoginScreen' } }],
+    });
   }
   return (
     <View style={{ height: '100%', backgroundColor: 'white', }}>

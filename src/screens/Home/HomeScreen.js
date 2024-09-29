@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, EndViewPost, GetLentsAction, GetPostsAction } from '../../store/action/action';
+import { AddPostViewCount, ClearLoginAction, ClearUser, DelatePostAction, EndViewPost, GetLentsAction, GetPostsAction, LogoutAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,6 +13,7 @@ import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
 import debounce from 'lodash/debounce';
 import { AddImageLoading } from '../../components/addImageLoading';
+import { useNavigation } from '@react-navigation/native';
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -86,20 +87,17 @@ export const HomeScreen = () => {
   //   }
   // }
 
-  const onViewableItemsChanged = useCallback(({ viewableItems, changed }) => {
+  const onViewableItemsChanged = useCallback(async ({ viewableItems, changed }) => {
     // if (changed[0].index) {
     //   End(viewableItems[0].item.id)
     // }
+    let token = await AsyncStorage.getItem("token")
     if (viewableItems.length > 0) {
-      dispatch(AddPostViewCount({ post_id: viewableItems[0].item.id }, staticdata.token))
+      dispatch(AddPostViewCount({ post_id: viewableItems[0].item.id }, token))
     }
     setViewableItems(changed)
-  }, [staticdata.token]);
+  }, []);
 
-
-  const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50,
-  };
 
 
   const handleEndReached = useCallback(() => {
@@ -155,6 +153,9 @@ export const HomeScreen = () => {
       dispatch(GetLentsAction(staticdata.token, 1));
     }}
   />
+  const viewabilityConfig = useRef({
+    viewAreaCoveragePercentThreshold: 50, // or itemVisiblePercentThreshold
+  });
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -179,10 +180,10 @@ export const HomeScreen = () => {
           windowSize={5}
           removeClippedSubviews={false}
           ref={flatListRef}
+          viewabilityConfig={viewabilityConfig.current}
           // getItemLayout={getItemLayout}
           onViewableItemsChanged={onViewableItemsChanged}
           refreshControl={refreshControl}
-          viewabilityConfig={viewabilityConfig}
         />
         :
         <View>

@@ -52,7 +52,7 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.msgCount = action.allData.chat_count
       break
     case 'ErrorGetUserData':
-      item.error = action.data
+      item.error = "no_token"
       item.loading = false
       item.status = false
       item.data = {}
@@ -110,6 +110,7 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.description = ''
       item.email = ''
       item.avatar = ''
+      item.error = ''
       break
 
     case 'DeletLocalPhoto':

@@ -7,8 +7,10 @@ import { ProfileNavigation } from './ProfileNavigation';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { HomeNavigation } from './HomeNavigation';
 import { Keyboard, SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const user = useSelector((st) => st.userData);
@@ -147,6 +149,25 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
 export const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
+  const navigation = useNavigation()
+  const userData = useSelector((st) => st.userData)
+  const dispatch = useDispatch()
+  const LogOut = async () => {
+    dispatch(LogoutAction(staticdata.token))
+    dispatch(ClearLoginAction())
+    dispatch(ClearUser())
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'LoginScreen1', params: { screen: 'LoginScreen' } }],
+    });
+  }
+
+  useEffect(() => {
+    if (userData.error == 'no_token') {
+      LogOut()
+    }
+  }, [userData.error])
+
 
   return (
     <Tab.Navigator

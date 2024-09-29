@@ -1603,6 +1603,7 @@ export const ChangeCatalog = (token, data) => {
       redirect: 'follow',
     };
     dispatch(StartChangeCatalog())
+    dispatch(getUserInfoAction(token))
     fetch(`${Api}/user_change_category`, requestOptions)
       .then(response => response.json())
       .then(r => {

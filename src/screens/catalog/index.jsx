@@ -3,7 +3,7 @@ import { Styles } from "../../styles/Styles"
 import { CatalogItem } from "../../components/catalogItem"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction, getUserInfoAction } from "../../store/action/action"
+import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction } from "../../store/action/action"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { Skeleton } from "../../components/Skeleton"
 
@@ -77,7 +77,7 @@ export const Catalog = () => {
       backAction
     );
 
-    return () => backHandler.remove(); // Cleanup the listener when the screen is not active
+    return () => backHandler.remove();
   }, [isFocused]);
 
   const SendData = () => {
@@ -86,7 +86,6 @@ export const Catalog = () => {
       category_ids: selected,
       settings: 1,
     }))
-    dispatch(getUserInfoAction(staticdata.token))
     dispatch(ClearChangeCatalog())
     navigation.navigate('TabNavigation', { screen: 'Home' })
   }
