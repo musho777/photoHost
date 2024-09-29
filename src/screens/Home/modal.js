@@ -62,7 +62,8 @@ export const ModalComponent = ({ showModal, token, close }) => {
       <View style={styles.popup}>
         <View style={[styles.card, styles.shadowProp]}>
           <View style={{ justifyContent: 'center', alignItems: 'center', gap: 6 }}>
-            <Text style={Styles.darkMedium16}>Предложить Вам попутный контент?</Text>
+            <Text style={Styles.darkMedium16}>Вы поменяли рубрики!</Text>
+            <Text style={[Styles.darkMedium14, { marginTop: -5 }]}>Предложить Вам попутный контент?</Text>
             <Text onPress={() => setShowText(true)} style={[Styles.balihaiMedium10, { borderBottomWidth: 0.5, paddingBottom: 2, borderColor: '#8C9CAB' }]}>(Что такое попутный контент?)</Text>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 30 }}>
@@ -103,7 +104,7 @@ export const ModalComponent = ({ showModal, token, close }) => {
               <View style={{ gap: 10 }}>
                 <Text style={[{ textDecorationLine: 'underline' }, Styles.balihaiSemiBold16]}>Пример:</Text>
                 <View style={{ gap: 6 }}>
-                  <Text style={Styles.balihaiMedium13}>Вы выбрали рубрику «Транспорт», к ней будет предлагаться такой контент как:</Text>
+                  <Text style={Styles.balihaiMedium13}>Вы выбрали рубрику «Транспорт», к ней попутно будет предлагаться такой контент как:</Text>
                   <Text style={Styles.balihaiMedium13}>-Одежда и обувь (какую удобную одежду и обувь взять с собой)</Text>
                   <Text style={Styles.balihaiMedium13}>-Путешествия и туризм (путешествия на личном и других видах транспорта)</Text>
                   <Text style={Styles.balihaiMedium13}>-Города и страны (города и страны, которые можно и нужно посетить)</Text>
@@ -111,6 +112,7 @@ export const ModalComponent = ({ showModal, token, close }) => {
                   <Text style={Styles.balihaiMedium13}>-Природа (самые красивые и сказочные места)</Text>
                   <Text style={Styles.balihaiMedium13}>-Релакс (расслабления на отдыхе)</Text>
                   <Text style={Styles.balihaiMedium13}>-Охота и рыбалка (о рыбных местах и охоте)</Text>
+                  <Text style={Styles.balihaiMedium13}>Выбрав другие рубрики, Вам будет предложен косвенно связанный контент.</Text>
                 </View>
               </View>
             </View>

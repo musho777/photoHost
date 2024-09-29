@@ -327,7 +327,6 @@ export const AddImg = ({ navigation }) => {
   }
 
   const handleVideoLoad = (data) => {
-    console.log('Video Loaded:', data)
     setLoading(false);
   };
 

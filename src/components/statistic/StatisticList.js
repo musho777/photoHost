@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import {
   BottomSheetScrollView,
@@ -11,8 +11,7 @@ import { Table, Row, } from 'react-native-table-component';
 import { GetStatisitc2, Getstatistic1 } from '../../store/action/action';
 import { AppColors } from '../../styles/AppColors';
 import { DonwSvg } from '../../assets/svg/Svgs';
-import { useNavigation } from '@react-navigation/native';
-
+import { UserItem } from './compeont/userItem';
 
 export const StatisticList = ({ id, token }) => {
   const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'Кол во просмотров ']
@@ -21,10 +20,12 @@ export const StatisticList = ({ id, token }) => {
   const [tableData, setTableDat] = useState([])
   const widthArr = [80, 50, 40, 70, 100]
   const getPostView = useSelector(st => st.getPostView);
-  const [page, setPage] = useState(1);
   const dispatch = useDispatch()
-  const user = useSelector((st) => st.userData)
-  const navigation = useNavigation()
+  const [show, setShow] = useState(false)
+  const [getView, setGetView] = useState(null)
+  const [getViewInAccaunt, setGetViewAccaunt] = useState(null)
+
+
 
 
   function getTimezoneOffset() {
@@ -43,17 +44,37 @@ export const StatisticList = ({ id, token }) => {
     }
   }, [id])
 
-  const getRandomNumber = (min, max) => {
-    let sec = Math.floor(Math.random() * (max - min + 1)) + min;
-    let word = 'секунд'
-    if (JSON.stringify(sec)[1] == 1) {
-      word = "секунда"
+  const getRandomNumber = useCallback((min, max) => {
+    if (getView == null) {
+      let sec = Math.floor(Math.random() * (max - min + 1)) + min;
+      let word = 'секунд'
+      if (JSON.stringify(sec)[1] == 1) {
+        word = "секунда"
+      }
+      else if (JSON.stringify(sec)[1] >= 2 && JSON.stringify(sec)[1] <= 4) {
+        word = "секунды"
+      }
+      setGetView(`${sec} ${word}`)
     }
-    else if (JSON.stringify(sec)[1] >= 2 && JSON.stringify(sec)[1] <= 4) {
-      word = "секунды"
+  });
+  const getRandomNumberAccaunt = useCallback((min, max) => {
+    if (!getViewInAccaunt) {
+      let sec = Math.floor(Math.random() * (max - min + 1)) + min;
+      let word = 'секунд'
+      if (JSON.stringify(sec)[1] == 1) {
+        word = "секунда"
+      }
+      else if (JSON.stringify(sec)[1] >= 2 && JSON.stringify(sec)[1] <= 4) {
+        word = "секунды"
+      }
+      setGetViewAccaunt(`${sec} ${word}`)
     }
-    return `${sec} ${word}`
-  };
+  });
+
+  useEffect(() => {
+    getRandomNumber(17, 25)
+    getRandomNumberAccaunt(17, 25)
+  }, [])
 
 
   function getMaxCountItem(data) {
@@ -63,7 +84,6 @@ export const StatisticList = ({ id, token }) => {
 
       const gender = maxStatistic.gender === "men" ? "M" : "Ж";
       let date = new Date(item.date)
-      console.log(item, '2')
       const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if necessary
       const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
       const year = String(date.getFullYear()).slice(2);
@@ -99,62 +119,24 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getRandomNumber(17, 25)} </Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
             <Text style={Styles.darkSemiBold14}>Переход (с ленты на Ваш аккаунт)
               - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
           </View>
           <View style={styles.line}></View>
-          <TouchableOpacity activeOpacity={1} style={{ position: 'relative', width: '100%' }}>
-            <View style={{ position: 'absolute', zIndex: 9999, right: 10, top: 23 }}>
+          <TouchableOpacity onPress={() => setShow(!show)} activeOpacity={1} style={{ position: 'relative', width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={Styles.darkSemiBold14}>Просмотрели предыдущие публикации</Text>
+            <View>
               <DonwSvg />
             </View>
-            <Accordion headerTitleStyle={Styles.darkMedium12} style={{ width: '100%', marginLeft: 0 }} headerTitle="Просмотрели предыдущие публикации">
-              <BottomSheetScrollView
-                style={{ marginTop: 20 }}
-                onScroll={({ nativeEvent }) => {
-                  if (isCloseToBottom(nativeEvent)) {
-                    if (getPosts.nextPage) {
-                      let pages = page + 1;
-                      dispatch(GetPostViewAction({ post_id: id }, token, page));
-                      setPage(pages);
-                    }
-                  }
-                }}>
-                {getPostView.data.map((elm, i) => {
-                  return (
-                    <TouchableOpacity
-                      activeOpacity={1}
-                      onPress={() => {
-                        if (user.data.id == elm.user.id) {
-                          navigation.navigate('ProfileNavigation');
-                        }
-                        else {
-                          navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: elm.user.id } });
-                        }
-                      }}
-                      key={i}
-                      style={[styles.block, { marginBottom: 5 }]}>
-                      <View style={Styles.flexAlignItems}>
-                        <Image
-                          style={styles.img}
-                          source={{
-                            uri: `https://chambaonline.pro/uploads/${elm.user.avatar}`,
-                          }}
-                        />
-                        <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
-                          {elm.user.name}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </BottomSheetScrollView>
-            </Accordion>
           </TouchableOpacity>
+          {show &&
+            <UserItem data={getPostView.data} />
+          }
           <View style={{ gap: 10 }}>
             <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом - {getStatistic1.data.get_comment_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getRandomNumber(18, 25)} </Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getViewInAccaunt}</Text>
           </View>
 
 
@@ -189,12 +171,6 @@ export const StatisticList = ({ id, token }) => {
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    paddingTop: 30,
-    backgroundColor: '#fff'
-  },
   textStyle: {
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 10,
@@ -208,23 +184,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-  button: {
-    fontSize: 10,
-    color: 'red',
-  },
   header: {
     height: 50,
     backgroundColor: 'rgba(255,194,75,0.8)',
     borderRadius: 10,
   },
-  borderRadius: 10,
   row: {
     height: 40,
     borderRadius: 10,
-  },
-  img: {
-    width: 25,
-    height: 25,
-    borderRadius: 50,
   },
 });
