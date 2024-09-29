@@ -81,7 +81,6 @@ export const ProfileScreen = ({ navigation }) => {
           initialNumToRender={5}
           maxToRenderPerBatch={windowSize}
           onEndReachedThreshold={0.5}
-
           onRefresh={() => {
             if (!getPosts.loading) {
               setPage(1);

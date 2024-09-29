@@ -1,12 +1,14 @@
-import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from "react-native"
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native"
 import { StartSvg } from "../../assets/svg/Svgs"
 import React, { useCallback, useState } from "react";
 import FastImage from "react-native-fast-image";
 import { useFocusEffect } from "@react-navigation/native";
+import { Skeleton } from "../Skeleton";
 
 const windowWidth = Dimensions.get('window').width;
 
 export const ImageComponent = React.memo(({ video, photo, onPress }) => {
+  const [loading, setLoading] = useState(true)
   const [disabled, setDisabled] = useState(false)
   useFocusEffect(
     useCallback(() => {
@@ -22,7 +24,17 @@ export const ImageComponent = React.memo(({ video, photo, onPress }) => {
         <StartSvg />
       </View>
     }
+    {loading &&
+      <Skeleton
+        width={windowWidth / 2 - 25}
+        height={windowWidth / 2 - 25}
+        style={{ borderRadius: 15, marginBottom: 10 }}
+      />
+    }
     <FastImage
+      onLoad={() => {
+        setLoading(false)
+      }}
       style={styles.img}
       source={{ uri: `https://chambaonline.pro/uploads/${photo}`, }}
       resizeMode={FastImage.resizeMode.cover}

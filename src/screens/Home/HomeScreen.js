@@ -117,7 +117,7 @@ export const HomeScreen = () => {
 
   const ListEndLoader = () => {
     if (getLents.secondLoading && getLents?.nextPage) {
-      return <ActivityIndicator size="small" color='#FFC24B' />
+      return <ActivityIndicator size="large" color='#FFC24B' />
     }
     else if ((!getLents?.nextPage && getLents.data.length > 5 && !getLents.secondLoading)) {
       return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 10 }]}>Больше нет публикаций</Text>
@@ -145,16 +145,6 @@ export const HomeScreen = () => {
     },
     [blackList, getLents.data.length, viewableItems]
   );
-
-  const ITEM_HEIGHT = 600;
-  const getItemLayout = (data, index) => {
-    return {
-      length: ITEM_HEIGHT,
-      offset: ITEM_HEIGHT * index,
-      index,
-    };
-  };
-  const windowSize = getLents.data.length > 50 ? getLents.data.length / 4 : 15;
   const keyExtractor = React.useCallback((item) => item.id.toString(), []);
 
   const refreshControl = <RefreshControl
@@ -183,8 +173,9 @@ export const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
           onEndReached={debounce(handleEndReached, 300)}
-          initialNumToRender={2}
-          maxToRenderPerBatch={2}
+          onEndReachedThreshold={0.1}
+          initialNumToRender={5}
+          maxToRenderPerBatch={10}
           windowSize={5}
           removeClippedSubviews={false}
           ref={flatListRef}

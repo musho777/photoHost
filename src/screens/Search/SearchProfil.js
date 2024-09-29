@@ -119,7 +119,7 @@ export const SearchProfil = ({ navigation, route }) => {
           renderItem={renderItem}
           numColumns={2}
           scrollEventThrottle={16}
-          getItemLayout={getItemLayout}
+          // getItemLayout={getItemLayout}
           onEndReached={debounce(handleEndReached, 300)}
           initialNumToRender={5}
           maxToRenderPerBatch={windowSize}

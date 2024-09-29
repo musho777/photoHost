@@ -11,13 +11,11 @@ export const Albom = ({ data, seved, my = false, loading, elm }) => {
   const Loadingdata = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 
   const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <Skeleton
-        width={windowWidth / 2 - 25}
-        height={windowWidth / 2 - 25}
-        style={{ borderRadius: 15, margin: 5 }}
-      />
-    </View>
+    <Skeleton
+      width={windowWidth / 2 - 25}
+      height={windowWidth / 2 - 25}
+      style={{ borderRadius: 15, margin: 5 }}
+    />
   );
   if (loading) {
     return <View activeOpacity={1} style={styles.block}>
