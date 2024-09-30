@@ -6,6 +6,7 @@ import { AddSecSvg, AddSecSvg1, FullScrenn, MusicSvg, MuteSvg, Pause, StartSvg }
 import { Styles } from '../../styles/Styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { FullScreen } from '../../store/action/action';
+import FastImage from 'react-native-fast-image';
 
 
 export const VidioComponent = forwardRef(({
@@ -23,7 +24,7 @@ export const VidioComponent = forwardRef(({
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true);
   const [volume, setVolume] = useState(0);
   const dispatch = useDispatch()
   const { full } = useSelector((st) => st.fullScreen)
@@ -91,20 +92,15 @@ export const VidioComponent = forwardRef(({
     }
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.log('12')
-  //     setFirst(true)
-  //   }, [])
-  // );
 
 
 
   const handleLoad = useCallback((data) => {
-    setPaused(true);
     setDuration(data.duration);
     setVolume(1)
   }, [volume]);
+
+  console.log(first && paused)
 
   return (
     <View style={{ position: 'relative', height: 570 }}>
@@ -119,7 +115,7 @@ export const VidioComponent = forwardRef(({
 
         {((showStartButton || first) && !big) && (
           <TouchableOpacity onPress={() => {
-            setPaused(false)
+            setPaused(true)
             dispatch(FullScreen(!full))
           }} style={{ position: 'absolute', top: 60, right: 10, zIndex: 999 }}>
             <FullScrenn />
@@ -145,13 +141,21 @@ export const VidioComponent = forwardRef(({
           </View>
         )}
         {(first && paused) &&
-          <Image
+          <FastImage
             style={styles.Vidio}
-            resizeMode={'cover'}
-            source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
+            onLoad={() => {
+              console.log("39")
+            }}
+            source={{
+              uri: `https://chambaonline.pro/uploads/${item.photo}`,
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.immutable
+            }}
+            fallback={false}
+            resizeMode={FastImage.resizeMode.cover}
           />
         }
-        {!full ? <Video
+        <Video
           ref={ref}
           paused={paused}
           repeat={false}
@@ -164,9 +168,7 @@ export const VidioComponent = forwardRef(({
           onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
           onProgress={(data) => ChangeCurentTime(data)}
           useTextureView={false}
-          onLoad={(data) =>
-            handleLoad(data)
-          }
+          onLoad={(data) => handleLoad(data)}
           onEnd={() => {
             setCurrentTime(0);
             setPaused(true);
@@ -175,91 +177,91 @@ export const VidioComponent = forwardRef(({
         />
 
 
-          :
-          <Modal
-            visible={true}
-            style={{ flex: 1 }}
-          >
-            <TouchableOpacity
-              activeOpacity={1}
-              onPressIn={() => {
-                setCurrentId(item.id);
-                setShowStartButton(!showStartButton);
+
+        {full && <Modal
+          visible={true}
+          style={{ flex: 1 }}
+        >
+          <TouchableOpacity
+            activeOpacity={1}
+            onPressIn={() => {
+              setCurrentId(item.id);
+              setShowStartButton(!showStartButton);
+            }}
+
+            style={{ justifyContent: 'center', alignItems: 'center', height: '100%', backgroundColor: 'black' }}>
+            {(showStartButton || first) && (
+              <TouchableOpacity onPress={() => {
+                setPaused(false)
+                dispatch(FullScreen(!full))
+              }} style={{ position: 'absolute', top: big ? 10 : 50, right: 10, zIndex: 999 }}>
+                <FullScrenn />
+              </TouchableOpacity>
+            )}
+            {(showStartButton || first) && (
+              <View style={styles.playButton}>
+                <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>
+                  <AddSecSvg1 />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onPlayPausePress}>
+                  {!paused ? <Pause /> : <StartSvg />}
+                </TouchableOpacity>
+                <TouchableOpacity onPress={AddCurrentTime}>
+                  <AddSecSvg />
+                </TouchableOpacity>
+              </View>
+            )}
+            <Video
+              ref={ref}
+              paused={paused}
+              repeat={false}
+              fullscreen={full}
+              volume={volume}
+              style={[styles.Vidio]}
+              source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
+              resizeMode={'cover'}
+              onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
+              onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
+              onProgress={(data) => ChangeCurentTime(data)}
+              useTextureView={false}
+              onLoad={(data) => handleLoad(data)}
+              onEnd={() => {
+                setPaused(true);
+                ref.current.seek(0);
               }}
+            />
+            {(showStartButton || first) &&
 
-              style={{ justifyContent: 'center', alignItems: 'center', height: '100%', backgroundColor: 'black' }}>
-              {(showStartButton || first) && (
-                <TouchableOpacity onPress={() => {
-                  setPaused(false)
-                  dispatch(FullScreen(!full))
-                }} style={{ position: 'absolute', top: big ? 10 : 50, right: 10, zIndex: 999 }}>
-                  <FullScrenn />
-                </TouchableOpacity>
-              )}
-              {(showStartButton || first) && (
-                <View style={styles.playButton}>
-                  <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>
-                    <AddSecSvg1 />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={onPlayPausePress}>
-                    {!paused ? <Pause /> : <StartSvg />}
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={AddCurrentTime}>
-                    <AddSecSvg />
-                  </TouchableOpacity>
+              <TouchableOpacity activeOpacity={1} onPress={ChangeVolume} style={[{ position: 'absolute', top: 100, zIndex: 9999, right: 10 }]}>
+                {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
+              </TouchableOpacity>
+            }
+            {(showStartButton || first) && (
+              <View style={styles.music}>
+                <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
+                  {music && <MusicSvg />}
+                  <Text style={Styles.whiteSemiBold13}>{music}</Text>
                 </View>
-              )}
-              <Video
-                ref={ref}
-                paused={paused}
-                repeat={false}
-                fullscreen={full}
-                volume={volume}
-                style={[styles.Vidio]}
-                source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
-                resizeMode={'cover'}
-                onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
-                onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
-                onProgress={(data) => ChangeCurentTime(data)}
-                useTextureView={false}
-                onLoad={(data) => handleLoad(data)}
-                onEnd={() => {
-                  setPaused(true);
-                  ref.current.seek(0);
-                }}
-              />
-              {(showStartButton || first) &&
+                <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
+              </View>
+            )}
+            {(showStartButton || first) && (
+              <TouchableOpacity style={[styles.controls, { bottom: 40, justifyContent: 'center' }]}>
+                <Slider
+                  style={styles.seekSlider}
+                  value={currentTime}
+                  minimumValue={0}
+                  maximumValue={duration}
+                  onValueChange={onSeek}
+                  minimumTrackTintColor="#FFFFFF"
+                  maximumTrackTintColor="#000000"
+                  thumbTintColor="#FFC24B"
+                />
+              </TouchableOpacity>
+            )}
+          </TouchableOpacity>
+        </Modal>}
 
-                <TouchableOpacity activeOpacity={1} onPress={ChangeVolume} style={[{ position: 'absolute', top: 100, zIndex: 9999, right: 10 }]}>
-                  {!volume ? <MuteSvg /> : <Image style={{ width: 25, height: 25 }} source={require('../../assets/img/Sound.png')} />}
-                </TouchableOpacity>
-              }
-              {(showStartButton || first) && (
-                <View style={styles.music}>
-                  <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
-                    {music && <MusicSvg />}
-                    <Text style={Styles.whiteSemiBold13}>{music}</Text>
-                  </View>
-                  <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
-                </View>
-              )}
-              {(showStartButton || first) && (
-                <TouchableOpacity style={[styles.controls, { bottom: 40, justifyContent: 'center' }]}>
-                  <Slider
-                    style={styles.seekSlider}
-                    value={currentTime}
-                    minimumValue={0}
-                    maximumValue={duration}
-                    onValueChange={onSeek}
-                    minimumTrackTintColor="#FFFFFF"
-                    maximumTrackTintColor="#000000"
-                    thumbTintColor="#FFC24B"
-                  />
-                </TouchableOpacity>
-              )}
-            </TouchableOpacity>
-          </Modal>
-        }
 
 
         <TouchableOpacity
