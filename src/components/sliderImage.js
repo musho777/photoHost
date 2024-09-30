@@ -26,7 +26,7 @@ const SliderImage = React.memo(({ description, data, item, long, height, index, 
         {Array.isArray(Description) ? Description[index] : Description}
       </Text>
     </View>}
-    {item.video ?
+    {/* {item.video ?
       <VidioComponent
         active={active == index}
         setScrollEnabled={(e) => setScrollEnabled(e)}
@@ -34,17 +34,17 @@ const SliderImage = React.memo(({ description, data, item, long, height, index, 
         music={data.music_name}
         item={item}
       /> :
-      <FastImage
-        style={[{ height: height }, styles.img]}
-        source={{
-          uri: `https://chambaonline.pro/uploads/${item.photo}`,
-          priority: FastImage.priority.high,
-          cache: FastImage.cacheControl.immutable
-        }}
-        fallback={false}
-        resizeMode={FastImage.resizeMode.cover}
-      />
-    }
+    } */}
+    <FastImage
+      style={[{ height: height }, styles.img]}
+      source={{
+        uri: `https://chambaonline.pro/uploads/${item.photo}`,
+        priority: FastImage.priority.high,
+        cache: FastImage.cacheControl.immutable
+      }}
+      fallback={false}
+      resizeMode={FastImage.resizeMode.cover}
+    />
   </View>
 
 }, (prevProps, nextProps) => {

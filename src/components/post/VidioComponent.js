@@ -1,5 +1,5 @@
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import { AddSecSvg, AddSecSvg1, FullScrenn, MusicSvg, MuteSvg, Pause, StartSvg } from '../../assets/svg/Svgs';
@@ -9,14 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FullScreen } from '../../store/action/action';
 
 
-export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big, viewableItems, active }) => {
+export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCurrentTime, music, setScrollEnabled = () => { }, item, big, viewableItems, active, setDuration }, ref) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
-  const [holde, setHold] = useState(false);
-  const videoRef = useRef(null);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
   const [paused, setPaused] = useState(false);
   const [volume, setVolume] = useState(0);
   const dispatch = useDispatch()
@@ -34,12 +30,6 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
       setPaused(false)
     }
   }, [active])
-
-  const onSeek = (value) => {
-    setHold(true);
-    setCurrentTime(value);
-    videoRef?.current?.seek(value);
-  };
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -61,30 +51,29 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
 
   const AddCurrentTime = () => {
     const newTime = Math.min(currentTime + 5, duration);
-    videoRef?.current?.seek(newTime);
-    setCurrentTime(newTime);
+    ref?.current?.seek(newTime);
+    setCurrentTime(newTime)
     setShowStartButton(false);
   };
 
   const LakeCurrentTime = () => {
     const newTime = Math.max(currentTime - 5, 0);
-    videoRef?.current?.seek(newTime);
-    setCurrentTime(newTime);
+    ref?.current?.seek(newTime);
+    setCurrentTime(newTime)
     setShowStartButton(false);
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!holde) {
+    const timer = null
+    if (showStartButton) {
+      setTimeout(() => {
         setShowStartButton(false);
         setScrollEnabled(false);
-      } else {
-        setHold(false);
-      }
-    }, 3000);
+      }, 3000);
+    }
 
     return () => clearTimeout(timer);
-  }, [holde]);
+  }, [showStartButton]);
 
   const ChangeVolume = () => {
     setVolume(volume === 0 ? 1 : 0);
@@ -94,9 +83,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
     if (currentTime <= duration) {
       setCurrentTime(currentTime + 0.251);
     } else {
+      console.log('3329')
       setCurrentTime(0);
       setPaused(true);
-      videoRef.current.seek(0);
+      ref.current.seek(0);
     }
   };
 
@@ -118,12 +108,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
-          setHold(true);
           setCurrentId(item.id);
-          setShowStartButton(!showStartButton);
+          setShowStartButton(true);
           setScrollEnabled(false);
         }}
-        onPressOut={() => { setHold(false) }}
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       >
 
@@ -162,7 +150,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           />
         }
         {!full ? <Video
-          ref={videoRef}
+          ref={ref}
           paused={paused}
           repeat={false}
           fullscreen={full}
@@ -178,17 +166,9 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
           onEnd={() => {
             setCurrentTime(0);
             setPaused(true);
-            videoRef.current.seek(0);
+            ref.current.seek(0);
           }}
         />
-
-
-
-
-
-
-
-
 
 
           :
@@ -199,12 +179,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
             <TouchableOpacity
               activeOpacity={1}
               onPressIn={() => {
-                setHold(true);
                 setCurrentId(item.id);
                 setShowStartButton(!showStartButton);
                 setScrollEnabled(true);
               }}
-              onPressOut={() => { setHold(false) }}
 
               style={{ justifyContent: 'center', alignItems: 'center', height: '100%', backgroundColor: 'black' }}>
               {(showStartButton || first) && (
@@ -229,7 +207,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
                 </View>
               )}
               <Video
-                ref={videoRef}
+                ref={ref}
                 paused={paused}
                 repeat={false}
                 fullscreen={full}
@@ -247,9 +225,8 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
                   setVolume(1)
                 }}
                 onEnd={() => {
-                  setCurrentTime(0);
                   setPaused(true);
-                  videoRef.current.seek(0);
+                  ref.current.seek(0);
                 }}
               />
               {(showStartButton || first) &&
@@ -268,9 +245,7 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
                 </View>
               )}
               {(showStartButton || first) && (
-                <TouchableOpacity
-
-                  style={[styles.controls, { bottom: 40, justifyContent: 'center' }]}>
+                <TouchableOpacity style={[styles.controls, { bottom: 40, justifyContent: 'center' }]}>
                   <Slider
                     style={styles.seekSlider}
                     value={currentTime}
@@ -302,16 +277,10 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
 
         <TouchableOpacity
           onPressIn={() => {
-            setHold(true);
             setCurrentId(item.id);
-            setShowStartButton(!showStartButton);
-            setScrollEnabled(false);
+            // setShowStartButton();
           }}
-          onPressOut={() => {
-            setScrollEnabled(true);
-            setHold(false)
-          }}
-          style={{ height: 60, width: '100%', position: 'absolute', bottom: 0 }}>
+          style={{ height: 60, width: '100%', position: 'absolute', bottom: 5 }}>
 
           {(showStartButton || first) && (
             <View style={styles.music}>
@@ -322,35 +291,13 @@ export const VidioComponent = ({ music, setScrollEnabled = () => { }, item, big,
               <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
             </View>
           )}
-          {(showStartButton || first) && (
-            <TouchableOpacity
-
-              onPressIn={() => {
-                setScrollEnabled(true);
-              }}
-              onPressOut={() => {
-                setScrollEnabled(false)
-              }}
-              style={[styles.controls, { bottom: 30 }]}>
-              <Slider
-                style={styles.seekSlider}
-                value={currentTime}
-                minimumValue={0}
-                maximumValue={duration}
-                onValueChange={onSeek}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-                thumbTintColor="#FFC24B"
-              />
-            </TouchableOpacity>
-          )}
         </TouchableOpacity>
 
 
       </TouchableOpacity>
     </View>
   );
-}
+})
 
 const styles = StyleSheet.create({
   playButton: {
@@ -398,5 +345,6 @@ const styles = StyleSheet.create({
   },
   seekSlider: {
     width: '90%',
+    height: 50,
   },
 });

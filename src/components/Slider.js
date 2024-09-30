@@ -12,6 +12,8 @@ import FastImage from 'react-native-fast-image';
 import { LikePostAction } from '../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import SliderImage from './sliderImage';
+import Sliders from '@react-native-community/slider';
+import { VidioComponent } from './post/VidioComponent';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -27,6 +29,16 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   const DOUBLE_CLICK_DELAY = 300;
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const dispatch = useDispatch()
+  const [showSlider, setShowSlider] = useState(true)
+  const [duration, setDuration] = useState(0);
+  const videoRef = useRef(null);
+
+
+  const [currentTime, setCurrentTime] = useState(0)
+  const onSeek = (value) => {
+    setCurrentTime(value)
+    videoRef?.current?.seek(value);
+  };
 
   useEffect(() => {
     let timer = null
@@ -92,6 +104,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   };
 
   const handleMomentumScrollEnd = (event) => {
+    setShowSlider(true)
     const index = Math.floor(
       Math.floor(event.nativeEvent.contentOffset.x) /
       Math.floor(event.nativeEvent.layoutMeasurement.width)
@@ -111,17 +124,33 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         onPressOut={() => onPressOut()}
         onPress={(e) => handleClick(e, item)}
         style={styles.img}>
-        <SliderImage
-          data={data}
-          long={long}
-          description={data.description}
-          index={index}
-          setScrollEnabled={(e) => setScrollEnabled(e)}
-          item={item}
-          height={height}
-          viewableItems={viewableItems}
-          active={active}
-        />
+        {item.video ?
+          <VidioComponent
+            active={active == index}
+            setScrollEnabled={(e) => setScrollEnabled(e)}
+            viewableItems={viewableItems}
+            music={data.music_name}
+            item={item}
+            currentTime={currentTime}
+            setCurrentTime={(e) => setCurrentTime(e)}
+            setDuration={(e) => setDuration(e)}
+            duration={duration}
+            onSeek={() => onSeek()}
+            ref={videoRef}
+          /> :
+          <SliderImage
+            data={data}
+            long={long}
+            description={data.description}
+            index={index}
+            setScrollEnabled={(e) => setScrollEnabled(e)}
+            item={item}
+            height={height}
+            viewableItems={viewableItems}
+            active={active}
+          />
+        }
+
         {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
           <FastImage
             source={require('../assets/img/Animation3.gif')}
@@ -134,7 +163,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   }
 
   return (
-    <View>
+    <View style={{ position: 'relative' }}>
       <FlatList
         horizontal
         pagingEnabled
@@ -146,6 +175,10 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         initialNumToRender={5}
         maxToRenderPerBatch={10}
         onMomentumScrollEnd={handleMomentumScrollEnd}
+        onScroll={() => {
+          console.log("02")
+          setShowSlider(false)
+        }}
         scrollEnabled={!scrollEnabled}
         renderItem={renderItem}
         getItemLayout={(data, index) => ({
@@ -158,6 +191,26 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         {photo?.length > 1 && photo?.map((elm, i) => (
           <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
         ))}
+      </View>
+      <View>
+        {
+          console.log(photo[active].video)
+        }
+        {(photo[active].video && showSlider) &&
+          <View style={{ bottom: 15, position: 'absolute', zIndex: 99999, width: '100%', height: 10, }}>
+            <Sliders
+              style={styles.seekSlider}
+              value={currentTime}
+              minimumValue={0}
+              maximumValue={duration}
+              onValueChange={onSeek}
+              minimumTrackTintColor="#FFFFFF"
+              maximumTrackTintColor="#000000"
+              thumbTintColor="#FFC24B"
+            />
+          </View>
+        }
+
       </View>
       {openSlider && (
         <SliderModal

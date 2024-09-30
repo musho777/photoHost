@@ -101,8 +101,8 @@ export const AddImg = ({ navigation }) => {
   const captureScreenshot = async (ref) => {
     try {
       const uri = await captureRef(ref, {
-        format: 'jpg',
-        quality: 1,
+        format: "webm",
+        quality: 0.5,
         width: 'auto',
         height: 'auto'
       });
@@ -336,15 +336,6 @@ export const AddImg = ({ navigation }) => {
         count = count + 1
       }
     })
-
-    if (count > 1) {
-      setError("onliy one vidio")
-      setShowError(true)
-    }
-    else {
-      setError("")
-      setShowError(false)
-    }
     if (uri.length > 0) {
       setSelectedImage(uri[0].uri)
     }
