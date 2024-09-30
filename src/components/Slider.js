@@ -20,10 +20,9 @@ const windowWidth = Dimensions.get('window').width;
 export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
-  const [scrollEnabled, setScrollEnabled] = useState(false)
   const [showLikeIcone, setShowLikeICone] = useState(false)
   const staticdata = useSelector(st => st.static);
-  const lastClickTime = useRef(0); // Use ref instead of state
+  const lastClickTime = useRef(0);
   const clickTimeout = useRef(null);
   const SINGLE_CLICK_DELAY = 300;
   const DOUBLE_CLICK_DELAY = 300;
@@ -32,13 +31,16 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   const [showSlider, setShowSlider] = useState(true)
   const [duration, setDuration] = useState(0);
   const videoRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 
-  const [currentTime, setCurrentTime] = useState(0)
   const onSeek = (value) => {
-    setCurrentTime(value)
+    let item = [...currentTime]
+    item[active] = value
+    setCurrentTime(item)
     videoRef?.current?.seek(value);
   };
+
 
   useEffect(() => {
     let timer = null
@@ -57,29 +59,6 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
     dispatch(LikePostAction({ post_id: data.id }, staticdata.token, user.data.id));
   }, [dispatch, data.id, staticdata.token, user.data.id]);
 
-
-  // const handleClick = (event, item) => {
-  //   const now = new Date().getTime();
-
-  //   if (lastClickTime && (now - lastClickTime) < DOUBLE_CLICK_DELAY) {
-
-  //     if (clickTimeout) {
-  //       clearTimeout(clickTimeout);
-  //     }
-  //     const { locationX, locationY } = event.nativeEvent;
-  //     setPosition({ x: locationX - 50, y: locationY - 50 });
-  //     setShowLikeICone(true)
-  //     LikePost()
-  //   } else {
-  //     const timeoutId = setTimeout(() => {
-  //       !item.video && setOpenSlider(true)
-  //       setOpenModal(false)
-  //     }, SINGLE_CLICK_DELAY);
-
-  //     setClickTimeout(timeoutId);
-  //     setLastClickTime(now);
-  //   }
-  // };
 
 
   const handleClick = (event, item) => {
@@ -114,6 +93,11 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   };
 
 
+  const CurrentTimeSet = (i, e) => {
+    let item = [...currentTime]
+    item[i] = e
+    setCurrentTime(item)
+  }
 
   const renderItem = ({ item, index }) => {
     const height = item.height < 650 ? 370 : 570;
@@ -127,27 +111,23 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         {item.video ?
           <VidioComponent
             active={active == index}
-            setScrollEnabled={(e) => setScrollEnabled(e)}
             viewableItems={viewableItems}
             music={data.music_name}
             item={item}
-            currentTime={currentTime}
-            setCurrentTime={(e) => setCurrentTime(e)}
+            currentTime={currentTime[active]}
+            setCurrentTime={(e) => CurrentTimeSet(index, e)}
             setDuration={(e) => setDuration(e)}
-            duration={duration}
+            duration={40}
             onSeek={() => onSeek()}
             ref={videoRef}
+            height={height}
           /> :
           <SliderImage
-            data={data}
             long={long}
             description={data.description}
             index={index}
-            setScrollEnabled={(e) => setScrollEnabled(e)}
             item={item}
             height={height}
-            viewableItems={viewableItems}
-            active={active}
           />
         }
 
@@ -173,19 +153,13 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         data={photo}
         windowSize={5}
         initialNumToRender={5}
+        removeClippedSubviews={false}
         maxToRenderPerBatch={10}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         onScroll={() => {
-          console.log("02")
           setShowSlider(false)
         }}
-        scrollEnabled={!scrollEnabled}
         renderItem={renderItem}
-        getItemLayout={(data, index) => ({
-          length: windowWidth,
-          offset: windowWidth * index,
-          index,
-        })}
       />
       <View style={styles.paginationWrapper}>
         {photo?.length > 1 && photo?.map((elm, i) => (
@@ -193,14 +167,11 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         ))}
       </View>
       <View>
-        {
-          console.log(photo[active].video)
-        }
         {(photo[active].video && showSlider) &&
-          <View style={{ bottom: 15, position: 'absolute', zIndex: 99999, width: '100%', height: 10, }}>
+          <View style={styles.slider}>
             <Sliders
               style={styles.seekSlider}
-              value={currentTime}
+              value={currentTime[active]}
               minimumValue={0}
               maximumValue={duration}
               onValueChange={onSeek}
@@ -261,5 +232,12 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     top: 50,
     height: 'auto',
+  },
+  slider: {
+    bottom: 15,
+    position: 'absolute',
+    zIndex: 99999,
+    width: '100%',
+    height: 10,
   }
 });

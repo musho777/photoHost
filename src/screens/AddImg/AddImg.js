@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { CreatePostLocal, CreatPostAction, GetCatalogAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
-import { launchImageLibrary } from 'react-native-image-picker';
 import Video from 'react-native-video';
 import { t } from '../../components/lang';
 import { captureRef } from 'react-native-view-shot';
@@ -98,21 +97,21 @@ export const AddImg = ({ navigation }) => {
   }, []);
 
 
-  const captureScreenshot = async (ref) => {
-    try {
-      const uri = await captureRef(ref, {
-        format: "webm",
-        quality: 0.5,
-        width: 'auto',
-        height: 'auto'
-      });
-      let item = [...screenshotUri]
-      item.push(uri)
-      setScreenshotUri(item);
-    } catch (error) {
-      console.error('Error capturing screenshot:', error);
-    }
-  };
+  // const captureScreenshot = async (ref) => {
+  //   try {
+  //     const uri = await captureRef(ref, {
+  //       format: "webm",
+  //       quality: 0.5,
+  //       width: 'auto',
+  //       height: 'auto'
+  //     });
+  //     let item = [...screenshotUri]
+  //     item.push(uri)
+  //     setScreenshotUri(item);
+  //   } catch (error) {
+  //     console.error('Error capturing screenshot:', error);
+  //   }
+  // };
 
 
   React.useLayoutEffect(() => {
@@ -171,27 +170,17 @@ export const AddImg = ({ navigation }) => {
     let form = new FormData();
     uri.length &&
       uri.forEach((el, i) => {
-        let index = 0
-        if (el.uri.includes('.mp4') || el.uri.includes('mov')) {
-          index = index + 1
-        }
         (!el.uri.includes('.mp4') && !el.uri.includes('mov')) ?
           form.append('photos[]', {
             uri: el.uri,
             type: 'image/jpg',
             name: 'photo.jpg',
-          }) : (
-            form.append(`video[${index}][video]`, {
-              uri: el.uri,
-              type: 'video/mp4',
-              name: 'Seconds Countdown 🎵⚡.mp4',
-            }),
-            form.append(`video[${index}][photo]`, {
-              uri: screenshotUri[i],
-              type: 'image/jpeg',
-              name: '1.06.24 577x325.jpg',
-            })
-          )
+          }) :
+          form.append(`video[][video]`, {
+            uri: el.uri,
+            type: 'video/mp4',
+            name: 'video.mp4',
+          })
       });
 
     description && form.append('description', JSON.stringify(description));
@@ -212,58 +201,6 @@ export const AddImg = ({ navigation }) => {
   };
 
 
-
-  // const addPhoto = () => {
-  //   setError('')
-  //   setShowError(false)
-  //   const options = {
-  //     mediaType: 'mixed',
-  //     quality: 0.5,
-  //     includeBase64: false,
-  //     maxWidth: 5000,
-  //     maxHeight: 5000,
-  //     selectionLimit: 10 - uri.length,
-  //     storageOptions: {
-  //       skipBackup: true,
-  //       path: 'images'
-  //     }
-  //   };
-  //   setLoading(true)
-  //   setFirst(true)
-  // launchImageLibrary(options, (response) => {
-  //   console.log(response)
-  //   let item = [...uri]
-  //   if (response.didCancel) {
-  //     if (uri.length == 0) {
-  //       navigation.goBack()
-  //       setFirst(false)
-  //     }
-  //   }
-  //   else if (!response.didCancel && !response.error) {
-  //     response.assets?.map((elm, i) => {
-  //       console.log(elm)
-  //       if (elm?.type.startsWith('video')) {
-  //         if (elm.duration <= 60) {
-  //           item.push({ uri: elm.uri })
-  //           setTimeout(() => {
-  //             captureScreenshot(ref[i])
-  //           }, 2000)
-  //         }
-  //         else {
-  //           setError('видео должен быть меньше чем 60 с')
-  //           setShowError(true)
-  //         }
-  //       }
-  //       else {
-  //         if (item.length <= 10)
-  //           item.push({ uri: elm.uri });
-  //       }
-  //     })
-  //     setUri(item);
-  //   }
-  // });
-  // }
-
   const addPhoto = () => {
     setFirst(true)
     ImagePicker.openPicker({
@@ -273,7 +210,6 @@ export const AddImg = ({ navigation }) => {
       height: 1280,
       multiple: true,
     }).then(response => {
-      console.log(response)
       let item = [...uri]
       if (response.didCancel) {
         if (uri.length == 0) {
@@ -283,14 +219,12 @@ export const AddImg = ({ navigation }) => {
       }
       else if (!response.didCancel && !response.error) {
         response?.map((elm, i) => {
-          console.log(elm)
           if (elm?.mime.startsWith('video')) {
             if (elm.duration <= 60883) {
-              console.log(elm)
               item.push({ uri: elm.path })
-              setTimeout(() => {
-                captureScreenshot(ref[i])
-              }, 2000)
+              // setTimeout(() => {
+              //   captureScreenshot(ref[i])
+              // }, 2000)
             }
             else {
               setError('видео должен быть меньше чем 60 с')
@@ -304,7 +238,6 @@ export const AddImg = ({ navigation }) => {
         })
         setUri(item);
       }
-      // console.log(video);
     });
   }
 
@@ -432,7 +365,6 @@ export const AddImg = ({ navigation }) => {
                       style={styles.close}>
                       <CloseSvg1 smole />
                     </TouchableOpacity>
-                    {console.log(elm)}
                     {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
                       <View>
                         <Video

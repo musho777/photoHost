@@ -1,13 +1,11 @@
 import React, { useMemo } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { VidioComponent } from './post/VidioComponent';
 import { Styles } from '../styles/Styles';
-import isEqual from 'lodash.isequal';
 
 const windowWidth = Dimensions.get('window').width;
 
-const SliderImage = React.memo(({ description, data, item, long, height, index, setScrollEnabled, viewableItems, active }) => {
+const SliderImage = React.memo(({ description, item, long, height, index }) => {
   const Description = useMemo(() => {
     let desc = description;
     if (description && description[0] === '[') {
@@ -26,17 +24,11 @@ const SliderImage = React.memo(({ description, data, item, long, height, index, 
         {Array.isArray(Description) ? Description[index] : Description}
       </Text>
     </View>}
-    {/* {item.video ?
-      <VidioComponent
-        active={active == index}
-        setScrollEnabled={(e) => setScrollEnabled(e)}
-        viewableItems={viewableItems}
-        music={data.music_name}
-        item={item}
-      /> :
-    } */}
     <FastImage
       style={[{ height: height }, styles.img]}
+      onLoad={() => {
+        console.log("39")
+      }}
       source={{
         uri: `https://chambaonline.pro/uploads/${item.photo}`,
         priority: FastImage.priority.high,
@@ -51,9 +43,7 @@ const SliderImage = React.memo(({ description, data, item, long, height, index, 
   return (
     prevProps.long === nextProps.long &&
     prevProps.index === nextProps.index &&
-    prevProps.data === nextProps.data &&
-    prevProps.description === nextProps.description &&
-    isEqual(prevProps.viewableItems, nextProps.viewableItems)
+    prevProps.description === nextProps.description
   )
 });
 

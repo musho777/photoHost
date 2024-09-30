@@ -1,15 +1,25 @@
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import { AddSecSvg, AddSecSvg1, FullScrenn, MusicSvg, MuteSvg, Pause, StartSvg } from '../../assets/svg/Svgs';
 import { Styles } from '../../styles/Styles';
-import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { FullScreen } from '../../store/action/action';
 
 
-export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCurrentTime, music, setScrollEnabled = () => { }, item, big, viewableItems, active, setDuration }, ref) => {
+export const VidioComponent = forwardRef(({
+  onSeek,
+  duration,
+  currentTime,
+  setCurrentTime,
+  music,
+  item,
+  big,
+  viewableItems,
+  setDuration,
+  height
+}, ref) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
@@ -22,14 +32,7 @@ export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCu
     setFirst(false);
     setPaused(!paused);
     setShowStartButton(false);
-    setScrollEnabled(false);
   };
-
-  useEffect(() => {
-    if (!active) {
-      setPaused(false)
-    }
-  }, [active])
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -68,7 +71,6 @@ export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCu
     if (showStartButton) {
       setTimeout(() => {
         setShowStartButton(false);
-        setScrollEnabled(false);
       }, 3000);
     }
 
@@ -83,18 +85,19 @@ export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCu
     if (currentTime <= duration) {
       setCurrentTime(currentTime + 0.251);
     } else {
-      console.log('3329')
       setCurrentTime(0);
       setPaused(true);
       ref.current.seek(0);
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      setFirst(true)
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     console.log('12')
+  //     setFirst(true)
+  //   }, [])
+  // );
+
 
 
   const handleLoad = useCallback((data) => {
@@ -104,13 +107,12 @@ export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCu
   }, [volume]);
 
   return (
-    <View style={{ position: 'relative', height: 550 }}>
+    <View style={{ position: 'relative', height: 570 }}>
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
           setCurrentId(item.id);
           setShowStartButton(true);
-          setScrollEnabled(false);
         }}
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       >
@@ -155,14 +157,16 @@ export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCu
           repeat={false}
           fullscreen={full}
           volume={volume}
-          style={[styles.Vidio, first && { opacity: 0 }]}
+          style={[styles.Vidio, { height: height }, first && { opacity: 0 }]}
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
           resizeMode={'cover'}
           onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
           onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
           onProgress={(data) => ChangeCurentTime(data)}
           useTextureView={false}
-          onLoad={(data) => handleLoad(data)}
+          onLoad={(data) =>
+            handleLoad(data)
+          }
           onEnd={() => {
             setCurrentTime(0);
             setPaused(true);
@@ -181,7 +185,6 @@ export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCu
               onPressIn={() => {
                 setCurrentId(item.id);
                 setShowStartButton(!showStartButton);
-                setScrollEnabled(true);
               }}
 
               style={{ justifyContent: 'center', alignItems: 'center', height: '100%', backgroundColor: 'black' }}>
@@ -219,11 +222,7 @@ export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCu
                 onFullscreenPlayerWillDismiss={() => dispatch(FullScreen(false))} // Reset fullscreen state
                 onProgress={(data) => ChangeCurentTime(data)}
                 useTextureView={false}
-                onLoad={(data) => {
-                  setPaused(true);
-                  setDuration(data.duration);
-                  setVolume(1)
-                }}
+                onLoad={(data) => handleLoad(data)}
                 onEnd={() => {
                   setPaused(true);
                   ref.current.seek(0);
@@ -263,22 +262,9 @@ export const VidioComponent = forwardRef(({ onSeek, duration, currentTime, setCu
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         <TouchableOpacity
           onPressIn={() => {
             setCurrentId(item.id);
-            // setShowStartButton();
           }}
           style={{ height: 60, width: '100%', position: 'absolute', bottom: 5 }}>
 
@@ -329,7 +315,7 @@ const styles = StyleSheet.create({
   },
   Vidio: {
     width: '100%',
-    height: 550,
+    height: 570,
     position: 'relative',
   },
   controls: {
