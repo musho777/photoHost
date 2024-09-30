@@ -273,7 +273,7 @@ export const AddImg = ({ navigation }) => {
         setActivePhoto(0)
       }
       else {
-        setActivePhoto(null)
+        setActivePhoto(0)
       }
     }
     setUri(item);

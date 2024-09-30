@@ -153,9 +153,10 @@ export const HomeScreen = () => {
       dispatch(GetLentsAction(staticdata.token, 1));
     }}
   />
-  const viewabilityConfig = useRef({
-    viewAreaCoveragePercentThreshold: 50, // or itemVisiblePercentThreshold
-  });
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+    minimumViewTime: 300,
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -174,10 +175,10 @@ export const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
           onEndReached={debounce(handleEndReached, 300)}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.5}
           initialNumToRender={5}
           maxToRenderPerBatch={10}
-          windowSize={5}
+          windowSize={6}
           removeClippedSubviews={false}
           ref={flatListRef}
           viewabilityConfig={viewabilityConfig.current}
