@@ -12,6 +12,7 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { CreatePostLocal, CreatPostAction, GetCatalogAction } from '../../store/action/action';
@@ -212,22 +213,67 @@ export const AddImg = ({ navigation }) => {
 
 
 
+  // const addPhoto = () => {
+  //   setError('')
+  //   setShowError(false)
+  //   const options = {
+  //     mediaType: 'mixed',
+  //     quality: 0.5,
+  //     includeBase64: false,
+  //     maxWidth: 5000,
+  //     maxHeight: 5000,
+  //     selectionLimit: 10 - uri.length,
+  //     storageOptions: {
+  //       skipBackup: true,
+  //       path: 'images'
+  //     }
+  //   };
+  //   setLoading(true)
+  //   setFirst(true)
+  // launchImageLibrary(options, (response) => {
+  //   console.log(response)
+  //   let item = [...uri]
+  //   if (response.didCancel) {
+  //     if (uri.length == 0) {
+  //       navigation.goBack()
+  //       setFirst(false)
+  //     }
+  //   }
+  //   else if (!response.didCancel && !response.error) {
+  //     response.assets?.map((elm, i) => {
+  //       console.log(elm)
+  //       if (elm?.type.startsWith('video')) {
+  //         if (elm.duration <= 60) {
+  //           item.push({ uri: elm.uri })
+  //           setTimeout(() => {
+  //             captureScreenshot(ref[i])
+  //           }, 2000)
+  //         }
+  //         else {
+  //           setError('видео должен быть меньше чем 60 с')
+  //           setShowError(true)
+  //         }
+  //       }
+  //       else {
+  //         if (item.length <= 10)
+  //           item.push({ uri: elm.uri });
+  //       }
+  //     })
+  //     setUri(item);
+  //   }
+  // });
+  // }
+
   const addPhoto = () => {
-    setError('')
-    setShowError(false)
-    const options = {
-      mediaType: 'mixed',
-      quality: 1,
-      maxWidth: 5000,
-      maxHeight: 5000,
-      selectionLimit: 10 - uri.length,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-    setLoading(true)
     setFirst(true)
-    launchImageLibrary(options, (response) => {
+    ImagePicker.openPicker({
+      mediaType: "any",
+      compressVideo: true,
+      width: 720,
+      height: 1280,
+      multiple: true,
+    }).then(response => {
+      console.log(response)
       let item = [...uri]
       if (response.didCancel) {
         if (uri.length == 0) {
@@ -236,10 +282,12 @@ export const AddImg = ({ navigation }) => {
         }
       }
       else if (!response.didCancel && !response.error) {
-        response.assets?.map((elm, i) => {
-          if (elm?.type.startsWith('video')) {
-            if (elm.duration <= 60) {
-              item.push({ uri: elm.uri })
+        response?.map((elm, i) => {
+          console.log(elm)
+          if (elm?.mime.startsWith('video')) {
+            if (elm.duration <= 60883) {
+              console.log(elm)
+              item.push({ uri: elm.path })
               setTimeout(() => {
                 captureScreenshot(ref[i])
               }, 2000)
@@ -251,11 +299,12 @@ export const AddImg = ({ navigation }) => {
           }
           else {
             if (item.length <= 10)
-              item.push({ uri: elm.uri });
+              item.push({ uri: elm.path });
           }
         })
         setUri(item);
       }
+      // console.log(video);
     });
   }
 
@@ -326,9 +375,6 @@ export const AddImg = ({ navigation }) => {
     navigation.goBack()
   }
 
-  const handleVideoLoad = (data) => {
-    setLoading(false);
-  };
 
   if (first)
     return (
@@ -372,14 +418,10 @@ export const AddImg = ({ navigation }) => {
                   style={[styles.img, { height: 570 }]}
                   source={{ uri: selectedImage }}
                 /> :
-                  // {
-
-                  // }
                   <Video
                     source={{ uri: selectedImage }}
                     style={[styles.img]}
                     resizeMode="cover"
-                    onLoad={handleVideoLoad}
                     volume={0}
                   />
                 }
@@ -399,6 +441,7 @@ export const AddImg = ({ navigation }) => {
                       style={styles.close}>
                       <CloseSvg1 smole />
                     </TouchableOpacity>
+                    {console.log(elm)}
                     {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
                       <View>
                         <Video
