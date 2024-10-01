@@ -238,5 +238,9 @@ const styles = StyleSheet.create({
     zIndex: 99999,
     width: '100%',
     height: 10,
+  },
+  seekSlider: {
+    width: '100%',
+    height: 40,
   }
 });
