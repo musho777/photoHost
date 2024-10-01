@@ -246,10 +246,14 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
   slider: {
-    bottom: 15,
+    bottom: 5,
     position: 'absolute',
     zIndex: 99999,
     width: '100%',
-    height: 10,
+    height: 30,
+  },
+  seekSlider: {
+    width: '100%',
+    height: 30,
   }
 });

@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { BackHandler, Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
 import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import Video from 'react-native-video';
 import FastImage from 'react-native-fast-image';
@@ -26,10 +26,12 @@ export const VidioComponent = forwardRef(({
   const [volume, setVolume] = useState(0);
   const [fullScreen, setFullScreen] = useState(false)
   const navigation = useNavigation()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setPaused(true)
   }, [active])
+
 
   useEffect(() => {
     if (viewableItems?.length) {
@@ -72,7 +74,8 @@ export const VidioComponent = forwardRef(({
   const handleLoad = useCallback((data) => {
     setDuration(data.duration);
     setVolume(1)
-  }, [volume]);
+    setLoading(false)
+  }, []);
 
 
   useEffect(() => {
@@ -107,6 +110,7 @@ export const VidioComponent = forwardRef(({
             setPaused={(e) => setPaused(e)}
             setFirst={(e) => setFirst(e)}
             full={fullScreen}
+            loading={loading}
           />}
         {(first && paused) &&
           <FastImage
@@ -143,7 +147,7 @@ export const VidioComponent = forwardRef(({
 
       </TouchableOpacity>
       <Modal
-
+        onRequestClose={() => setFullScreen(false)}
         visible={fullScreen}
         supportedOrientations={['portrait', 'landscape']}
       >

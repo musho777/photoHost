@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   img: {
     width: windowWidth,
     flexShrink: 0,
+    backgroundColor: '#dedcdc'
   },
   hover: {
     marginHorizontal: 7,

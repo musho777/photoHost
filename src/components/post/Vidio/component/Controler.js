@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { AddSecSvg, AddSecSvg1, FullScrenn, MuteSvg, Pause, StartSvg } from "../../../../assets/svg/Svgs"
 import { forwardRef } from "react";
 import { Styles } from "../../../../styles/Styles";
@@ -15,7 +15,8 @@ export const Controler = forwardRef(({
   setCurrentTime,
   setShowStartButton,
   setFullScreen,
-  full
+  full,
+  loading
 }, ref) => {
 
   const formatTime = (time) => {
@@ -57,6 +58,7 @@ export const Controler = forwardRef(({
       setVolume(volume === 0 ? 1 : 0)
     } style={styles.voice}>
       {!volume ?
+
         <MuteSvg /> :
         <Image style={{ width: 25, height: 25 }} source={require('../../../../assets/img/Sound.png')} />}
     </TouchableOpacity>
@@ -64,9 +66,13 @@ export const Controler = forwardRef(({
       <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>
         <AddSecSvg1 />
       </TouchableOpacity>
-      <TouchableOpacity onPress={onPlayPausePress}>
-        {!paused ? <Pause /> : <StartSvg />}
-      </TouchableOpacity>
+      {loading ?
+        <View>
+          <ActivityIndicator size={"large"} color={'white'} />
+        </View> :
+        <TouchableOpacity onPress={onPlayPausePress}>
+          {!paused ? <Pause /> : <StartSvg />}
+        </TouchableOpacity>}
       <TouchableOpacity onPress={AddCurrentTime}>
         <AddSecSvg />
       </TouchableOpacity>

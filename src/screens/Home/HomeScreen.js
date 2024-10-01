@@ -13,7 +13,6 @@ import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
 import debounce from 'lodash/debounce';
 import { AddImageLoading } from '../../components/addImageLoading';
-import { useNavigation } from '@react-navigation/native';
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();

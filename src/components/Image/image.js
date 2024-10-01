@@ -24,13 +24,6 @@ export const ImageComponent = React.memo(({ video, photo, onPress }) => {
         <StartSvg />
       </View>
     }
-    {loading &&
-      <Skeleton
-        width={windowWidth / 2 - 25}
-        height={windowWidth / 2 - 25}
-        style={{ borderRadius: 15, marginBottom: 10 }}
-      />
-    }
     <FastImage
       onLoad={() => {
         setLoading(false)
@@ -53,6 +46,8 @@ const styles = StyleSheet.create({
     width: windowWidth / 2 - 25,
     height: windowWidth / 2 - 25,
     borderRadius: 15,
+    backgroundColor: '#dedcdc'
+
   },
   playerIcone: {
     position: 'absolute',
