@@ -45,10 +45,8 @@ export const Controler = forwardRef(({
   };
 
   return <View style={styles.wrapper}>
-
-
     <TouchableOpacity onPress={() => {
-      setPaused(true)
+      // setPaused(true)
       setFullScreen(!full)
     }}
       style={styles.full}>

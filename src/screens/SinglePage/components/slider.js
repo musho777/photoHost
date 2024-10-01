@@ -97,12 +97,9 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                 : (
                   <View>
                     <View style={{ zIndex: 9999 }}>
-                      {description && description[0] === '[' ?
+                      {description && description[0] === '[' &&
                         <View style={styles.hover}>
                           <Text style={Styles.whiteSemiBold12}>{JSON.parse(description)[index]}</Text>
-                        </View> :
-                        <View style={styles.hover}>
-                          <Text style={Styles.whiteSemiBold12}>{description}</Text>
                         </View>
                       }
                     </View>
@@ -116,7 +113,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                       duration={duration}
                       onSeek={() => onSeek()}
                       ref={videoRef}
-                      big={big}
+                      big={false}
                     />
                   </View>
 

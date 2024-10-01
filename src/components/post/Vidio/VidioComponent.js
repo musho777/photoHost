@@ -156,13 +156,12 @@ export const VidioComponent = forwardRef(({
             }}
             style={{ width: '100%', height: 570 }}
           >
-            {((showStartButton || first) && !big) &&
+            {((showStartButton || first)) &&
               <Controler
                 setShowStartButton={(e) => setShowStartButton(e)}
                 setCurrentTime={(e) => setCurrentTime(e)}
                 ref={ref}
                 currentTime={currentTime}
-                big={big}
                 setFullScreen={(e) => setFullScreen(e)}
                 duration={duration}
                 setVolume={(e) => setVolume(e)}
@@ -185,7 +184,7 @@ export const VidioComponent = forwardRef(({
             }
             <Video
               ref={ref}
-              paused={false}
+              paused={paused}
               repeat={false}
               fullscreen={fullScreen}
               volume={volume}

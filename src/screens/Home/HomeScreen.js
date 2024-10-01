@@ -176,7 +176,7 @@ export const HomeScreen = () => {
           renderItem={renderItem}
           onEndReached={debounce(handleEndReached, 300)}
           onEndReachedThreshold={0.5}
-          initialNumToRender={5}
+          initialNumToRender={6}
           maxToRenderPerBatch={10}
           windowSize={6}
           removeClippedSubviews={false}
