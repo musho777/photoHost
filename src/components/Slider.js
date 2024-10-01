@@ -14,7 +14,7 @@ import { LikePostAction } from '../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import SliderImage from './sliderImage';
 import Sliders from '@react-native-community/slider';
-import { VidioComponent } from './post/VidioComponent';
+import { VidioComponent } from './post/Vidio/VidioComponent';
 import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
@@ -105,7 +105,6 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
 
   const renderItem = ({ item, index }) => {
     const height = item.height < 650 ? 370 : 570;
-    console.log(data.description)
     return (
       <TouchableOpacity
         onLongPress={() => onLongClikc()}
@@ -133,9 +132,9 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
               setCurrentTime={(e) => CurrentTimeSet(index, e)}
               setDuration={(e) => setDuration(e)}
               duration={duration}
-              onSeek={() => onSeek()}
               ref={videoRef}
               height={height}
+              onSeek={onSeek}
             />
           </View>
           :

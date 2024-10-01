@@ -8,7 +8,7 @@ import {
   Text,
 } from 'react-native';
 import { AppColors } from '../../../styles/AppColors';
-import { VidioComponent } from '../../../components/post/VidioComponent';
+import { VidioComponent } from '../../../components/post/Vidio/VidioComponent';
 import { Styles } from '../../../styles/Styles';
 import Sliders from '@react-native-community/slider';
 

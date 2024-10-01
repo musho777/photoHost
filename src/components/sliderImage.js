@@ -26,9 +26,6 @@ const SliderImage = React.memo(({ description, item, long, height, index }) => {
     </View>}
     <FastImage
       style={[{ height: height }, styles.img]}
-      onLoad={() => {
-        console.log("39")
-      }}
       source={{
         uri: `https://chambaonline.pro/uploads/${item.photo}`,
         priority: FastImage.priority.high,

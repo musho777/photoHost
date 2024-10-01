@@ -868,9 +868,7 @@ export const CreatPostAction = (data, token) => {
     fetch(`${Api}/add_new_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
-          console.log(r)
           dispatch(GetLentsAction(token));
           dispatch(SuccessCreatePost(r));
           dispatch(getUserInfoAction(token))
@@ -1853,12 +1851,6 @@ export const ClearUser = () => {
   }
 }
 
-export const FullScreen = (data) => {
-  return {
-    type: 'FullScreen',
-    data
-  }
-}
 
 export const ClearChatNumber = () => {
   return {
