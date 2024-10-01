@@ -5,6 +5,7 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import { AppColors } from '../styles/AppColors';
 import { SliderModal } from './SliderModal';
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SliderImage from './sliderImage';
 import Sliders from '@react-native-community/slider';
 import { VidioComponent } from './post/VidioComponent';
+import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -99,8 +101,11 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
     setCurrentTime(item)
   }
 
+
+
   const renderItem = ({ item, index }) => {
     const height = item.height < 650 ? 370 : 570;
+    console.log(data.description)
     return (
       <TouchableOpacity
         onLongPress={() => onLongClikc()}
@@ -109,19 +114,31 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         onPress={(e) => handleClick(e, item)}
         style={styles.img}>
         {item.video ?
-          <VidioComponent
-            active={active == index}
-            viewableItems={viewableItems}
-            music={data.music_name}
-            item={item}
-            currentTime={currentTime[active]}
-            setCurrentTime={(e) => CurrentTimeSet(index, e)}
-            setDuration={(e) => setDuration(e)}
-            duration={40}
-            onSeek={() => onSeek()}
-            ref={videoRef}
-            height={height}
-          /> :
+          <View>
+            {data.description && data.description[0] === '[' ?
+              <View style={styles.hover}>
+                <Text style={Styles.whiteSemiBold12}>{JSON.parse(data.description)[index]}</Text>
+              </View>
+              :
+              <View style={styles.hover}>
+                <Text style={Styles.whiteSemiBold12}>{data.description}</Text>
+              </View>
+            }
+            <VidioComponent
+              active={active == index}
+              viewableItems={viewableItems}
+              music={data.music_name}
+              item={item}
+              currentTime={currentTime[active]}
+              setCurrentTime={(e) => CurrentTimeSet(index, e)}
+              setDuration={(e) => setDuration(e)}
+              duration={duration}
+              onSeek={() => onSeek()}
+              ref={videoRef}
+              height={height}
+            />
+          </View>
+          :
           <SliderImage
             long={long}
             description={data.description}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,6 +10,8 @@ import {
 import { AppColors } from '../../../styles/AppColors';
 import { VidioComponent } from '../../../components/post/VidioComponent';
 import { Styles } from '../../../styles/Styles';
+import Sliders from '@react-native-community/slider';
+
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -17,6 +19,11 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
   const [active, setActive] = useState(0);
   const [scroleEneble, setScrollEnabled] = useState(true)
   const [D, setD] = useState(description)
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const videoRef = useRef(null);
+  const [showSlider, setShowSlider] = useState(true)
+
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -35,6 +42,21 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
     setD(desc)
   }, [description])
 
+  const CurrentTimeSet = (i, e) => {
+    let item = [...currentTime]
+    item[i] = e
+    setCurrentTime(item)
+  }
+
+
+  const onSeek = (value) => {
+    let item = [...currentTime]
+    item[active] = value
+    setCurrentTime(item)
+    videoRef?.current?.seek(value);
+  };
+
+
   return (
     <View style={{ backgroundColor: 'black', height: '100%' }}>
       <FlatList
@@ -44,6 +66,9 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
         decelerationRate="fast"
         scrollEnabled={scroleEneble}
         data={photo}
+        onScroll={() => {
+          setShowSlider(false)
+        }}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         renderItem={({ item, index }) => {
           let height = 570
@@ -71,18 +96,27 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                 </View>
                 : (
                   <View>
-                    {(description && (Array.isArray(D) ? D[index] : D)) && <View style={[styles.hover, { top: save ? 40 : 10 }]}>
-                      <Text style={[Styles.whiteSemiBold12]}>
-                        {Array.isArray(D) ? D[index] : D}
-                      </Text>
-                    </View>}
-                    <VidioComponent big={big} setResizeVidio={() => {
-                      setSelectedVidio(item)
-                      setResizeVidio(true)
-                    }}
-                      setScrollEnabled={(e) => setScrollEnabled(false)}
+                    <View style={{ zIndex: 9999 }}>
+                      {description && description[0] === '[' ?
+                        <View style={styles.hover}>
+                          <Text style={Styles.whiteSemiBold12}>{JSON.parse(description)[index]}</Text>
+                        </View> :
+                        <View style={styles.hover}>
+                          <Text style={Styles.whiteSemiBold12}>{description}</Text>
+                        </View>
+                      }
+                    </View>
+                    <VidioComponent
+                      active={active == index}
                       music={music_name}
                       item={item}
+                      currentTime={currentTime[active]}
+                      setCurrentTime={(e) => CurrentTimeSet(index, e)}
+                      setDuration={(e) => setDuration(e)}
+                      duration={duration}
+                      onSeek={() => onSeek()}
+                      ref={videoRef}
+                      big={big}
                     />
                   </View>
 
@@ -91,6 +125,20 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
           );
         }}
       />
+      {(photo[active].video && showSlider) &&
+        <View style={styles.slider}>
+          <Sliders
+            style={styles.seekSlider}
+            value={currentTime[active]}
+            minimumValue={0}
+            maximumValue={duration}
+            onValueChange={onSeek}
+            minimumTrackTintColor="#FFFFFF"
+            maximumTrackTintColor="#000000"
+            thumbTintColor="#FFC24B"
+          />
+        </View>
+      }
       <View
         style={{
           flexDirection: 'row',
@@ -136,5 +184,13 @@ const styles = StyleSheet.create({
     width: 'auto',
     position: 'absolute',
     left: 3,
+    top: 10,
+  },
+  slider: {
+    bottom: 50,
+    position: 'absolute',
+    zIndex: 99999,
+    width: '100%',
+    height: 10,
   }
 });

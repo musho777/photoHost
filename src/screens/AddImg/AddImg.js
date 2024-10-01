@@ -97,22 +97,6 @@ export const AddImg = ({ navigation }) => {
   }, []);
 
 
-  // const captureScreenshot = async (ref) => {
-  //   try {
-  //     const uri = await captureRef(ref, {
-  //       format: "webm",
-  //       quality: 0.5,
-  //       width: 'auto',
-  //       height: 'auto'
-  //     });
-  //     let item = [...screenshotUri]
-  //     item.push(uri)
-  //     setScreenshotUri(item);
-  //   } catch (error) {
-  //     console.error('Error capturing screenshot:', error);
-  //   }
-  // };
-
 
   React.useLayoutEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {

@@ -18,6 +18,7 @@ export const VidioComponent = forwardRef(({
   item,
   big,
   viewableItems,
+  active,
   setDuration,
   height
 }, ref) => {
@@ -28,6 +29,8 @@ export const VidioComponent = forwardRef(({
   const [volume, setVolume] = useState(0);
   const dispatch = useDispatch()
   const { full } = useSelector((st) => st.fullScreen)
+
+  console.log(item.video)
 
   const onPlayPausePress = () => {
     setFirst(false);
@@ -40,6 +43,10 @@ export const VidioComponent = forwardRef(({
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
+
+  useEffect(() => {
+    setPaused(true)
+  }, [active])
 
   useEffect(() => {
     if (viewableItems?.length) {
@@ -99,6 +106,8 @@ export const VidioComponent = forwardRef(({
     setDuration(data.duration);
     setVolume(1)
   }, [volume]);
+
+
 
   console.log(first && paused)
 
@@ -161,7 +170,7 @@ export const VidioComponent = forwardRef(({
           repeat={false}
           fullscreen={full}
           volume={volume}
-          style={[styles.Vidio, { height: height }, first && { opacity: 0 }]}
+          style={[styles.Vidio, first && { opacity: 0 }]}
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
           resizeMode={'cover'}
           onFullscreenPlayerWillPresent={() => dispatch(FullScreen(true))} // Set fullscreen state
@@ -175,8 +184,6 @@ export const VidioComponent = forwardRef(({
             ref.current.seek(0);
           }}
         />
-
-
 
         {full && <Modal
           visible={true}
