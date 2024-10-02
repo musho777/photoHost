@@ -36,6 +36,7 @@ export const t = (lang = 'ru') => {
             logOut: 'Log Out',
             Blacklist: 'Black list',
             Accountsettings: 'Account settings',
+            Settings: "Settings",
             Addinformation: "Add. information",
             City: 'City',
             DateofBirth: 'Date of Birth',
@@ -78,11 +79,15 @@ export const t = (lang = 'ru') => {
             Companyname: 'Company name',
             comments: 'Comments',
             Nocomments: 'No comments',
+            Soundsandnotifications: "Sounds and notifications",
+            Messages: "Messages",
             Leaveacomment: 'Leave a comment',
             Women: 'Women',
             Men: "Men",
             Unspecifiedgender: 'Unspecified gender',
             AboutProgram: "Who we are",
+            Like: 'Like',
+            Subscribed: "Subscribed",
         }
     }
     {
@@ -98,7 +103,10 @@ export const t = (lang = 'ru') => {
             Notfound: "Не найдено",
             subscribe: "Подписаться",
             Unsubscribe: "Отписаться",
+            Messages: "Сообщения",
             Youhavenomessages: "У вас нет сообщений",
+            Soundsandnotifications: "Звуки и уведомления",
+            Settings: "Настройки",
             Newpublication: "Новая публикация",
             adddescription: "Добавить описание",
             Musicfromthevideo: "Музыка из видео (при наличии)",
@@ -169,6 +177,8 @@ export const t = (lang = 'ru') => {
             Men: "Mужчины",
             Unspecifiedgender: 'Неуказанные гендере',
             AboutProgram: "Кто мы?",
+            Like: 'Лайк',
+            Subscribed: "Подписано",
         }
     }
 }

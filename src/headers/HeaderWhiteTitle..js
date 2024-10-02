@@ -16,7 +16,7 @@ export const HeaderWhiteTitle = ({
       <View
         style={[
           Styles.flexAlignItems,
-          { height: Platform.OS == 'android' ? 70 : 50, paddingHorizontal: 10, backgroundColor: '#FFF' },
+          { height: 50, paddingHorizontal: 10, backgroundColor: '#FFF' },
           transparent && { backgroundColor: 'transparent' },
         ]}>
         <TouchableOpacity onPress={onPress}>

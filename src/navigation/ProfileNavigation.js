@@ -14,6 +14,7 @@ import AccauntParametrNavigation from './AccauntParametrNavigation';
 import MyPageNavigation from './MyPageNavigation';
 import { ContactsPage } from '../screens/contacts';
 import { AboutApplication } from '../screens/Profile/AboutApplication';
+import { SettingsNavigation } from './SettingsNavigation';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
@@ -62,6 +63,11 @@ function CustomDrawerContent(props) {
         />
         <DrawerItem
           labelStyle={[Styles.darkRegular16]}
+          label={t(mainData.lang).Settings}
+          onPress={() => props.navigation.navigate('SettingsNavigation')}
+        />
+        <DrawerItem
+          labelStyle={[Styles.darkRegular16]}
           label={t(mainData.lang).Blacklist}
           onPress={() => props.navigation.navigate('BlackListScreen')}
         />
@@ -104,6 +110,13 @@ export const ProfileNavigation = () => {
       <Drawer.Screen
         name="ParametrScreen"
         component={AccauntParametrNavigation}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="SettingsNavigation"
+        component={SettingsNavigation}
         options={{
           headerShown: false,
         }}
