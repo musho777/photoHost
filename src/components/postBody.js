@@ -3,11 +3,9 @@ import { CommentWhite, WhiteHeart, WhiteViewSvg } from "../assets/svg/TabBarSvg"
 import { NotLineSvgWhite, ShearSvg } from "../assets/svg/Svgs";
 import { Styles } from "../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { GetFollowerAction, GetPostLikeAction, LikePostAction } from "../store/action/action";
+import { useEffect, useState } from "react";
+import { GetFollowerAction, GetPostLikeAction, LikePostAction, LocalLike } from "../store/action/action";
 import { useNavigation } from "@react-navigation/native";
-import { LikeList } from "./LikeList";
-import { Share } from "./share";
 
 export const PostBody = ({
   commentCount,
@@ -54,10 +52,12 @@ export const PostBody = ({
 
   return <View style={styles.bostBody}>
     {(!likeClose && !showShare) && <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
-      <TouchableOpacity onLongPress={() => {
-        dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
-        setShowLike(true)
-      }} style={styles.hover}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onLongPress={() => {
+          dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
+          setShowLike(true)
+        }} style={styles.hover}>
         <TouchableOpacity onPress={() => LikePost()} style={styles.hoverItem}>
           <View >
             {isliked ? <WhiteHeart /> : <NotLineSvgWhite />}
