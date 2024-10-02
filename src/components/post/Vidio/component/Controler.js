@@ -18,7 +18,7 @@ export const Controler = forwardRef(({
   full,
   loading
 }, ref) => {
-
+  console.log(volume)
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);

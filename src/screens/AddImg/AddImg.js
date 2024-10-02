@@ -312,7 +312,8 @@ export const AddImg = ({ navigation }) => {
             <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
             <View style={styles.centeredView}>
               {selectedImage && <View style={styles.selectImage}>
-                {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ? <Image
+                {/* {(!selectedImage.includes('mp4') && !selectedImage.includes('mov')) ?  */}
+                <Image
                   onLoad={(event) => {
                     let { width, height } = event.nativeEvent.source;
                     if (height < 700) {
@@ -325,14 +326,14 @@ export const AddImg = ({ navigation }) => {
 
                   style={[styles.img, { height: 570 }]}
                   source={{ uri: selectedImage }}
-                /> :
-                  <Video
+                />
+                {/* <Video
                     source={{ uri: selectedImage }}
                     style={[styles.img]}
                     resizeMode="cover"
                     volume={0}
-                  />
-                }
+                  /> */}
+                {/* } */}
               </View>}
               <ScrollView showsHorizontalScrollIndicator={false} keyboardShouldPersistTaps="handled" horizontal={true} style={[styles.list, keyboardOpen && { marginBottom: 30 }]}>
                 {uri.length < 10 && < TouchableOpacity style={[styles.itemImage]} onPress={() => addPhoto()}>
@@ -349,8 +350,8 @@ export const AddImg = ({ navigation }) => {
                       style={styles.close}>
                       <CloseSvg1 smole />
                     </TouchableOpacity>
-                    {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ?
-                      <View>
+                    {/* {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ? */}
+                    {/* <View>
                         <Video
                           source={{ uri: elm.uri }}
                           style={[styles.vidio, { marginLeft: i == 0 ? 0 : 10, }, activePhoto == i && { borderWidth: 3, borderColor: 'green' }]}
@@ -358,20 +359,12 @@ export const AddImg = ({ navigation }) => {
                           paused={false}
                           volume={0}
                         />
-                        <Video
-                          source={{ uri: elm.uri }}
-                          style={[styles.img, { opacity: 0, position: "absolute" }]}
-                          resizeMode="cover"
-                          paused={false}
-                          volume={0}
-                          ref={ref[i]}
-                        />
-                      </View> :
-                      <Image
-                        style={[{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }, activePhoto == i && { borderWidth: 3, borderColor: 'green' }]}
-                        source={{ uri: elm.uri }}
-                      />
-                    }
+                      </View> : */}
+                    <Image
+                      style={[{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }, activePhoto == i && { borderWidth: 3, borderColor: 'green' }]}
+                      source={{ uri: elm.uri }}
+                    />
+                    {/* } */}
                   </TouchableOpacity>
                 })}
               </ScrollView>

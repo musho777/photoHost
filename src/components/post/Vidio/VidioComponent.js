@@ -103,6 +103,7 @@ export const VidioComponent = forwardRef(({
             ref={ref}
             currentTime={currentTime}
             big={big}
+            volume={volume}
             setFullScreen={(e) => setFullScreen(e)}
             duration={duration}
             setVolume={(e) => setVolume(e)}
@@ -169,6 +170,7 @@ export const VidioComponent = forwardRef(({
                 setFullScreen={(e) => setFullScreen(e)}
                 duration={duration}
                 setVolume={(e) => setVolume(e)}
+                volume={volume}
                 paused={paused}
                 setPaused={(e) => setPaused(e)}
                 setFirst={(e) => setFirst(e)}

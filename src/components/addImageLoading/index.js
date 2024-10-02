@@ -7,7 +7,6 @@ export const AddImageLoading = ({ uri }) => {
     <View style={styles.loadingVidio}>
       <Image source={{ uri: uri }} style={styles.image} />
       <Text style={Styles.homeTitle}>Загрузка</Text>
-      <FastImage source={require('../../assets/img/loading4.gif')} style={styles.loading} />
     </View>
   </SafeAreaView>
 }
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 5,
     paddingHorizontal: 5,
-    paddingRight: 0,
+    paddingRight: 15,
     height: 60,
     flexDirection: "row",
     alignItems: 'center',
