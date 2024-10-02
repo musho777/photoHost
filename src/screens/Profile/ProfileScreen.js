@@ -11,9 +11,6 @@ import { Albom } from '../../components/Albom/Albom';
 import debounce from 'lodash/debounce';
 import { InfoBlock } from './InfoBlock';
 
-const windowWidth = Dimensions.get('window').width;
-
-
 
 export const ProfileScreen = ({ navigation }) => {
 
@@ -24,11 +21,14 @@ export const ProfileScreen = ({ navigation }) => {
   const [page, setPage] = useState(1);
   const [seletedScreen, setSelectedScreen] = useState(true)
   const [changeAvatar, setChangeAvatar] = useState(false);
+
   useEffect(() => {
     if (user.data?.id) {
       dispatch(GetPostsAction({ user_id: user.data?.id }, staticdata.token, page));
     }
   }, [user.data?.id, page]);
+
+
 
 
 
@@ -50,15 +50,6 @@ export const ProfileScreen = ({ navigation }) => {
 
   const renderItem = seletedScreen ? renderItem1 : renderItem2;
 
-  const ITEM_HEIGHT = windowWidth / 2 - 25;
-  const getItemLayout = (data, index) => {
-    return {
-      length: ITEM_HEIGHT,
-      offset: ITEM_HEIGHT * index,
-      index,
-    };
-  };
-
   const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
 
   return (
@@ -72,11 +63,10 @@ export const ProfileScreen = ({ navigation }) => {
           scrollEnabled={seletedScreen}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          refreshing={getPosts?.loading}
+          refreshing={user?.loading}
           renderItem={renderItem}
           numColumns={2}
           scrollEventThrottle={16}
-          // getItemLayout={getItemLayout}
           onEndReached={debounce(handleEndReached, 300)}
           initialNumToRender={5}
           maxToRenderPerBatch={windowSize}

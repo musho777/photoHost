@@ -65,7 +65,6 @@ export const SearchBlock = () => {
           handleSearchInput={(e) => handleSearchInput(e)}
         />
         <FlatList
-          refreshControl={<RefreshControl refreshing={search.loading} />}
           keyExtractor={item => item.id.toString()}
           data={search.data}
           enableEmptySections={true}
