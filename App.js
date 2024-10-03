@@ -9,11 +9,24 @@ import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
 import { NotificationLister, requestUserPermission } from './src/utils/pushnotification_helper';
 import { StatusBar } from 'react-native';
+import PushNotification from 'react-native-push-notification';
+
 export default App = () => {
 
 
   const [hardwareBackPress, setHardwareBackPress] = useState(false)
 
+  PushNotification.createChannel(
+    {
+      channelId: "sms-channel",
+      channelName: "SmS",
+      channelDescription: "A channel to categorise your notifications",
+      soundName: "default",
+      largeIcon: "ic_launcher",
+      importance: 4,
+      vibrate: true,
+    },
+  );
 
   const firebaseConfig = {
     apiKey: "AIzaSyDeqDpmN8h9Zr2EkzcMlyZr-ddq_HkRZAc",
@@ -28,11 +41,39 @@ export default App = () => {
     firebase.initializeApp(firebaseConfig);
   }
 
+  const CheckToken = async () => {
+    const token = await messaging().getToken();
+    console.log('FCM Token', token);
+  }
+
+
   useEffect(() => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log('Notification caused app to open from background state:', remoteMessage.notification);
+    });
+
+    messaging().getInitialNotification().then(remoteMessage => {
+      if (remoteMessage) {
+        console.log('Notification caused app to open from quit state:', remoteMessage.notification);
+      }
+    });
+  }, []);
+
+
+
+  useEffect(() => {
+    CheckToken()
     requestUserPermission()
     NotificationLister()
     if (firebase.app()) {
       const unsubscribe = messaging().onMessage(async remoteMessage => {
+        PushNotification.localNotification({
+          smallIcon: null,
+          largeIcon: null,
+          channelId: "sms-channel",
+          title: "349949",
+          message: '100000',
+        });
       });
 
       return () => {
