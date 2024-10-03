@@ -52,6 +52,7 @@ export const CityModal = ({ visible, close, onPress }) => {
                             </View>
                         ) : (
                             <ScrollView
+                                keyboardShouldPersistTaps="handled"
                                 showsVerticalScrollIndicator={false}
                                 onScroll={({ nativeEvent }) => {
                                     if (nativeEvent.contentOffset.y + nativeEvent.layoutMeasurement.height >= nativeEvent.contentSize.height - 20) {

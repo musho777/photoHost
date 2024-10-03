@@ -166,6 +166,7 @@ export const RegisterAction = data => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          console.log(r)
           dispatch(SuccessRegister(r));
         } else {
           dispatch(
@@ -201,6 +202,7 @@ export const ConfirmRegisterCode = data => {
     })
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(setToken(r.token));
           setTokenSorage(r.token, r.user.id);
@@ -356,6 +358,7 @@ export const getUserInfoAction = (token) => {
 export const chnageUserProfil = (data, token) => {
   return dispatch => {
     dispatch(StartChangeData());
+    dispatch(changeUserData(data));
     axios
       .post(`${Api}/update_profile`, data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -363,7 +366,6 @@ export const chnageUserProfil = (data, token) => {
       .then(r => {
         if (r.data.status) {
           dispatch(SuccessChangeProfil(r.data));
-          dispatch(changeUserData(data));
         } else {
           dispatch(ErrorChangeProfile());
         }

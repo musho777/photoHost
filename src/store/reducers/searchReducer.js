@@ -20,6 +20,7 @@ const SearchReducer = (state = initialState, action) => {
       item.error = '';
       item.message = action.data?.message
       item.loading = false;
+
       item.data = [...item.data, ...action.data.data.data];
       item.nextPage = action.data.data.next_page_url
       break;

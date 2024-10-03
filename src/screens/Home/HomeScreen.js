@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, ClearLoginAction, ClearUser, DelatePostAction, EndViewPost, GetLentsAction, GetPostsAction, LogoutAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, GetLentsAction, GetPostsAction, getUserInfoAction, LogoutAction } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -153,6 +153,7 @@ export const HomeScreen = () => {
     tintColor="#FFC24B"
     onRefresh={() => {
       setPage(1)
+      dispatch(getUserInfoAction(staticdata.token));
       dispatch(GetLentsAction(staticdata.token, 1));
     }}
   />

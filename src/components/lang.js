@@ -140,7 +140,7 @@ export const t = (lang = 'ru') => {
             Placeofwork: "Место работы",
             Website: 'Сайт',
             Mail: 'Почта',
-            Phonenumber: 'Phone number',
+            Phonenumber: 'Номер телефона',
             changelanguage: "Изменение языка",
             Brieflyaboutyourself: 'Кратко о себе',
             Day: 'День',

@@ -97,12 +97,11 @@ export const RegisterScreen = ({ navigation, route }) => {
 
 
   useEffect(() => {
-    if (confirm.status) {
+    if (confirm.status && route.params.selected == 'Legal_entity') {
       setShow(true)
-      // dispatch(ClearConfirmPasswordAction())
-      // dispatch(ClearRegisterAction())
-      // navigation.navigate('Catalog');
-      // ShowDesctiption()
+    }
+    else if (confirm.status) {
+      Confirm()
     }
   }, [confirm.status])
 
