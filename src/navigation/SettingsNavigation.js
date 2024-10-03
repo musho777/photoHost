@@ -4,6 +4,7 @@ import { HeaderWhiteTitle } from '../headers/HeaderWhiteTitle.';
 import { t } from '../components/lang';
 import { useSelector } from 'react-redux';
 import { Soundsandnotifications } from '../screens/Settings/Soundsandnotifications';
+import { LikeNotification } from '../screens/Settings/LikeNotification';
 
 export const SettingsNavigation = () => {
   const Stack = createStackNavigator();
@@ -26,6 +27,15 @@ export const SettingsNavigation = () => {
         options={{
           header: ({ navigation }) => (
             <HeaderWhiteTitle title={t(mainData.data).Soundsandnotifications} onPress={() => navigation.goBack()} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="LikeNotification"
+        component={LikeNotification}
+        options={{
+          header: ({ navigation }) => (
+            <HeaderWhiteTitle title={t(mainData.data).Like} onPress={() => navigation.goBack()} />
           ),
         }}
       />

@@ -88,6 +88,10 @@ export const t = (lang = 'ru') => {
             AboutProgram: "Who we are",
             Like: 'Like',
             Subscribed: "Subscribed",
+            Off: "Off.",
+            Standardnotification: "Standard notification",
+            Funnynotification: "Funny notification"
+
         }
     }
     {
@@ -179,6 +183,9 @@ export const t = (lang = 'ru') => {
             AboutProgram: "Кто мы?",
             Like: 'Лайк',
             Subscribed: "Подписано",
+            Off: "Выкл.",
+            Standardnotification: "Стандартное уведомление",
+            Funnynotification: "Забавное уведомление"
         }
     }
 }

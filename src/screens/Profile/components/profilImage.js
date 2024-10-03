@@ -72,9 +72,13 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
       </View>
     }
     <View style={styles.userData}>
-      <View style={Styles.flexAlignItems}>
-        <Text style={[Styles.darkMedium16, { marginRight: 5 }]}>{user?.name}</Text>
-        {user.data.star > 0 && <CheckMarkUserSvg />}
+      <View style={[Styles.flexAlignItems, { gap: 7 }]}>
+        <Text style={Styles.darkMedium16}>{user?.name}</Text>
+
+        {user.data.star > 0 && <View style={{ marginTop: 3 }}>
+          <CheckMarkUserSvg />
+        </View>
+        }
       </View>
     </View>
     {user.data.description && (
