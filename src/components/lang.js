@@ -90,8 +90,9 @@ export const t = (lang = 'ru') => {
             Subscribed: "Subscribed",
             Off: "Off.",
             Standardnotification: "Standard notification",
-            Funnynotification: "Funny notification"
-
+            Funnynotification: "Funny notification",
+            ProfileisEmpty: "Profile is Empty",
+            Thefeedisempty: "The feed is empty",
         }
     }
     {
@@ -185,7 +186,9 @@ export const t = (lang = 'ru') => {
             Subscribed: "Подписано",
             Off: "Выкл.",
             Standardnotification: "Стандартное уведомление",
-            Funnynotification: "Забавное уведомление"
+            Funnynotification: "Забавное уведомление",
+            ProfileisEmpty: "Профиль пуст",
+            Thefeedisempty: "Лента пуста",
         }
     }
 }

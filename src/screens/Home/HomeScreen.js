@@ -13,6 +13,9 @@ import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
 import debounce from 'lodash/debounce';
 import { AddImageLoading } from '../../components/addImageLoading';
+import { EmptyFlatlist } from '../../components/emptyFlatlist';
+import { t } from '../../components/lang';
+
 
 export const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -30,6 +33,7 @@ export const HomeScreen = () => {
   const [likeClose, setLikeClose] = useState(false)
   const [showShare, setShowShare] = useState(false)
   const [isFetching, setIsFetching] = useState(false);
+  const mainData = useSelector(st => st.mainData);
 
 
   useEffect(() => {
@@ -157,6 +161,10 @@ export const HomeScreen = () => {
     minimumViewTime: 300,
   };
 
+  const ListEmptyComponent = () => {
+    return <EmptyFlatlist loading={getLents.loading} text={t(mainData.lang).Thefeedisempty} />
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HomeHeader onPress={() => goTop()} />
@@ -173,6 +181,7 @@ export const HomeScreen = () => {
           data={getLents.data}
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
+          ListEmptyComponent={ListEmptyComponent}
           onEndReached={debounce(handleEndReached, 300)}
           onEndReachedThreshold={0.5}
           initialNumToRender={5}

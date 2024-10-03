@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { TouchableOpacity, SafeAreaView, ActivityIndicator, StyleSheet, FlatList, Text, Dimensions } from 'react-native';
+import { TouchableOpacity, SafeAreaView, ActivityIndicator, StyleSheet, FlatList, Text, Dimensions, View, Image } from 'react-native';
 import { MenuSvg2 } from '../../assets/svg/Svgs';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
@@ -9,7 +9,10 @@ import { AlbomAndInfo } from './components/albomAndInfo';
 import { ProfileImageSkeleton } from '../../components/skeleton/profileImageSkeleton';
 import { Albom } from '../../components/Albom/Albom';
 import debounce from 'lodash/debounce';
+import { t } from '../../components/lang';
 import { InfoBlock } from './InfoBlock';
+import { Styles } from '../../styles/Styles';
+import { EmptyFlatlist } from '../../components/emptyFlatlist';
 
 
 export const ProfileScreen = ({ navigation }) => {
@@ -18,6 +21,8 @@ export const ProfileScreen = ({ navigation }) => {
   const staticdata = useSelector(st => st.static);
   const getPosts = useSelector(st => st.getPosts);
   const user = useSelector(st => st.userData);
+  const mainData = useSelector(st => st.mainData);
+
   const [page, setPage] = useState(1);
   const [seletedScreen, setSelectedScreen] = useState(true)
   const [changeAvatar, setChangeAvatar] = useState(false);
@@ -51,6 +56,9 @@ export const ProfileScreen = ({ navigation }) => {
   const renderItem = seletedScreen ? renderItem1 : renderItem2;
 
   const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
+  const ListEmptyComponent = () => {
+    return <EmptyFlatlist loading={getPosts.loading} text={t(mainData.lang).ProfileisEmpty} />
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -66,6 +74,7 @@ export const ProfileScreen = ({ navigation }) => {
           refreshing={user?.loading}
           renderItem={renderItem}
           numColumns={2}
+          ListEmptyComponent={ListEmptyComponent}
           scrollEventThrottle={16}
           onEndReached={debounce(handleEndReached, 300)}
           initialNumToRender={5}

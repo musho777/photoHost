@@ -23,6 +23,7 @@ import { Albom } from '../../components/Albom/Albom';
 import { InfoBlock } from '../Profile/InfoBlock';
 import debounce from 'lodash/debounce';
 import { AlbomAndInfo } from '../Profile/components/albomAndInfo';
+import { EmptyFlatlist } from '../../components/emptyFlatlist';
 const windowWidth = Dimensions.get('window').width;
 
 
@@ -108,6 +109,11 @@ export const SearchProfil = ({ navigation, route }) => {
 
   const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
 
+  const ListEmptyComponent = () => {
+    return <EmptyFlatlist loading={getPosts.loading} text={t(mainData.lang).Thefeedisempty} />
+  }
+
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ paddingHorizontal: 15 }}>
@@ -120,6 +126,7 @@ export const SearchProfil = ({ navigation, route }) => {
           renderItem={renderItem}
           numColumns={2}
           scrollEventThrottle={16}
+          ListEmptyComponent={ListEmptyComponent}
           // getItemLayout={getItemLayout}
           onEndReached={debounce(handleEndReached, 300)}
           initialNumToRender={5}
