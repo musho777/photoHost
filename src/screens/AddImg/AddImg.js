@@ -225,12 +225,15 @@ export const AddImg = ({ navigation }) => {
     });
   }
 
+  console.log(uri, 'uri')
+
 
   const delateFoto = index => {
     let item = [...uri];
     let temp = [...description]
     temp.splice(index, 1);
     item.splice(index, 1);
+    console.log(activePhoto == index, '222')
     if (activePhoto == index) {
       if (index != 0) {
         setActivePhoto(index - 1)
@@ -238,9 +241,15 @@ export const AddImg = ({ navigation }) => {
       else if (index == 0 && item.length >= 1) {
         setActivePhoto(0)
       }
+      else if (index == 0 && !item.length) {
+        setActivePhoto(0)
+      }
       else {
         setActivePhoto(0)
       }
+    }
+    else if (activePhoto >= index) {
+      setActivePhoto(activePhoto - 1)
     }
     setUri(item);
     setDescription(temp)
