@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 import Sound from 'react-native-sound';
 import { Comments } from '../components/comment/Comment';
+import messaging from '@react-native-firebase/messaging';
 import {
   AddBlackListPusherAction,
   AddMessageCount,
@@ -133,11 +134,13 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     changeLanguage()
     Pushers();
     getData();
+    requestUserPermission()
+    getNotificationToken()
   }, [token]);
 
-  // black_list_delete
+
   const getNotificationToken = async () => {
-    const fcmtoken = await AsyncStorage.getItem('fcmtoken')
+    const fcmtoken = await messaging().getToken()
     const deviceId = await DeviceInfo.getUniqueId();
     dispatch(DeviceIdAction({
       device_id: fcmtoken,
@@ -146,12 +149,21 @@ export default Navigation = ({ token, initialRouteName, id }) => {
   };
 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  async function requestUserPermission() {
+    console.log('---1')
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
       getNotificationToken()
-    }, 15 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+    }
+  }
+
+
+
+
 
 
   const Stack = createStackNavigator();

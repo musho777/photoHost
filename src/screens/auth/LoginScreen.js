@@ -4,11 +4,12 @@ import { Styles } from '../../styles/Styles';
 import { Button } from '../../ui/Button';
 import { Input } from '../../ui/Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { ClearConfirmPasswordAction, ClearLoginAction, LoginAction, DeleteTokenSorage } from '../../store/action/action';
+import { ClearConfirmPasswordAction, ClearLoginAction, LoginAction, DeleteTokenSorage, DeviceIdAction } from '../../store/action/action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ChecboxUNchekedSvg, CheckedChexbox } from '../../assets/svg/Svgs';
 import { t } from '../../components/lang';
 import { CommonActions } from '@react-navigation/native';
+import DeviceInfo from 'react-native-device-info';
 
 
 export const LoginScreen = ({ navigation }) => {
@@ -59,7 +60,6 @@ export const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (loginData.status) {
-      // navigation.navigate('TabNavigation', { screen: 'Home' });
       navigation.dispatch(
         CommonActions.reset({
           index: 0,

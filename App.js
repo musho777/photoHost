@@ -10,6 +10,7 @@ import firebase from '@react-native-firebase/app';
 import { NotificationLister, requestUserPermission } from './src/utils/pushnotification_helper';
 import { StatusBar } from 'react-native';
 import PushNotification from 'react-native-push-notification';
+import DeviceInfo from 'react-native-device-info';
 
 export default App = () => {
 
@@ -45,14 +46,13 @@ export default App = () => {
   }
 
 
-  async function GetFCMToke() {
-    let fcmtoken = await messaging().getToken()
-    console.log(fcmtoken, 'fcmtoken')
-  }
+  // async function GetFCMToke() {
+  //   let fcmtoken = await messaging().getToken()
+  // }
 
 
   useEffect(() => {
-    GetFCMToke()
+    // GetFCMToke()
     messaging().onNotificationOpenedApp(remoteMessage => {
       console.log('Notification caused app to open from background state:', remoteMessage.notification);
     });
@@ -65,10 +65,32 @@ export default App = () => {
   }, []);
 
 
+  const getNotificationToken = async () => {
+    const fcmtoken = await messaging().getToken()
+    const deviceId = await DeviceInfo.getUniqueId();
+    dispatch(DeviceIdAction({
+      device_id: fcmtoken,
+      phone_code: deviceId,
+    }, token))
+  };
+
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      GetFCMToke()
+    }
+  }
+
+
+
 
   useEffect(() => {
     CheckToken()
-    requestUserPermission()
     NotificationLister()
     if (firebase.app()) {
       const unsubscribe = messaging().onMessage(async remoteMessage => {
