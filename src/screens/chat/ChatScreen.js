@@ -21,7 +21,7 @@ export const ChatScreen = ({ route }) => {
   const [addToblackList, setAddToBlackList] = useState('')
   const user = useSelector(st => st.userData);
 
-  const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
+  const music = new Sound('Send.wav', Sound.MAIN_BUNDLE, (error) => { });
   const staticdata = useSelector(st => st.static);
 
 

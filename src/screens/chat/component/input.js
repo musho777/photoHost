@@ -9,7 +9,7 @@ import { Styles } from "../../../styles/Styles"
 
 
 export const InputComponent = ({ sendMSg, setSendMsg, setAddToBlackList, addToblackList, route }) => {
-  const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
+  const music = new Sound('Send.wav', Sound.MAIN_BUNDLE, (error) => { });
   const dispatch = useDispatch()
   const [showInput, setShopwINput] = useState()
   let getSinglePageChat = useSelector(st => st.getSinglePageChat);

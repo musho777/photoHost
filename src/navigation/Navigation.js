@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LoginScreen } from '../screens/auth/LoginScreen';
 import { AppColors } from '../styles/AppColors';
 import { TabNavigation } from './TabNavigation';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';

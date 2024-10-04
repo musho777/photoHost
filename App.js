@@ -14,8 +14,6 @@ import PushNotification from 'react-native-push-notification';
 export default App = () => {
 
 
-  const [hardwareBackPress, setHardwareBackPress] = useState(false)
-
   PushNotification.createChannel(
     {
       channelId: "sms-channel",
@@ -47,7 +45,14 @@ export default App = () => {
   }
 
 
+  async function GetFCMToke() {
+    let fcmtoken = await messaging().getToken()
+    console.log(fcmtoken, 'fcmtoken')
+  }
+
+
   useEffect(() => {
+    GetFCMToke()
     messaging().onNotificationOpenedApp(remoteMessage => {
       console.log('Notification caused app to open from background state:', remoteMessage.notification);
     });
@@ -104,9 +109,12 @@ export default App = () => {
     }
     setIsLoading(false)
   }
+
+
+
   useEffect(() => {
     getData()
-  }, [hardwareBackPress])
+  }, [])
 
 
 
