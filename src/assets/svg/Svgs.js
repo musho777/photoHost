@@ -1134,8 +1134,8 @@ export const StartVidioSvg = () => {
 export const AddSecSvg = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="50px"
-    height="50px"
+    width="30px"
+    height="30px"
     viewBox="0 0 24 24"
     fill="none"
   >
@@ -1152,8 +1152,8 @@ export const AddSecSvg = () => {
 export const AddSecSvg1 = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="50px"
-    height="50px"
+    width="30px"
+    height="30px"
     viewBox="0 0 24 24"
     fill="none"
     stroke="white"
@@ -1171,8 +1171,8 @@ export const AddSecSvg1 = () => {
 export const Pause = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="50px"
-    height="50px"
+    width="30px"
+    height="30px"
     viewBox="0 0 24 24"
     fill="none"
   >
@@ -1185,8 +1185,8 @@ export const Pause = () => {
 export const StartSvg = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="50px"
-    height="50px"
+    width="30px"
+    height="30px"
     viewBox="0 0 24 24"
     fill="none"
   >
@@ -1246,8 +1246,8 @@ export const SoundSvg = () => {
 export const FullScrenn = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="30px"
-    height="30px"
+    width="25px"
+    height="25px"
     viewBox="0 0 24 24"
     fill="none"
   >

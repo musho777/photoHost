@@ -13,7 +13,7 @@ import FastImage from 'react-native-fast-image';
 import { LikePostAction } from '../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import SliderImage from './sliderImage';
-import Sliders from '@react-native-community/slider';
+// import Sliders from '@react-native-community/slider';
 import { VidioComponent } from './post/Vidio/VidioComponent';
 import { Styles } from '../styles/Styles';
 
@@ -30,18 +30,18 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   const DOUBLE_CLICK_DELAY = 300;
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const dispatch = useDispatch()
-  const [showSlider, setShowSlider] = useState(true)
+  // const [showSlider, setShowSlider] = useState(true)
   const [duration, setDuration] = useState(0);
   const videoRef = useRef(null);
-  const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  // const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 
-  const onSeek = (value) => {
-    let item = [...currentTime]
-    item[active] = value
-    setCurrentTime(item)
-    videoRef?.current?.seek(value);
-  };
+  // const onSeek = (value) => {
+  //   let item = [...currentTime]
+  //   item[active] = value
+  //   setCurrentTime(item)
+  //   videoRef?.current?.seek(value);
+  // };
 
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   };
 
   const handleMomentumScrollEnd = (event) => {
-    setShowSlider(true)
+    // setShowSlider(true)
     const index = Math.floor(
       Math.floor(event.nativeEvent.contentOffset.x) /
       Math.floor(event.nativeEvent.layoutMeasurement.width)
@@ -95,11 +95,11 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   };
 
 
-  const CurrentTimeSet = (i, e) => {
-    let item = [...currentTime]
-    item[i] = e
-    setCurrentTime(item)
-  }
+  // const CurrentTimeSet = (i, e) => {
+  //   let item = [...currentTime]
+  //   item[i] = e
+  //   setCurrentTime(item)
+  // }
 
 
 
@@ -124,13 +124,13 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
               viewableItems={viewableItems}
               music={data.music_name}
               item={item}
-              currentTime={currentTime[active]}
-              setCurrentTime={(e) => CurrentTimeSet(index, e)}
+              // currentTime={currentTime[active]}
+              // setCurrentTime={(e) => CurrentTimeSet(index, e)}
               setDuration={(e) => setDuration(e)}
               duration={duration}
               ref={videoRef}
               height={height}
-              onSeek={onSeek}
+            // onSeek={onSeek}
             />
           </View>
           :
@@ -168,9 +168,9 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         removeClippedSubviews={false}
         maxToRenderPerBatch={10}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        onScroll={() => {
-          setShowSlider(false)
-        }}
+        // onScroll={() => {
+        //   setShowSlider(false)
+        // }}
         renderItem={renderItem}
       />
       <View style={styles.paginationWrapper}>
@@ -178,7 +178,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
           <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
         ))}
       </View>
-      <View>
+      {/* <View>
         {(photo[active].video && showSlider) &&
           <View style={styles.slider}>
             <Sliders
@@ -193,8 +193,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
             />
           </View>
         }
-
-      </View>
+      </View> */}
       {openSlider && (
         <SliderModal
           modalVisible={openSlider}

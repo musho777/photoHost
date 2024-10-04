@@ -2,6 +2,7 @@ import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } fr
 import { AddSecSvg, AddSecSvg1, FullScrenn, MuteSvg, Pause, StartSvg } from "../../../../assets/svg/Svgs"
 import { forwardRef } from "react";
 import { Styles } from "../../../../styles/Styles";
+import { LikeList } from "../../../LikeList";
 
 export const Controler = forwardRef(({
   setVolume,
@@ -16,59 +17,77 @@ export const Controler = forwardRef(({
   setShowStartButton,
   setFullScreen,
   full,
-  loading
+  loading,
 }, ref) => {
-  console.log(volume)
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-
   const AddCurrentTime = () => {
     const newTime = Math.min(currentTime + 5, duration);
     ref?.current?.seek(newTime);
     setCurrentTime(newTime)
-    setShowStartButton(false);
+    if (!full) {
+      setShowStartButton(false);
+    }
   };
 
   const onPlayPausePress = () => {
     setFirst(false);
     setPaused(!paused);
-    setShowStartButton(false);
+    if (paused && !full) {
+      setShowStartButton(false);
+    }
   };
 
   const LakeCurrentTime = () => {
     const newTime = Math.max(currentTime - 5, 0);
     ref?.current?.seek(newTime);
     setCurrentTime(newTime)
-    setShowStartButton(false);
+    if (!full) {
+      setShowStartButton(false);
+    }
   };
 
-  return <View style={styles.wrapper}>
-    <TouchableOpacity onPress={() => {
-      // setPaused(true)
-      setFullScreen(!full)
-    }}
-      style={styles.full}>
+  if (!full) {
+    return <View style={styles.wrapper}>
+      <TouchableOpacity
+        style={styles.full}
+        onPress={() => {
+          setFullScreen(!full)
+          setShowStartButton(true)
+        }}>
+        <FullScrenn />
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={1} onPress={() =>
+        setVolume(volume === 0 ? 1 : 0)
+      } style={styles.voice}>
+        {!volume ?
+
+          <MuteSvg /> :
+          <Image style={{ width: 25, height: 25 }} source={require('../../../../assets/img/Sound.png')} />}
+      </TouchableOpacity>
+
+      <View style={styles.playButton}>
+        {loading ?
+          <View>
+            <ActivityIndicator size={"large"} color={'white'} />
+          </View> :
+          <TouchableOpacity onPress={onPlayPausePress}>
+            {!paused ? <Pause /> : <StartSvg />}
+          </TouchableOpacity>}
+      </View>
+    </View>
+  }
+
+  return <View style={styles.wrapper1}>
+    <TouchableOpacity onPress={() => setFullScreen(!full)}>
       <FullScrenn />
     </TouchableOpacity>
 
-    <TouchableOpacity activeOpacity={1} onPress={() =>
-      setVolume(volume === 0 ? 1 : 0)
-    } style={styles.voice}>
-      {!volume ?
-
-        <MuteSvg /> :
-        <Image style={{ width: 25, height: 25 }} source={require('../../../../assets/img/Sound.png')} />}
-    </TouchableOpacity>
-    <View style={styles.playButton}>
+    <View style={styles.playButtonFull}>
       <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>
         <AddSecSvg1 />
       </TouchableOpacity>
       {loading ?
         <View>
-          <ActivityIndicator size={"large"} color={'white'} />
+          <ActivityIndicator size={"small"} color={'white'} />
         </View> :
         <TouchableOpacity onPress={onPlayPausePress}>
           {!paused ? <Pause /> : <StartSvg />}
@@ -78,6 +97,12 @@ export const Controler = forwardRef(({
       </TouchableOpacity>
     </View>
 
+    <TouchableOpacity activeOpacity={1} onPress={() => setVolume(volume === 0 ? 1 : 0)}>
+      {!volume ?
+        <MuteSvg /> :
+        <Image style={{ width: 25, height: 25 }} source={require('../../../../assets/img/Sound.png')} />}
+    </TouchableOpacity>
+
     <View
       style={{ height: 60, width: '100%', position: 'absolute', bottom: 5 }}>
       <View style={styles.music}>
@@ -85,10 +110,9 @@ export const Controler = forwardRef(({
           {music && <MusicSvg />}
           <Text style={Styles.whiteSemiBold13}>{music}</Text>
         </View>
-        <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)} / {formatTime(duration)}</Text>
       </View>
     </View>
-  </View>
+  </View >
 })
 
 const styles = StyleSheet.create({
@@ -97,6 +121,18 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 99999,
     position: 'absolute'
+  },
+  wrapper1: {
+    width: '100%',
+    zIndex: 99999,
+    position: 'absolute',
+    borderWidth: 1,
+    height: 33,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    bottom: -60,
+    paddingHorizontal: 10,
   },
   voice: {
     position: 'absolute',
@@ -121,7 +157,10 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     flexDirection: 'row',
-    gap: 70,
+  },
+  playButtonFull: {
+    flexDirection: 'row',
+    gap: 25,
   },
   music: {
     zIndex: 999,

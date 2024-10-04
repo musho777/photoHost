@@ -11205,7 +11205,6 @@ __metadata:
     react-native-accordion: ^1.0.1
     react-native-awesome-slider: ^2.5.3
     react-native-calendars: 1.1286.0
-    react-native-cameraroll: ^1.0.0-alpha2
     react-native-contacts: ^7.0.8
     react-native-device-info: ^10.8.0
     react-native-eject: ^0.2.0
@@ -11656,16 +11655,6 @@ __metadata:
     moment:
       optional: true
   checksum: 5b95310ff5931791ea8fec87300316bbbfd0342daf1ce72cb1dda5b91b75400be64c25e69aa6b9d277fd3197bc5a1b42e5767b5ece35b7c14abdb7362805ed5a
-  languageName: node
-  linkType: hard
-
-"react-native-cameraroll@npm:^1.0.0-alpha2":
-  version: 1.0.0-alpha2
-  resolution: "react-native-cameraroll@npm:1.0.0-alpha2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: a65fa1384180fbc6a068f778a475af9c874b1f2041ba272503c2345396cc69be6174cd9fb48ef1034b55ddcaf901e53ebf3cd97cbff6f4afa214ec49770111a1
   languageName: node
   linkType: hard
 

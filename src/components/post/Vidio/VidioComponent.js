@@ -1,23 +1,25 @@
-import { BackHandler, Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
-import React, { forwardRef, useCallback, useEffect, useState } from 'react';
+import { BackHandler, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import Video from 'react-native-video';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 import { Controler } from './component/Controler';
 import Sliders from '@react-native-community/slider';
+import Slider from 'react-native-slider'
+import { Styles } from '../../../styles/Styles';
 
 
 
 export const VidioComponent = forwardRef(({
   duration,
-  currentTime,
-  setCurrentTime,
+  // currentTime,
+  // setCurrentTime,
   item,
   big,
   viewableItems,
   active,
   setDuration,
-  onSeek
+  // onSeek
 }, ref) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
@@ -27,6 +29,13 @@ export const VidioComponent = forwardRef(({
   const [fullScreen, setFullScreen] = useState(false)
   const navigation = useNavigation()
   const [loading, setLoading] = useState(true)
+  const [currentTime, setCurrentTime] = useState(0)
+  const videoRef = useRef(null);
+
+  const onSeek = (value) => {
+    setCurrentTime(value)
+    videoRef?.current?.seek(value);
+  };
 
   useEffect(() => {
     setPaused(true)
@@ -48,15 +57,15 @@ export const VidioComponent = forwardRef(({
 
 
   useEffect(() => {
-    const timer = null
-    if (showStartButton) {
-      setTimeout(() => {
-        setShowStartButton(false);
-      }, 3000);
-    }
-
+    const timer = setTimeout(() => {
+      if (!fullScreen) {
+        if (!paused) {
+          setShowStartButton(false);
+        }
+      }
+    }, 3000);
     return () => clearTimeout(timer);
-  }, [showStartButton]);
+  }, [paused, showStartButton]);
 
   const ChangeCurentTime = () => {
     if (currentTime <= duration) {
@@ -86,6 +95,13 @@ export const VidioComponent = forwardRef(({
     return unsubscribe;
   }, [navigation]);
 
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
   return (
     <View style={{ position: 'relative', height: 570 }}>
       <TouchableOpacity
@@ -112,7 +128,9 @@ export const VidioComponent = forwardRef(({
             setFirst={(e) => setFirst(e)}
             full={fullScreen}
             loading={loading}
-          />}
+          />
+
+        }
         {(first && paused) &&
           <FastImage
             style={styles.Vidio}
@@ -161,7 +179,7 @@ export const VidioComponent = forwardRef(({
             }}
             style={{ width: '100%', height: 570 }}
           >
-            {((showStartButton || first)) &&
+            {((showStartButton || first || fullScreen)) &&
               <Controler
                 setShowStartButton={(e) => setShowStartButton(e)}
                 setCurrentTime={(e) => setCurrentTime(e)}
@@ -209,16 +227,20 @@ export const VidioComponent = forwardRef(({
               }}
             />
             <View style={styles.slider}>
-              <Sliders
-                style={styles.seekSlider}
+              <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)}</Text>
+              <Slider
                 value={currentTime}
                 minimumValue={0}
                 maximumValue={duration}
-                onValueChange={onSeek}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                style={styles.seekSlider}
+                minimumTrackTintColor="#FFFF"
+                maximumTrackTintColor="#ababab"
                 thumbTintColor="#FFC24B"
+                onValueChange={onSeek}
+                thumbStyle={{ width: 13, height: 13 }}
+                trackStyle={{ height: 2 }}
               />
+              <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(duration)}</Text>
             </View>
 
           </TouchableOpacity>
@@ -235,14 +257,19 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   slider: {
-    bottom: 5,
+    bottom: -25,
     position: 'absolute',
-    zIndex: 99999,
+    alignItems: 'center',
+    flexDirection: 'row',
     width: '100%',
-    height: 10,
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
   },
   seekSlider: {
-    width: '100%',
-    height: 40,
+    width: '80%',
+    height: 50,
+    // bottom: -25,
+    // position: 'absolute',
+    zIndex: 999999999,
   }
 });
