@@ -8,6 +8,7 @@ import { useCallback, useRef, useState } from "react";
 import { ShowSave } from "../showSave";
 import { HeaderInfo } from "./component/headerInfro";
 import { Settings } from "./component/settings";
+import { DelateModal } from "./component/DelateModel";
 
 export const PostHeader = ({
   user,
@@ -24,6 +25,8 @@ export const PostHeader = ({
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [showSave, setShowSave] = useState(false)
   const dispatch = useDispatch()
+  const [show, setShow] = useState(false)
+
 
   const handlePresentModalPress = useCallback(() => { bottomSheetRef.current?.present(); }, []);
   const bottomSheetRef = useRef(null);
@@ -46,6 +49,13 @@ export const PostHeader = ({
   }
 
   return <View style={styles.hover}>
+    <DelateModal Confirm={() => {
+      deletData(data.id)
+      setShow(false)
+    }} show={show} setModalVisible={(e) => setShow(e)} />
+
+
+
     <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
     <HeaderInfo
       data={data.created_at}
@@ -72,7 +82,7 @@ export const PostHeader = ({
         id={data.id}
         isFollow={data.user.follow_status_sender.length}
         my={true}
-        deletData={deletData}
+        setShow={(e) => setShow(e)}
         setOpenModal={(e) => setOpenModal(e)}
         activeImage={activeImage}
       />

@@ -6,6 +6,7 @@ export const t = (lang = 'ru') => {
             Contacts: "Contacts",
             Edit: "Edit",
             Deletepost: "Delete post",
+            Delete: "Delete",
             Subscriptions: 'Subscriptions',
             Recommendations: "Recommendations",
             Selectacategory: 'Select a category',
@@ -93,6 +94,8 @@ export const t = (lang = 'ru') => {
             Funnynotification: "Funny notification",
             ProfileisEmpty: "Profile is Empty",
             Thefeedisempty: "The feed is empty",
+            Cancel: "Cancel",
+            Areyousureyouwanttodelete: "Are you sure you want to delete"
         }
     }
     {
@@ -119,6 +122,7 @@ export const t = (lang = 'ru') => {
             noPublications: "нет публикаций",
             Bookmarklistisempty: 'Список закладок пуст',
             Album: 'Альбом',
+            Delete: "Удалить",
             Listlistisempty: 'Пустая лента',
             Subscriptions: 'Подписки',
             Recommendations: "Попутный контент",
@@ -189,6 +193,8 @@ export const t = (lang = 'ru') => {
             Funnynotification: "Забавное уведомление",
             ProfileisEmpty: "Профиль пуст",
             Thefeedisempty: "Лента пуста",
+            Cancel: "Отмена",
+            Areyousureyouwanttodelete: "Вы уверены, что хотите удалить?"
         }
     }
 }

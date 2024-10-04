@@ -4,7 +4,14 @@ import { t } from '../../../lang';
 import { Styles } from "../../../../styles/Styles";
 import { useSelector } from "react-redux";
 
-export const Settings = ({ my, setOpenModal, description, id, deletData, activeImage }) => {
+export const Settings = ({
+  my,
+  setOpenModal,
+  description,
+  id,
+  activeImage,
+  setShow,
+}) => {
 
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()
@@ -27,8 +34,8 @@ export const Settings = ({ my, setOpenModal, description, id, deletData, activeI
       <TouchableOpacity
         style={{ marginVertical: 10 }}
         onPress={() => {
+          setShow(true)
           setOpenModal(false)
-          deletData(id)
         }}>
         <Text style={Styles.darkRegular14}>{t(mainData.lang).Deletepost} </Text>
       </TouchableOpacity>
