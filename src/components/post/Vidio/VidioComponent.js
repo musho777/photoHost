@@ -12,14 +12,14 @@ import { Styles } from '../../../styles/Styles';
 
 export const VidioComponent = forwardRef(({
   duration,
-  // currentTime,
-  // setCurrentTime,
+  currentTime,
+  setCurrentTime,
   item,
   big,
   viewableItems,
   active,
   setDuration,
-  // onSeek
+  onSeek
 }, ref) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
@@ -29,13 +29,13 @@ export const VidioComponent = forwardRef(({
   const [fullScreen, setFullScreen] = useState(false)
   const navigation = useNavigation()
   const [loading, setLoading] = useState(true)
-  const [currentTime, setCurrentTime] = useState(0)
+  // const [currentTime, setCurrentTime] = useState(0)
   const videoRef = useRef(null);
 
-  const onSeek = (value) => {
-    setCurrentTime(value)
-    videoRef?.current?.seek(value);
-  };
+  // const onSeek = (value) => {
+  //   setCurrentTime(value)
+  //   videoRef?.current?.seek(value);
+  // };
 
   useEffect(() => {
     setPaused(true)
@@ -123,6 +123,7 @@ export const VidioComponent = forwardRef(({
             setFullScreen={(e) => setFullScreen(e)}
             duration={duration}
             setVolume={(e) => setVolume(e)}
+            showStartButton={showStartButton}
             paused={paused}
             setPaused={(e) => setPaused(e)}
             setFirst={(e) => setFirst(e)}

@@ -17,6 +17,7 @@ export const Controler = forwardRef(({
   setShowStartButton,
   setFullScreen,
   full,
+  showStartButton,
   loading,
 }, ref) => {
   const AddCurrentTime = () => {
@@ -45,6 +46,8 @@ export const Controler = forwardRef(({
     }
   };
 
+  console.log(showStartButton)
+
   if (!full) {
     return <View style={styles.wrapper}>
       <TouchableOpacity
@@ -63,15 +66,20 @@ export const Controler = forwardRef(({
           <MuteSvg /> :
           <Image style={{ width: 25, height: 25 }} source={require('../../../../assets/img/Sound.png')} />}
       </TouchableOpacity>
-
       <View style={styles.playButton}>
+        {(showStartButton && !paused) && <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>
+          <AddSecSvg1 width={40} />
+        </TouchableOpacity>}
         {loading ?
           <View>
             <ActivityIndicator size={"large"} color={'white'} />
           </View> :
           <TouchableOpacity onPress={onPlayPausePress}>
-            {!paused ? <Pause /> : <StartSvg />}
+            {!paused ? <Pause width={40} /> : <StartSvg width={40} />}
           </TouchableOpacity>}
+        {(showStartButton && !paused) && <TouchableOpacity onPress={AddCurrentTime}>
+          <AddSecSvg width={40} />
+        </TouchableOpacity>}
       </View>
     </View>
   }
@@ -120,7 +128,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     zIndex: 99999,
-    position: 'absolute'
+    position: 'absolute',
   },
   wrapper1: {
     width: '100%',
@@ -157,6 +165,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     flexDirection: 'row',
+    gap: 40,
   },
   playButtonFull: {
     flexDirection: 'row',

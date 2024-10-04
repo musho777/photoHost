@@ -1131,11 +1131,11 @@ export const StartVidioSvg = () => {
   </Svg>
 }
 
-export const AddSecSvg = () => {
+export const AddSecSvg = ({ width = 30 }) => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="30px"
-    height="30px"
+    width={width}
+    height={width}
     viewBox="0 0 24 24"
     fill="none"
   >
@@ -1149,11 +1149,11 @@ export const AddSecSvg = () => {
   </Svg>
 }
 
-export const AddSecSvg1 = () => {
+export const AddSecSvg1 = ({ width = 30 }) => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="30px"
-    height="30px"
+    width={width}
+    height={width}
     viewBox="0 0 24 24"
     fill="none"
     stroke="white"
@@ -1168,11 +1168,11 @@ export const AddSecSvg1 = () => {
   </Svg>
 }
 
-export const Pause = () => {
+export const Pause = ({ width = 30 }) => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="30px"
-    height="30px"
+    width={width}
+    height={width}
     viewBox="0 0 24 24"
     fill="none"
   >
@@ -1182,11 +1182,11 @@ export const Pause = () => {
   </Svg>
 }
 
-export const StartSvg = () => {
+export const StartSvg = ({ width = 30 }) => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="30px"
-    height="30px"
+    width={width}
+    height={width}
     viewBox="0 0 24 24"
     fill="none"
   >
