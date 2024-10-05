@@ -32,18 +32,29 @@ import { CheckBlack } from '../../CheckBlack';
 import { LoginNavigation } from './LoginNavigation';
 import { Catalog } from '../screens/catalog';
 import { OtherUserScreenNavigation } from './OtherUserScreenNavigation';
+import { PermissionsAndroid, Platform } from 'react-native';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
   const [i, setI] = useState(initialRouteName);
 
 
-  const music = new Sound('ding.mp3', Sound.MAIN_BUNDLE, (error) => {
-    if (error) {
+  async function requestNotificationPermission() {
+    if (Platform.OS === 'android' && Platform.Version >= 33) {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Notification permission granted');
+        } else {
+          console.log('Notification permission denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
     }
-  });
-
-
+  }
 
   const changeLanguage = async () => {
     let lang = await AsyncStorage.getItem('lang')
@@ -95,12 +106,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
                 created_at: today
               }),
             );
-            if (id == JSON.parse(event.data)?.message?.sender_id) {
-              music.play()
-              setTimeout(() => {
-                music.stop()
-              }, 5000);
-            }
           }
         }
         else if (JSON.parse(event.data).message.type == 'delete_chat') {
@@ -136,8 +141,12 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     getData();
     requestUserPermission()
     getNotificationToken()
+
   }, [token]);
 
+  useEffect(() => {
+    requestNotificationPermission()
+  }, [])
 
   const getNotificationToken = async () => {
     const fcmtoken = await messaging().getToken()

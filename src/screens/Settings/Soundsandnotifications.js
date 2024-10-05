@@ -1,17 +1,22 @@
-import { View } from "react-native"
-import { FieldWithArrow } from "../../components/fieldWithArrow"
+import { StyleSheet, View } from "react-native"
 import { t } from '../../components/lang';
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { SelectItem } from "../../components/SelectItems";
 
 
 export const Soundsandnotifications = () => {
   const mainData = useSelector(st => st.mainData);
-  const navigation = useNavigation()
-  return <View>
-    <FieldWithArrow text={t(mainData.lang).Subscribed} />
-    <FieldWithArrow onPress={() => navigation.navigate("LikeNotification")} text={t(mainData.lang).Like} />
-    <FieldWithArrow text={t(mainData.lang).comments} />
-    <FieldWithArrow text={t(mainData.lang).Messages} />
+  return <View style={styles.wrapper}>
+    <SelectItem text={t(mainData.lang).Off} />
+    <SelectItem text={t(mainData.lang).Standardnotification} />
+    <SelectItem text={t(mainData.lang).Funnynotification} />
   </View>
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingHorizontal: 15,
+    gap: 15,
+    marginTop: 20
+  }
+})
