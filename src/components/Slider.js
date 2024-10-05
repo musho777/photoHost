@@ -186,7 +186,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         ))}
       </View>
       <View>
-        {(photo[active].video && showSlider) &&
+        {(photo[active]?.video && showSlider) &&
           <View style={styles.slider}>
             <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime[active])}</Text>
 

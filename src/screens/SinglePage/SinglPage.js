@@ -3,9 +3,6 @@ import {
   View,
   StyleSheet,
   Platform,
-  TouchableOpacity,
-  Image,
-  Text
 } from 'react-native';
 import { Slider } from './components/slider';
 import { Header } from './components/Hedaer';

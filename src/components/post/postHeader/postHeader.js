@@ -52,7 +52,10 @@ export const PostHeader = ({
     <DelateModal Confirm={() => {
       deletData(data.id)
       setShow(false)
-    }} show={show} setModalVisible={(e) => setShow(e)} />
+    }}
+      show={show}
+      setModalVisible={(e) => setShow(e)}
+    />
 
 
 
