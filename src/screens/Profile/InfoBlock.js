@@ -59,15 +59,16 @@ export const InfoBlock = ({ user }) => {
     return <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableOpacity activeOpacity={1}>
             {userType && <InfoItem svg={<CakeSvg />} value={date} />}
+            {userType && <InfoItem svg={<GenderSvg />} value={gender} />}
+            <InfoItem svg={<EmailSvg />} value={email} />
+            <InfoItem svg={<PhoneSvg />} value={phone} />
             <InfoItem svg={<LocationSvg />} value={location} />
             <InfoItem svg={<Otrastel />} value={otrastel} />
             <InfoItem svg={<ProfetionsSvg />} value={profetion} />
             <InfoItem svg={<WorkLocation />} value={workLocation} />
             {!userType && <InfoItem svg={<NetWorkSvg />} value={web} />}
             {!userType && <InfoItem svg={<WatchSvg />} value={graf} />}
-            {userType && <InfoItem svg={<GenderSvg />} value={gender} />}
-            <InfoItem svg={<EmailSvg />} value={email} />
-            <InfoItem svg={<PhoneSvg />} value={phone} />
+
         </TouchableOpacity>
     </ScrollView>
 }

@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AppColors } from '../styles/AppColors';
 import { TabNavigation } from './TabNavigation';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
-import Sound from 'react-native-sound';
 import { Comments } from '../components/comment/Comment';
 import messaging from '@react-native-firebase/messaging';
 import {
@@ -36,8 +35,6 @@ import { PermissionsAndroid, Platform } from 'react-native';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
-  const [i, setI] = useState(initialRouteName);
-
 
   async function requestNotificationPermission() {
     if (Platform.OS === 'android' && Platform.Version >= 33) {
@@ -46,8 +43,10 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          await AsyncStorage.setItem("notification", "standart")
           console.log('Notification permission granted');
         } else {
+          await AsyncStorage.setItem("notification", "off")
           console.log('Notification permission denied');
         }
       } catch (err) {
@@ -189,7 +188,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     <BottomSheetModalProvider>
       <NavigationContainer theme={MyTheme}>
         {<CheckBlack token={token} />}
-        <Stack.Navigator initialRouteName={i}>
+        <Stack.Navigator initialRouteName={initialRouteName}>
           <Stack.Screen
             name="LoginScreen1"
             component={LoginNavigation}

@@ -17,7 +17,15 @@ export default App = () => {
   const [token, setToken] = useState('')
   const [id, setID] = useState('')
 
-
+  PushNotification.createChannel(
+    {
+      channelId: "your-channel-id", // Provide a unique channel ID
+      channelName: "Custom Sound Channel",
+      soundName: "cartoonbubbles.mp3", // Custom sound file from 'res/raw'
+      importance: 4, // Set the importance (1 to 5)
+    },
+    (created) => console.log(`Channel created: ${created}`)
+  );
 
   const firebaseConfig = {
     apiKey: "AIzaSyDeqDpmN8h9Zr2EkzcMlyZr-ddq_HkRZAc",
@@ -47,7 +55,7 @@ export default App = () => {
           channelId: "sms-channel",
           title: remoteMessage.data.title,
           message: remoteMessage.data.body,
-          soundName: "cartoonbubbles"
+          sound: "sms.mp3"
         });
       });
 

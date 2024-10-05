@@ -791,6 +791,19 @@ export const SelectSvg = () => {
   </Svg>
 }
 
+export const SelectedSvg1 = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={9}
+    height={9}
+    viewBox="0 0 14 14"
+    fill="none"
+  >
+    <Circle cx={7} cy={7} r={6.5} fill="#FFD953" />
+  </Svg>
+}
+
+
 export const SelectedSvg = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"

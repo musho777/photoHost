@@ -1,11 +1,16 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native"
-import { SelectSvg } from "../assets/svg/Svgs"
+import { SelectedSvg1, SelectSvg } from "../assets/svg/Svgs"
 import { Styles } from "../styles/Styles"
 
-export const SelectItem = ({ text }) => {
-  return <TouchableOpacity style={styles.wrapper}>
+export const SelectItem = ({ text, active, onPress }) => {
+  return <TouchableOpacity activeOpacity={1} onPress={() => onPress()} style={styles.wrapper}>
     <Text style={Styles.darkSemiBold14}>{text}</Text>
-    <SelectSvg />
+    <View style={{ width: 10 }}>
+      {active ?
+        <SelectedSvg1 /> :
+        <SelectSvg />
+      }
+    </View>
   </TouchableOpacity>
 }
 
