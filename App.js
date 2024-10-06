@@ -86,7 +86,7 @@ export default App = () => {
     PushNotification.localNotification({
       channelId: "sms-channel",
       title: remoteMessage.data.title || 'Custom Notification', // Use custom data
-      message: "3333" || 'Message Body', // Use custom data
+      message: remoteMessage.data.body,
       playSound: true,
       sound: "sms.mp3",
       priority: 'high',
@@ -98,7 +98,6 @@ export default App = () => {
     getData()
     if (firebase.app()) {
       const unsubscribe = messaging().onMessage(async remoteMessage => {
-        console.log("::::")
         PushNot(remoteMessage)
       });
 

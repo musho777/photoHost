@@ -18,6 +18,7 @@ export const ChatUser = ({
   const navigation = useNavigation();
   return (
     <TouchableOpacity
+      activeOpacity={1}
       onPress={() => {
         navigation.navigate('ChatScreen', { id: otherUserId, chatId: id })
       }}
