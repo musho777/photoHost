@@ -78,16 +78,19 @@ export default Navigation = ({ token, initialRouteName, id }) => {
     await pusher.subscribe({
       channelName: 'NewMessage',
       onEvent: event => {
+        const today = new Date()
         if (JSON.parse(event.data).message.type == 'new_message') {
           if (JSON.parse(event.data).message.latest_sender != id && JSON.parse(event.data).message.receiver_id == id) {
             dispatch(MsgCountAction(JSON.parse(event.data)?.message.all_message_count))
           }
-          const today = new Date()
-          dispatch(
-            NewMsgAction({
-              data: JSON.parse(event.data)?.message,
-            }),
-          );
+          // console.log(JSON.parse(event.data).message.receiver_id, id, JSON.parse(event.data).message.sender_id)
+          if (JSON.parse(event.data).message.receiver_id == id || JSON.parse(event.data).message.sender_id == id) {
+            dispatch(
+              NewMsgAction({
+                data: JSON.parse(event.data)?.message,
+              }),
+            );
+          }
           if (JSON.parse(event.data)?.message?.receiver_id == id) {
             dispatch(
               AddMsgAction({
@@ -99,7 +102,9 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             );
           }
           else {
-            dispatch(AddMessageCount())
+            if (JSON.parse(event.data).message.receiver_user.id == id) {
+              dispatch(AddMessageCount())
+            }
             dispatch(
               AddMsgAction({
                 message: JSON.parse(event.data)?.message?.message,
