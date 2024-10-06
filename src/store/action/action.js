@@ -166,7 +166,6 @@ export const RegisterAction = data => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          console.log(r)
           dispatch(SuccessRegister(r));
         } else {
           dispatch(
@@ -202,7 +201,6 @@ export const ConfirmRegisterCode = data => {
     })
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(setToken(r.token));
           setTokenSorage(r.token, r.user.id);

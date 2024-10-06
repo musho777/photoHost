@@ -46,7 +46,6 @@ export const Controler = forwardRef(({
     }
   };
 
-  console.log(showStartButton)
 
   if (!full) {
     return <View style={styles.wrapper}>

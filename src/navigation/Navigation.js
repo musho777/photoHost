@@ -36,6 +36,8 @@ import { PermissionsAndroid, Platform } from 'react-native';
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
 
+
+
   async function requestNotificationPermission() {
     if (Platform.OS === 'android' && Platform.Version >= 33) {
       try {
@@ -47,10 +49,8 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           if (!not) {
             await AsyncStorage.setItem("notification", "standart")
           }
-          console.log('Notification permission granted');
         } else {
           await AsyncStorage.setItem("notification", "off")
-          console.log('Notification permission denied');
         }
       } catch (err) {
         console.warn(err);
@@ -83,7 +83,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           if (JSON.parse(event.data).message.latest_sender != id && JSON.parse(event.data).message.receiver_id == id) {
             dispatch(MsgCountAction(JSON.parse(event.data)?.message.all_message_count))
           }
-          // console.log(JSON.parse(event.data).message.receiver_id, id, JSON.parse(event.data).message.sender_id)
           if (JSON.parse(event.data).message.receiver_id == id || JSON.parse(event.data).message.sender_id == id) {
             dispatch(
               NewMsgAction({
@@ -166,7 +165,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
 
 
   async function requestUserPermission() {
-    console.log('---1')
     const authStatus = await messaging().requestPermission();
     const enabled =
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||

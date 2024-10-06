@@ -39,6 +39,17 @@ export default App = () => {
     (created) => console.log(`CreateChannel returned '${created}'`) // Callback for channel creation
   );
 
+  PushNotification.createChannel(
+    {
+      channelId: "sms2-channel", // Must be the same as the channelId in the notification
+      channelName: "sms-channel",
+      channelDescription: "A channel for custom sound notifications",
+      soundName: "bell.mp3", // Custom sound in raw folder
+      importance: 4, // High importance
+    },
+    (created) => console.log(`CreateChannel returned '${created}'`) // Callback for channel creation
+  );
+
   const firebaseConfig = {
     apiKey: "AIzaSyDeqDpmN8h9Zr2EkzcMlyZr-ddq_HkRZAc",
     authDomain: "https://chamba-f5697-default-rtdb.firebaseio.com",
@@ -54,7 +65,6 @@ export default App = () => {
 
   const CheckToken = async () => {
     const token = await messaging().getToken();
-    console.log('FCM Token', token);
   }
 
 
@@ -67,6 +77,16 @@ export default App = () => {
         message: remoteMessage.data.body,
         playSound: true,
         sound: "default",
+        priority: "high",
+      });
+    }
+    else if (notSound == 'bell') {
+      PushNotification.localNotification({
+        channelId: "sms2-channel",
+        title: remoteMessage.data.title,
+        message: remoteMessage.data.body,
+        playSound: true,
+        sound: "bell.mp3",
         priority: "high",
       });
     }
