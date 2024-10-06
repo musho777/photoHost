@@ -91,11 +91,12 @@ export const t = (lang = 'ru') => {
             Subscribed: "Subscribed",
             Off: "Off.",
             Standardnotification: "Standard notification",
-            Funnynotification: "Funny notification",
+            Funnynotification: "Bubbles",
             ProfileisEmpty: "Profile is Empty",
             Thefeedisempty: "The feed is empty",
             Cancel: "Cancel",
-            Areyousureyouwanttodelete: "Are you sure you want to delete"
+            Areyousureyouwanttodelete: "Are you sure you want to delete",
+            bell: "bell"
         }
     }
     {
@@ -190,11 +191,12 @@ export const t = (lang = 'ru') => {
             Subscribed: "Подписано",
             Off: "Выкл.",
             Standardnotification: "Стандартное уведомление",
-            Funnynotification: "Забавное уведомление",
+            Funnynotification: "Пузыри",
             ProfileisEmpty: "Профиль пуст",
             Thefeedisempty: "Лента пуста",
             Cancel: "Отмена",
-            Areyousureyouwanttodelete: "Вы уверены, что хотите удалить?"
+            Areyousureyouwanttodelete: "Вы уверены, что хотите удалить?",
+            bell: "Колокол"
         }
     }
 }

@@ -43,7 +43,10 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          await AsyncStorage.setItem("notification", "standart")
+          let not = await AsyncStorage.getItem("notification")
+          if (!not) {
+            await AsyncStorage.setItem("notification", "standart")
+          }
           console.log('Notification permission granted');
         } else {
           await AsyncStorage.setItem("notification", "off")

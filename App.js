@@ -17,14 +17,26 @@ export default App = () => {
   const [token, setToken] = useState('')
   const [id, setID] = useState('')
 
+
   PushNotification.createChannel(
     {
-      channelId: "your-channel-id", // Provide a unique channel ID
-      channelName: "Custom Sound Channel",
-      soundName: "cartoonbubbles.mp3", // Custom sound file from 'res/raw'
-      importance: 4, // Set the importance (1 to 5)
+      channelId: "sms-channel", // Must be the same as the channelId in the notification
+      channelName: "sms-channel",
+      channelDescription: "A channel for custom sound notifications",
+      soundName: "sms.mp3", // Custom sound in raw folder
+      importance: 4, // High importance
     },
-    (created) => console.log(`Channel created: ${created}`)
+    (created) => console.log(`CreateChannel returned '${created}'`) // Callback for channel creation
+  );
+  PushNotification.createChannel(
+    {
+      channelId: "sms1-channel", // Must be the same as the channelId in the notification
+      channelName: "sms-channel",
+      channelDescription: "A channel for custom sound notifications",
+      soundName: "default", // Custom sound in raw folder
+      importance: 4, // High importance
+    },
+    (created) => console.log(`CreateChannel returned '${created}'`) // Callback for channel creation
   );
 
   const firebaseConfig = {
@@ -45,18 +57,49 @@ export default App = () => {
     console.log('FCM Token', token);
   }
 
+
+  const PushNot = async (remoteMessage) => {
+    let notSound = await AsyncStorage.getItem("notification")
+    if (notSound == "standart") {
+      PushNotification.localNotification({
+        channelId: "sms1-channel",
+        title: remoteMessage.data.title,
+        message: remoteMessage.data.body,
+        playSound: true,
+        sound: "default",
+        priority: "high",
+      });
+    }
+    else {
+      PushNotification.localNotification({
+        channelId: "sms-channel",
+        title: remoteMessage.data.title,
+        message: remoteMessage.data.body,
+        playSound: true,
+        sound: "sms.mp3",
+        priority: "high",
+      });
+    }
+  }
+
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    PushNotification.localNotification({
+      channelId: "sms-channel",
+      title: remoteMessage.data.title || 'Custom Notification', // Use custom data
+      message: "3333" || 'Message Body', // Use custom data
+      playSound: true,
+      sound: "sms.mp3",
+      priority: 'high',
+    });
+  });
+
   useEffect(() => {
     CheckToken()
     getData()
     if (firebase.app()) {
       const unsubscribe = messaging().onMessage(async remoteMessage => {
-        console.log(remoteMessage, 'remoteMessage')
-        PushNotification.localNotification({
-          channelId: "sms-channel",
-          title: remoteMessage.data.title,
-          message: remoteMessage.data.body,
-          sound: "sms.mp3"
-        });
+        console.log("::::")
+        PushNot(remoteMessage)
       });
 
       return () => {
