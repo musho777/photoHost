@@ -26,7 +26,6 @@ export default App = () => {
       soundName: "sms.mp3", // Custom sound in raw folder
       importance: 4, // High importance
     },
-    (created) => console.log(`CreateChannel returned '${created}'`) // Callback for channel creation
   );
   PushNotification.createChannel(
     {
@@ -36,7 +35,6 @@ export default App = () => {
       soundName: "default", // Custom sound in raw folder
       importance: 4, // High importance
     },
-    (created) => console.log(`CreateChannel returned '${created}'`) // Callback for channel creation
   );
 
   PushNotification.createChannel(
@@ -47,7 +45,6 @@ export default App = () => {
       soundName: "bell.mp3", // Custom sound in raw folder
       importance: 4, // High importance
     },
-    (created) => console.log(`CreateChannel returned '${created}'`) // Callback for channel creation
   );
 
   const firebaseConfig = {
@@ -90,7 +87,7 @@ export default App = () => {
         priority: "high",
       });
     }
-    else {
+    else if (notSound == 'funy') {
       PushNotification.localNotification({
         channelId: "sms-channel",
         title: remoteMessage.data.title,
@@ -102,15 +99,11 @@ export default App = () => {
     }
   }
 
+
+
+
   messaging().setBackgroundMessageHandler(async remoteMessage => {
-    PushNotification.localNotification({
-      channelId: "sms-channel",
-      title: remoteMessage.data.title || 'Custom Notification', // Use custom data
-      message: remoteMessage.data.body,
-      playSound: true,
-      sound: "sms.mp3",
-      priority: 'high',
-    });
+    PushNot(remoteMessage)
   });
 
   useEffect(() => {

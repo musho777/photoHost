@@ -1375,6 +1375,7 @@ export const DeviceIdAction = (data, token) => {
     fetch(`${Api}/add_device_id`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
       })
       .catch(error => {
       });
