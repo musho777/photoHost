@@ -335,3 +335,10 @@ export const SuccessGetStatisitc2 = (data) => {
         data
     }
 }
+
+export const SuccessGetSound = (data) => {
+    return {
+        type: 'SuccessGetSound',
+        data
+    }
+}

@@ -293,3 +293,9 @@ export const StartGetStatisitc2 = () => {
         type: 'StartGetStatisitc2'
     }
 }
+
+export const StartGetSound = () => {
+    return {
+        type: 'StartGetSound'
+    }
+}

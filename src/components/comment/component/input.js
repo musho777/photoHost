@@ -8,31 +8,20 @@ export const InputComponent = ({ user, sendComment, setSendCommet, sendCommentFu
   const mainData = useSelector(st => st.mainData);
 
   return <View style={styles.InputComponent}>
-    <Image
-      style={styles.image}
-      source={{ uri: `https://chambaonline.pro/uploads/${user.data.avatar}`, }}
-    />
     <Input
       send
       pdR={50}
       sendCom={() => sendCommentFunction()}
       data={sendComment}
       onChange={e => setSendCommet(e)}
-      width={'85%'}
+      width={'100%'}
       placeholder={t(mainData.lang).Leaveacomment}
     />
   </View>
 }
 
 const styles = StyleSheet.create({
-  image: {
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-  },
   InputComponent: {
-    width: '80%',
-    flexDirection: 'row',
-    gap: 10,
+    width: '70%',
   }
 });

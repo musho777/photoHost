@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {
+  ErroGetSound,
   ErrorAddBlackList,
   ErrorAddComment,
   ErrorAddDeleteFollow,
@@ -101,6 +102,7 @@ import {
   StartGetPostView,
   StartGetstatistic1,
   StartGetStatisitc2,
+  StartGetSound,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -137,6 +139,7 @@ import {
   SuccessGetSinglePageChat,
   SuccessGetSinglPage,
   SuccessGetSinglPost,
+  SuccessGetSound,
   SuccessGetStatisitc2,
   SuccessGetstatistic1,
   SuccessGetUserData,
@@ -1891,4 +1894,32 @@ export const ClearFollowrs = () => {
   return {
     type: 'ClearFollowrs'
   }
+}
+
+export const GetMusic = (id, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartGetSound())
+    fetch(`${Api}/get_category_sounds?category_id=${id}`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          dispatch(SuccessGetSound(r.data))
+        }
+        else {
+          dispatch(ErroGetSound())
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        dispatch(ErroGetSound())
+      });
+  };
 }

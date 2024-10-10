@@ -46,6 +46,7 @@ import GetPostViewReducer from './reducers/getPostViewReducer';
 import GetStatistic1Reducer from './reducers/GetStatistic1Reducer';
 import GetStatistic2Reducer from './reducers/getStatistic2Reducer';
 import LocalSinglPageReducer from './reducers/LocalSinglPageReducer';
+import GetSoundReducer from './reducers/getSoundReducer';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -93,7 +94,8 @@ const rootReducer = combineReducers({
     getPostView: GetPostViewReducer,
     getStatistic1: GetStatistic1Reducer,
     getStatistic2: GetStatistic2Reducer,
-    localSinglPage: LocalSinglPageReducer
+    localSinglPage: LocalSinglPageReducer,
+    getSound: GetSoundReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

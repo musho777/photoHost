@@ -329,3 +329,9 @@ export const ErrorGetStatisitc2 = () => {
         type: "ErrorGetStatisitc2",
     }
 }
+
+export const ErroGetSound = () => {
+    return {
+        type: 'ErroGetSound'
+    }
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,31 +8,41 @@ import {
   Keyboard,
   SafeAreaView,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { Styles } from '../../styles/Styles';
 import { CommentBlock } from './component/CommentBlock';
 import { t } from '../lang';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddCommentAction, AddCommentInPost, DelateCommentLocal, DeletComment, GelPostCommentsAction } from '../../store/action/action';
+import { AddCommentAction, DelateCommentLocal, DeletComment, GelPostCommentsAction, GetMusic } from '../../store/action/action';
 import { ClearSinglpAgeComment } from '../../store/action/clearAction';
 import { useNavigation } from '@react-navigation/native';
 import { InputComponent } from './component/input';
 import Main from '../GIf/main';
-import { Emojy, Sticker } from '../../assets/svg/Svgs';
+import { Emojy, Nota, Sticker } from '../../assets/svg/Svgs';
 import EmojiPicker from 'rn-emoji-keyboard';
 import { RefreshControl } from 'react-native-gesture-handler';
+import { BootomModal } from '../../components/BootomSheet';
+import { MusicPlay } from './component/musicPlay';
+
 
 
 export const Comments = ({ route, }) => {
   let parentId = route?.params?.parentId
+  let categoryID = route?.params?.categoryId
   const [sendComment, setSendCommet] = useState('');
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState(1);
   const [keyboardOpen, setKeyboardOpen] = useState(10);
   const bottomSheetRef = useRef(null);
+  const bottomSheetRef1 = useRef(null);
+
+
+  const snapPoints = useMemo(() => ['50%'], []);
+
+
 
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
@@ -47,6 +57,14 @@ export const Comments = ({ route, }) => {
 
 
   useEffect(() => {
+    dispatch(GetMusic(categoryID, staticdata.token))
+  }, [staticdata.token])
+
+  useEffect(() => {
+    dispatch(ClearSinglpAgeComment())
+    dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
+
+
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       if (Platform.OS == 'android') {
         setKeyboardOpen(60);
@@ -63,16 +81,11 @@ export const Comments = ({ route, }) => {
     };
   }, []);
 
-  useEffect(() => {
-    dispatch(ClearSinglpAgeComment())
-    dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
-  }, []);
 
   const deletComment = (id, parent_id) => {
     dispatch(DelateCommentLocal({ id: parentId, comment_id: id, parent_id: parent_id, }))
     dispatch(DeletComment({ comment_id: id }, staticdata.token))
   }
-
 
 
   const Answer = (e) => {
@@ -121,6 +134,7 @@ export const Comments = ({ route, }) => {
       let regex = new RegExp(senderName, "gi");
       send = send.replace(regex, "");
     }
+    bottomSheetRef1.current?.close()
     dispatch(
       AddCommentAction(
         {
@@ -185,6 +199,7 @@ export const Comments = ({ route, }) => {
     );
   };
 
+
   return (
     <SafeAreaView style={styles.body}>
       <KeyboardAvoidingView
@@ -211,25 +226,32 @@ export const Comments = ({ route, }) => {
               />
             }
           />
-          <View style={{ marginBottom: keyboardOpen, width: '100%', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+          <View style={[styles.bottom, { marginBottom: keyboardOpen }]}>
             <InputComponent
               sendCommentFunction={() => sendCommentFunction()}
               sendComment={sendComment}
               setSendCommet={(e) => setSendCommet(e)}
               user={user}
             />
-            <View style={{ flexDirection: 'row', gap: 5 }}>
+            <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
               <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
                 <Sticker />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setIsOpen(true)}>
                 <Emojy />
               </TouchableOpacity>
+              <TouchableOpacity onPress={() => bottomSheetRef1.current?.present()}>
+                <Nota />
+              </TouchableOpacity>
             </View>
             <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
+
           </View>
           <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
         </View>
+        <BootomModal ref={bottomSheetRef1} snapPoints={snapPoints}>
+          <MusicPlay onSend={(e) => sendCommentFunction(e)} />
+        </BootomModal>
       </KeyboardAvoidingView>
     </SafeAreaView >
   );
@@ -250,4 +272,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  bottom: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10
+  }
 });

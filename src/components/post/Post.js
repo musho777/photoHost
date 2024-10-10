@@ -25,7 +25,7 @@ export const Post = React.memo(({
   const [long, setLong] = useState(false)
 
   const [activeImage, setActiveImage] = useState(0)
-
+  console.log(data.category.id)
 
   const onLongClikc = () => {
     setLong(true)
@@ -78,6 +78,7 @@ export const Post = React.memo(({
             like={data.like_count}
             id={data.id}
             user={user}
+            categoryId={data.category.id}
           />
         </View>}
       </View>
