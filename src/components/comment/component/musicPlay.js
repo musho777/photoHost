@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import Sound from 'react-native-sound'
 import { useSelector } from 'react-redux'
@@ -34,6 +34,11 @@ export const MusicPlay = ({ onSend }) => {
 
   const handleButtonClick = (index) => {
     const selectedSound = sound[index];
+    if (isPlaying !== null && isPlaying !== index) {
+      // Stop the currently playing sound
+      const currentlyPlayingSound = sound[isPlaying];
+      currentlyPlayingSound.stop(() => console.log(`Sound ${isPlaying} stopped`));
+    }
 
     if (isPlaying === index) {
       selectedSound.stop(() => console.log(`Sound ${index} stopped`));
@@ -41,6 +46,7 @@ export const MusicPlay = ({ onSend }) => {
     } else {
       selectedSound.play((success) => {
         if (success) {
+          setIsPlaying(null)
           console.log(`Sound ${index} played successfully`);
         } else {
           console.log(`Failed to play sound ${index}`);
@@ -50,28 +56,35 @@ export const MusicPlay = ({ onSend }) => {
     }
   };
 
-  return <ScrollView style={{ paddingTop: 10, }}>
+  console.log(isPlaying, 'isPlaying')
+
+  return <ScrollView showsVerticalScrollIndicator={false}>
     {getSound.data && getSound.data?.map((elm, i) => {
       return <TouchableOpacity
         onPress={() => onSend(elm.name)}
-        key={i} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15, marginBottom: 15 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
-
-          <TouchableOpacity onPress={() => handleButtonClick(i)}>
-            {(isPlaying == null) ?
-              <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
-              <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
-            }
-          </TouchableOpacity>
-          <Text style={Styles.darkMedium14}>{elm.name}</Text>
-        </View>
-        {/* <View>
-          <Text style={[Styles.darkMedium14, { width: 40 }]}>00:10</Text>
-        </View> */}
+        key={i}
+        style={styles.wrapper}>
+        <TouchableOpacity onPress={() => handleButtonClick(i)}>
+          {(isPlaying == null || i != isPlaying) ?
+            <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
+            <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
+          }
+        </TouchableOpacity>
+        <Text style={Styles.darkMedium14}>{elm.name}</Text>
       </TouchableOpacity>
     })}
-
-
-
   </ScrollView>
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 15,
+    borderBottomWidth: 1,
+    borderColor: '#f0eded'
+  },
+})

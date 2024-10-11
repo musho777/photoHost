@@ -92,13 +92,14 @@ export const EditPostScreen = ({ route, navigation }) => {
   }, [index])
 
   const delateFoto = (i, id) => {
-    console.log(i)
     let item = [...photos]
     item.splice(i, 1)
     let desitem = JSON.parse(description)
-    desitem.splice(i, 1)
-    setDescription(JSON.stringify(desitem))
-    setActiveDescription(desitem[index])
+    if (desitem) {
+      desitem?.splice(i, 1)
+      setDescription(JSON.stringify(desitem))
+      setActiveDescription(desitem[index])
+    }
     setPhotos(item)
     setIndex(0)
     if (item.length == 0) {

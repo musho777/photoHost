@@ -6,7 +6,7 @@ import { SearchNavigation } from './SearchNavigation';
 import { ProfileNavigation } from './ProfileNavigation';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { HomeNavigation } from './HomeNavigation';
-import { Keyboard, SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -74,20 +74,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                   <View>
                     {user.msgCount > 0 && (
                       <View
-                        style={{
-                          position: 'absolute',
-                          right: -7,
-                          top: -10,
-                          backgroundColor: 'red',
-                          borderRadius: 20,
-                          height: 15,
-                          width: 15,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          textAlign: 'center',
-                        }}
-                      >
-                        <Text style={{ color: '#FFF', fontSize: 10 }}>{user.msgCount}</Text>
+                        style={styles.message}>
+                        <Text style={{ color: '#FFF', fontSize: 10, fontWeight: '600' }}>{user.msgCount}</Text>
                       </View>
                     )}
                     <ChatSvg focused={isFocused} />
@@ -218,4 +206,20 @@ export const TabNavigation = () => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  message: {
+    position: 'absolute',
+    right: -7,
+    top: -10,
+    backgroundColor: 'red',
+    borderRadius: 20,
+    height: 20,
+    width: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    zIndex: 99999,
+  }
+})
 

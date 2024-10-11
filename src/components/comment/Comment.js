@@ -38,11 +38,7 @@ export const Comments = ({ route, }) => {
   const [keyboardOpen, setKeyboardOpen] = useState(10);
   const bottomSheetRef = useRef(null);
   const bottomSheetRef1 = useRef(null);
-
-
   const snapPoints = useMemo(() => ['50%'], []);
-
-
 
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
@@ -59,6 +55,7 @@ export const Comments = ({ route, }) => {
   useEffect(() => {
     dispatch(GetMusic(categoryID, staticdata.token))
   }, [staticdata.token])
+
 
   useEffect(() => {
     dispatch(ClearSinglpAgeComment())
