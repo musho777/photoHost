@@ -50,6 +50,7 @@ export const Header = ({ data, navigation, my, big = false, activeImage }) => {
             id={data.id}
             description={data.description}
             activeImage={activeImage}
+            data={data}
           />
           :
           <BootomModalComponent

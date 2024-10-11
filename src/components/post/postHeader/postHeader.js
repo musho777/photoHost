@@ -60,15 +60,7 @@ export const PostHeader = ({
 
 
     <ShowSave showSave={showSave} setShowSave={(e) => setShowSave(e)} saveType={saveType} />
-    <HeaderInfo
-      data={data.created_at}
-      user={user}
-      userId={data.user.id}
-      id={data.id}
-      star={data.user.star}
-      userImg={data.user.avatar}
-      userName={data.user.name}
-    />
+    <HeaderInfo data={data} user={user} />
     <TouchableOpacity
       activeOpacity={1}
       onPress={() => {
@@ -85,6 +77,7 @@ export const PostHeader = ({
         id={data.id}
         isFollow={data.user.follow_status_sender.length}
         my={true}
+        data={data}
         setShow={(e) => setShow(e)}
         setOpenModal={(e) => setOpenModal(e)}
         activeImage={activeImage}

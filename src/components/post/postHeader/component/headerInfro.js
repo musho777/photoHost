@@ -4,13 +4,13 @@ import { Styles } from "../../../../styles/Styles";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 
-export const HeaderInfo = ({ star, userName, userImg, userId, id, user, data }) => {
+export const HeaderInfo = ({ user, data }) => {
   const navigation = useNavigation()
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [day, setDay] = useState('')
 
   useEffect(() => {
-    const currentDate = new Date(data);
+    const currentDate = new Date(data.created_at);
     let dayOfMonth = currentDate.getDate();
     let hour = currentDate.getHours();
     let minute = currentDate.getMinutes();
@@ -25,22 +25,22 @@ export const HeaderInfo = ({ star, userName, userImg, userId, id, user, data }) 
       dayOfMonth = `0${dayOfMonth}`
     }
     setDay(`${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`)
-  }, [data])
+  }, [data.created_at])
 
   return <TouchableOpacity
     activeOpacity={1}
     onPress={() =>
-      user?.data.id != userId ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userId, post_id: id } }) :
+      user?.data.id != data.user.id ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data.user.id, post_id: data.id } }) :
         navigation.navigate('TabNavigation', { screen: "ProfileNavigation" })
     } style={Styles.flexAlignItems}>
     <View>
       <Image style={styles.userImg}
-        source={{ uri: `https://chambaonline.pro/uploads/${userImg}` }} />
+        source={{ uri: `https://chambaonline.pro/uploads/${data.user.avatar}` }} />
     </View>
     <View style={{ gap: 2 }}>
       <View style={[Styles.flexAlignItems, { width: 'auto', gap: 8 }]}>
-        <Text Text style={[Styles.whiteSemiBold14,]}>{userName}</Text>
-        {star > 0 && <CheckMarkUserSvg />}
+        <Text Text style={[Styles.whiteSemiBold14,]}>{data.user.name}</Text>
+        {data.user.star > 0 && <CheckMarkUserSvg />}
       </View>
       <Text style={[Styles.whiteMedium9]}>{day} </Text>
     </View>

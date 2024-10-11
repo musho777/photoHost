@@ -11,6 +11,7 @@ export const Settings = ({
   id,
   activeImage,
   setShow,
+  data
 }) => {
 
   const mainData = useSelector(st => st.mainData);
@@ -24,7 +25,8 @@ export const Settings = ({
           navigation.navigate('EditPostScreen', {
             description: description,
             id: id,
-            index: activeImage
+            index: activeImage,
+            data: data
           });
         }}>
         <Text style={Styles.darkRegular14}>

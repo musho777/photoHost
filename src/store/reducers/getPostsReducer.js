@@ -74,6 +74,14 @@ const GetPostsReducer = (state = initialState, action) => {
         }
       }
       break
+
+    case 'DelatePhotofromPost':
+      let delatePhotoIndex = item.data.findIndex((elm) => elm.id == action.post_id)
+      if (delatePhotoIndex >= 0) {
+        let delatephotoformPostIndex = item.data[delatePhotoIndex].photo.findIndex((elm) => elm.post_id == action.id)
+        item.data[delatePhotoIndex].photo.splice(delatephotoformPostIndex, 1)
+      }
+      break
     default:
       break;
   }

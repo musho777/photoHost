@@ -1378,7 +1378,6 @@ export const DeviceIdAction = (data, token) => {
     fetch(`${Api}/add_device_id`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
       })
       .catch(error => {
       });
@@ -1521,7 +1520,7 @@ export const DelatePostAction = (data, token) => {
   };
 }
 
-const DeletLocalPhoto = (data) => {
+export const DeletLocalPhoto = (data) => {
   return {
     type: 'DeletLocalPhoto',
     data
@@ -1918,8 +1917,37 @@ export const GetMusic = (id, token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErroGetSound())
       });
+  };
+}
+
+export const DelatePhotofromPost = (post_id, id) => {
+  return {
+    type: "DelatePhotofromPost",
+    post_id,
+    id
+  }
+}
+
+export const DelatePhotoFromPost = (post_id, id, token) => {
+  var myHeaders = new Headers();
+  const formdata = new FormData();
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  formdata.append("photo_ids[]", id);
+  formdata.append("post_id", post_id);
+
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: formdata,
+    redirect: 'follow'
+  };
+  return dispatch => {
+    fetch("https://chambaonline.pro/api/delete_photos", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
   };
 }

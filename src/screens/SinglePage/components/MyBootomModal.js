@@ -8,7 +8,7 @@ import { ClearDelatePhost } from "../../../store/action/clearAction";
 import { DelateModal } from "../../../components/post/postHeader/component/DelateModel";
 
 
-export const MyBootomModal = forwardRef(({ navigation, id, description, activeImage }, ref) => {
+export const MyBootomModal = forwardRef(({ navigation, id, description, activeImage, data }, ref) => {
   const dispatch = useDispatch()
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
@@ -33,7 +33,7 @@ export const MyBootomModal = forwardRef(({ navigation, id, description, activeIm
 
   const EditImage = () => {
     ref.current?.close();
-    navigation.navigate('EditPostScreen', { description: description, id: id, index: activeImage });
+    navigation.navigate('EditPostScreen', { description: description, id: id, index: activeImage, data: data });
   }
 
   const Confirm = () => {

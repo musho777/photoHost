@@ -1,29 +1,48 @@
-import { TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Styles } from '../../styles/Styles';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { useDispatch, useSelector } from 'react-redux';
-import { EditLentPhot, EditPostAction } from '../../store/action/action';
+import { DelatePhotoFromPost, DelatePhotofromPost, DeletLocalPhoto, EditLentPhot, EditPostAction } from '../../store/action/action';
 import { ClearEditPost } from '../../store/action/clearAction';
 import { t } from '../../components/lang';
+import FastImage from 'react-native-fast-image';
+import { CloseSvg1 } from '../../assets/svg/Svgs';
 
 
 export const EditPostScreen = ({ route, navigation }) => {
   const [description, setDescription] = useState(route.params.description);
-  const index = route.params.index
+  // const index = route.params.index
+  const [index, setIndex] = useState(route.params.index)
+  const data = route.params.data
   const mainData = useSelector(st => st.mainData);
   const [activeDescription, setActiveDescription] = useState()
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const editPost = useSelector((st) => st.editPost)
-  const EditPost = () => {
-    if (route.params.description != description) {
-      dispatch(EditPostAction({
-        post_id: route.params.id,
-        description: description
-      },
-        staticdata.token))
+  const [photos, setPhotos] = useState([])
+
+  useEffect(() => {
+    console.log("01")
+    setPhotos(data.photo)
+  }, [data.photo])
+
+  useEffect(() => {
+    if (route.params.index) {
+      setIndex(route.params.index)
     }
+  }, [route.params.index])
+
+
+
+
+  const EditPost = () => {
+    dispatch(EditPostAction({
+      post_id: route.params.id,
+      description: description
+    },
+      staticdata.token))
+    navigation.goBack()
   }
   useEffect(() => {
     if (editPost.status) {
@@ -32,7 +51,7 @@ export const EditPostScreen = ({ route, navigation }) => {
         description: description
       },
         staticdata.token))
-      navigation.goBack()
+
       dispatch(ClearEditPost())
     }
   }, [editPost.status])
@@ -70,7 +89,24 @@ export const EditPostScreen = ({ route, navigation }) => {
         setActiveDescription(description)
       }
     }
-  }, [])
+  }, [index])
+
+  const delateFoto = (i, id) => {
+    console.log(i)
+    let item = [...photos]
+    item.splice(i, 1)
+    let desitem = JSON.parse(description)
+    desitem.splice(i, 1)
+    setDescription(JSON.stringify(desitem))
+    setActiveDescription(desitem[index])
+    setPhotos(item)
+    setIndex(0)
+    if (item.length == 0) {
+      dispatch(DeletLocalPhoto({ post_id: data.id }))
+    }
+    dispatch(DelatePhotoFromPost(route.params.id, id, staticdata.token))
+    dispatch(DelatePhotofromPost(route.params.id, id))
+  }
 
   return (
     <View>
@@ -90,6 +126,50 @@ export const EditPostScreen = ({ route, navigation }) => {
         placeholder={t(mainData.lang).adddescription}
         placeholderTextColor={'#8C9CAB'}
       />
-    </View>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        horizontal={true}
+      >
+        <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 10 }}>
+          {photos?.map((elm, i) => {
+            return <TouchableOpacity activeOpacity={1} onPress={() => setIndex(i)} key={i} style={{ width: 80, height: 80 }}>
+              <TouchableOpacity
+                onPress={() => delateFoto(i, elm.id)}
+                style={styles.close}>
+                <CloseSvg1 smole />
+              </TouchableOpacity>
+              <FastImage
+                style={[{ height: 80, borderRadius: 10 }, i == index && styles.activePhot]}
+                source={{
+                  uri: `https://chambaonline.pro/uploads/${elm.photo}`,
+                  priority: FastImage.priority.high,
+                  cache: FastImage.cacheControl.immutable
+                }}
+                fallback={false}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </TouchableOpacity>
+          })}
+        </View>
+      </ScrollView >
+    </View >
   );
 };
+
+
+const styles = StyleSheet.create({
+  block: {
+    borderRadius: 10,
+    position: 'relative',
+  },
+  close: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 9999,
+  },
+  activePhot: {
+    borderWidth: 3,
+    borderColor: 'green'
+  }
+});
