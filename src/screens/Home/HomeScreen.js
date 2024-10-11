@@ -186,9 +186,9 @@ export const HomeScreen = () => {
           onEndReached={debounce(handleEndReached, 300)}
           onEndReachedThreshold={0.5}
           initialNumToRender={5}
-          maxToRenderPerBatch={10}
-          windowSize={5}
-          removeClippedSubviews={false}
+          maxToRenderPerBatch={5}
+          windowSize={10}
+          removeClippedSubviews={true}
           ref={flatListRef}
           viewabilityConfig={viewabilityConfig.current}
           // getItemLayout={getItemLayout}

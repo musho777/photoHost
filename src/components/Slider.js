@@ -13,7 +13,6 @@ import FastImage from 'react-native-fast-image';
 import { LikePostAction } from '../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import SliderImage from './sliderImage';
-// import Sliders from '@react-native-community/slider';
 import { VidioComponent } from './post/Vidio/VidioComponent';
 import { Styles } from '../styles/Styles';
 import Sliders from '@react-native-community/slider';
@@ -229,6 +228,7 @@ const styles = StyleSheet.create({
   img: {
     width: windowWidth,
     flexShrink: 0,
+    justifyContent: 'center',
   },
   pagination: {
     width: 6,
