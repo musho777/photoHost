@@ -120,6 +120,11 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
             <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
+            <View style={{ gap: 10 }}>
+              <Text style={Styles.darkSemiBold14}>Максимальное время просмотра - {getView} </Text>
+              <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
+              <Text style={Styles.darkSemiBold14}>Минимальный время просмотра - {getView} </Text>
+            </View>
             <Text style={Styles.darkSemiBold14}>Переход (с ленты на Ваш аккаунт)
               - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>

@@ -1493,10 +1493,10 @@ export const VoiceIcone = () => {
   </Svg>
 }
 
-export const VoiceAmplituda = () => {
+export const VoiceAmplituda = ({ width = '80%', height = 36 }) => {
   return <Svg
-    width={244}
-    height={36}
+    width={width}
+    height={height}
     viewBox="0 0 244 36"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

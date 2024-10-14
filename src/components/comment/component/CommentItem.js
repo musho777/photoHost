@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 import emojiRegex from 'emoji-regex';
 import { Styles } from '../../../styles/Styles';
 import { LikeCommentAction } from '../../../store/action/action';
-import { CommentLikeSvg } from '../../../assets/svg/Svgs';
+import { CommentLikeSvg, VoiceAmplituda } from '../../../assets/svg/Svgs';
 import { AppColors } from '../../../styles/AppColors';
 import Sound from 'react-native-sound';
 
@@ -122,8 +122,9 @@ export const CommentItem = ({
                 <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
               }
             </TouchableOpacity>
-
-            <Text style={Styles.darkMedium10}>{text}</Text>
+            <View style={{ width: '60%', alignItems: 'flex-start' }}>
+              <VoiceAmplituda height={20} />
+            </View>
           </View>
         </View>
       }

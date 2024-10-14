@@ -59,20 +59,15 @@ export const MusicPlay = ({ onSend }) => {
         style={styles.wrapper}>
         <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}>
           {(loading && i == isPlaying) ?
-            <View style={{ width: 20, height: 20 }}>
+            <View style={{ width: 26, height: 26 }}>
               <ActivityIndicator size={'small'} />
             </View> :
             <TouchableOpacity onPress={() => handleButtonClick(i)}>
               {(!isPlaying || i != isPlaying) ?
-                <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
-                <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
+                <Image style={{ width: 26, height: 26 }} source={require('../../../assets/img/play.png')} /> :
+                <Image style={{ width: 26, height: 26 }} source={require('../../../assets/img/pause.png')} />
               }
             </TouchableOpacity>}
-          <View style={{ alignItems: 'center', flexDirection: 'row', gap: 10 }}>
-            {/* <Text style={{ fontSize: 25 }}>
-              🦊
-            </Text> */}
-          </View>
         </View>
         <VoiceAmplituda />
         <TouchableOpacity onPress={() => {

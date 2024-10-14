@@ -4,7 +4,7 @@ import { NotLineSvgWhite, ShearSvg } from "../assets/svg/Svgs";
 import { Styles } from "../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { GetFollowerAction, GetPostLikeAction, LikePostAction, LocalLike } from "../store/action/action";
+import { GetFollowerAction, GetPostLikeAction, LikePostAction } from "../store/action/action";
 import { useNavigation } from "@react-navigation/native";
 
 export const PostBody = ({
