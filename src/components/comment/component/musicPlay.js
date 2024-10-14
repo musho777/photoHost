@@ -1,23 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import Sound from 'react-native-sound'
 import { useSelector } from 'react-redux'
-import { Styles } from '../../../styles/Styles'
-import { VoiceAmplituda, VoiceIcone } from '../../../assets/svg/Svgs'
+import { SendMsgSvg, VoiceAmplituda, VoiceIcone } from '../../../assets/svg/Svgs'
 
 export const MusicPlay = ({ onSend }) => {
   const getSound = useSelector((st) => st.getSound)
 
   const [isPlaying, setIsPlaying] = useState(null);
-  // const [sound, setSound] = useState(null);
   const [selectedSound, setSelectedSound] = useState(null)
   const [loading, setLoading] = useState(false)
 
 
-  const handleButtonClick = (index) => {
+  const Stop = () => {
+    if (selectedSound) {
+      selectedSound.stop(() => {
+        setSelectedSound(null)
+      });
+      setIsPlaying(null)
+    }
+  }
 
-    console.log(isPlaying, 'isPlaying')
+  const handleButtonClick = (index) => {
 
     if (selectedSound) {
       selectedSound.stop(() => {
@@ -38,7 +43,6 @@ export const MusicPlay = ({ onSend }) => {
             console.log('Playback failed');
           }
           setIsPlaying(false);
-          // Reset isPlaying state after sound finishes
         });
         setLoading(false)
         setSelectedSound(sound)
@@ -50,8 +54,7 @@ export const MusicPlay = ({ onSend }) => {
 
   return <ScrollView showsVerticalScrollIndicator={false}>
     {getSound.data && getSound.data?.map((elm, i) => {
-      return <TouchableOpacity
-        onPress={() => onSend(elm.name)}
+      return <View
         key={i}
         style={styles.wrapper}>
         <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}>
@@ -60,7 +63,7 @@ export const MusicPlay = ({ onSend }) => {
               <ActivityIndicator size={'small'} />
             </View> :
             <TouchableOpacity onPress={() => handleButtonClick(i)}>
-              {(isPlaying == null || i != isPlaying) ?
+              {(!isPlaying || i != isPlaying) ?
                 <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
                 <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
               }
@@ -70,15 +73,15 @@ export const MusicPlay = ({ onSend }) => {
               🦊
             </Text> */}
           </View>
-
-          {/* <Image style={{ height: 40, width: '80%', resizeMode: 'cover' }} source={require('../../../assets/img/wave.jpg')}></Image> */}
         </View>
         <VoiceAmplituda />
-        <Text style={{ fontSize: 25 }}>
-          🦊
-        </Text>
-        {/* <VoiceIcone /> */}
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          Stop()
+          onSend(elm.name)
+        }}>
+          <SendMsgSvg />
+        </TouchableOpacity>
+      </View>
     })}
   </ScrollView>
 }

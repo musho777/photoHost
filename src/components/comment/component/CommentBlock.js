@@ -23,13 +23,16 @@ export const CommentBlock = ({
 }) => {
   const [showAnswrs, setShowAnswers] = useState(false);
   const staticdata = useSelector(st => st.static);
+  const [current, setCureent] = useState(null)
   return (
     <View>
       <CommentItem
         text={text}
         isLiked={isLiked}
+        current={current}
         owner={owner}
         ansswer={ansswer}
+        setCureent={(e) => setCureent(e)}
         user={user}
         like_count={like_count}
         id={id}

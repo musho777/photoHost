@@ -24,9 +24,6 @@ import { InfoBlock } from '../Profile/InfoBlock';
 import debounce from 'lodash/debounce';
 import { AlbomAndInfo } from '../Profile/components/albomAndInfo';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
-const windowWidth = Dimensions.get('window').width;
-
-
 
 
 export const SearchProfil = ({ navigation, route }) => {
@@ -98,14 +95,6 @@ export const SearchProfil = ({ navigation, route }) => {
 
   const renderItem = seletedScreen ? renderItem1 : renderItem2;
 
-  const ITEM_HEIGHT = windowWidth / 2 - 25;
-  const getItemLayout = (data, index) => {
-    return {
-      length: ITEM_HEIGHT,
-      offset: ITEM_HEIGHT * index,
-      index,
-    };
-  };
 
   const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
 

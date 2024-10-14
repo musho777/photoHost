@@ -234,11 +234,11 @@ export const Comments = ({ route, }) => {
               user={user}
             />
             <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
-                <Sticker />
-              </TouchableOpacity>
               <TouchableOpacity onPress={() => setIsOpen(true)}>
                 <Emojy />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
+                <Sticker />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => bottomSheetRef1.current?.present()}>
                 <Nota />

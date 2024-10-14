@@ -15,7 +15,7 @@ import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/actio
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const user = useSelector((st) => st.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const currentRouteName = state.routes[state.index].name; // Get the current route name
+  const currentRouteName = state.routes[state.index].name;
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -220,8 +220,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     bottom: 10,
     position: 'absolute',
-    width: '80%',
-    left: '10%',
+    width: '70%',
+    left: '15%',
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
@@ -229,6 +229,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     backgroundColor: 'white',
     borderRadius: 15,
+    borderWidth: 2,
+    borderColor: "#FFC24B",
   },
   tabBar: {
     flex: 1,

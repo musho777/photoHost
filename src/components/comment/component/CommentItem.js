@@ -21,7 +21,9 @@ export const CommentItem = ({
   onPressAnsswer,
   daysAgo,
   onDeletComment,
-  parent_id
+  parent_id,
+  setCureent,
+  current
 }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState();
@@ -47,15 +49,15 @@ export const CommentItem = ({
 
   const handleButtonClick = (name) => {
     setLoading(true)
+    current?.stop(() => { });
     if (soundInstance) {
       soundInstance.stop(() => {
         setLoading(false)
-        console.log('Sound stopped');
         setIsPlaying(false);
+        setSoundInstance(null)
       });
     }
     else {
-      // If the sound is not playing, create a new Sound instance
       const sound = new Sound(`https://chambaonline.pro/uploads/audio/${name}`, null, (error) => {
         if (error) {
           console.log('Failed to load sound', name, error);
@@ -64,20 +66,20 @@ export const CommentItem = ({
         else {
           setLoading(false)
         }
-
-        // Play the sound
         sound.play((success) => {
           if (success) {
             console.log('Sound played successfully');
           } else {
             console.log('Playback failed');
           }
+          setSoundInstance(null)
           setIsPlaying(false);
         });
 
         setSoundInstance(sound);
         setIsPlaying(true);
       });
+      setCureent(sound)
     }
   }
 

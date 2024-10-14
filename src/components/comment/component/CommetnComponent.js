@@ -4,7 +4,6 @@ import { CommentItem } from './CommentItem';
 
 const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDeletComment }) => {
     const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-
     const renderComment = (comment, index) => {
         const givenDate = new Date(comment.created_at);
         const currentDate = new Date();
