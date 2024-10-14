@@ -40,13 +40,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   if (!isKeyboardVisible) {
     if (currentRouteName != "AddImg") {
       return (
-        <SafeAreaView>
-          <View style={{
-            flexDirection: 'row',
-            height: 32,
-            backgroundColor: '#FFF',
-            borderTopColor: '#FFF',
-          }}>
+        <SafeAreaView >
+          <View style={styles.tabWrapper}>
             {state.routes.map((route, index) => {
               const { options } = descriptors[route.key];
               const label = options.tabBarLabel !== undefined
@@ -122,7 +117,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                   onPress={onPress}
                   onLongPress={onLongPress}
                 >
-                  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                  <View style={styles.tabBar}>
                     {tabIcon}
                   </View>
                 </TouchableWithoutFeedback>
@@ -220,6 +215,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     zIndex: 99999,
+  },
+  tabWrapper: {
+    flexDirection: 'row',
+    bottom: 10,
+    position: 'absolute',
+    width: '80%',
+    left: '10%',
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 'auto',
+    paddingVertical: 10,
+    backgroundColor: 'white',
+    borderRadius: 20,
+  },
+  tabBar: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 })
 

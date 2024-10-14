@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import Sound from 'react-native-sound'
 import { useSelector } from 'react-redux'
@@ -9,54 +9,71 @@ export const MusicPlay = ({ onSend }) => {
   const getSound = useSelector((st) => st.getSound)
 
   const [isPlaying, setIsPlaying] = useState(null);
-  const [sound, setSound] = useState(null);
+  // const [sound, setSound] = useState(null);
+  const [selectedSound, setSelectedSound] = useState(null)
+  const [loading, setLoading] = useState(false)
 
+  // useEffect(() => {
+  //   let loadedSounds = []
+  //   if (getSound.data.length) {
+  //     loadedSounds = getSound.data.map((fileName) => {
+  //       const sound = new Sound(`https://chambaonline.pro/uploads/audio/${fileName.name}`, Sound.MAIN_BUNDLE, (error) => {
+  //         if (error) {
+  //           console.log('Failed to load sound', fileName.name, error);
+  //         }
+  //       });
+  //       return sound;
+  //     });
+  //     setSound(loadedSounds);
+  //   }
 
-  useEffect(() => {
-    let loadedSounds = []
-    if (getSound.data.length) {
-      loadedSounds = getSound.data.map((fileName) => {
-        const sound = new Sound(`https://chambaonline.pro/uploads/audio/${fileName.name}`, Sound.MAIN_BUNDLE, (error) => {
-          if (error) {
-            console.log('Failed to load sound', fileName.name, error);
-          }
-        });
-        return sound;
-      });
-      setSound(loadedSounds);
-    }
-
-    return () => {
-      loadedSounds.forEach(sound => sound.release());
-    };
-  }, [getSound.data]);
+  //   return () => {
+  //     loadedSounds.forEach(sound => sound.release());
+  //   };
+  // }, [getSound.data]);
 
 
   const handleButtonClick = (index) => {
-    const selectedSound = sound[index];
-    if (isPlaying !== null && isPlaying !== index) {
-      // Stop the currently playing sound
-      const currentlyPlayingSound = sound[isPlaying];
-      currentlyPlayingSound.stop(() => console.log(`Sound ${isPlaying} stopped`));
-    }
+    // const selectedSound = sound[index];
+    // if (isPlaying !== null && isPlaying !== index) {
+    //   const currentlyPlayingSound = sound[isPlaying];
+    //   currentlyPlayingSound.stop(() => console.log(`Sound ${isPlaying} stopped`));
+    // }
+    // if (isPlaying === index) {
+    //   selectedSound.stop(() => console.log(`Sound ${index} stopped`));
+    //   setIsPlaying(null);
+    // } 
+    // else {
+    console.log(isPlaying, 'isPlaying')
 
-    if (isPlaying === index) {
-      selectedSound.stop(() => console.log(`Sound ${index} stopped`));
-      setIsPlaying(null);
-    } else {
-      selectedSound.play((success) => {
-        if (success) {
-          setIsPlaying(null)
-          console.log(`Sound ${index} played successfully`);
-        } else {
-          console.log(`Failed to play sound ${index}`);
-        }
+    if (selectedSound) {
+      selectedSound.stop(() => {
+        setSelectedSound(null)
       });
+      setIsPlaying(null)
+    }
+    if (isPlaying != index) {
+      setLoading(true)
+      const sound = new Sound(`https://chambaonline.pro/uploads/audio/${getSound.data[index].name}`, null, (error) => {
+        if (error) {
+          return
+        }
+        sound.play((success) => {
+          if (success) {
+            console.log('Sound played successfully');
+          } else {
+            console.log('Playback failed');
+          }
+          setIsPlaying(false);
+          // Reset isPlaying state after sound finishes
+        });
+        setLoading(false)
+        setSelectedSound(sound)
+
+      })
       setIsPlaying(index);
     }
   };
-
-  console.log(isPlaying, 'isPlaying')
 
   return <ScrollView showsVerticalScrollIndicator={false}>
     {getSound.data && getSound.data?.map((elm, i) => {
@@ -64,12 +81,16 @@ export const MusicPlay = ({ onSend }) => {
         onPress={() => onSend(elm.name)}
         key={i}
         style={styles.wrapper}>
-        <TouchableOpacity onPress={() => handleButtonClick(i)}>
-          {(isPlaying == null || i != isPlaying) ?
-            <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
-            <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
-          }
-        </TouchableOpacity>
+        {(loading && i == isPlaying) ?
+          <View style={{ width: 20, height: 20 }}>
+            <ActivityIndicator size={'small'} />
+          </View> :
+          <TouchableOpacity onPress={() => handleButtonClick(i)}>
+            {(isPlaying == null || i != isPlaying) ?
+              <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
+              <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
+            }
+          </TouchableOpacity>}
         <Text style={Styles.darkMedium14}>{elm.name}</Text>
       </TouchableOpacity>
     })}

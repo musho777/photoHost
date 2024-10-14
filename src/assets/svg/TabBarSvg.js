@@ -42,8 +42,8 @@ export const SearchSvg = ({ focused }) => {
   if (!focused) {
 
     return <Svg
-      width={25}
-      height={21}
+      width={26}
+      height={26}
       viewBox="0 0 23 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

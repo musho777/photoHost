@@ -28,7 +28,6 @@ export const CommentItem = ({
   const [likeCount, setLikeCount] = useState();
   const myuser = useSelector((st) => st.userData)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [sound, setSound] = useState(false)
   const [soundInstance, setSoundInstance] = useState(null);
   const [loading, setLoading] = useState(false)
   useEffect(() => {
@@ -48,16 +47,14 @@ export const CommentItem = ({
 
   const handleButtonClick = (name) => {
     setLoading(true)
-    if (isPlaying) {
-      // Stop the sound if it's currently playing
-      if (soundInstance) {
-        soundInstance.stop(() => {
-          setLoading(false)
-          console.log('Sound stopped');
-          setIsPlaying(false);
-        });
-      }
-    } else {
+    if (soundInstance) {
+      soundInstance.stop(() => {
+        setLoading(false)
+        console.log('Sound stopped');
+        setIsPlaying(false);
+      });
+    }
+    else {
       // If the sound is not playing, create a new Sound instance
       const sound = new Sound(`https://chambaonline.pro/uploads/audio/${name}`, null, (error) => {
         if (error) {
@@ -67,7 +64,6 @@ export const CommentItem = ({
         else {
           setLoading(false)
         }
-        console.log('Sound loaded successfully');
 
         // Play the sound
         sound.play((success) => {
@@ -76,39 +72,15 @@ export const CommentItem = ({
           } else {
             console.log('Playback failed');
           }
-          setIsPlaying(false);  // Reset isPlaying state after sound finishes
+          setIsPlaying(false);
         });
 
-        // Save the sound instance in the state to use it for stopping
         setSoundInstance(sound);
         setIsPlaying(true);
       });
     }
   }
 
-  // const handleButtonClick = (name) => {
-  //   console.log(name)
-
-  //   const sound = new Sound(`https://chambaonline.pro/uploads/audio/${name}`, null, (error) => {
-  //     if (error) {
-  //       console.log('Failed to load sound', name, error);
-  //     }
-  //   });
-  //   console.log(sound, 'isPlaying')
-  //   if (isPlaying) {
-  //     sound.stop(() => console.log(`Sound ${index} stopped`));
-  //     setIsPlaying(false);
-  //   } else {
-  //     sound.play((success) => {
-  //       if (success) {
-  //         console.log(`Sound played successfully`);
-  //       } else {
-  //         console.log(`Failed to play sound `);
-  //       }
-  //     });
-  //     setIsPlaying(true);
-  //   }
-  // };
 
   const TextType = (text) => {
     if (text.includes('https://media')) {
@@ -125,7 +97,6 @@ export const CommentItem = ({
       </View>
     }
     else if (text.includes('.wav')) {
-      console.log(loading, '21')
       if (loading) {
         return <View style={styles.voice}>
           <View style={{ width: 20 }}>
