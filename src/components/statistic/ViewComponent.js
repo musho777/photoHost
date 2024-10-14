@@ -10,7 +10,7 @@ import { Styles } from '../../styles/Styles';
 import { StatisticSvg, ViewListSwg } from '../../assets/svg/Svgs';
 import { ViewList } from './ViewList';
 import { StatisticList } from './StatisticList';
-import { GetPostViewAction } from '../../store/action/action';
+import { GetPostViewAction, HidenTabNavigation, ShowTabNavigation } from '../../store/action/action';
 import BottomSheet from '@gorhom/bottom-sheet';
 
 export const ViewComponent = ({ id, token, close, big = false }) => {
@@ -24,9 +24,7 @@ export const ViewComponent = ({ id, token, close, big = false }) => {
   }, [id])
 
   useEffect(() => {
-    navigation.setOptions({
-      tabBarStyle: { display: 'none' },
-    });
+    dispatch(HidenTabNavigation())
   }, [])
 
   const [statistic, setStatistic] = useState(false)
@@ -52,7 +50,10 @@ export const ViewComponent = ({ id, token, close, big = false }) => {
       snapPoints={['80%']}
       backdropComponent={renderBackdrop}
       enablePanDownToClose={true}
-      onClose={() => close()}
+      onClose={() => {
+        dispatch(ShowTabNavigation())
+        close()
+      }}
       style={{ zIndex: 999993, postion: 'absalute' }}
     >
       <View style={{ height: '100%' }}>

@@ -11,11 +11,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
-
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const user = useSelector((st) => st.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const currentRouteName = state.routes[state.index].name;
+  const { show } = useSelector((st) => st.showTabNavigatior)
+  console.log(show, 'showTabNavigatior')
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -36,9 +37,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
       keyboardDidShowListener.remove();
     };
   }, []);
-
   if (!isKeyboardVisible) {
-    if (currentRouteName != "AddImg") {
+    if (currentRouteName != "AddImg" && show) {
       return (
         <SafeAreaView >
           <View style={styles.tabWrapper}>

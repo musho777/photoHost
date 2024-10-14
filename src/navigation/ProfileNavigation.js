@@ -8,13 +8,15 @@ import { Catalog } from '../screens/catalog';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Styles } from '../styles/Styles';
-import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
+import { ClearLoginAction, ClearUser, HidenTabNavigation, LogoutAction, ShowTabNavigation } from '../store/action/action';
 import { CloseSvg } from '../assets/svg/Svgs';
 import AccauntParametrNavigation from './AccauntParametrNavigation';
 import MyPageNavigation from './MyPageNavigation';
 import { ContactsPage } from '../screens/contacts';
 import { AboutApplication } from '../screens/Profile/AboutApplication';
 import { SettingsNavigation } from './SettingsNavigation';
+import { useDrawerStatus } from '@react-navigation/drawer';
+import { useEffect } from 'react';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
@@ -30,8 +32,20 @@ function CustomDrawerContent(props) {
       routes: [{ name: 'LoginScreen1', params: { screen: 'LoginScreen' } }],
     });
   }
+
+  const isDrawerOpen = useDrawerStatus() === 'open';
+
+  useEffect(() => {
+    if (isDrawerOpen) {
+      dispatch(HidenTabNavigation())
+    }
+    else {
+      dispatch(ShowTabNavigation())
+    }
+  }, [isDrawerOpen])
+
   return (
-    <View style={{ height: '100%', backgroundColor: 'white', }}>
+    <View style={{ height: '100%', backgroundColor: 'white' }}>
       <DrawerContentScrollView style={{ paddingTop: 40 }} {...props}>
         <TouchableOpacity style={{ paddingLeft: 15, width: 70, height: 30 }} onPress={() => props.navigation.closeDrawer()}>
           <CloseSvg />

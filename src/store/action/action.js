@@ -1951,3 +1951,15 @@ export const DelatePhotoFromPost = (post_id, id, token) => {
       .catch(error => console.log('error', error));
   };
 }
+
+export const HidenTabNavigation = () => {
+  return {
+    type: 'hidenTabNavigation'
+  }
+}
+
+export const ShowTabNavigation = () => {
+  return {
+    type: 'ShowTabNavigation'
+  }
+}
