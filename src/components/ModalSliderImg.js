@@ -10,9 +10,22 @@ import SwiperFlatList from 'react-native-swiper-flatlist';
 import { AppColors } from '../styles/AppColors';
 
 const windowWidth = Dimensions.get('window').width;
-const windowheight = Dimensions.get('window').height;
 
 export const ModalSliderImg = ({ photo, activePhoto }) => {
+    const [height1, setHeight] = useState(0)
+    const getImageHeight = (imageUri) => {
+        return new Promise((resolve, reject) => {
+            Image.getSize(
+                imageUri,
+                (width, height) => {
+                    resolve(height); // Return the image height
+                },
+                (error) => {
+                    reject(error); // Handle the error
+                }
+            );
+        });
+    };
 
     const [active, setActive] = useState(0);
     return (
@@ -31,14 +44,20 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                     if (item.height < 650) {
                         height = 400
                     }
-                    else {
+                    else if (item.height && item.height >= 650) {
                         height = 700
                     }
+                    else {
+                        height = null
+                        getImageHeight(`https://chambaonline.pro/uploads/${item.photo}`).then((r) => {
+                            setHeight(r)
+                        })
+                    }
+                    console.log(height)
                     return (
                         <Image
-                            style={[styles.img, { height: height ? height : 500 }]}
+                            style={[styles.img, { height: height ? height : height1 }]}
                             source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
-
                         />
                     );
                 }}

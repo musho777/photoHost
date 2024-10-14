@@ -11,7 +11,6 @@ import { Albom } from '../../components/Albom/Albom';
 import debounce from 'lodash/debounce';
 import { t } from '../../components/lang';
 import { InfoBlock } from './InfoBlock';
-import { Styles } from '../../styles/Styles';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
 
 

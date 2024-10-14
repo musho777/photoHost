@@ -84,13 +84,14 @@ export const CommentItem = ({
 
   const TextType = (text) => {
     if (text.includes('https://media')) {
-      return <FastImage source={{ uri: text }} style={styles.image} />
+      return <View style={{ gap: 5 }}>
+        <Text style={Styles.darkMedium13}>{user?.name}</Text>
+        <FastImage source={{ uri: text }} style={styles.image} />
+      </View>
     }
     else if (checkIfEmoji(text)) {
-      return <View >
-        <Text style={[Styles.darkSemiBold12, { marginTop: -5, fontSize: 15, marginBottom: 7 }]}>
-          {user?.name}
-        </Text>
+      return <View style={{ gap: 5 }}>
+        <Text style={Styles.darkMedium13}>{user?.name}</Text>
         <Text style={[Styles.darkSemiBold12, { marginTop: -5, fontSize: 40 }]}>
           {text}
         </Text>
@@ -98,30 +99,39 @@ export const CommentItem = ({
     }
     else if (text.includes('.wav')) {
       if (loading) {
-        return <View style={styles.voice}>
-          <View style={{ width: 20 }}>
-            <ActivityIndicator color={"#141c3b"} />
+
+        return <View style={{ gap: 5 }}>
+          <Text style={Styles.darkMedium13}>{user?.name}</Text>
+          <View style={styles.voice}>
+            <View style={{ width: 20 }}>
+              <ActivityIndicator color={"#141c3b"} />
+            </View>
+            <Text style={Styles.darkMedium10}>{text}</Text>
           </View>
-          <Text style={Styles.darkMedium10}>{text}</Text>
         </View>
       }
       else {
-        return <View style={styles.voice}>
-          <TouchableOpacity onPress={() => handleButtonClick(text)}>
-            {!isPlaying ?
-              <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
-              <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
-            }
-          </TouchableOpacity>
-          <Text style={Styles.darkMedium10}>{text}</Text>
+        return <View style={{ gap: 5 }}>
+          <Text style={Styles.darkMedium13}> {user?.name}</Text>
+          <View style={styles.voice}>
+            <TouchableOpacity onPress={() => handleButtonClick(text)}>
+              {!isPlaying ?
+                <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
+                <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
+              }
+            </TouchableOpacity>
+
+            <Text style={Styles.darkMedium10}>{text}</Text>
+          </View>
         </View>
       }
     }
     else {
 
-      return <Text style={[Styles.darkSemiBold12, { marginTop: 5, fontSize: 15, color: 'red' }]}>
-        {user?.name}:<Text style={[Styles.darkMedium12, { fontSize: 13 }]}>{text}</Text>
-      </Text>
+      return <View style={{ gap: 5 }}>
+        <Text style={Styles.darkMedium13}>{user?.name}</Text>
+        <Text style={[Styles.darkMedium12, { fontSize: 13 }]}>{text}</Text>
+      </View>
     }
   }
   return (

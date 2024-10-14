@@ -132,25 +132,28 @@ export const Comments = ({ route, }) => {
       send = send.replace(regex, "");
     }
     bottomSheetRef1.current?.close()
-    dispatch(
-      AddCommentAction(
-        {
-          comment: send,
-          parent_id: parenId,
-          post_id: parentId,
-        }, staticdata.token,
-        {
-          comment: send,
-          parent_id: parenId,
-          post_id: parentId,
-          created_at: isoDate,
-          like_auth_user: [],
-          likes_count: 0,
-          replay: [],
-          replay_count: 0,
-          user: user.allData.data,
-        }
-      ))
+    console.log(send, 'send')
+    if (send) {
+      dispatch(
+        AddCommentAction(
+          {
+            comment: send,
+            parent_id: parenId,
+            post_id: parentId,
+          }, staticdata.token,
+          {
+            comment: send,
+            parent_id: parenId,
+            post_id: parentId,
+            created_at: isoDate,
+            like_auth_user: [],
+            likes_count: 0,
+            replay: [],
+            replay_count: 0,
+            user: user.allData.data,
+          }
+        ))
+    }
     setParentId(null)
     setSendCommet('')
   };

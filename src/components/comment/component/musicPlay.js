@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import Sound from 'react-native-sound'
 import { useSelector } from 'react-redux'
 import { Styles } from '../../../styles/Styles'
+import { VoiceAmplituda, VoiceIcone } from '../../../assets/svg/Svgs'
 
 export const MusicPlay = ({ onSend }) => {
   const getSound = useSelector((st) => st.getSound)
@@ -13,37 +14,9 @@ export const MusicPlay = ({ onSend }) => {
   const [selectedSound, setSelectedSound] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  // useEffect(() => {
-  //   let loadedSounds = []
-  //   if (getSound.data.length) {
-  //     loadedSounds = getSound.data.map((fileName) => {
-  //       const sound = new Sound(`https://chambaonline.pro/uploads/audio/${fileName.name}`, Sound.MAIN_BUNDLE, (error) => {
-  //         if (error) {
-  //           console.log('Failed to load sound', fileName.name, error);
-  //         }
-  //       });
-  //       return sound;
-  //     });
-  //     setSound(loadedSounds);
-  //   }
-
-  //   return () => {
-  //     loadedSounds.forEach(sound => sound.release());
-  //   };
-  // }, [getSound.data]);
-
 
   const handleButtonClick = (index) => {
-    // const selectedSound = sound[index];
-    // if (isPlaying !== null && isPlaying !== index) {
-    //   const currentlyPlayingSound = sound[isPlaying];
-    //   currentlyPlayingSound.stop(() => console.log(`Sound ${isPlaying} stopped`));
-    // }
-    // if (isPlaying === index) {
-    //   selectedSound.stop(() => console.log(`Sound ${index} stopped`));
-    //   setIsPlaying(null);
-    // } 
-    // else {
+
     console.log(isPlaying, 'isPlaying')
 
     if (selectedSound) {
@@ -81,17 +54,27 @@ export const MusicPlay = ({ onSend }) => {
         onPress={() => onSend(elm.name)}
         key={i}
         style={styles.wrapper}>
-        {(loading && i == isPlaying) ?
-          <View style={{ width: 20, height: 20 }}>
-            <ActivityIndicator size={'small'} />
-          </View> :
-          <TouchableOpacity onPress={() => handleButtonClick(i)}>
-            {(isPlaying == null || i != isPlaying) ?
-              <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
-              <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
-            }
-          </TouchableOpacity>}
-        <Text style={Styles.darkMedium14}>{elm.name}</Text>
+        <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}>
+          {(loading && i == isPlaying) ?
+            <View style={{ width: 20, height: 20 }}>
+              <ActivityIndicator size={'small'} />
+            </View> :
+            <TouchableOpacity onPress={() => handleButtonClick(i)}>
+              {(isPlaying == null || i != isPlaying) ?
+                <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
+                <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
+              }
+            </TouchableOpacity>}
+          <View style={{ alignItems: 'center', flexDirection: 'row', gap: 10 }}>
+            <Text style={{ fontSize: 15 }}>
+              🦊
+            </Text>
+            <VoiceAmplituda />
+          </View>
+
+          {/* <Image style={{ height: 40, width: '80%', resizeMode: 'cover' }} source={require('../../../assets/img/wave.jpg')}></Image> */}
+        </View>
+        <VoiceIcone />
       </TouchableOpacity>
     })}
   </ScrollView>
@@ -104,6 +87,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     gap: 15,
     borderBottomWidth: 1,
     borderColor: '#f0eded'

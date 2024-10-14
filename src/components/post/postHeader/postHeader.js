@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
 import { Styles } from "../../../styles/Styles"
 import { useDispatch, useSelector } from 'react-redux';
-import { MenuSvg } from '../../../assets/svg/TabBarSvg';
+import { MenuSvg, WhiteMenuSvg } from '../../../assets/svg/TabBarSvg';
 import { AddBlackListAction, AddDeleteFollowAction, AddInBookAction } from '../../../store/action/action';
 import { t } from '../../lang';
 import { useCallback, useRef, useState } from "react";
@@ -68,7 +68,7 @@ export const PostHeader = ({
         handlePresentModalPress()
       }}
       style={{ width: 50, zIndex: 99999, justifyContent: 'flex-end', alignItems: 'flex-end', paddingRight: 10, }}>
-      <MenuSvg />
+      <WhiteMenuSvg />
     </TouchableOpacity>
     {
       (user?.data.id == data.user.id && openModal) &&

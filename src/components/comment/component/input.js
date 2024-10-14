@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { t } from '../../lang';
 
 
-export const InputComponent = ({ user, sendComment, setSendCommet, sendCommentFunction }) => {
+export const InputComponent = ({ sendComment, setSendCommet, sendCommentFunction }) => {
   const mainData = useSelector(st => st.mainData);
 
   return <View style={styles.InputComponent}>

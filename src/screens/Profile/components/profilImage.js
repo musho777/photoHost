@@ -19,8 +19,8 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
   const dispatch = useDispatch()
   const changeImg = () => {
     ImageCropPicker.openPicker({
-      width: 450,
-      height: 450,
+      width: 5000,
+      height: 5000,
       cropping: false,
       multiple: false
     }).then(image => {

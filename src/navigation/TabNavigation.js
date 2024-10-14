@@ -226,9 +226,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 'auto',
-    paddingVertical: 10,
+    paddingVertical: 5,
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 15,
   },
   tabBar: {
     flex: 1,

@@ -297,19 +297,21 @@ export const CommentLikeSvg = ({ liked }) => {
 
 export const SendSvg = () => {
   return <Svg
-    width={26}
+    width={24}
     height={24}
-    viewBox="0 0 26 24"
+    viewBox="0 0 22 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <Path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M1.417.09A1 1 0 00.035 1.264L2.964 12 .035 22.737a1 1 0 001.382 1.172l23.986-10.994a1.003 1.003 0 00.553-1.21.998.998 0 00-.553-.62L1.417.09zM20.418 11L2.528 2.8 4.764 11h15.654zM4.764 13h15.654l-17.89 8.2L4.764 13z"
-      fill="#8C9CAB"
+      d="M21 1L1 7.667l9.583 3.75M21 1l-6.667 20-3.75-9.583M21 1L10.583 11.417"
+      stroke="#636363"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </Svg>
+
 }
 export const SendMsgSvg = () => {
   return <Svg
@@ -1469,6 +1471,42 @@ export const Nota = () => {
       stroke="#1C274C"
       strokeWidth={1.5}
       strokeLinecap="round"
+    />
+  </Svg>
+}
+
+export const VoiceIcone = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20px"
+    height="20px"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <Path
+      d="M6 9.86v4.29M9 8.43v7.14M12 7v10M15 8.43v7.14M18 9.86v4.29M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7z"
+      stroke="#292D32"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+}
+
+export const VoiceAmplituda = () => {
+  return <Svg
+    width={244}
+    height={36}
+    viewBox="0 0 244 36"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path
+      d="M2 15.333v5.334m8-8v10.666m8-8v5.334M26 10v16m8-24v32m8-21.333v10.666m8-8v5.334M50 15.333v5.334m8-8v10.666m8-8v5.334M74 10v16m8-24v32m8-21.333v10.666m8-8v5.334M98 15.333v5.334m8-8v10.666m8-8v5.334M122 10v16m8-24v32m8-21.333v10.666m8-8v5.334M146 15.333v5.334m8-8v10.666m8-8v5.334M170 10v16m8-24v32m8-21.333v10.666m8-8v5.334M194 15.333v5.334m8-8v10.666m8-8v5.334M218 10v16m8-24v32m8-21.333v10.666m8-8v5.334"
+      stroke="#000"
+      strokeWidth={4}
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </Svg>
 }
