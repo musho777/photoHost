@@ -66,15 +66,18 @@ export const MusicPlay = ({ onSend }) => {
               }
             </TouchableOpacity>}
           <View style={{ alignItems: 'center', flexDirection: 'row', gap: 10 }}>
-            <Text style={{ fontSize: 15 }}>
+            {/* <Text style={{ fontSize: 25 }}>
               🦊
-            </Text>
-            <VoiceAmplituda />
+            </Text> */}
           </View>
 
           {/* <Image style={{ height: 40, width: '80%', resizeMode: 'cover' }} source={require('../../../assets/img/wave.jpg')}></Image> */}
         </View>
-        <VoiceIcone />
+        <VoiceAmplituda />
+        <Text style={{ fontSize: 25 }}>
+          🦊
+        </Text>
+        {/* <VoiceIcone /> */}
       </TouchableOpacity>
     })}
   </ScrollView>
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     gap: 15,
     borderBottomWidth: 1,
     borderColor: '#f0eded'
