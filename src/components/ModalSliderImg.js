@@ -18,7 +18,9 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
             Image.getSize(
                 imageUri,
                 (width, height) => {
-                    resolve(height); // Return the image height
+                    if (height > 600) {
+                        resolve(height - 200); // Return the image height
+                    }
                 },
                 (error) => {
                     reject(error); // Handle the error
@@ -53,7 +55,7 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                             setHeight(r)
                         })
                     }
-                    console.log(height)
+                    console.log(height, height1)
                     return (
                         <Image
                             style={[styles.img, { height: height ? height : height1 }]}

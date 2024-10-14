@@ -24,6 +24,7 @@ function CustomDrawerContent(props) {
   const dispatch = useDispatch()
 
   const LogOut = async () => {
+    dispatch(ShowTabNavigation())
     dispatch(LogoutAction(staticdata.token))
     dispatch(ClearLoginAction())
     dispatch(ClearUser())

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, forwardRef } from 'react';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-export const BootomModal = forwardRef(({ children, snapPoints }, ref) => {
+export const BootomModal = forwardRef(({ children, snapPoints, close = () => { } }, ref) => {
 
   const renderBackdrop = useCallback(
     (props) => (
@@ -14,15 +14,21 @@ export const BootomModal = forwardRef(({ children, snapPoints }, ref) => {
         opacity={0.85}
       />
     ), [])
+
   return (
     <BottomSheetModal
+      onChange={(index) => {
+        if (index === -1) {
+          close()
+        }
+      }}
       ref={ref}
       index={0}
       snapPoints={snapPoints}
       backdropComponent={renderBackdrop}
     >
       {children}
-    </BottomSheetModal>
+    </BottomSheetModal >
   );
 });
 

@@ -47,6 +47,8 @@ export const Comments = ({ route, }) => {
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()
 
+  const [close, setClose] = useState(false)
+
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false)
@@ -132,7 +134,6 @@ export const Comments = ({ route, }) => {
       send = send.replace(regex, "");
     }
     bottomSheetRef1.current?.close()
-    console.log(send, 'send')
     if (send) {
       dispatch(
         AddCommentAction(
@@ -249,9 +250,7 @@ export const Comments = ({ route, }) => {
           </View>
           <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
         </View>
-        <BootomModal ref={bottomSheetRef1} snapPoints={snapPoints}>
-          <MusicPlay onSend={(e) => sendCommentFunction(e)} />
-        </BootomModal>
+        <MusicPlay ref={bottomSheetRef1} onSend={(e) => sendCommentFunction(e)} />
       </KeyboardAvoidingView>
     </SafeAreaView >
   );

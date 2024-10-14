@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { forwardRef, useMemo, useState } from 'react'
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import Sound from 'react-native-sound'
 import { useSelector } from 'react-redux'
 import { SendMsgSvg, VoiceAmplituda, VoiceIcone } from '../../../assets/svg/Svgs'
+import { BootomModal } from '../../BootomSheet'
 
-export const MusicPlay = ({ onSend }) => {
+export const MusicPlay = forwardRef(({ onSend }, ref) => {
   const getSound = useSelector((st) => st.getSound)
+  const snapPoints = useMemo(() => ['50%'], []);
 
   const [isPlaying, setIsPlaying] = useState(null);
   const [selectedSound, setSelectedSound] = useState(null)
@@ -52,34 +54,42 @@ export const MusicPlay = ({ onSend }) => {
     }
   };
 
-  return <ScrollView showsVerticalScrollIndicator={false}>
-    {getSound.data && getSound.data?.map((elm, i) => {
-      return <View
-        key={i}
-        style={styles.wrapper}>
-        <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}>
-          {(loading && i == isPlaying) ?
-            <View style={{ width: 26, height: 26 }}>
-              <ActivityIndicator size={'small'} />
-            </View> :
-            <TouchableOpacity onPress={() => handleButtonClick(i)}>
-              {(!isPlaying || i != isPlaying) ?
-                <Image style={{ width: 26, height: 26 }} source={require('../../../assets/img/play.png')} /> :
-                <Image style={{ width: 26, height: 26 }} source={require('../../../assets/img/pause.png')} />
-              }
-            </TouchableOpacity>}
+  console.log(isPlaying, 'isPlaying')
+
+  return <BootomModal
+    ref={ref}
+    snapPoints={snapPoints}
+    close={() => Stop()}
+  >
+    <ScrollView showsVerticalScrollIndicator={false}>
+      {getSound.data && getSound.data?.map((elm, i) => {
+        return <View
+          key={i}
+          style={styles.wrapper}>
+          <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}>
+            {(loading && i == isPlaying) ?
+              <View style={{ width: 26, height: 26 }}>
+                <ActivityIndicator size={'small'} />
+              </View> :
+              <TouchableOpacity onPress={() => handleButtonClick(i)}>
+                {(i != isPlaying) ?
+                  <Image style={{ width: 26, height: 26 }} source={require('../../../assets/img/play.png')} /> :
+                  <Image style={{ width: 26, height: 26 }} source={require('../../../assets/img/pause.png')} />
+                }
+              </TouchableOpacity>}
+          </View>
+          <VoiceAmplituda />
+          <TouchableOpacity onPress={() => {
+            Stop()
+            onSend(elm.name)
+          }}>
+            <SendMsgSvg />
+          </TouchableOpacity>
         </View>
-        <VoiceAmplituda />
-        <TouchableOpacity onPress={() => {
-          Stop()
-          onSend(elm.name)
-        }}>
-          <SendMsgSvg />
-        </TouchableOpacity>
-      </View>
-    })}
-  </ScrollView>
-}
+      })}
+    </ScrollView>
+  </BootomModal>
+})
 
 const styles = StyleSheet.create({
   wrapper: {
