@@ -2,7 +2,7 @@ import { Image, StyleSheet, TouchableOpacity, View, Text } from "react-native"
 import { BackArrow } from "../../../assets/svg/Svgs"
 import { Styles } from "../../../styles/Styles"
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { MenuSvg } from "../../../assets/svg/TabBarSvg";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BootomModal } from "../../../components/BootomSheet";
@@ -20,6 +20,7 @@ export const Header = ({ data, route, user }) => {
   const addBlackPusher = useSelector(st => st.addBlackPusher)
   const deletChat = useSelector((st) => st.deletChatPusher)
 
+  const [clicked, setCliked] = useState(false)
 
   const addToBlackList = () => {
     bottomSheetRef.current?.close();
@@ -52,25 +53,42 @@ export const Header = ({ data, route, user }) => {
     }
   }, [deletChat.deletChatPusher])
 
+
+  const NavigateUserPage = () => {
+    setCliked(true)
+    navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: getSinglePageChat.resiverUser.id } });
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      setCliked(false)
+    }, [])
+  );
+
+
   return <View
     style={[Styles.flexSpaceBetween, styles.header]}>
     <View style={Styles.flexAlignItems}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity activeOpacity={1} onPress={() => navigation.goBack()}>
         <BackArrow />
       </TouchableOpacity>
-      <View style={[{ marginHorizontal: 20 }, Styles.flexAlignItems]}>
+      <TouchableOpacity
+        activeOpacity={1}
+        disabled={clicked}
+        onPress={() => NavigateUserPage()}
+        style={[{ marginHorizontal: 20 }, Styles.flexAlignItems]}>
         <Image
           style={styles.img}
           source={{
             uri: `https://chambaonline.pro/uploads/${getSinglePageChat.resiverUser.avatar}`,
           }}
         />
-        <View style={{ marginHorizontal: 20 }}>
+        <View style={{ marginHorizontal: 15 }}>
           <Text style={Styles.darkMedium14}>
             {getSinglePageChat.resiverUser.name}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
     <TouchableOpacity style={styles.menuSvg} onPress={() => handlePresentModalPress()}>
       <MenuSvg />

@@ -76,15 +76,15 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
             height = 400
           }
           else {
-            height = 700
+            height = '90%'
           }
           return (
             <View style={styles.img}>
 
               {!item.video ?
-                <View>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                   <Image
-                    style={[{ width: '100%', height: height }]}
+                    style={[{ width: '100%', height: height, }]}
                     source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
                     resizeMode="cover"
                   />
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     width: windowWidth,
     flexShrink: 0,
     justifyContent: 'center',
+    height: '100%',
     position: 'relative',
   },
   pagination: {

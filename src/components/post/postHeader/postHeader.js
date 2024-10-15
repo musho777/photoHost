@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
 import { Styles } from "../../../styles/Styles"
 import { useDispatch, useSelector } from 'react-redux';
-import { MenuSvg, WhiteMenuSvg } from '../../../assets/svg/TabBarSvg';
+import { WhiteMenuSvg } from '../../../assets/svg/TabBarSvg';
 import { AddBlackListAction, AddDeleteFollowAction, AddInBookAction } from '../../../store/action/action';
 import { t } from '../../lang';
 import { useCallback, useRef, useState } from "react";
