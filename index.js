@@ -11,9 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const HeadlessTask = async (message) => {
-  console.log('Headless Task: ', message);
   let notSound = await AsyncStorage.getItem("notification")
-  console.log(notSound, 'notSound')
   if (notSound == 'standart') {
     PushNotification.localNotification({
       channelId: "sms-channel",
@@ -43,7 +41,6 @@ const HeadlessTask = async (message) => {
       sound: "sms.mp3",
       priority: "high",
     });
-    console.log('else')
   }
 
   // You can process the message similarly here

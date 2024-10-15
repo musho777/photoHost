@@ -16,7 +16,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const currentRouteName = state.routes[state.index].name;
   const { show } = useSelector((st) => st.showTabNavigatior)
-  console.log(show, 'showTabNavigatior')
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -229,8 +228,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     backgroundColor: 'white',
     borderRadius: 15,
-    borderWidth: 2,
-    borderColor: "#FFC24B",
   },
   tabBar: {
     flex: 1,

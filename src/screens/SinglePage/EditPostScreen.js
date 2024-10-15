@@ -23,7 +23,6 @@ export const EditPostScreen = ({ route, navigation }) => {
   const [photos, setPhotos] = useState([])
 
   useEffect(() => {
-    console.log("01")
     setPhotos(data.photo)
   }, [data.photo])
 

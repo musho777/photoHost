@@ -54,8 +54,6 @@ export const MusicPlay = forwardRef(({ onSend }, ref) => {
     }
   };
 
-  console.log(isPlaying, 'isPlaying')
-
   return <BootomModal
     ref={ref}
     snapPoints={snapPoints}

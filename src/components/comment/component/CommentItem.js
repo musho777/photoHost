@@ -108,7 +108,9 @@ export const CommentItem = ({
             <View style={{ width: 20 }}>
               <ActivityIndicator color={"#141c3b"} />
             </View>
-            <Text style={Styles.darkMedium10}>{text}</Text>
+            <View style={{ width: '60%', alignItems: 'flex-start' }}>
+              <VoiceAmplituda height={20} />
+            </View>
           </View>
         </View>
       }

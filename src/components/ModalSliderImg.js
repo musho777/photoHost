@@ -55,7 +55,6 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                             setHeight(r)
                         })
                     }
-                    console.log(height, height1)
                     return (
                         <Image
                             style={[styles.img, { height: height ? height : height1 }]}
