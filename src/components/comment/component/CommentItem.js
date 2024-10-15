@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity, ActivityIndicator, BackHandler } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import emojiRegex from 'emoji-regex';
@@ -32,6 +32,8 @@ export const CommentItem = ({
   const [isPlaying, setIsPlaying] = useState(false)
   const [soundInstance, setSoundInstance] = useState(null);
   const [loading, setLoading] = useState(false)
+
+
   useEffect(() => {
     setLiked(isLiked);
   }, [isLiked]);
@@ -41,10 +43,39 @@ export const CommentItem = ({
 
 
 
+  useEffect(() => {
+    // Add back handler to stop sound when navigating back
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      StopSound();
+      if (soundInstance) {
+        return true; // Return false to let the default back behavior happen
+      }
+      else {
+        return false
+      }
+    });
+
+    return () => {
+      StopSound();
+      backHandler.remove(); // Clean up the event listener
+    };
+  }, [soundInstance]);
+
   const checkIfEmoji = (text) => {
     const regex = emojiRegex();
     return regex.test(text);
   };
+
+
+  const StopSound = () => {
+    if (soundInstance) {
+      soundInstance.stop(() => {
+        setLoading(false)
+        setIsPlaying(false);
+        setSoundInstance(null)
+      });
+    }
+  }
 
 
   const handleButtonClick = (name) => {
@@ -154,16 +185,21 @@ export const CommentItem = ({
       <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>
         {TextType(text)}
         <View style={Styles.flexAlignItems}></View>
-        <View style={{ flexDirection: 'row', marginTop: 5, gap: 20 }}>
-          <Text >{daysAgo}</Text>
+        <View style={{ flexDirection: 'row', marginTop: 5, gap: 20, alignItems: 'center' }}>
+          <Text style={Styles.balihaiMedium13}>{daysAgo}</Text>
           {(!owner && !ansswer) && <TouchableOpacity
             onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
             <Text>ответить</Text>
           </TouchableOpacity>}
-          {myuser.allData?.data?.id == user?.id && <TouchableOpacity
-            onPress={() => onDeletComment(id, parent_id)}>
-            <Text>удалить</Text>
-          </TouchableOpacity>}
+          {myuser.allData?.data?.id == user?.id &&
+            <TouchableOpacity
+              style={{ marginBottom: 2 }}
+              onPress={() => {
+                StopSound()
+                onDeletComment(id, parent_id)
+              }}>
+              <Text style={Styles.balihaiMedium13}>удалить</Text>
+            </TouchableOpacity>}
         </View>
       </View>
       <View style={styles.like}>

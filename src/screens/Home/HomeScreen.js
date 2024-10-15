@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator, BackHandler } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, GetLentsAction, GetPostsAction, getUserInfoAction, LogoutAction } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, GetLentsAction, GetPostsAction, getUserInfoAction, LogoutAction, ShowTabNavigation } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -53,9 +53,9 @@ export const HomeScreen = () => {
   }, [staticdata.token, dispatch]);
 
 
-  const deletData = useCallback((i, post_id) => {
+  const deletData = useCallback((post_id) => {
+    console.log("-111", post_id)
     dispatch(DelatePostAction({ post_id }, staticdata.token))
-
   }, [dispatch, staticdata.token]);
 
   const AddToBack = useCallback((e) => {
@@ -77,6 +77,27 @@ export const HomeScreen = () => {
     flatListRef.current.scrollToOffset({ offset: 0, animated: true });
   }
 
+
+
+  useEffect(() => {
+    // Add back handler to stop sound when navigating back
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (showShare || likeClose || showView) {
+        setShowShare(false)
+        setLikeClose(false)
+        setShowView(false)
+        dispatch(ShowTabNavigation())
+        return true;
+      }
+      else {
+        return false
+      }
+    });
+
+    return () => {
+      backHandler.remove(); // Clean up the event listener
+    };
+  }, [showShare, likeClose, showView]);
 
 
 
@@ -136,7 +157,7 @@ export const HomeScreen = () => {
             setShowLike={() => setLikeClose(true)}
             setShowView={() => setShowView(true)}
             addToblack={(e) => AddToBack(e)}
-            deletData={(e) => deletData(index, e)}
+            deletData={(e) => deletData(e)}
             setSelectidId={(id) => setSelectidId(id)}
             setShowShare={(e) => setShowShare(e)}
           />

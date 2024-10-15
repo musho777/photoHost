@@ -18,8 +18,13 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
             Image.getSize(
                 imageUri,
                 (width, height) => {
+                    console.log(height, 'height')
                     if (height > 600) {
                         resolve(height - 200); // Return the image height
+                    }
+                    else {
+                        resolve(height); // Return the image height
+
                     }
                 },
                 (error) => {
