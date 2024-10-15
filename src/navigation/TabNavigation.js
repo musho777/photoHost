@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
+
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const user = useSelector((st) => st.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -59,7 +60,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 tabIcon = <SearchSvg focused={isFocused} />;
               } else if (label === 'AddImg') {
                 tabIcon = (
-                  <View style={{ marginLeft: -2 }}>
+                  <View>
                     <AddSvg focused={isFocused} />
                   </View>
                 );
@@ -217,14 +218,11 @@ const styles = StyleSheet.create({
   },
   tabWrapper: {
     flexDirection: 'row',
-    bottom: 10,
+    bottom: 7,
     position: 'absolute',
     width: '80%',
     left: '10%',
     right: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 'auto',
     paddingVertical: 5,
     backgroundColor: 'white',
     borderRadius: 15,

@@ -190,6 +190,7 @@ const style = StyleSheet.create({
     right: 0,
     backgroundColor: 'white',
     justifyContent: 'center',
+    marginBottom: 55,
   },
   footer: {
     padding: 20,

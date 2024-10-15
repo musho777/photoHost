@@ -98,7 +98,7 @@ export const AboutApplication = () => {
           Не тратьте время на скучную ленту! Скачайте приложение и окунитесь в мир интересных открытий!
         </Text>
       </View>
-      <View style={{ marginBottom: 20 }}>
+      <View style={{ marginBottom: 55 }}>
         <Text style={[Styles.balihaiMedium13, styles.line, { borderBottomWidth: 0 }]}>Рекомендации</Text>
         <Text style={Styles.balihaiMedium13}>Автор канала не выкладывает:</Text>
         <Text style={[Styles.balihaiMedium13,]}>-Запрещенный контент</Text>

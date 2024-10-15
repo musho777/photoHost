@@ -54,7 +54,6 @@ export const HomeScreen = () => {
 
 
   const deletData = useCallback((post_id) => {
-    console.log("-111", post_id)
     dispatch(DelatePostAction({ post_id }, staticdata.token))
   }, [dispatch, staticdata.token]);
 
@@ -153,6 +152,7 @@ export const HomeScreen = () => {
         return (
           <Post
             data={item}
+            lastItem={index == getLents.data.length - 1}
             viewableItems={viewableItems}
             setShowLike={() => setLikeClose(true)}
             setShowView={() => setShowView(true)}

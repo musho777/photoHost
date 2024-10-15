@@ -15,7 +15,8 @@ export const Post = React.memo(({
   setShowView,
   data,
   setShowLike,
-  setShowShare
+  setShowShare,
+  lastItem
 }) => {
 
   const user = useSelector((st) => st.userData)
@@ -31,9 +32,8 @@ export const Post = React.memo(({
   const onPressOut = () => {
     setLong(false)
   }
-
   return (
-    <View>
+    <View style={lastItem && { marginBottom: 50 }}>
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
