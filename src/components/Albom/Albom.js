@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 const windowWidth = Dimensions.get('window').width;
 
 export const Albom = ({ data, seved, my = false, loading, elm, lastItem }) => {
-  console.log(lastItem)
   const navigation = useNavigation()
   const Loadingdata = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 

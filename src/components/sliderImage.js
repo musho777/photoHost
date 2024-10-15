@@ -1,11 +1,13 @@
-import React, { useMemo } from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, Text, Dimensions, StyleSheet, ActivityIndicator } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
 const SliderImage = React.memo(({ description, item, long, height, index }) => {
+
+  const [loading, setLoading] = useState(true)
   const Description = useMemo(() => {
     let desc = description;
     if (description && description[0] === '[') {
@@ -24,6 +26,9 @@ const SliderImage = React.memo(({ description, item, long, height, index }) => {
         {Array.isArray(Description) ? Description[index] : Description}
       </Text>
     </View>}
+    {loading && <View style={[styles.loading, { height: height }]}>
+      <ActivityIndicator color='#FFC24B' size={"large"} />
+    </View>}
     <FastImage
       style={[{ height: height }, styles.img]}
       source={{
@@ -32,6 +37,9 @@ const SliderImage = React.memo(({ description, item, long, height, index }) => {
         cache: FastImage.cacheControl.immutable
       }}
       fallback={false}
+      onLoad={() => {
+        setLoading(false)
+      }}
       resizeMode={FastImage.resizeMode.cover}
     />
   </View>
@@ -64,5 +72,12 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     top: 50,
     height: 'auto',
+  },
+  loading: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999,
+    width: '100%'
   }
 });

@@ -141,7 +141,7 @@ export const HomeScreen = () => {
       return <ActivityIndicator size="large" color='#FFC24B' />
     }
     else if ((!getLents?.nextPage && getLents.data.length > 5 && !getLents.secondLoading)) {
-      return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 10 }]}>Больше нет публикаций</Text>
+      return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 55 }]}>Больше нет публикаций</Text>
     }
   };
 
@@ -152,7 +152,6 @@ export const HomeScreen = () => {
         return (
           <Post
             data={item}
-            lastItem={index == getLents.data.length - 1}
             viewableItems={viewableItems}
             setShowLike={() => setLikeClose(true)}
             setShowView={() => setShowView(true)}

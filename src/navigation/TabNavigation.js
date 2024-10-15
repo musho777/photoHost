@@ -155,9 +155,27 @@ export const TabNavigation = () => {
 
   return (
     <Tab.Navigator
-      tabBar={(props) => <CustomTabBar {...props} />}
+      tabBar={(props) => <View style={{ backgroundColor: 'transparent' }}>
+        <CustomTabBar {...props} />
+      </View>
+      }
+
       screenOptions={({ route }) => ({
-        tabBarShowLabel: false,
+        // tabBarShowLabel: false,
+        tabBarOptions: {
+          showIcon: true,
+          showLabel: false,
+          lazyLoad: true,
+          style: {
+            backgroundColor: 'transparent',
+            borderTopWidth: 0,
+            position: 'absolute',
+            left: 50,
+            right: 50,
+            bottom: 20,
+            height: 100
+          }
+        }
       })}
     >
       <Tab.Screen
