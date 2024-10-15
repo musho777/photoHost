@@ -1,4 +1,4 @@
-import React, { useCallback, forwardRef } from 'react';
+import React, { useCallback, forwardRef, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import {
   BottomSheetBackdrop,
@@ -6,7 +6,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetPostLikeAction } from '../store/action/action';
+import { GetPostLikeAction, HidenTabNavigation, ShowTabNavigation } from '../store/action/action';
 import { useNavigation } from '@react-navigation/native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { HearSvg2 } from '../assets/svg/Svgs';
@@ -19,6 +19,12 @@ export const LikeList = forwardRef(
     const [page, setPage] = useState(1);
     const dispatch = useDispatch();
     const getPostLike = useSelector(st => st.getPostLike);
+
+
+    useEffect(() => {
+      dispatch(HidenTabNavigation())
+    }, [])
+
     const renderBackdrop = useCallback(
       props => (
         <BottomSheetBackdrop
@@ -49,7 +55,10 @@ export const LikeList = forwardRef(
         index={0}
         snapPoints={['80%']}
         enablePanDownToClose={true}
-        onClose={() => close()}
+        onClose={() => {
+          dispatch(ShowTabNavigation())
+          close()
+        }}
         backdropComponent={renderBackdrop}>
         <View
           style={[

@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Styles } from '../../styles/Styles';
 import { SelectedSvg, SelectSvg, ShearSvg } from '../../assets/svg/Svgs';
-import { GetFollowerAction, newMessageAction } from '../../store/action/action';
+import { GetFollowerAction, HidenTabNavigation, newMessageAction, ShowTabNavigation } from '../../store/action/action';
 import BottomSheet from '@gorhom/bottom-sheet';
 
 
-export const Share = ({ big, postId, close, open, user_id }) => {
+export const Share = ({ postId, close, open, user_id }) => {
   const [select, setSelect] = useState([])
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
@@ -36,11 +36,19 @@ export const Share = ({ big, postId, close, open, user_id }) => {
     setSelect([])
   }, [open])
 
+  useEffect(() => {
+    dispatch(HidenTabNavigation())
+  }, [])
+
+
   const ShareFunction = () => {
-    select.map((elm, i) => {
-      dispatch(newMessageAction({ post_id: `${postId}`, receiver_id: elm }, staticdata.token));
-    })
-    close()
+    if (select.length) {
+      select.map((elm, i) => {
+        dispatch(newMessageAction({ post_id: `${postId}`, receiver_id: elm }, staticdata.token));
+      })
+      dispatch(ShowTabNavigation())
+      close()
+    }
   }
 
   const SelectUsers = (id) => {
@@ -70,7 +78,10 @@ export const Share = ({ big, postId, close, open, user_id }) => {
     <BottomSheet
       index={0}
       snapPoints={['80%']}
-      onClose={() => close()}
+      onClose={() => {
+        dispatch(ShowTabNavigation())
+        close()
+      }}
       enablePanDownToClose={true}
       backdropComponent={renderBackdrop}>
       <View
