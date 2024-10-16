@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, SafeAreaView, BackHandler, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { EmailSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from '../../../assets/svg/Svgs';
+import { EmailSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation, WorkLocationSvg } from '../../../assets/svg/Svgs';
 import { AppColors } from '../../../styles/AppColors';
 import { Styles } from '../../../styles/Styles';
 import React, { useEffect } from 'react';
@@ -59,6 +59,7 @@ export const EditProfilScreen = ({ navigation }) => {
   const [day, setDay] = useState('')
   const [date, setDate] = useState('')
   const isFocused = useIsFocused();
+  const [ooo, setOoo] = useState('')
 
 
   useEffect(() => {
@@ -106,11 +107,14 @@ export const EditProfilScreen = ({ navigation }) => {
     setGender(temp?.gender)
     setWorkLocation(temp?.work_type)
     setProfation(temp?.mgu)
+    setOoo(temp.ooo)
     setPhonNumber(temp?.phone)
     setWeb(temp?.web)
     setGraf(temp?.work_grafik)
     setOtrasl(temp?.otrasl)
   }
+
+  console.log(user?.allData?.data)
 
   const chnageProfil = () => {
     if (name === '') {
@@ -145,6 +149,7 @@ export const EditProfilScreen = ({ navigation }) => {
       work_grafik: graf,
       web: web,
       otrasl: otrasl,
+      ooo: ooo,
       user_type: user?.allData?.data.user_type,
     }, staticdata.token))
   };
@@ -163,6 +168,7 @@ export const EditProfilScreen = ({ navigation }) => {
         work_grafik: graf,
         web: web,
         otrasl: otrasl,
+        ooo: ooo,
       }))
       navigation.navigate('ProfileScreen')
     }
@@ -188,64 +194,127 @@ export const EditProfilScreen = ({ navigation }) => {
   }, [isFocused]);
 
 
-
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}>
-          <HeaderWhiteTitle
-            loading={changeProfil.loading}
-            onCheck={() => chnageProfil()}
-            check
-            onPress={() => {
-              navigation.goBack()
-              navigation.openDrawer()
-            }}
-            title=
-            {t(mainData.lang).Editprofile}
-          />
-          <View style={styles.textWrapper}>
-            <TextInput
-              value={name}
-              onChangeText={e => setName(e)}
-              style={Styles.darkMedium14}
+  if (accauntType) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}>
+            <HeaderWhiteTitle
+              loading={changeProfil.loading}
+              onCheck={() => chnageProfil()}
+              check
+              onPress={() => {
+                navigation.goBack()
+                navigation.openDrawer()
+              }}
+              title=
+              {t(mainData.lang).Editprofile}
             />
-          </View>
-          <Fild multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
-          {accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
-            (Чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
-            Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)
-          </Text> :
+            <View style={styles.textWrapper}>
+              <TextInput
+                value={name}
+                onChangeText={e => setName(e)}
+                style={Styles.darkMedium14}
+              />
+            </View>
+            <Fild multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
+            {accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
+              (Чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
+              Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)
+            </Text> :
+              <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
+                (Чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
+                Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города)
+              </Text>
+            }
+            <View>
+              {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
+              {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
+              {!accauntType && <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />}
+              <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
+              <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
+              <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
+              {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
+
+              <Fild multiline={true} value={ooo} hadnelChange={(e) => setOoo(e)} svg={<WorkLocationSvg />} placeholder={!accauntType ? `Адрес компании` : 'Адрес предприятия'} />
+
+
+
+
+
+
+              <Profiesions setLocation={(e) => setProfation(e)} loaction={profation} />
+              {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />}
+              {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
+              <View style={{ height: 55, width: '100%' }}></View>
+            </View>
+            {/* <Text
+            style={[[Styles.tomatoMedium10, { textAlign: 'center', marginTop: 10 }]]}>
+            {error || changeProfil.error}
+          </Text> */}
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    );
+  }
+  else {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}>
+            <HeaderWhiteTitle
+              loading={changeProfil.loading}
+              onCheck={() => chnageProfil()}
+              check
+              onPress={() => {
+                navigation.goBack()
+                navigation.openDrawer()
+              }}
+              title=
+              {t(mainData.lang).Editprofile}
+            />
+            <View style={styles.textWrapper}>
+              <TextInput
+                value={name}
+                onChangeText={e => setName(e)}
+                style={Styles.darkMedium14}
+              />
+            </View>
+
+
+
+
+
+            <Fild multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
               (Чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
               Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города)
             </Text>
-          }
-          <View>
-            {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
-            <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
-            <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
-            <Profiesions setLocation={(e) => setProfation(e)} loaction={profation} />
-            {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
-            {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
-            {!accauntType && <Fild multiline={true} value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
-            {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />}
-            {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
-            <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />
-            <View style={{ marginBottom: 55 }}>
+            <View>
+              <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
+              <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
+              <Fild multiline={true} value={ooo} hadnelChange={(e) => setOoo(e)} svg={<WorkLocationSvg />} placeholder={`Адрес компании`} />
+              <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />
+              <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />
               <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
+              <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />
+
+              {/* <Profiesions setLocation={(e) => setProfation(e)} loaction={profation} /> */}
+              <View style={{ height: 55, width: '100%' }}></View>
             </View>
-          </View>
-          {/* <Text
-          style={[[Styles.tomatoMedium10, { textAlign: 'center', marginTop: 10 }]]}>
-          {error || changeProfil.error}
-        </Text> */}
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
-  );
+            {/* <Text
+            style={[[Styles.tomatoMedium10, { textAlign: 'center', marginTop: 10 }]]}>
+            {error || changeProfil.error}
+          </Text> */}
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
