@@ -230,7 +230,7 @@ export const EditProfilScreen = ({ navigation }) => {
             <Profiesions setLocation={(e) => setProfation(e)} loaction={profation} />
             {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
             {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
-            {!accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
+            {!accauntType && <Fild multiline={true} value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={'Адрес компании'} />}
             {!accauntType && <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />}
             {!accauntType && <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />}
             <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />

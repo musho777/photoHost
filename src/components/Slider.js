@@ -16,6 +16,7 @@ import SliderImage from './sliderImage';
 import { VidioComponent } from './post/Vidio/VidioComponent';
 import { Styles } from '../styles/Styles';
 import Sliders from '@react-native-community/slider';
+import LottieView from 'lottie-react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -34,7 +35,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   const [duration, setDuration] = useState(0);
   const videoRef = useRef(null);
   const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
+  const animation = useRef(null);
 
   const onSeek = (value) => {
     let item = [...currentTime]
@@ -44,22 +45,10 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   };
 
 
-  useEffect(() => {
-    let timer = null
-    if (showLikeIcone) {
-      timer = setTimeout(() => {
-        setShowLikeICone(false)
-      }, 500);
-    }
-
-    return () => clearTimeout(timer);
-  }, [showLikeIcone]);
-
-
-
   const LikePost = useCallback(() => {
     dispatch(LikePostAction({ post_id: data.id }, staticdata.token, user.data.id));
   }, [dispatch, data.id, staticdata.token, user.data.id]);
+
 
 
 
@@ -70,8 +59,9 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         clearTimeout(clickTimeout.current);
       }
       const { locationX, locationY } = event.nativeEvent;
-      setPosition({ x: locationX - 50, y: locationY - 50 });
+      setPosition({ x: locationX - 180, y: locationY - 180 });
       setShowLikeICone(true);
+      animation?.current?.play();
       LikePost();
     } else {
       clickTimeout.current = setTimeout(() => {
@@ -150,10 +140,13 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         }
 
         {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
-          <FastImage
-            source={require('../assets/img/Animation3.gif')}
-            style={{ width: 130, height: 130 }}
-            resizeMode={FastImage.resizeMode.contain}
+          <LottieView
+            ref={animation}
+            source={require('../assets/img/Animation.json')}
+            autoPlay={true}
+            loop={false}
+            style={{ width: 350, height: 350 }}
+            onAnimationFinish={(e) => { setShowLikeICone(false) }}
           />
         </View>}
       </TouchableOpacity>

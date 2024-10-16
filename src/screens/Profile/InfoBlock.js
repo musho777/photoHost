@@ -68,7 +68,6 @@ export const InfoBlock = ({ user }) => {
             <InfoItem svg={<WorkLocation />} value={workLocation} />
             {!userType && <InfoItem svg={<NetWorkSvg />} value={web} />}
             {!userType && <InfoItem svg={<WatchSvg />} value={graf} />}
-
         </TouchableOpacity>
     </ScrollView>
 }
