@@ -52,7 +52,6 @@ export const ProfileScreen = ({ navigation }) => {
     return <InfoBlock user={user.data} />
   };
 
-  const renderItem = seletedScreen ? renderItem1 : renderItem2;
 
   const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
   const ListEmptyComponent = () => {
@@ -61,17 +60,16 @@ export const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TouchableOpacity
+      {seletedScreen ? <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}
         style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
         <FlatList
-          data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
-          scrollEnabled={seletedScreen}
+          data={getPosts?.data}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           refreshing={user?.loading}
-          renderItem={renderItem}
+          renderItem={renderItem1}
           numColumns={2}
           ListEmptyComponent={ListEmptyComponent}
           scrollEventThrottle={16}
@@ -118,7 +116,55 @@ export const ProfileScreen = ({ navigation }) => {
             )}
         />
 
-      </TouchableOpacity>
+      </TouchableOpacity> :
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => setChangeAvatar(false)}
+          style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
+          <FlatList
+            data={[{ id: 1 }]}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            refreshing={user?.loading}
+            renderItem={renderItem2}
+            numColumns={2}
+            ListEmptyComponent={ListEmptyComponent}
+            onRefresh={() => {
+              if (!getPosts.loading) {
+                setPage(1);
+                dispatch(getUserInfoAction(staticdata.token));
+              }
+            }}
+
+            ListHeaderComponent={
+              <>
+                <TouchableOpacity
+                  onPress={() => navigation.openDrawer()}
+                  style={{ marginVertical: 10 }}>
+                  <MenuSvg2 />
+                </TouchableOpacity>
+
+                {user.loading ? (
+                  <ProfileImageSkeleton />
+                ) : (
+                  <ProfilImage
+                    user={user}
+                    changeAvatar={changeAvatar}
+                    setChangeAvatar={(e) => setChangeAvatar(e)}
+                  />
+                )}
+                <ProfilInfo
+                  id={user?.allData?.data?.id}
+                  loading={getPosts.loading}
+                  postCount={user.postCount}
+                  user={user}
+                />
+                <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+              </>
+            }
+          />
+        </TouchableOpacity>
+      }
     </SafeAreaView>
   );
 };

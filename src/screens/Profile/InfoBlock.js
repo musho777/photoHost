@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { ScrollView, TouchableOpacity } from "react-native"
+import { ScrollView, TouchableOpacity, View } from "react-native"
 import { CakeSvg, EmailSvg, GenderSvg, LocationSvg, NetWorkSvg, Otrastel, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation } from "../../assets/svg/Svgs"
 import { InfoItem } from "./components/infoItem"
 import { useFocusEffect } from "@react-navigation/native"
@@ -68,6 +68,7 @@ export const InfoBlock = ({ user }) => {
             <InfoItem svg={<WorkLocation />} value={workLocation} />
             {!userType && <InfoItem svg={<NetWorkSvg />} value={web} />}
             {!userType && <InfoItem svg={<WatchSvg />} value={graf} />}
+            <View style={{ height: 60, width: '100%' }}></View>
         </TouchableOpacity>
     </ScrollView>
 }
