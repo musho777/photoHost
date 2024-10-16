@@ -18,9 +18,8 @@ const SliderImage = React.memo(({ description, item, long, height, index }) => {
     return desc;
   }, [description]);
 
-  console.log(description, 'des')
   return <View>
-    {(!long && (description && Description?.length > 0)) && <View style={styles.hover}>
+    {(!long && (description && Description?.length > 0 && Description[index])) && <View style={styles.hover}>
       <Text style={[Styles.whiteSemiBold12]}>
         {Description[index]}
       </Text>

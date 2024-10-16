@@ -114,8 +114,6 @@ export const EditProfilScreen = ({ navigation }) => {
     setOtrasl(temp?.otrasl)
   }
 
-  console.log(user?.allData?.data)
-
   const chnageProfil = () => {
     if (name === '') {
       setError('Введите корректный  имя');

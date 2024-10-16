@@ -34,7 +34,6 @@ export const InfoBlock = ({ user }) => {
         else {
             setDate(`-`)
         }
-        console.log(user.ooo)
         setLocation(user.city?.name ? user.city?.name : '-')
         setGender(user.gender ? user.gender : '-')
         setOoo(user.ooo ? user.ooo : '-')
