@@ -9,21 +9,20 @@ const SliderImage = React.memo(({ description, item, long, height, index }) => {
 
   const [loading, setLoading] = useState(true)
   const Description = useMemo(() => {
-    let desc = description;
-    if (description && description[0] === '[') {
-      try {
-        desc = JSON.parse(description);
-      } catch (error) {
-        console.error('Failed to parse description:', error);
-      }
+    let desc = "";
+    try {
+      desc = JSON.parse(description);
+    } catch (error) {
+      console.error('Failed to parse description:', error);
     }
     return desc;
   }, [description]);
 
+  console.log(description, 'des')
   return <View>
-    {(!long && (Array.isArray(Description) ? Description[index] : Description)) && <View style={styles.hover}>
+    {(!long && (description && Description?.length > 0)) && <View style={styles.hover}>
       <Text style={[Styles.whiteSemiBold12]}>
-        {Array.isArray(Description) ? Description[index] : Description}
+        {Description[index]}
       </Text>
     </View>}
     {loading && <View style={[styles.loading, { height: height }]}>

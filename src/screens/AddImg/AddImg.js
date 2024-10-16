@@ -37,25 +37,8 @@ export const AddImg = ({ navigation }) => {
   const [selectedCatalog, setSelectedCatalog] = useState('')
   const [selectedCatalogName, setSelectedCatalogName] = useState('')
   const getCatalog = useSelector((st) => st.getCatalog)
-  const videoRefCut = useRef(null);
-  const videoRefCut1 = useRef(null);
-  const videoRefCut2 = useRef(null);
-  const videoRefCut3 = useRef(null);
-  const videoRefCut4 = useRef(null);
-  const videoRefCut5 = useRef(null);
-  const videoRefCut6 = useRef(null);
-  const videoRefCut7 = useRef(null);
-  const videoRefCut8 = useRef(null);
-  const videoRefCut9 = useRef(null);
-  const videoRefCut10 = useRef(null);
-  const [loading, setLoading] = useState(false)
-
 
   const [showError, setShowError] = useState(false)
-
-
-
-  const ref = [videoRefCut, videoRefCut1, videoRefCut2, videoRefCut3, videoRefCut4, videoRefCut5, videoRefCut6, videoRefCut7, videoRefCut8, videoRefCut9, videoRefCut10]
 
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['50%'], [],);
@@ -71,7 +54,6 @@ export const AddImg = ({ navigation }) => {
   const [selectedImage, setSelectedImage] = useState()
 
   const [activePhoto, setActivePhoto] = useState(0)
-  const [screenshotUri, setScreenshotUri] = useState([]);
   const [errorCatalog, setErrorCatalog] = useState(false)
   const [error, setError] = useState('')
   const [first, setFirst] = useState(false)
@@ -81,6 +63,7 @@ export const AddImg = ({ navigation }) => {
   const [keyboardOpen, setKeyboardOpen] = useState(false);
 
   useEffect(() => {
+    dispatch(GetCatalogAction(staticData.token))
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardOpen(true);
     });
@@ -98,6 +81,15 @@ export const AddImg = ({ navigation }) => {
 
   React.useLayoutEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      setError('')
+      setShowError(false)
+      Camera()
+      setErrorCatalog(false)
+      dispatch(ClearCreatPost())
+      setSelectedCatalog('')
+      setSelectedCatalogName('')
+      setSelectedImage()
+      setUri([])
       addPhoto()
     });
 
@@ -108,7 +100,7 @@ export const AddImg = ({ navigation }) => {
     const cameraPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.CAMERA
     const photoLibraryPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
     setUri([])
-    setDescription('')
+    setDescription([])
     const cameraPermissionStatus = await check(cameraPermission);
     const photoLibraryPermissionStatus = await check(photoLibraryPermission);
     if (cameraPermissionStatus !== RESULTS.GRANTED && photoLibraryPermissionStatus !== RESULTS.GRANTED) {
@@ -117,30 +109,12 @@ export const AddImg = ({ navigation }) => {
     }
   }
 
-  useEffect(() => {
-    dispatch(GetCatalogAction(staticData.token))
-  }, [])
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
-      setError('')
-      setShowError(false)
-      Camera()
-      setErrorCatalog(false)
-      dispatch(ClearCreatPost())
-      setSelectedCatalog('')
-      setSelectedCatalogName('')
-      setSelectedImage()
-      setUri([])
-    });
-    return unsubscribe;
-  }, [navigation]);
 
   useEffect(() => {
     if (createPost.status) {
       dispatch(ClearCreatPost())
       setUri([])
-      setDescription('')
+      setDescription([])
     }
   }, [createPost.status]);
 
@@ -182,7 +156,6 @@ export const AddImg = ({ navigation }) => {
     }
   };
 
-
   const addPhoto = () => {
     setFirst(true)
     ImagePicker.openPicker({
@@ -193,6 +166,7 @@ export const AddImg = ({ navigation }) => {
       multiple: true,
     }).then(response => {
       let item = [...uri]
+      console.log(response.length)
       if (response.didCancel) {
         if (uri.length == 0) {
           navigation.goBack()
@@ -214,8 +188,9 @@ export const AddImg = ({ navigation }) => {
             }
           }
           else {
-            if (item.length <= 10)
+            if (item.length <= 10) {
               item.push({ uri: elm.path });
+            }
           }
         })
         setUri(item);
@@ -332,15 +307,8 @@ export const AddImg = ({ navigation }) => {
                   style={[styles.img, { height: 570 }]}
                   source={{ uri: selectedImage }}
                 />
-                {/* <Video
-                    source={{ uri: selectedImage }}
-                    style={[styles.img]}
-                    resizeMode="cover"
-                    volume={0}
-                  /> */}
-                {/* } */}
               </View>}
-              <ScrollView showsHorizontalScrollIndicator={false} keyboardShouldPersistTaps="handled" horizontal={true} style={[styles.list, keyboardOpen && { marginBottom: 30 }]}>
+              <ScrollView showsHorizontalScrollIndicator={false} keyboardShouldPersistTaps="handled" horizontal={true} style={[styles.list, keyboardOpen && { marginBottom: -50 }]}>
                 {uri.length < 10 && < TouchableOpacity style={[styles.itemImage]} onPress={() => addPhoto()}>
                   <AddImage />
                 </TouchableOpacity>}
@@ -355,31 +323,20 @@ export const AddImg = ({ navigation }) => {
                       style={styles.close}>
                       <CloseSvg1 smole />
                     </TouchableOpacity>
-                    {/* {(elm.uri.includes('mp4') || elm.uri.includes('mov')) ? */}
-                    {/* <View>
-                        <Video
-                          source={{ uri: elm.uri }}
-                          style={[styles.vidio, { marginLeft: i == 0 ? 0 : 10, }, activePhoto == i && { borderWidth: 3, borderColor: 'green' }]}
-                          resizeMode="cover"
-                          paused={false}
-                          volume={0}
-                        />
-                      </View> : */}
                     <Image
                       style={[{ width: 80, height: 80, borderRadius: 10, marginLeft: i == 0 ? 0 : 10, }, activePhoto == i && { borderWidth: 3, borderColor: 'green' }]}
                       source={{ uri: elm.uri }}
                     />
-                    {/* } */}
                   </TouchableOpacity>
                 })}
               </ScrollView>
 
             </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 30 }} >
               <TextInput
                 placeholderTextColor="white"
                 placeholder={t(mainData.lang).adddescription}
-                style={[styles.input, { marginBottom: (!keyboardOpen && Platform.OS == "android") ? 0 : 50, zIndex: 999 }]}
+                style={[styles.input, { marginBottom: (!keyboardOpen && Platform.OS == "android") ? 0 : 20, zIndex: 999 }]}
                 value={description[activePhoto]}
                 multiline
                 onChangeText={(e) => addDescription(e, activePhoto)}
@@ -439,7 +396,7 @@ const styles = StyleSheet.create({
   list: {
     position: 'absolute',
     zIndex: 999,
-    bottom: 90,
+    bottom: 130,
   },
   input: {
     borderColor: 'red',
