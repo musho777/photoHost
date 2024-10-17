@@ -1,10 +1,9 @@
-import { BackHandler, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import Video from 'react-native-video';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 import { Controler } from './component/Controler';
-import Sliders from '@react-native-community/slider';
 import Slider from 'react-native-slider'
 import { Styles } from '../../../styles/Styles';
 
@@ -29,13 +28,6 @@ export const VidioComponent = forwardRef(({
   const [fullScreen, setFullScreen] = useState(false)
   const navigation = useNavigation()
   const [loading, setLoading] = useState(true)
-  // const [currentTime, setCurrentTime] = useState(0)
-  const videoRef = useRef(null);
-
-  // const onSeek = (value) => {
-  //   setCurrentTime(value)
-  //   videoRef?.current?.seek(value);
-  // };
 
   useEffect(() => {
     setPaused(true)

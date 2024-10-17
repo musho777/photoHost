@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator, BackHandler } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, GetLentsAction, GetPostsAction, getUserInfoAction, LogoutAction, ShowTabNavigation } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, GetLentsAction, GetPostsAction, getUserInfoAction, ShowTabNavigation } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -79,7 +79,6 @@ export const HomeScreen = () => {
 
 
   useEffect(() => {
-    // Add back handler to stop sound when navigating back
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (showShare || likeClose || showView) {
         setShowShare(false)
@@ -94,7 +93,7 @@ export const HomeScreen = () => {
     });
 
     return () => {
-      backHandler.remove(); // Clean up the event listener
+      backHandler.remove();
     };
   }, [showShare, likeClose, showView]);
 

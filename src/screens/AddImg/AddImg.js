@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Image,
   StyleSheet,
   TextInput,
   View,
@@ -128,17 +127,21 @@ export const AddImg = ({ navigation }) => {
     let form = new FormData();
     uri.length &&
       uri.forEach((el, i) => {
-        (!el.uri.includes('.mp4') && !el.uri.includes('mov')) ?
+
+        if (!el.mime.includes('video')) {
           form.append('photos[]', {
             uri: el.uri,
-            type: 'image/jpg',
-            name: 'photo.jpg',
-          }) :
+            type: el.mime,
+            name: 'photo',
+          });
+        }
+        else {
           form.append(`video[][video]`, {
             uri: el.uri,
             type: 'video/mp4',
             name: 'video.mp4',
           })
+        }
       });
 
     description && form.append('description', JSON.stringify(description));
@@ -162,8 +165,6 @@ export const AddImg = ({ navigation }) => {
     setEnableScrollTo(true)
     setFirst(true)
     const options = {
-      // width: 720,
-      // height: 1280,
       compressVideo: true,
       maxVideoDuration: 60,
       maxSelectedAssets: 10,
@@ -172,7 +173,6 @@ export const AddImg = ({ navigation }) => {
       isPreview: false,
     }
     const response = await openPicker(options);
-    console.log(response)
     let item = [...data]
     if (response.didCancel) {
       if (uri.length == 0) {
@@ -184,7 +184,7 @@ export const AddImg = ({ navigation }) => {
       response?.map((elm, i) => {
         if (elm?.mime.startsWith('video')) {
           if (elm.duration <= 60883) {
-            item.push({ uri: elm.path })
+            item.push({ uri: elm.path, mime: elm.mime })
           }
           else {
             setError('видео должен быть меньше чем 60 с')
@@ -193,7 +193,8 @@ export const AddImg = ({ navigation }) => {
         }
         else {
           if (item.length <= 10) {
-            item.push({ uri: elm.path });
+            console.log(elm)
+            item.push({ uri: elm.path, mime: elm.mime });
           }
         }
       })
@@ -231,6 +232,7 @@ export const AddImg = ({ navigation }) => {
     let item = [...description]
     item[i] = e
     setDescription(item)
+    setEnableScrollTo(false)
   }
 
 
@@ -286,7 +288,7 @@ export const AddImg = ({ navigation }) => {
       >
         <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
           <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
-          <View activeOpacity={1} onPress={() => Keyboard.dismiss()} style={{ flex: 1 }}>
+          <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
               <TouchableOpacity onPress={() => CloseScreen()}>
                 <CloseSvg1 />
@@ -319,12 +321,6 @@ export const AddImg = ({ navigation }) => {
                   initialNumToRender={5}
                   maxToRenderPerBatch={10}
                   renderItem={renderItem}
-                  onContentSizeChange={() => {
-                    if (enableScrollTo) {
-                      flatListRef.current.scrollToIndex({ index: scrollTo, animated: true })
-                    }
-                  }
-                  }
                 />
               </View>
               <View style={styles.paginationWrapper}>

@@ -58,7 +58,6 @@
     "react-native-media-controls": "^2.3.0",
     "react-native-modal": "^13.0.1",
     "react-native-modal-datetime-picker": "^17.1.0",
-    "react-native-multiple-image-picker": "^0.7.3",
     "react-native-multiple-select": "^0.5.12",
     "react-native-pager-view": "^6.2.0",
     "react-native-permissions": "^3.8.4",

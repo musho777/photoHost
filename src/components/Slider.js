@@ -110,7 +110,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         style={styles.img}>
         {item.video ?
           <View>
-            {(data.description && data.description[0] === '[') &&
+            {(JSON.parse(data.description)[index]) &&
               <View style={styles.hover}>
                 <Text style={Styles.whiteSemiBold12}>{JSON.parse(data.description)[index]}</Text>
               </View>

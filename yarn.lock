@@ -11275,6 +11275,7 @@ __metadata:
     react-native-swiper-flatlist: ^3.2.3
     react-native-tab-view: ^3.5.2
     react-native-table-component: ^1.2.2
+    react-native-turbo-image: 1.12.2
     react-native-vector-icons: ^10.1.0
     react-native-video: ^5.2.1
     react-native-video-controls: ^2.8.1
@@ -12197,6 +12198,16 @@ react-native-snap-carousel@latest:
   version: 1.2.2
   resolution: "react-native-table-component@npm:1.2.2"
   checksum: 906a0ae3b23bcf4a98237d07853bb416feb3d512a4f28e758470a3c45154f15e92445d57ef272e3c3c24c7355ec6ccbf6b53e7ce917ed1964b9f973084d88c46
+  languageName: node
+  linkType: hard
+
+"react-native-turbo-image@npm:1.12.2":
+  version: 1.12.2
+  resolution: "react-native-turbo-image@npm:1.12.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 6b33cccb0dbe0d93609d7ef257d88fc246b5277e51834cb8315d3eff633580fb1bf61be34984d736073decf9b323890406d908c64fd3f6ac515baa67022ea89d
   languageName: node
   linkType: hard
 
