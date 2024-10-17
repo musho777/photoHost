@@ -2083,6 +2083,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@baronha/react-native-multiple-image-picker@npm:^1.1.9":
+  version: 1.1.9
+  resolution: "@baronha/react-native-multiple-image-picker@npm:1.1.9"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 309d0842967673a97687f34107dce627e91a200c69e898970a854f3c76ced273f4835ac69d82e3e84f5a8fcbe6c8d9ae0c25bf0bd3fccf42da2b3c54aef08d3d
+  languageName: node
+  linkType: hard
+
 "@bcoe/v8-coverage@npm:^0.2.3":
   version: 0.2.3
   resolution: "@bcoe/v8-coverage@npm:0.2.3"
@@ -11186,6 +11196,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
+    "@baronha/react-native-multiple-image-picker": ^1.1.9
     "@gapur/react-native-accordion": ^1.0.7
     "@gorhom/bottom-sheet": ^4.6.3
     "@miblanchard/react-native-slider": ^2.6.0
@@ -11244,6 +11255,7 @@ __metadata:
     react-native-media-controls: ^2.3.0
     react-native-modal: ^13.0.1
     react-native-modal-datetime-picker: ^17.1.0
+    react-native-multiple-image-picker: ^0.7.3
     react-native-multiple-select: ^0.5.12
     react-native-pager-view: ^6.2.0
     react-native-permissions: ^3.8.4
@@ -11870,6 +11882,15 @@ __metadata:
     react: "*"
     react-native: ">=0.65.0"
   checksum: 15985fd6aaae7a2134ec1003c63abd384f4a17beabd0a80b74033c98eccee29161aa07150f479373fb43106cfb33b5837b7a4f1d2b721ff03b3727490c830a07
+  languageName: node
+  linkType: hard
+
+"react-native-multiple-image-picker@npm:^0.7.3":
+  version: 0.7.3
+  resolution: "react-native-multiple-image-picker@npm:0.7.3"
+  peerDependencies:
+    react-native: ">=0.26.0"
+  checksum: b06d0e80caf91ca3822529fb103f614ae62e2c290a83c34ceafa9d3c3b61ee18ef161e8b4479d7ff5b075fddb1a6f0faf3b393acdfc9391ed39d8722d8eb174e
   languageName: node
   linkType: hard
 

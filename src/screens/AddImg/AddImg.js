@@ -13,7 +13,6 @@ import {
   Keyboard,
   FlatList,
 } from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { CreatePostLocal, CreatPostAction, GetCatalogAction } from '../../store/action/action';
@@ -21,12 +20,13 @@ import { Styles } from '../../styles/Styles';
 import { t } from '../../components/lang';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ClearCreatPost } from '../../store/action/clearAction';
-import { AddImage, CheckMarkSvg, CloseSvg1 } from '../../assets/svg/Svgs';
+import { AddImage, CheckMarkSvg, CloseSvg1, RubbishSvg } from '../../assets/svg/Svgs';
 import { BootomModal } from '../../components/BootomSheet';
 import { Status } from './component/status';
 import { AppColors } from '../../styles/AppColors';
 import { useFocusEffect } from '@react-navigation/native';
-
+import { openPicker } from '@baronha/react-native-multiple-image-picker';
+import FastImage from 'react-native-fast-image';
 const windowWidth = Dimensions.get('window').width;
 
 
@@ -158,49 +158,50 @@ export const AddImg = ({ navigation }) => {
   };
 
 
-  const addPhoto = (data, i) => {
+  const addPhoto = async (data, i) => {
     setEnableScrollTo(true)
     setFirst(true)
-    ImagePicker.openPicker({
-      mediaType: "any",
+    const options = {
+      // width: 720,
+      // height: 1280,
       compressVideo: true,
-      width: 720,
-      height: 1280,
-      multiple: true,
-    }).then(response => {
-      console.log(uri.length, 'uri.length')
-      console.log(data, 'data.length')
-      let item = [...data]
-      if (response.didCancel) {
-        if (uri.length == 0) {
-          navigation.goBack()
-          setFirst(false)
-        }
+      maxVideoDuration: 60,
+      maxSelectedAssets: 10,
+      doneTitle: "Добавлять",
+      usedCameraButton: false,
+      isPreview: false,
+    }
+    const response = await openPicker(options);
+    console.log(response)
+    let item = [...data]
+    if (response.didCancel) {
+      if (uri.length == 0) {
+        navigation.goBack()
+        setFirst(false)
       }
-      else if (!response.didCancel && !response.error) {
-
-        response?.map((elm, i) => {
-          if (elm?.mime.startsWith('video')) {
-            if (elm.duration <= 60883) {
-              item.push({ uri: elm.path })
-            }
-            else {
-              setError('видео должен быть меньше чем 60 с')
-              setShowError(true)
-            }
+    }
+    else if (!response.didCancel && !response.error) {
+      response?.map((elm, i) => {
+        if (elm?.mime.startsWith('video')) {
+          if (elm.duration <= 60883) {
+            item.push({ uri: elm.path })
           }
           else {
-            if (item.length <= 10) {
-              item.push({ uri: elm.path });
-            }
+            setError('видео должен быть меньше чем 60 с')
+            setShowError(true)
           }
-        })
-        if (i != 0) {
-          setScrollTo(uri.length)
         }
-        setUri(item);
+        else {
+          if (item.length <= 10) {
+            item.push({ uri: elm.path });
+          }
+        }
+      })
+      if (i != 0) {
+        setScrollTo(uri.length)
       }
-    });
+      setUri(item);
+    }
   }
 
 
@@ -248,21 +249,12 @@ export const AddImg = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => {
     return <View>
-      <Image
-        onLoad={(event) => {
-          let { width, height } = event.nativeEvent.source;
-          if (height < 700) {
-            height = 380
-          }
-          else {
-            height = 570
-          }
-        }}
+      <FastImage
         style={[styles.img, { height: 570 }]}
         source={{ uri: item.uri }}
       />
       <TouchableOpacity onPress={() => delateFoto(index)} style={{ position: 'absolute', top: 10, right: 10 }}>
-        <CloseSvg1 />
+        <RubbishSvg />
       </TouchableOpacity>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <TextInput
