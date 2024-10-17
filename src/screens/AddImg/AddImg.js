@@ -138,6 +138,19 @@ export const AddImg = ({ navigation }) => {
     setDescription(item)
   }
 
+  const handleMomentumScrollEnd = (event) => {
+    const index = Math.floor(
+      Math.floor(event.nativeEvent.contentOffset.x) /
+      Math.floor(event.nativeEvent.layoutMeasurement.width)
+    );
+    setActive(index);
+  };
+
+
+  const Close = () => {
+    setUri([])
+  }
+
   const renderItem = ({ item, index }) => {
     return <View behavior={Platform.OS === 'ios' ? 'padding' : "position"}>
       <ScrollView style={{ height: 500 }}>
@@ -162,13 +175,7 @@ export const AddImg = ({ navigation }) => {
     </View>
   }
 
-  const handleMomentumScrollEnd = (event) => {
-    const index = Math.floor(
-      Math.floor(event.nativeEvent.contentOffset.x) /
-      Math.floor(event.nativeEvent.layoutMeasurement.width)
-    );
-    setActive(index);
-  };
+
 
 
   if (first)
@@ -183,7 +190,13 @@ export const AddImg = ({ navigation }) => {
           setSelectedCatalog={(e) => setSelectedCatalog(e)}
           error={error}
           setFirst={(e) => setFirst(e)}
+          Close={() => Close()}
         />
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity onPress={() => addPhoto(uri, 1)} style={styles.addPhoto}>
+            <Text style={[Styles.whiteMedium12, { color: 'black' }]}>{t(mainData.lang).Addphoto}</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
         <View style={styles.centeredView}>
           <View style={styles.selectImage}>
@@ -206,9 +219,6 @@ export const AddImg = ({ navigation }) => {
               <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
             ))}
           </View>
-          <TouchableOpacity onPress={() => addPhoto(uri, 1)}>
-            <AddImage />
-          </TouchableOpacity>
         </View>
         {/* </ScrollView> */}
 
@@ -247,7 +257,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     height: '100%',
-    marginTop: 20,
   },
   img: {
     height: 500,
@@ -273,6 +282,16 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 25
+    marginTop: 10
+  },
+  addPhoto: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    borderRadius: 7,
+    width: 220,
+    height: 30,
+    marginTop: 10,
+    backgroundColor: '#FFD953',
   },
 });

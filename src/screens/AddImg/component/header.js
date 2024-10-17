@@ -19,6 +19,7 @@ export const Header = ({
   uri,
   error,
   setFirst,
+  Close
 }) => {
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['50%'], [],);
@@ -111,10 +112,13 @@ export const Header = ({
   return <View>
 
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity onPress={() => {
+        Close()
+        navigation.goBack()
+      }}>
         <CloseSvg1 />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePresentModalPress()} style={{ borderWidth: 1, borderColor: errorCatalog ? 'red' : 'white', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, borderRadius: 7, }}>
+      <TouchableOpacity onPress={() => handlePresentModalPress()} style={[styles.category, { borderColor: errorCatalog ? 'red' : 'white' }]}>
         <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white' }]}>
           {selectedCatalog ?
             selectedCatalogName :
@@ -147,5 +151,12 @@ export const Header = ({
 }
 
 const styles = StyleSheet.create({
-
+  category: {
+    borderWidth: 1,
+    alignItems: 'center', justifyContent: 'center',
+    paddingHorizontal: 12,
+    borderRadius: 7,
+    width: 220,
+    marginLeft: 5,
+  }
 });

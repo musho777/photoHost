@@ -120,9 +120,9 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
             <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
 
-            <Text style={Styles.darkSemiBold14}>Минимальное время просмотра видео - 5  </Text>
+            {/* <Text style={Styles.darkSemiBold14}>Минимальное время просмотра видео - 5  </Text>
             <Text style={Styles.darkSemiBold14}>Среднее время просмотра видео - 14 </Text>
-            <Text style={Styles.darkSemiBold14}>Максимальное время просмотра видео - 36 </Text>
+            <Text style={Styles.darkSemiBold14}>Максимальное время просмотра видео - 36 </Text> */}
 
 
             <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
