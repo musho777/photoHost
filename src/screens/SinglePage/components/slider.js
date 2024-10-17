@@ -11,6 +11,7 @@ import { AppColors } from '../../../styles/AppColors';
 import { VidioComponent } from '../../../components/post/Vidio/VidioComponent';
 import { Styles } from '../../../styles/Styles';
 import Sliders from '@react-native-community/slider';
+import FastImage from 'react-native-fast-image';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -83,10 +84,15 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
 
               {!item.video ?
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                  <Image
+                  <FastImage
                     style={[{ width: '100%', height: height, }]}
-                    source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
-                    resizeMode="cover"
+                    source={{
+                      uri: `https://chambaonline.pro/uploads/${item.photo}`,
+                      priority: FastImage.priority.high,
+                      cache: FastImage.cacheControl.immutable
+                    }}
+                    fallback={false}
+                    resizeMode={FastImage.resizeMode.cover}
                   />
                   {(description && (Array.isArray(D) ? D[index] : D)) && <View style={[styles.hover, { top: save ? 40 : 10 }]}>
                     <Text style={[Styles.whiteSemiBold12]}>

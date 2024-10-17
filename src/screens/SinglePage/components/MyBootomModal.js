@@ -5,7 +5,7 @@ import { Styles } from "../../../styles/Styles";
 import { t } from '../../../components/lang';
 import { DelatePostAction } from "../../../store/action/action";
 import { ClearDelatePhost } from "../../../store/action/clearAction";
-import { DelateModal } from "../../../components/post/postHeader/component/DelateModel";
+import { DelateModal } from "../../../components/DelateModel";
 
 
 export const MyBootomModal = forwardRef(({ navigation, id, description, activeImage, data }, ref) => {
@@ -42,9 +42,12 @@ export const MyBootomModal = forwardRef(({ navigation, id, description, activeIm
   }
 
   return <View style={{ paddingHorizontal: 20, gap: 20 }}>
-    <DelateModal Confirm={() => Confirm()}
+    <DelateModal
+      title={t(mainData.lang).Areyousureyouwanttodelete}
+      Confirm={() => Confirm()}
       show={show}
       setModalVisible={(e) => setShow(e)}
+      confirmText={t(mainData.lang).Delete}
     />
     <TouchableOpacity onPress={() => EditImage()}>
       <Text style={Styles.darkRegular14}>{t(mainData.lang).Editprofile}</Text>

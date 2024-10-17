@@ -8,7 +8,7 @@ import { useCallback, useRef, useState } from "react";
 import { ShowSave } from "../showSave";
 import { HeaderInfo } from "./component/headerInfro";
 import { Settings } from "./component/settings";
-import { DelateModal } from "./component/DelateModel";
+import { DelateModal } from "../../DelateModel";
 
 export const PostHeader = ({
   user,
@@ -49,10 +49,14 @@ export const PostHeader = ({
   }
 
   return <View style={styles.hover}>
-    <DelateModal Confirm={() => {
-      deletData(data.id)
-      setShow(false)
-    }}
+    <DelateModal
+      Confirm={() => {
+        deletData(data.id)
+        setShow(false)
+      }}
+      confirmText={t(mainData.lang).Delete}
+      title={t(mainData.lang).Areyousureyouwanttodelete}
+
       show={show}
       setModalVisible={(e) => setShow(e)}
     />

@@ -96,7 +96,8 @@ export const t = (lang = 'ru') => {
             Thefeedisempty: "The feed is empty",
             Cancel: "Cancel",
             Areyousureyouwanttodelete: "Are you sure you want to delete",
-            bell: "bell"
+            bell: "bell",
+            Doyoureallywanttoexit: "Do you really want to exit?"
         }
     }
     {
@@ -196,7 +197,8 @@ export const t = (lang = 'ru') => {
             Thefeedisempty: "Лента пуста",
             Cancel: "Отмена",
             Areyousureyouwanttodelete: "Вы уверены, что хотите удалить?",
-            bell: "Колокол"
+            bell: "Колокол",
+            Doyoureallywanttoexit: "Вы действительно хотите выйти?"
         }
     }
 }

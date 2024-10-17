@@ -16,14 +16,17 @@ import { ContactsPage } from '../screens/contacts';
 import { AboutApplication } from '../screens/Profile/AboutApplication';
 import { SettingsNavigation } from './SettingsNavigation';
 import { useDrawerStatus } from '@react-navigation/drawer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { DelateModal } from '../components/DelateModel';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
+  const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
 
   const LogOut = async () => {
+    setShowModal(false)
     dispatch(ShowTabNavigation())
     dispatch(LogoutAction(staticdata.token))
     dispatch(ClearLoginAction())
@@ -45,8 +48,16 @@ function CustomDrawerContent(props) {
     }
   }, [isDrawerOpen])
 
+
   return (
     <View style={{ height: '100%', backgroundColor: 'white' }}>
+      <DelateModal
+        title={t(mainData.lang).Doyoureallywanttoexit}
+        Confirm={() => LogOut()}
+        confirmText={t(mainData.lang).logOut}
+        show={showModal}
+        setModalVisible={(e) => setShowModal(e)}
+      />
       <DrawerContentScrollView style={{ paddingTop: 40 }} {...props}>
         <TouchableOpacity style={{ paddingLeft: 15, width: 70, height: 30 }} onPress={() => props.navigation.closeDrawer()}>
           <CloseSvg />
@@ -89,7 +100,7 @@ function CustomDrawerContent(props) {
         <DrawerItem
           labelStyle={[Styles.darkRegular16]}
           label={t(mainData.lang).logOut}
-          onPress={() => LogOut()}
+          onPress={() => setShowModal(true)}
         />
       </DrawerContentScrollView>
       <TouchableOpacity

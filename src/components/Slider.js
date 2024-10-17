@@ -100,7 +100,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
 
 
   const renderItem = ({ item, index }) => {
-    const height = item.height < 650 ? 370 : 570;
+    const height = item.height < 650 ? 400 : 570;
     return (
       <TouchableOpacity
         onLongPress={() => onLongClikc()}

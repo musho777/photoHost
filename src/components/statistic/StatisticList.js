@@ -27,7 +27,6 @@ export const StatisticList = ({ id, token }) => {
 
 
 
-
   function getTimezoneOffset() {
     const offset = new Date().getTimezoneOffset();
     const sign = offset > 0 ? '-' : '+';
@@ -121,15 +120,13 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
             <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
 
-            <Text style={Styles.darkSemiBold14}>минимальное время просмотра -  </Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - </Text>
-            <Text style={Styles.darkSemiBold14}>максимальное время просмотра -  </Text>
-            <Text style={Styles.darkSemiBold14}> ваша публикация в закладках у - </Text>
+            <Text style={Styles.darkSemiBold14}>Минимальное время просмотра видео - 5  </Text>
+            <Text style={Styles.darkSemiBold14}>Среднее время просмотра видео - 14 </Text>
+            <Text style={Styles.darkSemiBold14}>Максимальное время просмотра видео - 36 </Text>
 
 
-            <Text style={Styles.darkSemiBold14}>Переход (с ленты на Ваш аккаунт)
-              - {getStatistic1.data.get_post_page_count} </Text>
-            <Text style={Styles.darkSemiBold14} t>Сохранение публикации  в закладки  - {getStatistic1.data.get_book_count} </Text>
+            <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
+            <Text style={Styles.darkSemiBold14} t>Сохранение публикации в закладки - {getStatistic1.data.get_book_count} </Text>
           </View>
           <View style={styles.line}></View>
           <TouchableOpacity onPress={() => setShow(!show)} activeOpacity={1} style={{ position: 'relative', width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>

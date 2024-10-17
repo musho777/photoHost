@@ -1,9 +1,9 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { t } from '../../../../components/lang';
+import { t } from './lang';
 import { useSelector } from "react-redux";
-import { Styles } from "../../../../styles/Styles";
+import { Styles } from "../styles/Styles";
 
-export const DelateModal = ({ show, Confirm, setModalVisible }) => {
+export const DelateModal = ({ show, Confirm, setModalVisible, title, confirmText }) => {
   const mainData = useSelector(st => st.mainData);
 
   return <Modal
@@ -14,10 +14,10 @@ export const DelateModal = ({ show, Confirm, setModalVisible }) => {
   >
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        <Text style={styles.modalText}>{t(mainData.lang).Areyousureyouwanttodelete}</Text>
+        <Text style={styles.modalText}>{title}</Text>
         <View style={styles.buttonWrapper}>
           <TouchableOpacity onPress={() => Confirm()} >
-            <Text style={[Styles.darkSemiBold14, { color: 'red' }]}>{t(mainData.lang).Delete}</Text>
+            <Text style={[Styles.darkSemiBold14, { color: 'red' }]}>{confirmText}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setModalVisible(false)}>
             <Text style={[Styles.darkSemiBold14]}>{t(mainData.lang).Cancel}</Text>
