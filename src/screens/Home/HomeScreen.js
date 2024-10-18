@@ -117,10 +117,9 @@ export const HomeScreen = () => {
     // if (changed[0].index) {
     //   End(viewableItems[0].item.id)
     // }
-    console.log(viewableItems[0].item.photo)
     let token = await AsyncStorage.getItem("token")
     if (viewableItems.length > 0) {
-      dispatch(AddPostViewCount({ post_id: viewableItems[0].item.id }, token))
+      dispatch(AddPostViewCount({ post_id: viewableItems[0]?.item.id }, token))
     }
     setViewableItems(changed)
   }, []);

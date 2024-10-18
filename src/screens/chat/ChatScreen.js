@@ -4,7 +4,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { ClearSinglChatNumber, newMessageAction, SinglChatPageId, } from '../../store/action/action';
+import { newMessageAction, SinglChatPageId, } from '../../store/action/action';
 import { ClearChat, ClearDeletChat } from '../../store/action/clearAction';
 import { Header } from './component/header';
 import Main from '../../components/GIf/main';

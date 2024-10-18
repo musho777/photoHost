@@ -54,8 +54,7 @@ export const ParametrScreen = ({ navigation }) => {
         transparent={true}
         visible={showModal}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!setShowModal);
+          showModal(false);
         }}>
         <TouchableOpacity activeOpacity={1} onPress={() => setShowModal(false)} style={styles.centeredView}>
           <View style={styles.modalView}>

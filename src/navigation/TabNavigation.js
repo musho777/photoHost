@@ -6,7 +6,7 @@ import { SearchNavigation } from './SearchNavigation';
 import { ProfileNavigation } from './ProfileNavigation';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { HomeNavigation } from './HomeNavigation';
-import { Keyboard, SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, SafeAreaView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -108,11 +108,11 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
               };
 
               return (
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                   key={index}
                   accessibilityRole="button"
+                  style={{ width: '20%' }}
                   accessibilityState={isFocused ? { selected: true } : {}}
-                  accessibilityLabel={options.tabBarAccessibilityLabel}
                   testID={options.tabBarTestID}
                   onPress={onPress}
                   onLongPress={onLongPress}
@@ -120,7 +120,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                   <View style={styles.tabBar}>
                     {tabIcon}
                   </View>
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
               );
             })}
           </View>

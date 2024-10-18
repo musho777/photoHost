@@ -8,6 +8,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BootomModal } from "../../../components/BootomSheet";
 import { AddBlackListAction, DelateChatAction } from "../../../store/action/action";
 import { ClearDeletChat } from "../../../store/action/clearAction";
+import { DelateModal } from "../../../components/DelateModel";
+import { t } from '../../../components/lang';
+
+
 
 export const Header = ({ data, route, user }) => {
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
@@ -19,8 +23,9 @@ export const Header = ({ data, route, user }) => {
   const staticdata = useSelector(st => st.static);
   const addBlackPusher = useSelector(st => st.addBlackPusher)
   const deletChat = useSelector((st) => st.deletChatPusher)
-
+  const mainData = useSelector(st => st.mainData);
   const [clicked, setCliked] = useState(false)
+  const [show, setShow] = useState(false)
 
   const addToBlackList = () => {
     bottomSheetRef.current?.close();
@@ -59,6 +64,12 @@ export const Header = ({ data, route, user }) => {
     navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: getSinglePageChat.resiverUser.id } });
   }
 
+  const Confirm = () => {
+    setShow(false)
+    dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token))
+    navigation.goBack()
+  }
+
   useFocusEffect(
     useCallback(() => {
       setCliked(false)
@@ -66,8 +77,15 @@ export const Header = ({ data, route, user }) => {
   );
 
 
-  return <View
-    style={[Styles.flexSpaceBetween, styles.header]}>
+  return <View style={[Styles.flexSpaceBetween, styles.header]}>
+    <DelateModal
+      Confirm={() => Confirm()}
+      confirmText={t(mainData.lang).Delete}
+      title={t(mainData.lang).Areyousureyouwanttodelete}
+
+      show={show}
+      setModalVisible={(e) => setShow(e)}
+    />
     <View style={Styles.flexAlignItems}>
       <TouchableOpacity activeOpacity={1} onPress={() => navigation.goBack()}>
         <BackArrow />
@@ -97,8 +115,8 @@ export const Header = ({ data, route, user }) => {
       <View style={{ paddingHorizontal: 20 }}>
         {data.length > 0 && <TouchableOpacity
           onPress={() => {
-            dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token))
-            navigation.goBack()
+            setShow(true)
+
           }}
           style={{ marginBottom: 20, marginTop: 20 }}>
           <Text style={Styles.darkRegular14}>Удалить переписку</Text>
