@@ -21,10 +21,12 @@ export const Controler = forwardRef(({
   showStartButton,
   loading,
   id,
+  setStart,
+  start
 }, ref) => {
 
-  const [start, setStart] = useState(null)
-  const [end, setEnd] = useState(null)
+  // const [start, setStart] = useState(null)
+  // const [end, setEnd] = useState(null)
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
 
@@ -45,8 +47,8 @@ export const Controler = forwardRef(({
       const endData = Date.now();
       // setEnd(endData)
       let seconds = (endData - start) / 1000
+      console.log(seconds, 'seconds')
       dispatch(FixVidioWatch(id, seconds, staticdata.token))
-      // console.log((endData - start) / 1000)
     }
     else {
       const startDate = Date.now();

@@ -50,6 +50,7 @@ export const AddImg = ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
+
       setError('')
       setShowError(false)
       dispatch(ClearCreatPost())
@@ -71,7 +72,6 @@ export const AddImg = ({ navigation }) => {
   }, [createPost.status]);
 
   const addPhoto = async (data, i) => {
-    setFirst(true)
     const options = {
       compressVideo: true,
       maxVideoDuration: 60,
@@ -80,34 +80,46 @@ export const AddImg = ({ navigation }) => {
       usedCameraButton: false,
       isPreview: false,
     }
-    const response = await openPicker(options);
-    let item = [...data]
-    if (response.didCancel) {
-      if (uri.length == 0) {
-        navigation.goBack()
-        setFirst(false)
+    try {
+      const response = await openPicker(options);
+      console.log(response, 'response')
+      let item = [...data]
+      if (response.didCancel) {
+        if (uri.length == 0) {
+          navigation.goBack()
+          setFirst(false)
+        }
       }
-    }
-    else if (!response.didCancel && !response.error) {
-      response?.map((elm, i) => {
-        if (elm?.mime.startsWith('video')) {
-          if (elm.duration <= 60883) {
-            item.push({ uri: elm.path, mime: elm.mime })
+      else if (!response.didCancel && !response.error) {
+        if (response.length) {
+          setFirst(true)
+        }
+        response?.map((elm, i) => {
+          if (elm?.mime.startsWith('video')) {
+            if (elm.duration <= 60883) {
+              item.push({ uri: elm.path, mime: elm.mime })
+            }
+            else {
+              setError('видео должен быть меньше чем 60 с')
+              setShowError(true)
+            }
           }
           else {
-            setError('видео должен быть меньше чем 60 с')
-            setShowError(true)
+            if (item.length <= 10) {
+              console.log(elm)
+              item.push({ uri: elm.path, mime: elm.mime });
+            }
           }
-        }
-        else {
-          if (item.length <= 10) {
-            console.log(elm)
-            item.push({ uri: elm.path, mime: elm.mime });
-          }
-        }
-      })
-      setUri(item);
+        })
+        setUri(item);
+      }
     }
+    catch (error) {
+      Close()
+      setFirst(false)
+      navigation.goBack()
+    }
+
   }
 
 
@@ -148,14 +160,15 @@ export const AddImg = ({ navigation }) => {
 
 
   const Close = () => {
+    setFirst(false)
     setUri([])
   }
 
   const renderItem = ({ item, index }) => {
     return <View behavior={Platform.OS === 'ios' ? 'padding' : "position"}>
-      <ScrollView style={{ height: 500 }}>
+      <ScrollView style={{ height: 570 }}>
         <FastImage
-          style={[styles.img, { maxHeight: 500, }]}
+          style={[styles.img, { maxHeight: 570, }]}
           source={{ uri: item.uri }}
         />
         <TouchableOpacity onPress={() => delateFoto(index)} style={{ position: 'absolute', top: 10, right: 10 }}>
@@ -193,9 +206,9 @@ export const AddImg = ({ navigation }) => {
           Close={() => Close()}
         />
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => addPhoto(uri, 1)} style={styles.addPhoto}>
+          {/* <TouchableOpacity onPress={() => addPhoto(uri, 1)} style={styles.addPhoto}>
             <Text style={[Styles.whiteMedium12, { color: 'black' }]}>{t(mainData.lang).Addphoto}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
         <View style={styles.centeredView}>
@@ -219,6 +232,11 @@ export const AddImg = ({ navigation }) => {
               <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
             ))}
           </View>
+        </View>
+        <View style={{ alignItems: 'center', marginBottom: 40 }}>
+          <TouchableOpacity onPress={() => addPhoto(uri, 1)}>
+            <AddImage />
+          </TouchableOpacity>
         </View>
         {/* </ScrollView> */}
 
@@ -259,7 +277,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   img: {
-    height: 500,
+    height: 570,
     width: windowWidth,
     borderRadius: 11,
   },

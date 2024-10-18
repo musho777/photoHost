@@ -29,6 +29,9 @@ export const VidioComponent = forwardRef(({
   const navigation = useNavigation()
   const [loading, setLoading] = useState(true)
 
+  const [start, setStart] = useState(null)
+  const [end, setEnd] = useState(null)
+
   useEffect(() => {
     setPaused(true)
   }, [active])
@@ -111,6 +114,8 @@ export const VidioComponent = forwardRef(({
             ref={ref}
             currentTime={currentTime}
             big={big}
+            setStart={(e) => setStart(e)}
+            start={start}
             volume={volume}
             setFullScreen={(e) => setFullScreen(e)}
             duration={duration}
