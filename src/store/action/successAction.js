@@ -342,3 +342,10 @@ export const SuccessGetSound = (data) => {
         data
     }
 }
+
+export const SuccessGetVidioStatistic = (data) => {
+    return {
+        type: 'SuccessGetVidioStatistic',
+        data
+    }
+}

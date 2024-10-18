@@ -1,8 +1,9 @@
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { AddSecSvg, AddSecSvg1, FullScrenn, MuteSvg, Pause, StartSvg } from "../../../../assets/svg/Svgs"
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { Styles } from "../../../../styles/Styles";
-import { LikeList } from "../../../LikeList";
+import { useDispatch, useSelector } from "react-redux";
+import { FixVidioWatch } from "../../../../store/action/action";
 
 export const Controler = forwardRef(({
   setVolume,
@@ -19,7 +20,15 @@ export const Controler = forwardRef(({
   full,
   showStartButton,
   loading,
+  id,
 }, ref) => {
+
+  const [start, setStart] = useState(null)
+  const [end, setEnd] = useState(null)
+  const dispatch = useDispatch()
+  const staticdata = useSelector(st => st.static);
+
+
   const AddCurrentTime = () => {
     const newTime = Math.min(currentTime + 5, duration);
     ref?.current?.seek(newTime);
@@ -29,10 +38,22 @@ export const Controler = forwardRef(({
     }
   };
 
-  const onPlayPausePress = () => {
+  const onPlayPausePress = (type) => {
     setFirst(false);
-    setPaused(!paused);
-    if (paused && !full) {
+    setPaused(type);
+    if (type) {
+      const endData = Date.now();
+      // setEnd(endData)
+      let seconds = (endData - start) / 1000
+      dispatch(FixVidioWatch(id, seconds, staticdata.token))
+      // console.log((endData - start) / 1000)
+    }
+    else {
+      const startDate = Date.now();
+      setStart(startDate)
+    }
+
+    if (type && !full) {
       setShowStartButton(false);
     }
   };
@@ -73,9 +94,16 @@ export const Controler = forwardRef(({
           <View>
             <ActivityIndicator size={"large"} color={'white'} />
           </View> :
-          <TouchableOpacity onPress={onPlayPausePress}>
-            {!paused ? <Pause width={40} /> : <StartSvg width={40} />}
-          </TouchableOpacity>}
+          <View>
+            {!paused ?
+              <TouchableOpacity onPress={() => onPlayPausePress(true)}>
+                <Pause width={40} />
+              </TouchableOpacity >
+              : <TouchableOpacity onPress={() => onPlayPausePress(false)}>
+                <StartSvg width={40} />
+              </TouchableOpacity>
+            }
+          </View>}
         {(showStartButton && !paused) && <TouchableOpacity onPress={AddCurrentTime}>
           <AddSecSvg width={40} />
         </TouchableOpacity>}
@@ -96,9 +124,16 @@ export const Controler = forwardRef(({
         <View>
           <ActivityIndicator size={"small"} color={'white'} />
         </View> :
-        <TouchableOpacity onPress={onPlayPausePress}>
-          {!paused ? <Pause /> : <StartSvg />}
-        </TouchableOpacity>}
+        <View >
+          {!paused ?
+            <TouchableOpacity onPress={() => onPlayPausePress(true)}>
+              <Pause />
+            </TouchableOpacity> :
+            <TouchableOpacity onPress={() => onPlayPausePress(false)}>
+              <StartSvg />
+            </TouchableOpacity>
+          }
+        </View>}
       <TouchableOpacity onPress={AddCurrentTime}>
         <AddSecSvg />
       </TouchableOpacity>

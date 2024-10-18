@@ -94,16 +94,16 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                     fallback={false}
                     resizeMode={FastImage.resizeMode.cover}
                   />
-                  {(description && (Array.isArray(D) ? D[index] : D)) && <View style={[styles.hover, { top: save ? 40 : 10 }]}>
+                  {(description && D[index]) && <View style={[styles.hover, { top: save ? 40 : 10 }]}>
                     <Text style={[Styles.whiteSemiBold12]}>
-                      {Array.isArray(D) ? D[index] : D}
+                      {D[index]}
                     </Text>
                   </View>}
                 </View>
                 : (
                   <View>
                     <View style={{ zIndex: 9999 }}>
-                      {description && description[0] === '[' &&
+                      {description && D[index] &&
                         <View style={styles.hover}>
                           <Text style={Styles.whiteSemiBold12}>{JSON.parse(description)[index]}</Text>
                         </View>

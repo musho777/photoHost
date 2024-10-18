@@ -299,3 +299,9 @@ export const StartGetSound = () => {
         type: 'StartGetSound'
     }
 }
+
+export const StartGetVidioStatistic = () => {
+    return {
+        type: 'StartGetVidioStatistic'
+    }
+}

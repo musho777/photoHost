@@ -335,3 +335,9 @@ export const ErroGetSound = () => {
         type: 'ErroGetSound'
     }
 }
+
+export const ErrorGetVidioStatistic = () => {
+    return {
+        type: "ErrorGetVidioStatistic"
+    }
+}

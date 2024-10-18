@@ -13,7 +13,7 @@ import { AppColors } from '../../styles/AppColors';
 import { DonwSvg } from '../../assets/svg/Svgs';
 import { UserItem } from './compeont/userItem';
 
-export const StatisticList = ({ id, token }) => {
+export const StatisticList = ({ id, token, vidio }) => {
   const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'Кол во просмотров ']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
@@ -24,8 +24,7 @@ export const StatisticList = ({ id, token }) => {
   const [show, setShow] = useState(false)
   const [getView, setGetView] = useState(null)
   const [getViewInAccaunt, setGetViewAccaunt] = useState(null)
-
-
+  const getVidioStatistic = useSelector((st) => st.getVidioStatistic)
 
   function getTimezoneOffset() {
     const offset = new Date().getTimezoneOffset();
@@ -118,12 +117,16 @@ export const StatisticList = ({ id, token }) => {
             <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
+            {!vidio &&
+              <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
+            }
 
-            {/* <Text style={Styles.darkSemiBold14}>Минимальное время просмотра видео - 5  </Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время просмотра видео - 14 </Text>
-            <Text style={Styles.darkSemiBold14}>Максимальное время просмотра видео - 36 </Text> */}
-
+            {vidio && <View style={{ gap: 10 }}>
+              <Text style={Styles.darkSemiBold14}>Минимальное время просмотра видео - {getVidioStatistic.data.min}  </Text>
+              <Text style={Styles.darkSemiBold14}>Среднее время просмотра видео - {getVidioStatistic.data.avg} </Text>
+              <Text style={Styles.darkSemiBold14}>Максимальное время просмотра видео - {getVidioStatistic.data.max} </Text>
+            </View>
+            }
 
             <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации в закладки - {getStatistic1.data.get_book_count} </Text>

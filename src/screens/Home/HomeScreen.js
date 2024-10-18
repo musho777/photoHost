@@ -29,11 +29,15 @@ export const HomeScreen = () => {
   const [viewableItems, setViewableItems] = useState([])
   const createPost = useSelector(st => st.createPost);
   const [selecteidId, setSelectidId] = useState(null)
+
+  const [selectedVidioId, setSelectedVidioId] = useState(null)
+
   const [showView, setShowView] = useState(false)
   const [likeClose, setLikeClose] = useState(false)
   const [showShare, setShowShare] = useState(false)
   const [isFetching, setIsFetching] = useState(false);
   const mainData = useSelector(st => st.mainData);
+
 
 
   useEffect(() => {
@@ -113,6 +117,7 @@ export const HomeScreen = () => {
     // if (changed[0].index) {
     //   End(viewableItems[0].item.id)
     // }
+    console.log(viewableItems[0].item.photo)
     let token = await AsyncStorage.getItem("token")
     if (viewableItems.length > 0) {
       dispatch(AddPostViewCount({ post_id: viewableItems[0].item.id }, token))
@@ -158,6 +163,7 @@ export const HomeScreen = () => {
             deletData={(e) => deletData(e)}
             setSelectidId={(id) => setSelectidId(id)}
             setShowShare={(e) => setShowShare(e)}
+            setSelectedVidioId={(e) => setSelectedVidioId(e)}
           />
         );
       }
@@ -226,6 +232,7 @@ export const HomeScreen = () => {
           id={selecteidId}
           token={staticdata.token}
           close={(e) => setShowView(e)}
+          selectedVidioId={selectedVidioId}
         />
       }
       {likeClose && <LikeList

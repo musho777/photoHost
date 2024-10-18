@@ -10,13 +10,12 @@ import { Styles } from '../../styles/Styles';
 import { StatisticSvg, ViewListSwg } from '../../assets/svg/Svgs';
 import { ViewList } from './ViewList';
 import { StatisticList } from './StatisticList';
-import { GetPostViewAction, HidenTabNavigation, ShowTabNavigation } from '../../store/action/action';
+import { GetPostViewAction, GetVidioStatistic, HidenTabNavigation, ShowTabNavigation } from '../../store/action/action';
 import BottomSheet from '@gorhom/bottom-sheet';
 
-export const ViewComponent = ({ id, token, close, big = false }) => {
-
-
+export const ViewComponent = ({ id, token, close, big = false, selectedVidioId }) => {
   const dispatch = useDispatch()
+  const [vidio, setVidio] = useState(false)
   useEffect(() => {
     if (id) {
       dispatch(GetPostViewAction({ post_id: id }, token, 1));
@@ -26,6 +25,18 @@ export const ViewComponent = ({ id, token, close, big = false }) => {
   useEffect(() => {
     dispatch(HidenTabNavigation())
   }, [])
+
+
+  useEffect(() => {
+
+    if (selectedVidioId.video) {
+      setVidio(true)
+      dispatch(GetVidioStatistic(selectedVidioId.id, token))
+    }
+    else {
+      setVidio(false)
+    }
+  }, [selectedVidioId])
 
   const [statistic, setStatistic] = useState(false)
 
@@ -42,7 +53,6 @@ export const ViewComponent = ({ id, token, close, big = false }) => {
     ),
     [],
   );
-
 
   return (
     <BottomSheet
@@ -68,7 +78,7 @@ export const ViewComponent = ({ id, token, close, big = false }) => {
             token={token}
             close={close}
           /> :
-          <StatisticList token={token} id={id} />}
+          <StatisticList vidio={vidio} token={token} id={id} />}
 
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: big ? 100 : 50, alignItems: 'center' }}>
           <TouchableOpacity style={[{ padding: 10, borderRadius: 10, }, statistic == false && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(false)}>

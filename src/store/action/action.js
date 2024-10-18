@@ -41,6 +41,7 @@ import {
   ErrorGetStatisitc2,
   ErrorGetstatistic1,
   ErrorGetUserData,
+  ErrorGetVidioStatistic,
   ErrorLikePost,
   ErrorLogin,
   ErrorLogout,
@@ -103,6 +104,7 @@ import {
   StartGetstatistic1,
   StartGetStatisitc2,
   StartGetSound,
+  StartGetVidioStatistic,
 } from './startAction';
 import {
   SuccessAddBlackList,
@@ -143,6 +145,7 @@ import {
   SuccessGetStatisitc2,
   SuccessGetstatistic1,
   SuccessGetUserData,
+  SuccessGetVidioStatistic,
   SuccessLikePost,
   SuccessLogin,
   SuccessLogout,
@@ -1962,4 +1965,56 @@ export const ShowTabNavigation = () => {
   return {
     type: 'ShowTabNavigation'
   }
+}
+
+
+export const FixVidioWatch = (id, seconds, token) => {
+  var myHeaders = new Headers();
+  const formdata = new FormData();
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  formdata.append("file_id", id);
+  formdata.append("seconds", seconds);
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: formdata,
+    redirect: 'follow'
+  };
+  return dispatch => {
+    fetch("https://chambaonline.pro/api/file_view_seconds", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  };
+}
+
+
+
+export const GetVidioStatistic = (id, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow',
+  };
+  return dispatch => {
+    dispatch(StartGetVidioStatistic())
+    fetch(`${Api}/get_file_view_statistics?file_id=${id}`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        console.log(r)
+        if (r.status) {
+          dispatch(SuccessGetVidioStatistic(r))
+        }
+        else {
+          dispatch(ErrorGetVidioStatistic())
+        }
+      })
+      .catch(error => {
+        dispatch(ErrorGetVidioStatistic())
+      });
+  };
 }

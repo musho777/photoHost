@@ -18,7 +18,7 @@ export const VidioComponent = forwardRef(({
   viewableItems,
   active,
   setDuration,
-  onSeek
+  onSeek,
 }, ref) => {
   const [first, setFirst] = useState(true);
   const [showStartButton, setShowStartButton] = useState(false);
@@ -121,6 +121,7 @@ export const VidioComponent = forwardRef(({
             setFirst={(e) => setFirst(e)}
             full={fullScreen}
             loading={loading}
+            id={item.id}
           />
 
         }
@@ -186,6 +187,7 @@ export const VidioComponent = forwardRef(({
                 setPaused={(e) => setPaused(e)}
                 setFirst={(e) => setFirst(e)}
                 full={fullScreen}
+                id={item.id}
               />}
             {(first && paused) &&
               <FastImage

@@ -30,6 +30,8 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [likeClose, setLikeClose] = useState(false)
   const [activeImage, setActiveImage] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [selectedVidioId, setSelectedVidioId] = useState(null)
+
 
   const [showShare, setShowShare] = useState(false)
   const End = async (id) => {
@@ -74,7 +76,8 @@ export const SinglPageScreen = ({ route, navigation }) => {
         </View>}
       </View>}
       {!loading &&
-        <Slider save={save} setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+        <Slider
+          save={save} setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
       }
       {!loading &&
         <View style={{ position: 'absolute', bottom: 15, width: '100%', zIndex: 999 }}>
@@ -100,6 +103,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
         big={true}
         token={staticdata.token}
         close={(e) => setShowView(e)}
+        selectedVidioId={data?.photo[activeImage]}
       />}
       {likeClose && <LikeList
         close={(e) => setLikeClose(false)}

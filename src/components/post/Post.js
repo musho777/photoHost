@@ -16,6 +16,7 @@ export const Post = React.memo(({
   data,
   setShowLike,
   setShowShare,
+  setSelectedVidioId
 }) => {
 
   const user = useSelector((st) => st.userData)
@@ -23,7 +24,7 @@ export const Post = React.memo(({
   const [showSave, setShowSave] = useState(false)
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [long, setLong] = useState(false)
-
+  const [activePhoto, setActivePhoto] = useState(0)
   const [activeImage, setActiveImage] = useState(0)
   const onLongClikc = () => {
     setLong(true)
@@ -57,6 +58,7 @@ export const Post = React.memo(({
           onLongClikc={() => onLongClikc()}
           photo={data.photo}
           setOpenModal={setOpenModal}
+          setActivePhoto={(e) => setActivePhoto(e)}
           data={data}
           user={user}
         />
@@ -64,7 +66,10 @@ export const Post = React.memo(({
           <PostBody
             postCount={user.postCount}
             commentCount={data.comment_count}
-            setSelectidId={(id) => setSelectidId(id)}
+            setSelectidId={(id) => {
+              setSelectedVidioId(data.photo[activePhoto])
+              setSelectidId(id)
+            }}
             liked={data.like_auth_user.findIndex((elm, i) => elm.user_id == user.data.id) >= 0}
             setShowView={(e) => setShowView(e)}
             setShowLike={(e) => setShowLike(e)}
