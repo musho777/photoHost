@@ -4,11 +4,9 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  KeyboardAvoidingView,
-  Keyboard,
   SafeAreaView,
-  Platform,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { Styles } from '../../styles/Styles';
@@ -23,7 +21,6 @@ import Main from '../GIf/main';
 import { Emojy, Nota, Sticker } from '../../assets/svg/Svgs';
 import EmojiPicker from 'rn-emoji-keyboard';
 import { RefreshControl } from 'react-native-gesture-handler';
-import { BootomModal } from '../../components/BootomSheet';
 import { MusicPlay } from './component/musicPlay';
 
 
@@ -35,10 +32,8 @@ export const Comments = ({ route, }) => {
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);
   const [page, setPage] = useState(1);
-  const [keyboardOpen, setKeyboardOpen] = useState(10);
   const bottomSheetRef = useRef(null);
   const bottomSheetRef1 = useRef(null);
-  const snapPoints = useMemo(() => ['50%'], []);
 
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
@@ -46,8 +41,6 @@ export const Comments = ({ route, }) => {
   const textInputRef = useRef(null);
   const mainData = useSelector(st => st.mainData);
   const navigation = useNavigation()
-
-  const [close, setClose] = useState(false)
 
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
@@ -62,22 +55,6 @@ export const Comments = ({ route, }) => {
   useEffect(() => {
     dispatch(ClearSinglpAgeComment())
     dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
-
-
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      if (Platform.OS == 'android') {
-        setKeyboardOpen(60);
-      }
-    });
-
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardOpen(10);
-    });
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
   }, []);
 
 
@@ -203,55 +180,52 @@ export const Comments = ({ route, }) => {
 
   return (
     <SafeAreaView style={styles.body}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardAvoidingView}
-      >
-        <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
-        <View style={{ flex: 1, paddingHorizontal: 15 }}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={getComments.data}
-            contentContainerStyle={styles.scrollViewContent}
-            onEndReached={() => { onEndReached() }}
-            ListEmptyComponent={() => Empty()}
-            renderItem={renderItem}
-            refreshControl={
-              <RefreshControl
-                refreshing={getComments?.loading}
-                onRefresh={() => {
-                  if (getComments?.loading) {
-                    dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
-                  }
-                }}
-              />
-            }
-          />
-          <View style={[styles.bottom, { marginBottom: keyboardOpen }]}>
-            <InputComponent
-              sendCommentFunction={() => sendCommentFunction()}
-              sendComment={sendComment}
-              setSendCommet={(e) => setSendCommet(e)}
-              user={user}
-            />
-            <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => setIsOpen(true)}>
-                <Emojy />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
-                <Sticker />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => bottomSheetRef1.current?.present()}>
-                <Nota />
-              </TouchableOpacity>
-            </View>
-            <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
 
+      <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
+      <View style={{ flex: 1, paddingHorizontal: 15 }}>
+
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={getComments.data}
+          contentContainerStyle={styles.scrollViewContent}
+          onEndReached={() => { onEndReached() }}
+          ListEmptyComponent={() => Empty()}
+          renderItem={renderItem}
+          refreshControl={
+            <RefreshControl
+              refreshing={getComments?.loading}
+              onRefresh={() => {
+                if (getComments?.loading) {
+                  dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, 1));
+                }
+              }}
+            />
+          }
+        />
+        <View style={styles.bottom}>
+          <InputComponent
+            sendCommentFunction={() => sendCommentFunction()}
+            sendComment={sendComment}
+            setSendCommet={(e) => setSendCommet(e)}
+            user={user}
+          />
+          <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => setIsOpen(true)}>
+              <Emojy />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
+              <Sticker />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => bottomSheetRef1.current?.present()}>
+              <Nota />
+            </TouchableOpacity>
           </View>
-          <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
+          <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
+
         </View>
-        <MusicPlay ref={bottomSheetRef1} onSend={(e) => sendCommentFunction(e)} />
-      </KeyboardAvoidingView>
+        <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
+      </View>
+      <MusicPlay ref={bottomSheetRef1} onSend={(e) => sendCommentFunction(e)} />
     </SafeAreaView >
   );
 };
@@ -275,6 +249,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10
+    gap: 10,
+    marginBottom: 10,
   }
 });

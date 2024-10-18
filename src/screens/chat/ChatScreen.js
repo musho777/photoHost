@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  KeyboardAvoidingView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClearSinglChatNumber, newMessageAction, SinglChatPageId, } from '../../store/action/action';
@@ -43,10 +42,8 @@ export const ChatScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.body}>
       <Header user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} />
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keyboardAvoidingView}>
-        <Messages id={route.params.chatId} route={route} />
-        <BottomWrapper ref={bottomSheetRef} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
-      </KeyboardAvoidingView>
+      <Messages id={route.params.chatId} route={route} />
+      <BottomWrapper ref={bottomSheetRef} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
       <Main SendSticker={(e) => SendSticker(e)} route={route} ref={bottomSheetRef} />
     </SafeAreaView >
   );

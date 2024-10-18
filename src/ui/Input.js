@@ -10,7 +10,6 @@ import {
   Eye,
   SearchInputSvg,
   SendMsgSvg,
-  SendSvg,
 } from '../assets/svg/Svgs';
 import { AppColors } from '../styles/AppColors';
 import { Styles } from '../styles/Styles';
@@ -98,7 +97,7 @@ export const Input = forwardRef(
         {send && (
           <View style={[Styles.flexAlignItems, styles.eye, { height: '100%' }]}>
             <TouchableOpacity onPress={sendCom}>
-              <SendSvg />
+              <SendMsgSvg />
             </TouchableOpacity>
           </View>
         )}
