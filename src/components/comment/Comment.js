@@ -161,6 +161,7 @@ export const Comments = ({ route, }) => {
         <CommentBlock
           key={index}
           text={item.comment}
+          categoryID={categoryID}
           replay={item.replay}
           user={item.user}
           like_count={item.likes_count}
@@ -225,7 +226,7 @@ export const Comments = ({ route, }) => {
         </View>
         <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
       </View>
-      <MusicPlay ref={bottomSheetRef1} onSend={(e) => sendCommentFunction(e)} />
+      <MusicPlay categoryID={categoryID} ref={bottomSheetRef1} onSend={(e) => sendCommentFunction(e)} />
     </SafeAreaView >
   );
 };

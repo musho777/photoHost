@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { CommentItem } from './CommentItem';
 
-const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDeletComment }) => {
+const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDeletComment, categoryID }) => {
     const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
     const renderComment = (comment, index) => {
         const givenDate = new Date(comment.created_at);
@@ -37,6 +37,7 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDel
                 daysAgo={daysAgo}
                 onPressAnsswer={onPressAnsswer}
                 onDeletComment={onDeletComment}
+                categoryID={categoryID}
             />
             {/* <View style={{ marginLeft: 20 }}>
                 {comment.replay.map(review => renderCommentReview(review, depth + 1))}
@@ -74,6 +75,7 @@ const CommentComponent = ({ commentData, depth = 0, onPressAnsswer, token, onDel
                 token={token}
                 daysAgo={daysAgo}
                 onPressAnsswer={onPressAnsswer}
+                categoryID={categoryID}
             />
             {review.replay.map(subReview => renderCommentReview(subReview, reviewDepth + 1))}
         </View>

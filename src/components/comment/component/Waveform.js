@@ -1,38 +1,56 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { View, PanResponder, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Svg, { Rect } from 'react-native-svg';
 
-export const Waveform = ({ waveformData }) => {
-  const barWidth = 5;  // Width of each bar
-  const gap = 2;        // Gap between bars
-  const waveformWidth = (waveformData.length) * (barWidth + gap);
+export const Waveform = ({ currentTime, waveformData, soundInstance, endReach }) => {
+  const barWidth = 5;
+  const gap = 2;
+
+  const waveformWidth = (waveformData?.length) * (barWidth + gap);
   const [selectedBarIndex, setSelectedBarIndex] = useState(-1);
   // Handle swiping
+  const seekToTime = (timeInSeconds) => {
+    if (soundInstance) {
+      setSelectedBarIndex(timeInSeconds)
+      soundInstance.setCurrentTime(timeInSeconds);
+    }
+  };
+
   const onGestureEvent = (event) => {
-    const x = event.nativeEvent.absoluteX - 100;
-    console.log(x, 'xxxxx')
-    const index = Math.floor(x / (barWidth + gap)); // Calculate the index of the bar
-    if (index >= 0 && index < waveformData.length) {
+    const x = (event.nativeEvent.absoluteX - 100);
+    const index = Math.floor(x / (barWidth + gap)) / 2;
+    seekToTime(index)
+    if (index >= 0 && index < waveformData?.length) {
       setSelectedBarIndex(index);
     }
     if (index < 0) {
       setSelectedBarIndex(-1)
     }
+    if (index == waveformData?.length - 1) {
+      setSelectedBarIndex(-1)
+    }
   };
+
+  useEffect(() => {
+    if (endReach) {
+      setSelectedBarIndex(-1)
+    }
+  }, [endReach])
+
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <View style={styles.container}>
         <Svg height="50" width={200}>
-          {waveformData.map((height, index) => {
+          {waveformData?.map((height, index) => {
             return <Rect
               key={index}
-              x={index * (barWidth + gap)}  // Calculate x position with width and gap
-              y={25 - height / 2}  // Position vertically in the middle
+              x={index * (barWidth + gap)}
+              y={25 - height / 2}
               width={barWidth}
               height={height}
               ry={3}
-              fill={selectedBarIndex >= index ? 'rgba(255, 217, 83 ,1)' : 'rgba(214, 214, 214,0.7)'}
+              fill={(selectedBarIndex >= index || Math.floor(currentTime) > index) ? 'rgba(255, 217, 83 ,1)' : 'rgba(214, 214, 214,0.7)'}
             />
           })}
         </Svg>

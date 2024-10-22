@@ -19,7 +19,8 @@ export const CommentBlock = ({
   replay,
   replay_count,
   daysAgo,
-  deletComment
+  deletComment,
+  categoryID
 }) => {
   const [showAnswrs, setShowAnswers] = useState(false);
   const staticdata = useSelector(st => st.static);
@@ -34,6 +35,7 @@ export const CommentBlock = ({
         ansswer={ansswer}
         setCureent={(e) => setCureent(e)}
         user={user}
+        categoryID={categoryID}
         like_count={like_count}
         id={id}
         token={token}
@@ -46,6 +48,7 @@ export const CommentBlock = ({
       {showAnswrs &&
         <CommentComponent
           onDeletComment={deletComment}
+          categoryID={categoryID}
           token={staticdata.token} onPressAnsswer={onPressAnsswer} commentData={replay} />
       }
       <TouchableOpacity onPress={() => setShowAnswers(!showAnswrs)}>

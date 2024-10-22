@@ -97,7 +97,8 @@ export const t = (lang = 'ru') => {
             Cancel: "Cancel",
             Areyousureyouwanttodelete: "Are you sure you want to delete",
             bell: "bell",
-            Doyoureallywanttoexit: "Do you really want to exit?"
+            Doyoureallywanttoexit: "Do you really want to exit?",
+            Nosoundsavailable: "No sounds available"
         }
     }
     {
@@ -198,7 +199,8 @@ export const t = (lang = 'ru') => {
             Cancel: "Отмена",
             Areyousureyouwanttodelete: "Вы уверены, что хотите удалить?",
             bell: "Колокол",
-            Doyoureallywanttoexit: "Вы действительно хотите выйти?"
+            Doyoureallywanttoexit: "Вы действительно хотите выйти?",
+            Nosoundsavailable: "Нет доступных звуков"
         }
     }
 }
