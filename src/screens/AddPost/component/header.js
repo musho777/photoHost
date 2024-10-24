@@ -16,10 +16,13 @@ export const Header = ({
   setSelectedCatalog,
   selectedCatalog,
   description,
-  uri,
   error,
-  setFirst,
-  Close
+  Close,
+  color,
+  font,
+  font_size,
+  font_family,
+  background,
 }) => {
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['50%'], [],);
@@ -64,33 +67,21 @@ export const Header = ({
     }
     setErrorCatalog(false)
     let form = new FormData();
-    uri.length &&
-      uri.forEach((el, i) => {
-        if (!el.mime.includes('video')) {
-          form.append('photos[]', {
-            uri: el.uri,
-            type: el.mime,
-            name: 'photo',
-          });
-        }
-        else {
-          form.append(`video[][video]`, {
-            uri: el.uri,
-            type: 'video/mp4',
-            name: 'video.mp4',
-          })
-        }
-      });
-
     description && form.append('description', JSON.stringify(description));
+
+    color && form.append('color', color);
+    font && form.append("form", form)
+    font_size && form.append("font_size", font_size)
+    font_family && form.append("font_family", font_family)
+    background && form.append("background", background)
+    console.log(error, 'error')
+
     form.append('category_id', selectedCatalog)
     if (selectedCatalog != '' && error == '') {
-      dispatch(CreatePostLocal(uri[0]))
       navigation.navigate('TabNavigation', {
         screen: 'Home',
         params: { param: 'add_image' },
       });
-      setFirst(false)
       dispatch(CreatPostAction(form, staticData.token));
     }
     else if (selectedCatalog == '') {
@@ -126,7 +117,7 @@ export const Header = ({
           }
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading || uri.length === 0} >
+      <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading} >
         <CheckMarkSvg />
       </TouchableOpacity>
     </View>

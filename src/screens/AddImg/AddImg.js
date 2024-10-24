@@ -19,7 +19,7 @@ import { ClearCreatPost } from '../../store/action/clearAction';
 import { AddImage, RubbishSvg } from '../../assets/svg/Svgs';
 import { Status } from './component/status';
 import { AppColors } from '../../styles/AppColors';
-import { useFocusEffect } from '@react-navigation/native';
+import { CommonActions, useFocusEffect } from '@react-navigation/native';
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
 import FastImage from 'react-native-fast-image';
 import { Header } from './component/header';
@@ -86,7 +86,12 @@ export const AddImg = ({ navigation }) => {
       let item = [...data]
       if (response.didCancel) {
         if (uri.length == 0) {
-          navigation.goBack()
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'TabNavigation' }],
+            })
+          );
           setFirst(false)
         }
       }
@@ -117,7 +122,12 @@ export const AddImg = ({ navigation }) => {
     catch (error) {
       Close()
       setFirst(false)
-      navigation.goBack()
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'TabNavigation' }],
+        })
+      );
     }
 
   }
@@ -195,7 +205,6 @@ export const AddImg = ({ navigation }) => {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
         <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
-        {/* <ScrollView scrollEnabled={false} style={{ flex: 1 }}> */}
         <Header
           uri={uri}
           selectedCatalog={selectedCatalog}
@@ -205,11 +214,6 @@ export const AddImg = ({ navigation }) => {
           setFirst={(e) => setFirst(e)}
           Close={() => Close()}
         />
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {/* <TouchableOpacity onPress={() => addPhoto(uri, 1)} style={styles.addPhoto}>
-            <Text style={[Styles.whiteMedium12, { color: 'black' }]}>{t(mainData.lang).Addphoto}</Text>
-          </TouchableOpacity> */}
-        </View>
         <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
         <View style={styles.centeredView}>
           <View style={styles.selectImage}>
@@ -238,8 +242,6 @@ export const AddImg = ({ navigation }) => {
             <AddImage />
           </TouchableOpacity>
         </View>
-        {/* </ScrollView> */}
-
       </SafeAreaView>
     );
   else {

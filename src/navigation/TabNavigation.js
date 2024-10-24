@@ -1,23 +1,49 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AddSvg, ChatSvg, HomeSvg, SearchSvg, UserSvg } from '../assets/svg/TabBarSvg';
 import { ChatNavigation } from './ChatNavigation';
 import { SearchNavigation } from './SearchNavigation';
 import { ProfileNavigation } from './ProfileNavigation';
-import { AddImg } from '../screens/AddImg/AddImg';
 import { HomeNavigation } from './HomeNavigation';
-import { Keyboard, SafeAreaView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, Animated, SafeAreaView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
 import { PostNavigation } from './postNavigation';
+import { Styles } from '../styles/Styles';
+import { t } from '../components/lang';
+
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const user = useSelector((st) => st.userData);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const currentRouteName = state.routes[state.index].name;
   const { show } = useSelector((st) => st.showTabNavigatior)
+  const mainData = useSelector(st => st.mainData);
+
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [isVisible, setIsVisible] = useState(false);
+
+  const AddPostShow = () => {
+    if (isVisible) {
+      Animated.timing(fadeAnim, {
+        toValue: 0, // Fade out
+        duration: 200,
+        useNativeDriver: true,
+      }).start(() => setIsVisible(false));
+    }
+    else {
+      setIsVisible(true);
+      Animated.timing(fadeAnim, {
+        toValue: 1, // Fade in
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  }
+
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -43,6 +69,23 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
       return (
         <SafeAreaView >
           <View style={styles.tabWrapper}>
+            <View style={{ width: "100%", height: 50, position: 'absolute', bottom: 50, justifyContent: 'center', alignItems: 'center', left: 0, right: 0, margin: 'auto' }}>
+              <Animated.View style={[styles.box, { opacity: fadeAnim, }]}>
+                <View style={styles.triangle} />
+                <View style={{ alignItems: 'center', marginTop: 3, gap: 5 }}>
+                  <Text
+                    onPress={() =>
+                      navigation.navigate('AddImg', { screen: 'AddPhoto' })
+                    }
+                    style={Styles.darkMedium13}>{t(mainData.lang).Addphoto}</Text>
+                  <Text
+                    onPress={() => {
+                      navigation.navigate('AddImg', { screen: 'AddText' })
+                    }}
+                    style={Styles.darkMedium13}>{t(mainData.lang).Addtext}</Text>
+                </View>
+              </Animated.View>
+            </View>
             {state.routes.map((route, index) => {
               const { options } = descriptors[route.key];
               const label = options.tabBarLabel !== undefined
@@ -87,15 +130,17 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                   target: route.key,
                   canPreventDefault: true,
                 });
-
+                console.log(route.name, 'route.name')
                 if (!isFocused && !event.defaultPrevented) {
                   if (route.name == 'ProfileNavigation') {
                     navigation.navigate(route.name, {
                       screen: 'ProfileScreen'
                     });
                   }
+                  else if (route.name == "AddImg") {
+                    AddPostShow()
+                  }
                   else {
-
                     navigation.navigate(route.name);
                   }
                 }
@@ -125,7 +170,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
               );
             })}
           </View>
-        </SafeAreaView>
+        </SafeAreaView >
       );
     }
   }
@@ -216,15 +261,6 @@ export const TabNavigation = () => {
         name="ProfileNavigation"
         component={ProfileNavigation}
       />
-      {/* 
-      <Tab.Screen
-        options={() => ({
-          headerShown: false,
-        })}
-        name="PostNavigation"
-        component={PostNavigation}
-      /> */}
-
     </Tab.Navigator>
   );
 };
@@ -258,6 +294,44 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  addImage: {
+    width: 0,
+    height: 0,
+    position: "absolute",
+    borderLeftWidth: 20,
+    borderRightWidth: 20,
+    borderBottomWidth: 30,
+    borderStyle: 'solid',
+    backgroundColor: 'transparent',
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: 'blue',
+    width: 200,
+    backgroundColor: 'blue',
+    height: 50
+  },
+  box: {
+    width: 200,
+    height: 50,
+    backgroundColor: "white",
+    position: "relative",
+    borderWidth: 1,
+    borderColor: 'transparent',
+    borderRadius: 10,
+  },
+  triangle: {
+    width: 10,
+    height: 10,
+    position: "absolute",
+    bottom: -10,
+    left: 90,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 10,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "white",
+    transform: [{ rotate: '180deg' }],
   }
 })
-

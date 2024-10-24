@@ -152,6 +152,9 @@ export const HomeScreen = () => {
   const renderItem = useMemo(
     () => ({ item, index }) => {
       if (!blackList.includes(item.user.id)) {
+        if (index == 0) {
+          console.log(item.description)
+        }
         return (
           <Post
             data={item}

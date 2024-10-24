@@ -21,7 +21,6 @@ const windowWidth = Dimensions.get('window').width;
 
 
 export const AddPost = () => {
-  const mainData = useSelector(st => st.mainData);
   const [uri, setUri] = useState([]);
   const [description, setDescription] = useState([]);
   const [selectedCatalog, setSelectedCatalog] = useState('')
@@ -55,7 +54,13 @@ export const AddPost = () => {
       <Header
         uri={uri}
         selectedCatalog={selectedCatalog}
-        description={description}
+        description={text}
+
+        color={color}
+        font_family={activeFont}
+        background={fone.findIndex((elm) => elm == activefon) + 1}
+        font_size={fontSize}
+
         setSelectedCatalog={(e) => setSelectedCatalog(e)}
         error={error}
         Close={() => Close()}

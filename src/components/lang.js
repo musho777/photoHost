@@ -98,7 +98,9 @@ export const t = (lang = 'ru') => {
             Areyousureyouwanttodelete: "Are you sure you want to delete",
             bell: "bell",
             Doyoureallywanttoexit: "Do you really want to exit?",
-            Nosoundsavailable: "No sounds available"
+            Nosoundsavailable: "No sounds available",
+            Addphoto: "Add photo",
+            Addtext: "Add text"
         }
     }
     {
@@ -200,7 +202,9 @@ export const t = (lang = 'ru') => {
             Areyousureyouwanttodelete: "Вы уверены, что хотите удалить?",
             bell: "Колокол",
             Doyoureallywanttoexit: "Вы действительно хотите выйти?",
-            Nosoundsavailable: "Нет доступных звуков"
+            Nosoundsavailable: "Нет доступных звуков",
+            Addphoto: "Добавить фото",
+            Addtext: "Добавить текст"
         }
     }
 }

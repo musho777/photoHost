@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Slider } from '../Slider';
@@ -16,7 +16,8 @@ export const Post = React.memo(({
   data,
   setShowLike,
   setShowShare,
-  setSelectedVidioId
+  setSelectedVidioId,
+  background
 }) => {
 
   const user = useSelector((st) => st.userData)
@@ -32,6 +33,7 @@ export const Post = React.memo(({
   const onPressOut = () => {
     setLong(false)
   }
+  console.log(data.background, '22999943')
   return (
     <View>
       {showSave && <ShowSave saveType={saveType} />}
@@ -50,7 +52,7 @@ export const Post = React.memo(({
             activeImage={activeImage}
           />
         </View>
-        <Slider
+        {!data.background ? <Slider
           viewableItems={viewableItems}
           long={long}
           setActiveImage={(e) => setActiveImage(e)}
@@ -61,8 +63,56 @@ export const Post = React.memo(({
           setActivePhoto={(e) => setActivePhoto(e)}
           data={data}
           user={user}
-        />
-        {!long && <View style={{ position: "absolute", zIndex: 999, bottom: 10, width: '100%' }}>
+        /> :
+          <View style={{ marginBottom: 10 }}>
+            {data.background == 1 &&
+
+              <Image
+                source={require('../../assets/img/fon1.png')}
+                style={[{ height: 570 }, styles.img]}
+              />
+            }
+            {data.background == 2 &&
+
+              <Image
+                source={require('../../assets/img/fon2.jpg')}
+                style={[{ height: 570 }, styles.img]}
+              />
+            }
+
+            {data.background == 3 &&
+
+              <Image
+                source={require('../../assets/img/fon3.jpg')}
+                style={[{ height: 570 }, styles.img]}
+              />
+            }
+
+            {data.background == 4 &&
+
+              <Image
+                source={require('../../assets/img/fon4.jpg')}
+                style={[{ height: 570 }, styles.img]}
+              />
+            }
+
+            {data.background == 5 &&
+
+              <Image
+                source={require('../../assets/img/fon5.jpg')}
+                style={[{ height: 570 }, styles.img]}
+              />
+            }
+
+            <View style={styles.textWrapper}>
+
+              {data.font_size &&
+                <Text style={{ color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size) }}>{JSON.parse(data.description)}</Text>
+              }
+            </View>
+          </View>
+        }
+        {!long && <View style={styles.PostBody}>
           <PostBody
             postCount={user.postCount}
             commentCount={data.comment_count}
@@ -99,4 +149,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: 'relative',
   },
+  textWrapper: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  },
+  PostBody: {
+    position: "absolute",
+    zIndex: 999,
+    bottom: 10,
+    width: '100%'
+  }
 });

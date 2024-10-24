@@ -6,17 +6,17 @@ export const PostNavigation = () => {
   const Stack = createStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName={'AddPost'}>
+    <Stack.Navigator>
       <Stack.Screen
-        name="AddPost"
-        component={AddPost}
+        name="AddPhoto"
+        component={AddImg}
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="AddImg"
-        component={AddImg}
+        name="AddText"
+        component={AddPost}
         options={{
           headerShown: false,
         }}
