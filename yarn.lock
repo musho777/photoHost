@@ -5352,15 +5352,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^2.0.0":
-  version: 2.6.4
-  resolution: "async@npm:2.6.4"
-  dependencies:
-    lodash: ^4.17.14
-  checksum: a52083fb32e1ebe1d63e5c5624038bb30be68ff07a6c8d7dfe35e47c93fc144bd8652cbec869e0ac07d57dde387aa5f1386be3559cdee799cb1f789678d88e19
-  languageName: node
-  linkType: hard
-
 "async@npm:^3.2.2":
   version: 3.2.4
   resolution: "async@npm:3.2.4"
@@ -7131,13 +7122,6 @@ __metadata:
   version: 5.0.1
   resolution: "event-target-shim@npm:5.0.1"
   checksum: 1ffe3bb22a6d51bdeb6bf6f7cf97d2ff4a74b017ad12284cc9e6a279e727dc30a5de6bb613e5596ff4dc3e517841339ad09a7eec44266eccb1aa201a30448166
-  languageName: node
-  linkType: hard
-
-"eventemitter3@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "eventemitter3@npm:1.2.0"
-  checksum: 1ce3c91340f5038bd611c31a32c69167ccc598049a6844f58400583b4d70f5c0c2d13a201c763624f81de461498fe2767d0bfadcb2c0c417e37556a481b00c1d
   languageName: node
   linkType: hard
 
@@ -9574,7 +9558,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.13.1, lodash@npm:^4.16.4, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.21":
+"lodash@npm:^4.16.4, lodash@npm:^4.17.15, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -11264,9 +11248,9 @@ __metadata:
     react: 18.2.0
     react-native: 0.72.2
     react-native-accordion: ^1.0.1
-    react-native-audio-toolkit: ^1.0.6
     react-native-awesome-slider: ^2.5.3
     react-native-calendars: 1.1286.0
+    react-native-color-picker: ^0.6.0
     react-native-contacts: ^7.0.8
     react-native-device-info: ^10.8.0
     react-native-eject: ^0.2.0
@@ -11311,6 +11295,7 @@ __metadata:
     react-native-view-shot: ^3.8.0
     react-redux: ^8.1.1
     react-test-renderer: 18.2.0
+    reanimated-color-picker: ^3.0.4
     redux: ^4.2.1
     redux-thunk: ^2.4.2
     rn-emoji-keyboard: ^1.7.0
@@ -11688,17 +11673,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-audio-toolkit@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "react-native-audio-toolkit@npm:1.0.6"
-  dependencies:
-    async: ^2.0.0
-    eventemitter3: ^1.2.0
-    lodash: ^4.13.1
-  checksum: ea599981fee19d208766a555467bd2adefe2a50904fbcc2b2828e593d687057153b12ce79816bf0fdd2c278533dae39cdb8b155c8cddd40220d1d4f0b0a511b0
-  languageName: node
-  linkType: hard
-
 "react-native-awesome-slider@npm:^2.5.3":
   version: 2.5.3
   resolution: "react-native-awesome-slider@npm:2.5.3"
@@ -11728,6 +11702,16 @@ __metadata:
     moment:
       optional: true
   checksum: 5b95310ff5931791ea8fec87300316bbbfd0342daf1ce72cb1dda5b91b75400be64c25e69aa6b9d277fd3197bc5a1b42e5767b5ece35b7c14abdb7362805ed5a
+  languageName: node
+  linkType: hard
+
+"react-native-color-picker@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "react-native-color-picker@npm:0.6.0"
+  dependencies:
+    prop-types: ^15.5.10
+    tinycolor2: ^1.4.1
+  checksum: 47c65e4f6eb6f28fc35cf94399ba44b88494ada99edf37b4cd5eb548ccfd22e83e0c6e72657b033a998809e73f155296fe44a15a71bcd704921bbeef09afb2bb
   languageName: node
   linkType: hard
 
@@ -12499,6 +12483,22 @@ react-native-snap-carousel@latest:
   version: 1.3.0
   resolution: "readline@npm:1.3.0"
   checksum: dfaf8e6ac20408ea00d650e95f7bb47f77c4c62dd12ed7fb51731ee84532a2f3675fcdc4cab4923dc1eef227520a2e082a093215190907758bea9f585b19438e
+  languageName: node
+  linkType: hard
+
+"reanimated-color-picker@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "reanimated-color-picker@npm:3.0.4"
+  peerDependencies:
+    expo: ">=44.0.0"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.0.0"
+    react-native-reanimated: ^2.0.0 || ^3.0.0
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: c402ac803311810f97b48418270cd0a1a912f44cf856b8d84836cdb9c653f5c47d9e711a4c0208eacf9d391a4947d8d0756311e779dbd5d28eac5efa7649ddba
   languageName: node
   linkType: hard
 
@@ -13615,7 +13615,7 @@ react-native-snap-carousel@latest:
   languageName: node
   linkType: hard
 
-"tinycolor2@npm:^1.4.2":
+"tinycolor2@npm:^1.4.1, tinycolor2@npm:^1.4.2":
   version: 1.6.0
   resolution: "tinycolor2@npm:1.6.0"
   checksum: 6df4d07fceeedc0a878d7bac47e2cd47c1ceeb1078340a9eb8a295bc0651e17c750f73d47b3028d829f30b85c15e0572c0fd4142083e4c21a30a597e47f47230

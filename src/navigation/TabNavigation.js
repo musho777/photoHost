@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/action';
+import { PostNavigation } from './postNavigation';
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const user = useSelector((st) => st.userData);
@@ -197,7 +198,7 @@ export const TabNavigation = () => {
           headerShown: false,
         })}
         name="AddImg"
-        component={AddImg}
+        component={PostNavigation}
         screenOptions={({ route }) => ({
         })}
       />
@@ -215,6 +216,14 @@ export const TabNavigation = () => {
         name="ProfileNavigation"
         component={ProfileNavigation}
       />
+      {/* 
+      <Tab.Screen
+        options={() => ({
+          headerShown: false,
+        })}
+        name="PostNavigation"
+        component={PostNavigation}
+      /> */}
 
     </Tab.Navigator>
   );
