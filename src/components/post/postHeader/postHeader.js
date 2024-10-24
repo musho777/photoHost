@@ -71,7 +71,7 @@ export const PostHeader = ({
         setOpenModal(!openModal)
         handlePresentModalPress()
       }}
-      style={{ width: 50, zIndex: 99999, justifyContent: 'flex-end', alignItems: 'flex-end', paddingRight: 10, }}>
+      style={styles.menu}>
       <WhiteMenuSvg />
     </TouchableOpacity>
     {
@@ -138,5 +138,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: "rgba(0,0,0,0.2)"
+  },
+  menu: {
+    width: 50,
+    zIndex: 99999,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    paddingRight: 10,
   }
 });

@@ -2005,7 +2005,6 @@ export const GetVidioStatistic = (id, token) => {
     fetch(`${Api}/get_file_view_statistics?file_id=${id}`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessGetVidioStatistic(r))
         }

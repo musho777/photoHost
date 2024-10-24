@@ -17,9 +17,7 @@ export const Post = React.memo(({
   setShowLike,
   setShowShare,
   setSelectedVidioId,
-  background
 }) => {
-
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
@@ -33,7 +31,6 @@ export const Post = React.memo(({
   const onPressOut = () => {
     setLong(false)
   }
-  console.log(data.background, '22999943')
   return (
     <View>
       {showSave && <ShowSave saveType={saveType} />}

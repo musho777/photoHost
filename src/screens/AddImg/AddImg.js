@@ -82,7 +82,6 @@ export const AddImg = ({ navigation }) => {
     }
     try {
       const response = await openPicker(options);
-      console.log(response, 'response')
       let item = [...data]
       if (response.didCancel) {
         if (uri.length == 0) {
@@ -111,7 +110,6 @@ export const AddImg = ({ navigation }) => {
           }
           else {
             if (item.length <= 10) {
-              console.log(elm)
               item.push({ uri: elm.path, mime: elm.mime });
             }
           }

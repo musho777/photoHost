@@ -47,7 +47,6 @@ export const Controler = forwardRef(({
       const endData = Date.now();
       // setEnd(endData)
       let seconds = (endData - start) / 1000
-      console.log(seconds, 'seconds')
       dispatch(FixVidioWatch(id, seconds, staticdata.token))
     }
     else {

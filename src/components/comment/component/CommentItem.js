@@ -301,7 +301,6 @@ export const CommentItem = ({
       if (ind >= 0) {
         wave = currentArray[ind]
       }
-      console.log(ind, 'ind')
 
       if (loading) {
         return <View style={{ gap: 5 }}>

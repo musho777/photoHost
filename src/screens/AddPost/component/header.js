@@ -74,7 +74,6 @@ export const Header = ({
     font_size && form.append("font_size", font_size)
     font_family && form.append("font_family", font_family)
     background && form.append("background", background)
-    console.log(error, 'error')
 
     form.append('category_id', selectedCatalog)
     if (selectedCatalog != '' && error == '') {

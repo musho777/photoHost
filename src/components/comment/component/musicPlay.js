@@ -14,7 +14,6 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
   const snapPoints = useMemo(() => ['50%'], []);
   const [intervalId, setIntervalId] = useState(null);
 
-  console.log(categoryID, 'parentId')
 
   const [isPlaying, setIsPlaying] = useState(null);
   const [selectedSound, setSelectedSound] = useState(null)

@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { AppColors } from '../styles/AppColors';
 import { SliderModal } from './SliderModal';
-import FastImage from 'react-native-fast-image';
 import { LikePostAction } from '../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import SliderImage from './sliderImage';
@@ -155,10 +154,20 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
     );
   }
 
+  const flatListRef = useRef();
+  useEffect(() => {
+    flatListRef.current.scrollToIndex({
+      index: 0,
+      animated: true,
+    });
+    setActive(0)
+  }, [photo.length])
+
   return (
     <View style={{ position: 'relative' }}>
       <FlatList
         horizontal
+        ref={flatListRef}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         decelerationRate="normal"
