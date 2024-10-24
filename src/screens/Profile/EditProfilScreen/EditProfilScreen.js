@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, SafeAreaView, BackHandler, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { EmailSvg, NetWorkSvg, PhoneSvg, ProfetionsSvg, WatchSvg, WorkLocation, WorkLocationSvg } from '../../../assets/svg/Svgs';
+import { EmailSvg, NetWorkSvg, PhoneSvg, WatchSvg, WorkLocation, WorkLocationSvg } from '../../../assets/svg/Svgs';
 import { AppColors } from '../../../styles/AppColors';
 import { Styles } from '../../../styles/Styles';
 import React, { useEffect } from 'react';
@@ -14,7 +14,7 @@ import { DateComponent } from './components/date';
 import { Fild } from './components/Fild';
 import { Location } from './components/location';
 import { ChnageGender } from './components/changeGender';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Profiesions } from './components/Profiesions';
 import { Position_profession } from './components/position_profession';
 
@@ -58,7 +58,6 @@ export const EditProfilScreen = ({ navigation }) => {
   const [mount, setMount] = useState('')
   const [day, setDay] = useState('')
   const [date, setDate] = useState('')
-  const isFocused = useIsFocused();
   const [ooo, setOoo] = useState('')
 
 
@@ -173,25 +172,6 @@ export const EditProfilScreen = ({ navigation }) => {
   }, [updateUserInfo.status, changeProfil.status])
 
 
-  useEffect(() => {
-    const backAction = () => {
-      if (isFocused) {
-        navigation.goBack(); // Perform back action only if this is the active screen
-        navigation.openDrawer()
-        return true;
-      }
-      return false; // Let the default behavior happen if this screen isn't focused
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
-
-    return () => backHandler.remove(); // Cleanup the listener when the screen is not active
-  }, [isFocused]);
-
-
   if (accauntType) {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -203,12 +183,8 @@ export const EditProfilScreen = ({ navigation }) => {
               loading={changeProfil.loading}
               onCheck={() => chnageProfil()}
               check
-              onPress={() => {
-                navigation.goBack()
-                navigation.openDrawer()
-              }}
-              title=
-              {t(mainData.lang).Editprofile}
+              onPress={() => { navigation.goBack() }}
+              title={t(mainData.lang).Editprofile}
             />
             <View style={styles.textWrapper}>
               <TextInput
@@ -270,7 +246,6 @@ export const EditProfilScreen = ({ navigation }) => {
               check
               onPress={() => {
                 navigation.goBack()
-                navigation.openDrawer()
               }}
               title=
               {t(mainData.lang).Editprofile}

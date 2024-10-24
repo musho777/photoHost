@@ -24,7 +24,6 @@ export default AccauntParametrNavigation = () => {
           header: ({ navigation }) => {
             return <HeaderWhiteTitle onPress={() => {
               navigation.goBack()
-              navigation.openDrawer()
             }} title={t(mainData.lang).Accountsettings} />
           }
         }}

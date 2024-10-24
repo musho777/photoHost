@@ -1,10 +1,10 @@
-import { ActivityIndicator, BackHandler, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Styles } from "../../styles/Styles"
 import { CatalogItem } from "../../components/catalogItem"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction, ShowPopUpLocal } from "../../store/action/action"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import { Skeleton } from "../../components/Skeleton"
 
 export const Catalog = () => {
@@ -61,24 +61,6 @@ export const Catalog = () => {
 
 
 
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    const backAction = () => {
-      if (isFocused) {
-        navigation.goBack(); // Perform back action only if this is the active screen
-        navigation.openDrawer()
-        return true;
-      }
-      return false; // Let the default behavior happen if this screen isn't focused
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
-
-    return () => backHandler.remove();
-  }, [isFocused]);
 
   const SendData = () => {
     setLiading(true)

@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   Modal,
   StyleSheet,
-  BackHandler
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { ArrowSvg } from '../../assets/svg/Svgs';
@@ -12,10 +11,9 @@ import { ClearEmailChange } from '../../store/action/clearAction';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { t } from '../../components/lang';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ChnageLanguage } from '../../store/action/action';
-import { useIsFocused } from '@react-navigation/native';
 
 export const ParametrScreen = ({ navigation }) => {
   const user = useSelector(st => st.userData);
@@ -27,25 +25,6 @@ export const ParametrScreen = ({ navigation }) => {
     await AsyncStorage.setItem('lang', type)
     dispatch(ChnageLanguage(type))
   }
-
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    const backAction = () => {
-      if (isFocused) {
-        navigation.goBack(); // Perform back action only if this is the active screen
-        navigation.openDrawer()
-        return true;
-      }
-      return false; // Let the default behavior happen if this screen isn't focused
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
-
-    return () => backHandler.remove(); // Cleanup the listener when the screen is not active
-  }, [isFocused]);
 
   return <View >
     <View onPress={() => setShowModal(false)} >

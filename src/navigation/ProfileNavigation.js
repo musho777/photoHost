@@ -154,7 +154,6 @@ export const ProfileNavigation = () => {
           header: ({ navigation }) => {
             return <HeaderWhiteTitle onPress={() => {
               navigation.goBack()
-              navigation.openDrawer()
             }} title={t(mainData.lang).Blacklist} />
           }
         }}
@@ -166,7 +165,6 @@ export const ProfileNavigation = () => {
           header: ({ navigation }) => {
             return <HeaderWhiteTitle onPress={() => {
               navigation.goBack()
-              navigation.openDrawer()
             }} title={'Синхронизация контактов'} />
           }
         }}
@@ -178,7 +176,6 @@ export const ProfileNavigation = () => {
           header: ({ navigation }) => {
             return <HeaderWhiteTitle onPress={() => {
               navigation.goBack()
-              navigation.openDrawer()
             }} title={t(mainData.lang).Bookmarks} />
           }
         }}
@@ -190,7 +187,6 @@ export const ProfileNavigation = () => {
           header: ({ navigation }) => {
             return <HeaderWhiteTitle onPress={() => {
               navigation.goBack()
-              navigation.openDrawer()
             }} title={t(mainData.lang).Catalog} />
           }
         }}
@@ -202,7 +198,6 @@ export const ProfileNavigation = () => {
           header: ({ navigation }) => {
             return <HeaderWhiteTitle onPress={() => {
               navigation.goBack()
-              navigation.openDrawer()
             }} title={t(mainData.lang).AboutProgram} />
           }
         }}

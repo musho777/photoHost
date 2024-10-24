@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
   View,
-  Dimensions,
-  BackHandler,
   ActivityIndicator,
   FlatList,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Albom } from '../../components/Albom/Albom';
 import { GetMyBooksAction, } from '../../store/action/action';
-import { useIsFocused } from '@react-navigation/native';
 
-const windowWidth = Dimensions.get('window').width;
 
 export const SavedPostScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -27,24 +23,6 @@ export const SavedPostScreen = ({ navigation }) => {
     return unsubscribe;
   }, [navigation, page]);
 
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    const backAction = () => {
-      if (isFocused) {
-        navigation.goBack(); // Perform back action only if this is the active screen
-        navigation.openDrawer()
-        return true;
-      }
-      return false; // Let the default behavior happen if this screen isn't focused
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
-
-    return () => backHandler.remove(); // Cleanup the listener when the screen is not active
-  }, [isFocused]);
 
   const handleLoadMore = () => {
     if (books.nextPage) {

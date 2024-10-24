@@ -1,13 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { BackHandler, FlatList, PermissionsAndroid, Platform, RefreshControl, Text, View } from "react-native"
+import { FlatList, PermissionsAndroid, Platform, RefreshControl, Text, View } from "react-native"
 import Contacts from 'react-native-contacts';
 import { Api } from "../../store/action/action";
 import { SearchItem } from "../Search/component/searchItem";
 import { Styles } from "../../styles/Styles";
 import { t } from "../../components/lang";
 import { useSelector } from "react-redux";
-import { useIsFocused } from "@react-navigation/native";
 
 export const ContactsPage = ({ navigation }) => {
 
@@ -18,24 +17,6 @@ export const ContactsPage = ({ navigation }) => {
   const [data, setData] = useState([])
   const mainData = useSelector(st => st.mainData);
 
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    const backAction = () => {
-      if (isFocused) {
-        navigation.goBack(); // Perform back action only if this is the active screen
-        navigation.openDrawer()
-        return true;
-      }
-      return false; // Let the default behavior happen if this screen isn't focused
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
-
-    return () => backHandler.remove(); // Cleanup the listener when the screen is not active
-  }, [isFocused]);
 
   const requestPermission = async () => {
     if (Platform.OS === 'android') {
