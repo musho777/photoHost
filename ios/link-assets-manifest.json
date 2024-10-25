@@ -2,8 +2,24 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "src/assets/fonts/AdventPro_Expanded-Regular.ttf",
+      "sha1": "b30218b20b3a3f3c48e5b04e8e83b3c228ffe9e1"
+    },
+    {
       "path": "src/assets/fonts/Agdasima-Regular.ttf",
       "sha1": "4e047702c298778c8c423f999d0264836b1ade4e"
+    },
+    {
+      "path": "src/assets/fonts/Alice-Regular.ttf",
+      "sha1": "7abf3b73f620de8e1242966e7079016bcecb4fe3"
+    },
+    {
+      "path": "src/assets/fonts/AmaticSC-Regular.ttf",
+      "sha1": "9aa9f1b9ddbd8340e415b538c513ee2ab92ee2e2"
+    },
+    {
+      "path": "src/assets/fonts/BadScript-Regular.ttf",
+      "sha1": "1acf93ddc780afc4f4621999613daaa513c16844"
     },
     {
       "path": "src/assets/fonts/Caveat-Regular.ttf",
@@ -16,6 +32,14 @@
     {
       "path": "src/assets/fonts/CormorantGaramond-Regular.ttf",
       "sha1": "e6f212e20e9b26cfd5efb7b36880c3ad4362094b"
+    },
+    {
+      "path": "src/assets/fonts/DelaGothicOne-Regular.ttf",
+      "sha1": "aa4fe2ff09693803f5665c6596480f2f911f8540"
+    },
+    {
+      "path": "src/assets/fonts/Geologica_Auto-Regular.ttf",
+      "sha1": "10ff53f4fc18556c0f9b02ca54110d9f8d70180a"
     },
     {
       "path": "src/assets/fonts/GreatVibes-Regular.ttf",
@@ -110,8 +134,20 @@
       "sha1": "baca1fca7fe74b61cb33aa0da48ec1a3a77bcf49"
     },
     {
+      "path": "src/assets/fonts/PlayfairDisplaySC-Regular.ttf",
+      "sha1": "ebc9f6727f30d5084a7f53e1b5f082ebac8a8c9f"
+    },
+    {
       "path": "src/assets/fonts/PlaywriteGBS-Regular.ttf",
       "sha1": "b657820f7717f1ca15cc99438a3db8064ca67c22"
+    },
+    {
+      "path": "src/assets/fonts/PressStart2P-Regular.ttf",
+      "sha1": "59caa00e6aac4573f51943e0bdd20c758eddbf4a"
+    },
+    {
+      "path": "src/assets/fonts/RubikMonoOne-Regular.ttf",
+      "sha1": "494e30805dc070dfa19c14f69db2dc887ed12556"
     },
     {
       "path": "src/assets/fonts/RussoOne-Regular.ttf",
@@ -120,6 +156,14 @@
     {
       "path": "src/assets/fonts/Tiny5-Regular.ttf",
       "sha1": "efb6866fde05939eb2d94809edf8b5433fd58bdc"
+    },
+    {
+      "path": "src/assets/fonts/Unbounded-Regular.ttf",
+      "sha1": "6149891af7e7dbd207323315fcd25a08bd364a8c"
+    },
+    {
+      "path": "src/assets/fonts/YanoneKaffeesatz-Regular.ttf",
+      "sha1": "8e52d8409fb1b576362596d9df5b012b11ad145e"
     }
   ]
 }

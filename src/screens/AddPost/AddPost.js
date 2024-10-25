@@ -46,6 +46,18 @@ export const AddPost = () => {
     'NotoSansHK-Regular',
     'Pacifico-Regular',
     'Tiny5-Regular',
+    "AdventPro_Expanded-Regular",
+    "Alice-Regular",
+    "AmaticSC-Regular",
+    "BadScript-Regular",
+    "DelaGothicOne-Regular",
+    "Geologica_Auto-Regular",
+    "PlayfairDisplaySC-Regular",
+    "PressStart2P-Regular",
+    "RubikMonoOne-Regular",
+    "Unbounded-Regular",
+    "YanoneKaffeesatz-Regular",
+
 
   ]
   const [emojy, setEmojy] = useState(false)
