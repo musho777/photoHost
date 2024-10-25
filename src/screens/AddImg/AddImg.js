@@ -77,7 +77,7 @@ export const AddImg = ({ navigation }) => {
       compressVideo: true,
       maxVideoDuration: 60,
       maxSelectedAssets: 10,
-      // doneTitle: <Icon name="rocket" size={20} color="#900" />,
+      doneTitle: "Добавлять",
       usedCameraButton: false,
       isPreview: false,
     }
@@ -172,7 +172,7 @@ export const AddImg = ({ navigation }) => {
     return <View behavior={Platform.OS === 'ios' ? 'padding' : "position"}>
       <ScrollView style={{ height: 570 }}>
         <FastImage
-          style={[styles.img, { maxHeight: 570, }]}
+          style={[styles.img, { maxHeight: 600, }]}
           source={{ uri: item.uri }}
         />
         <TouchableOpacity onPress={() => delateFoto(index)} style={{ position: 'absolute', top: 10, right: 10 }}>

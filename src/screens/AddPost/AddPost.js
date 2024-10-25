@@ -57,8 +57,15 @@ export const AddPost = () => {
     "RubikMonoOne-Regular",
     "Unbounded-Regular",
     "YanoneKaffeesatz-Regular",
-
-
+    "AlegreyaSansSC-Regular",
+    "BalsamiqSans-Regular",
+    "CormorantInfant-Regular",
+    "DaysOne-Regular",
+    "MarckScript-Regular",
+    "Pattaya-Regular",
+    "ProstoOne-Regular",
+    "RubikSprayPaint-Regular",
+    "SofiaSansExtraCondensed-Regular"
   ]
   const [emojy, setEmojy] = useState(false)
   const [activeFont, setActiveFont] = useState("Montserrat-Regular")
@@ -152,19 +159,24 @@ export const AddPost = () => {
       </View>
       <View >
         <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10 }}>
-          <TouchableOpacity onPress={() => setShowType(5)} style={styles.editItem}>
-            <TextSvg2 source={activefon} style={{ width: 30, height: 30 }} />
-            <Text style={styles.textStyle}>Текст</Text>
-          </TouchableOpacity>
           <TouchableOpacity onPress={() => setShowType(1)} style={styles.editItem}>
             <Image source={activefon} style={{ width: 30, height: 30 }} />
             <Text style={styles.textStyle}>Фон</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => setShowType(5)} style={styles.editItem}>
+            <TextSvg2 source={activefon} style={{ width: 30, height: 30 }} />
+            <Text style={styles.textStyle}>Текст</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={() => setShowType(3)} style={styles.editItem}>
             <View style={{ height: 30, width: 30, alignItems: 'center' }}>
               <TextSvg />
             </View>
             <Text style={styles.textStyle}>Размер</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setShowType(4)} style={styles.editItem}>
+            <FontFemalySvg />
+            <Text style={styles.textStyle}>Шрифт</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setShowType(2)} style={styles.editItem}>
             <View style={{ height: 30, width: 30, }}>
@@ -172,10 +184,7 @@ export const AddPost = () => {
             </View>
             <Text style={styles.textStyle}>Цвет</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setShowType(4)} style={styles.editItem}>
-            <FontFemalySvg />
-            <Text style={styles.textStyle}>Шрифт</Text>
-          </TouchableOpacity>
+
           <TouchableOpacity onPress={() => setEmojy(true)} style={styles.editItem}>
             <Emojy />
             <Text style={styles.textStyle}>Эмодзи</Text>

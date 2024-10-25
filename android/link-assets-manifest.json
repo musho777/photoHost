@@ -10,6 +10,10 @@
       "sha1": "4e047702c298778c8c423f999d0264836b1ade4e"
     },
     {
+      "path": "src/assets/fonts/AlegreyaSansSC-Regular.ttf",
+      "sha1": "cf4fb58eddaa47a14d091bb65239d7b7d05d20be"
+    },
+    {
       "path": "src/assets/fonts/Alice-Regular.ttf",
       "sha1": "7abf3b73f620de8e1242966e7079016bcecb4fe3"
     },
@@ -22,6 +26,10 @@
       "sha1": "1acf93ddc780afc4f4621999613daaa513c16844"
     },
     {
+      "path": "src/assets/fonts/BalsamiqSans-Regular.ttf",
+      "sha1": "050e0d3fa328586e4601390b60cd7780b85da7e0"
+    },
+    {
       "path": "src/assets/fonts/Caveat-Regular.ttf",
       "sha1": "c3c969c44a97760dd2dfd01c452976c725307b42"
     },
@@ -32,6 +40,14 @@
     {
       "path": "src/assets/fonts/CormorantGaramond-Regular.ttf",
       "sha1": "e6f212e20e9b26cfd5efb7b36880c3ad4362094b"
+    },
+    {
+      "path": "src/assets/fonts/CormorantInfant-Regular.ttf",
+      "sha1": "87f188c863ff96944b072a0a5a6a9d55d95d3376"
+    },
+    {
+      "path": "src/assets/fonts/DaysOne-Regular.ttf",
+      "sha1": "51ad4f895d88177662da5a5c41d3a99bc897aa90"
     },
     {
       "path": "src/assets/fonts/DelaGothicOne-Regular.ttf",
@@ -52,6 +68,10 @@
     {
       "path": "src/assets/fonts/Lobster-Regular.ttf",
       "sha1": "120c751cd7a77174037c2409ab883ef7efc5edbb"
+    },
+    {
+      "path": "src/assets/fonts/MarckScript-Regular.ttf",
+      "sha1": "254431c73407e4cd8f02055223ed812d20a99414"
     },
     {
       "path": "src/assets/fonts/Montserrat-Black.ttf",
@@ -134,6 +154,10 @@
       "sha1": "baca1fca7fe74b61cb33aa0da48ec1a3a77bcf49"
     },
     {
+      "path": "src/assets/fonts/Pattaya-Regular.ttf",
+      "sha1": "fb7be079953f63b6fc5a324c60e3cda71e9f9f5b"
+    },
+    {
       "path": "src/assets/fonts/PlayfairDisplaySC-Regular.ttf",
       "sha1": "ebc9f6727f30d5084a7f53e1b5f082ebac8a8c9f"
     },
@@ -146,12 +170,24 @@
       "sha1": "59caa00e6aac4573f51943e0bdd20c758eddbf4a"
     },
     {
+      "path": "src/assets/fonts/ProstoOne-Regular.ttf",
+      "sha1": "b18ae80cb7d295f5b5a674abd45e4538d8d6deaf"
+    },
+    {
       "path": "src/assets/fonts/RubikMonoOne-Regular.ttf",
       "sha1": "494e30805dc070dfa19c14f69db2dc887ed12556"
     },
     {
+      "path": "src/assets/fonts/RubikSprayPaint-Regular.ttf",
+      "sha1": "e29a554ac9cdde6dddd8e6605edeb819125231ae"
+    },
+    {
       "path": "src/assets/fonts/RussoOne-Regular.ttf",
       "sha1": "4a12533ad9ee3d6c83da4ac659d78ef9fb702ab4"
+    },
+    {
+      "path": "src/assets/fonts/SofiaSansExtraCondensed-Regular.ttf",
+      "sha1": "068013fca1708c6f950b205cfd9f2ce66eb8e737"
     },
     {
       "path": "src/assets/fonts/Tiny5-Regular.ttf",
