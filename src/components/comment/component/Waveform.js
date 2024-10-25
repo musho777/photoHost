@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Svg, { Rect } from 'react-native-svg';
 
-export const Waveform = ({ currentTime, waveformData, soundInstance, endReach }) => {
+export const Waveform = ({ currentTime, waveformData, soundInstance, endReach, isPlaying }) => {
   const barWidth = 5;
   const gap = 2;
 
@@ -18,17 +18,19 @@ export const Waveform = ({ currentTime, waveformData, soundInstance, endReach })
   };
 
   const onGestureEvent = (event) => {
-    const x = (event.nativeEvent.absoluteX - 100);
-    const index = Math.floor(x / (barWidth + gap)) / 2;
-    seekToTime(index)
-    if (index >= 0 && index < waveformData?.length) {
-      setSelectedBarIndex(index);
-    }
-    if (index < 0) {
-      setSelectedBarIndex(-1)
-    }
-    if (index == waveformData?.length - 1) {
-      setSelectedBarIndex(-1)
+    if (isPlaying) {
+      const x = (event.nativeEvent.absoluteX - 100);
+      const index = Math.floor(x / (barWidth + gap)) / 2;
+      seekToTime(index)
+      if (index >= 0 && index < waveformData?.length) {
+        setSelectedBarIndex(index);
+      }
+      if (index < 0) {
+        setSelectedBarIndex(-1)
+      }
+      if (index == waveformData?.length - 1) {
+        setSelectedBarIndex(-1)
+      }
     }
   };
 

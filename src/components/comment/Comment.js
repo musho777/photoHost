@@ -34,6 +34,8 @@ export const Comments = ({ route, }) => {
   const [page, setPage] = useState(1);
   const bottomSheetRef = useRef(null);
   const bottomSheetRef1 = useRef(null);
+  const getSound = useSelector((st) => st.getSound)
+
 
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
@@ -178,6 +180,7 @@ export const Comments = ({ route, }) => {
     );
   };
 
+  console.log(getSound.data)
 
   return (
     <SafeAreaView style={styles.body}>
@@ -209,17 +212,18 @@ export const Comments = ({ route, }) => {
             sendComment={sendComment}
             setSendCommet={(e) => setSendCommet(e)}
             user={user}
+            width={getSound.data.length}
           />
-          <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
             <TouchableOpacity onPress={() => setIsOpen(true)}>
               <Emojy />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => bottomSheetRef.current?.present()}>
               <Sticker />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => bottomSheetRef1.current?.present()}>
+            {getSound.data.length > 0 && <TouchableOpacity onPress={() => bottomSheetRef1.current?.present()}>
               <Nota />
-            </TouchableOpacity>
+            </TouchableOpacity>}
           </View>
           <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
 

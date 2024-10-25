@@ -25,6 +25,8 @@ import debounce from 'lodash/debounce';
 import { AlbomAndInfo } from '../Profile/components/albomAndInfo';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
 
+const { width } = Dimensions.get('window');
+
 
 export const SearchProfil = ({ navigation, route }) => {
   const singlPage = useSelector(st => st.singlPage);
@@ -137,11 +139,19 @@ export const SearchProfil = ({ navigation, route }) => {
               {singlPage.loading ?
                 <ProfileImageSkeleton /> :
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                  <Image
-                    style={styles.img}
-                    source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.avatar}` }}
-                  />
-                  <Text style={[Styles.darkMedium16, { margin: 7 }]}>{singlPage.data.name}</Text>
+                  <View style={{ width: '100%' }}>
+                    <Image style={styles.bgImage} source={require('../../assets/img/fon/90.jpeg')} />
+                    <TouchableOpacity style={styles.avatarWrapper} activeOpacity={1} onPress={() => setChangeAvatar(!changeAvatar)}>
+                      <View style={[styles.shadow, styles.avatar]}>
+                        <Image
+                          style={styles.img}
+                          source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.avatar}` }}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+
+                  <Text style={[Styles.darkMedium16, { marginTop: 20 }]}>{singlPage.data.name}</Text>
                   {singlPage.data.description && (
                     <Text style={[Styles.darkRegular14, { textAlign: 'center' }]}>{singlPage.data.description}</Text>
                   )}
@@ -177,8 +187,8 @@ export const SearchProfil = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   img: {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
     borderRadius: 50,
   },
   textWrapper: {
@@ -193,6 +203,27 @@ const styles = StyleSheet.create({
     width: 50,
     height: 30
 
-  }
+  },
+  bgImage: {
+    objectFit: 'cover',
+    width: width - 90,
+    height: 130,
+  },
+  avatar: {
+    width: 110,
+    height: 110,
+    backgroundColor: 'white',
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  avatarWrapper: {
+    position: "absolute",
+    right: 2,
+    top: 0,
+    bottom: 0,
+    margin: 'auto',
+    justifyContent: 'center',
+  },
 });
 

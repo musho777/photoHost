@@ -176,8 +176,8 @@ const styles = StyleSheet.create({
     zIndex: 99999,
   },
   userData: {
-    marginTop: 7,
-    marginBottom: 5,
+    marginTop: 10,
+    marginBottom: 0,
     alignItems: 'center',
     marginLeft: 10,
     flexDirection: 'row',
@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     objectFit: 'cover',
     width: width - 90,
     height: 130,
-    // borderRadius: 10
   },
   avatar: {
     width: 110,

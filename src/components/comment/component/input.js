@@ -1,13 +1,13 @@
 import { Input } from '../../../ui/Input';
-import { Image, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { useSelector } from "react-redux";
 import { t } from '../../lang';
 
 
-export const InputComponent = ({ sendComment, setSendCommet, sendCommentFunction }) => {
+export const InputComponent = ({ sendComment, setSendCommet, sendCommentFunction, width }) => {
   const mainData = useSelector(st => st.mainData);
 
-  return <View style={styles.InputComponent}>
+  return <View style={[width ? styles.InputComponent : { width: '80%' }]}>
     <Input
       send
       pdR={50}
