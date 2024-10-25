@@ -120,12 +120,7 @@ export const AddImg = ({ navigation }) => {
     catch (error) {
       Close()
       setFirst(false)
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'TabNavigation' }],
-        })
-      );
+      navigation.navigate('TabNavigation')
     }
 
   }

@@ -16,7 +16,7 @@ import FastImage from 'react-native-fast-image';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, music_name, big = false, description, setActiveImage, save }) => {
+export const Slider = ({ photo, music_name, big = false, description, setActiveImage, save, setVertical }) => {
   const [active, setActive] = useState(0);
   const [scroleEneble, setScrollEnabled] = useState(true)
   const [D, setD] = useState(description)
@@ -74,10 +74,12 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
         renderItem={({ item, index }) => {
           let height = 570
           if (item.height < 650) {
-            height = 400
+            height = "75%"
+            setVertical(false)
           }
           else {
             height = '90%'
+            setVertical(true)
           }
           return (
             <View style={styles.img}>

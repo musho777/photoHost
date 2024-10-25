@@ -10,7 +10,6 @@ export const SearchInput = ({ data, handleSearchInput }) => {
     <TextInput
       onChangeText={handleSearchInput}
       value={data}
-      autoFocus
       style={styles.Input}
       placeholder={t(mainData.lang).search}
       placeholderTextColor={'black'}

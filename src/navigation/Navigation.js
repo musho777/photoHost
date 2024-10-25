@@ -32,6 +32,8 @@ import { LoginNavigation } from './LoginNavigation';
 import { Catalog } from '../screens/catalog';
 import { OtherUserScreenNavigation } from './OtherUserScreenNavigation';
 import { PermissionsAndroid, Platform } from 'react-native';
+import { AddImg } from '../screens/AddImg/AddImg';
+import { AddPost } from '../screens/AddPost/AddPost';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
@@ -247,6 +249,21 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           <Stack.Screen
             name="Catalog"
             component={Catalog}
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="AddPhoto"
+            component={AddImg}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AddText"
+            component={AddPost}
             options={{
               headerShown: false,
             }}

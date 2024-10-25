@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,19 +10,20 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { useSelector } from 'react-redux';
 import { Status } from './component/status';
 import { Header } from './component/header';
-import { FontFemalySvg, SelectColor, TextSvg, TextSvg2 } from '../../assets/svg/Svgs';
+import { Emojy, FontFemalySvg, SelectColor, TextSvg, TextSvg2 } from '../../assets/svg/Svgs';
 import { ColorPicker } from 'react-native-color-picker';
 import { Styles } from '../../styles/Styles';
+import EmojiPicker from 'rn-emoji-keyboard';
+import { GetCatalogAction } from '../../store/action/action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 
 
 export const AddPost = () => {
   const [uri, setUri] = useState([]);
-  const [description, setDescription] = useState([]);
   const [selectedCatalog, setSelectedCatalog] = useState('')
   const [text, setText] = useState('')
   const [showError, setShowError] = useState(false)
@@ -33,9 +34,10 @@ export const AddPost = () => {
   const [color, setColor] = useState('white')
   const [showType, setShowType] = useState(null)
   const fontFamily = ["Montserrat-Regular", "PlaywriteGBS-Regular", 'RussoOne-Regular', 'Agdasima-Regular']
-
+  const [emojy, setEmojy] = useState(false)
   const [activeFont, setActiveFont] = useState("Montserrat-Regular")
-
+  const staticData = useSelector(st => st.static);
+  const dispatch = useDispatch()
   const fone = [
     require('../../assets/img/fon1.png'),
     require('../../assets/img/fon2.jpg'),
@@ -46,6 +48,15 @@ export const AddPost = () => {
 
   const Close = () => {
     setUri([])
+
+  }
+
+  useEffect(() => {
+    dispatch(GetCatalogAction(staticData.token))
+  }, []);
+
+  const handlePick = (e) => {
+    setText(text + e.emoji)
   }
 
   return (
@@ -108,12 +119,13 @@ export const AddPost = () => {
             onChangeText={(e) => setText(e)}
             placeholder='Text'
             multiline
+            value={text}
             style={{ backgroundColor: 'white', width: '90%', borderRadius: 10, paddingHorizontal: 10, marginVertical: 10, }}
           />
         </View>}
       </View>
       <View >
-        <View style={{ gap: 10, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10 }}>
           <TouchableOpacity onPress={() => setShowType(5)} style={styles.editItem}>
             <TextSvg2 source={activefon} style={{ width: 30, height: 30 }} />
             <Text style={styles.textStyle}>Текст</Text>
@@ -138,7 +150,13 @@ export const AddPost = () => {
             <FontFemalySvg />
             <Text style={styles.textStyle}>Шрифт</Text>
           </TouchableOpacity>
-        </View>
+          <TouchableOpacity onPress={() => setEmojy(true)} style={styles.editItem}>
+            <Emojy />
+            <Text style={styles.textStyle}>Эмодзи</Text>
+          </TouchableOpacity>
+        </ScrollView>
+
+        <EmojiPicker onEmojiSelected={handlePick} open={emojy} onClose={() => setEmojy(false)} />
 
 
       </View>

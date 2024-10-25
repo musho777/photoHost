@@ -13,6 +13,8 @@ import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/actio
 import { PostNavigation } from './postNavigation';
 import { Styles } from '../styles/Styles';
 import { t } from '../components/lang';
+import { AddPost } from '../screens/AddPost/AddPost';
+import { AddImg } from '../screens/AddImg/AddImg';
 
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
@@ -74,13 +76,20 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 <View style={styles.triangle} />
                 <View style={{ alignItems: 'center', marginTop: 3, gap: 5 }}>
                   <Text
-                    onPress={() =>
-                      navigation.navigate('AddImg', { screen: 'AddPhoto' })
+                    onPress={() => {
+                      if (isVisible) {
+                        AddPostShow()
+                      }
+                      navigation.navigate('AddPhoto')
+                    }
                     }
                     style={Styles.darkMedium13}>{t(mainData.lang).Addphoto}</Text>
                   <Text
                     onPress={() => {
-                      navigation.navigate('AddImg', { screen: 'AddText' })
+                      if (isVisible) {
+                        AddPostShow()
+                      }
+                      navigation.navigate('AddText')
                     }}
                     style={Styles.darkMedium13}>{t(mainData.lang).Addtext}</Text>
                 </View>
@@ -132,6 +141,9 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 });
                 if (!isFocused && !event.defaultPrevented) {
                   if (route.name == 'ProfileNavigation') {
+                    if (isVisible) {
+                      AddPostShow()
+                    }
                     navigation.navigate(route.name, {
                       screen: 'ProfileScreen'
                     });
@@ -140,6 +152,9 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                     AddPostShow()
                   }
                   else {
+                    if (isVisible) {
+                      AddPostShow()
+                    }
                     navigation.navigate(route.name);
                   }
                 }
@@ -223,6 +238,8 @@ export const TabNavigation = () => {
         }
       })}
     >
+
+
       <Tab.Screen
         options={() => ({
           headerShown: false,
@@ -260,6 +277,7 @@ export const TabNavigation = () => {
         name="ProfileNavigation"
         component={ProfileNavigation}
       />
+
     </Tab.Navigator>
   );
 };

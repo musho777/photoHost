@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image'
 export const AddImageLoading = ({ uri }) => {
   return <SafeAreaView style={styles.wrapper}>
     <View style={styles.loadingVidio}>
-      <Image source={{ uri: uri }} style={styles.image} />
+      {uri && <Image source={{ uri: uri }} style={styles.image} />}
       <Text style={Styles.homeTitle}>Загрузка</Text>
     </View>
   </SafeAreaView>

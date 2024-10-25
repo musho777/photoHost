@@ -3,6 +3,8 @@ import {
   View,
   StyleSheet,
   Platform,
+  Image,
+  Text,
 } from 'react-native';
 import { Slider } from './components/slider';
 import { Header } from './components/Hedaer';
@@ -32,6 +34,16 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(true)
   const [selectedVidioId, setSelectedVidioId] = useState(null)
 
+  const [vertical, setVertical] = useState(false)
+
+  const bagraund = [
+    require('../../assets/img/fon1.png'),
+    require('../../assets/img/fon2.jpg'),
+    require('../../assets/img/fon3.jpg'),
+    require('../../assets/img/fon4.jpg'),
+    require('../../assets/img/fon5.jpg'),
+  ]
+
 
   const [showShare, setShowShare] = useState(false)
   const End = async (id) => {
@@ -59,6 +71,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
     }, [])
   );
 
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       {!loading && <View style={styles.header}>
@@ -75,29 +88,66 @@ export const SinglPageScreen = ({ route, navigation }) => {
           />
         </View>}
       </View>}
-      {!loading &&
-        <Slider
-          save={save} setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
-      }
-      {!loading &&
-        <View style={{ position: 'absolute', bottom: 15, width: '100%', zIndex: 999 }}>
-          {!showView && <PostBody
-            my={my}
-            commentCount={data.comment_count}
-            liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
-            view={data.view_count}
-            like={data.like_count}
-            id={data.id}
-            user={user}
-            setShowLike={() => setLikeClose(true)}
-            big={true}
-            likeClose={likeClose}
-            showShare={showShare}
-            setShowView={(e) => setShowView(e)}
-            setShowShare={(e) => setShowShare(e)}
-          />}
+
+      {(!loading && !data.background) &&
+        <View style={{ height: '100%', justifyContent: 'center', }}>
+          <Slider
+            setVertical={(e) => setVertical(e)}
+            save={save} setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+          {!loading &&
+            <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: vertical ? '9%' : '20%' }}>
+              {!showView && <PostBody
+                my={my}
+                commentCount={data.comment_count}
+                liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
+                view={data.view_count}
+                like={data.like_count}
+                id={data.id}
+                user={user}
+                setShowLike={() => setLikeClose(true)}
+                big={true}
+                likeClose={likeClose}
+                showShare={showShare}
+                setShowView={(e) => setShowView(e)}
+                setShowShare={(e) => setShowShare(e)}
+              />}
+            </View>
+          }
         </View>
       }
+      {(!loading && data.background) &&
+        <View style={{ height: '100%', justifyContent: 'center' }}>
+          <View style={{ height: 570 }}>
+            <Image style={{ width: '100%', height: 570, }} source={bagraund[data.background - 1]} />
+            <View style={styles.textWrapper}>
+
+              {data.font_size &&
+                <Text style={{ color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size) }}>{JSON.parse(data.description)}</Text>
+              }
+            </View>
+            {!loading &&
+              <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: 0 }}>
+                {!showView && <PostBody
+                  my={my}
+                  commentCount={data.comment_count}
+                  liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
+                  view={data.view_count}
+                  like={data.like_count}
+                  id={data.id}
+                  user={user}
+                  setShowLike={() => setLikeClose(true)}
+                  big={true}
+                  likeClose={likeClose}
+                  showShare={showShare}
+                  setShowView={(e) => setShowView(e)}
+                  setShowShare={(e) => setShowShare(e)}
+                />}
+              </View>
+            }
+          </View>
+        </View>
+      }
+
       {showView && <ViewComponent
         id={data.id}
         big={true}
@@ -149,5 +199,14 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
     paddingVertical: 10,
     marginTop: -15
-  }
+  },
+  textWrapper: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  },
 });

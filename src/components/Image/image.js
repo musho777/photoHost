@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native"
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { StartSvg } from "../../assets/svg/Svgs"
 import React, { useCallback, useState } from "react";
 import FastImage from "react-native-fast-image";
@@ -7,7 +7,7 @@ import { Skeleton } from "../Skeleton";
 
 const windowWidth = Dimensions.get('window').width;
 
-export const ImageComponent = React.memo(({ video, photo, onPress }) => {
+export const ImageComponent = React.memo(({ background, video, photo, onPress, color, text }) => {
   const [loading, setLoading] = useState(true)
   const [disabled, setDisabled] = useState(false)
   useFocusEffect(
@@ -15,6 +15,48 @@ export const ImageComponent = React.memo(({ video, photo, onPress }) => {
       setDisabled(false)
     }, [])
   );
+  if (background) {
+    return <TouchableOpacity disabled={disabled} activeOpacity={1} onPress={() => {
+      onPress()
+      setDisabled(true)
+    }}>
+      {background == 1 &&
+        <View>
+          <Image
+            style={styles.img}
+            source={require('../../assets/img/fon1.png')}
+          />
+        </View>
+      }
+      {background == 2 &&
+        <View style={[styles.img, { justifyContent: 'center', alignItems: 'center' }]}>
+          <Text style={{ position: 'absolute', zIndex: 9999, color: color }}>{text}</Text>
+          <Image
+            style={styles.img}
+            source={require('../../assets/img/fon2.jpg')}
+          />
+        </View>
+      }
+      {background == 3 &&
+        <Image
+          style={styles.img}
+          source={require('../../assets/img/fon3.jpg')}
+        />
+      }
+      {background == 4 &&
+        <Image
+          style={styles.img}
+          source={require('../../assets/img/fon4.jpg')}
+        />
+      }
+      {background == 5 &&
+        <Image
+          style={styles.img}
+          source={require('../../assets/img/fon5.jpg')}
+        />
+      }
+    </TouchableOpacity>
+  }
   return <TouchableOpacity disabled={disabled} activeOpacity={1} onPress={() => {
     onPress()
     setDisabled(true)
@@ -38,7 +80,12 @@ export const ImageComponent = React.memo(({ video, photo, onPress }) => {
   return prevProps.video === nextProps.video &&
     prevProps.photo === nextProps.photo &&
     prevProps.my === nextProps.my &&
-    prevProps.data === nextProps.data;
+    prevProps.data === nextProps.data &&
+    prevProps.background === nextProps.background &&
+    prevProps.color === nextProps.color &&
+    prevProps.text === nextProps.text
+
+
 })
 
 const styles = StyleSheet.create({
