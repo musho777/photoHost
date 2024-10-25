@@ -3,7 +3,7 @@ import { Styles } from '../styles/Styles';
 import { useNavigation } from '@react-navigation/native';
 
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export const NotificationBlock = ({ description, avatar, name, photo, id }) => {
   const navigation = useNavigation()

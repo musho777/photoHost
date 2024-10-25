@@ -63,7 +63,7 @@ export const ProfileScreen = ({ navigation }) => {
       {seletedScreen ? <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}
-        style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
+        style={{ flex: 1, marginTop: 10, paddingLeft: 15, paddingRight: 13 }}>
         <FlatList
           data={getPosts?.data}
           keyExtractor={(item) => item.id.toString()}
@@ -92,7 +92,6 @@ export const ProfileScreen = ({ navigation }) => {
                 style={{ marginVertical: 10 }}>
                 <MenuSvg2 />
               </TouchableOpacity>
-
               {user.loading ? (
                 <ProfileImageSkeleton />
               ) : (
@@ -102,13 +101,15 @@ export const ProfileScreen = ({ navigation }) => {
                   setChangeAvatar={(e) => setChangeAvatar(e)}
                 />
               )}
-              <ProfilInfo
-                id={user?.allData?.data?.id}
-                loading={getPosts.loading}
-                postCount={user.postCount}
-                user={user}
-              />
-              <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+              <View style={{ paddingRight: 2 }}>
+                <ProfilInfo
+                  id={user?.allData?.data?.id}
+                  loading={getPosts.loading}
+                  postCount={user.postCount}
+                  user={user}
+                />
+                <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+              </View>
             </>
           }
           ListFooterComponent={
@@ -121,7 +122,7 @@ export const ProfileScreen = ({ navigation }) => {
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => setChangeAvatar(false)}
-          style={{ flex: 1, marginTop: 10, paddingHorizontal: 15 }}>
+          style={{ flex: 1, marginTop: 10, paddingLeft: 15, paddingRight: 13 }}>
           <FlatList
             data={[{ id: 1 }]}
             keyExtractor={(item) => item.id.toString()}
@@ -155,13 +156,15 @@ export const ProfileScreen = ({ navigation }) => {
                     setChangeAvatar={(e) => setChangeAvatar(e)}
                   />
                 )}
-                <ProfilInfo
-                  id={user?.allData?.data?.id}
-                  loading={getPosts.loading}
-                  postCount={user.postCount}
-                  user={user}
-                />
-                <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+                <View style={{ paddingRight: 2 }}>
+                  <ProfilInfo
+                    id={user?.allData?.data?.id}
+                    loading={getPosts.loading}
+                    postCount={user.postCount}
+                    user={user}
+                  />
+                  <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+                </View>
               </>
             }
           />

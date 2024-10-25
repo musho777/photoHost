@@ -180,18 +180,18 @@ export const SendImgSvg = () => {
 
 export const MenuSvg2 = () => {
   return <Svg
-    xmlns="http://www.w3.org/2000/svg"
+    width={32}
+    height={12}
+    viewBox="0 0 32 12"
     fill="none"
-    height={30}
-    viewBox="0 0 24 24"
-    width={30}
+    xmlns="http://www.w3.org/2000/svg"
   >
+    <Path stroke="#444" strokeWidth={2} strokeLinecap="round" d="M1 1L31 1" />
     <Path
-      d="M4 6h16M4 12h16M4 18h16"
       stroke="#444"
-      strokeLinecap="round"
-      strokeLinejoin="round"
       strokeWidth={2}
+      strokeLinecap="round"
+      d="M1 11L19.4074 11"
     />
   </Svg>
 }
@@ -1680,5 +1680,25 @@ export const NoteSvg = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+  </Svg>
+}
+
+export const EditSvg = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20px"
+    height="20px"
+    viewBox="0 0 24 24"
+  >
+    <G
+      fill="none"
+      stroke="#fff"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+    >
+      <Path d="M20 16v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h4" />
+      <Path d="M12.5 15.8L22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8z" />
+    </G>
   </Svg>
 }

@@ -14,7 +14,7 @@ export const Albom = ({ data, seved, my = false, loading, elm, lastItem }) => {
     <Skeleton
       width={windowWidth / 2 - 25}
       height={windowWidth / 2 - 25}
-      style={{ borderRadius: 15, margin: 5 }}
+      style={{ borderRadius: 15 }}
     />
   );
   if (loading) {
