@@ -22,6 +22,7 @@ export const ImageComponent = React.memo(({ background, video, photo, onPress, c
     }}>
       {background == 1 &&
         <View>
+          <Text style={{ position: 'absolute', zIndex: 9999, color: color }}>{text}</Text>
           <Image
             style={styles.img}
             source={require('../../assets/img/fon1.png')}
@@ -38,22 +39,31 @@ export const ImageComponent = React.memo(({ background, video, photo, onPress, c
         </View>
       }
       {background == 3 &&
-        <Image
-          style={styles.img}
-          source={require('../../assets/img/fon3.jpg')}
-        />
+        <View style={[styles.img, { justifyContent: 'center', alignItems: 'center' }]}>
+          <Text style={{ position: 'absolute', zIndex: 9999, color: color }}>{text}</Text>
+          <Image
+            style={styles.img}
+            source={require('../../assets/img/fon3.jpg')}
+          />
+        </View>
       }
       {background == 4 &&
-        <Image
-          style={styles.img}
-          source={require('../../assets/img/fon4.jpg')}
-        />
+        <View style={[styles.img, { justifyContent: 'center', alignItems: 'center' }]}>
+          <Text style={{ position: 'absolute', zIndex: 9999, color: color }}>{text}</Text>
+          <Image
+            style={styles.img}
+            source={require('../../assets/img/fon4.jpg')}
+          />
+        </View>
       }
       {background == 5 &&
-        <Image
-          style={styles.img}
-          source={require('../../assets/img/fon5.jpg')}
-        />
+        <View style={[styles.img, { justifyContent: 'center', alignItems: 'center' }]}>
+          <Text style={{ position: 'absolute', zIndex: 9999, color: color }}>{text}</Text>
+          <Image
+            style={styles.img}
+            source={require('../../assets/img/fon5.jpg')}
+          />
+        </View>
       }
     </TouchableOpacity>
   }

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AddSvg, ChatSvg, HomeSvg, SearchSvg, UserSvg } from '../assets/svg/TabBarSvg';
 import { ChatNavigation } from './ChatNavigation';
@@ -13,8 +13,8 @@ import { ClearLoginAction, ClearUser, LogoutAction } from '../store/action/actio
 import { PostNavigation } from './postNavigation';
 import { Styles } from '../styles/Styles';
 import { t } from '../components/lang';
-import { AddPost } from '../screens/AddPost/AddPost';
-import { AddImg } from '../screens/AddImg/AddImg';
+import { BootomModal } from '../components/BootomSheet';
+import { AddPhotoSvg, NoteSvg } from '../assets/svg/Svgs';
 
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
@@ -23,27 +23,33 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   const currentRouteName = state.routes[state.index].name;
   const { show } = useSelector((st) => st.showTabNavigatior)
   const mainData = useSelector(st => st.mainData);
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ['20%'], [],);
+
 
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [isVisible, setIsVisible] = useState(false);
 
   const AddPostShow = () => {
-    if (isVisible) {
-      Animated.timing(fadeAnim, {
-        toValue: 0, // Fade out
-        duration: 200,
-        useNativeDriver: true,
-      }).start(() => setIsVisible(false));
-    }
-    else {
-      setIsVisible(true);
-      Animated.timing(fadeAnim, {
-        toValue: 1, // Fade in
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    }
+    // bottomSheetRef.current().pre
+    bottomSheetRef.current?.present();
+
+    // if (isVisible) {
+    //   Animated.timing(fadeAnim, {
+    //     toValue: 0, // Fade out
+    //     duration: 200,
+    //     useNativeDriver: true,
+    //   }).start(() => setIsVisible(false));
+    // }
+    // else {
+    //   setIsVisible(true);
+    //   Animated.timing(fadeAnim, {
+    //     toValue: 1, // Fade in
+    //     duration: 200,
+    //     useNativeDriver: true,
+    //   }).start();
+    // }
   }
 
 
@@ -71,8 +77,39 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
       return (
         <SafeAreaView >
           <View style={styles.tabWrapper}>
-            <View style={{ width: "100%", height: 50, position: 'absolute', bottom: 50, justifyContent: 'center', alignItems: 'center', left: 0, right: 0, margin: 'auto' }}>
-              <Animated.View style={[styles.box, { opacity: fadeAnim, }]}>
+            <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
+              <View>
+                <Text style={[Styles.darkSemiBold16, { borderBottomWidth: 1, marginHorizontal: 10, paddingBottom: 10, borderColor: '#ededed' }]}>Опубликовать</Text>
+              </View>
+              <View style={{ marginTop: 20, gap: 15, paddingHorizontal: 10, }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                  <AddPhotoSvg />
+                  <Text
+                    onPress={() => {
+                      if (isVisible) {
+                        AddPostShow()
+                      }
+                      navigation.navigate('AddPhoto')
+                    }
+                    }
+                    style={[Styles.darkMedium16, { paddingBottom: 4 }]}>{t(mainData.lang).Addphoto}</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                  <NoteSvg />
+                  <Text
+                    onPress={() => {
+                      if (isVisible) {
+                        AddPostShow()
+                      }
+                      navigation.navigate('AddText')
+                    }}
+                    style={[Styles.darkMedium16, { paddingBottom: 4 }]}>{t(mainData.lang).Addtext}</Text>
+                </View>
+
+              </View>
+            </BootomModal>
+            {/* <View style={{ width: "100%", height: 50, position: 'absolute', bottom: 50, justifyContent: 'center', alignItems: 'center', left: 0, right: 0, margin: 'auto' }}> */}
+            {/* <Animated.View style={[styles.box, { opacity: fadeAnim, }]}>
                 <View style={styles.triangle} />
                 <View style={{ alignItems: 'center', marginTop: 3, gap: 5 }}>
                   <Text
@@ -93,8 +130,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                     }}
                     style={Styles.darkMedium13}>{t(mainData.lang).Addtext}</Text>
                 </View>
-              </Animated.View>
-            </View>
+              </Animated.View> */}
+            {/* </View> */}
             {state.routes.map((route, index) => {
               const { options } = descriptors[route.key];
               const label = options.tabBarLabel !== undefined
