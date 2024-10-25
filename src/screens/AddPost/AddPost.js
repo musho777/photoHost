@@ -33,7 +33,21 @@ export const AddPost = () => {
   const [activefon, setActiveFon] = useState(require('../../assets/img/fon1.png'))
   const [color, setColor] = useState('white')
   const [showType, setShowType] = useState(null)
-  const fontFamily = ["Montserrat-Regular", "PlaywriteGBS-Regular", 'RussoOne-Regular', 'Agdasima-Regular']
+  const fontFamily = [
+    "Montserrat-Regular",
+    "PlaywriteGBS-Regular",
+    'RussoOne-Regular',
+    'Agdasima-Regular',
+    'Caveat-Regular',
+    'Comfortaa-Regular',
+    'CormorantGaramond-Regular',
+    'Jost-Regular',
+    'Lobster-Regular',
+    'NotoSansHK-Regular',
+    'Pacifico-Regular',
+    'Tiny5-Regular',
+
+  ]
   const [emojy, setEmojy] = useState(false)
   const [activeFont, setActiveFont] = useState("Montserrat-Regular")
   const staticData = useSelector(st => st.static);

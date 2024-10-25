@@ -6,8 +6,28 @@
       "sha1": "4e047702c298778c8c423f999d0264836b1ade4e"
     },
     {
+      "path": "src/assets/fonts/Caveat-Regular.ttf",
+      "sha1": "c3c969c44a97760dd2dfd01c452976c725307b42"
+    },
+    {
+      "path": "src/assets/fonts/Comfortaa-Regular.ttf",
+      "sha1": "fb5a258452921a7f710d1913777ae6f48a0b6089"
+    },
+    {
+      "path": "src/assets/fonts/CormorantGaramond-Regular.ttf",
+      "sha1": "e6f212e20e9b26cfd5efb7b36880c3ad4362094b"
+    },
+    {
       "path": "src/assets/fonts/GreatVibes-Regular.ttf",
       "sha1": "9b472a4e6d606f46bcaa915d4b8ce59e10e2624a"
+    },
+    {
+      "path": "src/assets/fonts/Jost-Regular.ttf",
+      "sha1": "63de8f35a2b969d64b1e4012d26a38e8be1e01ae"
+    },
+    {
+      "path": "src/assets/fonts/Lobster-Regular.ttf",
+      "sha1": "120c751cd7a77174037c2409ab883ef7efc5edbb"
     },
     {
       "path": "src/assets/fonts/Montserrat-Black.ttf",
@@ -82,12 +102,24 @@
       "sha1": "f7d887fc6b50157081fd60082d20339c433f9955"
     },
     {
+      "path": "src/assets/fonts/NotoSansHK-Regular.ttf",
+      "sha1": "2eeda13e0b296393516279265b880d826367abcb"
+    },
+    {
+      "path": "src/assets/fonts/Pacifico-Regular.ttf",
+      "sha1": "baca1fca7fe74b61cb33aa0da48ec1a3a77bcf49"
+    },
+    {
       "path": "src/assets/fonts/PlaywriteGBS-Regular.ttf",
       "sha1": "b657820f7717f1ca15cc99438a3db8064ca67c22"
     },
     {
       "path": "src/assets/fonts/RussoOne-Regular.ttf",
       "sha1": "4a12533ad9ee3d6c83da4ac659d78ef9fb702ab4"
+    },
+    {
+      "path": "src/assets/fonts/Tiny5-Regular.ttf",
+      "sha1": "efb6866fde05939eb2d94809edf8b5433fd58bdc"
     }
   ]
 }
