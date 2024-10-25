@@ -68,6 +68,7 @@ export const EditPostScreen = ({ route, navigation }) => {
       }
       else {
         setDescription(e)
+        setActiveDescription(e)
       }
     }
     else {
@@ -121,6 +122,7 @@ export const EditPostScreen = ({ route, navigation }) => {
         autoFocus
         value={activeDescription}
         multiline
+
         onChangeText={e => changeDescription(e)}
         style={[Styles.darkMedium14, { paddingHorizontal: 15 }]}
         placeholder={t(mainData.lang).adddescription}

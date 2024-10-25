@@ -18,6 +18,7 @@ import { Styles } from '../../styles/Styles';
 import EmojiPicker from 'rn-emoji-keyboard';
 import { GetCatalogAction } from '../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
+import { FlatList } from 'react-native-gesture-handler';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -30,7 +31,7 @@ export const AddPost = () => {
   const [fontSize, setFintSize] = useState(20)
   const [error, setError] = useState('')
   const fontSiezeType = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40]
-  const [activefon, setActiveFon] = useState(require('../../assets/img/fon1.png'))
+  const [activefon, setActiveFon] = useState(require('../../assets/img/fon/1.jpg'))
   const [color, setColor] = useState('white')
   const [showType, setShowType] = useState(null)
   const fontFamily = [
@@ -72,11 +73,95 @@ export const AddPost = () => {
   const staticData = useSelector(st => st.static);
   const dispatch = useDispatch()
   const fone = [
-    require('../../assets/img/fon1.png'),
-    require('../../assets/img/fon2.jpg'),
-    require('../../assets/img/fon3.jpg'),
-    require('../../assets/img/fon4.jpg'),
-    require('../../assets/img/fon5.jpg'),
+    require('../../assets/img/fon/1.jpg'),
+    require('../../assets/img/fon/2.jpg'),
+    require('../../assets/img/fon/3.jpg'),
+    require('../../assets/img/fon/4.jpg'),
+    require('../../assets/img/fon/5.jpg'),
+
+
+
+    require('../../assets/img/fon/6.jpg'),
+    require('../../assets/img/fon/10.jpg'),
+    require('../../assets/img/fon/11.jpg'),
+    require('../../assets/img/fon/12.jpg'),
+    require('../../assets/img/fon/13.jpg'),
+    require('../../assets/img/fon/14.jpg'),
+    require('../../assets/img/fon/15.jpg'),
+    require('../../assets/img/fon/20.jpg'),
+    require('../../assets/img/fon/21.jpg'),
+    require('../../assets/img/fon/23.webp'),
+    require('../../assets/img/fon/24.webp'),
+    require('../../assets/img/fon/26.webp'),
+    require('../../assets/img/fon/27.webp'),
+    require('../../assets/img/fon/30.webp'),
+    require('../../assets/img/fon/35.jpeg'),
+    require('../../assets/img/fon/36.jpeg'),
+    require('../../assets/img/fon/37.jpeg'),
+    require('../../assets/img/fon/38.jpeg'),
+    require('../../assets/img/fon/39.jpeg'),
+    require('../../assets/img/fon/40.jpeg'),
+    require('../../assets/img/fon/41.jpeg'),
+    require('../../assets/img/fon/42.jpeg'),
+    require('../../assets/img/fon/43.jpeg'),
+    require('../../assets/img/fon/44.jpeg'),
+    require('../../assets/img/fon/45.jpeg'),
+    require('../../assets/img/fon/46.jpeg'),
+    require('../../assets/img/fon/47.jpeg'),
+    require('../../assets/img/fon/48.jpeg'),
+    require('../../assets/img/fon/49.jpeg'),
+    require('../../assets/img/fon/50.jpeg'),
+    require('../../assets/img/fon/51.jpeg'),
+    require('../../assets/img/fon/52.jpeg'),
+    require('../../assets/img/fon/53.jpeg'),
+    require('../../assets/img/fon/54.jpeg'),
+    require('../../assets/img/fon/55.jpeg'),
+    require('../../assets/img/fon/56.jpeg'),
+    require('../../assets/img/fon/57.jpeg'),
+    require('../../assets/img/fon/58.jpeg'),
+    require('../../assets/img/fon/59.jpeg'),
+    require('../../assets/img/fon/60.jpeg'),
+    require('../../assets/img/fon/61.jpeg'),
+    require('../../assets/img/fon/62.jpeg'),
+    require('../../assets/img/fon/63.jpeg'),
+    require('../../assets/img/fon/64.jpeg'),
+    require('../../assets/img/fon/65.jpeg'),
+    require('../../assets/img/fon/66.jpeg'),
+    require('../../assets/img/fon/67.jpeg'),
+    require('../../assets/img/fon/68.jpeg'),
+    require('../../assets/img/fon/69.jpeg'),
+    require('../../assets/img/fon/70.jpeg'),
+    require('../../assets/img/fon/71.jpeg'),
+    require('../../assets/img/fon/72.jpeg'),
+    require('../../assets/img/fon/73.jpeg'),
+    require('../../assets/img/fon/74.jpeg'),
+    require('../../assets/img/fon/75.jpeg'),
+    require('../../assets/img/fon/76.jpeg'),
+    require('../../assets/img/fon/77.jpeg'),
+    require('../../assets/img/fon/78.jpeg'),
+    require('../../assets/img/fon/80.jpeg'),
+    require('../../assets/img/fon/81.jpeg'),
+    require('../../assets/img/fon/82.jpeg'),
+    require('../../assets/img/fon/83.jpeg'),
+    require('../../assets/img/fon/84.jpeg'),
+    require('../../assets/img/fon/86.jpeg'),
+    require('../../assets/img/fon/87.jpeg'),
+    require('../../assets/img/fon/88.jpeg'),
+    require('../../assets/img/fon/89.jpeg'),
+    require('../../assets/img/fon/90.jpeg'),
+    require('../../assets/img/fon/91.jpeg'),
+    require('../../assets/img/fon/92.jpeg'),
+    require('../../assets/img/fon/93.jpeg'),
+    require('../../assets/img/fon/94.jpeg'),
+    require('../../assets/img/fon/95.jpeg'),
+    require('../../assets/img/fon/96.jpeg'),
+    require('../../assets/img/fon/97.jpeg'),
+    require('../../assets/img/fon/98.jpeg'),
+    require('../../assets/img/fon/99.jpeg'),
+    require('../../assets/img/fon/100.jpeg'),
+
+
+
   ]
 
   const Close = () => {
@@ -92,13 +177,15 @@ export const AddPost = () => {
     setText(text + e.emoji)
   }
 
+  console.log(activefon)
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
       <Header
         uri={uri}
         selectedCatalog={selectedCatalog}
-        description={text}
+        description={[text]}
 
         color={color}
         font_family={activeFont}
@@ -109,10 +196,10 @@ export const AddPost = () => {
         error={error}
         Close={() => Close()}
       />
-      <ScrollView contentContainerStyle={{ marginTop: 30, justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }} >
+      <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }} >
         <View style={styles.selectImage}>
           <Text style={{ fontFamily: activeFont, color: color, position: 'absolute', zIndex: 9999, fontSize: fontSize, textAlign: 'center' }}>{text}</Text>
-          <Image style={{ height: 500 }} source={activefon} />
+          <Image style={{ height: 550, resizeMode: "cover" }} source={activefon} />
         </View>
       </ScrollView>
       {showType == 2 && <View style={{ width: 150, height: 150, position: 'absolute', bottom: 70, justifyContent: 'center', alignItems: 'center', width: '100%' }}>
@@ -139,13 +226,30 @@ export const AddPost = () => {
         </View>}
 
         {showType == 1 && <View style={{ backgroundColor: 'white' }}>
-          <View style={{ flexDirection: 'row', marginVertical: 5, gap: 10, paddingHorizontal: 10, alignItems: 'center', justifyContent: 'center' }}>
-            {fone.map((elm, i) => {
-              return <TouchableOpacity key={i} onPress={() => setActiveFon(elm)}>
-                <Image style={{ width: 50, height: 50 }} key={i} source={elm} />
+          <FlatList
+            data={fone}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            initialNumToRender={20}
+            maxToRenderPerBatch={20}
+            windowSize={20}
+            removeClippedSubviews={true}
+
+            contentContainerStyle={{
+              flexDirection: 'row',
+              marginVertical: 5,
+              gap: 10,
+              paddingHorizontal: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => setActiveFon(item)}>
+                <Image style={{ width: 50, height: 50 }} source={item} />
               </TouchableOpacity>
-            })}
-          </View>
+            )}
+            showsHorizontalScrollIndicator={false}
+          />
         </View>}
         {showType == 5 && <View style={{ width: '100%', alignItems: 'center', }}>
           <TextInput

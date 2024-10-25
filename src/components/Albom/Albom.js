@@ -40,6 +40,7 @@ export const Albom = ({ data, seved, my = false, loading, elm, lastItem }) => {
         background={elm.background}
         color={elm.color}
         text={JSON.parse(elm.description)}
+        fontFamily={elm.font_family}
         video={elm?.photo ? elm.photo[0]?.video : elm.post.photo[0]?.video}
         photo={elm?.photo ? elm?.photo[0]?.photo : elm?.post.photo[0]?.photo}
       />

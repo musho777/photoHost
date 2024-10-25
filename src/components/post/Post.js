@@ -31,6 +31,101 @@ export const Post = React.memo(({
   const onPressOut = () => {
     setLong(false)
   }
+
+
+  const fone = [
+    require('../../assets/img/fon/1.jpg'),
+    require('../../assets/img/fon/2.jpg'),
+    require('../../assets/img/fon/3.jpg'),
+    require('../../assets/img/fon/4.jpg'),
+    require('../../assets/img/fon/5.jpg'),
+
+
+
+    require('../../assets/img/fon/6.jpg'),
+    require('../../assets/img/fon/10.jpg'),
+    require('../../assets/img/fon/11.jpg'),
+    require('../../assets/img/fon/12.jpg'),
+    require('../../assets/img/fon/13.jpg'),
+    require('../../assets/img/fon/14.jpg'),
+    require('../../assets/img/fon/15.jpg'),
+    require('../../assets/img/fon/20.jpg'),
+    require('../../assets/img/fon/21.jpg'),
+    require('../../assets/img/fon/23.webp'),
+    require('../../assets/img/fon/24.webp'),
+    require('../../assets/img/fon/26.webp'),
+    require('../../assets/img/fon/27.webp'),
+    require('../../assets/img/fon/30.webp'),
+    require('../../assets/img/fon/35.jpeg'),
+    require('../../assets/img/fon/36.jpeg'),
+    require('../../assets/img/fon/37.jpeg'),
+    require('../../assets/img/fon/38.jpeg'),
+    require('../../assets/img/fon/39.jpeg'),
+    require('../../assets/img/fon/40.jpeg'),
+    require('../../assets/img/fon/41.jpeg'),
+    require('../../assets/img/fon/42.jpeg'),
+    require('../../assets/img/fon/43.jpeg'),
+    require('../../assets/img/fon/44.jpeg'),
+    require('../../assets/img/fon/45.jpeg'),
+    require('../../assets/img/fon/46.jpeg'),
+    require('../../assets/img/fon/47.jpeg'),
+    require('../../assets/img/fon/48.jpeg'),
+    require('../../assets/img/fon/49.jpeg'),
+    require('../../assets/img/fon/50.jpeg'),
+    require('../../assets/img/fon/51.jpeg'),
+    require('../../assets/img/fon/52.jpeg'),
+    require('../../assets/img/fon/53.jpeg'),
+    require('../../assets/img/fon/54.jpeg'),
+    require('../../assets/img/fon/55.jpeg'),
+    require('../../assets/img/fon/56.jpeg'),
+    require('../../assets/img/fon/57.jpeg'),
+    require('../../assets/img/fon/58.jpeg'),
+    require('../../assets/img/fon/59.jpeg'),
+    require('../../assets/img/fon/60.jpeg'),
+    require('../../assets/img/fon/61.jpeg'),
+    require('../../assets/img/fon/62.jpeg'),
+    require('../../assets/img/fon/63.jpeg'),
+    require('../../assets/img/fon/64.jpeg'),
+    require('../../assets/img/fon/65.jpeg'),
+    require('../../assets/img/fon/66.jpeg'),
+    require('../../assets/img/fon/67.jpeg'),
+    require('../../assets/img/fon/68.jpeg'),
+    require('../../assets/img/fon/69.jpeg'),
+    require('../../assets/img/fon/70.jpeg'),
+    require('../../assets/img/fon/71.jpeg'),
+    require('../../assets/img/fon/72.jpeg'),
+    require('../../assets/img/fon/73.jpeg'),
+    require('../../assets/img/fon/74.jpeg'),
+    require('../../assets/img/fon/75.jpeg'),
+    require('../../assets/img/fon/76.jpeg'),
+    require('../../assets/img/fon/77.jpeg'),
+    require('../../assets/img/fon/78.jpeg'),
+    require('../../assets/img/fon/80.jpeg'),
+    require('../../assets/img/fon/81.jpeg'),
+    require('../../assets/img/fon/82.jpeg'),
+    require('../../assets/img/fon/83.jpeg'),
+    require('../../assets/img/fon/84.jpeg'),
+    require('../../assets/img/fon/86.jpeg'),
+    require('../../assets/img/fon/87.jpeg'),
+    require('../../assets/img/fon/88.jpeg'),
+    require('../../assets/img/fon/89.jpeg'),
+    require('../../assets/img/fon/90.jpeg'),
+    require('../../assets/img/fon/91.jpeg'),
+    require('../../assets/img/fon/92.jpeg'),
+    require('../../assets/img/fon/93.jpeg'),
+    require('../../assets/img/fon/94.jpeg'),
+    require('../../assets/img/fon/95.jpeg'),
+    require('../../assets/img/fon/96.jpeg'),
+    require('../../assets/img/fon/97.jpeg'),
+    require('../../assets/img/fon/98.jpeg'),
+    require('../../assets/img/fon/99.jpeg'),
+    require('../../assets/img/fon/100.jpeg'),
+
+
+
+  ]
+
+
   return (
     <View>
       {showSave && <ShowSave saveType={saveType} />}
@@ -62,49 +157,14 @@ export const Post = React.memo(({
           user={user}
         /> :
           <View style={{ marginBottom: 10 }}>
-            {data.background == 1 &&
-
-              <Image
-                source={require('../../assets/img/fon1.png')}
-                style={[{ height: 570 }, styles.img]}
-              />
-            }
-            {data.background == 2 &&
-
-              <Image
-                source={require('../../assets/img/fon2.jpg')}
-                style={[{ height: 570 }, styles.img]}
-              />
-            }
-
-            {data.background == 3 &&
-
-              <Image
-                source={require('../../assets/img/fon3.jpg')}
-                style={[{ height: 570 }, styles.img]}
-              />
-            }
-
-            {data.background == 4 &&
-
-              <Image
-                source={require('../../assets/img/fon4.jpg')}
-                style={[{ height: 570 }, styles.img]}
-              />
-            }
-
-            {data.background == 5 &&
-
-              <Image
-                source={require('../../assets/img/fon5.jpg')}
-                style={[{ height: 570 }, styles.img]}
-              />
-            }
-
+            <Image
+              source={fone[data.background - 1]}
+              style={[{ height: 570 }, styles.img]}
+            />
             <View style={styles.textWrapper}>
 
               {data.font_size &&
-                <Text style={{ color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size) }}>{JSON.parse(data.description)}</Text>
+                <Text style={{ padding: 10, textAlign: 'center', color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size) }}>{JSON.parse(data.description)}</Text>
               }
             </View>
           </View>
