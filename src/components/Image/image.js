@@ -148,8 +148,8 @@ export const ImageComponent = React.memo(({ background, video, photo, onPress, c
 
 const styles = StyleSheet.create({
   img: {
-    width: windowWidth / 2 - 18,
-    height: windowWidth / 2 - 18,
+    width: windowWidth / 2 - 19,
+    height: windowWidth / 2 - 19,
     borderRadius: 15,
     backgroundColor: '#dedcdc'
 

@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Dimensions, Text, FlatList } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Text, FlatList, ActivityIndicator } from 'react-native';
 import { Empty } from "./component/empty";
 import { Skeleton } from "../Skeleton";
 import { ImageComponent } from "../Image/image";
@@ -6,32 +6,11 @@ import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Albom = ({ data, seved, my = false, loading, elm, lastItem, index }) => {
+export const Albom = ({ data, seved, my = false, elm, lastItem, index }) => {
   const navigation = useNavigation()
-  const Loadingdata = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
-
-  const renderItem = ({ item }) => (
-    <Skeleton
-      width={windowWidth / 2 - 18}
-      height={windowWidth / 2 - 18}
-      style={{ borderRadius: 15 }}
-    />
-  );
-  if (loading) {
-    return <View activeOpacity={1} style={styles.block}>
-      <View style={styles.albom}>
-        <FlatList
-          data={Loadingdata}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          numColumns={2} // This will make two items per row
-        />
-      </View >
-    </View>
-  }
   return (
     <View activeOpacity={1} style={[styles.block, lastItem && { marginBottom: 55 },
-    index % 2 != 0 && { marginLeft: 6 }
+    index % 2 != 0 && { marginLeft: 5 }
     ]}>
       <ImageComponent
         onPress={() => {
@@ -53,11 +32,11 @@ export const Albom = ({ data, seved, my = false, loading, elm, lastItem, index }
 
 const styles = StyleSheet.create({
   block: {
-    marginBottom: 6,
+    marginBottom: 5,
   },
   albom: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   }
 });
 

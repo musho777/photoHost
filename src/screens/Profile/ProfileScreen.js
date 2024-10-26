@@ -63,7 +63,7 @@ export const ProfileScreen = ({ navigation }) => {
       {seletedScreen ? <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}
-        style={{ flex: 1, marginTop: 10, paddingLeft: 15, paddingRight: 13 }}>
+        style={{ flex: 1, paddingLeft: 15, paddingRight: 15 }}>
         <FlatList
           data={getPosts?.data}
           keyExtractor={(item) => item.id.toString()}
@@ -85,7 +85,7 @@ export const ProfileScreen = ({ navigation }) => {
           }}
 
           ListHeaderComponent={
-            <>
+            <View>
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => navigation.openDrawer()}
@@ -101,7 +101,7 @@ export const ProfileScreen = ({ navigation }) => {
                   setChangeAvatar={(e) => setChangeAvatar(e)}
                 />
               )}
-              <View style={{ paddingRight: 2 }}>
+              <View >
                 <ProfilInfo
                   id={user?.allData?.data?.id}
                   loading={getPosts.loading}
@@ -109,8 +109,11 @@ export const ProfileScreen = ({ navigation }) => {
                   user={user}
                 />
                 <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+                {getPosts.loading && <View>
+                  <ActivityIndicator />
+                </View>}
               </View>
-            </>
+            </View>
           }
           ListFooterComponent={
             getPosts.secondLoading && (

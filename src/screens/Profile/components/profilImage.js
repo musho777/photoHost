@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   bgImage: {
     objectFit: 'cover',
-    width: width - 90,
+    width: width - 83,
     height: 130,
     // borderRadius: 10,
   },
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   },
   avatarWrapper: {
     position: "absolute",
-    right: 1,
+    right: 0,
     top: 0,
     bottom: 0,
     margin: 'auto',
