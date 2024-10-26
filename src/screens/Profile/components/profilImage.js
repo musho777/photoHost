@@ -19,7 +19,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
   const [openSlider, setOpenSlider] = useState(false)
   const bottomSheetRef = useRef(null);
   const [bg, setBg] = useState("")
-  const snapPoints = useMemo(() => ['15%'], []);
+  const snapPoints = useMemo(() => ['20%'], []);
 
   const [imgUrl, setImgUrl] = useState('');
   const dispatch = useDispatch()
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   },
   avatarWrapper: {
     position: "absolute",
-    right: 0,
+    right: 1,
     top: 0,
     bottom: 0,
     margin: 'auto',

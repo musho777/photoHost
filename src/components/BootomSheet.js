@@ -6,10 +6,7 @@ export const BootomModal = forwardRef(({ children, snapPoints, close = () => { }
     (props) => (
       <BottomSheetBackdrop
         {...props}
-        // animatedIndex={{
-        //   value: 1,
-        // }}
-        disappearsOnIndex={-1} // Optionally control when the backdrop disappears
+        disappearsOnIndex={-1}
         appearsOnIndex={0}
         opacity={0.85}
       />

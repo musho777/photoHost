@@ -24,9 +24,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   const { show } = useSelector((st) => st.showTabNavigatior)
   const mainData = useSelector(st => st.mainData);
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ['20%'], [],);
+  const snapPoints = useMemo(() => ['25%'], [],);
 
-  const [isVisible, setIsVisible] = useState(false);
 
   const AddPostShow = () => {
     bottomSheetRef.current?.present();
@@ -134,9 +133,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 });
                 if (!isFocused && !event.defaultPrevented) {
                   if (route.name == 'ProfileNavigation') {
-                    if (isVisible) {
-                      AddPostShow()
-                    }
                     navigation.navigate(route.name, {
                       screen: 'ProfileScreen'
                     });
@@ -145,9 +141,6 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                     AddPostShow()
                   }
                   else {
-                    if (isVisible) {
-                      AddPostShow()
-                    }
                     navigation.navigate(route.name);
                   }
                 }

@@ -1,5 +1,6 @@
 import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { ModalSliderImg } from './ModalSliderImg';
+import { CloseSvg1 } from '../assets/svg/Svgs';
 export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
     return <View >
         <Modal
@@ -9,8 +10,10 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
             onRequestClose={() => close()}
         >
             <View style={styles.centeredView}>
-                <TouchableOpacity activeOpacity={1} style={styles.centeredView2} onPress={() => close()} />
-                <View onClick={(e) => { e.stopPropagation() }} style={styles.modalView}>
+                <TouchableOpacity activeOpacity={1} style={styles.centeredView2} onPress={() => close()} >
+                    <CloseSvg1 />
+                </TouchableOpacity>
+                <View style={styles.modalView}>
                     <ModalSliderImg photo={photo} activePhoto={activePhoto} />
                 </View>
             </View>
@@ -26,10 +29,10 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     centeredView2: {
-        flex: 1,
         position: 'absolute',
-        width: '100%',
-        height: '100%'
+        zIndex: 9999,
+        top: 10,
+        right: 10,
     },
     modalView: {
         borderRadius: 0,
