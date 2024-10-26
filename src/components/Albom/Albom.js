@@ -6,14 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Albom = ({ data, seved, my = false, loading, elm, lastItem }) => {
+export const Albom = ({ data, seved, my = false, loading, elm, lastItem, index }) => {
   const navigation = useNavigation()
   const Loadingdata = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 
   const renderItem = ({ item }) => (
     <Skeleton
-      width={windowWidth / 2 - 25}
-      height={windowWidth / 2 - 25}
+      width={windowWidth / 2 - 18}
+      height={windowWidth / 2 - 18}
       style={{ borderRadius: 15 }}
     />
   );
@@ -30,7 +30,9 @@ export const Albom = ({ data, seved, my = false, loading, elm, lastItem }) => {
     </View>
   }
   return (
-    <View activeOpacity={1} style={[styles.block, lastItem && { marginBottom: 55 }]}>
+    <View activeOpacity={1} style={[styles.block, lastItem && { marginBottom: 55 },
+    index % 2 != 0 && { marginLeft: 6 }
+    ]}>
       <ImageComponent
         onPress={() => {
           my ?
@@ -51,7 +53,7 @@ export const Albom = ({ data, seved, my = false, loading, elm, lastItem }) => {
 
 const styles = StyleSheet.create({
   block: {
-    margin: 5,
+    marginBottom: 6,
   },
   albom: {
     flexDirection: 'row',

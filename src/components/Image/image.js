@@ -7,7 +7,6 @@ import { useFocusEffect } from "@react-navigation/native";
 const windowWidth = Dimensions.get('window').width;
 
 export const ImageComponent = React.memo(({ background, video, photo, onPress, color, text, fontFamily }) => {
-  const [loading, setLoading] = useState(true)
 
   const fone = [
     require('../../assets/img/fon/1.jpg'),
@@ -129,9 +128,6 @@ export const ImageComponent = React.memo(({ background, video, photo, onPress, c
       </View>
     }
     <FastImage
-      onLoad={() => {
-        setLoading(false)
-      }}
       style={styles.img}
       source={{ uri: `https://chambaonline.pro/uploads/${photo}`, }}
       resizeMode={FastImage.resizeMode.cover}
@@ -152,8 +148,8 @@ export const ImageComponent = React.memo(({ background, video, photo, onPress, c
 
 const styles = StyleSheet.create({
   img: {
-    width: windowWidth / 2 - 25,
-    height: windowWidth / 2 - 25,
+    width: windowWidth / 2 - 18,
+    height: windowWidth / 2 - 18,
     borderRadius: 15,
     backgroundColor: '#dedcdc'
 

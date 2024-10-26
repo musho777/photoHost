@@ -46,7 +46,7 @@ export const ProfileScreen = ({ navigation }) => {
   }, [getPosts, page, seletedScreen]);
 
   const renderItem1 = ({ item, index }) => {
-    return <Albom lastItem={(index == getPosts.data.length - 1) && !getPosts.nextPage} elm={item} loading={getPosts.loading} my={true} data={getPosts.data} />;
+    return <Albom index={index} lastItem={(index == getPosts.data.length - 1) && !getPosts.nextPage} elm={item} loading={getPosts.loading} my={true} data={getPosts.data} />;
   };
   const renderItem2 = ({ item, index }) => {
     return <InfoBlock user={user.data} />

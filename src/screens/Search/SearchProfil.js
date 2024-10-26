@@ -89,7 +89,7 @@ export const SearchProfil = ({ navigation, route }) => {
   }, [getPosts, page, seletedScreen]);
 
   const renderItem1 = ({ item, index }) => {
-    return <Albom elm={item} loading={getPosts.loading} my={false} data={getPosts.data} />;
+    return <Albom index={index} elm={item} loading={getPosts.loading} my={false} data={getPosts.data} />;
   };
   const renderItem2 = ({ item, index }) => {
     return <InfoBlock user={singlPage.data} />
@@ -187,8 +187,8 @@ export const SearchProfil = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   img: {
-    width: 90,
-    height: 90,
+    width: 100,
+    height: 100,
     borderRadius: 50,
   },
   textWrapper: {
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   },
   avatarWrapper: {
     position: "absolute",
-    right: 2,
+    right: 0,
     top: 0,
     bottom: 0,
     margin: 'auto',

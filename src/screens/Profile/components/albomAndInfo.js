@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     borderColor: AppColors.Solitude_Color,
     backgroundColor: '#FFF',
     elevation: 0,
-    marginHorizontal: 15,
+    // marginHorizontal: 15,
     marginBottom: 10,
   },
   tab: {
