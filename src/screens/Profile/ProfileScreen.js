@@ -99,6 +99,7 @@ export const ProfileScreen = ({ navigation }) => {
                   user={user}
                   changeAvatar={changeAvatar}
                   setChangeAvatar={(e) => setChangeAvatar(e)}
+                  backroundPhoto={user.data.backround_photo}
                 />
               )}
               <View >

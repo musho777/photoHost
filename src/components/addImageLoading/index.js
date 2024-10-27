@@ -1,6 +1,5 @@
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { Styles } from '../../styles/Styles'
-import FastImage from 'react-native-fast-image'
 
 export const AddImageLoading = ({ uri }) => {
   return <SafeAreaView style={styles.wrapper}>

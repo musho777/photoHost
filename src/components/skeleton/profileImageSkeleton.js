@@ -6,17 +6,6 @@ const { width } = Dimensions.get('window');
 
 
 export const ProfileImageSkeleton = () => {
-  // return <View style={styles.block}>
-  //   <Skeleton
-  //     width={90}
-  //     height={90}
-  //     style={{ borderRadius: 50 }}
-  //   />
-  //   <Skeleton
-  //     width={150}
-  //     height={14}
-  //   />
-  // </View>
   return <View>
 
     <View style={{ width: '100%' }}>

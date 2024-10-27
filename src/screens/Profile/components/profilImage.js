@@ -3,23 +3,49 @@ import { Shadow } from 'react-native-shadow-2'
 import { t } from '../../../components/lang';
 import { Styles } from '../../../styles/Styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMemo, useRef, useState } from 'react';
-import { chnageAvatarAction } from '../../../store/action/action';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { chnageAvatarAction, UpdateBackroundPhoto } from '../../../store/action/action';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { SliderModal } from '../../../components/SliderModal';
 import { CheckMarkUserSvg, EditSvg } from '../../../assets/svg/Svgs';
 import { BootomModal } from '../../../components/BootomSheet';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import FastImage from 'react-native-fast-image';
+import { Skeleton } from '../../../components/Skeleton';
 
 const { width } = Dimensions.get('window');
 
-export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
+export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
   const [openSlider, setOpenSlider] = useState(false)
   const bottomSheetRef = useRef(null);
+  const bottomSheetRef1 = useRef(null);
+
   const [bg, setBg] = useState("")
   const snapPoints = useMemo(() => ['20%'], []);
+  const snapPoints1 = useMemo(() => ['70%',], []);
+  const [imageData, setImageData] = useState([])
+  const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)
+  const [loadBgImage, setLoadBgImage] = useState(true)
+
+  useEffect(() => {
+    setBgPhoto(user.data.backround_photo)
+  }, [user])
+
+  const GetPhoto = () => {
+    let item = [...imageData]
+    if (user) {
+      user.data.categories.map((elm, i) => {
+        elm.photo_array.map((el) => {
+          item.push(el)
+        })
+      })
+    }
+    setImageData(item)
+  }
+
 
   const [imgUrl, setImgUrl] = useState('');
   const dispatch = useDispatch()
@@ -48,6 +74,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
       bottomSheetRef.current?.close()
       if (image.path) {
         setBg(image.path);
+        dispatch(UpdateBackroundPhoto(image.path, staticdata.token));
       }
     })
       .catch((error) => {
@@ -60,6 +87,35 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
     setImgUrl('')
     dispatch(chnageAvatarAction('', staticdata.token));
   }
+
+
+
+
+  const renderItem = ({ item, index }) => {
+    return <TouchableOpacity onPress={() => {
+      bottomSheetRef.current?.close()
+      setBgPhoto(item.photo)
+      dispatch(UpdateBackroundPhoto("", staticdata.token, item.photo));
+      bottomSheetRef1.current?.close()
+    }} style={{ width: '100%', paddingHorizontal: 15 }}>
+      <View style={{ marginBottom: 15 }}>
+        <Image
+          style={styles.bgImage}
+          source={{ uri: `https://chambaonline.pro/uploads/${item.photo}`, }}
+        />
+        <View style={styles.avatarWrapper} activeOpacity={1}>
+          <View style={[styles.shadow, styles.avatar]}>
+            <Image
+              style={styles.img}
+              source={{ uri: imgUrl ? imgUrl : `https://chambaonline.pro/uploads/${user.avatar}`, }}
+            />
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+
+  }
+
   return <View style={{ justifyContent: 'center', alignItems: 'center' }}>
     <View style={{ width: '100%' }}>
       <TouchableOpacity
@@ -67,11 +123,20 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
         style={styles.editIcon}>
         <EditSvg />
       </TouchableOpacity>
-      <Image style={styles.bgImage} source={
-        !bg ?
-          require('../../../assets/img/fon/90.jpeg') :
-          { uri: bg }
-      } />
+      {loadBgImage &&
+        <Skeleton
+          width={width - 82}
+          height={130}
+          style={{ position: "absolute" }}
+        />
+      }
+      <FastImage
+        onLoad={() => {
+          setLoadBgImage(false)
+        }}
+        style={[styles.bgImage, loadBgImage && { opacity: 0 }]}
+        source={{ uri: bg ? bg : `https://chambaonline.pro/uploads/${bgPhoto}`, }}
+      />
       <TouchableOpacity style={styles.avatarWrapper} activeOpacity={1} onPress={() => setChangeAvatar(!changeAvatar)}>
         <View style={[styles.shadow, styles.avatar]}>
           <Image
@@ -129,17 +194,33 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar }) => {
     <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
       <View style={{ paddingHorizontal: 20 }}>
         <TouchableOpacity onPress={() => {
+          GetPhoto()
           bottomSheetRef.current?.close()
+          setTimeout(() => {
+            bottomSheetRef1.current?.present(); // Open the second sheet with a slight delay to ensure proper timing
+          }, 300);
         }} style={{ marginBottom: 20, marginTop: 20 }} >
           <Text style={Styles.darkRegular14}>добавить фото</Text>
 
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
           changeBg()
+          bottomSheetRef.current?.close()
         }} style={{ marginBottom: 20 }}>
           <Text style={Styles.darkRegular14}>добавить фото из телефона</Text>
         </TouchableOpacity>
       </View>
+    </BootomModal>
+
+    <BootomModal ref={bottomSheetRef1} snapPoints={snapPoints1}>
+      <FlatList
+        initialNumToRender={5}
+        keyExtractor={(item) => item.id.toString()}
+        data={imageData}
+        showsVerticalScrollIndicator={false}
+        renderItem={renderItem}
+      />
+
     </BootomModal>
 
   </View>

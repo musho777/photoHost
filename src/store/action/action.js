@@ -2017,3 +2017,34 @@ export const GetVidioStatistic = (id, token) => {
       });
   };
 }
+
+
+export const UpdateBackroundPhoto = (url, token, img) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  let body = new FormData();
+  if (url) {
+    body.append('photo', {
+      uri: url,
+      name: 'photo.png',
+      filename: 'imageName.png',
+      type: 'image/png',
+    });
+    body.append('Content-Type', 'image/png');
+  }
+  else {
+    body.append('category_photo_name', img)
+    body.append('Content-Type', 'application/json');
+  }
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: body,
+  };
+  return dispatch => {
+    fetch("https://chambaonline.pro/api/update_backround_photo", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  };
+}
