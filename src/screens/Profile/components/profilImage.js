@@ -92,9 +92,10 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
 
   const renderItem = ({ item, index }) => {
-    return <TouchableOpacity onPress={() => {
+    return <TouchableOpacity activeOpacity={1} onPress={() => {
       bottomSheetRef.current?.close()
       setBgPhoto(item.photo)
+      setBg("")
       dispatch(UpdateBackroundPhoto("", staticdata.token, item.photo));
       bottomSheetRef1.current?.close()
     }} style={{ width: '100%', paddingHorizontal: 15 }}>
@@ -172,18 +173,20 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
         </Shadow>
       </View>
     }
-    <View style={{ paddingRight: 2 }}>
+    <View style={{ width: '100%', }}>
       <View style={styles.userData}>
-        <View style={[Styles.flexAlignItems, { gap: 7 }]}>
-          <Text style={Styles.darkMedium16}>{user?.name}</Text>
-          {user.data.star > 0 && <View style={{ marginTop: 3 }}>
-            <CheckMarkUserSvg />
-          </View>
+        <View style={[{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }]}>
+          <Text style={[Styles.darkMedium16, { textAlign: 'center', marginRight: 7, }]}>{user?.name}
+          </Text>
+          {
+            user.data.star > 0 && <View style={{ marginTop: 3 }}>
+              <CheckMarkUserSvg />
+            </View>
           }
         </View>
       </View>
       {user.data.description && (
-        <Text style={[Styles.darkRegular14, { textAlign: 'center' }]}>{user.description}</Text>
+        <Text style={[Styles.darkRegular14, { textAlign: 'center', width: '100%' }]}>{user.description}</Text>
       )}
     </View>
     <SliderModal
@@ -260,8 +263,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 0,
     alignItems: 'center',
-    marginLeft: 10,
     flexDirection: 'row',
+    width: '100%',
   },
   shadow: {
     alignItems: 'center',
@@ -278,7 +281,7 @@ const styles = StyleSheet.create({
   bgImage: {
     objectFit: 'cover',
     width: width - 83,
-    height: 130,
+    height: 150,
     // borderRadius: 10,
   },
   avatar: {

@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useMemo, useState } from 'react'
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Sound from 'react-native-sound'
 import { useSelector } from 'react-redux'
 import { SendMsgSvg, } from '../../../assets/svg/Svgs'
@@ -7,6 +7,7 @@ import { BootomModal } from '../../BootomSheet'
 import { Waveform } from './Waveform'
 import { t } from '../../../components/lang';
 import { Styles } from '../../../styles/Styles'
+import { FlatList } from 'react-native-gesture-handler'
 
 
 export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {

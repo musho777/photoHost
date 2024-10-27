@@ -23,7 +23,7 @@ export const AboutApplication = () => {
         </View>
         <Text style={Styles.balihaiMedium13} >
           <Text style={styles.line}>
-            Персональная лента
+            Персональная лента:
             {"\n"}
           </Text>
           После быстрой регистрации, Вы выбираете любимые рубрики, а их более 35, и получаете контент, подходящий именно Вам!

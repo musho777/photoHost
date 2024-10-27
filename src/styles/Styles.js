@@ -16,7 +16,7 @@ export const Styles = StyleSheet.create({
     },
     flexAlignItems: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     darkMedium22: {
         fontFamily: 'Montserrat-Medium',

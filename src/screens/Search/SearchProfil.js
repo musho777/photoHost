@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   bgImage: {
     objectFit: 'cover',
     width: width - 90,
-    height: 130,
+    height: 150,
   },
   avatar: {
     width: 110,
