@@ -127,8 +127,8 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       {loadBgImage &&
         <Skeleton
           width={width - 82}
-          height={130}
-          style={{ position: "absolute" }}
+          height={150}
+          style={{ position: "absolute", borderRadius: 10 }}
         />
       }
       <FastImage
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     objectFit: 'cover',
     width: width - 83,
     height: 150,
-    // borderRadius: 10,
+    borderRadius: 10,
   },
   avatar: {
     width: 110,
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   },
   avatarWrapper: {
     position: "absolute",
-    right: 0,
+    right: 1,
     top: 0,
     bottom: 0,
     margin: 'auto',
@@ -304,6 +304,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     zIndex: 9999,
-    left: 10
+    left: 10,
   }
 });

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     objectFit: 'cover',
     width: width - 90,
     height: 150,
-    // borderRadius: 10,
+    borderRadius: 10,
   },
   avatarWrapper: {
     position: "absolute",

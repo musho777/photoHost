@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     objectFit: 'cover',
     width: width - 90,
     height: 150,
+    borderRadius: 10,
   },
   avatar: {
     width: 110,
