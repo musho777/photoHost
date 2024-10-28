@@ -177,8 +177,6 @@ export const AddPost = () => {
     setText(text + e.emoji)
   }
 
-  console.log(activefon)
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />

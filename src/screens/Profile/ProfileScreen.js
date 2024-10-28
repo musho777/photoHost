@@ -87,9 +87,8 @@ export const ProfileScreen = ({ navigation }) => {
           ListHeaderComponent={
             <View>
               <TouchableOpacity
-                activeOpacity={1}
                 onPress={() => navigation.openDrawer()}
-                style={{ marginVertical: 10 }}
+                style={{ width: 30, height: 30 }}
               >
                 <MenuSvg2 />
               </TouchableOpacity>

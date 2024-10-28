@@ -24,7 +24,7 @@ export const PostBody = ({
   categoryId,
   setSelectidId = () => { }
 }) => {
-
+  console.log(categoryId)
   const navigation = useNavigation()
   const [showViewText, setShowViewText] = useState(false)
   const staticdata = useSelector(st => st.static);

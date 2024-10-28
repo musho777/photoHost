@@ -24,6 +24,8 @@ import { InfoBlock } from '../Profile/InfoBlock';
 import debounce from 'lodash/debounce';
 import { AlbomAndInfo } from '../Profile/components/albomAndInfo';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
+import FastImage from 'react-native-fast-image';
+import { Skeleton } from '../../components/Skeleton';
 
 const { width } = Dimensions.get('window');
 
@@ -39,6 +41,7 @@ export const SearchProfil = ({ navigation, route }) => {
   const [followersCount, setFollowersCount] = useState(0)
   const user = useSelector(st => st.userData);
   const [seletedScreen, setSelectedScreen] = useState(true)
+  const [loadBgImage, setLoadBgImage] = useState(true)
 
 
 
@@ -110,7 +113,6 @@ export const SearchProfil = ({ navigation, route }) => {
       <View style={{ paddingHorizontal: 15 }}>
         <FlatList
           data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
-          scrollEnabled={seletedScreen}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           refreshing={getPosts?.loading}
@@ -140,7 +142,20 @@ export const SearchProfil = ({ navigation, route }) => {
                 <ProfileImageSkeleton /> :
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <View style={{ width: '100%' }}>
-                    <Image style={styles.bgImage} source={require('../../assets/img/fon/90.jpeg')} />
+                    {loadBgImage &&
+                      <Skeleton
+                        width={width - 83}
+                        height={150}
+                        style={{ position: "absolute", borderRadius: 10 }}
+                      />
+                    }
+                    <FastImage
+                      onLoad={() => {
+                        setLoadBgImage(false)
+                      }}
+                      style={[styles.bgImage, loadBgImage && { opacity: 0 }]}
+                      source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.backround_photo}`, }}
+                    />
                     <TouchableOpacity style={styles.avatarWrapper} activeOpacity={1} onPress={() => setChangeAvatar(!changeAvatar)}>
                       <View style={[styles.shadow, styles.avatar]}>
                         <Image
@@ -199,10 +214,8 @@ const styles = StyleSheet.create({
     borderColor: '#E7EEF5',
   },
   goBack: {
-    marginVertical: 15,
     width: 50,
     height: 30
-
   },
   bgImage: {
     objectFit: 'cover',

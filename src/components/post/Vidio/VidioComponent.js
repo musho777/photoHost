@@ -30,7 +30,6 @@ export const VidioComponent = forwardRef(({
   const [loading, setLoading] = useState(true)
 
   const [start, setStart] = useState(null)
-  const [end, setEnd] = useState(null)
 
   useEffect(() => {
     setPaused(true)
@@ -107,13 +106,12 @@ export const VidioComponent = forwardRef(({
         }}
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       >
-        {((showStartButton || first) && !big) &&
+        {((showStartButton || first)) &&
           <Controler
             setShowStartButton={(e) => setShowStartButton(e)}
             setCurrentTime={(e) => setCurrentTime(e)}
             ref={ref}
             currentTime={currentTime}
-            big={big}
             setStart={(e) => setStart(e)}
             start={start}
             volume={volume}
@@ -125,6 +123,7 @@ export const VidioComponent = forwardRef(({
             setPaused={(e) => setPaused(e)}
             setFirst={(e) => setFirst(e)}
             full={fullScreen}
+            big={big}
             loading={loading}
             id={item.id}
           />

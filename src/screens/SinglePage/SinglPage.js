@@ -126,14 +126,6 @@ export const SinglPageScreen = ({ route, navigation }) => {
     require('../../assets/img/fon/100.jpeg'),
   ]
 
-  // const bagraund = [
-  //   require('../../assets/img/fon/1.jpg'),
-  //   require('../../assets/img/fon/2.jpg'),
-  //   require('../../assets/img/fon/3.jpg'),
-  //   require('../../assets/img/fon/4.jpg'),
-  //   require('../../assets/img/fon/6.jpg'),
-  // ]
-
 
   const [showShare, setShowShare] = useState(false)
   const End = async (id) => {
@@ -194,6 +186,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
                 like={data.like_count}
                 id={data.id}
                 user={user}
+                categoryId={data?.category?.id}
                 setShowLike={() => setLikeClose(true)}
                 big={true}
                 likeClose={likeClose}

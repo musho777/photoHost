@@ -121,7 +121,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                       duration={duration}
                       onSeek={() => onSeek()}
                       ref={videoRef}
-                      big={false}
+                      big={true}
                     />
                   </View>
 
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   hover: {
     backgroundColor: 'rgba(0,0,0,0.8)',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     borderRadius: 10,
     width: 'auto',
     position: 'absolute',

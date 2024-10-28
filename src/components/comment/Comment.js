@@ -36,7 +36,6 @@ export const Comments = ({ route, }) => {
   const bottomSheetRef1 = useRef(null);
   const getSound = useSelector((st) => st.getSound)
 
-
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
   const getComments = useSelector(st => st.getComments);
@@ -179,8 +178,6 @@ export const Comments = ({ route, }) => {
       </View >
     );
   };
-
-  console.log(getSound.data)
 
   return (
     <SafeAreaView style={styles.body}>

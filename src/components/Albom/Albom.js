@@ -1,10 +1,8 @@
-import { View, StyleSheet, TouchableOpacity, Dimensions, Text, FlatList, ActivityIndicator } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Empty } from "./component/empty";
-import { Skeleton } from "../Skeleton";
 import { ImageComponent } from "../Image/image";
 import { useNavigation } from '@react-navigation/native';
 
-const windowWidth = Dimensions.get('window').width;
 
 export const Albom = ({ data, seved, my = false, elm, lastItem, index }) => {
   const navigation = useNavigation()

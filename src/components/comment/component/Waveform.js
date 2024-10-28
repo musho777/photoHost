@@ -18,7 +18,6 @@ export const Waveform = ({ currentTime, waveformData, soundInstance, endReach, i
   };
 
   const onGestureEvent = (event) => {
-    console.log(isPlaying >= 0)
     if (isPlaying >= 0 && isPlaying != null) {
       const x = (event.nativeEvent.absoluteX - 100);
       const index = Math.floor(x / (barWidth + gap)) / 2;

@@ -219,7 +219,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
         showsVerticalScrollIndicator={false}
         renderItem={renderItem}
       />
-
     </BootomModal>
 
   </View>

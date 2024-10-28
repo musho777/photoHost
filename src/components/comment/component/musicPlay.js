@@ -194,11 +194,6 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
           return;
         }
         sound.play((success) => {
-          if (success) {
-            console.log('Sound played successfully');
-          } else {
-            console.log('Playback failed');
-          }
           setCurrentTime(0);
           clearInterval(intervalId);
           setIsPlaying(null);

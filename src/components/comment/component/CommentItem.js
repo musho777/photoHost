@@ -250,18 +250,12 @@ export const CommentItem = ({
       setEndReach(false)
       const sound = new Sound(`https://chambaonline.pro/uploads/audio/${name}`, null, (error) => {
         if (error) {
-          console.log('Failed to load sound', name, error);
           return;
         }
         else {
           setLoading(false)
         }
         sound.play((success) => {
-          if (success) {
-            console.log('Sound played successfully');
-          } else {
-            console.log('Playback failed');
-          }
           setSoundInstance(null)
           setEndReach(false)
           setIsPlaying(false);

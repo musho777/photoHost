@@ -1,6 +1,6 @@
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { AddSecSvg, AddSecSvg1, FullScrenn, MuteSvg, Pause, StartSvg } from "../../../../assets/svg/Svgs"
-import { forwardRef, useState } from "react";
+import { forwardRef } from "react";
 import { Styles } from "../../../../styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { FixVidioWatch } from "../../../../store/action/action";
@@ -22,11 +22,10 @@ export const Controler = forwardRef(({
   loading,
   id,
   setStart,
-  start
+  start,
+  big
 }, ref) => {
 
-  // const [start, setStart] = useState(null)
-  // const [end, setEnd] = useState(null)
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
 
@@ -71,17 +70,17 @@ export const Controler = forwardRef(({
 
   if (!full) {
     return <View style={styles.wrapper}>
-      <TouchableOpacity
+      {!big && <TouchableOpacity
         style={styles.full}
         onPress={() => {
           setFullScreen(!full)
           setShowStartButton(true)
         }}>
         <FullScrenn />
-      </TouchableOpacity>
+      </TouchableOpacity>}
       <TouchableOpacity activeOpacity={1} onPress={() =>
         setVolume(volume === 0 ? 1 : 0)
-      } style={styles.voice}>
+      } style={[styles.voice, big && { top: 10, right: 5 }]}>
         {!volume ?
 
           <MuteSvg /> :
