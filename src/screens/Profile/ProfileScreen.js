@@ -60,16 +60,16 @@ export const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {seletedScreen ? <TouchableOpacity
+      <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}
         style={{ flex: 1, paddingLeft: 15, paddingRight: 15 }}>
         <FlatList
-          data={getPosts?.data}
+          data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           refreshing={user?.loading}
-          renderItem={renderItem1}
+          renderItem={seletedScreen ? renderItem1 : renderItem2}
           numColumns={2}
           ListEmptyComponent={ListEmptyComponent}
           scrollEventThrottle={16}
@@ -89,7 +89,8 @@ export const ProfileScreen = ({ navigation }) => {
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => navigation.openDrawer()}
-                style={{ marginVertical: 10 }}>
+                style={{ marginVertical: 10 }}
+              >
                 <MenuSvg2 />
               </TouchableOpacity>
               {user.loading ? (
@@ -122,59 +123,8 @@ export const ProfileScreen = ({ navigation }) => {
             )}
         />
 
-      </TouchableOpacity> :
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => setChangeAvatar(false)}
-          style={{ flex: 1, marginTop: 10, paddingLeft: 15, paddingRight: 13 }}>
-          <FlatList
-            data={[{ id: 1 }]}
-            keyExtractor={(item) => item.id.toString()}
-            showsVerticalScrollIndicator={false}
-            refreshing={user?.loading}
-            renderItem={renderItem2}
-            numColumns={2}
-            ListEmptyComponent={ListEmptyComponent}
-            onRefresh={() => {
-              if (!getPosts.loading) {
-                setPage(1);
-                dispatch(getUserInfoAction(staticdata.token));
-              }
-            }}
-
-            ListHeaderComponent={
-              <>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  onPress={() => navigation.openDrawer()}
-                  style={{ marginVertical: 10 }}>
-                  <MenuSvg2 />
-                </TouchableOpacity>
-
-                {user.loading ? (
-                  <ProfileImageSkeleton />
-                ) : (
-                  <ProfilImage
-                    user={user}
-                    changeAvatar={changeAvatar}
-                    setChangeAvatar={(e) => setChangeAvatar(e)}
-                  />
-                )}
-                <View style={{ paddingRight: 2 }}>
-                  <ProfilInfo
-                    id={user?.allData?.data?.id}
-                    loading={getPosts.loading}
-                    postCount={user.postCount}
-                    user={user}
-                  />
-                  <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
-                </View>
-              </>
-            }
-          />
-        </TouchableOpacity>
-      }
-    </SafeAreaView>
+      </TouchableOpacity>
+    </SafeAreaView >
   );
 };
 

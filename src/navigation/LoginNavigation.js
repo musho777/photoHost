@@ -5,7 +5,7 @@ import { RecoveryPassword } from '../screens/auth/RecoveryPassword';
 import { NewPassword } from '../screens/auth/NewPassword';
 import { Header } from '../headers/Header';
 import { Catalog } from '../screens/catalog';
-import { RegisterType } from '../screens/auth/RegisterType';
+import { RegisterType } from '../screens/auth/registerType';
 
 export const LoginNavigation = () => {
   const Stack = createStackNavigator();

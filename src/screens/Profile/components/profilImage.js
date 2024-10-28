@@ -3,13 +3,13 @@ import { Shadow } from 'react-native-shadow-2'
 import { t } from '../../../components/lang';
 import { Styles } from '../../../styles/Styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { chnageAvatarAction, UpdateBackroundPhoto } from '../../../store/action/action';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { SliderModal } from '../../../components/SliderModal';
 import { CheckMarkUserSvg, EditSvg } from '../../../assets/svg/Svgs';
 import { BootomModal } from '../../../components/BootomSheet';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { FlatList, } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
 import { Skeleton } from '../../../components/Skeleton';
 
@@ -29,10 +29,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const [imageData, setImageData] = useState([])
   const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)
   const [loadBgImage, setLoadBgImage] = useState(true)
-
-  useEffect(() => {
-    setBgPhoto(user.data.backround_photo)
-  }, [user])
 
   const GetPhoto = () => {
     let item = [...imageData]
@@ -126,7 +122,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       </TouchableOpacity>
       {loadBgImage &&
         <Skeleton
-          width={width - 82}
+          width={width - 83}
           height={150}
           style={{ position: "absolute", borderRadius: 10 }}
         />
