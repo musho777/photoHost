@@ -119,7 +119,7 @@ export const Header = ({
         <CloseSvg1 />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePresentModalPress()} style={[styles.category, { borderColor: errorCatalog ? 'red' : 'white' }]}>
-        <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white' }]}>
+        <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white', textAlign: 'center' }]}>
           {selectedCatalog ?
             selectedCatalogName :
             t(mainData.lang).Choosecatalog

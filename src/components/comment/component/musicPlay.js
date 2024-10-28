@@ -257,7 +257,7 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
         if (!waveformData[index]) {
           wave = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]
         }
-        return <View style={styles.wrapper}>
+        return <TouchableOpacity activeOpacity={1} style={styles.wrapper}>
           <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}>
             {(loading && index == isPlaying) ?
               <View style={{ width: 26, height: 26 }}>
@@ -284,7 +284,7 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
           }}>
             <SendMsgSvg />
           </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       }}
       showsVerticalScrollIndicator={false}
     />

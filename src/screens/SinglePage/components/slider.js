@@ -85,7 +85,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
             <View style={styles.img}>
 
               {!item.video ?
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ alignItems: 'center', justifyContent: 'center', height: height, }}>
                   <FastImage
                     style={[{ width: '100%', height: height, }]}
                     source={{
@@ -96,7 +96,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                     fallback={false}
                     resizeMode={FastImage.resizeMode.cover}
                   />
-                  {(description && D[index]) && <View style={[styles.hover, { top: save ? 40 : 10 }]}>
+                  {(description && D[index]) && <View style={[styles.hover, { top: save ? 40 : 40 }]}>
                     <Text style={[Styles.whiteSemiBold12]}>
                       {D[index]}
                     </Text>
@@ -130,7 +130,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
           );
         }}
       />
-      {(photo[active].video && showSlider) &&
+      {(photo[active]?.video && showSlider) &&
         <View style={styles.slider}>
           <Sliders
             style={styles.seekSlider}
