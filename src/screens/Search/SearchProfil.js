@@ -111,7 +111,7 @@ export const SearchProfil = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} translucent={true} />
+      {/* <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} translucent={true} /> */}
       <FlatList
         data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
         keyExtractor={(item) => item.id.toString()}

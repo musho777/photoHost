@@ -32,16 +32,6 @@ export const ProfileScreen = () => {
   }, [user.data?.id, page]);
 
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('light-content');
-      StatusBar.setBackgroundColor('transparent');
-      StatusBar.setTranslucent(true);
-    }, [])
-  );
-
-
-
   const handleEndReached = useCallback(() => {
     if (seletedScreen)
       if (getPosts.nextPage && !getPosts.secondLoading) {
@@ -66,7 +56,6 @@ export const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle={"light-content"} backgroundColor={"transparent"} translucent={true} />
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}

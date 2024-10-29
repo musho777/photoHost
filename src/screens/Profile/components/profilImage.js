@@ -247,19 +247,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     padding: 20,
   },
-  bgImage: {
-    objectFit: 'cover',
-    width: width - 83,
-    height: 150,
-    borderRadius: 10,
-  },
-  bgImage1: {
-    objectFit: 'cover',
-    width: width,
-    height: 280,
-    marginLeft: -15,
-    borderRadius: 10,
-  },
+
   avatar: {
     width: 120,
     height: 120,
