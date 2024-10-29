@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, SafeAreaView, ActivityIndicator, StyleSheet, FlatList, Text, Dimensions, View, Image, StatusBar } from 'react-native';
-import { MenuSvg2 } from '../../assets/svg/Svgs';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
 import { ProfilImage } from './components/profilImage';
@@ -11,6 +10,7 @@ import debounce from 'lodash/debounce';
 import { t } from '../../components/lang';
 import { InfoBlock } from './InfoBlock';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const ProfileScreen = () => {
@@ -32,6 +32,13 @@ export const ProfileScreen = () => {
   }, [user.data?.id, page]);
 
 
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('light-content');
+      StatusBar.setBackgroundColor('transparent');
+      StatusBar.setTranslucent(true);
+    }, [])
+  );
 
 
 
@@ -59,6 +66,7 @@ export const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle={"light-content"} backgroundColor={"transparent"} translucent={true} />
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}
@@ -85,26 +93,21 @@ export const ProfileScreen = () => {
           }}
 
           ListHeaderComponent={
-            <View>
+            <>
               <ProfilImage
                 user={user}
                 changeAvatar={changeAvatar}
                 setChangeAvatar={(e) => setChangeAvatar(e)}
                 backroundPhoto={user.data.backround_photo}
               />
-              <View >
-                <ProfilInfo
-                  id={user?.allData?.data?.id}
-                  loading={getPosts.loading}
-                  postCount={user.postCount}
-                  user={user}
-                />
-                <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
-                {getPosts.loading && <View>
-                  <ActivityIndicator />
-                </View>}
-              </View>
-            </View>
+              <ProfilInfo
+                id={user?.allData?.data?.id}
+                loading={getPosts.loading}
+                postCount={user.postCount}
+                user={user}
+              />
+              <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+            </>
           }
           ListFooterComponent={
             getPosts.secondLoading && (

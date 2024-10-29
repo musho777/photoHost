@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, useWindowDimensions } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { Styles } from "../../../styles/Styles";
-import { Albom } from "../../../components/Albom/Albom";
-import { InfoBlock } from "../InfoBlock";
 import { AppColors } from "../../../styles/AppColors";
 import { t } from "../../../components/lang";
 

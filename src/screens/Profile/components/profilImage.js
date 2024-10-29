@@ -19,6 +19,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
   const [openSlider, setOpenSlider] = useState(false)
+  const [openBg, setOpenBg] = useState(false)
   const bottomSheetRef = useRef(null);
   const bottomSheetRef1 = useRef(null);
   const bottomSheetRef2 = useRef(null);
@@ -89,7 +90,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
 
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item }) => {
     return <TouchableOpacity activeOpacity={1} onPress={() => {
       bottomSheetRef.current?.close()
       setBgPhoto(item.photo)
@@ -116,40 +117,31 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   }
 
   return <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-    {changeStyle ?
-      <BigBgImage setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => bottomSheetRef2?.current?.present()} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} /> :
-      <BgImage setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => bottomSheetRef2?.current?.present()} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} />
+    {!changeStyle ?
+      <BigBgImage
+        setOpenBg={(e) => setOpenBg(!openBg)}
+        setLoadBgImage={(e) => setLoadBgImage()}
+        ref={bottomSheetRef}
+        changeAvatar={changeAvatar}
+        setChangeAvatar={(e) => bottomSheetRef2?.current?.present()}
+        imgUrl={imgUrl}
+        bg={bg}
+        bgPhoto={bgPhoto}
+        user={user}
+        openBg={openBg}
+
+      /> :
+      <BgImage
+        openBg={openBg}
+        setOpenBg={(e) => setOpenBg(!openBg)} setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => bottomSheetRef2?.current?.present()} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} />
     }
-    {
-      changeAvatar &&
-      <View style={{ top: 0, position: "absolute", zIndex: 9999 }}>
-        <Shadow style={styles.block} startColor={'#00000010'}>
-          <TouchableOpacity style={styles.iconWrapper} onPress={() => {
-            setChangeAvatar(false)
-            setOpenSlider(true)
-          }}>
-            <Image style={styles.icon} source={require('../../../assets/img/user1.png')} />
-            <Text style={styles.text}>Открыть фото</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconWrapper}>
-            <Image style={styles.icon} source={require('../../../assets/img/edit.png')} />
-            <Text style={styles.text} onPress={() => changeImg()}>{t(mainData.lang).ChangePhoto}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconWrapper} onPress={() => DelatePhoto()}>
-            <Image style={styles.icon} source={require('../../../assets/img/delete.png')} />
-            <Text style={styles.text}>Удалить фото</Text>
-          </TouchableOpacity>
-        </Shadow>
-      </View>
-    }
-
-
-
-
-
 
     <SliderModal
       modalVisible={openSlider} photo={[{ photo: user.avatar }]} close={() => setOpenSlider(false)} />
+
+
+    <SliderModal
+      modalVisible={openBg} photo={[{ photo: bgPhoto }]} close={() => setOpenBg(false)} />
 
 
 

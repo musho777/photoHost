@@ -44,6 +44,7 @@ export const SearchProfil = ({ navigation, route }) => {
   const [seletedScreen, setSelectedScreen] = useState(true)
   const [loadBgImage, setLoadBgImage] = useState(true)
   const [openSlider, setOpenSlider] = useState(false)
+  const [openBg, setOpenBg] = useState(false)
 
 
   const AddDeletFollow = () => {
@@ -150,13 +151,15 @@ export const SearchProfil = ({ navigation, route }) => {
                         style={{ position: "absolute", borderRadius: 10 }}
                       />
                     }
-                    <FastImage
-                      onLoad={() => {
-                        setLoadBgImage(false)
-                      }}
-                      style={[styles.bgImage, loadBgImage && { opacity: 0 }]}
-                      source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.backround_photo}`, }}
-                    />
+                    <TouchableOpacity onPress={() => setOpenBg()}>
+                      <FastImage
+                        onLoad={() => {
+                          setLoadBgImage(false)
+                        }}
+                        style={[styles.bgImage, loadBgImage && { opacity: 0 }]}
+                        source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.backround_photo}`, }}
+                      />
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.avatarWrapper} activeOpacity={1} onPress={() => setOpenSlider(true)}>
                       <View style={[styles.shadow, styles.avatar]}>
                         <Image
@@ -199,6 +202,8 @@ export const SearchProfil = ({ navigation, route }) => {
 
       <SliderModal
         modalVisible={openSlider} photo={[{ photo: singlPage.data.avatar }]} close={() => setOpenSlider(false)} />
+      <SliderModal
+        modalVisible={openBg} photo={[{ photo: singlPage.data.backround_photo }]} close={() => setOpenBg(false)} />
     </SafeAreaView>
   );
 };

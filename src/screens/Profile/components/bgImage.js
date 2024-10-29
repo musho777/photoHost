@@ -9,7 +9,7 @@ import { ProfileImageSkeleton } from "../../../components/skeleton/profileImageS
 
 const { width } = Dimensions.get('window');
 
-export const BgImage = forwardRef(({ user, loadBgImage, setLoadBgImage, bgPhoto, setChangeAvatar, changeAvatar, bg, imgUrl }, ref) => {
+export const BgImage = forwardRef(({ user, loadBgImage, setLoadBgImage, bgPhoto, setChangeAvatar, changeAvatar, bg, imgUrl, setOpenBg }, ref) => {
   const navigation = useNavigation()
   if (user.loading) {
     return <ProfileImageSkeleton />
@@ -29,7 +29,10 @@ export const BgImage = forwardRef(({ user, loadBgImage, setLoadBgImage, bgPhoto,
         style={{ position: "absolute", borderRadius: 10 }}
       />
     }
-    <View>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => setOpenBg()}
+    >
       <FastImage
         onLoad={() => {
           setLoadBgImage(false)
@@ -42,7 +45,7 @@ export const BgImage = forwardRef(({ user, loadBgImage, setLoadBgImage, bgPhoto,
         style={styles.editIcon}>
         <EditSvg />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
     <TouchableOpacity style={styles.avatarWrapper} activeOpacity={1} onPress={() => setChangeAvatar(!changeAvatar)}>
       <View style={[styles.shadow, styles.avatar]}>
         <Image

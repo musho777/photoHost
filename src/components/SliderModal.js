@@ -1,7 +1,18 @@
-import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity, StatusBar } from 'react-native';
 import { ModalSliderImg } from './ModalSliderImg';
 import { CloseSvg1 } from '../assets/svg/Svgs';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
+
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         StatusBar.setBarStyle('light-content');
+    //         StatusBar.setBackgroundColor('transparent');
+    //         StatusBar.setTranslucent(true);
+    //     }, [])
+    // );
+
     return <View >
         <Modal
             animationType="slide"
