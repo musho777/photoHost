@@ -65,6 +65,7 @@ export const SearchBlock = () => {
 
   return (
     <SafeAreaView >
+      <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} />
       <View style={styles.centeredView}>
         <SearchInput
           data={data}

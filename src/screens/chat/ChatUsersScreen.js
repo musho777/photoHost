@@ -95,6 +95,7 @@ export const ChatUsersScreen = () => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} />
       <View style={{ padding: 10, marginTop: 10 }}>
         {data.length > 0 && <Input
           placeholder={t(mainData.lang).search}

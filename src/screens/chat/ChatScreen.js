@@ -52,6 +52,7 @@ export const ChatScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.body}>
+      <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} />
       <Header user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} />
       <Messages id={route.params.chatId} route={route} />
       <BottomWrapper ref={bottomSheetRef} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />

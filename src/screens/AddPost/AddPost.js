@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  StatusBar,
 } from 'react-native';
 import { Status } from './component/status';
 import { Header } from './component/header';
@@ -179,6 +180,7 @@ export const AddPost = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+      <StatusBar barStyle={"light-content"} backgroundColor={"#000"} />
       <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
       <Header
         uri={uri}

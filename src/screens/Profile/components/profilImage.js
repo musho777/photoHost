@@ -26,7 +26,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
 
   const [bg, setBg] = useState("")
-  const snapPoints = useMemo(() => ['20%'], []);
+  const snapPoints = useMemo(() => ['16%'], []);
   const snapPoints1 = useMemo(() => ['70%',], []);
   const [imageData, setImageData] = useState([])
   const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)
@@ -163,14 +163,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
         }} style={{ marginBottom: 20 }}>
           <Text style={Styles.darkRegular14}>добавить фото из телефона</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          setChangeStyle(!changeStyle)
-          setTimeout(() => {
-            bottomSheetRef.current?.close();
-          }, 100);
-        }} style={{ marginBottom: 20 }}>
-          <Text style={Styles.darkRegular14}>{t(mainData.lang).ChangeBackgroundStyle}</Text>
-        </TouchableOpacity>
       </View>
     </BootomModal>
 
@@ -184,7 +176,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       />
     </BootomModal>
     <BootomModal ref={bottomSheetRef2} snapPoints={snapPoints}>
-      <View style={{ gap: 10, paddingHorizontal: 10, }}>
+      <View style={{ gap: 20, paddingHorizontal: 10, }}>
         <TouchableOpacity style={styles.iconWrapper} onPress={() => {
           setChangeAvatar(false)
           setOpenSlider(true)
@@ -208,8 +200,8 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
 const styles = StyleSheet.create({
   img: {
-    width: 100,
-    height: 100,
+    width: 110,
+    height: 110,
     borderRadius: 50,
   },
   block: {
@@ -223,12 +215,12 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 23,
-    height: 23
+    height: 23,
   },
   text: {
     color: "black",
     fontSize: 14,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   iconWrapper: {
     flexDirection: 'row',
@@ -269,8 +261,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   avatar: {
-    width: 110,
-    height: 110,
+    width: 120,
+    height: 120,
     backgroundColor: 'white',
     borderRadius: 100,
     justifyContent: 'center',
@@ -284,25 +276,4 @@ const styles = StyleSheet.create({
     margin: 'auto',
     justifyContent: 'center',
   },
-  avatarWrapper1: {
-    position: "absolute",
-    right: 0,
-    left: 0,
-    bottom: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 999999,
-  },
-  editIcon: {
-    position: 'absolute',
-    bottom: 10,
-    zIndex: 9999,
-    left: 10,
-  },
-  editIcon1: {
-    position: 'absolute',
-    top: 50,
-    zIndex: 9999,
-    right: 10,
-  }
 });

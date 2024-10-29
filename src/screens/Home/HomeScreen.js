@@ -203,6 +203,7 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView >
+      <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} translucent={false} />
       <HomeHeader onPress={() => goTop()} />
       {showModal && <ModalComponent
         showModal={showModal}
@@ -227,7 +228,7 @@ export const HomeScreen = () => {
           ref={flatListRef}
           viewabilityConfig={viewabilityConfig.current}
           // getItemLayout={getItemLayout}
-          // onViewableItemsChanged={onViewableItemsChanged}
+          onViewableItemsChanged={onViewableItemsChanged}
           refreshControl={refreshControl}
         />
         :

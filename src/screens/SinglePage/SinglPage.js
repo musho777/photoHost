@@ -5,6 +5,7 @@ import {
   Platform,
   Image,
   Text,
+  StatusBar,
 } from 'react-native';
 import { Slider } from './components/slider';
 import { Header } from './components/Hedaer';
@@ -156,6 +157,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+      <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} />
       {!loading && <View style={styles.header}>
         <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={my} />
         {save && <View style={styles.headerWrapper}>

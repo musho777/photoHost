@@ -1,16 +1,16 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View, Image, StatusBar } from "react-native"
 import FastImage from "react-native-fast-image"
 import { CheckMarkUserSvg, EditSvg, MenuSvg1 } from "../../../assets/svg/Svgs"
-import { forwardRef, useCallback, useState } from "react";
+import { forwardRef, useState } from "react";
 import { Styles } from "../../../styles/Styles";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Skeleton } from "../../../components/Skeleton";
 import { ProfileImageSkeleton } from "../../../components/skeleton/profileImageSkeleton";
 
 
 const { width } = Dimensions.get('window');
 
-export const BigBgImage = forwardRef(({ openBg, changeAvatar, setChangeAvatar, user, bg, bgPhoto, imgUrl, setOpenBg }, ref) => {
+export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg, bgPhoto, imgUrl, setOpenBg }, ref) => {
   const navigation = useNavigation()
   const [loadBgImage, setLoadBgImage] = useState(true)
   if (user.loading) {
@@ -43,7 +43,11 @@ export const BigBgImage = forwardRef(({ openBg, changeAvatar, setChangeAvatar, u
         />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => ref.current?.present()}
+        onPress={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          ref.current?.present()
+        }}
         style={styles.editIcon1}>
         <EditSvg />
       </TouchableOpacity>
@@ -73,9 +77,9 @@ export const BigBgImage = forwardRef(({ openBg, changeAvatar, setChangeAvatar, u
 
 const styles = StyleSheet.create({
   img: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 110,
+    height: 110,
+    borderRadius: 110,
   },
   shadow: {
     alignItems: 'center',
@@ -96,8 +100,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   avatar: {
-    width: 110,
-    height: 110,
+    width: 120,
+    height: 120,
     backgroundColor: 'white',
     borderRadius: 100,
     justifyContent: 'center',
@@ -114,8 +118,8 @@ const styles = StyleSheet.create({
   },
   editIcon1: {
     position: 'absolute',
-    top: 50,
-    zIndex: 9999,
-    right: 10,
+    bottom: 70,
+    zIndex: 9999999,
+    right: 15,
   }
 });
