@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   View,
   ActivityIndicator,
   FlatList,
+  StatusBar,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Albom } from '../../components/Albom/Albom';
 import { GetMyBooksAction, } from '../../store/action/action';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const SavedPostScreen = ({ navigation }) => {
@@ -22,6 +24,16 @@ export const SavedPostScreen = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation, page]);
+
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
+
 
 
   const handleLoadMore = () => {

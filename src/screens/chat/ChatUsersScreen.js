@@ -4,6 +4,7 @@ import {
   FlatList,
   Text,
   View,
+  StatusBar,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChatUser } from '../../components/ChatUser';
@@ -31,6 +32,9 @@ export const ChatUsersScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
       if (user.msgCount > 0) {
         dispatch(ClearChatNumber())
       }

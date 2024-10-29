@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo, forwardRef } from 'react';
+import React, { useCallback, forwardRef } from 'react';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 export const BootomModal = forwardRef(({ children, snapPoints, close = () => { } }, ref) => {
+
 
   const renderBackdrop = useCallback(
     (props) => (

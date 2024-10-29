@@ -1,9 +1,9 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View, Image, StatusBar } from "react-native"
 import FastImage from "react-native-fast-image"
 import { CheckMarkUserSvg, EditSvg, MenuSvg1 } from "../../../assets/svg/Svgs"
-import { forwardRef, useState } from "react";
+import { forwardRef, useCallback, useState } from "react";
 import { Styles } from "../../../styles/Styles";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Skeleton } from "../../../components/Skeleton";
 import { ProfileImageSkeleton } from "../../../components/skeleton/profileImageSkeleton";
 
@@ -12,6 +12,15 @@ const { width } = Dimensions.get('window');
 
 export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg, bgPhoto, imgUrl }, ref) => {
 
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('light-content');
+      StatusBar.setBackgroundColor('transparent');
+      StatusBar.setTranslucent(true);
+
+    }, [])
+  );
   const navigation = useNavigation()
   const [loadBgImage, setLoadBgImage] = useState(true)
   if (user.loading) {
@@ -25,7 +34,7 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
         style={{ position: "absolute", borderRadius: 10 }}
       />
     }
-    <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+    {/* <StatusBar barStyle="light-content" translucent backgroundColor="transparent" /> */}
     <TouchableOpacity
       onPress={() => navigation.openDrawer()}
       style={{ width: 30, height: 30, position: "absolute", top: 50, left: 10, zIndex: 9999 }}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator, BackHandler } from 'react-native';
+import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator, BackHandler, StatusBar } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
 import { AddPostViewCount, DelatePostAction, GetLentsAction, GetPostsAction, getUserInfoAction, ShowTabNavigation } from '../../store/action/action';
@@ -15,6 +15,7 @@ import debounce from 'lodash/debounce';
 import { AddImageLoading } from '../../components/addImageLoading';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
 import { t } from '../../components/lang';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const HomeScreen = () => {
@@ -190,8 +191,18 @@ export const HomeScreen = () => {
     return <EmptyFlatlist loading={getLents.loading} text={t(mainData.lang).Thefeedisempty} />
   }
 
+
+  useFocusEffect(
+    React.useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
+
+    }, [])
+  );
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView >
       <HomeHeader onPress={() => goTop()} />
       {showModal && <ModalComponent
         showModal={showModal}
@@ -216,7 +227,7 @@ export const HomeScreen = () => {
           ref={flatListRef}
           viewabilityConfig={viewabilityConfig.current}
           // getItemLayout={getItemLayout}
-          onViewableItemsChanged={onViewableItemsChanged}
+          // onViewableItemsChanged={onViewableItemsChanged}
           refreshControl={refreshControl}
         />
         :

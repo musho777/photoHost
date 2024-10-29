@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   SafeAreaView,
+  StatusBar,
   StyleSheet,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +12,7 @@ import Main from '../../components/GIf/main';
 import { BottomWrapper } from './component/bottomWrapper';
 import { Messages } from './component/Messages';
 import Sound from 'react-native-sound';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const ChatScreen = ({ route }) => {
@@ -29,6 +31,15 @@ export const ChatScreen = ({ route }) => {
     dispatch(ClearDeletChat())
     dispatch(ClearChat())
   }, [])
+
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
 
   const SendSticker = (e) => {
     music.play()

@@ -1,8 +1,19 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native"
 import { Styles } from "../../styles/Styles"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 export const AboutApplication = () => {
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
+
   return <SafeAreaView style={{ paddingHorizontal: 15 }}>
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{ gap: 15, marginBottom: 10, }}>

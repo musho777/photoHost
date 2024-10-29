@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, SafeAreaView, KeyboardAvoidingView, StatusBar } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { EmailSvg, NetWorkSvg, PhoneSvg, WatchSvg, WorkLocation, WorkLocationSvg } from '../../../assets/svg/Svgs';
@@ -34,6 +34,14 @@ export const EditProfilScreen = ({ navigation }) => {
     { name: 'Ноябрь', id: 10 },
     { name: 'Декабрь', id: 11 },
   ]
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
 
   const [name, setName] = useState('');
   const [discription, setDiscription] = useState('');

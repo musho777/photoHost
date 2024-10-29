@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ActivityIndicator, StatusBar } from 'react-native';
 import { FlatList, RefreshControl } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchAction } from '../../store/action/action';
@@ -18,6 +18,8 @@ export const SearchBlock = () => {
   const search = useSelector(st => st.search);
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
+
+
 
   const debouncedSearchData = useCallback(
     _.debounce((e) => {
@@ -39,6 +41,10 @@ export const SearchBlock = () => {
 
   useFocusEffect(
     useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
+
       dispatch(clearSearchData())
       setData("")
     }, [])

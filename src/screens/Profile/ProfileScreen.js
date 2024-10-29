@@ -6,7 +6,6 @@ import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
 import { ProfilImage } from './components/profilImage';
 import { ProfilInfo } from './components/profilInfo';
 import { AlbomAndInfo } from './components/albomAndInfo';
-import { ProfileImageSkeleton } from '../../components/skeleton/profileImageSkeleton';
 import { Albom } from '../../components/Albom/Albom';
 import debounce from 'lodash/debounce';
 import { t } from '../../components/lang';
@@ -14,7 +13,7 @@ import { InfoBlock } from './InfoBlock';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
 
 
-export const ProfileScreen = ({ navigation }) => {
+export const ProfileScreen = () => {
 
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
@@ -60,7 +59,6 @@ export const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {/* <StatusBar barStyle="light-content" translucent backgroundColor="transparent" /> */}
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}

@@ -1,12 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
-import { FlatList, PermissionsAndroid, Platform, RefreshControl, Text, View } from "react-native"
+import { useCallback, useEffect, useState } from "react";
+import { FlatList, PermissionsAndroid, Platform, RefreshControl, StatusBar, Text, View } from "react-native"
 import Contacts from 'react-native-contacts';
 import { Api } from "../../store/action/action";
 import { SearchItem } from "../Search/component/searchItem";
 import { Styles } from "../../styles/Styles";
 import { t } from "../../components/lang";
 import { useSelector } from "react-redux";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const ContactsPage = ({ navigation }) => {
 
@@ -16,6 +17,16 @@ export const ContactsPage = ({ navigation }) => {
   const [nextPage, setNextPage] = useState(null)
   const [data, setData] = useState([])
   const mainData = useSelector(st => st.mainData);
+
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
+
 
 
   const requestPermission = async () => {

@@ -21,6 +21,8 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const [openSlider, setOpenSlider] = useState(false)
   const bottomSheetRef = useRef(null);
   const bottomSheetRef1 = useRef(null);
+  const bottomSheetRef2 = useRef(null);
+
 
   const [bg, setBg] = useState("")
   const snapPoints = useMemo(() => ['20%'], []);
@@ -115,11 +117,9 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
   return <View style={{ justifyContent: 'center', alignItems: 'center' }}>
     {changeStyle ?
-      <BigBgImage setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => setChangeAvatar(e)} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} /> :
-      <BgImage setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => setChangeAvatar(e)} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} />
+      <BigBgImage setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => bottomSheetRef2?.current?.present()} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} /> :
+      <BgImage setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => bottomSheetRef2?.current?.present()} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} />
     }
-
-
     {
       changeAvatar &&
       <View style={{ top: 0, position: "absolute", zIndex: 9999 }}>
@@ -190,6 +190,25 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
         showsVerticalScrollIndicator={false}
         renderItem={renderItem}
       />
+    </BootomModal>
+    <BootomModal ref={bottomSheetRef2} snapPoints={snapPoints}>
+      <View style={{ gap: 10, paddingHorizontal: 10, }}>
+        <TouchableOpacity style={styles.iconWrapper} onPress={() => {
+          setChangeAvatar(false)
+          setOpenSlider(true)
+        }}>
+          <Image style={styles.icon} source={require('../../../assets/img/user1.png')} />
+          <Text style={styles.text}>Открыть фото</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconWrapper}>
+          <Image style={styles.icon} source={require('../../../assets/img/edit.png')} />
+          <Text style={styles.text} onPress={() => changeImg()}>{t(mainData.lang).ChangePhoto}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconWrapper} onPress={() => DelatePhoto()}>
+          <Image style={styles.icon} source={require('../../../assets/img/delete.png')} />
+          <Text style={styles.text}>Удалить фото</Text>
+        </TouchableOpacity>
+      </View>
     </BootomModal>
 
   </View >

@@ -26,6 +26,7 @@ import { AlbomAndInfo } from '../Profile/components/albomAndInfo';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
 import FastImage from 'react-native-fast-image';
 import { Skeleton } from '../../components/Skeleton';
+import { SliderModal } from '../../components/SliderModal';
 
 const { width } = Dimensions.get('window');
 
@@ -42,7 +43,7 @@ export const SearchProfil = ({ navigation, route }) => {
   const user = useSelector(st => st.userData);
   const [seletedScreen, setSelectedScreen] = useState(true)
   const [loadBgImage, setLoadBgImage] = useState(true)
-
+  const [openSlider, setOpenSlider] = useState(false)
 
 
   const AddDeletFollow = () => {
@@ -156,7 +157,7 @@ export const SearchProfil = ({ navigation, route }) => {
                       style={[styles.bgImage, loadBgImage && { opacity: 0 }]}
                       source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.backround_photo}`, }}
                     />
-                    <TouchableOpacity style={styles.avatarWrapper} activeOpacity={1} onPress={() => setChangeAvatar(!changeAvatar)}>
+                    <TouchableOpacity style={styles.avatarWrapper} activeOpacity={1} onPress={() => setOpenSlider(true)}>
                       <View style={[styles.shadow, styles.avatar]}>
                         <Image
                           style={styles.img}
@@ -195,6 +196,9 @@ export const SearchProfil = ({ navigation, route }) => {
             )}
         />
       </View>
+
+      <SliderModal
+        modalVisible={openSlider} photo={[{ photo: singlPage.data.avatar }]} close={() => setOpenSlider(false)} />
     </SafeAreaView>
   );
 };

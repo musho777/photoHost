@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Modal,
   StyleSheet,
+  StatusBar,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { ArrowSvg } from '../../assets/svg/Svgs';
@@ -11,9 +12,10 @@ import { ClearEmailChange } from '../../store/action/clearAction';
 import { AppColors } from '../../styles/AppColors';
 import { Styles } from '../../styles/Styles';
 import { t } from '../../components/lang';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ChnageLanguage } from '../../store/action/action';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const ParametrScreen = ({ navigation }) => {
   const user = useSelector(st => st.userData);
@@ -25,6 +27,14 @@ export const ParametrScreen = ({ navigation }) => {
     await AsyncStorage.setItem('lang', type)
     dispatch(ChnageLanguage(type))
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBackgroundColor('#fff');
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
 
   return <View >
     <View onPress={() => setShowModal(false)} >
