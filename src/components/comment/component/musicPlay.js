@@ -8,6 +8,7 @@ import { Waveform } from './Waveform'
 import { t } from '../../../components/lang';
 import { Styles } from '../../../styles/Styles'
 import { FlatList } from 'react-native-gesture-handler'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
@@ -121,7 +122,6 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
     [36, 37, 38, 39, 40, 41, 42, 43],
     [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55]
   ]
-
 
   const transport = [[48, 31, 23, 36, 35, 42, 38, 11, 44, 39, 28, 39, 10, 32, 41, 40, 39, 26, 27, 41, 46, 29, 42, 21, 34, 39, 31, 41, 34, 12, 42, 34, 41, 38, 44, 32, 41, 41], [26, 36, 34, 45, 50, 14, 43, 37, 39, 29], [47, 16, 10, 17, 18, 14, 12, 28, 19, 25, 45, 10, 20, 22], [18, 17], [10, 10], [33, 18, 18, 49, 41, 14, 28, 30, 16, 28, 24, 21, 15, 39, 24, 23, 32, 12, 28, 24, 24, 17, 32, 40, 25, 44, 40, 18], [47, 16, 19, 16], [13, 39, 39, 49, 32, 16], [13, 16, 47, 15, 22, 15, 49, 20], [18, 45, 47, 44, 50, 39, 23, 32, 15, 31, 26, 20, 13, 21, 26, 47, 16, 25, 42, 33], [50, 46], [33, 35, 35, 50, 23, 39, 31, 48, 14, 36, 37, 17, 31, 36, 46, 50, 17, 10, 17, 16, 15, 49, 13, 39, 42, 17, 48, 26], [20, 39, 24, 36, 13, 45, 29, 38, 30, 21, 34, 30, 29, 16, 49, 41, 25, 19, 10, 14, 30, 15], [12, 48, 17, 49, 13, 34, 12, 23, 35, 45, 50, 30, 43, 22, 11, 38], [10, 13, 41, 48, 34, 36, 43, 35, 15, 35, 12, 48, 38, 35, 22, 20, 42, 38, 29, 47, 15, 30, 30, 30, 20, 18, 50, 11, 29, 42, 43, 21, 15, 29, 14, 31, 50, 19], [34, 13, 24, 29, 49, 15, 13, 23, 34, 32, 38, 47, 40, 38, 17, 32, 17, 37, 38, 34, 23, 43, 30, 46]]
 
@@ -265,13 +265,13 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
                 }
               </TouchableOpacity>}
           </View>
-
           <Waveform
             isPlaying={isPlaying}
             soundInstance={selectedSound}
             currentTime={index == isPlaying && currentTime}
             waveformData={wave}
             endReach={endReach}
+            index={index}
           />
           <TouchableOpacity onPress={() => {
             Stop()

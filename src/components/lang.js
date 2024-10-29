@@ -100,7 +100,8 @@ export const t = (lang = 'ru') => {
             Doyoureallywanttoexit: "Do you really want to exit?",
             Nosoundsavailable: "No sounds available",
             // Addphoto: "Add photo",
-            Addtext: "Note"
+            Addtext: "Note",
+            ChangeBackgroundStyle: "Change Background Style"
         }
     }
     {
@@ -204,7 +205,8 @@ export const t = (lang = 'ru') => {
             Doyoureallywanttoexit: "Вы действительно хотите выйти?",
             Nosoundsavailable: "Нет доступных звуков",
             // Addphoto: "Добавить фото",
-            Addtext: "Запись"
+            Addtext: "Запись",
+            ChangeBackgroundStyle: "Изменить стиль фона"
         }
     }
 }

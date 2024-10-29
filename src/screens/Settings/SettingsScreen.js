@@ -9,6 +9,7 @@ export const Settings = () => {
   const navigation = useNavigation()
   return <View>
     <FieldWithArrow onPress={() => navigation.navigate("Soundsandnotifications")} text={t(mainData.lang).Soundsandnotifications} />
+    <FieldWithArrow onPress={() => navigation.navigate("ChangeBegraundStyle")} text={t(mainData.lang).ChangeBackgroundStyle} />
   </View>
 }
 

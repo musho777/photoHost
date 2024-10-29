@@ -7,11 +7,10 @@ import { useMemo, useRef, useState } from 'react';
 import { chnageAvatarAction, UpdateBackroundPhoto } from '../../../store/action/action';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { SliderModal } from '../../../components/SliderModal';
-import { CheckMarkUserSvg, EditSvg } from '../../../assets/svg/Svgs';
 import { BootomModal } from '../../../components/BootomSheet';
 import { FlatList, } from 'react-native-gesture-handler';
-import FastImage from 'react-native-fast-image';
-import { Skeleton } from '../../../components/Skeleton';
+import { BgImage } from './bgImage';
+import { BigBgImage } from './bigBgImage';
 
 const { width } = Dimensions.get('window');
 
@@ -29,6 +28,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const [imageData, setImageData] = useState([])
   const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)
   const [loadBgImage, setLoadBgImage] = useState(true)
+  const [changeStyle, setChangeStyle] = useState(false)
 
   const GetPhoto = () => {
     let item = [...imageData]
@@ -114,41 +114,14 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   }
 
   return <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-    <View style={{ width: '100%' }}>
-      <TouchableOpacity
-        onPress={() => bottomSheetRef.current?.present()}
-        style={styles.editIcon}>
-        <EditSvg />
-      </TouchableOpacity>
-      {loadBgImage &&
-        <Skeleton
-          width={width - 83}
-          height={150}
-          style={{ position: "absolute", borderRadius: 10 }}
-        />
-      }
-      <FastImage
-        onLoad={() => {
-          setLoadBgImage(false)
-        }}
-        style={[styles.bgImage, loadBgImage && { opacity: 0 }]}
-        source={{ uri: bg ? bg : `https://chambaonline.pro/uploads/${bgPhoto}`, }}
-      />
-      <TouchableOpacity style={styles.avatarWrapper} activeOpacity={1} onPress={() => setChangeAvatar(!changeAvatar)}>
-        <View style={[styles.shadow, styles.avatar]}>
-          <Image
-            style={styles.img}
-            source={{ uri: imgUrl ? imgUrl : `https://chambaonline.pro/uploads/${user.avatar}`, }}
-          />
-        </View>
-      </TouchableOpacity>
-    </View>
+    {changeStyle ?
+      <BigBgImage setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => setChangeAvatar(e)} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} /> :
+      <BgImage setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => setChangeAvatar(e)} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} />
+    }
 
 
-
-
-
-    {changeAvatar &&
+    {
+      changeAvatar &&
       <View style={{ top: 0, position: "absolute", zIndex: 9999 }}>
         <Shadow style={styles.block} startColor={'#00000010'}>
           <TouchableOpacity style={styles.iconWrapper} onPress={() => {
@@ -169,22 +142,12 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
         </Shadow>
       </View>
     }
-    <View style={{ width: '100%', }}>
-      <View style={styles.userData}>
-        <View style={[{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }]}>
-          <Text style={[Styles.darkMedium16, { textAlign: 'center', marginRight: 7, }]}>{user?.name}
-          </Text>
-          {
-            user.data.star > 0 && <View style={{ marginTop: 3 }}>
-              <CheckMarkUserSvg />
-            </View>
-          }
-        </View>
-      </View>
-      {user.data.description && (
-        <Text style={[Styles.darkRegular14, { textAlign: 'center', width: '100%' }]}>{user.description}</Text>
-      )}
-    </View>
+
+
+
+
+
+
     <SliderModal
       modalVisible={openSlider} photo={[{ photo: user.avatar }]} close={() => setOpenSlider(false)} />
 
@@ -196,7 +159,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
           GetPhoto()
           bottomSheetRef.current?.close()
           setTimeout(() => {
-            bottomSheetRef1.current?.present(); // Open the second sheet with a slight delay to ensure proper timing
+            bottomSheetRef1.current?.present();
           }, 300);
         }} style={{ marginBottom: 20, marginTop: 20 }} >
           <Text style={Styles.darkRegular14}>добавить фото</Text>
@@ -207,6 +170,14 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
           bottomSheetRef.current?.close()
         }} style={{ marginBottom: 20 }}>
           <Text style={Styles.darkRegular14}>добавить фото из телефона</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          setChangeStyle(!changeStyle)
+          setTimeout(() => {
+            bottomSheetRef.current?.close();
+          }, 100);
+        }} style={{ marginBottom: 20 }}>
+          <Text style={Styles.darkRegular14}>{t(mainData.lang).ChangeBackgroundStyle}</Text>
         </TouchableOpacity>
       </View>
     </BootomModal>
@@ -221,7 +192,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       />
     </BootomModal>
 
-  </View>
+  </View >
 }
 
 const styles = StyleSheet.create({
@@ -279,6 +250,13 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 10,
   },
+  bgImage1: {
+    objectFit: 'cover',
+    width: width,
+    height: 280,
+    marginLeft: -15,
+    borderRadius: 10,
+  },
   avatar: {
     width: 110,
     height: 110,
@@ -295,10 +273,25 @@ const styles = StyleSheet.create({
     margin: 'auto',
     justifyContent: 'center',
   },
+  avatarWrapper1: {
+    position: "absolute",
+    right: 0,
+    left: 0,
+    bottom: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999999,
+  },
   editIcon: {
     position: 'absolute',
     bottom: 10,
     zIndex: 9999,
     left: 10,
+  },
+  editIcon1: {
+    position: 'absolute',
+    top: 50,
+    zIndex: 9999,
+    right: 10,
   }
 });

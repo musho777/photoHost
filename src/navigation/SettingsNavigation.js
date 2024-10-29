@@ -5,6 +5,7 @@ import { t } from '../components/lang';
 import { useSelector } from 'react-redux';
 import { Soundsandnotifications } from '../screens/Settings/Soundsandnotifications';
 import { LikeNotification } from '../screens/Settings/LikeNotification';
+import { ChangeBegraundStyle } from '../screens/Settings/ChangeBegraundStyle';
 
 export const SettingsNavigation = () => {
   const Stack = createStackNavigator();
@@ -30,12 +31,23 @@ export const SettingsNavigation = () => {
           ),
         }}
       />
+
       <Stack.Screen
         name="LikeNotification"
         component={LikeNotification}
         options={{
           header: ({ navigation }) => (
             <HeaderWhiteTitle title={t(mainData.data).Like} onPress={() => navigation.goBack()} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="ChangeBegraundStyle"
+        component={ChangeBegraundStyle}
+        options={{
+          header: ({ navigation }) => (
+            <HeaderWhiteTitle title={t(mainData.data).ChangeBackgroundStyle} onPress={() => navigation.goBack()} />
           ),
         }}
       />

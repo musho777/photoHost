@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { TouchableOpacity, SafeAreaView, ActivityIndicator, StyleSheet, FlatList, Text, Dimensions, View, Image } from 'react-native';
+import { TouchableOpacity, SafeAreaView, ActivityIndicator, StyleSheet, FlatList, Text, Dimensions, View, Image, StatusBar } from 'react-native';
 import { MenuSvg2 } from '../../assets/svg/Svgs';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPostsAction, getUserInfoAction } from '../../store/action/action';
@@ -60,15 +60,17 @@ export const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      {/* <StatusBar barStyle="light-content" translucent backgroundColor="transparent" /> */}
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}
-        style={{ flex: 1, paddingLeft: 15, paddingRight: 15 }}>
+      >
         <FlatList
           data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           refreshing={user?.loading}
+          contentContainerStyle={{ paddingHorizontal: 15 }}
           renderItem={seletedScreen ? renderItem1 : renderItem2}
           numColumns={2}
           ListEmptyComponent={ListEmptyComponent}
@@ -86,22 +88,12 @@ export const ProfileScreen = ({ navigation }) => {
 
           ListHeaderComponent={
             <View>
-              <TouchableOpacity
-                onPress={() => navigation.openDrawer()}
-                style={{ width: 30, height: 30 }}
-              >
-                <MenuSvg2 />
-              </TouchableOpacity>
-              {user.loading ? (
-                <ProfileImageSkeleton />
-              ) : (
-                <ProfilImage
-                  user={user}
-                  changeAvatar={changeAvatar}
-                  setChangeAvatar={(e) => setChangeAvatar(e)}
-                  backroundPhoto={user.data.backround_photo}
-                />
-              )}
+              <ProfilImage
+                user={user}
+                changeAvatar={changeAvatar}
+                setChangeAvatar={(e) => setChangeAvatar(e)}
+                backroundPhoto={user.data.backround_photo}
+              />
               <View >
                 <ProfilInfo
                   id={user?.allData?.data?.id}

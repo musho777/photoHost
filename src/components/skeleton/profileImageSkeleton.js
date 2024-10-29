@@ -1,19 +1,50 @@
-import { Dimensions, StyleSheet, View } from "react-native"
+import { Dimensions, StatusBar, StyleSheet, View } from "react-native"
 import { Skeleton } from "../Skeleton"
+import { MenuSvg2 } from "../../assets/svg/Svgs";
 
 
 const { width } = Dimensions.get('window');
 
-
-export const ProfileImageSkeleton = () => {
-  return <View>
-
+export const ProfileImageSkeleton = ({ big }) => {
+  if (big) {
+    return <View style={{ width: width, height: 280 }}>
+      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      <View style={styles.avatarWrapper1}>
+        <Skeleton
+          width={width}
+          height={280}
+        />
+        <View style={styles.bigWrapper}>
+          <View style={{ position: 'absolute', top: -55 }}>
+            <Skeleton
+              width={110}
+              height={110}
+              style={{ borderRadius: 100 }}
+            />
+          </View>
+          <Skeleton
+            width={120}
+            height={15}
+            style={{ marginBottom: 5 }}
+          />
+          <Skeleton
+            width={120}
+            height={15}
+          />
+        </View>
+      </View>
+    </View>
+  }
+  return <View style={{ width: '100%' }}>
+    <View style={{ marginBottom: 20 }}>
+      <MenuSvg2 />
+    </View>
     <View style={{ width: '100%' }}>
       <Skeleton
         width={width - 90}
         height={130}
       />
-      <View style={styles.avatarWrapper} activeOpacity={1}>
+      <View style={styles.avatarWrapper}>
         <View style={styles.avatar}>
           <Skeleton
             width={100}
@@ -67,4 +98,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  avatarWrapper1: {
+    position: "absolute",
+    right: 0,
+    left: 0,
+    bottom: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999999,
+    height: 280,
+  },
+  bigWrapper: {
+    position: 'absolute',
+    bottom: -40,
+    zIndex: 99999,
+    marginTop: 80,
+    backgroundColor: 'white',
+    width: width,
+    borderTopLeftRadius: 30,
+    borderTopEndRadius: 30,
+    height: 100,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  }
 });

@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Svg, { Rect } from 'react-native-svg';
 
-export const Waveform = ({ currentTime, waveformData, soundInstance, endReach, isPlaying }) => {
+export const Waveform = ({ currentTime, waveformData, soundInstance, endReach, isPlaying, index }) => {
   const barWidth = 5;
   const gap = 2;
 
@@ -18,7 +18,8 @@ export const Waveform = ({ currentTime, waveformData, soundInstance, endReach, i
   };
 
   const onGestureEvent = (event) => {
-    if (isPlaying >= 0 && isPlaying != null) {
+    console.log(isPlaying)
+    if (isPlaying == index) {
       const x = (event.nativeEvent.absoluteX - 100);
       const index = Math.floor(x / (barWidth + gap)) / 2;
       seekToTime(index)
@@ -39,7 +40,23 @@ export const Waveform = ({ currentTime, waveformData, soundInstance, endReach, i
       setSelectedBarIndex(-1)
     }
   }, [endReach])
-
+  if (isPlaying == null) {
+    return <View style={styles.container}>
+      <Svg height="50" width={200}>
+        {waveformData?.map((height, index) => {
+          return <Rect
+            key={index}
+            x={index * (barWidth + gap)}
+            y={25 - height / 2}
+            width={barWidth}
+            height={height}
+            ry={3}
+            fill={(selectedBarIndex >= index || Math.floor(currentTime) > index) ? 'rgba(255, 217, 83 ,1)' : 'rgba(214, 214, 214,0.7)'}
+          />
+        })}
+      </Svg>
+    </View>
+  }
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <View style={styles.container}>
