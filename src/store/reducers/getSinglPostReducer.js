@@ -11,8 +11,8 @@ const GetSinglPostReducer = (state = initialState, action) => {
     case 'StartGetSingLPost':
       item.status = false
       item.error = ''
-      item.message = '',
-        item.loading = true
+      item.message = ''
+      item.loading = true
       item.data = {}
       break
     case 'SuccessGetSinglPost':

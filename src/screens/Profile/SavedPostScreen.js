@@ -26,15 +26,6 @@ export const SavedPostScreen = ({ navigation }) => {
   }, [navigation, page]);
 
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    }, [])
-  );
-
-
 
   const handleLoadMore = () => {
     if (books.nextPage) {
@@ -43,7 +34,9 @@ export const SavedPostScreen = ({ navigation }) => {
       setPage(nextPage);
     }
   };
-  const renderItem = ({ item }) => <Albom data={books.data} seved elm={item} />;
+  const renderItem = ({ item }) => {
+    return <Albom id={item.post_id} data={books.data} seved elm={item} />
+  };
 
   return (
     <View style={{ marginTop: 10, alignItems: 'center' }}>

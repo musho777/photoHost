@@ -4,7 +4,7 @@ import { ImageComponent } from "../Image/image";
 import { useNavigation } from '@react-navigation/native';
 
 
-export const Albom = ({ data, seved, my = false, elm, lastItem, index }) => {
+export const Albom = ({ id, data, seved, my = false, elm, lastItem, index }) => {
   const navigation = useNavigation()
   return (
     <View activeOpacity={1} style={[styles.block, lastItem && { marginBottom: 55 },
@@ -13,12 +13,12 @@ export const Albom = ({ data, seved, my = false, elm, lastItem, index }) => {
       <ImageComponent
         onPress={() => {
           my ?
-            navigation.navigate('SinglPageScreen', { data: seved ? elm.post : elm, my: my, seved: seved }) :
-            navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { data: seved ? elm.post : elm, my: false, seved: seved } })
+            navigation.navigate('SinglPageScreen', { id: id }) :
+            navigation.push('SearchProfil', { screen: "SinglPageScreen", params: { id: id } })
         }}
-        background={elm.background}
+        background={elm?.background}
         color={elm.color}
-        text={JSON.parse(elm.description)}
+        text={elm.description && JSON.parse(elm.description)}
         fontFamily={elm.font_family}
         video={elm?.photo ? elm.photo[0]?.video : elm.post.photo[0]?.video}
         photo={elm?.photo ? elm?.photo[0]?.photo : elm?.post.photo[0]?.photo}

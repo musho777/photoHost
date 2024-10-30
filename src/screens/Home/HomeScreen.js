@@ -15,7 +15,6 @@ import debounce from 'lodash/debounce';
 import { AddImageLoading } from '../../components/addImageLoading';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
 import { t } from '../../components/lang';
-import { useFocusEffect } from '@react-navigation/native';
 
 
 export const HomeScreen = () => {
@@ -217,6 +216,7 @@ export const HomeScreen = () => {
           ref={flatListRef}
           viewabilityConfig={viewabilityConfig.current}
           // getItemLayout={getItemLayout}
+
           onViewableItemsChanged={onViewableItemsChanged}
           refreshControl={refreshControl}
         />

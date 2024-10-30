@@ -19,11 +19,11 @@ const SliderImage = React.memo(({ description, item, long, height, index }) => {
   }, [description]);
 
   return <View>
-    {(!long && (description && Description?.length > 0 && Description[index])) && <View style={styles.hover}>
+    {/* {(!long && (description && Description?.length > 0 && Description[index])) && <View style={styles.hover}>
       <Text style={[Styles.whiteSemiBold12]}>
         {Description[index]}
       </Text>
-    </View>}
+    </View>} */}
     {loading && <View style={[styles.loading, { height: height }]}>
       <ActivityIndicator color='#FFC24B' size={"large"} />
     </View>}

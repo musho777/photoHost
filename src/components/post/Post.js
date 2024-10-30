@@ -6,6 +6,7 @@ import { Slider } from '../Slider';
 import { PostHeader } from './postHeader/postHeader';
 import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
+import { Styles } from '../../styles/Styles';
 
 export const Post = React.memo(({
   viewableItems,
@@ -190,6 +191,9 @@ export const Post = React.memo(({
             categoryId={data?.category?.id}
           />
         </View>}
+        <View style={{ marginBottom: 15, paddingHorizontal: 20, }}>
+          <Text style={Styles.darkMedium13}>Learning and growing with each day brings endless possibilities, paving the way for new adventures ahead.</Text>
+        </View>
       </View>
     </View>
   );
@@ -218,7 +222,7 @@ const styles = StyleSheet.create({
   PostBody: {
     position: "absolute",
     zIndex: 999,
-    bottom: 10,
+    bottom: 60,
     width: '100%'
   }
 });

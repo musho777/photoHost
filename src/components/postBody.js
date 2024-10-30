@@ -28,14 +28,22 @@ export const PostBody = ({
   const [showViewText, setShowViewText] = useState(false)
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
-  const [isliked, setIsliked] = useState(like)
+  const [isliked, setIsliked] = useState(null)
+  const [likeCount, setlikeCount] = useState(null)
 
   useEffect(() => {
+    setlikeCount(like)
     setIsliked(liked)
-  }, [liked])
+  }, [like, liked])
 
   const LikePost = () => {
     setIsliked(!isliked)
+    if (isliked) {
+      setlikeCount(likeCount - 1)
+    }
+    else {
+      setlikeCount(likeCount + 1)
+    }
     dispatch(LikePostAction({
       'post_id': id
     },
@@ -68,7 +76,7 @@ export const PostBody = ({
             setShowLike(true)
           }
           }>
-            <Text style={[Styles.darkMedium14, { color: 'white' }]}>{like}</Text>
+            <Text style={[Styles.darkMedium14, { color: 'white' }]}>{likeCount}</Text>
           </TouchableOpacity>
         </TouchableOpacity>
       </TouchableOpacity>

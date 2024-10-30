@@ -121,9 +121,7 @@ export const SearchProfil = ({ navigation, route }) => {
           body: JSON.stringify({ user_id: id }),
         })
         const result = await response.json();
-        console.log(result.followers_count, '2')
         let index = result?.data.follow_status_sender?.findIndex((elm) => elm.sender_id == user.data.id)
-        console.log(index, 'index')
         setIsFollow(index >= 0)
         setFollowersCount(result?.followers_count)
         setData(result);
@@ -154,7 +152,7 @@ export const SearchProfil = ({ navigation, route }) => {
 
 
   const renderItem1 = ({ item, index }) => {
-    return <Albom index={index} elm={item} loading={postLoading} my={false} data={postData} />;
+    return <Albom id={item.id} index={index} elm={item} loading={postLoading} my={false} data={postData} />;
   };
   const renderItem2 = ({ item, index }) => {
     return <InfoBlock user={data.data} />

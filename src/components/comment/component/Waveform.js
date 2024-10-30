@@ -9,7 +9,6 @@ export const Waveform = ({ currentTime, waveformData, soundInstance, endReach, i
 
   const waveformWidth = (waveformData?.length) * (barWidth + gap);
   const [selectedBarIndex, setSelectedBarIndex] = useState(-1);
-  // Handle swiping
   const seekToTime = (timeInSeconds) => {
     if (soundInstance) {
       setSelectedBarIndex(timeInSeconds)
@@ -18,7 +17,6 @@ export const Waveform = ({ currentTime, waveformData, soundInstance, endReach, i
   };
 
   const onGestureEvent = (event) => {
-    console.log(isPlaying)
     if (isPlaying == index) {
       const x = (event.nativeEvent.absoluteX - 100);
       const index = Math.floor(x / (barWidth + gap)) / 2;

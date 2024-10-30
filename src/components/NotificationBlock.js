@@ -8,27 +8,37 @@ const { width } = Dimensions.get('window');
 export const NotificationBlock = ({ description, avatar, name, photo, id }) => {
   const navigation = useNavigation()
   return (
-    <TouchableOpacity onPress={() =>
-      navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: id } })
-    } style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
-      <Image
-        style={styles.userImg}
-        source={{
-          uri: `https://chambaonline.pro/uploads/${avatar}`,
-        }}
-      />
+    <TouchableOpacity
+      onPress={() => {
+        if (photo?.length)
+          navigation.navigate('SinglPageScreen', { id: photo[0].post_id })
+      }}
+      style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
+      <TouchableOpacity onPress={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: id } })
+      }}>
+        <Image
+          style={styles.userImg}
+          source={{
+            uri: `https://chambaonline.pro/uploads/${avatar}`,
+          }}
+        />
+      </TouchableOpacity>
       <View style={{ width: (width - 120), flexDirection: 'row', borderWidth: 0, alignItems: 'center' }}>
         <Text style={Styles.eslipesMedium13}>
           <Text style={Styles.darkMedium13}>{name}:</Text>
           {description}
         </Text>
       </View>
-      <Image
-        style={styles.userImg}
-        source={{
-          uri: `https://chambaonline.pro/uploads/${photo}`,
-        }}
-      />
+      {photo?.length > 0 ?
+        <Image
+          style={styles.userImg}
+          source={{ uri: `https://chambaonline.pro/uploads/${photo[0].photo}` }} />
+        :
+        <View></View>
+      }
     </TouchableOpacity>
   );
 };

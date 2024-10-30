@@ -6,14 +6,15 @@ import {
   Image,
   Text,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import { Slider } from './components/slider';
 import { Header } from './components/Hedaer';
 import { PostBody } from '../../components/postBody';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from 'react';
-import { AddPostViewCount, EndViewPost, LocalSinglImage } from '../../store/action/action';
+import { useCallback, useState } from 'react';
+import { AddPostViewCount, Api, EndViewPost, } from '../../store/action/action';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { AppColors } from '../../styles/AppColors';
 import { LikeList } from '../../components/LikeList';
@@ -22,18 +23,16 @@ import { HeaderInfo } from '../../components/post/postHeader/component/headerInf
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const user = useSelector((st) => st.userData)
-  const localSinglPage = useSelector((st) => st.localSinglPage)
-  let data = localSinglPage.data
   const staticdata = useSelector(st => st.static);
   const my = route.params.my
   const save = route.params.seved
-  const post = route.params.data
   const dispatch = useDispatch()
   const [showView, setShowView] = useState(null)
   const [likeClose, setLikeClose] = useState(false)
   const [activeImage, setActiveImage] = useState(0)
   const [loading, setLoading] = useState(true)
   const [selectedVidioId, setSelectedVidioId] = useState(null)
+  const [data, setData] = useState(null)
 
   const [vertical, setVertical] = useState(false)
 
@@ -133,60 +132,75 @@ export const SinglPageScreen = ({ route, navigation }) => {
     dispatch(EndViewPost({ post_id: id }, staticdata.token))
   }
 
-  useEffect(() => {
-    setLoading(true)
-    dispatch(LocalSinglImage(post))
-  }, [])
-
-  useEffect(() => {
-    if (data) {
-      setLoading(false)
-    }
-  }, [data])
-
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(AddPostViewCount({ post_id: data.id }, staticdata.token))
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Authorization', `Bearer ${staticdata.token}`);
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify({ post_id: route.params.id }),
+        redirect: 'follow',
+      };
+      setLoading(true)
+      fetch(`${Api}/single_page_post`, requestOptions)
+        .then(response => response.json())
+        .then(r => {
+          setLoading(false)
+          setData(r.data)
+        })
+        .catch(error => {
+          setLoading(false)
+        });
       return () => {
-        End(data.id)
+        setData(null)
       };
     }, [])
   );
-
-
+  if (loading) {
+    return <View style={{ flex: 1, backgroundColor: 'black', paddingTop: 40 }}>
+      <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} />
+      <ActivityIndicator color="#FFC24B" />
+    </View>
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} />
       {!loading && <View style={styles.header}>
-        <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={my} />
+        {data &&
+          <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={my} />
+        }
         {save && <View style={styles.headerWrapper}>
           <HeaderInfo
-            id={data.user.id}
-            userImg={data.user.avatar}
-            data={data.created_at}
+            id={data?.user.id}
+            userImg={data?.user.avatar}
+            data={data?.created_at}
             user={user}
-            userId={data.user.id}
-            star={data.user.star}
-            userName={data.user.name}
+            userId={data?.user.id}
+            star={data?.user.star}
+            userName={data?.user.name}
           />
         </View>}
       </View>}
 
-      {(!loading && !data.background) &&
+      {(!loading && !data?.background) &&
         <View style={{ height: '100%', justifyContent: 'center', }}>
-          <Slider
-            setVertical={(e) => setVertical(e)}
-            save={save} setActiveImage={(e) => setActiveImage(e)} description={data.description} big={true} music_name={data.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+          {data?.photo.length &&
+            <Slider
+              setVertical={(e) => setVertical(e)}
+              save={save} setActiveImage={(e) => setActiveImage(e)} description={data?.description} big={true} music_name={data?.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+          }
           {!loading &&
             <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: vertical ? '9%' : '20%' }}>
               {!showView && <PostBody
                 my={my}
-                commentCount={data.comment_count}
-                liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
-                view={data.view_count}
-                like={data.like_count}
-                id={data.id}
+                commentCount={data?.comment_count}
+                liked={data?.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
+                view={data?.view_count}
+                like={data?.like_count}
+                id={data?.id}
                 user={user}
                 categoryId={data?.category?.id}
                 setShowLike={() => setLikeClose(true)}
@@ -200,7 +214,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
           }
         </View>
       }
-      {(!loading && data.background) &&
+      {(!loading && data?.background) &&
         <View style={{ height: '100%', justifyContent: 'center' }}>
           <View style={{ height: 570 }}>
             <Image style={{ width: '100%', height: 570, }} source={bagraund[data.background - 1]} />
@@ -215,11 +229,11 @@ export const SinglPageScreen = ({ route, navigation }) => {
               <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: 0 }}>
                 {!showView && <PostBody
                   my={my}
-                  commentCount={data.comment_count}
-                  liked={data.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
-                  view={data.view_count}
-                  like={data.like_count}
-                  id={data.id}
+                  commentCount={data?.comment_count}
+                  liked={data?.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
+                  view={data?.view_count}
+                  like={data?.like_count}
+                  id={data?.id}
                   user={user}
                   setShowLike={() => setLikeClose(true)}
                   big={true}
@@ -235,7 +249,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
       }
 
       {showView && <ViewComponent
-        id={data.id}
+        id={data?.id}
         big={true}
         token={staticdata.token}
         close={(e) => setShowView(e)}
@@ -244,11 +258,11 @@ export const SinglPageScreen = ({ route, navigation }) => {
       {likeClose && <LikeList
         close={(e) => setLikeClose(false)}
         token={staticdata.token}
-        id={data.id}
+        id={data?.id}
       />}
       {showShare && <Share
         close={() => setShowShare(false)}
-        postId={data.id}
+        postId={data?.id}
         open={showShare}
         big={true}
         user_id={user?.allData.data?.id}

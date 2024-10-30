@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TouchableOpacity, View, Text } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View, Text, Dimensions } from 'react-native'
 import { t } from '../../../components/lang';
 import { Styles } from '../../../styles/Styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,8 +8,9 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import { SliderModal } from '../../../components/SliderModal';
 import { BootomModal } from '../../../components/BootomSheet';
 import { FlatList, } from 'react-native-gesture-handler';
-import { BgImage } from './bgImage';
 import { BigBgImage } from './bigBgImage';
+
+const { width } = Dimensions.get('window');
 
 export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
@@ -41,7 +42,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
     }
     setImageData(item)
   }
-
 
   const [imgUrl, setImgUrl] = useState('');
   const dispatch = useDispatch()
@@ -236,6 +236,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     padding: 20,
+  },
+  bgImage: {
+    objectFit: 'cover',
+    width: width - 83,
+    height: 150,
+    borderRadius: 10,
   },
 
   avatar: {
