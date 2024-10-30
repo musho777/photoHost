@@ -22,7 +22,6 @@ import GetPostCommentsReducer from './reducers/getPostCommentsReducer';
 import GetPostLikeReducer from './reducers/getPostLikeReducer';
 import GetPostsReducer from './reducers/getPostsReducer';
 import GetSinglePageChatReducer from './reducers/getSinglePageChatReducer';
-import GetSinglPage from './reducers/getSinglPage';
 import GetSinglPostReducer from './reducers/getSinglPostReducer';
 import GetUserDataReducer from './reducers/getUserDataReducer';
 import LikePostReducer from './reducers/likePostReducer';
@@ -41,7 +40,6 @@ import ChangeCatalogReducer from './reducers/changeCatalogReducer';
 import GetRelationCategoryReducer from './reducers/GetRelationCategoryReducer';
 import DelatePhotoReducer from './reducers/delatePhotoReducer';
 import UpdateUserInfoReducer from './reducers/updateUserInfoReducer';
-import GetOtherPostsReducer from './reducers/GetOtherPostsReducer';
 import GetPostViewReducer from './reducers/getPostViewReducer';
 import GetStatistic1Reducer from './reducers/GetStatistic1Reducer';
 import GetStatistic2Reducer from './reducers/getStatistic2Reducer';
@@ -64,7 +62,6 @@ const rootReducer = combineReducers({
     changeEmail: ChangeEmailReducer,
     changeAvatar: ChangeAvatarReducer,
     search: SearchReducer,
-    singlPage: GetSinglPage,
     addDeleteFollow: AddDeleteFollowReducer,
     getFollowers: GetFollowersReducer,
     delete: DeletOtherPeopleReducer,
@@ -92,7 +89,6 @@ const rootReducer = combineReducers({
     getRelationCategory: GetRelationCategoryReducer,
     delatePhoto: DelatePhotoReducer,
     updateUserInfo: UpdateUserInfoReducer,
-    getOtherPosts: GetOtherPostsReducer,
     getPostView: GetPostViewReducer,
     getStatistic1: GetStatistic1Reducer,
     getStatistic2: GetStatistic2Reducer,

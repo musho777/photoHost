@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, FlatList, RefreshControl, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddDeletFollowAction, GetFollowerAction, GetFollowersAction } from '../store/action/action';
-import { clearGetFollowersAction } from '../store/action/clearAction';
+import { AddDeletFollowAction, GetFollowerAction, } from '../store/action/action';
 import { Input } from '../ui/Input';
 import { FollowingsBlock } from './FollowingsBlock';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Styles } from '../styles/Styles';
 import { t } from '../components/lang';
 import { FollowerSkeleton } from './skeleton/followerSkeleton';

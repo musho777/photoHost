@@ -599,31 +599,6 @@ export const SearchAction = (data, page, token) => {
   };
 };
 
-export const GetSinglPageAction = (data, token) => {
-  var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('Authorization', `Bearer ${token}`);
-  return dispatch => {
-    dispatch(StarGetSinglUser());
-    fetch(`${Api}/single_page_user`, {
-      method: 'POST',
-      headers: myHeaders,
-      body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .then(r => {
-        if (r.status) {
-          dispatch(SuccessGetSinglPage(r));
-        } else {
-          dispatch(ErrorGetSinglPage('server error'));
-        }
-      })
-      .catch(error => {
-        dispatch(ErrorGetSinglPage('server error'));
-      });
-  };
-};
-
 export const AddDeleteFollowAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
@@ -922,36 +897,6 @@ export const GetPostsAction = (data, token, page) => {
       })
       .catch(error => {
         dispatch(ErrorGetPosts('server error'));
-      });
-  };
-};
-export const GetOtherPostsAction = (data, token, page) => {
-  var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('Authorization', `Bearer ${token}`);
-  return dispatch => {
-    if (page == 1 || !page) {
-      dispatch(StartOtherPostsAction("first"))
-    }
-    else {
-      dispatch(StartOtherPostsAction("second"))
-    }
-
-    fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
-      method: 'POST',
-      headers: myHeaders,
-      body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .then(r => {
-        if (r.status) {
-          dispatch(SuccessOtherPostsAction(r));
-        } else {
-          dispatch(ErrorOtherPostsAction('server error'));
-        }
-      })
-      .catch(error => {
-        dispatch(ErrorOtherPostsAction('server error'));
       });
   };
 };

@@ -14,7 +14,7 @@ import { Styles } from '../../styles/Styles';
 import { BackArrow, BackArrowWhite } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddDeleteFollowAction, AddDeletFollowAction, ClearFollowrs, GetOtherPostsAction, GetSinglPageAction } from '../../store/action/action';
+import { AddDeleteFollowAction, AddDeletFollowAction, Api, ClearFollowrs } from '../../store/action/action';
 import { t } from '../../components/lang';
 import { useFocusEffect } from '@react-navigation/native';
 import { ProfilInfo } from '../Profile/components/profilInfo';
@@ -30,9 +30,7 @@ const { width } = Dimensions.get('window');
 
 
 export const SearchProfil = ({ navigation, route }) => {
-  const singlPage = useSelector(st => st.singlPage);
   const staticdata = useSelector(st => st.static);
-  const getPosts = useSelector(st => st.getOtherPosts);
   const [page, setPage] = useState(1)
   const dispatch = useDispatch();
   const mainData = useSelector(st => st.mainData);
@@ -44,7 +42,11 @@ export const SearchProfil = ({ navigation, route }) => {
   const [openSlider, setOpenSlider] = useState(false)
   const [openBg, setOpenBg] = useState(false)
   const { id } = route.params;
-  const isFetchingRef = useRef(false);
+  const [data, setData] = useState(null)
+  const [post, setPost] = useState({})
+  const [postLoading, setPostLoading] = useState(true)
+  const [postSecondLoading, setPostSecondLoadin] = useState(false)
+  const [postData, setPostData] = useState([])
 
 
 
@@ -58,7 +60,7 @@ export const SearchProfil = ({ navigation, route }) => {
       dispatch(AddDeletFollowAction('add'))
     }
     setIsFollow(!isFollow)
-    dispatch(AddDeleteFollowAction({ user_id: singlPage.data.id }, staticdata.token))
+    dispatch(AddDeleteFollowAction({ user_id: data.data.id }, staticdata.token))
   }
 
 
@@ -66,60 +68,115 @@ export const SearchProfil = ({ navigation, route }) => {
     navigation.navigate('ChatScreen', { id: id })
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      if (singlPage.data.id != id && !isFetchingRef.current) {
-        dispatch(ClearFollowrs())
-        dispatch(GetSinglPageAction({ user_id: id, }, staticdata.token));
-        dispatch(GetOtherPostsAction({ user_id: id }, staticdata.token, 1));
-      }
-      return () => {
-        dispatch(ClearFollowrs())
-      }
-    }, [id, staticdata.token, singlPage.data.id])
-  );
+  const fetchPost = async (page) => {
+    let item = [...postData]
+    if (page == 1) {
+      setPostLoading(true)
+    }
+    else {
+      setPostSecondLoadin(true)
+    }
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${staticdata.token}`);
+    try {
+      const response = await fetch(`${Api}/get_all_post_auth_user_or_other_user?page=${page}`, {
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify({ user_id: id }),
+      })
+      const result = await response.json();
+      setPostLoading(false)
+      setPostSecondLoadin(false)
+      setPost(result.data);
+      let current = [...item, ...result.data.data];
+      if (page == 1) {
+        setPostData(result.data.data)
 
+      }
+      else {
+        setPostData(current)
+      }
+    } catch (error) {
+      setPostSecondLoadin(false)
+      setPostLoading(false)
+    } finally {
+      setPostSecondLoadin(false)
+      setPostLoading(false)
+    }
+  };
 
   useEffect(() => {
-    let index = singlPage.data?.follow_status_sender?.findIndex((elm) => elm.sender_id == user.data.id)
-    setIsFollow(index >= 0)
-    setFollowersCount(singlPage.followersCount)
-  }, [singlPage.data])
+    setData(null)
+    setPost(null)
+    setPostData([])
+    const fetchData = async () => {
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Authorization', `Bearer ${staticdata.token}`);
+      try {
+        const response = await fetch(`${Api}/single_page_user`, {
+          method: 'POST',
+          headers: myHeaders,
+          body: JSON.stringify({ user_id: id }),
+        })
+        const result = await response.json();
+        console.log(result.followers_count, '2')
+        let index = result?.data.follow_status_sender?.findIndex((elm) => elm.sender_id == user.data.id)
+        console.log(index, 'index')
+        setIsFollow(index >= 0)
+        setFollowersCount(result?.followers_count)
+        setData(result);
+      } catch (error) {
+      } finally { }
+    };
 
-  const handleEndReached = useCallback(() => {
-    if (seletedScreen)
-      if (getPosts.nextPage && !getPosts.secondLoading) {
-        let pages = page
-        pages = page + 1
+    fetchData();
+    fetchPost(1);
+    return () => {
+      setPost(null)
+      setData(null)
+      setPostData([])
+    };
+  }, [id])
+
+  const handleEndReached = () => {
+    if (seletedScreen) {
+      if (post?.next_page_url && !postSecondLoading) {
+        let pages = page + 1
         setPage(pages)
-        dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, pages));
+        fetchPost(pages)
       }
-  }, [getPosts, page, seletedScreen]);
+    }
+  }
+
+
+
 
   const renderItem1 = ({ item, index }) => {
-    return <Albom index={index} elm={item} loading={getPosts.loading} my={false} data={getPosts.data} />;
+    return <Albom index={index} elm={item} loading={postLoading} my={false} data={postData} />;
   };
   const renderItem2 = ({ item, index }) => {
-    return <InfoBlock user={singlPage.data} />
+    return <InfoBlock user={data.data} />
   };
 
   const renderItem = seletedScreen ? renderItem1 : renderItem2;
 
 
-  const windowSize = getPosts.data.length > 50 ? getPosts.data.length / 4 : 21;
+  const windowSize = postData.length > 50 ? postData.length / 4 : 21;
 
   const ListEmptyComponent = () => {
-    return <EmptyFlatlist loading={getPosts.loading} text={t(mainData.lang).Thefeedisempty} />
+    return <EmptyFlatlist loading={postLoading} text={t(mainData.lang).Thefeedisempty} />
   }
 
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FlatList
-        data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
+        data={seletedScreen ? postData : [{ id: 1 }]}
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
-        refreshing={getPosts?.loading}
+        refreshing={postLoading}
         contentContainerStyle={{ paddingHorizontal: 15 }}
         renderItem={renderItem}
         numColumns={2}
@@ -131,12 +188,7 @@ export const SearchProfil = ({ navigation, route }) => {
         maxToRenderPerBatch={windowSize}
         onEndReachedThreshold={0.5}
 
-        onRefresh={() => {
-          if (!getPosts.loading) {
-            dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
-            setPage(1);
-          }
-        }}
+
 
         ListHeaderComponent={
           <>
@@ -153,14 +205,14 @@ export const SearchProfil = ({ navigation, route }) => {
                       setLoadBgImage(false)
                     }}
                     style={[styles.bgImage1, loadBgImage && { opacity: 0 }]}
-                    source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.backround_photo}`, }}
+                    source={{ uri: `https://chambaonline.pro/uploads/${data?.data.backround_photo}`, }}
                   />
                 </TouchableOpacity>
                 <View style={styles.avatarWrapper1} activeOpacity={1} >
                   <TouchableOpacity onPress={() => setChangeAvatar(!changeAvatar)} style={[styles.shadow, styles.avatar]}>
                     <Image
                       style={styles.img}
-                      source={{ uri: `https://chambaonline.pro/uploads/${singlPage.data.avatar}`, }}
+                      source={{ uri: `https://chambaonline.pro/uploads/${data?.data.avatar}`, }}
                     />
                   </TouchableOpacity>
                 </View>
@@ -169,17 +221,17 @@ export const SearchProfil = ({ navigation, route }) => {
 
               <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
-                  <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15 }]}>{singlPage.data.name}</Text>
-                  {user.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
+                  <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15 }]}>{data?.data.name}</Text>
+                  {data?.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
                     <CheckMarkUserSvg />
                   </View>}
                 </View>
-                <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center' }]}>{singlPage.data.description}</Text>
+                <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center' }]}>{data?.data.description}</Text>
               </View>
             </View>
 
 
-            <ProfilInfo id={singlPage.data.id} loading={singlPage.loading} user={{ followersCount: followersCount, followerCount: singlPage.followerCount }} postCount={singlPage.postCount} />
+            <ProfilInfo id={data?.data?.id} loading={data?.loading} user={{ followersCount: followersCount, followerCount: data?.follower_count }} postCount={data?.post_count} />
             <View
               style={[
                 Styles.flexSpaceBetween,
@@ -197,14 +249,14 @@ export const SearchProfil = ({ navigation, route }) => {
           </>
         }
         ListFooterComponent={
-          getPosts.secondLoading && (
+          postSecondLoading && (
             <ActivityIndicator style={styles.loading} size="small" color="#FFC24B" />
           )}
       />
       <SliderModal
-        modalVisible={openSlider} photo={[{ photo: singlPage.data.avatar }]} close={() => setOpenSlider(false)} />
+        modalVisible={openSlider} photo={[{ photo: data?.data.avatar }]} close={() => setOpenSlider(false)} />
       <SliderModal
-        modalVisible={openBg} photo={[{ photo: singlPage.data.backround_photo }]} close={() => setOpenBg(false)} />
+        modalVisible={openBg} photo={[{ photo: data?.data.backround_photo }]} close={() => setOpenBg(false)} />
     </SafeAreaView>
   );
 };
