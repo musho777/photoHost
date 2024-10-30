@@ -29,10 +29,9 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const [imageData, setImageData] = useState([])
   const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)
   const [loadBgImage, setLoadBgImage] = useState(true)
-  const [changeStyle, setChangeStyle] = useState(false)
 
   const GetPhoto = () => {
-    let item = [...imageData]
+    let item = []
     if (user) {
       user.data.categories.map((elm, i) => {
         elm.photo_array.map((el) => {
@@ -94,20 +93,12 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       setBg("")
       dispatch(UpdateBackroundPhoto("", staticdata.token, item.photo));
       bottomSheetRef1.current?.close()
-    }} style={{ width: '100%', paddingHorizontal: 15 }}>
-      <View style={{ marginBottom: 15 }}>
+    }} style={{ width: '100%', paddingHorizontal: 0 }}>
+      <View style={{ marginBottom: 15, justifyContent: 'center', alignItems: 'center' }}>
         <Image
-          style={styles.bgImage}
+          style={styles.bgImage1}
           source={{ uri: `https://chambaonline.pro/uploads/${item.photo}`, }}
         />
-        <View style={styles.avatarWrapper} activeOpacity={1}>
-          <View style={[styles.shadow, styles.avatar]}>
-            <Image
-              style={styles.img}
-              source={{ uri: imgUrl ? imgUrl : `https://chambaonline.pro/uploads/${user.avatar}`, }}
-            />
-          </View>
-        </View>
       </View>
     </TouchableOpacity>
 
@@ -237,9 +228,9 @@ const styles = StyleSheet.create({
     elevation: 3,
     padding: 20,
   },
-  bgImage: {
+  bgImage1: {
     objectFit: 'cover',
-    width: width - 83,
+    width: width - 30,
     height: 150,
     borderRadius: 10,
   },

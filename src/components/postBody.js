@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   bostBody: {
     paddingHorizontal: 5,
-    marginBottom: 30,
+    // marginBottom: 30,
     flexDirection: 'row',
     width: '100%'
   },

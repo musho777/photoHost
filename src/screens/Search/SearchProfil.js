@@ -207,7 +207,7 @@ export const SearchProfil = ({ navigation, route }) => {
                   />
                 </TouchableOpacity>
                 <View style={styles.avatarWrapper1} activeOpacity={1} >
-                  <TouchableOpacity onPress={() => setChangeAvatar(!changeAvatar)} style={[styles.shadow, styles.avatar]}>
+                  <TouchableOpacity onPress={() => setOpenSlider(true)} style={[styles.shadow, styles.avatar]}>
                     <Image
                       style={styles.img}
                       source={{ uri: `https://chambaonline.pro/uploads/${data?.data.avatar}`, }}

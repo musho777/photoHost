@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Slider } from '../Slider';
@@ -33,7 +33,7 @@ export const Post = React.memo(({
     setLong(false)
   }
 
-
+  console.log(activeImage, '11', activePhoto)
   const fone = [
     require('../../assets/img/fon/1.jpg'),
     require('../../assets/img/fon/2.jpg'),
@@ -126,7 +126,24 @@ export const Post = React.memo(({
 
   ]
 
+  const [isExpanded, setIsExpanded] = useState(false);
+  const MAX_LENGTH = 50;
 
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
+  const Description = useMemo(() => {
+    let desc = "";
+    try {
+      desc = JSON.parse(data.description);
+    } catch (error) {
+      console.error('Failed to parse description:', error);
+    }
+    return desc;
+  }, [data.description]);
+
+
+  console.log(Description[0])
   return (
     <View>
       {showSave && <ShowSave saveType={saveType} />}
@@ -157,20 +174,22 @@ export const Post = React.memo(({
           data={data}
           user={user}
         /> :
-          <View style={{ marginBottom: 10 }}>
-            <Image
-              source={fone[data.background - 1]}
-              style={[{ height: 570 }, styles.img]}
-            />
-            <View style={styles.textWrapper}>
+          <View>
 
-              {data.font_size &&
-                <Text style={{ padding: 10, textAlign: 'center', color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size) }}>{JSON.parse(data.description)}</Text>
-              }
+            <View style={{ marginBottom: 10 }}>
+              <Image
+                source={fone[data.background - 1]}
+                style={[{ height: 570 }, styles.img]}
+              />
+              <View style={styles.textWrapper}>
+                {data.font_size &&
+                  <Text style={{ padding: 10, textAlign: 'center', color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size) }}>{JSON.parse(data.description)}</Text>
+                }
+              </View>
             </View>
           </View>
         }
-        {!long && <View style={styles.PostBody}>
+        <View style={styles.PostBody}>
           <PostBody
             postCount={user.postCount}
             commentCount={data.comment_count}
@@ -190,12 +209,19 @@ export const Post = React.memo(({
             user={user}
             categoryId={data?.category?.id}
           />
-        </View>}
-        <View style={{ marginBottom: 15, paddingHorizontal: 20, }}>
-          <Text style={Styles.darkMedium13}>Learning and growing with each day brings endless possibilities, paving the way for new adventures ahead.</Text>
+        </View>
+        <View style={{ marginBottom: 15, paddingHorizontal: 20 }}>
+          {Description[activeImage] && <Text style={Styles.darkMedium13}>
+            {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}...`}
+          </Text>}
+          {Description[activeImage] && Description[activeImage].length > 30 && <TouchableOpacity onPress={toggleExpanded}>
+            <Text style={styles.showMoreText}>
+              {isExpanded ? 'Показать меньше' : 'Показать больше'}
+            </Text>
+          </TouchableOpacity>}
         </View>
       </View>
-    </View>
+    </View >
   );
 }, (prevProps, nextProps) => {
   return (
@@ -220,9 +246,8 @@ const styles = StyleSheet.create({
     right: 0
   },
   PostBody: {
-    position: "absolute",
     zIndex: 999,
-    bottom: 60,
+    bottom: 40,
     width: '100%'
   }
 });
