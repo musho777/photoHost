@@ -53,7 +53,7 @@ export const Followers = React.memo(({ id }) => {
               navigation.navigate('ProfileScreen', { screen: 'ProfileScreens' });
             }
             else {
-              navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: item.follower.id } });
+              navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: item.follower.id, key: item.follower.id.toString(), } });
             }
             setData('');
           }}

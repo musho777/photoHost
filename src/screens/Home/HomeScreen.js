@@ -191,19 +191,8 @@ export const HomeScreen = () => {
     return <EmptyFlatlist loading={getLents.loading} text={t(mainData.lang).Thefeedisempty} />
   }
 
-
-  useFocusEffect(
-    React.useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-
-    }, [])
-  );
-
   return (
     <SafeAreaView >
-      <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} translucent={false} />
       <HomeHeader onPress={() => goTop()} />
       {showModal && <ModalComponent
         showModal={showModal}

@@ -1,10 +1,10 @@
 import { ActivityIndicator, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Styles } from "../../styles/Styles"
 import { CatalogItem } from "../../components/catalogItem"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction, ShowPopUpLocal } from "../../store/action/action"
-import { useFocusEffect, useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import { Skeleton } from "../../components/Skeleton"
 
 export const Catalog = () => {
@@ -58,17 +58,6 @@ export const Catalog = () => {
       setLiading(false)
     }
   }, [changeCatalog.status])
-
-
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    }, [])
-  );
-
-
 
 
 

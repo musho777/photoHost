@@ -32,6 +32,24 @@ export const BackArrow = () => {
     />
   </Svg>
 }
+
+export const BackArrowWhite = () => {
+  return <Svg
+    width={23}
+    height={19}
+    viewBox="0 0 23 19"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path
+      d="M22 9.273H1.636M9.273 1L1 9.273l8.273 8.273"
+      stroke="white"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+}
 export const WhiteBackArrow = () => {
   return <Svg
     width={23}

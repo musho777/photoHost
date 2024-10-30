@@ -185,9 +185,6 @@ export const ProfileNavigation = () => {
         component={Catalog}
         options={{
           header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => {
-              navigation.goBack()
-            }} title={t(mainData.lang).Catalog} />
           }
         }}
       />

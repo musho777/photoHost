@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,10 +9,9 @@ import {
   FlatList,
   ActivityIndicator,
   Dimensions,
-  StatusBar
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
-import { BackArrow } from '../../assets/svg/Svgs';
+import { BackArrow, BackArrowWhite } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDeleteFollowAction, AddDeletFollowAction, ClearFollowrs, GetOtherPostsAction, GetSinglPageAction } from '../../store/action/action';
@@ -44,6 +43,9 @@ export const SearchProfil = ({ navigation, route }) => {
   const [loadBgImage, setLoadBgImage] = useState(true)
   const [openSlider, setOpenSlider] = useState(false)
   const [openBg, setOpenBg] = useState(false)
+  const { id } = route.params;
+  const isFetchingRef = useRef(false);
+
 
 
   const AddDeletFollow = () => {
@@ -61,19 +63,21 @@ export const SearchProfil = ({ navigation, route }) => {
 
 
   const sendMsg = () => {
-    navigation.navigate('ChatScreen', { id: route.params.id })
+    navigation.navigate('ChatScreen', { id: id })
   }
 
   useFocusEffect(
     useCallback(() => {
-      if (singlPage.data.id != route?.params?.id) {
+      if (singlPage.data.id != id && !isFetchingRef.current) {
         dispatch(ClearFollowrs())
-        dispatch(GetSinglPageAction({ user_id: route?.params?.id, }, staticdata.token));
-        dispatch(GetOtherPostsAction({ user_id: route?.params?.id }, staticdata.token, 1));
+        dispatch(GetSinglPageAction({ user_id: id, }, staticdata.token));
+        dispatch(GetOtherPostsAction({ user_id: id }, staticdata.token, 1));
       }
-    }, [route.params.id, staticdata.token, singlPage.data.id])
+      return () => {
+        dispatch(ClearFollowrs())
+      }
+    }, [id, staticdata.token, singlPage.data.id])
   );
-
 
 
   useEffect(() => {
@@ -111,7 +115,6 @@ export const SearchProfil = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {/* <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} translucent={true} /> */}
       <FlatList
         data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
         keyExtractor={(item) => item.id.toString()}
@@ -138,7 +141,7 @@ export const SearchProfil = ({ navigation, route }) => {
         ListHeaderComponent={
           <>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBack}>
-              <BackArrow />
+              <BackArrowWhite />
             </TouchableOpacity>
             <View style={{ width: width, marginLeft: -15 }}>
               <View style={{ width: width }}>
@@ -224,14 +227,8 @@ const styles = StyleSheet.create({
     width: 50,
     height: 30,
     position: 'absolute',
-    top: 50,
+    top: 10,
     zIndex: 9999,
-  },
-  bgImage: {
-    objectFit: 'cover',
-    width: width - 90,
-    height: 150,
-    borderRadius: 10,
   },
   avatar: {
     width: 110,
@@ -253,7 +250,6 @@ const styles = StyleSheet.create({
     objectFit: 'cover',
     width: width,
     height: 280,
-    borderRadius: 10,
   },
   avatarWrapper1: {
     position: "absolute",

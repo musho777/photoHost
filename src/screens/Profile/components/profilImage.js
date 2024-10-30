@@ -1,5 +1,4 @@
-import { Image, StyleSheet, TouchableOpacity, View, Text, Dimensions } from 'react-native'
-import { Shadow } from 'react-native-shadow-2'
+import { Image, StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import { t } from '../../../components/lang';
 import { Styles } from '../../../styles/Styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +10,6 @@ import { BootomModal } from '../../../components/BootomSheet';
 import { FlatList, } from 'react-native-gesture-handler';
 import { BgImage } from './bgImage';
 import { BigBgImage } from './bigBgImage';
-
-const { width } = Dimensions.get('window');
 
 export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
@@ -117,25 +114,18 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   }
 
   return <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-    {!changeStyle ?
-      <BigBgImage
-        setOpenBg={(e) => setOpenBg(!openBg)}
-        setLoadBgImage={(e) => setLoadBgImage()}
-        ref={bottomSheetRef}
-        changeAvatar={changeAvatar}
-        setChangeAvatar={(e) => bottomSheetRef2?.current?.present()}
-        imgUrl={imgUrl}
-        bg={bg}
-        bgPhoto={bgPhoto}
-        user={user}
-        openBg={openBg}
-
-      /> :
-      <BgImage
-        openBg={openBg}
-        setOpenBg={(e) => setOpenBg(!openBg)} setLoadBgImage={(e) => setLoadBgImage()} ref={bottomSheetRef} changeAvatar={changeAvatar} setChangeAvatar={(e) => bottomSheetRef2?.current?.present()} imgUrl={imgUrl} bg={bg} bgPhoto={bgPhoto} user={user} />
-    }
-
+    <BigBgImage
+      setOpenBg={(e) => setOpenBg(!openBg)}
+      setLoadBgImage={(e) => setLoadBgImage()}
+      ref={bottomSheetRef}
+      changeAvatar={changeAvatar}
+      setChangeAvatar={(e) => bottomSheetRef2?.current?.present()}
+      imgUrl={imgUrl}
+      bg={bg}
+      bgPhoto={bgPhoto}
+      user={user}
+      openBg={openBg}
+    />
     <SliderModal
       modalVisible={openSlider} photo={[{ photo: user.avatar }]} close={() => setOpenSlider(false)} />
 

@@ -10,7 +10,6 @@ import debounce from 'lodash/debounce';
 import { t } from '../../components/lang';
 import { InfoBlock } from './InfoBlock';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
-import { useFocusEffect } from '@react-navigation/native';
 
 
 export const ProfileScreen = () => {

@@ -37,7 +37,7 @@ export const Followings = ({ id }) => {
               navigation.navigate('ProfileScreen', { screen: 'ProfileScreens' });
             }
             else {
-              navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: item.followers.id } })
+              navigation.push('SearchProfil', { screen: 'SearchProfils', params: { id: item.followers.id, }, key: item.followers.id.toString() })
             }
             setData('')
           }}
