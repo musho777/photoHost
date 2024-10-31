@@ -193,7 +193,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
               save={save} setActiveImage={(e) => setActiveImage(e)} description={data?.description} big={true} music_name={data?.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
           }
           {!loading &&
-            <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: vertical ? '9%' : '20%' }}>
+            <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: vertical ? '13%' : '20%' }}>
               {!showView && <PostBody
                 my={my}
                 commentCount={data?.comment_count}

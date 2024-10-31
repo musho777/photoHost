@@ -191,7 +191,7 @@ export const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView >
+    <SafeAreaView style={{ flex: 1 }}>
       <HomeHeader onPress={() => goTop()} />
       {showModal && <ModalComponent
         showModal={showModal}

@@ -50,7 +50,7 @@ function CustomDrawerContent(props) {
 
 
   return (
-    <View style={{ height: '100%', backgroundColor: 'white' }}>
+    <View style={{ height: '100%', backgroundColor: 'white', }}>
       <DelateModal
         title={t(mainData.lang).Doyoureallywanttoexit}
         Confirm={() => LogOut()}
@@ -117,7 +117,7 @@ export const ProfileNavigation = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName={'ProfileScreen'} drawerContent={props => <CustomDrawerContent {...props} />}>
+      initialRouteName={'ProfileScreen'} screenOptions={{ drawerPosition: "right" }} drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
         name="ProfileScreen"
         component={MyPageNavigation}

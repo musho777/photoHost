@@ -33,7 +33,6 @@ export const Post = React.memo(({
     setLong(false)
   }
 
-  console.log(activeImage, '11', activePhoto)
   const fone = [
     require('../../assets/img/fon/1.jpg'),
     require('../../assets/img/fon/2.jpg'),
@@ -143,7 +142,6 @@ export const Post = React.memo(({
   }, [data.description]);
 
 
-  console.log(Description[0])
   return (
     <View>
       {showSave && <ShowSave saveType={saveType} />}
@@ -210,16 +208,18 @@ export const Post = React.memo(({
             categoryId={data?.category?.id}
           />
         </View>
-        <View style={{ marginBottom: 15, paddingHorizontal: 20 }}>
-          {Description[activeImage] && <Text style={Styles.darkMedium13}>
-            {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}...`}
-          </Text>}
-          {Description[activeImage] && Description[activeImage].length > 30 && <TouchableOpacity onPress={toggleExpanded}>
-            <Text style={styles.showMoreText}>
-              {isExpanded ? 'Показать меньше' : 'Показать больше'}
-            </Text>
-          </TouchableOpacity>}
-        </View>
+        {!data.background &&
+          <View style={{ marginBottom: 15, paddingHorizontal: 20 }}>
+            {Description[activeImage] && <Text style={Styles.darkMedium13}>
+              {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}...`}
+            </Text>}
+            {Description[activeImage] && Description[activeImage].length > 30 && <TouchableOpacity onPress={toggleExpanded}>
+              <Text style={styles.showMoreText}>
+                {isExpanded ? 'Показать меньше' : 'Показать больше'}
+              </Text>
+            </TouchableOpacity>}
+          </View>
+        }
       </View>
     </View >
   );
