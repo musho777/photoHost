@@ -7,19 +7,31 @@ import {
   Text,
   StatusBar,
   ActivityIndicator,
+  Dimensions,
+  FlatList,
+  ScrollView,
 } from 'react-native';
 import { Slider } from './components/slider';
 import { Header } from './components/Hedaer';
 import { PostBody } from '../../components/postBody';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AddPostViewCount, Api, EndViewPost, } from '../../store/action/action';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { AppColors } from '../../styles/AppColors';
 import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
 import { HeaderInfo } from '../../components/post/postHeader/component/headerInfro';
+import { Styles } from '../../styles/Styles';
+import Sliders from '@react-native-community/slider';
+import FastImage from 'react-native-fast-image';
+import { VidioComponent } from '../../components/post/Vidio/VidioComponent';
+
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 
 export const SinglPageScreen = ({ route, navigation }) => {
   const user = useSelector((st) => st.userData)
@@ -33,8 +45,48 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(true)
   const [selectedVidioId, setSelectedVidioId] = useState(null)
   const [data, setData] = useState(null)
+  const [active, setActive] = useState(0);
+  const [D, setD] = useState()
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const videoRef = useRef(null);
+  const [showSlider, setShowSlider] = useState(true)
+
+  console.log(user.data.id)
 
   const [vertical, setVertical] = useState(false)
+
+  const handleMomentumScrollEnd = (event) => {
+    const index = Math.floor(
+      Math.floor(event.nativeEvent.contentOffset.x) /
+      Math.floor(event.nativeEvent.layoutMeasurement.width)
+    );
+    setActive(index);
+    setActiveImage(index)
+  };
+
+  useEffect(() => {
+    let desc = data?.description
+    if (data?.description && data?.description[0] == '[') {
+      desc = JSON.parse(data?.description)
+    }
+    setD(desc)
+  }, [data?.description])
+
+  const CurrentTimeSet = (i, e) => {
+    let item = [...currentTime]
+    item[i] = e
+    setCurrentTime(item)
+  }
+
+
+  const onSeek = (value) => {
+    let item = [...currentTime]
+    item[active] = value
+    setCurrentTime(item)
+    videoRef?.current?.seek(value);
+  };
+
 
 
   const bagraund = [
@@ -165,108 +217,220 @@ export const SinglPageScreen = ({ route, navigation }) => {
       <ActivityIndicator color="#FFC24B" />
     </View>
   }
+  console.log(data?.user.id)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
-      <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} />
-      {!loading && <View style={styles.header}>
-        {data &&
-          <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={my} />
-        }
-        {save && <View style={styles.headerWrapper}>
-          <HeaderInfo
-            id={data?.user.id}
-            userImg={data?.user.avatar}
-            data={data?.created_at}
-            user={user}
-            userId={data?.user.id}
-            star={data?.user.star}
-            userName={data?.user.name}
-          />
+      <ScrollView contentContainerStyle={{ height: windowHeight }}>
+        <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} />
+        {!loading && <View style={styles.header}>
+          {data &&
+            <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={user.data.id == data?.user.id} />
+          }
+          {save && <View style={styles.headerWrapper}>
+            <HeaderInfo
+              id={data?.user.id}
+              userImg={data?.user.avatar}
+              data={data?.created_at}
+              user={user}
+              userId={data?.user.id}
+              star={data?.user.star}
+              userName={data?.user.name}
+            />
+          </View>}
         </View>}
-      </View>}
 
-      {(!loading && !data?.background) &&
-        <View style={{ height: '100%', justifyContent: 'center', }}>
-          {data?.photo.length &&
-            <Slider
-              setVertical={(e) => setVertical(e)}
-              save={save} setActiveImage={(e) => setActiveImage(e)} description={data?.description} big={true} music_name={data?.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
-          }
-          {!loading &&
-            <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: vertical ? '13%' : '20%' }}>
-              {!showView && <PostBody
-                my={my}
-                commentCount={data?.comment_count}
-                liked={data?.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
-                view={data?.view_count}
-                like={data?.like_count}
-                id={data?.id}
-                user={user}
-                categoryId={data?.category?.id}
-                setShowLike={() => setLikeClose(true)}
-                big={true}
-                likeClose={likeClose}
-                showShare={showShare}
-                setShowView={(e) => setShowView(e)}
-                setShowShare={(e) => setShowShare(e)}
-              />}
-            </View>
-          }
-        </View>
-      }
-      {(!loading && data?.background) &&
-        <View style={{ height: '100%', justifyContent: 'center' }}>
-          <View style={{ height: 570 }}>
-            <Image style={{ width: '100%', height: 570, }} source={bagraund[data.background - 1]} />
-            <View style={styles.textWrapper}>
-              {data.font_size &&
-                <View style={{ paddingHorizontal: 10 }}>
-                  <Text style={{ color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size), textAlign: 'center' }}>{JSON.parse(data.description)}</Text>
+        {(!loading && !data?.background) &&
+          <View style={{ justifyContent: 'center', }}>
+            {data?.photo.length > 0 &&
+              <View style={{ backgroundColor: 'black', height: '100%' }}>
+                <FlatList
+                  horizontal
+                  pagingEnabled
+                  showsHorizontalScrollIndicator={false}
+                  decelerationRate="fast"
+                  data={data?.photo}
+                  onScroll={() => {
+                    setShowSlider(false)
+                  }}
+                  onMomentumScrollEnd={handleMomentumScrollEnd}
+                  renderItem={({ item, index }) => {
+                    let height = 570
+                    if (item.height < 650) {
+                      height = "75%"
+                      setVertical(false)
+                    }
+                    else {
+                      height = '90%'
+                      setVertical(true)
+                    }
+                    return (
+                      <View style={[styles.img, { height: height, marginTop: -20 }]}>
+
+                        {!item.video ?
+                          <View style={{ alignItems: 'center', justifyContent: 'center', height: height, }}>
+                            <FastImage
+                              style={[{ width: '100%', height: height, }]}
+                              source={{
+                                uri: `https://chambaonline.pro/uploads/${item.photo}`,
+                                priority: FastImage.priority.high,
+                                cache: FastImage.cacheControl.immutable
+                              }}
+                              fallback={false}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                            {!loading &&
+                              <View style={{ width: '100%', zIndex: 999, bottom: 20 }}>
+                                {!showView && <PostBody
+                                  my={my}
+                                  commentCount={data?.comment_count}
+                                  liked={data?.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
+                                  view={data?.view_count}
+                                  like={data?.like_count}
+                                  id={data?.id}
+                                  user={user}
+                                  categoryId={data?.category?.id}
+                                  setShowLike={() => setLikeClose(true)}
+                                  big={true}
+                                  likeClose={likeClose}
+                                  showShare={showShare}
+                                  setShowView={(e) => setShowView(e)}
+                                  setShowShare={(e) => setShowShare(e)}
+                                />}
+                              </View>
+                            }
+                            {(data.description && D?.length > 0) && <View style={[styles.hover, { top: 10 }]}>
+                              <Text style={[Styles.whiteSemiBold12]}>
+                                {console.log(D)}
+                                {D[index]}
+                              </Text>
+                            </View>}
+                          </View>
+                          : (
+                            <View style={{ height: 570, marginTop: -30 }}>
+                              <VidioComponent
+                                active={active == index}
+                                music={data.music_name}
+                                item={item}
+                                currentTime={currentTime[active]}
+                                setCurrentTime={(e) => CurrentTimeSet(index, e)}
+                                setDuration={(e) => setDuration(e)}
+                                duration={duration}
+                                onSeek={() => onSeek()}
+                                ref={videoRef}
+                                big={true}
+                              />
+                              {(data.description && D?.length > 0) && <View style={[styles.hover, { top: 10 }]}>
+                                <Text style={[Styles.whiteSemiBold12]}>
+                                  {console.log(D)}
+                                  {D[index]}
+                                </Text>
+                              </View>}
+                            </View>
+
+                          )}
+                      </View>
+                    );
+                  }}
+                />
+                {(data?.photo[active]?.video && true) &&
+                  <View style={styles.slider}>
+                    <Sliders
+                      style={styles.seekSlider}
+                      value={currentTime[active]}
+                      minimumValue={0}
+                      maximumValue={duration}
+                      onValueChange={onSeek}
+                      minimumTrackTintColor="#FFFFFF"
+                      maximumTrackTintColor="#000000"
+                      thumbTintColor="#FFC24B"
+                    />
+                  </View>
+                }
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginVertical: 5,
+                  }}>
+                  {data?.photo?.length > 1 &&
+                    data?.photo?.map((elm, i) => (
+                      <View
+                        key={i}
+                        style={[
+                          styles.pagination,
+                          i === active && {
+                            backgroundColor: AppColors.GoldenTainoi_Color,
+                            borderRadius: 50,
+                          },
+                        ]}></View>
+                    ))}
+                </View>
+              </View>
+
+              // <Slider
+              //   setVertical={(e) => setVertical(e)}
+              //   save={save} setActiveImage={(e) => setActiveImage(e)} description={data?.description} big={true} music_name={data?.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+            }
+
+
+
+          </View>
+        }
+        {(!loading && data?.background) &&
+          <View style={{ justifyContent: 'center', height: '100%', marginTop: -60 }}>
+            <View style={{ height: 570 }}>
+              <Image style={{ width: '100%', height: 570, }} source={bagraund[data.background - 1]} />
+              <View style={styles.textWrapper}>
+                {data.font_size &&
+                  <View style={{ paddingHorizontal: 10 }}>
+                    <Text style={{ color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size), textAlign: 'center' }}>{JSON.parse(data.description)}</Text>
+                  </View>
+                }
+              </View>
+              {!loading &&
+                <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: 10 }}>
+                  {!showView && <PostBody
+                    my={my}
+                    commentCount={data?.comment_count}
+                    liked={data?.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
+                    view={data?.view_count}
+                    like={data?.like_count}
+                    id={data?.id}
+                    user={user}
+                    setShowLike={() => setLikeClose(true)}
+                    big={true}
+                    likeClose={likeClose}
+                    showShare={showShare}
+                    setShowView={(e) => setShowView(e)}
+                    setShowShare={(e) => setShowShare(e)}
+                  />}
                 </View>
               }
             </View>
-            {!loading &&
-              <View style={{ position: 'absolute', width: '100%', zIndex: 999, bottom: 0 }}>
-                {!showView && <PostBody
-                  my={my}
-                  commentCount={data?.comment_count}
-                  liked={data?.like_auth_user.findIndex((elm) => elm.user_id == user.data.id) >= 0}
-                  view={data?.view_count}
-                  like={data?.like_count}
-                  id={data?.id}
-                  user={user}
-                  setShowLike={() => setLikeClose(true)}
-                  big={true}
-                  likeClose={likeClose}
-                  showShare={showShare}
-                  setShowView={(e) => setShowView(e)}
-                  setShowShare={(e) => setShowShare(e)}
-                />}
-              </View>
-            }
           </View>
-        </View>
-      }
+        }
 
-      {showView && <ViewComponent
-        id={data?.id}
-        big={true}
-        token={staticdata.token}
-        close={(e) => setShowView(e)}
-        selectedVidioId={data?.photo[activeImage]}
-      />}
-      {likeClose && <LikeList
-        close={(e) => setLikeClose(false)}
-        token={staticdata.token}
-        id={data?.id}
-      />}
-      {showShare && <Share
-        close={() => setShowShare(false)}
-        postId={data?.id}
-        open={showShare}
-        big={true}
-        user_id={user?.allData.data?.id}
-      />}
+        {showView && <ViewComponent
+          id={data?.id}
+          big={true}
+          token={staticdata.token}
+          close={(e) => setShowView(e)}
+          selectedVidioId={data?.photo[activeImage]}
+        />}
+        {likeClose && <LikeList
+          close={(e) => setLikeClose(false)}
+          token={staticdata.token}
+          id={data?.id}
+        />}
+        {showShare && <Share
+          close={() => setShowShare(false)}
+          postId={data?.id}
+          open={showShare}
+          big={true}
+          user_id={user?.allData.data?.id}
+        />}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -279,8 +443,6 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   header: {
-    position: 'absolute',
-    top: Platform.OS === 'ios' ? 30 : 0,
     zIndex: 999,
     width: "100%",
   },
@@ -309,4 +471,29 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0
   },
+  img: {
+    width: windowWidth,
+    flexShrink: 0,
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  pagination: {
+    width: 6,
+    height: 6,
+    backgroundColor: '#CCD6DF',
+    marginHorizontal: 5,
+    borderRadius: 50,
+  },
+  hover: {
+    paddingHorizontal: 15,
+    width: '100%'
+  },
+  slider: {
+    bottom: windowHeight - 640,
+    position: 'absolute',
+    zIndex: 99999,
+    width: '100%',
+    height: 10,
+    // backgroundColor: 'red',
+  }
 });

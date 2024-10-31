@@ -16,14 +16,14 @@ import FastImage from 'react-native-fast-image';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = ({ photo, music_name, big = false, description, setActiveImage, save, setVertical }) => {
+export const Slider = ({ photo, music_name, description, setActiveImage, save, setVertical }) => {
   const [active, setActive] = useState(0);
-  const [scroleEneble, setScrollEnabled] = useState(true)
   const [D, setD] = useState(description)
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const videoRef = useRef(null);
   const [showSlider, setShowSlider] = useState(true)
+  const [heights, setHeights] = useState(600)
 
 
   const handleMomentumScrollEnd = (event) => {
@@ -59,13 +59,12 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
 
 
   return (
-    <View style={{ backgroundColor: 'black', height: '100%' }}>
+    <View style={{ height: "90%", }}>
       <FlatList
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
-        scrollEnabled={scroleEneble}
         data={photo}
         onScroll={() => {
           setShowSlider(false)
@@ -74,43 +73,37 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
         renderItem={({ item, index }) => {
           let height = 570
           if (item.height < 650) {
-            height = "75%"
+            height = 400
+            setHeights(500)
             setVertical(false)
           }
           else {
-            height = '90%'
+            height = 650
             setVertical(true)
           }
           return (
             <View style={styles.img}>
-
               {!item.video ?
-                <View style={{ alignItems: 'center', justifyContent: 'center', height: height, }}>
-                  <FastImage
-                    style={[{ width: '100%', height: height, }]}
-                    source={{
-                      uri: `https://chambaonline.pro/uploads/${item.photo}`,
-                      priority: FastImage.priority.high,
-                      cache: FastImage.cacheControl.immutable
-                    }}
-                    fallback={false}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
-                  {(description && D[index]) && <View style={[styles.hover, { top: save ? 40 : 40 }]}>
-                    <Text style={[Styles.whiteSemiBold12]}>
+                <View >
+                  <View style={{ justifyContent: 'center', }}>
+                    <FastImage
+                      style={[{ width: '100%', height: height, }]}
+                      source={{
+                        uri: `https://chambaonline.pro/uploads/${item.photo}`,
+                        priority: FastImage.priority.high,
+                        cache: FastImage.cacheControl.immutable
+                      }}
+                      fallback={false}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </View>
+                  {(description && D[index]) &&
+                    <Text style={[[Styles.whiteSemiBold12, { paddingHorizontal: 10, marginTop: 10, marginBottom: 10, height: 'auto' }]]}>
                       {D[index]}
-                    </Text>
-                  </View>}
+                    </Text>}
                 </View>
                 : (
                   <View>
-                    <View style={{ zIndex: 9999 }}>
-                      {description && D[index] &&
-                        <View style={styles.hover}>
-                          <Text style={Styles.whiteSemiBold12}>{JSON.parse(description)[index]}</Text>
-                        </View>
-                      }
-                    </View>
                     <VidioComponent
                       active={active == index}
                       music={music_name}
@@ -123,8 +116,12 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
                       ref={videoRef}
                       big={true}
                     />
+                    <View style={{ zIndex: 9999 }}>
+                      {(description && D[index]) && <Text style={[[Styles.whiteSemiBold12, { paddingHorizontal: 10, marginTop: 10, marginBottom: 10 }]]}>
+                        {D[index]}
+                      </Text>}
+                    </View>
                   </View>
-
                 )}
             </View>
           );
@@ -164,6 +161,7 @@ export const Slider = ({ photo, music_name, big = false, description, setActiveI
               ]}></View>
           ))}
       </View>
+
     </View>
   );
 };
@@ -173,7 +171,6 @@ const styles = StyleSheet.create({
     width: windowWidth,
     flexShrink: 0,
     justifyContent: 'center',
-    height: '100%',
     position: 'relative',
   },
   pagination: {
@@ -188,7 +185,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 10,
     width: 'auto',
-    position: 'absolute',
+    // position: 'absolute',
     left: 3,
     top: 10,
   },

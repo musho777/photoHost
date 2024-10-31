@@ -210,9 +210,17 @@ export const Post = React.memo(({
         </View>
         {!data.background &&
           <View style={{ marginBottom: 15, paddingHorizontal: 20 }}>
-            {Description[activeImage] && <Text style={Styles.darkMedium13}>
-              {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}...`}
-            </Text>}
+            {Description[activeImage] &&
+              <View>
+                <Text style={Styles.darkMedium13}>
+                  {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH) < 30 ?
+                    Description[activeImage].slice(0, MAX_LENGTH)
+                    : Description[activeImage].slice(0, MAX_LENGTH) + "..."
+                    }`
+                  }
+                </Text>
+              </View>
+            }
             {Description[activeImage] && Description[activeImage].length > 30 && <TouchableOpacity onPress={toggleExpanded}>
               <Text style={styles.showMoreText}>
                 {isExpanded ? 'Показать меньше' : 'Показать больше'}
