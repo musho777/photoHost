@@ -18,6 +18,7 @@ export const Post = React.memo(({
   setShowLike,
   setShowShare,
   setSelectedVidioId,
+  big = false
 }) => {
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
@@ -134,12 +135,12 @@ export const Post = React.memo(({
   const Description = useMemo(() => {
     let desc = "";
     try {
-      desc = JSON.parse(data.description);
+      desc = JSON.parse(data?.description);
     } catch (error) {
       console.error('Failed to parse description:', error);
     }
     return desc;
-  }, [data.description]);
+  }, [data?.description]);
 
 
   return (
@@ -153,20 +154,20 @@ export const Post = React.memo(({
             setShowSave={(e) => setShowSave(true)}
             setSaveType={(e) => setSaveType(e)}
             openModal={openModal}
-            star={data.user.star}
+            star={data?.user.star}
             setOpenModal={setOpenModal}
             deletData={deletData}
             addToblack={addToblack}
             activeImage={activeImage}
           />
         </View>
-        {!data.background ? <Slider
+        {!data?.background ? <Slider
           viewableItems={viewableItems}
           long={long}
           setActiveImage={(e) => setActiveImage(e)}
           onPressOut={() => onPressOut()}
           onLongClikc={() => onLongClikc()}
-          photo={data.photo}
+          photo={data?.photo ? data?.photo : []}
           setOpenModal={setOpenModal}
           setActivePhoto={(e) => setActivePhoto(e)}
           data={data}
@@ -176,12 +177,12 @@ export const Post = React.memo(({
 
             <View style={{ marginBottom: 10 }}>
               <Image
-                source={fone[data.background - 1]}
+                source={fone[data?.background - 1]}
                 style={[{ height: 570 }, styles.img]}
               />
               <View style={styles.textWrapper}>
-                {data.font_size &&
-                  <Text style={{ padding: 10, textAlign: 'center', color: data.color, fontFamily: data.font_family, fontSize: JSON.parse(data.font_size) }}>{JSON.parse(data.description)}</Text>
+                {data?.font_size &&
+                  <Text style={{ padding: 10, textAlign: 'center', color: data?.color, fontFamily: data?.font_family, fontSize: JSON.parse(data?.font_size) }}>{JSON.parse(data?.description)}</Text>
                 }
               </View>
             </View>
@@ -190,29 +191,29 @@ export const Post = React.memo(({
         <View style={styles.PostBody}>
           <PostBody
             postCount={user.postCount}
-            commentCount={data.comment_count}
+            commentCount={data?.comment_count}
             setSelectidId={(id) => {
-              setSelectedVidioId(data.photo[activePhoto])
+              setSelectedVidioId(data?.photo[activePhoto])
               setSelectidId(id)
             }}
-            liked={data.like_auth_user.findIndex((elm, i) => elm.user_id == user.data.id) >= 0}
+            liked={data?.like_auth_user.findIndex((elm, i) => elm.user_id == user.data.id) >= 0}
             setShowView={(e) => setShowView(e)}
             setShowLike={(e) => setShowLike(e)}
             setShowShare={(e) => setShowShare(e)}
-            view={data.view_count}
-            my={user?.data.id != data.user.id ? false : true}
-            userId={data.user.id}
-            like={data.like_count}
-            id={data.id}
+            view={data?.view_count}
+            my={user?.data.id != data?.user.id ? false : true}
+            userId={data?.user.id}
+            like={data?.like_count}
+            id={data?.id}
             user={user}
             categoryId={data?.category?.id}
           />
         </View>
-        {!data.background &&
+        {!data?.background &&
           <View style={{ marginBottom: 15, paddingHorizontal: 20 }}>
             {Description[activeImage] &&
               <View>
-                <Text style={Styles.darkMedium13}>
+                <Text style={[Styles.darkMedium13, big && { color: 'white' }]}>
                   {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH) < 30 ?
                     Description[activeImage].slice(0, MAX_LENGTH)
                     : Description[activeImage].slice(0, MAX_LENGTH) + "..."
@@ -222,7 +223,7 @@ export const Post = React.memo(({
               </View>
             }
             {Description[activeImage] && Description[activeImage].length > 30 && <TouchableOpacity onPress={toggleExpanded}>
-              <Text style={styles.showMoreText}>
+              <Text style={[styles.showMoreText, big && { color: 'white' }]}>
                 {isExpanded ? 'Показать меньше' : 'Показать больше'}
               </Text>
             </TouchableOpacity>}
@@ -233,7 +234,7 @@ export const Post = React.memo(({
   );
 }, (prevProps, nextProps) => {
   return (
-    prevProps.data.id === nextProps.data.id
+    prevProps.data?.id === nextProps.data?.id
   )
 });
 

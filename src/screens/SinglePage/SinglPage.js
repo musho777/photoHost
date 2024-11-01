@@ -27,6 +27,7 @@ import { Styles } from '../../styles/Styles';
 import Sliders from '@react-native-community/slider';
 import FastImage from 'react-native-fast-image';
 import { VidioComponent } from '../../components/post/Vidio/VidioComponent';
+import { Post } from '../../components/post/Post';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -65,13 +66,13 @@ export const SinglPageScreen = ({ route, navigation }) => {
     setActiveImage(index)
   };
 
-  useEffect(() => {
-    let desc = data?.description
-    if (data?.description && data?.description[0] == '[') {
-      desc = JSON.parse(data?.description)
-    }
-    setD(desc)
-  }, [data?.description])
+  // useEffect(() => {
+  //   let desc = data?.description
+  //   if (data?.description && data?.description[0] == '[') {
+  //     desc = JSON.parse(data?.description)
+  //   }
+  //   setD(desc)
+  // }, [data?.description])
 
   const CurrentTimeSet = (i, e) => {
     let item = [...currentTime]
@@ -220,7 +221,46 @@ export const SinglPageScreen = ({ route, navigation }) => {
   console.log(data?.user.id)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
-      <ScrollView contentContainerStyle={{ height: windowHeight }}>
+      {!loading && <View style={styles.header}>
+        {data &&
+          <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={user.data.id == data?.user.id} />
+        }
+      </View>}
+      <ScrollView >
+        <Post
+          data={data}
+          setShowLike={() => setLikeClose(true)}
+          setShowView={() => setShowView(true)}
+          addToblack={(e) => AddToBack(e)}
+          deletData={(e) => deletData(e)}
+          setSelectidId={(id) => console.log(id)}
+          setShowShare={(e) => setShowShare(e)}
+          setSelectedVidioId={(e) => setSelectedVidioId(e)}
+          big={true}
+        />
+      </ScrollView>
+
+      {showView && <ViewComponent
+        id={data?.id}
+        big={true}
+        token={staticdata.token}
+        close={(e) => setShowView(e)}
+        selectedVidioId={data?.photo[activeImage]}
+      />}
+      {likeClose && <LikeList
+        close={(e) => setLikeClose(false)}
+        token={staticdata.token}
+        id={data?.id}
+      />}
+      {showShare && <Share
+        close={() => setShowShare(false)}
+        postId={data?.id}
+        open={showShare}
+        big={true}
+        user_id={user?.allData.data?.id}
+      />}
+
+      {/* <ScrollView contentContainerStyle={{ height: windowHeight - 30 }}>
         <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} />
         {!loading && <View style={styles.header}>
           {data &&
@@ -265,7 +305,6 @@ export const SinglPageScreen = ({ route, navigation }) => {
                     }
                     return (
                       <View style={[styles.img, { height: height, marginTop: -20 }]}>
-
                         {!item.video ?
                           <View style={{ alignItems: 'center', justifyContent: 'center', height: height, }}>
                             <FastImage
@@ -346,31 +385,8 @@ export const SinglPageScreen = ({ route, navigation }) => {
                     />
                   </View>
                 }
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginVertical: 5,
-                  }}>
-                  {data?.photo?.length > 1 &&
-                    data?.photo?.map((elm, i) => (
-                      <View
-                        key={i}
-                        style={[
-                          styles.pagination,
-                          i === active && {
-                            backgroundColor: AppColors.GoldenTainoi_Color,
-                            borderRadius: 50,
-                          },
-                        ]}></View>
-                    ))}
-                </View>
-              </View>
 
-              // <Slider
-              //   setVertical={(e) => setVertical(e)}
-              //   save={save} setActiveImage={(e) => setActiveImage(e)} description={data?.description} big={true} music_name={data?.music_name} single image={data?.photo[0].photo} photo={data?.photo} />
+              </View>
             }
 
 
@@ -431,6 +447,26 @@ export const SinglPageScreen = ({ route, navigation }) => {
           user_id={user?.allData.data?.id}
         />}
       </ScrollView>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginVertical: 5,
+        }}>
+        {data?.photo?.length > 1 &&
+          data?.photo?.map((elm, i) => (
+            <View
+              key={i}
+              style={[
+                styles.pagination,
+                i === active && {
+                  backgroundColor: AppColors.GoldenTainoi_Color,
+                  borderRadius: 50,
+                },
+              ]}></View>
+          ))}
+      </View> */}
     </SafeAreaView>
   );
 };

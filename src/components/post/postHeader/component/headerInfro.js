@@ -10,7 +10,7 @@ export const HeaderInfo = ({ user, data }) => {
   const [day, setDay] = useState('')
 
   useEffect(() => {
-    const currentDate = new Date(data.created_at);
+    const currentDate = new Date(data?.created_at);
     let dayOfMonth = currentDate.getDate();
     let hour = currentDate.getHours();
     let minute = currentDate.getMinutes();
@@ -25,22 +25,22 @@ export const HeaderInfo = ({ user, data }) => {
       dayOfMonth = `0${dayOfMonth}`
     }
     setDay(`${dayOfMonth} ${mounth[Mounth]} в ${hour}:${minute}`)
-  }, [data.created_at])
+  }, [data?.created_at])
 
   return <TouchableOpacity
     activeOpacity={1}
     onPress={() =>
-      user?.data.id != data.user.id ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data.user.id, post_id: data.id } }) :
+      user?.data?.id != data?.user.id ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data.user.id, post_id: data.id } }) :
         navigation.navigate('TabNavigation', { screen: "ProfileNavigation" })
     } style={Styles.flexAlignItems}>
     <View>
       <Image style={styles.userImg}
-        source={{ uri: `https://chambaonline.pro/uploads/${data.user.avatar}` }} />
+        source={{ uri: `https://chambaonline.pro/uploads/${data?.user.avatar}` }} />
     </View>
     <View style={{ gap: 2 }}>
       <View style={[Styles.flexAlignItems, { width: 'auto', gap: 8 }]}>
-        <Text Text style={[Styles.whiteSemiBold14,]}>{data.user.name}</Text>
-        {data.user.star > 0 && <CheckMarkUserSvg />}
+        <Text Text style={[Styles.whiteSemiBold14,]}>{data?.user.name}</Text>
+        {data?.user.star > 0 && <CheckMarkUserSvg />}
       </View>
       <Text style={[Styles.whiteMedium9]}>{day} </Text>
     </View>

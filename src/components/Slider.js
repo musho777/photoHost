@@ -45,8 +45,8 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
 
 
   const LikePost = useCallback(() => {
-    dispatch(LikePostAction({ post_id: data.id }, staticdata.token, user.data.id));
-  }, [dispatch, data.id, staticdata.token, user.data.id]);
+    dispatch(LikePostAction({ post_id: data?.id }, staticdata.token, user.data?.id));
+  }, [dispatch, data?.id, staticdata.token, user.data?.id]);
 
 
 
@@ -156,12 +156,14 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
 
   const flatListRef = useRef();
   useEffect(() => {
-    flatListRef.current.scrollToIndex({
-      index: 0,
-      animated: true,
-    });
+    if (photo?.length > 0) {
+      flatListRef.current?.scrollToIndex({
+        index: 0,
+        animated: true,
+      });
+    }
     setActive(0)
-  }, [photo.length])
+  }, [photo?.length])
 
   return (
     <View style={{ position: 'relative' }}>

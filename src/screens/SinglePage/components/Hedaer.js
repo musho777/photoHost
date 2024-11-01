@@ -37,9 +37,9 @@ export const Header = ({ data, navigation, my, big = false, activeImage }) => {
       <TouchableOpacity style={styles.goBack} onPress={() => { navigation.goBack() }}>
         {big ? <WhiteBackArrow /> : <BackArrow />}
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePresentModalPress()} style={styles.MenuSvg}>
+      {/* <TouchableOpacity onPress={() => handlePresentModalPress()} style={styles.MenuSvg}>
         {big ? <WhiteMenuSvg /> : <MenuSvg />}
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
     <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
       <View style={{ position: 'absolute' }}>

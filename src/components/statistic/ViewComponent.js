@@ -29,9 +29,9 @@ export const ViewComponent = ({ id, token, close, big = false, selectedVidioId }
 
   useEffect(() => {
 
-    if (selectedVidioId.video) {
+    if (selectedVidioId?.video) {
       setVidio(true)
-      dispatch(GetVidioStatistic(selectedVidioId.id, token))
+      dispatch(GetVidioStatistic(selectedVidioId?.id, token))
     }
     else {
       setVidio(false)
