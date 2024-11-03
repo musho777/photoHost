@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
-import { StatusBar } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 
 export default App = () => {
@@ -146,8 +146,8 @@ export default App = () => {
 
       <Provider store={store}>
         <StatusBar
-          animated={true}
-          backgroundColor="#fff"
+          translucent
+          backgroundColor="transparent"
           barStyle={'dark-content'}
         />
         <GestureHandlerRootView style={{ flex: 1 }}>

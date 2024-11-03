@@ -8,7 +8,7 @@ const { width } = Dimensions.get('window');
 export const ProfileImageSkeleton = ({ big }) => {
   if (big) {
     return <View style={{ width: width, height: 280 }}>
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      {/* <StatusBar barStyle="light-content" translucent backgroundColor="transparent" /> */}
       <View style={styles.avatarWrapper1}>
         <Skeleton
           width={width}

@@ -209,7 +209,8 @@ export const Post = React.memo(({
             categoryId={data?.category?.id}
           />
         </View>
-        {(!data?.background && Description[activeImage]) &&
+        {console.log(activeImage)}
+        {(!data?.background && Description && Description[activeImage]) &&
           <View style={{ marginBottom: 7, paddingHorizontal: 20, flexDirection: 'row', flexWrap: 'wrap' }}>
             {Description[activeImage] &&
               <View>

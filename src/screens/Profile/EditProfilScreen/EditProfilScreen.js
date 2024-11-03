@@ -35,13 +35,6 @@ export const EditProfilScreen = ({ navigation }) => {
     { name: 'Декабрь', id: 11 },
   ]
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    }, [])
-  );
 
   const [name, setName] = useState('');
   const [discription, setDiscription] = useState('');

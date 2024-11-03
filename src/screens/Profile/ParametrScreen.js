@@ -28,13 +28,6 @@ export const ParametrScreen = ({ navigation }) => {
     dispatch(ChnageLanguage(type))
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    }, [])
-  );
 
   return <View >
     <View onPress={() => setShowModal(false)} >

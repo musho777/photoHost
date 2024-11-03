@@ -202,7 +202,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
   );
   if (loading) {
     return <View style={{ flex: 1, backgroundColor: 'black', paddingTop: 40 }}>
-      <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} />
+      {/* <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} /> */}
       <ActivityIndicator color="#FFC24B" />
     </View>
   }

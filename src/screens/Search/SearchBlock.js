@@ -39,16 +39,6 @@ export const SearchBlock = () => {
   };
 
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-
-      dispatch(clearSearchData())
-      setData("")
-    }, [])
-  );
 
 
   const renderItem = ({ item }) => {
@@ -64,8 +54,7 @@ export const SearchBlock = () => {
 
 
   return (
-    <SafeAreaView >
-      <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} />
+    <SafeAreaView style={Styles.statusBar}>
       <View style={styles.centeredView}>
         <SearchInput
           data={data}

@@ -35,7 +35,7 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
     const [active, setActive] = useState(0);
     return (
         <View>
-            <StatusBar backgroundColor={"black"} barStyle="light-content" />
+            {/* <StatusBar backgroundColor={"black"} barStyle="light-content" /> */}
             <SwiperFlatList
                 index={activePhoto}
                 renderAll

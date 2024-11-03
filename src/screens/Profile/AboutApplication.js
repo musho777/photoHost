@@ -6,13 +6,6 @@ import { useCallback } from "react";
 
 export const AboutApplication = () => {
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    }, [])
-  );
 
   return <SafeAreaView style={{ paddingHorizontal: 15 }}>
     <ScrollView showsVerticalScrollIndicator={false}>

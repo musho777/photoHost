@@ -13,6 +13,7 @@ import { BottomWrapper } from './component/bottomWrapper';
 import { Messages } from './component/Messages';
 import Sound from 'react-native-sound';
 import { useFocusEffect } from '@react-navigation/native';
+import { Styles } from '../../styles/Styles';
 
 
 export const ChatScreen = ({ route }) => {
@@ -33,14 +34,6 @@ export const ChatScreen = ({ route }) => {
   }, [])
 
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    }, [])
-  );
-
   const SendSticker = (e) => {
     music.play()
     setTimeout(() => {
@@ -51,8 +44,8 @@ export const ChatScreen = ({ route }) => {
   }
 
   return (
-    <SafeAreaView style={styles.body}>
-      <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} />
+    <SafeAreaView style={[styles.body]}>
+      {/* <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} /> */}
       <Header user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} />
       <Messages id={route.params.chatId} route={route} />
       <BottomWrapper ref={bottomSheetRef} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />

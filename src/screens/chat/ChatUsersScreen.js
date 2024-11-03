@@ -32,9 +32,6 @@ export const ChatUsersScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
       if (user.msgCount > 0) {
         dispatch(ClearChatNumber())
       }
@@ -94,8 +91,8 @@ export const ChatUsersScreen = () => {
     );
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} />
+    <SafeAreaView style={[{ flex: 1 }, Styles.statusBar]}>
+      {/* <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} /> */}
       <View style={{ padding: 10, marginTop: 10 }}>
         {data.length > 0 && <Input
           placeholder={t(mainData.lang).search}

@@ -12,7 +12,7 @@ export const HeaderWhiteTitle = ({
   disabled
 }) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={Styles.statusBar}>
       <View
         style={[
           Styles.flexAlignItems,

@@ -9,13 +9,6 @@ export const Settings = () => {
   const mainData = useSelector((st) => st.mainData)
   const navigation = useNavigation()
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    }, [])
-  );
 
 
   return <View>

@@ -104,8 +104,8 @@ export const Catalog = () => {
     }
   };
 
-  return <SafeAreaView>
-    <View style={style.page}>
+  return <SafeAreaView >
+    <View style={[style.page, Styles.statusBar]}>
       <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
       {(getCatalog.loading && page == 1) ?
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', }}>

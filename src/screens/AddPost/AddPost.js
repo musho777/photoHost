@@ -183,7 +183,7 @@ export const AddPost = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
-      <StatusBar barStyle={"light-content"} backgroundColor={"#000"} />
+      {/* <StatusBar barStyle={"light-content"} backgroundColor={"#000"} /> */}
       <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
       <Header
         uri={uri}

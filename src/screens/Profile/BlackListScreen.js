@@ -23,14 +23,6 @@ export const BlackListScreen = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    }, [])
-  );
-
 
   useEffect(() => {
     setData(blackList.data)
