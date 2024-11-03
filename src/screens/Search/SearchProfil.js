@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
   bgImage1: {
     objectFit: 'cover',
     width: width,
-    height: 280,
+    height: 250,
   },
   avatarWrapper1: {
     position: "absolute",

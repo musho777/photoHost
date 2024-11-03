@@ -24,7 +24,6 @@ import { CommonActions, useFocusEffect } from '@react-navigation/native';
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
 import FastImage from 'react-native-fast-image';
 import { Header } from './component/header';
-import Icon from 'react-native-vector-icons/FontAwesome';
 const windowWidth = Dimensions.get('window').width;
 
 
@@ -78,7 +77,7 @@ export const AddImg = ({ navigation }) => {
       compressVideo: true,
       maxVideoDuration: 60,
       maxSelectedAssets: 10,
-      doneTitle: "Добавлять",
+      doneTitle: "Добавить",
       usedCameraButton: false,
       isPreview: false,
     }

@@ -12,7 +12,7 @@ export const ProfileImageSkeleton = ({ big }) => {
       <View style={styles.avatarWrapper1}>
         <Skeleton
           width={width}
-          height={280}
+          height={250}
         />
         <View style={styles.bigWrapper}>
           <View style={{ position: 'absolute', top: -55 }}>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 999999,
-    height: 280,
+    height: 250,
   },
   bigWrapper: {
     position: 'absolute',

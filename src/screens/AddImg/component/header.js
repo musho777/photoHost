@@ -112,11 +112,14 @@ export const Header = ({
   return <View>
 
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 8, marginTop: 10 }}>
-      <TouchableOpacity onPress={() => {
-        Close()
-        navigation.goBack()
-      }}>
-        <CloseSvg1 />
+      <TouchableOpacity
+        style={{ width: 35, height: 26 }}
+
+        onPress={() => {
+          Close()
+          navigation.goBack()
+        }}>
+        {/* <CloseSvg1 /> */}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePresentModalPress()} style={[styles.category, { borderColor: errorCatalog ? 'red' : 'white' }]}>
         <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white', textAlign: 'center' }]}>

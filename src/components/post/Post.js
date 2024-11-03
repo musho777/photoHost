@@ -209,20 +209,16 @@ export const Post = React.memo(({
             categoryId={data?.category?.id}
           />
         </View>
-        {!data?.background &&
-          <View style={{ marginBottom: 15, paddingHorizontal: 20 }}>
+        {(!data?.background && Description[activeImage]) &&
+          <View style={{ marginBottom: 7, paddingHorizontal: 20, flexDirection: 'row', flexWrap: 'wrap' }}>
             {Description[activeImage] &&
               <View>
                 <Text style={[Styles.darkMedium13, big && { color: 'white' }]}>
-                  {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH) < 30 ?
-                    Description[activeImage].slice(0, MAX_LENGTH)
-                    : Description[activeImage].slice(0, MAX_LENGTH) + "..."
-                    }`
-                  }
+                  {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}`}
                 </Text>
               </View>
             }
-            {Description[activeImage] && Description[activeImage].length > 30 && <TouchableOpacity onPress={toggleExpanded}>
+            {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity onPress={toggleExpanded}>
               <Text style={[styles.showMoreText, big && { color: 'white' }]}>
                 {isExpanded ? 'Показать меньше' : 'Показать больше'}
               </Text>

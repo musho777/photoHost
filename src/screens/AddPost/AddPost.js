@@ -20,11 +20,14 @@ import EmojiPicker from 'rn-emoji-keyboard';
 import { GetCatalogAction } from '../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlatList } from 'react-native-gesture-handler';
+import { t } from '../../components/lang';
+
 
 const windowWidth = Dimensions.get('window').width;
 
 
 export const AddPost = () => {
+  const mainData = useSelector(st => st.mainData);
   const [uri, setUri] = useState([]);
   const [selectedCatalog, setSelectedCatalog] = useState('')
   const [text, setText] = useState('')
@@ -196,6 +199,7 @@ export const AddPost = () => {
         error={error}
         Close={() => Close()}
       />
+      <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
       <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }} >
         <View style={styles.selectImage}>
           <Text style={{ fontFamily: activeFont, color: color, position: 'absolute', zIndex: 9999, fontSize: fontSize, textAlign: 'center' }}>{text}</Text>
@@ -254,7 +258,7 @@ export const AddPost = () => {
         {showType == 5 && <View style={{ width: '100%', alignItems: 'center', }}>
           <TextInput
             onChangeText={(e) => setText(e)}
-            placeholder='Text'
+            placeholder='Текст'
             multiline
             value={text}
             style={{ backgroundColor: 'white', width: '90%', borderRadius: 10, paddingHorizontal: 10, marginVertical: 10, }}

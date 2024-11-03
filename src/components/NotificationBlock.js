@@ -37,7 +37,9 @@ export const NotificationBlock = ({ description, avatar, name, photo, id }) => {
           style={styles.userImg}
           source={{ uri: `https://chambaonline.pro/uploads/${photo[0].photo}` }} />
         :
-        <View></View>
+        <View
+          style={styles.userImg}
+        ></View>
       }
     </TouchableOpacity>
   );

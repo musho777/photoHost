@@ -18,7 +18,7 @@ export const StatisticList = ({ id, token, vidio }) => {
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
-  const widthArr = [80, 50, 40, 70, 100]
+  const widthArr = [70, 50, 40, 70, 90]
   const getPostView = useSelector(st => st.getPostView);
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
@@ -149,23 +149,23 @@ export const StatisticList = ({ id, token, vidio }) => {
 
         </Accordion>
         <Accordion headerTitleStyle={[Styles.darkMedium12, { textAlign: "center" }]} headerTitle="Активность просмотров">
-          <ScrollView style={{ marginTop: 20 }} horizontal={true}>
-            <View>
+          <ScrollView contentContainerStyle={{ justifyContent: 'center', width: '100%' }} style={{ marginTop: 20 }} horizontal={true}>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Table >
                 <Row data={tableHead} widthArr={widthArr} style={styles.header} textStyle={styles.textStyle} />
               </Table>
               <ScrollView style={styles.dataWrapper}>
                 <Table>
                   {
-                    tableData.map((rowData, index) => (
-                      <Row
+                    tableData.map((rowData, index) => {
+                      return <Row
                         key={index}
                         data={rowData}
                         widthArr={widthArr}
                         style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
                         textStyle={styles.textStyle}
                       />
-                    ))
+                    })
                   }
                 </Table>
               </ScrollView>

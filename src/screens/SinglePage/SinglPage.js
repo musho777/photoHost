@@ -11,22 +11,14 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import { Slider } from './components/slider';
-import { Header } from './components/Hedaer';
-import { PostBody } from '../../components/postBody';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { AddPostViewCount, Api, EndViewPost, } from '../../store/action/action';
+import { useCallback, useRef, useState } from 'react';
+import { Api, EndViewPost, } from '../../store/action/action';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { AppColors } from '../../styles/AppColors';
 import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
-import { HeaderInfo } from '../../components/post/postHeader/component/headerInfro';
-import { Styles } from '../../styles/Styles';
-import Sliders from '@react-native-community/slider';
-import FastImage from 'react-native-fast-image';
-import { VidioComponent } from '../../components/post/Vidio/VidioComponent';
 import { Post } from '../../components/post/Post';
 
 
@@ -51,11 +43,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const videoRef = useRef(null);
-  const [showSlider, setShowSlider] = useState(true)
 
-  console.log(user.data.id)
-
-  const [vertical, setVertical] = useState(false)
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -222,9 +210,9 @@ export const SinglPageScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
       {!loading && <View style={styles.header}>
-        {data &&
+        {/* {data &&
           <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={user.data.id == data?.user.id} />
-        }
+        } */}
       </View>}
       <ScrollView >
         <Post

@@ -24,7 +24,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
 
   const [bg, setBg] = useState("")
-  const snapPoints = useMemo(() => ['16%'], []);
+  const snapPoints = useMemo(() => ['20%'], []);
   const snapPoints1 = useMemo(() => ['70%',], []);
   const [imageData, setImageData] = useState([])
   const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)

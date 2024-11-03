@@ -20,7 +20,7 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
     {loadBgImage &&
       <Skeleton
         width={width}
-        height={280}
+        height={250}
         style={{ position: "absolute", borderRadius: 10 }}
       />
     }
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   bgImage1: {
     objectFit: 'cover',
     width: width,
-    height: 280,
+    height: 250,
   },
   avatar: {
     width: 120,
