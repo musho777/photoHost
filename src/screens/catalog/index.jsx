@@ -164,6 +164,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     borderRadius: 5,
+    marginBottom: 60
   },
   buttonWrapper: {
     width: '100%',

@@ -20,6 +20,7 @@ import { AppColors } from '../../styles/AppColors';
 import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
 import { Post } from '../../components/post/Post';
+import { Styles } from '../../styles/Styles';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -208,7 +209,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
   }
   console.log(data?.user.id)
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+    <SafeAreaView style={[{ flex: 1, backgroundColor: 'black' }, Styles.statusBar]}>
       {!loading && <View style={styles.header}>
         {/* {data &&
           <Header activeImage={activeImage} big={true} data={data} navigation={navigation} my={user.data.id == data?.user.id} />

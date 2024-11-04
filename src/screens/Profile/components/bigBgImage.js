@@ -26,7 +26,7 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
     }
     <TouchableOpacity
       onPress={() => navigation.openDrawer()}
-      style={{ width: 30, height: 30, position: "absolute", top: 20, right: 10, zIndex: 9999 }}
+      style={{ width: 30, height: 30, position: "absolute", top: 40, right: 10, zIndex: 9999 }}
     >
       <MenuSvg1 />
     </TouchableOpacity>

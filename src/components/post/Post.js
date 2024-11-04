@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Slider } from '../Slider';
@@ -130,6 +130,7 @@ export const Post = React.memo(({
   const MAX_LENGTH = 50;
 
   const toggleExpanded = () => {
+    setShowFullText(!showFullText)
     setIsExpanded(!isExpanded);
   };
   const Description = useMemo(() => {
@@ -142,12 +143,14 @@ export const Post = React.memo(({
     return desc;
   }, [data?.description]);
 
+  const [showFullText, setShowFullText] = useState(false)
+
 
   return (
     <View>
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
-        <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
+        {!showFullText && <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
           <PostHeader
             data={data}
             user={user}
@@ -160,7 +163,7 @@ export const Post = React.memo(({
             addToblack={addToblack}
             activeImage={activeImage}
           />
-        </View>
+        </View>}
         {!data?.background ? <Slider
           viewableItems={viewableItems}
           long={long}
@@ -188,7 +191,7 @@ export const Post = React.memo(({
             </View>
           </View>
         }
-        <View style={styles.PostBody}>
+        {!showFullText && <View style={styles.PostBody}>
           <PostBody
             postCount={user.postCount}
             commentCount={data?.comment_count}
@@ -208,24 +211,31 @@ export const Post = React.memo(({
             user={user}
             categoryId={data?.category?.id}
           />
-        </View>
-        {console.log(activeImage)}
-        {(!data?.background && Description && Description[activeImage]) &&
-          <View style={{ marginBottom: 7, paddingHorizontal: 20, flexDirection: 'row', flexWrap: 'wrap' }}>
-            {Description[activeImage] &&
-              <View>
-                <Text style={[Styles.darkMedium13, big && { color: 'white' }]}>
-                  {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}`}
-                </Text>
+        </View>}
+        <View style={{ position: 'absolute', bottom: 0, height: showFullText ? "100%" : 50 }}>
+          {(!data?.background && Description && Description[activeImage]) &&
+            <ScrollView nestedScrollEnabled={true} contentContainerStyle={{ zIndex: 99999 }}>
+              <View style={[styles.textWrapper1, { height: showFullText ? "100%" : 50 }]}>
+                <View>
+                  {Description[activeImage] &&
+                    <View>
+                      <Text style={[Styles.darkMedium13, { color: 'white' }]}>
+                        {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}`}
+                      </Text>
+                    </View>
+                  }
+                  {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity
+                    onPress={toggleExpanded}
+                  >
+                    <Text style={[styles.showMoreText, { color: 'white' }]}>
+                      {isExpanded ? 'Показать меньше' : 'Показать больше'}
+                    </Text>
+                  </TouchableOpacity>}
+                </View>
               </View>
-            }
-            {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity onPress={toggleExpanded}>
-              <Text style={[styles.showMoreText, big && { color: 'white' }]}>
-                {isExpanded ? 'Показать меньше' : 'Показать больше'}
-              </Text>
-            </TouchableOpacity>}
-          </View>
-        }
+            </ScrollView>
+          }
+        </View>
       </View>
     </View >
   );
@@ -255,5 +265,17 @@ const styles = StyleSheet.create({
     zIndex: 999,
     bottom: 40,
     width: '100%'
+  },
+  textWrapper1: {
+    marginBottom: 7,
+    // paddingHorizontal: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    // position: 'absolute',
+    bottom: 0,
+    height: 50,
+    zIndex: 9999,
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,0.5)'
   }
 });
