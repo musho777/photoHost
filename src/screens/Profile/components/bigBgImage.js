@@ -63,6 +63,7 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
       </View>
 
     </View>
+    {console.log(JSON.parse(user.description))}
     <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
         <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15 }]}>{user?.name}</Text>
@@ -70,7 +71,9 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
           <CheckMarkUserSvg />
         </View>}
       </View>
-      <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center' }]}>{user.description}</Text>
+      <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(user.description).color.title, fontFamily: JSON.parse(user.description).font }]}>{
+        JSON.parse(user.description).text
+      }</Text>
     </View>
   </View>
 })

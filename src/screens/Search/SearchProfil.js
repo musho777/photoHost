@@ -169,7 +169,7 @@ export const SearchProfil = ({ navigation, route }) => {
 
 
   return (
-    <SafeAreaView style={[{ flex: 1 }, Styles.statusBar]}>
+    <SafeAreaView style={{ flex: 1 }}>
       <FlatList
         data={seletedScreen ? postData : [{ id: 1 }]}
         keyExtractor={(item) => item.id.toString()}
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 30,
     position: 'absolute',
-    top: 10,
+    top: 30,
     zIndex: 9999,
   },
   avatar: {

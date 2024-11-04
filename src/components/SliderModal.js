@@ -11,9 +11,6 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
             onRequestClose={() => close()}
         >
             <View style={styles.centeredView}>
-                {/* <TouchableOpacity activeOpacity={1} style={styles.centeredView2} onPress={() => close()} >
-                    <CloseSvg1 />
-                </TouchableOpacity> */}
                 <View style={styles.modalView}>
                     <ModalSliderImg photo={photo} activePhoto={activePhoto} />
                 </View>

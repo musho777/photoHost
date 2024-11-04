@@ -194,7 +194,7 @@ export const EditProfilScreen = ({ navigation }) => {
                 style={Styles.darkMedium14}
               />
             </View>
-            <Fild multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
+            <Fild discription multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             {accauntType ? <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
               (Чем больше заполните информацию о себе, тем более точный контент будет предлагаться.
               Помимо выбранных Вами рубрик, будет предлагаться контент с вашего города.)

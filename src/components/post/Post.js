@@ -212,10 +212,10 @@ export const Post = React.memo(({
             categoryId={data?.category?.id}
           />
         </View>}
-        <View style={{ position: 'absolute', bottom: 0, height: showFullText ? "100%" : 50 }}>
+        <View style={{ position: 'absolute', bottom: 0, height: showFullText ? "100%" : 50, width: '100%' }}>
           {(!data?.background && Description && Description[activeImage]) &&
             <ScrollView nestedScrollEnabled={true} contentContainerStyle={{ zIndex: 99999 }}>
-              <View style={[styles.textWrapper1, { height: showFullText ? "100%" : 50 }]}>
+              <View style={[styles.textWrapper1, { height: showFullText ? "100%" : 50, paddingHorizontal: 10, }]}>
                 <View>
                   {Description[activeImage] &&
                     <View>
