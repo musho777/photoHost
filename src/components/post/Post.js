@@ -177,7 +177,6 @@ export const Post = React.memo(({
           user={user}
         /> :
           <View>
-
             <View style={{ marginBottom: 10 }}>
               <Image
                 source={fone[data?.background - 1]}
@@ -212,30 +211,29 @@ export const Post = React.memo(({
             categoryId={data?.category?.id}
           />
         </View>}
-        <View style={{ position: 'absolute', bottom: 0, height: showFullText ? "100%" : 50, width: '100%' }}>
-          {(!data?.background && Description && Description[activeImage]) &&
-            <ScrollView nestedScrollEnabled={true} contentContainerStyle={{ zIndex: 99999 }}>
-              <View style={[styles.textWrapper1, { height: showFullText ? "100%" : 50, paddingHorizontal: 10, }]}>
+        {(!data?.background && Description && Description[activeImage]) ?
+          <View style={[styles.textWrapper1, { paddingHorizontal: 10, }]}>
+            <View>
+              {Description[activeImage] &&
                 <View>
-                  {Description[activeImage] &&
-                    <View>
-                      <Text style={[Styles.darkMedium13, { color: 'white' }]}>
-                        {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}`}
-                      </Text>
-                    </View>
-                  }
-                  {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity
-                    onPress={toggleExpanded}
-                  >
-                    <Text style={[styles.showMoreText, { color: 'white' }]}>
-                      {isExpanded ? 'Показать меньше' : 'Показать больше'}
-                    </Text>
-                  </TouchableOpacity>}
+                  <Text style={[Styles.darkMedium13]}>
+                    {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}`}
+                  </Text>
                 </View>
-              </View>
-            </ScrollView>
-          }
-        </View>
+              }
+              {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity
+                onPress={toggleExpanded}
+              >
+                <Text style={[styles.showMoreText,]}>
+                  {isExpanded ? 'Показать меньше' : 'Показать больше'}
+                </Text>
+              </TouchableOpacity>}
+            </View>
+          </View>
+          : <View style={{ marginVertical: 5 }}>
+
+          </View>
+        }
       </View>
     </View >
   );
@@ -267,15 +265,11 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   textWrapper1: {
-    marginBottom: 7,
-    // paddingHorizontal: 20,
+    marginVertical: 5,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    // position: 'absolute',
     bottom: 0,
-    height: 50,
     zIndex: 9999,
     width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)'
   }
 });

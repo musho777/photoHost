@@ -11,6 +11,7 @@ import {
   FlatList,
   ScrollView,
   StatusBar,
+  Keyboard,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetCatalogAction } from '../../store/action/action';
@@ -28,6 +29,25 @@ const windowWidth = Dimensions.get('window').width;
 
 
 export const AddImg = ({ navigation }) => {
+
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    // Cleanup listeners on unmount
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   const mainData = useSelector(st => st.mainData);
   const [uri, setUri] = useState([]);
   const [description, setDescription] = useState([]);
@@ -170,7 +190,7 @@ export const AddImg = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => {
     return <View behavior={Platform.OS === 'ios' ? 'padding' : "position"}>
-      <ScrollView style={{ height: 570 }}>
+      <ScrollView style={{ height: 550 }}>
         <FastImage
           style={[styles.img, { maxHeight: 600, }]}
           source={{ uri: item.uri }}
@@ -232,11 +252,19 @@ export const AddImg = ({ navigation }) => {
             ))}
           </View>
         </View>
-        <View style={{ alignItems: 'center', marginBottom: 40 }}>
-          <TouchableOpacity onPress={() => addPhoto(uri, 1)}>
-            <AddImage />
-          </TouchableOpacity>
-        </View>
+        {!keyboardVisible && <View style={{ marginBottom: 40 }}>
+          <Text style={{ color: 'white', fontSize: 10, paddingHorizontal: 20, }}>
+            Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном посте может быть запечатлен красивый автомобиль, милая собачка, нежное море и белоснежная яхта.
+            Куда выложить?
+            Мы предлагаем такой контент выложить в несколько рубрик (не более 4), где Ваше произведение увидят намного больше людей.
+          </Text>
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => addPhoto(uri, 1)}>
+              <AddImage />
+            </TouchableOpacity>
+          </View>
+
+        </View>}
       </SafeAreaView>
     );
   else {
@@ -274,7 +302,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   img: {
-    height: 570,
+    height: 550,
     width: windowWidth,
     borderRadius: 11,
   },

@@ -10,6 +10,7 @@ import debounce from 'lodash/debounce';
 import { t } from '../../components/lang';
 import { InfoBlock } from './InfoBlock';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const ProfileScreen = () => {
@@ -52,6 +53,13 @@ export const ProfileScreen = () => {
   const ListEmptyComponent = () => {
     return <EmptyFlatlist loading={getPosts.loading} text={t(mainData.lang).ProfileisEmpty} />
   }
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setTranslucent = true
+      StatusBar.backgroundColor = "transparent"
+    }, [])
+  );
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -59,6 +67,11 @@ export const ProfileScreen = () => {
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}
       >
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle={'dark-content'}
+        />
         <FlatList
           data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
           keyExtractor={(item) => item.id.toString()}

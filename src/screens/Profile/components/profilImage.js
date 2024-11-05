@@ -117,12 +117,15 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       user={user}
       openBg={openBg}
     />
-    <SliderModal
-      modalVisible={openSlider} photo={[{ photo: user.avatar }]} close={() => setOpenSlider(false)} />
+    {openSlider &&
+      <SliderModal
+        modalVisible={openSlider} photo={[{ photo: user.avatar }]} close={() => setOpenSlider(false)} />
+    }
 
-
-    <SliderModal
-      modalVisible={openBg} photo={[{ photo: bgPhoto }]} close={() => setOpenBg(false)} />
+    {openBg &&
+      <SliderModal
+        modalVisible={openBg} photo={[{ photo: bgPhoto }]} close={() => setOpenBg(false)} />
+    }
 
 
 

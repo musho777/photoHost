@@ -224,7 +224,18 @@ export const SearchProfil = ({ navigation, route }) => {
                     <CheckMarkUserSvg />
                   </View>}
                 </View>
-                <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center' }]}>{data?.data.description}</Text>
+                {data?.data.description && <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
+                    <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15 }]}>{user?.name}</Text>
+                    {user.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
+                      <CheckMarkUserSvg />
+                    </View>}
+                  </View>
+                  <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(data?.data.description).color.title, fontFamily: JSON.parse(data?.data.description).font }]}>{
+                    JSON.parse(data?.data.description).text
+                  }</Text>
+                </View>}
+                {/* <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center' }]}>{data?.data.description}</Text> */}
               </View>
             </View>
 

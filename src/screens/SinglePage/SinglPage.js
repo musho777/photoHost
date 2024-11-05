@@ -209,7 +209,8 @@ export const SinglPageScreen = ({ route, navigation }) => {
   }
   console.log(data?.user.id)
   return (
-    <SafeAreaView style={[{ flex: 1, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center' }, Styles.statusBar]}>
+    <SafeAreaView style={[{ flex: 1, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', marginTop: 100 }, Styles.statusBar]}>
+      <View style={Styles.statusBar}></View>
       <Post
         data={data}
         setShowLike={() => setLikeClose(true)}

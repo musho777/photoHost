@@ -4,8 +4,13 @@ import { CloseSvg1 } from '../assets/svg/Svgs';
 export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
 
     return <View >
+        <StatusBar
+            translucent
+            backgroundColor="black"
+            barStyle={'dark-content'}
+        />
         <Modal
-            animationType="slide"
+            animationType="fade"
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => close()}

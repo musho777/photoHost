@@ -42,7 +42,7 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
   const [activeColor, setActiveColor] = useState({ title: '#000000', id: 1 })
   const [localValue, setLocalValue] = useState(value)
   useEffect(() => {
-    if (!localValue && discription) {
+    if (!localValue && discription && value) {
       setLocalValue(JSON.parse(value).text)
       setActiveColor(JSON.parse(value)?.color)
       setActicveFont(JSON.parse(value)?.font)

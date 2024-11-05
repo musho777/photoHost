@@ -109,9 +109,6 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
     else {
       height = 570
     }
-    if (index == 0) {
-      console.log(item.height)
-    }
     return (
       <TouchableOpacity
         onLongPress={() => onLongClikc()}
@@ -195,16 +192,15 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         }}
         renderItem={renderItem}
       />
-      <View style={styles.paginationWrapper}>
-        {photo?.length > 1 && photo?.map((elm, i) => (
+      {photo?.length > 1 && <View style={styles.paginationWrapper}>
+        {photo?.map((elm, i) => (
           <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
         ))}
-      </View>
+      </View>}
       <View>
         {(photo[active]?.video && showSlider) &&
           <View style={styles.slider}>
             <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime[active])}</Text>
-
             <Sliders
               style={styles.seekSlider}
               value={currentTime[active]}
@@ -216,7 +212,6 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
               thumbTintColor="#FFC24B"
             />
             <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(duration)}</Text>
-
           </View>
         }
       </View>
@@ -257,7 +252,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10
+    bottom: 10,
+    position: 'absolute',
+    left: 0,
+    right: 0,
   },
   hover: {
     marginHorizontal: 7,
