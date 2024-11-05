@@ -26,7 +26,7 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
     }
     <TouchableOpacity
       onPress={() => navigation.openDrawer()}
-      style={{ width: 30, height: 30, position: "absolute", top: 40, right: 10, zIndex: 9999 }}
+      style={{ width: 50, height: 50, position: "absolute", top: 30, right: 0, zIndex: 9999, justifyContent: 'center', alignItems: 'center' }}
     >
       <MenuSvg1 />
     </TouchableOpacity>
@@ -70,9 +70,9 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
           <CheckMarkUserSvg />
         </View>}
       </View>
-      <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(user.description).color.title, fontFamily: JSON.parse(user.description).font }]}>{
-        JSON.parse(user.description).text
-      }</Text>
+      {user?.description && <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(user?.description)?.color.title, fontFamily: JSON.parse(user?.description)?.font }]}>{
+        JSON.parse(user?.description)?.text
+      }</Text>}
     </View>
   </View>
 })

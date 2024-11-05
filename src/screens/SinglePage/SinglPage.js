@@ -21,6 +21,7 @@ import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
 import { Post } from '../../components/post/Post';
 import { Styles } from '../../styles/Styles';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -174,6 +175,21 @@ export const SinglPageScreen = ({ route, navigation }) => {
     dispatch(EndViewPost({ post_id: id }, staticdata.token))
   }
 
+  const insets = useSafeAreaInsets();
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('light-content');
+      StatusBar.setBackgroundColor('#000000');
+      StatusBar.setTranslucent = true;
+      return () => {
+        StatusBar.setTranslucent = true;
+        StatusBar.setBackgroundColor('transparent');
+      };
+    }, [])
+  );
+
+
 
   useFocusEffect(
     useCallback(() => {
@@ -207,22 +223,21 @@ export const SinglPageScreen = ({ route, navigation }) => {
       <ActivityIndicator color="#FFC24B" />
     </View>
   }
-  console.log(data?.user.id)
   return (
-    <SafeAreaView style={[{ flex: 1, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', marginTop: 100 }, Styles.statusBar]}>
-      <View style={Styles.statusBar}></View>
-      <Post
-        data={data}
-        setShowLike={() => setLikeClose(true)}
-        setShowView={() => setShowView(true)}
-        addToblack={(e) => AddToBack(e)}
-        deletData={(e) => deletData(e)}
-        setSelectidId={(id) => console.log(id)}
-        setShowShare={(e) => setShowShare(e)}
-        setSelectedVidioId={(e) => setSelectedVidioId(e)}
-        big={true}
-      />
-
+    <SafeAreaView style={[{ backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', height: '100%', }, Styles.statusBar]}>
+      <ScrollView contentContainerStyle={{ marginTop: (windowWidth - 570 / 2) }}>
+        <Post
+          data={data}
+          setShowLike={() => setLikeClose(true)}
+          setShowView={() => setShowView(true)}
+          addToblack={(e) => AddToBack(e)}
+          deletData={(e) => deletData(e)}
+          setSelectidId={(id) => console.log(id)}
+          setShowShare={(e) => setShowShare(e)}
+          setSelectedVidioId={(e) => setSelectedVidioId(e)}
+          big={true}
+        />
+      </ScrollView>
       {showView && <ViewComponent
         id={data?.id}
         big={true}

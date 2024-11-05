@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { ChangeCatalog, ClearChangeCatalog, GetCatalogAction, ShowPopUpLocal } from "../../store/action/action"
 import { useNavigation } from "@react-navigation/native"
 import { Skeleton } from "../../components/Skeleton"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 export const Catalog = () => {
   const dispatch = useDispatch()
+  const insets = useSafeAreaInsets();
   const getCatalog = useSelector((st) => st.getCatalog)
   const userData = useSelector((st) => st.userData)
   const [selected, setSelected] = useState([])
@@ -17,7 +19,6 @@ export const Catalog = () => {
   const [loading, setLiading] = useState(false)
   const [page, setPage] = useState(1)
   const [dataLoading, setDataLoading] = useState(['', '', '', '', '', '', '', '', ''])
-
   const changeCatalog = useSelector((st) => st.changeCatalog)
 
   const SelectCatalog = (data) => {
@@ -105,7 +106,7 @@ export const Catalog = () => {
   };
 
   return <SafeAreaView >
-    <View style={[style.page, Styles.statusBar]}>
+    <View style={[style.page, { marginTop: insets.top ? insets.top : 50 }]}>
       <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
       {(getCatalog.loading && page == 1) ?
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', }}>

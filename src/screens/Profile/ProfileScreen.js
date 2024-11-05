@@ -57,6 +57,11 @@ export const ProfileScreen = () => {
     useCallback(() => {
       StatusBar.setTranslucent = true
       StatusBar.backgroundColor = "transparent"
+      StatusBar.setBarStyle('light-content');
+      return () => {
+        StatusBar.setBarStyle('dark-content');
+
+      };
     }, [])
   );
 
@@ -70,7 +75,7 @@ export const ProfileScreen = () => {
         <StatusBar
           translucent
           backgroundColor="transparent"
-          barStyle={'dark-content'}
+          barStyle={'light-content'}
         />
         <FlatList
           data={seletedScreen ? getPosts?.data : [{ id: 1 }]}

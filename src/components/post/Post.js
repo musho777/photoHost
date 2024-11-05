@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, FlatList, Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Slider } from '../Slider';
@@ -7,6 +7,8 @@ import { PostHeader } from './postHeader/postHeader';
 import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
 import { Styles } from '../../styles/Styles';
+
+const windowWidth = Dimensions.get('window').width;
 
 export const Post = React.memo(({
   viewableItems,
@@ -150,7 +152,7 @@ export const Post = React.memo(({
     <View>
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
-        {!showFullText && <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
+        <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
           <PostHeader
             data={data}
             user={user}
@@ -163,7 +165,7 @@ export const Post = React.memo(({
             addToblack={addToblack}
             activeImage={activeImage}
           />
-        </View>}
+        </View>
         {!data?.background ? <Slider
           viewableItems={viewableItems}
           long={long}
@@ -176,21 +178,17 @@ export const Post = React.memo(({
           data={data}
           user={user}
         /> :
-          <View>
-            <View style={{ marginBottom: 10 }}>
-              <Image
-                source={fone[data?.background - 1]}
-                style={[{ height: 570 }, styles.img]}
-              />
-              <View style={styles.textWrapper}>
-                {data?.font_size &&
-                  <Text style={{ padding: 10, textAlign: 'center', color: data?.color, fontFamily: data?.font_family, fontSize: JSON.parse(data?.font_size) }}>{JSON.parse(data?.description)}</Text>
-                }
-              </View>
+          <View style={{ marginBottom: 10, height: 570, position: 'relative' }}>
+            <Image
+              source={fone[data?.background - 1]}
+              style={[{ height: 570 }, styles.img]}
+            />
+            <View style={styles.textWrapper}>
+              <Text style={{ padding: 10, textAlign: 'center', color: data?.color, fontFamily: data?.font_family, fontSize: JSON.parse(data?.font_size) }}>{JSON.parse(data?.description)}</Text>
             </View>
           </View>
         }
-        {!showFullText && <View style={styles.PostBody}>
+        <View style={styles.PostBody}>
           <PostBody
             postCount={user.postCount}
             commentCount={data?.comment_count}
@@ -210,13 +208,13 @@ export const Post = React.memo(({
             user={user}
             categoryId={data?.category?.id}
           />
-        </View>}
+        </View>
         {(!data?.background && Description && Description[activeImage]) ?
           <View style={[styles.textWrapper1, { paddingHorizontal: 10, }]}>
             <View>
               {Description[activeImage] &&
                 <View>
-                  <Text style={[Styles.darkMedium13]}>
+                  <Text style={[Styles.darkMedium13, big && { color: 'white' }]}>
                     {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}`}
                   </Text>
                 </View>
@@ -224,7 +222,7 @@ export const Post = React.memo(({
               {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity
                 onPress={toggleExpanded}
               >
-                <Text style={[styles.showMoreText,]}>
+                <Text style={[styles.showMoreText, big && { color: 'white', marginBottom: (windowWidth - 480 / 2) }]}>
                   {isExpanded ? 'Показать меньше' : 'Показать больше'}
                 </Text>
               </TouchableOpacity>}
@@ -257,12 +255,18 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    height: 570,
   },
   PostBody: {
     zIndex: 999,
     bottom: 40,
     width: '100%'
+  },
+  img: {
+    width: windowWidth,
+    flexShrink: 0,
+    justifyContent: 'center',
   },
   textWrapper1: {
     marginVertical: 5,

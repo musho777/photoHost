@@ -1,29 +1,14 @@
-import React, { useMemo, useState } from 'react';
-import { View, Text, Dimensions, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { View, Dimensions, StyleSheet, ActivityIndicator } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-const SliderImage = React.memo(({ description, item, long, height, index }) => {
+const SliderImage = React.memo(({ item, height }) => {
 
   const [loading, setLoading] = useState(true)
-  const Description = useMemo(() => {
-    let desc = "";
-    try {
-      desc = JSON.parse(description);
-    } catch (error) {
-      console.error('Failed to parse description:', error);
-    }
-    return desc;
-  }, [description]);
 
   return <View>
-    {/* {(!long && (description && Description?.length > 0 && Description[index])) && <View style={styles.hover}>
-      <Text style={[Styles.whiteSemiBold12]}>
-        {Description[index]}
-      </Text>
-    </View>} */}
     {loading && <View style={[styles.loading, { height: height }]}>
       <ActivityIndicator color='#FFC24B' size={"large"} />
     </View>}

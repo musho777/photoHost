@@ -22,13 +22,11 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const bottomSheetRef1 = useRef(null);
   const bottomSheetRef2 = useRef(null);
 
-
   const [bg, setBg] = useState("")
   const snapPoints = useMemo(() => ['20%'], []);
   const snapPoints1 = useMemo(() => ['70%',], []);
   const [imageData, setImageData] = useState([])
   const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)
-  const [loadBgImage, setLoadBgImage] = useState(true)
 
   const GetPhoto = () => {
     let item = []
@@ -107,7 +105,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   return <View style={{ justifyContent: 'center', alignItems: 'center' }}>
     <BigBgImage
       setOpenBg={(e) => setOpenBg(!openBg)}
-      setLoadBgImage={(e) => setLoadBgImage()}
       ref={bottomSheetRef}
       changeAvatar={changeAvatar}
       setChangeAvatar={(e) => bottomSheetRef2?.current?.present()}

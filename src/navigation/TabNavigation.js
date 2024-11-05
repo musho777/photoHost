@@ -131,7 +131,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                   target: route.key,
                   canPreventDefault: true,
                 });
-                if (!isFocused && !event.defaultPrevented) {
+                if (!event.defaultPrevented) {
                   if (route.name == 'ProfileNavigation') {
                     navigation.navigate(route.name, {
                       screen: 'ProfileScreen'

@@ -11,7 +11,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
-import { BackArrow, BackArrowWhite } from '../../assets/svg/Svgs';
+import { BackArrow, BackArrowWhite, CheckMarkUserSvg } from '../../assets/svg/Svgs';
 import { Button } from '../../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDeleteFollowAction, AddDeletFollowAction, Api, ClearFollowrs } from '../../store/action/action';
@@ -185,9 +185,6 @@ export const SearchProfil = ({ navigation, route }) => {
         initialNumToRender={5}
         maxToRenderPerBatch={windowSize}
         onEndReachedThreshold={0.5}
-
-
-
         ListHeaderComponent={
           <>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.goBack}>
@@ -224,7 +221,7 @@ export const SearchProfil = ({ navigation, route }) => {
                     <CheckMarkUserSvg />
                   </View>}
                 </View>
-                {data?.data.description && <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
+                {data?.data.description && <View style={{ marginTop: -80, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
                     <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15 }]}>{user?.name}</Text>
                     {user.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
@@ -235,7 +232,6 @@ export const SearchProfil = ({ navigation, route }) => {
                     JSON.parse(data?.data.description).text
                   }</Text>
                 </View>}
-                {/* <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center' }]}>{data?.data.description}</Text> */}
               </View>
             </View>
 
@@ -262,10 +258,14 @@ export const SearchProfil = ({ navigation, route }) => {
             <ActivityIndicator style={styles.loading} size="small" color="#FFC24B" />
           )}
       />
-      <SliderModal
-        modalVisible={openSlider} photo={[{ photo: data?.data.avatar }]} close={() => setOpenSlider(false)} />
-      <SliderModal
-        modalVisible={openBg} photo={[{ photo: data?.data.backround_photo }]} close={() => setOpenBg(false)} />
+      {openSlider &&
+        <SliderModal
+          modalVisible={openSlider} photo={[{ photo: data?.data.avatar }]} close={() => setOpenSlider(false)} />
+      }
+      {openBg &&
+        <SliderModal
+          modalVisible={openBg} photo={[{ photo: data?.data.backround_photo }]} close={() => setOpenBg(false)} />
+      }
     </SafeAreaView>
   );
 };
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 30,
     position: 'absolute',
-    top: 30,
+    top: 40,
     zIndex: 9999,
   },
   avatar: {
