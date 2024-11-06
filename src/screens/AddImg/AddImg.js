@@ -270,11 +270,11 @@ export const AddImg = ({ navigation }) => {
               ))}
             </View>
           </View>
-          {!keyboardVisible && <View style={{ marginTop: 30, gap: 15 }}>
+          {!keyboardVisible && <View style={{ marginTop: 10, gap: 15 }}>
             <Text style={{ color: 'white', fontSize: 10, paddingHorizontal: 20, }}>
               Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном посте может быть запечатлен красивый автомобиль, милая собачка, нежное море и белоснежная яхта.
               Куда выложить?
-              Мы предлагаем такой контент выложить в несколько рубрик (не более 4), где Ваше произведение увидят намного больше людей.
+              Мы предлагаем такой контент выложить в несколько рубрик (не более 4), где Ваше искусство увидят любители разного.
             </Text>
             <View style={{ alignItems: 'center' }}>
               <TouchableOpacity onPress={() => addPhoto(uri, 1)}>

@@ -3,7 +3,7 @@ import { t } from '../../../components/lang';
 import { Styles } from '../../../styles/Styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { chnageAvatarAction, UpdateBackroundPhoto } from '../../../store/action/action';
+import { Api, chnageAvatarAction, UpdateBackroundPhoto } from '../../../store/action/action';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { SliderModal } from '../../../components/SliderModal';
 import { BootomModal } from '../../../components/BootomSheet';
@@ -46,13 +46,36 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
   const GetPhoto = () => {
     let item = []
-    if (user) {
-      user.data.categories.map((elm, i) => {
-        elm.photo_array.map((el) => {
-          item.push(el)
-        })
+    let data = []
+    let api = `${Api}/category`
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${staticdata.token}`);
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+    fetch(api, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        if (r.status) {
+          data = r.data
+          console.log(r.data[0])
+        }
+        else {
+          console.log(error)
+        }
       })
-    }
+      .catch(error => {
+      });
+
+
+    data?.map((elm, i) => {
+      elm.photo_array.map((el) => {
+        item.push(el)
+      })
+    })
     setImageData(item)
   }
 
