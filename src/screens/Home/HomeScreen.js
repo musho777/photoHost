@@ -15,9 +15,14 @@ import debounce from 'lodash/debounce';
 import { AddImageLoading } from '../../components/addImageLoading';
 import { EmptyFlatlist } from '../../components/emptyFlatlist';
 import { t } from '../../components/lang';
+import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+
 
 
 export const HomeScreen = () => {
+  const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
   const staticdata = useSelector(st => st.static);
   const getLents = useSelector(st => st.getLents, shallowEqual);
@@ -40,15 +45,29 @@ export const HomeScreen = () => {
 
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (userData.data.show_category_pop_up == 1) {
-        setShowModal(true);
-      }
-    }, 20000);
+  // useEffect(() => {
+  //   console.log(isFocused)
+  //   const timer = setTimeout(() => {
+  //     if (userData.data.show_category_pop_up == 1 && isFocused) {
 
-    return () => clearTimeout(timer);
-  }, [userData.data.show_category_pop_up]);
+  //       setShowModal(true);
+  //     }
+  //   }, 20000);
+
+  //   return () => clearTimeout(timer);
+  // }, [userData.data.show_category_pop_up]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const timer = setTimeout(() => {
+        if (userData.data.show_category_pop_up == 1) {
+
+          setShowModal(true);
+        }
+      }, 20000);
+      return () => clearTimeout(timer);
+    }, [userData.data.show_category_pop_up])
+  );
 
   useEffect(() => {
     if (staticdata.token && !getLents?.data.length) {
@@ -189,9 +208,23 @@ export const HomeScreen = () => {
   const ListEmptyComponent = () => {
     return <EmptyFlatlist loading={getLents.loading} text={t(mainData.lang).Thefeedisempty} />
   }
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBackgroundColor("white")
+      StatusBar.setBarStyle('dark-content');
+      return () => {
+        StatusBar.setBarStyle('dark-content');
+      };
+    }, [])
+  );
+
 
   return (
-    <SafeAreaView style={[{ flex: 1, }, Styles.statusBar]}>
+    <SafeAreaView style={[{ flex: 1 }, insets.top ? { marginTop: insets.top } : Styles.statusBar]}>
+      {/* <StatusBar
+        backgroundColor="white"
+        barStyle={'dark-content'}
+      /> */}
       <HomeHeader onPress={() => goTop()} />
       {showModal && <ModalComponent
         showModal={showModal}

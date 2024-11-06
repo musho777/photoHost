@@ -10,6 +10,7 @@ import { SearchItem } from './component/searchItem';
 import _ from 'lodash';
 import { SearchInput } from './component/SearchInput';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const SearchBlock = () => {
   const [data, setData] = useState('');
@@ -19,6 +20,7 @@ export const SearchBlock = () => {
   const staticdata = useSelector(st => st.static);
   const mainData = useSelector(st => st.mainData);
 
+  const insets = useSafeAreaInsets();
 
 
   const debouncedSearchData = useCallback(
@@ -54,7 +56,7 @@ export const SearchBlock = () => {
 
 
   return (
-    <SafeAreaView style={Styles.statusBar}>
+    <SafeAreaView style={insets.top ? { marginTop: insets.top } : Styles.statusBar}>
       <View style={styles.centeredView}>
         <SearchInput
           data={data}

@@ -15,7 +15,7 @@ export const Styles = StyleSheet.create({
         width: '100%'
     },
     statusBar: {
-        marginTop: 50,
+        marginTop: 48,
     },
     flexAlignItems: {
         flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -21,6 +21,7 @@ import { GetCatalogAction } from '../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlatList } from 'react-native-gesture-handler';
 import { t } from '../../components/lang';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -196,7 +197,6 @@ export const AddPost = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'black', marginTop: 40 }}>
-      {/* <StatusBar barStyle={"light-content"} backgroundColor={"#000"} /> */}
       <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
       <Header
         uri={uri}

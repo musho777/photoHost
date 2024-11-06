@@ -180,12 +180,12 @@ export const SinglPageScreen = ({ route, navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBarStyle('light-content');
+      StatusBar.setBarStyle('dark-content');
       StatusBar.setBackgroundColor('#000000');
       StatusBar.setTranslucent = true;
       return () => {
         StatusBar.setTranslucent = true;
-        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBackgroundColor("white");
       };
     }, [])
   );
@@ -220,7 +220,6 @@ export const SinglPageScreen = ({ route, navigation }) => {
   );
   if (loading) {
     return <View style={{ flex: 1, backgroundColor: 'black', paddingTop: 40 }}>
-      {/* <StatusBar barStyle={"light-content"} backgroundColor={"#000"} translucent={false} /> */}
       <ActivityIndicator color="#FFC24B" />
     </View>
   }

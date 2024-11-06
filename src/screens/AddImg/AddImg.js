@@ -12,6 +12,7 @@ import {
   ScrollView,
   StatusBar,
   Keyboard,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetCatalogAction } from '../../store/action/action';
@@ -31,7 +32,7 @@ const windowWidth = Dimensions.get('window').width;
 export const AddImg = ({ navigation }) => {
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-
+  const ref = useRef()
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardVisible(true);
@@ -218,6 +219,9 @@ export const AddImg = ({ navigation }) => {
           placeholder={t(mainData.lang).adddescription}
           style={styles.input}
           value={description[active]}
+          onFocus={() => {
+            ref.current?.scrollToEnd({ animated: true });
+          }}
           multiline
           onChangeText={(e) => addDescription(e, active)}
         />
@@ -230,7 +234,7 @@ export const AddImg = ({ navigation }) => {
 
   if (first)
     return (
-      <View style={{ flex: 1, backgroundColor: 'black', marginTop: 40, }}>
+      <ScrollView ref={ref} style={{ flex: 1, backgroundColor: 'black', marginTop: 40, }}>
         <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
         <Header
           uri={uri}
@@ -277,7 +281,7 @@ export const AddImg = ({ navigation }) => {
           </View>
 
         </View>}
-      </View>
+      </ScrollView>
     );
   else {
     return

@@ -194,7 +194,7 @@ export const SearchProfil = ({ navigation, route }) => {
               <View style={{ width: width }}>
                 <TouchableOpacity
                   activeOpacity={1}
-                  onPress={() => setOpenBg()}>
+                  onPress={() => setOpenBg(true)}>
                   <FastImage
                     onLoad={() => {
                       setLoadBgImage(false)
@@ -204,7 +204,7 @@ export const SearchProfil = ({ navigation, route }) => {
                   />
                 </TouchableOpacity>
                 <View style={styles.avatarWrapper1} activeOpacity={1} >
-                  <TouchableOpacity onPress={() => setOpenSlider(true)} style={[styles.shadow, styles.avatar]}>
+                  <TouchableOpacity activeOpacity={1} onPress={() => setOpenSlider(true)} style={[styles.shadow, styles.avatar]}>
                     <Image
                       style={styles.img}
                       source={{ uri: `https://chambaonline.pro/uploads/${data?.data.avatar}`, }}

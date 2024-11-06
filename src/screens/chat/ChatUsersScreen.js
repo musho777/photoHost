@@ -13,9 +13,12 @@ import { Styles } from '../../styles/Styles';
 import { Input } from '../../ui/Input';
 import { t } from '../../components/lang';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const ChatUsersScreen = () => {
   const [data, setData] = useState([]);
+  const insets = useSafeAreaInsets();
+
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const getMyChatRoom = useSelector(st => st.getMyChatRoom);
@@ -91,8 +94,7 @@ export const ChatUsersScreen = () => {
     );
   };
   return (
-    <SafeAreaView style={[{ flex: 1 }, Styles.statusBar]}>
-      {/* <StatusBar barStyle={"dark-content"} backgroundColor={"white"} translucent={false} /> */}
+    <SafeAreaView style={[{ flex: 1, marginTop: insets.top ? insets.top : Styles.statusBar },]}>
       <View style={{ padding: 10, marginTop: 10 }}>
         {data.length > 0 && <Input
           placeholder={t(mainData.lang).search}
