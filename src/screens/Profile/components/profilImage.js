@@ -151,14 +151,14 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
             bottomSheetRef1.current?.present();
           }, 300);
         }} style={{ marginBottom: 20, marginTop: 20 }} >
-          <Text style={Styles.darkRegular14}>добавить фото</Text>
+          <Text style={Styles.darkRegular14}>Добавить фото</Text>
 
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
           changeBg()
           bottomSheetRef.current?.close()
         }} style={{ marginBottom: 20 }}>
-          <Text style={Styles.darkRegular14}>добавить фото из телефона</Text>
+          <Text style={Styles.darkRegular14}>Добавить фото из телефона</Text>
         </TouchableOpacity>
       </View>
     </BootomModal>

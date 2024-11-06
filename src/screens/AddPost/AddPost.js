@@ -278,7 +278,7 @@ export const AddPost = () => {
           />
         </View>}
       </View>
-      <View >
+      <View style={{ marginBottom: 10 }}>
         <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10 }}>
           <TouchableOpacity onPress={() => setShowType(1)} style={styles.editItem}>
             <Image source={activefon} style={{ width: 30, height: 30 }} />

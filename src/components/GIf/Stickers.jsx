@@ -6,7 +6,6 @@ const Sticker = ({ setSelected }) => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const api_kay = 'vH1C0TVHpNEFoxXFPMFlqIAkGfZ63rIc'
 
@@ -18,11 +17,13 @@ const Sticker = ({ setSelected }) => {
     if (loading) return;
     let response = '';
     if (searchQuery) {
+      console.log(searchQuery)
       response = await fetch(`https://api.giphy.com/v1/stickers/search?api_key=${api_kay}&q=${searchQuery}&limit=20&offset=${(page - 1) * 20}`);
     } else {
       response = await fetch(`https://api.giphy.com/v1/stickers/trending?api_key=${api_kay}&limit=20&offset=${(page - 1) * 20}`);
     }
     const result = await response.json();
+    console.log(result)
     setData(prevData => page === 1 ? result.data : [...prevData, ...result.data]);
     setLoading(false);
   };
@@ -43,8 +44,8 @@ const Sticker = ({ setSelected }) => {
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.input}
-            value={query}
-            onChangeText={setQuery}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
             placeholder="Search GIFs"
           />
         </View>
