@@ -45,6 +45,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const videoRef = useRef(null);
+  const [horiznotal, setHoriznotal] = useState(false)
 
 
   const handleMomentumScrollEnd = (event) => {
@@ -224,10 +225,11 @@ export const SinglPageScreen = ({ route, navigation }) => {
     </View>
   }
   return (
-    <SafeAreaView style={[{ backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', height: '100%', }, Styles.statusBar]}>
-      <ScrollView contentContainerStyle={{ marginTop: (windowWidth - 570 / 2) }}>
+    <SafeAreaView style={[{ backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', height: '100%', }]}>
+      <ScrollView contentContainerStyle={{ marginTop: (windowWidth + insets.top - (!horiznotal ? 570 : 380) / 2), marginBottom: 500 }}>
         <Post
           data={data}
+          setHoriznotal={(e) => setHoriznotal(e)}
           setShowLike={() => setLikeClose(true)}
           setShowView={() => setShowView(true)}
           addToblack={(e) => AddToBack(e)}
@@ -236,6 +238,7 @@ export const SinglPageScreen = ({ route, navigation }) => {
           setShowShare={(e) => setShowShare(e)}
           setSelectedVidioId={(e) => setSelectedVidioId(e)}
           big={true}
+          horiznotal={horiznotal}
         />
       </ScrollView>
       {showView && <ViewComponent

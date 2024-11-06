@@ -181,8 +181,21 @@ export const AddPost = () => {
     setText(text + e.emoji)
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setTranslucent = true
+      StatusBar.setBackgroundColor("black")
+      StatusBar.setBarStyle('light-content');
+      return () => {
+        StatusBar.setBackgroundColor("white")
+        StatusBar.setBarStyle('dark-content');
+      };
+    }, [])
+  );
+
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'black', marginTop: 40 }}>
       {/* <StatusBar barStyle={"light-content"} backgroundColor={"#000"} /> */}
       <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
       <Header

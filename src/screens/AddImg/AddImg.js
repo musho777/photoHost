@@ -83,6 +83,19 @@ export const AddImg = ({ navigation }) => {
   );
 
 
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setTranslucent = true
+      StatusBar.setBackgroundColor("black")
+      StatusBar.setBarStyle('light-content');
+      return () => {
+        StatusBar.setBackgroundColor("white")
+        StatusBar.setBarStyle('dark-content');
+      };
+    }, [])
+  );
+
+
 
   useEffect(() => {
     if (createPost.status) {
@@ -192,7 +205,7 @@ export const AddImg = ({ navigation }) => {
     return <View behavior={Platform.OS === 'ios' ? 'padding' : "position"}>
       <ScrollView style={{ height: 550 }}>
         <FastImage
-          style={[styles.img, { maxHeight: 600, }]}
+          style={[styles.img, { maxHeight: 550, }]}
           source={{ uri: item.uri }}
         />
         <TouchableOpacity onPress={() => delateFoto(index)} style={{ position: 'absolute', top: 10, right: 10 }}>
@@ -217,8 +230,7 @@ export const AddImg = ({ navigation }) => {
 
   if (first)
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
-        {/* <StatusBar barStyle={"light-content"} backgroundColor={"#000"} /> */}
+      <View style={{ flex: 1, backgroundColor: 'black', marginTop: 40, }}>
         <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
         <Header
           uri={uri}
@@ -252,7 +264,7 @@ export const AddImg = ({ navigation }) => {
             ))}
           </View>
         </View>
-        {!keyboardVisible && <View style={{ marginBottom: 40 }}>
+        {!keyboardVisible && <View style={{ marginTop: 30, gap: 15 }}>
           <Text style={{ color: 'white', fontSize: 10, paddingHorizontal: 20, }}>
             Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном посте может быть запечатлен красивый автомобиль, милая собачка, нежное море и белоснежная яхта.
             Куда выложить?
@@ -265,7 +277,7 @@ export const AddImg = ({ navigation }) => {
           </View>
 
         </View>}
-      </SafeAreaView>
+      </View>
     );
   else {
     return
@@ -296,10 +308,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   centeredView: {
-    flex: 1,
     alignItems: 'center',
     backgroundColor: 'black',
-    height: '100%',
+    // height: '100%',
+    height: 550,
+    borderColor: 'red'
   },
   img: {
     height: 550,

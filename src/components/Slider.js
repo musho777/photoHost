@@ -19,7 +19,7 @@ import LottieView from 'lottie-react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data, setActivePhoto }) => {
+export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data, setActivePhoto, setHoriznotal = () => { } }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [showLikeIcone, setShowLikeICone] = useState(false)
@@ -102,12 +102,14 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
 
   const renderItem = ({ item, index }) => {
     let height = 570
-    if (item.height > item.width) {
-
-      height = 390
+    if (item.height - 200 > item.width) {
+      height = 570
+      console.log(setHoriznotal)
+      setHoriznotal(false)
     }
     else {
-      height = 570
+      height = 410
+      setHoriznotal(true)
     }
     return (
       <TouchableOpacity

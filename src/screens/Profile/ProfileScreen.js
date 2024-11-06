@@ -56,11 +56,10 @@ export const ProfileScreen = () => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setTranslucent = true
-      StatusBar.backgroundColor = "transparent"
+      StatusBar.setBackgroundColor("transparent")
       StatusBar.setBarStyle('light-content');
       return () => {
         StatusBar.setBarStyle('dark-content');
-
       };
     }, [])
   );

@@ -20,7 +20,9 @@ export const Post = React.memo(({
   setShowLike,
   setShowShare,
   setSelectedVidioId,
-  big = false
+  setHoriznotal,
+  big = false,
+  horiznotal
 }) => {
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
@@ -139,9 +141,7 @@ export const Post = React.memo(({
     let desc = "";
     try {
       desc = JSON.parse(data?.description);
-    } catch (error) {
-      console.error('Failed to parse description:', error);
-    }
+    } catch (error) { }
     return desc;
   }, [data?.description]);
 
@@ -168,6 +168,7 @@ export const Post = React.memo(({
         </View>
         {!data?.background ? <Slider
           viewableItems={viewableItems}
+
           long={long}
           setActiveImage={(e) => setActiveImage(e)}
           onPressOut={() => onPressOut()}
@@ -176,6 +177,7 @@ export const Post = React.memo(({
           setOpenModal={setOpenModal}
           setActivePhoto={(e) => setActivePhoto(e)}
           data={data}
+          setHoriznotal={setHoriznotal}
           user={user}
         /> :
           <View style={{ marginBottom: 10, height: 570, position: 'relative' }}>
@@ -222,7 +224,7 @@ export const Post = React.memo(({
               {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity
                 onPress={toggleExpanded}
               >
-                <Text style={[styles.showMoreText, big && { color: 'white', marginBottom: (windowWidth - 480 / 2) }]}>
+                <Text style={[styles.showMoreText, big && { color: 'white', marginBottom: (windowWidth - 300 / 2) }]}>
                   {isExpanded ? 'Показать меньше' : 'Показать больше'}
                 </Text>
               </TouchableOpacity>}

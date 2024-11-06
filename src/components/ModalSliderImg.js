@@ -46,11 +46,11 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                 data={photo}
                 renderItem={({ item, index }) => {
                     let height = 580
-                    if (item.height > item.width) {
-                        height = 400
+                    if (item.height - 200 > item.width) {
+                        height = 580
                     }
                     else if (item.height) {
-                        height = 580
+                        height = 410
                     }
                     else {
                         height = null

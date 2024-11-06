@@ -1,8 +1,8 @@
-import { Image, StyleSheet, TouchableOpacity, View, Text, Dimensions } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View, Text, Dimensions, BackHandler } from 'react-native'
 import { t } from '../../../components/lang';
 import { Styles } from '../../../styles/Styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { chnageAvatarAction, UpdateBackroundPhoto } from '../../../store/action/action';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { SliderModal } from '../../../components/SliderModal';
@@ -27,6 +27,22 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const snapPoints1 = useMemo(() => ['70%',], []);
   const [imageData, setImageData] = useState([])
   const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)
+
+  useEffect(() => {
+    const backAction = () => {
+      bottomSheetRef.current?.close()
+      bottomSheetRef1.current?.close()
+      bottomSheetRef2.current?.close()
+
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   const GetPhoto = () => {
     let item = []
