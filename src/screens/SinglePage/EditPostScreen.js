@@ -124,7 +124,7 @@ export const EditPostScreen = ({ route, navigation }) => {
         multiline
 
         onChangeText={e => changeDescription(e)}
-        style={[Styles.darkMedium14, { paddingHorizontal: 15 }]}
+        style={[Styles.darkMedium14, { paddingHorizontal: 10 }]}
         placeholder={t(mainData.lang).adddescription}
         placeholderTextColor={'#8C9CAB'}
       />

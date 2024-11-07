@@ -131,8 +131,7 @@ export const Post = React.memo(({
   ]
 
   const [isExpanded, setIsExpanded] = useState(false);
-  const MAX_LENGTH = 50;
-
+  const MAX_LENGTH = windowWidth / 8;
   const toggleExpanded = () => {
     setShowFullText(!showFullText)
     setIsExpanded(!isExpanded);
@@ -224,7 +223,7 @@ export const Post = React.memo(({
               {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity
                 onPress={toggleExpanded}
               >
-                <Text style={[styles.showMoreText, big && { color: 'white', marginBottom: (windowWidth - 300 / 2) }]}>
+                <Text style={[Styles.balihaiMedium13, big && { color: 'white', marginBottom: (windowWidth - 300 / 2) }]}>
                   {isExpanded ? 'Показать меньше' : 'Показать больше'}
                 </Text>
               </TouchableOpacity>}

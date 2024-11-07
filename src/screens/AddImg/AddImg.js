@@ -213,7 +213,7 @@ export const AddImg = ({ navigation }) => {
           <RubbishSvg />
         </TouchableOpacity>
       </ScrollView>
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <View style={keyboardVisible ? { justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 80, width: '100%' } : { justifyContent: 'center', alignItems: 'center' }}>
         <TextInput
           placeholderTextColor="white"
           placeholder={t(mainData.lang).adddescription}
@@ -236,54 +236,54 @@ export const AddImg = ({ navigation }) => {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'black', marginTop: 40 }}>
 
-        <ScrollView ref={ref} style={{ flex: 1, backgroundColor: 'black' }}>
-          <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
-          <Header
-            uri={uri}
-            selectedCatalog={selectedCatalog}
-            description={description}
-            setSelectedCatalog={(e) => setSelectedCatalog(e)}
-            error={error}
-            setFirst={(e) => setFirst(e)}
-            Close={() => Close()}
-          />
-          <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
-          <View style={styles.centeredView}>
-            <View style={styles.selectImage}>
-              <FlatList
-                horizontal
-                pagingEnabled
-                ref={flatListRef}
-                showsHorizontalScrollIndicator={true}
-                decelerationRate="normal"
-                data={uri}
-                windowSize={5}
-                onScroll={handleMomentumScrollEnd}
-                initialNumToRender={5}
-                maxToRenderPerBatch={10}
-                renderItem={renderItem}
-              />
-            </View>
-            <View style={styles.paginationWrapper}>
-              {uri?.length > 1 && uri?.map((elm, i) => (
-                <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
-              ))}
-            </View>
+        {/* <ScrollView ref={ref} style={{ flex: 1, backgroundColor: 'black' }}> */}
+        <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
+        <Header
+          uri={uri}
+          selectedCatalog={selectedCatalog}
+          description={description}
+          setSelectedCatalog={(e) => setSelectedCatalog(e)}
+          error={error}
+          setFirst={(e) => setFirst(e)}
+          Close={() => Close()}
+        />
+        <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
+        <View style={styles.centeredView}>
+          <View style={styles.selectImage}>
+            <FlatList
+              horizontal
+              pagingEnabled
+              ref={flatListRef}
+              showsHorizontalScrollIndicator={true}
+              decelerationRate="normal"
+              data={uri}
+              windowSize={5}
+              onScroll={handleMomentumScrollEnd}
+              initialNumToRender={5}
+              maxToRenderPerBatch={10}
+              renderItem={renderItem}
+            />
           </View>
-          {!keyboardVisible && <View style={{ marginTop: 10, gap: 15 }}>
-            <Text style={{ color: 'white', fontSize: 10, paddingHorizontal: 20, }}>
-              Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном посте может быть запечатлен красивый автомобиль, милая собачка, нежное море и белоснежная яхта.
-              Куда выложить?
-              Мы предлагаем такой контент выложить в несколько рубрик (не более 4), где Ваше искусство увидят любители разного.
-            </Text>
-            <View style={{ alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => addPhoto(uri, 1)}>
-                <AddImage />
-              </TouchableOpacity>
-            </View>
-
+          {uri?.length > 1 && <View style={styles.paginationWrapper}>
+            {uri?.length > 1 && uri?.map((elm, i) => (
+              <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
+            ))}
           </View>}
-        </ScrollView>
+        </View>
+        {!keyboardVisible && <View style={{ marginTop: uri?.length > 1 ? 20 : 10, gap: 15 }}>
+          <Text style={{ color: 'white', fontSize: 10, paddingHorizontal: 20, }}>
+            Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном посте может быть запечатлен красивый автомобиль, милая собачка, нежное море и белоснежная яхта.
+            Куда выложить?
+            Мы предлагаем такой контент выложить в несколько рубрик (не более 4), где Ваше искусство увидят любители разного.
+          </Text>
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => addPhoto(uri, 1)}>
+              <AddImage />
+            </TouchableOpacity>
+          </View>
+
+        </View>}
+        {/* </ScrollView> */}
       </SafeAreaView>
     );
   else {
