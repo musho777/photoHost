@@ -200,7 +200,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
         setShowAllPhoto(true)
         bottomSheetRef3.current?.present()
       }, 300);
-      console.log(item)
       setImageData(item.photo_array)
       // setSelectedName(item.)
       // setBgPhoto(item.photo)

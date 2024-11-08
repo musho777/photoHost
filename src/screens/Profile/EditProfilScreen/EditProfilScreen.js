@@ -212,7 +212,7 @@ export const EditProfilScreen = ({ navigation }) => {
             <Fild setIsOpen={(e) => setIsOpen(e)} discription multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             <View style={{ width: '100%', borderWidth: 1, marginTop: 10, borderColor: AppColors.Solitude_Color, }} />
             <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 15, marginTop: 5, color: 'red' }]}>
-              Помимо выбранных Вами рубрик, в первую очередь будет предлагаться контент с Вашего города.
+              Чем больше заполните информацию о себе, тем точнее будет предлагаться контент. Помимо выбранных Вами рубрик будет предлагаться контент с Вашего города.
             </Text>
             <View>
               {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}

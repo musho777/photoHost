@@ -82,7 +82,6 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
   }
 
   if (discription) {
-    console.log(localValue)
     return <View >
       <View style={styles.textWrapper}>
         {svg && <View style={{ width: 20, marginRight: 10 }}>
@@ -135,7 +134,7 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
         multiline={multiline}
         value={value}
         onChangeText={e => ChnageData(e, activeFont, activeColor)}
-        style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', fontFamily: activeFont }]}
+        style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', fontFamily: activeFont, paddingHorizontal: 0 }]}
       />
     </View>
   </View>

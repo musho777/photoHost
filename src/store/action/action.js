@@ -850,7 +850,6 @@ export const CreatPostAction = (data, token) => {
     fetch(`${Api}/add_new_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           // dispatch(GetLentsAction(token));
           dispatch(SuccessCreatePost(r));
@@ -1530,7 +1529,6 @@ export const GetCatalogAction = (token, limit, page) => {
     fetch(api, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessGetCatalog(r.data))
         }
@@ -1539,7 +1537,6 @@ export const GetCatalogAction = (token, limit, page) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorGetCatalog())
       });
   };
@@ -1857,7 +1854,6 @@ export const GetMusic = (id, token) => {
   // let ids = []
   id.map((elm, i) => {
     // ids.push(elm.id)
-    console.log(elm.id)
     formdata.append('category_id[]', elm.id)
   })
 

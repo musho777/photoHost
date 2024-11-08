@@ -58,6 +58,8 @@ export const AddImg = ({ navigation }) => {
   const [active, setActive] = useState(0)
   const flatListRef = useRef(null);
 
+  const [localheight, setLocalHeight] = useState([])
+
   const [showError, setShowError] = useState(false)
 
   const [error, setError] = useState('')
@@ -201,13 +203,18 @@ export const AddImg = ({ navigation }) => {
     setFirst(false)
     setUri([])
   }
-
   const renderItem = ({ item, index }) => {
     return <View behavior={Platform.OS === 'ios' ? 'padding' : "position"}>
       <ScrollView style={{ height: 550 }}>
         <FastImage
-          style={[styles.img, { maxHeight: 550, }]}
+          style={[styles.img, localheight[index]?.height + 50 >= localheight[index]?.width ? { maxHeight: 550 } : { maxHeight: 400 }]}
           source={{ uri: item.uri }}
+          onLoad={(event) => {
+            const { width, height } = event.nativeEvent;
+            let item = [...localheight]
+            item.push({ width: width, height: height })
+            setLocalHeight(item)
+          }}
         />
         <TouchableOpacity onPress={() => delateFoto(index)} style={{ position: 'absolute', top: 10, right: 10 }}>
           <RubbishSvg />
