@@ -40,7 +40,7 @@ export const SearchItem = ({ data }) => {
         />
         <Text style={Styles.balihaiRegular12}>{data.name}</Text>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => addFollow()}
         style={[styles.button, !isFollow && { backgroundColor: AppColors.GoldenTainoi_Color }]}>
         <Text style={Styles.darkSemiBold10}>{
@@ -48,7 +48,7 @@ export const SearchItem = ({ data }) => {
             t(mainData.lang).Unsubscribe :
             t(mainData.lang).subscribe
         }</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </TouchableOpacity>
   );
 };

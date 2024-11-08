@@ -17,6 +17,7 @@ const Sticker = ({ setSelected }) => {
     if (loading) return;
     let response = '';
     if (searchQuery) {
+
       response = await fetch(`https://api.giphy.com/v1/stickers/search?api_key=${api_kay}&q=${searchQuery}&limit=20&offset=${(page - 1) * 20}`);
     } else {
       response = await fetch(`https://api.giphy.com/v1/stickers/trending?api_key=${api_kay}&limit=20&offset=${(page - 1) * 20}`);
@@ -43,7 +44,11 @@ const Sticker = ({ setSelected }) => {
           <TextInput
             style={styles.input}
             value={searchQuery}
-            onChangeText={setSearchQuery}
+            onChangeText={(e) => {
+              setData("")
+              setPage(1)
+              setSearchQuery(e)
+            }}
             placeholder="Search GIFs"
           />
         </View>

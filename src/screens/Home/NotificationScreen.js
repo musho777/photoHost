@@ -31,6 +31,9 @@ export const NotificationScreen = ({ navigation }) => {
 
 
   const renderItem = ({ item, index }) => {
+    if (index == 3) {
+      console.log(item)
+    }
     return <NotificationBlock
       description={item.description}
       id={item.sender.id}

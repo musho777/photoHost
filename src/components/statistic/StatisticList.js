@@ -24,6 +24,9 @@ export const StatisticList = ({ id, token, vidio }) => {
   const [show, setShow] = useState(false)
   const [getView, setGetView] = useState(null)
   const [getViewInAccaunt, setGetViewAccaunt] = useState(null)
+  const [getMaxView, setGetMaxView] = useState(null)
+  const [getMinView, setGetMinView] = useState(null)
+
   const getVidioStatistic = useSelector((st) => st.getVidioStatistic)
 
   function getTimezoneOffset() {
@@ -55,7 +58,7 @@ export const StatisticList = ({ id, token, vidio }) => {
       setGetView(`${sec} ${word}`)
     }
   });
-  const getRandomNumberAccaunt = useCallback((min, max) => {
+  const getRandomNumberAccaunt = useCallback((min, max, type = 'average') => {
     if (!getViewInAccaunt) {
       let sec = Math.floor(Math.random() * (max - min + 1)) + min;
       let word = 'секунд'
@@ -65,13 +68,23 @@ export const StatisticList = ({ id, token, vidio }) => {
       else if (JSON.stringify(sec)[1] >= 2 && JSON.stringify(sec)[1] <= 4) {
         word = "секунды"
       }
-      setGetViewAccaunt(`${sec} ${word}`)
+      if (type == 'average') {
+        setGetViewAccaunt(`${sec} ${word}`)
+      }
+      else if (type == 'min') {
+        setGetMinView(`${sec} ${word}`)
+      }
+      else if (type == 'max') {
+        setGetMaxView(`${sec} ${word}`)
+      }
     }
   });
 
   useEffect(() => {
     getRandomNumber(17, 25)
-    getRandomNumberAccaunt(17, 25)
+    getRandomNumberAccaunt(17, 25, 'average')
+    getRandomNumberAccaunt(5, 10, 'min')
+    getRandomNumberAccaunt(25, 40, 'max')
   }, [])
 
   console.log(getStatistic1.data.city_data)
@@ -118,7 +131,12 @@ export const StatisticList = ({ id, token, vidio }) => {
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
             {!vidio &&
-              <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
+              <View style={{ gap: 10 }}>
+                <Text style={Styles.darkSemiBold14}>Минимальное время просмотра - {getMinView}  </Text>
+                <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
+                <Text style={Styles.darkSemiBold14}>Максимальное время просмотра - {getMaxView} </Text>
+
+              </View>
             }
 
             {vidio && <View style={{ gap: 10 }}>
