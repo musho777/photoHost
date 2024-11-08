@@ -9,6 +9,7 @@ import { SliderModal } from '../../../components/SliderModal';
 import { BootomModal } from '../../../components/BootomSheet';
 import { FlatList, } from 'react-native-gesture-handler';
 import { BigBgImage } from './bigBgImage';
+import { BackArrow } from '../../../assets/svg/Svgs';
 
 const { width } = Dimensions.get('window');
 
@@ -21,18 +22,49 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const bottomSheetRef = useRef(null);
   const bottomSheetRef1 = useRef(null);
   const bottomSheetRef2 = useRef(null);
+  const bottomSheetRef3 = useRef(null);
+
+  const [showAllPhoto, setShowAllPhoto] = useState(false)
+  const [showPhoto, setShowPhoto] = useState(false)
+  const [seletedName, setSelectedName] = useState('')
+
+
 
   const [bg, setBg] = useState("")
   const snapPoints = useMemo(() => ['20%'], []);
   const snapPoints1 = useMemo(() => ['70%',], []);
   const [imageData, setImageData] = useState([])
+  const [mainImageData, setMainImageData] = useState([])
   const [bgPhoto, setBgPhoto] = useState(user.data.backround_photo)
 
   useEffect(() => {
     const backAction = () => {
-      bottomSheetRef.current?.close()
-      bottomSheetRef1.current?.close()
-      bottomSheetRef2.current?.close()
+      console.log(showPhoto, 'show')
+      if (showAllPhoto) {
+        bottomSheetRef3.current?.close()
+
+        setTimeout(() => {
+          setShowPhoto(true)
+          bottomSheetRef1.current?.present();
+        }, 300);
+
+        // bottomSheetRef1.current?.present()
+        setShowAllPhoto(false)
+        return () => backHandler.remove();
+      }
+      else if (showPhoto) {
+        bottomSheetRef3.current?.close()
+        bottomSheetRef1.current?.close()
+        return () => backHandler.remove();
+      }
+      else {
+        bottomSheetRef.current?.close()
+        bottomSheetRef1.current?.close()
+        bottomSheetRef2.current?.close()
+        bottomSheetRef3.current?.close()
+      }
+
+
 
     };
 
@@ -42,7 +74,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
     );
 
     return () => backHandler.remove();
-  }, []);
+  }, [showAllPhoto, showPhoto]);
 
   const GetPhoto = async () => {
     let item = []
@@ -61,6 +93,8 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       .then(r => {
         if (r.status) {
           itemData = r.data
+          setMainImageData(r.data)
+
           // console.log(r.data[1])
           // data = r.data
           // r.data.map((elm, i) => {
@@ -81,14 +115,16 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
     //     item.push(el)
     //   })
     // })
-    itemData.map((elm, i) => {
-      elm.photo_array.map((el, i) => {
-        item.push(el)
-      })
-    })
-    console.log(itemData, 'itemData')
+    // itemData.map((elm, i) => {
+    //   elm.photo_array.map((el, i) => {
+    //     item.push(el)
+    //   })
+    // })
+    // console.log(itemData, 'itemData')
+    // setMainImageData(imageData)
     setImageData(item)
   }
+
 
   const [imgUrl, setImgUrl] = useState('');
   const dispatch = useDispatch()
@@ -137,6 +173,10 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const renderItem = ({ item }) => {
     return <TouchableOpacity activeOpacity={1} onPress={() => {
       bottomSheetRef.current?.close()
+      setTimeout(() => {
+        bottomSheetRef1.current?.present();
+      }, 300);
+
       setBgPhoto(item.photo)
       setBg("")
       dispatch(UpdateBackroundPhoto("", staticdata.token, item.photo));
@@ -151,6 +191,35 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
     </TouchableOpacity>
 
   }
+
+
+  const renderItem1 = ({ item }) => {
+    return <TouchableOpacity activeOpacity={1} onPress={() => {
+      bottomSheetRef.current?.close()
+      setTimeout(() => {
+        setShowAllPhoto(true)
+        bottomSheetRef3.current?.present()
+      }, 300);
+      console.log(item)
+      setImageData(item.photo_array)
+      // setSelectedName(item.)
+      // setBgPhoto(item.photo)
+      // setBg("")
+      // dispatch(UpdateBackroundPhoto("", staticdata.token, item.photo));
+      // bottomSheetRef1.current?.close()
+      setSelectedName(item.name)
+    }} style={{ width: '100%', paddingHorizontal: 0 }}>
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={[Styles.darkSemiBold14, { marginTop: 5, marginBottom: 2 }]}>{item.name}</Text>
+        <Image
+          style={styles.bgImage1}
+          source={{ uri: `https://chambaonline.pro/uploads/${item.photo_array[0].photo}`, }}
+        />
+      </View>
+    </TouchableOpacity>
+
+  }
+
 
   return <View style={{ justifyContent: 'center', alignItems: 'center' }}>
     <BigBgImage
@@ -176,12 +245,13 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
 
 
-    <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
+    <BootomModal close={() => setShowAllPhoto(false)} ref={bottomSheetRef} snapPoints={snapPoints}>
       <View style={{ paddingHorizontal: 20 }}>
         <TouchableOpacity onPress={() => {
           GetPhoto()
           bottomSheetRef.current?.close()
           setTimeout(() => {
+            setShowPhoto(true)
             bottomSheetRef1.current?.present();
           }, 300);
         }} style={{ marginBottom: 20, marginTop: 20 }} >
@@ -197,7 +267,33 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       </View>
     </BootomModal>
 
-    <BootomModal ref={bottomSheetRef1} snapPoints={snapPoints1}>
+    <BootomModal close={() => setShowPhoto(false)} ref={bottomSheetRef1} snapPoints={snapPoints1}>
+      <FlatList
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        windowSize={10}
+        keyExtractor={(item) => item.id.toString()}
+        data={mainImageData}
+        removeClippedSubviews={true}
+        showsVerticalScrollIndicator={false}
+        renderItem={renderItem1}
+      />
+
+    </BootomModal>
+    <BootomModal ref={bottomSheetRef3} snapPoints={snapPoints1}>
+      <TouchableOpacity
+        onPress={() => {
+          bottomSheetRef3.current?.close()
+          setTimeout(() => {
+            setShowPhoto(true)
+            bottomSheetRef1.current?.present();
+          }, 300);
+          setShowAllPhoto(false)
+        }}
+        style={{ flexDirection: 'row', paddingHorizontal: 15, marginBottom: 20, gap: 10, alignItems: 'center' }}>
+        <BackArrow />
+        <Text style={Styles.darkSemiBold14}>{seletedName}</Text>
+      </TouchableOpacity>
       <FlatList
         initialNumToRender={5}
         maxToRenderPerBatch={5}
