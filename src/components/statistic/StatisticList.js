@@ -74,7 +74,7 @@ export const StatisticList = ({ id, token, vidio }) => {
     getRandomNumberAccaunt(17, 25)
   }, [])
 
-
+  console.log(getStatistic1.data.city_data)
   function getMaxCountItem(data) {
     return data.map((item) => {
       const maxStatistic = item.statistics.reduce((max, current) =>
@@ -130,6 +130,11 @@ export const StatisticList = ({ id, token, vidio }) => {
 
             <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации в закладки - {getStatistic1.data.get_book_count} </Text>
+
+            {getStatistic1.data?.city_data?.map((elm, i) => {
+              return <Text style={Styles.darkSemiBold14} t>{elm.city} - {elm.count} </Text>
+            })}
+
           </View>
           <View style={styles.line}></View>
           <TouchableOpacity onPress={() => setShow(!show)} activeOpacity={1} style={{ position: 'relative', width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>

@@ -207,7 +207,7 @@ export const Post = React.memo(({
             like={data?.like_count}
             id={data?.id}
             user={user}
-            categoryId={data?.category?.id}
+            categoryId={data?.many_category}
           />
         </View>
         {(!data?.background && Description && Description[activeImage]) ?

@@ -850,6 +850,7 @@ export const CreatPostAction = (data, token) => {
     fetch(`${Api}/add_new_post`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(GetLentsAction(token));
           dispatch(SuccessCreatePost(r));
@@ -1529,6 +1530,7 @@ export const GetCatalogAction = (token, limit, page) => {
     fetch(api, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessGetCatalog(r.data))
         }
@@ -1537,6 +1539,7 @@ export const GetCatalogAction = (token, limit, page) => {
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorGetCatalog())
       });
   };
@@ -1846,18 +1849,31 @@ export const ClearFollowrs = () => {
 
 export const GetMusic = (id, token) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
+  // myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
+  const formdata = new FormData();
+  // formdata.append("photo_ids[]", id);
+
+  // let ids = []
+  id.map((elm, i) => {
+    // ids.push(elm.id)
+    console.log(elm.id)
+    formdata.append('category_id[]', elm.id)
+  })
+
+  // console.log(ids)
   var requestOptions = {
-    method: 'GET',
+    method: 'POST',
     headers: myHeaders,
+    body: formdata,
     redirect: 'follow',
   };
   return dispatch => {
     dispatch(StartGetSound())
-    fetch(`${Api}/get_category_sounds?category_id=${id}`, requestOptions)
+    fetch(`${Api}/get_category_sounds`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
           dispatch(SuccessGetSound(r.data))
         }
@@ -1866,6 +1882,7 @@ export const GetMusic = (id, token) => {
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErroGetSound())
       });
   };

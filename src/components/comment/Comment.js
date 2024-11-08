@@ -28,6 +28,7 @@ import { MusicPlay } from './component/musicPlay';
 export const Comments = ({ route, }) => {
   let parentId = route?.params?.parentId
   let categoryID = route?.params?.categoryId
+  // console.log(categoryID)
   const [sendComment, setSendCommet] = useState('');
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);

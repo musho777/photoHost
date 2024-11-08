@@ -44,9 +44,9 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
     return () => backHandler.remove();
   }, []);
 
-  const GetPhoto = () => {
+  const GetPhoto = async () => {
     let item = []
-    let data = []
+    let itemData = []
     let api = `${Api}/category`
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -56,26 +56,37 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       headers: myHeaders,
       redirect: 'follow',
     };
-    fetch(api, requestOptions)
+    await fetch(api, requestOptions)
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          data = r.data
-          console.log(r.data[0])
+          itemData = r.data
+          // console.log(r.data[1])
+          // data = r.data
+          // r.data.map((elm, i) => {
+          //   console.log(elm)
+          //   elm.photo_array.map((el, i) => {
+          //     console.log(el)
+          //     itemData.data.push(el)
+          //   })
+          // })
         }
-        else {
-          console.log(error)
-        }
+
       })
       .catch(error => {
       });
 
-
-    data?.map((elm, i) => {
-      elm.photo_array.map((el) => {
+    // data?.map((elm, i) => {
+    //   elm.photo_array.map((el) => {
+    //     item.push(el)
+    //   })
+    // })
+    itemData.map((elm, i) => {
+      elm.photo_array.map((el, i) => {
         item.push(el)
       })
     })
+    console.log(itemData, 'itemData')
     setImageData(item)
   }
 
@@ -189,8 +200,11 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
     <BootomModal ref={bottomSheetRef1} snapPoints={snapPoints1}>
       <FlatList
         initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        windowSize={10}
         keyExtractor={(item) => item.id.toString()}
         data={imageData}
+        removeClippedSubviews={true}
         showsVerticalScrollIndicator={false}
         renderItem={renderItem}
       />
@@ -272,6 +286,7 @@ const styles = StyleSheet.create({
     width: width - 30,
     height: 150,
     borderRadius: 10,
+    backgroundColor: '#c7c7c7'
   },
 
   avatar: {

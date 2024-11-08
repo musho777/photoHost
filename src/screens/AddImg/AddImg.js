@@ -54,7 +54,7 @@ export const AddImg = ({ navigation }) => {
   const [description, setDescription] = useState([]);
   const createPost = useSelector(st => st.createPost);
   const staticData = useSelector(st => st.static);
-  const [selectedCatalog, setSelectedCatalog] = useState('')
+  const [selectedCatalog, setSelectedCatalog] = useState([])
   const [active, setActive] = useState(0)
   const flatListRef = useRef(null);
 
@@ -76,7 +76,7 @@ export const AddImg = ({ navigation }) => {
       setError('')
       setShowError(false)
       dispatch(ClearCreatPost())
-      setSelectedCatalog('')
+      setSelectedCatalog([])
       setUri([])
       addPhoto([], 0)
       setActive(0)
@@ -235,8 +235,6 @@ export const AddImg = ({ navigation }) => {
   if (first)
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'black', marginTop: 40 }}>
-
-        {/* <ScrollView ref={ref} style={{ flex: 1, backgroundColor: 'black' }}> */}
         <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
         <Header
           uri={uri}
@@ -283,7 +281,6 @@ export const AddImg = ({ navigation }) => {
           </View>
 
         </View>}
-        {/* </ScrollView> */}
       </SafeAreaView>
     );
   else {

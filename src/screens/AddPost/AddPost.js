@@ -30,7 +30,7 @@ const windowWidth = Dimensions.get('window').width;
 export const AddPost = () => {
   const mainData = useSelector(st => st.mainData);
   const [uri, setUri] = useState([]);
-  const [selectedCatalog, setSelectedCatalog] = useState('')
+  const [selectedCatalog, setSelectedCatalog] = useState([])
   const [text, setText] = useState('')
   const [showError, setShowError] = useState(false)
   const [fontSize, setFintSize] = useState(20)
@@ -207,7 +207,6 @@ export const AddPost = () => {
         font_family={activeFont}
         background={fone.findIndex((elm) => elm == activefon) + 1}
         font_size={fontSize}
-
         setSelectedCatalog={(e) => setSelectedCatalog(e)}
         error={error}
         Close={() => Close()}

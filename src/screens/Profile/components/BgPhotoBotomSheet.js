@@ -8,7 +8,7 @@ export const BgPhotoBotomSheet = forwardRef(({ renderItem }, ref) => {
   const snapPoints1 = useMemo(() => ['70%',], []);
   const staticdata = useSelector(st => st.static);
   const getCatalog = useSelector((st) => st.getCatalog)
-  console.log(getCatalog.data, 'getCatalog')
+  const [photos, setPhotos] = useState([])
   const GetPhoto = () => {
     let api = `${Api}/category`
     var myHeaders = new Headers();
@@ -22,11 +22,6 @@ export const BgPhotoBotomSheet = forwardRef(({ renderItem }, ref) => {
     fetch(api, requestOptions)
       .then(response => response.json())
       .then(r => {
-        if (r.status) {
-          console.log(r)
-        }
-        else {
-        }
       })
       .catch(error => {
       });
@@ -42,16 +37,18 @@ export const BgPhotoBotomSheet = forwardRef(({ renderItem }, ref) => {
     setImageData(item)
   }
   const dispatch = useDispatch()
+
+
   useEffect(() => {
+    console.log("--")
     if (staticdata.token) {
       dispatch(GetCatalogAction(staticdata.token))
     }
   }, [staticdata.token,])
 
   useEffect(() => {
-
-    console.log("20")
-  }, [])
+    console.log(getCatalog)
+  }, [getCatalog])
   const [data, setData] = useState([])
   return <BootomModal ref={ref} snapPoints={snapPoints1}>
     <FlatList

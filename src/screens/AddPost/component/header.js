@@ -1,5 +1,5 @@
-import { Keyboard, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { CheckMarkSvg, CloseSvg1 } from "../../../assets/svg/Svgs"
+import { Image, Keyboard, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { ChecboxUNchekedSvg, CheckedChexbox, CheckMarkSvg, CloseSvg1 } from "../../../assets/svg/Svgs"
 import { BootomModal } from "../../../components/BootomSheet"
 import { ScrollView } from "react-native-gesture-handler"
 import { useDispatch, useSelector } from "react-redux"
@@ -33,7 +33,7 @@ export const Header = ({
   const dispatch = useDispatch()
   const staticData = useSelector(st => st.static);
   const navigation = useNavigation()
-  const [selectedCatalogName, setSelectedCatalogName] = useState('')
+  const [selectedCatalogName, setSelectedCatalogName] = useState([])
   const getCatalog = useSelector((st) => st.getCatalog)
 
 
@@ -59,7 +59,40 @@ export const Header = ({
     }
   }
 
+  const Select = (elm) => {
+    let item = [...selectedCatalog]
+    let photo = [...selectedCatalogName]
+    let index = item.findIndex(el => el == elm.id)
+    let index1 = photo.findIndex((el) => el == elm.photo)
+    if (index >= 0) {
+      item.splice(index, 1)
+    }
+    else {
+      if (item.length < 4) {
+        item.push(elm.id)
+      }
+      else {
+        Alert.alert("Вы можете выбрать максимум 4 рубрики")
+      }
+    }
 
+    if (index1 >= 0) {
+      photo.splice(index1, 1)
+    }
+    else {
+      if (photo.length < 4) {
+        photo.push(elm.photo)
+      }
+    }
+    setSelectedCatalog(item)
+    setSelectedCatalogName(photo)
+    // handlePresentModalClose()
+    setErrorCatalog('')
+
+    // else {
+    //   Alert.alert("Вы можете выбрать максимум 4 рубрики")
+    // }
+  }
 
   const creatPost = () => {
     if (error) {
@@ -75,7 +108,7 @@ export const Header = ({
     font_family && form.append("font_family", font_family)
     background && form.append("background", background)
 
-    form.append('category_id', selectedCatalog)
+    selectedCatalog.forEach(id => form.append('category_ids[]', id));
     if (selectedCatalog != '' && error == '') {
       navigation.navigate('TabNavigation', {
         screen: 'Home',
@@ -92,7 +125,7 @@ export const Header = ({
 
   useFocusEffect(
     useCallback(() => {
-      setSelectedCatalogName('')
+      setSelectedCatalogName([])
       setErrorCatalog(false)
       Camera()
     }, [])
@@ -112,12 +145,23 @@ export const Header = ({
         {/* <CloseSvg1 /> */}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePresentModalPress()} style={[styles.category, { borderColor: errorCatalog ? 'red' : 'white' }]}>
-        <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white', textAlign: 'center' }]}>
+        {selectedCatalogName.length == 0 &&
+          <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white', textAlign: 'center' }]}>
+            {
+              t(mainData.lang).Choosecatalog
+            }
+          </Text>
+        }
+        {selectedCatalogName.map((elm, i) => {
+          return <Image key={i} style={styles.image}
+            source={{ uri: `https://chambaonline.pro/uploads/${elm}` }} />
+        })}
+        {/* <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white', textAlign: 'center' }]}>
           {selectedCatalog ?
             selectedCatalogName :
             t(mainData.lang).Choosecatalog
           }
-        </Text>
+        </Text> */}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading} >
         <CheckMarkSvg />
@@ -128,13 +172,12 @@ export const Header = ({
         <View style={{ marginBottom: 30 }}>
 
           {getCatalog.data.map((elm, i) => {
-            return <TouchableOpacity onPress={() => {
-              setSelectedCatalog(elm.id)
-              setSelectedCatalogName(elm.name)
-              handlePresentModalClose()
-              setErrorCatalog('')
-            }} key={i}>
-              <Text style={[{ padding: 10, paddingHorizontal: 15 }, Styles.darkMedium13]}>{elm.name}</Text>
+            return <TouchableOpacity activeOpacity={1} onPress={() => Select(elm)} style={styles.CheckMark} key={i}>
+              <Text style={[{ padding: 10, paddingHorizontal: 15, }, Styles.darkMedium13]}>{elm.name}</Text>
+              {selectedCatalog?.findIndex((e) => elm.id == e) >= 0 ?
+                <CheckedChexbox /> :
+                <ChecboxUNchekedSvg />
+              }
             </TouchableOpacity>
           })}
         </View>
@@ -147,9 +190,24 @@ const styles = StyleSheet.create({
   category: {
     borderWidth: 1,
     alignItems: 'center', justifyContent: 'center',
-    paddingHorizontal: 12,
+    paddingHorizontal: 5,
     borderRadius: 7,
-    width: 220,
+    // width: 220,
     marginLeft: 5,
+    flexDirection: 'row',
+    gap: 3
+  },
+  CheckMark: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingRight: 10,
+  },
+  image: {
+    width: 20,
+    height: 10,
+    objectFit: 'contain'
+    // height: 50,
+
   }
 });

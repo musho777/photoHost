@@ -101,6 +101,10 @@ export const AboutApplication = () => {
           Каждый пользователь может посмотреть подробную статистику по загруженной публикации.{"\n"}
           Не тратьте время на скучную ленту! Скачайте приложение и окунитесь в мир интересных открытий!
         </Text>
+        <Text style={Styles.balihaiMedium13}>
+          Не прячьте красивые кадры в галерее телефона
+        </Text>
+
       </View>
       <View style={{ marginBottom: 55 }}>
         <Text style={[Styles.balihaiMedium13, styles.line, { borderBottomWidth: 0 }]}>Рекомендации</Text>

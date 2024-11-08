@@ -104,7 +104,6 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
     let height = 570
     if (item.height - 200 > item.width) {
       height = 570
-      console.log(setHoriznotal)
       setHoriznotal(false)
     }
     else {
