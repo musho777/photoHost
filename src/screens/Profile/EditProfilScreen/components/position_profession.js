@@ -8,7 +8,7 @@ import { Position_professionModal } from "./position_professionModal"
 export const Position_profession = ({ setLocation, loaction }) => {
   const [city, setCity] = useState(false)
   return <View>
-    <TouchableOpacity activeOpacity={1} onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
+    <TouchableOpacity activeOpacity={1} onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 15, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ width: 20, marginRight: 10 }}>
           <Otrastel />

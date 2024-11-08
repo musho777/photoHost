@@ -15,7 +15,7 @@ export const ChnageGender = ({ value, setValue }) => {
   const snapPoints = useMemo(() => ['16%'], []);
 
   return <View>
-    <TouchableOpacity onPress={() => handlePresentModalPress()} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
+    <TouchableOpacity onPress={() => handlePresentModalPress()} style={[styles.textWrapper2, { paddingVertical: 15, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ width: 20, marginRight: 10 }}>
           <GenderSvg />
@@ -59,10 +59,12 @@ const styles = StyleSheet.create({
   textWrapper2: {
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderBottomColor: AppColors.Solitude_Color,
+    borderColor: AppColors.Solitude_Color,
     borderBottomWidth: 1,
+    borderTopWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 10,
   },
 });
 

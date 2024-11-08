@@ -12,7 +12,7 @@ export const Location = ({ setLocation, loaction }) => {
   const mainData = useSelector(st => st.mainData);
 
   return <View>
-    <TouchableOpacity onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
+    <TouchableOpacity onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 15, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ width: 20, marginRight: 10 }}>
           <LocationSvg />

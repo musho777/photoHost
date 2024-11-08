@@ -11,7 +11,7 @@ export const Profiesions = ({ setLocation, loaction }) => {
   const [city, setCity] = useState(false)
   const mainData = useSelector(st => st.mainData);
   return <View>
-    <TouchableOpacity activeOpacity={1} onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 25, justifyContent: "space-between" }]}>
+    <TouchableOpacity activeOpacity={1} onPress={() => setCity(true)} style={[styles.textWrapper2, { paddingVertical: 15, justifyContent: "space-between" }]}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ width: 20, marginRight: 10 }}>
           <ProfetionsSvg />
