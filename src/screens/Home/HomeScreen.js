@@ -87,6 +87,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (createPost.loading) {
+      dispatch(GetLentsAction(staticdata.token));
       dispatch(GetPostsAction({ user_id: userData.data?.id }, staticdata.token, 1));
       goTop()
     }

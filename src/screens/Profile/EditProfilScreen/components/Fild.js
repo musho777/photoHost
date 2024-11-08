@@ -2,8 +2,9 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import { Styles } from "../../../../styles/Styles"
 import { AppColors } from "../../../../styles/AppColors";
 import { useEffect, useState } from "react";
+import { Emojy } from "../../../../assets/svg/Svgs";
 
-export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discription }) => {
+export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discription, setIsOpen }) => {
   const fontFamily = [
     "Montserrat-Regular",
     "PlaywriteGBS-Regular",
@@ -42,18 +43,13 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
   const [activeColor, setActiveColor] = useState({ title: '#000000', id: 1 })
   const [localValue, setLocalValue] = useState(value)
   useEffect(() => {
-    if (!localValue && discription && value) {
+    if (discription && value) {
       setLocalValue(JSON.parse(value).text)
       setActiveColor(JSON.parse(value)?.color)
       setActicveFont(JSON.parse(value)?.font)
 
     }
   }, [value])
-  const [data, setData] = useState({
-    text: '',
-    color: { title: '#000000', id: 1 },
-    font: 'Montserrat-Regular'
-  })
   const color = [
     { title: '#000000', id: 1 },
     { title: '#808080', id: 3 },
@@ -86,6 +82,7 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
   }
 
   if (discription) {
+    console.log(localValue)
     return <View >
       <View style={styles.textWrapper}>
         {svg && <View style={{ width: 20, marginRight: 10 }}>
@@ -99,6 +96,9 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
           onChangeText={e => ChnageData(e, activeFont, activeColor)}
           style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: activeColor.title, fontFamily: activeFont }]}
         />
+        <TouchableOpacity style={styles.emojy} onPress={() => setIsOpen(true)}>
+          <Emojy />
+        </TouchableOpacity>
       </View>
       {discription &&
         <View style={{ marginTop: 10 }}>
@@ -150,4 +150,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 'auto',
   },
+  emojy: {
+    position: 'absolute',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    right: 10,
+    top: 0,
+    bottom: 10
+  }
 });

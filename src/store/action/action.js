@@ -852,7 +852,7 @@ export const CreatPostAction = (data, token) => {
       .then(r => {
         console.log(r)
         if (r.status) {
-          dispatch(GetLentsAction(token));
+          // dispatch(GetLentsAction(token));
           dispatch(SuccessCreatePost(r));
           dispatch(getUserInfoAction(token))
 

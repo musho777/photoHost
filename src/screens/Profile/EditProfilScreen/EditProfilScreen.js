@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, SafeAreaView, KeyboardAvoidingView, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, SafeAreaView, KeyboardAvoidingView, StatusBar, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { EmailSvg, NetWorkSvg, PhoneSvg, WatchSvg, WorkLocation, WorkLocationSvg } from '../../../assets/svg/Svgs';
+import { EmailSvg, Emojy, NetWorkSvg, PhoneSvg, WatchSvg, WorkLocation, WorkLocationSvg } from '../../../assets/svg/Svgs';
 import { AppColors } from '../../../styles/AppColors';
 import { Styles } from '../../../styles/Styles';
 import React, { useEffect } from 'react';
@@ -17,6 +17,7 @@ import { ChnageGender } from './components/changeGender';
 import { useFocusEffect } from '@react-navigation/native';
 import { Profiesions } from './components/Profiesions';
 import { Position_profession } from './components/position_profession';
+import EmojiPicker from 'rn-emoji-keyboard';
 
 export const EditProfilScreen = ({ navigation }) => {
 
@@ -60,6 +61,8 @@ export const EditProfilScreen = ({ navigation }) => {
   const [day, setDay] = useState('')
   const [date, setDate] = useState('')
   const [ooo, setOoo] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+
 
 
   useEffect(() => {
@@ -172,6 +175,14 @@ export const EditProfilScreen = ({ navigation }) => {
     }
   }, [updateUserInfo.status, changeProfil.status])
 
+  const handlePick = (e) => {
+    let item = JSON.parse(discription)
+    console.log(item, '20')
+    item.text = `${item.text}${e.emoji}`
+    // item.text = `${item.text} + ${e.emoji}`
+    // console.log(item.text)
+    setDiscription(JSON.stringify(item))
+  }
 
   if (accauntType) {
     return (
@@ -180,22 +191,25 @@ export const EditProfilScreen = ({ navigation }) => {
           <ScrollView
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}>
-            <HeaderWhiteTitle
-              loading={changeProfil.loading}
-              onCheck={() => chnageProfil()}
-              check
-              onPress={() => { navigation.goBack() }}
-              title={t(mainData.lang).Editprofile}
-            />
+            <View style={{ marginBottom: 20 }}>
+              <HeaderWhiteTitle
+                loading={changeProfil.loading}
+                onCheck={() => chnageProfil()}
+                check
+                onPress={() => { navigation.goBack() }}
+                title={t(mainData.lang).Editprofile}
+              />
+            </View>
             <View style={styles.textWrapper}>
               <TextInput
+
                 value={name}
                 onChangeText={e => setName(e)}
-                style={Styles.darkMedium14}
+                style={[Styles.darkMedium14]}
               />
             </View>
 
-            <Fild discription multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
+            <Fild setIsOpen={(e) => setIsOpen(e)} discription multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             <View style={{ width: '100%', borderWidth: 1, marginTop: 10, borderColor: AppColors.Solitude_Color, }} />
             <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 15, marginTop: 5, color: 'red' }]}>
               Помимо выбранных Вами рубрик, в первую очередь будет предлагаться контент с Вашего города.
@@ -227,6 +241,7 @@ export const EditProfilScreen = ({ navigation }) => {
           </Text> */}
           </ScrollView>
         </KeyboardAvoidingView>
+        <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
       </SafeAreaView>
     );
   }
@@ -237,28 +252,33 @@ export const EditProfilScreen = ({ navigation }) => {
           <ScrollView
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}>
-            <HeaderWhiteTitle
-              loading={changeProfil.loading}
-              onCheck={() => chnageProfil()}
-              check
-              onPress={() => {
-                navigation.goBack()
-              }}
-              title=
-              {t(mainData.lang).Editprofile}
-            />
+            <View style={{ marginBottom: 20 }}>
+              <HeaderWhiteTitle
+                loading={changeProfil.loading}
+                onCheck={() => chnageProfil()}
+                check
+                onPress={() => {
+                  navigation.goBack()
+                }}
+                title=
+                {t(mainData.lang).Editprofile}
+              />
+            </View>
             <View style={styles.textWrapper}>
               <TextInput
                 value={name}
                 onChangeText={e => setName(e)}
                 style={Styles.darkMedium14}
               />
+              <View style={{ backgroundColor: 'red' }}>
+              </View>
+
             </View>
 
 
 
 
-            <Fild multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
+            <Fild setIsOpen={(e) => setIsOpen(e)} multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 15, marginTop: 5 }]}>
               (Чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
               Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города)
@@ -281,6 +301,7 @@ export const EditProfilScreen = ({ navigation }) => {
           </Text> */}
           </ScrollView>
         </KeyboardAvoidingView>
+        <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
       </SafeAreaView>
     );
   }
@@ -289,9 +310,19 @@ export const EditProfilScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   textWrapper: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderBottomColor: AppColors.Solitude_Color,
+    paddingVertical: 0,
+    borderColor: AppColors.Solitude_Color,
     borderBottomWidth: 1,
+    borderTopWidth: 1,
+    // width: '100%'
   },
+  emojy: {
+    position: 'absolute',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    right: 10,
+    top: 0,
+    bottom: 10
+  }
 });
 
