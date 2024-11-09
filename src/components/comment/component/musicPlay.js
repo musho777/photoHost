@@ -127,45 +127,129 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
   const [emojy, setEmojy] = useState([])
 
   useEffect(() => {
-    if (categoryID == 138) {
-      setWaveformData(Eda)
+    // let item = [...waveformData]
+    let temp = []
+    let item = categoryID.reverse()
+    // console.log(categoryID)
+    const uniqueCategoryIds = [...new Set(getSound.data.map(item => item.category_id))];
+    let emojys = []
+    console.log(uniqueCategoryIds);
+    uniqueCategoryIds.map((elm, i) => {
+      if (elm == 138) {
+        // [...array1, ...array2];
+        // temp = temp.concat(Eda)
+        Eda.map((elm, i) => {
+          emojys.push("")
+        })
+        temp = [...temp, ...Eda]
+        // setWaveformData(temp)
+      }
+      else if (elm == 170) {
+        // temp = temp.concat(musInst)
+        musInst.map((elm, i) => {
+          emojys.push("")
+        })
+        temp = [...temp, ...musInst]
 
-    }
-    else if (categoryID == 170) {
-      setWaveformData(musInst)
-    }
-    else if (categoryID == 164) {
-      setWaveformData(animals)
-      setEmojy(["🐥", "🐦", '🐈', '🦆', '🐔', '🐶', '🐕', '🦮', '🐺', '🐅', '🐄', '🐎', '🐯'])
-    }
+        // setWaveformData(temp)
+        // setWaveformData([...item, ...musInst])
+        // setWaveformData(musInst)
+      }
+      else if (elm == 164) {
+        // setWaveformData(animals)
+        // setWaveformData([...item, ...animals])
+        // temp = temp.concat(animals)
 
-    else if (categoryID == 160) {
-      setWaveformData(PrirodaYavlenia)
-    }
-    else if (categoryID == 159) {
-      setWaveformData(Priroda)
-    }
-    else if (categoryID == 156) {
-      setWaveformData(fest)
-    }
-    else if (categoryID == 154) {
-      setWaveformData(sport)
-    }
+        temp = [...temp, ...animals]
 
-    else if (categoryID == 142) {
-      setWaveformData(stroyInst)
-    }
+        // setWaveformData(temp)
+        let emojy1 = ["🐥", "🐦", '🐈', '🦆', '🐔', '🐶', '🐕', '🦮', '🐺', '🐅', '🐄', '🐎', '🐯']
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
+        })
+        // setEmojy(["🐥", "🐦", '🐈', '🦆', '🐔', '🐶', '🐕', '🦮', '🐺', '🐅', '🐄', '🐎', '🐯'])
+      }
+      else if (elm == 160) {
+        // temp = temp.concat(PrirodaYavlenia)
+        temp = [...temp, ...PrirodaYavlenia]
+        PrirodaYavlenia.map((elm, i) => {
+          emojys.push("")
+        })
 
-    else if (categoryID == 141) {
-      setWaveformData(stroyibag)
-    }
+        // setWaveformData(temp)
+        // setWaveformData([...item, ...PrirodaYavlenia])
+        // setWaveformData(PrirodaYavlenia)
+      }
+      else if (elm == 159) {
+        // setWaveformData(Priroda)
+        temp = [...temp, ...Priroda]
+        Priroda.map((elm, i) => {
+          emojys.push("")
+        })
 
-    else if (categoryID == 136) {
-      setWaveformData(transport)
+        // temp = temp.concat(Priroda)
 
-    }
+        // setWaveformData([...item, ...Priroda])
 
-  }, [categoryID])
+      }
+      else if (elm == 156) {
+        temp = [...temp, ...fest]
+        fest.map((elm, i) => {
+          emojys.push("")
+        })
+
+        // setWaveformData(fest)
+        // temp = temp.concat(fest)
+
+        // setWaveformData([...item, ...fest])
+
+      }
+      else if (elm == 154) {
+        temp = [...temp, ...sport]
+        sport.map((elm, i) => {
+          emojys.push("")
+        })
+
+        // temp = temp.concat(sport)
+
+        // setWaveformData([...item, ...sport])
+        // setWaveformData(sport)
+      }
+      else if (elm == 142) {
+        stroyInst.map((elm, i) => {
+          emojys.push("")
+        })
+        temp = [...temp, ...stroyInst]
+
+        // temp = temp.concat(stroyInst)
+
+        // setWaveformData([...item, ...stroyInst])
+        // setWaveformData(stroyInst)
+      }
+      else if (elm == 141) {
+        stroyibag.map((elm, i) => {
+          emojys.push("")
+        })
+        temp = [...temp, ...stroyibag]
+        // temp = temp.concat(stroyibag)
+
+        // setWaveformData([...item, ...stroyibag])
+        // setWaveformData(stroyibag)
+      }
+      else if (elm == 136) {
+        transport.map((elm, i) => {
+          emojys.push("")
+        })
+        temp = temp.concat(transport)
+
+        // setWaveformData([...item, ...transport])
+        // setWaveformData(transport)
+      }
+    })
+    setEmojy(emojys)
+    setWaveformData(temp)
+
+  }, [getSound])
 
 
   const Stop = () => {
@@ -235,7 +319,8 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
   //   }
   // }, [getSound.data]);
 
-
+  // console.log(getSound.data)
+  console.log(emojy)
   return <BootomModal
     ref={ref}
     snapPoints={snapPoints}

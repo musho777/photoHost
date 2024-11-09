@@ -46,9 +46,6 @@ export const BgPhotoBotomSheet = forwardRef(({ renderItem }, ref) => {
     }
   }, [staticdata.token,])
 
-  useEffect(() => {
-    console.log(getCatalog)
-  }, [getCatalog])
   const [data, setData] = useState([])
   return <BootomModal ref={ref} snapPoints={snapPoints1}>
     <FlatList

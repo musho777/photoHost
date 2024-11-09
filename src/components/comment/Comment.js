@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { Styles } from '../../styles/Styles';
@@ -28,7 +27,6 @@ import { MusicPlay } from './component/musicPlay';
 export const Comments = ({ route, }) => {
   let parentId = route?.params?.parentId
   let categoryID = route?.params?.categoryId
-  // console.log(categoryID)
   const [sendComment, setSendCommet] = useState('');
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);
@@ -224,7 +222,6 @@ export const Comments = ({ route, }) => {
             </TouchableOpacity>}
           </View>
           <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />
-
         </View>
         <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
       </View>

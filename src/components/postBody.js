@@ -82,7 +82,6 @@ export const PostBody = ({
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => {
-        console.log(categoryId)
         navigation.navigate('coment', { parentId: id, categoryId: categoryId })
       }} style={styles.hover}>
         <View style={styles.hoverItem}>
