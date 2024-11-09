@@ -37,8 +37,8 @@ export const HeaderInfo = ({ user, data }) => {
       <Image style={styles.userImg}
         source={{ uri: `https://chambaonline.pro/uploads/${data?.user.avatar}` }} />
     </View>
-    <View style={{ gap: 2 }}>
-      <View style={[Styles.flexAlignItems, { width: 'auto', gap: 8 }]}>
+    <View style={{ gap: 2, width: '75%' }}>
+      <View style={[Styles.flexAlignItems, { width: '100%', gap: 8 }]}>
         <Text Text style={[Styles.whiteSemiBold14,]}>{data?.user.name}</Text>
         {data?.user.star > 0 && <CheckMarkUserSvg />}
       </View>

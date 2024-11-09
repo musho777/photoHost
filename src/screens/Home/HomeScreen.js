@@ -84,6 +84,8 @@ export const HomeScreen = () => {
     setBlackList(prev => [...prev, e]);
   }, []);
 
+  console.log(staticdata.token)
+
 
   useEffect(() => {
     if (createPost.loading) {

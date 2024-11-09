@@ -177,7 +177,6 @@ export const EditProfilScreen = ({ navigation }) => {
 
   const handlePick = (e) => {
     let item = JSON.parse(discription)
-    console.log(item, '20')
     item.text = `${item.text}${e.emoji}`
     // item.text = `${item.text} + ${e.emoji}`
     // console.log(item.text)
@@ -202,8 +201,9 @@ export const EditProfilScreen = ({ navigation }) => {
             </View>
             <View style={styles.textWrapper}>
               <TextInput
-
+                multiline
                 value={name}
+                maxLength={30}
                 onChangeText={e => setName(e)}
                 style={[Styles.darkMedium14]}
               />

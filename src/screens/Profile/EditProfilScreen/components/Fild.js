@@ -95,9 +95,9 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
           onChangeText={e => ChnageData(e, activeFont, activeColor)}
           style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: activeColor.title, fontFamily: activeFont }]}
         />
-        <TouchableOpacity style={styles.emojy} onPress={() => setIsOpen(true)}>
+        {/* <TouchableOpacity style={styles.emojy} onPress={() => setIsOpen(true)}>
           <Emojy />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       {discription &&
         <View style={{ marginTop: 10 }}>
