@@ -44,9 +44,6 @@ export const Header = ({
     bottomSheetRef.current?.present();
   }, []);
 
-  const handlePresentModalClose = useCallback(() => {
-    bottomSheetRef.current?.close();
-  }, []);
 
   const Camera = async () => {
     const cameraPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.CAMERA

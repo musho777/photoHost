@@ -64,15 +64,25 @@ export const RegisterType = () => {
     <View >
       <View style={{ marginTop: 10, marginLeft: 10 }} >
         <TouchableOpacity activeOpacity={1} onPress={() => startAnimation()} style={{ flexDirection: 'row', gap: 10 }}>
-          <Text style={Styles.balihaiMedium10}>( В чём разница между регистрацией физического и юридического лица? )</Text>
-          {showAll ?
-            <TopArrow /> :
-            <DownSvg />
-          }
+          <Text style={Styles.balihaiMedium10}>(В чём разница между регистрацией физического и юридического лица?)</Text>
+          <View style={{ position: 'absolute', bottom: -1, left: 130 }}>
+            {!showAll &&
+              <DownSvg />
+              // <TopArrow />
+            }
+          </View>
         </TouchableOpacity>
         <Animated.View style={[styles.animatedBox, { height: heightAnim }]} >
           <Text style={Styles.balihaiMedium10}>Chamba - это открытая платформа для всех.
-            Обычные пользователи могут наслаждаться общением и находить единомышленников, создавая яркий контент, который отражает их индивидуальность.                                                                                                            А для бизнеса мы предлагаем сладкое предложение: добавляйте свои товары и услуги, график работы и местоположение, чтобы Ваши клиенты всегда могли легко вас найти и быть в курсе ваших предложений. Присоединяйтесь к нам и позвольте своему бизнесу быть узнаваемым!</Text>
+            Обычные пользователи могут наслаждаться общением и находить единомышленников, создавая яркий контент, который отражает их индивидуальность.
+            А для бизнеса мы предлагаем сладкое предложение: добавляйте свои товары и услуги, график работы и местоположение, чтобы Ваши клиенты всегда могли легко вас найти и быть в курсе ваших предложений. Присоединяйтесь к нам и позвольте своему бизнесу быть узнаваемым!
+          </Text>
+          <TouchableOpacity onPress={() => startAnimation()} style={{ position: 'absolute', bottom: -1, right: 0 }}>
+            {showAll &&
+              <TopArrow />
+            }
+          </TouchableOpacity>
+
         </Animated.View>
       </View>
 

@@ -2,10 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { Styles } from '../../styles/Styles';
@@ -19,7 +18,7 @@ import { InputComponent } from './component/input';
 import Main from '../GIf/main';
 import { Emojy, Nota, Sticker } from '../../assets/svg/Svgs';
 import EmojiPicker from 'rn-emoji-keyboard';
-import { RefreshControl } from 'react-native-gesture-handler';
+import { FlatList, RefreshControl } from 'react-native-gesture-handler';
 import { MusicPlay } from './component/musicPlay';
 
 
@@ -34,13 +33,14 @@ export const Comments = ({ commentData, }) => {
   const bottomSheetRef = useRef(null);
   const bottomSheetRef1 = useRef(null);
   const getSound = useSelector((st) => st.getSound)
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
 
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
   const getComments = useSelector(st => st.getComments);
   const textInputRef = useRef(null);
   const mainData = useSelector(st => st.mainData);
-  const navigation = useNavigation()
 
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch();
@@ -72,6 +72,27 @@ export const Comments = ({ commentData, }) => {
       textInputRef.current.focus();
     }
   }
+
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
 
   const onEndReached = () => {
@@ -200,7 +221,7 @@ export const Comments = ({ commentData, }) => {
             />
           }
         />
-        <View style={styles.bottom}>
+        <View style={[styles.bottom, isKeyboardVisible && { marginBottom: 25 }]}>
           <InputComponent
             sendCommentFunction={() => sendCommentFunction()}
             sendComment={sendComment}
@@ -248,6 +269,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    marginBottom: 10,
+    marginBottom: 5,
   }
 });

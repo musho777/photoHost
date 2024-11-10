@@ -286,7 +286,6 @@ export const HomeScreen = () => {
         postId={selecteidId}
         open={showShare}
         commentData={commentData}
-        user_id={userData?.allData.data?.id}
       />}
     </SafeAreaView>
   );

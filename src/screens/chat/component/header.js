@@ -76,6 +76,16 @@ export const Header = ({ data, route, user }) => {
     }, [])
   );
 
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.darkMedium16, { textAlign: 'center', color: JSON.parse(user?.name)?.color?.title ? JSON.parse(getSinglePageChat.resiverUser?.name)?.color?.title : "black", fontFamily: JSON.parse(getSinglePageChat.resiverUser?.name)?.font }]}>{JSON.parse(getSinglePageChat.resiverUser.name)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={[Styles.darkMedium16, { textAlign: 'center', }]}> {getSinglePageChat.resiverUser.name}</Text >
+    }
+  }
+
 
   return <View style={[Styles.flexSpaceBetween, styles.header]}>
     <DelateModal
@@ -102,9 +112,10 @@ export const Header = ({ data, route, user }) => {
           }}
         />
         <View style={{ marginHorizontal: 15 }}>
-          <Text style={Styles.darkMedium14}>
+          {canParseJSON(getSinglePageChat.resiverUser.name)}
+          {/* <Text style={Styles.darkMedium14}>
             {getSinglePageChat.resiverUser.name}
-          </Text>
+          </Text> */}
         </View>
       </TouchableOpacity>
     </View>

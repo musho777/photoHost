@@ -22,6 +22,7 @@ import { Share } from '../../components/share';
 import { Post } from '../../components/post/Post';
 import { Styles } from '../../styles/Styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { CommmentModal } from '../../components/comment/CommmentModal';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -46,6 +47,10 @@ export const SinglPageScreen = ({ route, navigation }) => {
   const [currentTime, setCurrentTime] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   const videoRef = useRef(null);
   const [horiznotal, setHoriznotal] = useState(false)
+  const [showComment, setShowComment] = useState(false)
+  const [commentData, setCommentData] = useState({ parentId: "", categoryId: "" })
+
+
 
 
   const handleMomentumScrollEnd = (event) => {
@@ -236,6 +241,8 @@ export const SinglPageScreen = ({ route, navigation }) => {
           setSelectidId={(id) => console.log(id)}
           setShowShare={(e) => setShowShare(e)}
           setSelectedVidioId={(e) => setSelectedVidioId(e)}
+          setCommentData={(e) => setCommentData(e)}
+          setShowComment={() => setShowComment(true)}
           big={true}
           horiznotal={horiznotal}
         />
@@ -258,6 +265,10 @@ export const SinglPageScreen = ({ route, navigation }) => {
         open={showShare}
         big={true}
         user_id={user?.allData.data?.id}
+      />}
+      {showComment && <CommmentModal
+        close={() => setShowComment(false)}
+        commentData={commentData}
       />}
     </SafeAreaView>
   );

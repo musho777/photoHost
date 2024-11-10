@@ -149,6 +149,16 @@ export const CommentItem = ({
 
   const [currentArray, setCurrentArray] = useState([])
 
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15, color: JSON.parse(user?.name)?.color?.title ? JSON.parse(user?.name)?.color?.title : "black", fontFamily: JSON.parse(user?.name)?.font }]}>{JSON.parse(user?.name)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15, }]}> {user?.name}</Text >
+    }
+  }
+
 
   useEffect(() => {
     let temp = []
@@ -331,7 +341,8 @@ export const CommentItem = ({
 
       if (loading) {
         return <View style={{ gap: 5 }}>
-          <Text style={Styles.darkMedium13}>{user?.name}</Text>
+
+          <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
           <View style={styles.voice}>
             <View style={{ width: 20 }}>
               <ActivityIndicator color={"#141c3b"} />
@@ -343,8 +354,10 @@ export const CommentItem = ({
         </View>
       }
       else {
+        console.log(user.name.name)
         return <View style={{ gap: 5 }}>
-          <Text style={Styles.darkMedium13}> {user?.name}</Text>
+          <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
+
           <View style={styles.voice}>
             <TouchableOpacity onPress={() => handleButtonClick(text)}>
               {!isPlaying ?
@@ -362,7 +375,7 @@ export const CommentItem = ({
     else {
 
       return <View style={{ gap: 5 }}>
-        <Text style={Styles.darkMedium13}>{user?.name}</Text>
+        <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
         <Text style={[Styles.darkMedium12, { fontSize: 13 }]}>{text}</Text>
       </View>
     }

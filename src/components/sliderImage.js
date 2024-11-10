@@ -12,7 +12,7 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
   const heightAnim = useRef(new Animated.Value(0)).current;
   // const [isExpanded, setIsExpanded] = useState(false);
   const [showText, setShowText] = useState(false)
-  const MAX_Height = 50;
+  const MAX_Height = 40;
   console.log(isExpanded)
   const Description = useMemo(() => {
     let desc = "";
@@ -52,7 +52,7 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
       }}
       resizeMode={FastImage.resizeMode.cover}
     />
-    <View style={{ marginVertical: 10, position: 'absolute', bottom: 0 }}>
+    <View style={{ marginVertical: 10, position: 'absolute', bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
       {(Description && Description[index]) && !showText &&
         <View style={[{ paddingHorizontal: 10 }]}>
           <View>
@@ -63,7 +63,7 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
                 </Text>
               </View>
             }
-            {<TouchableOpacity
+            {Description[index] > MAX_Height && <TouchableOpacity
               onPress={() => startAnimation(true)}
             >
               <Text style={[Styles.balihaiMedium13, { color: 'white' }]}>Показать больше</Text>
@@ -87,9 +87,7 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
               </Text>
             </View>
           }
-          {Description && Description[index] && <TouchableOpacity
-            onPress={() => startAnimation(false)}
-          >
+          {Description && Description[index] && <TouchableOpacity onPress={() => startAnimation(false)}>
             <Text style={[Styles.balihaiMedium13, { color: 'white' }]}>
               Показать меньше
             </Text>

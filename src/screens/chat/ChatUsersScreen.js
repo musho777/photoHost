@@ -78,20 +78,22 @@ export const ChatUsersScreen = () => {
       name = item?.sender.name
       otherUserId = item.sender?.id
     }
-    return (
-      <ChatUser
-        id={item.id}
-        name={name}
-        img={`https://chambaonline.pro/uploads/${avatar}`}
-        sendWhiteMe={item.sendWhiteMe}
-        sendr_id={item.latest_sender}
-        user_id={user.data.id}
-        seen={item.status}
-        text={item.message}
-        otherUserId={otherUserId}
-        msg={item.message_sum}
-      />
-    );
+    console.log(avatar, '2000')
+    if (avatar)
+      return (
+        <ChatUser
+          id={item.id}
+          name={name}
+          img={`https://chambaonline.pro/uploads/${avatar}`}
+          sendWhiteMe={item.sendWhiteMe}
+          sendr_id={item.latest_sender}
+          user_id={user.data.id}
+          seen={item.status}
+          text={item.message}
+          otherUserId={otherUserId}
+          msg={item.message_sum}
+        />
+      );
   };
   return (
     <SafeAreaView style={[{ flex: 1, marginTop: insets.top ? insets.top : Styles.statusBar },]}>
