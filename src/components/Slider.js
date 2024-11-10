@@ -106,7 +106,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
       setHoriznotal(false)
     }
     else {
-      height = 410
+      height = 393
       setHoriznotal(true)
     }
     return (
@@ -118,23 +118,22 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         style={styles.img}>
         {item.video ?
           <View>
-            {(JSON.parse(data.description)[index]) &&
-              <View style={styles.hover}>
-                <Text style={Styles.whiteSemiBold12}>{JSON.parse(data.description)[index]}</Text>
-              </View>
-            }
             <VidioComponent
               active={active == index}
               viewableItems={viewableItems}
               music={data.music_name}
               item={item}
+              index={index}
               currentTime={currentTime[active]}
               setCurrentTime={(e) => CurrentTimeSet(index, e)}
               setDuration={(e) => setDuration(e)}
               duration={duration}
               ref={videoRef}
               height={height}
+              isExpanded={isExpanded}
+              description={description}
               onSeek={onSeek}
+              setIsExpanded={(e) => setIsExpanded(e)}
             />
           </View>
           :
@@ -200,7 +199,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         ))}
       </View>}
       <View>
-        {(photo[active]?.video && showSlider) &&
+        {(photo[active]?.video && showSlider) && !isExpanded &&
           <View style={styles.slider}>
             <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime[active])}</Text>
             <Sliders

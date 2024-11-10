@@ -1,11 +1,12 @@
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { forwardRef, useCallback, useEffect, useState } from 'react';
+import { Animated, Easing, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Video from 'react-native-video';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 import { Controler } from './component/Controler';
 import Slider from 'react-native-slider'
 import { Styles } from '../../../styles/Styles';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -19,8 +20,13 @@ export const VidioComponent = forwardRef(({
   active,
   setDuration,
   onSeek,
+  description,
+  index,
+  setIsExpanded
 }, ref) => {
   const [first, setFirst] = useState(true);
+  const MAX_Height = 40;
+
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
   const [paused, setPaused] = useState(true);
@@ -28,6 +34,9 @@ export const VidioComponent = forwardRef(({
   const [fullScreen, setFullScreen] = useState(false)
   const navigation = useNavigation()
   const [loading, setLoading] = useState(true)
+  const heightAnim = useRef(new Animated.Value(0)).current;
+  const [showText, setShowText] = useState(false)
+
 
   const [start, setStart] = useState(null)
 
@@ -96,6 +105,30 @@ export const VidioComponent = forwardRef(({
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  const startAnimation = (show) => {
+    console.log(show)
+    setIsExpanded(show)
+    setShowText(!showText)
+    // setIsExpanded()
+    Animated.timing(heightAnim, {
+      toValue: show ? 300 : 0,
+      duration: 400,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  };
+
+
+  const Description = useMemo(() => {
+    let desc = "";
+    try {
+      desc = JSON.parse(description);
+    } catch (error) { }
+    return desc;
+  }, [description]);
+
+  console.log(Description[index])
+
   return (
     <View style={{ position: 'relative', height: 570 }}>
       <TouchableOpacity
@@ -161,8 +194,51 @@ export const VidioComponent = forwardRef(({
             ref.current.seek(0);
           }}
         />
-
       </TouchableOpacity>
+      <View style={{ marginVertical: 10, position: 'absolute', bottom: 40, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
+        {(Description && Description[index]) && !showText &&
+          <View style={[{ paddingHorizontal: 10 }]}>
+            <View>
+              {Description[index] &&
+                <View>
+                  <Text style={[Styles.darkMedium13, { color: 'white' }]}>
+                    {`${Description[index].slice(0, MAX_Height)}`}
+                  </Text>
+                </View>
+              }
+              {Description[index].length > MAX_Height && <TouchableOpacity
+                onPress={() => startAnimation(true)}
+              >
+                <Text style={[Styles.balihaiMedium13, { color: 'white' }]}>Показать больше</Text>
+              </TouchableOpacity>}
+            </View>
+          </View>
+        }
+      </View>
+
+      <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', width: '100%' }, { height: heightAnim }]}>
+        <ScrollView
+          nestedScrollEnabled={true}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
+          style={styles.textScrollContainer}>
+          <TouchableOpacity style={{ padding: 10 }} activeOpacity={1}>
+            {Description && Description[index] &&
+              <View>
+                <Text style={[Styles.darkMedium13, { color: 'white' }]}>
+                  {Description[index]}
+                </Text>
+              </View>
+            }
+            {Description && Description[index] && <TouchableOpacity onPress={() => startAnimation(false)}>
+              <Text style={[Styles.balihaiMedium13, { color: 'white' }]}>
+                Показать меньше
+              </Text>
+            </TouchableOpacity>}
+          </TouchableOpacity>
+        </ScrollView>
+      </Animated.View>
+
       <Modal
         onRequestClose={() => setFullScreen(false)}
         visible={fullScreen}

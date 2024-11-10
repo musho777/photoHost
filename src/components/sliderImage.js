@@ -6,14 +6,13 @@ import { Styles } from '../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 
-const SliderImage = React.memo(({ item, height, description, index, setIsExpanded, isExpanded }) => {
+const SliderImage = React.memo(({ item, height, description, index, setIsExpanded }) => {
 
   const [loading, setLoading] = useState(true)
   const heightAnim = useRef(new Animated.Value(0)).current;
   // const [isExpanded, setIsExpanded] = useState(false);
   const [showText, setShowText] = useState(false)
   const MAX_Height = 40;
-  console.log(isExpanded)
   const Description = useMemo(() => {
     let desc = "";
     try {

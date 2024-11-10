@@ -207,7 +207,7 @@ export const AddImg = ({ navigation }) => {
     return <View behavior={Platform.OS === 'ios' ? 'padding' : "position"}>
       <ScrollView style={{ height: 550 }}>
         <FastImage
-          style={[styles.img, localheight[index]?.height + 50 >= localheight[index]?.width ? { maxHeight: 550 } : { maxHeight: 400 }]}
+          style={[styles.img, localheight[index]?.height + 50 >= localheight[index]?.width ? { maxHeight: 550 } : { maxHeight: 393 }]}
           source={{ uri: item.uri }}
           onLoad={(event) => {
             const { width, height } = event.nativeEvent;
