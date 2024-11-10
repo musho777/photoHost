@@ -27,7 +27,6 @@ import { MusicPlay } from './component/musicPlay';
 export const Comments = ({ commentData, }) => {
   let { parentId } = commentData
   let { categoryId } = commentData
-  console.log(commentData)
   const [sendComment, setSendCommet] = useState('');
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);
@@ -49,7 +48,6 @@ export const Comments = ({ commentData, }) => {
 
 
   useEffect(() => {
-    console.log(categoryId, 'categoryID')
     dispatch(GetMusic(categoryId, staticdata.token))
   }, [staticdata.token, categoryId])
 

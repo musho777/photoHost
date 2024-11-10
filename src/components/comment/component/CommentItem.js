@@ -150,45 +150,6 @@ export const CommentItem = ({
   const [currentArray, setCurrentArray] = useState([])
 
 
-  // useEffect(() => {
-  //   console.log(categoryID, 'categoryID')
-  //   if (categoryID == 138) {
-  //     setCurrentArray(Eda)
-  //   }
-  //   else if (categoryID == 170) {
-  //     setCurrentArray(musInst)
-  //   }
-  //   else if (categoryID == 164) {
-  //     setCurrentArray(animals)
-  //   }
-
-  //   else if (categoryID == 160) {
-  //     setCurrentArray(PrirodaYavlenia)
-  //   }
-  //   else if (categoryID == 159) {
-  //     setCurrentArray(Priroda)
-  //   }
-  //   else if (categoryID == 156) {
-  //     setCurrentArray(fest)
-  //   }
-  //   else if (categoryID == 154) {
-  //     setCurrentArray(sport)
-  //   }
-
-  //   else if (categoryID == 142) {
-  //     setCurrentArray(stroyInst)
-  //   }
-
-  //   else if (categoryID == 141) {
-  //     setCurrentArray(stroyibag)
-  //   }
-
-  //   else if (categoryID == 136) {
-  //     setCurrentArray(transport)
-
-  //   }
-  // }, [categoryID])
-
   useEffect(() => {
     let temp = []
     const uniqueCategoryIds = [...new Set(getSound.data.map(item => item.category_id))];

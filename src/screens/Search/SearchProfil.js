@@ -50,6 +50,18 @@ export const SearchProfil = ({ navigation, route }) => {
 
 
 
+
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.darkMedium16, {
+        textAlign: 'center', paddingTop: 15, color: JSON.parse(data.data?.name)?.color?.title, fontFamily: JSON.parse(data?.data.name)?.font
+      }]}>{JSON.parse(data?.data.name)?.name}</Text>
+    } catch (error) {
+      return <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15 }]}>{data?.data?.name}</Text>
+    }
+  }
+
   const AddDeletFollow = () => {
     if (isFollow) {
       setFollowersCount(followersCount - 1)
@@ -214,24 +226,24 @@ export const SearchProfil = ({ navigation, route }) => {
               </View>
 
 
-              <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
+              <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, justifyContent: 'flex-end', alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
-                  <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15 }]}>{data?.data.name}</Text>
+                  {canParseJSON(data?.data?.name)}
                   {data?.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
                     <CheckMarkUserSvg />
                   </View>}
                 </View>
-                {data?.data.description && <View style={{ marginTop: -80, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
-                    <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15 }]}>{user?.name}</Text>
-                    {user.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
-                      <CheckMarkUserSvg />
-                    </View>}
-                  </View>
-                  <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(data?.data.description).color.title, fontFamily: JSON.parse(data?.data.description).font }]}>{
-                    JSON.parse(data?.data.description).text
-                  }</Text>
-                </View>}
+                {data?.data.description &&
+                  <View >
+                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'center', }}>
+                      {user.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
+                        <CheckMarkUserSvg />
+                      </View>}
+                    </View>
+                    <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(data?.data.description).color.title, fontFamily: JSON.parse(data?.data.description).font }]}>{
+                      JSON.parse(data?.data.description).text
+                    }</Text>
+                  </View>}
               </View>
             </View>
 

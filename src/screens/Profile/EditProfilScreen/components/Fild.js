@@ -95,31 +95,27 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
           onChangeText={e => ChnageData(e, activeFont, activeColor)}
           style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: activeColor.title, fontFamily: activeFont }]}
         />
-        {/* <TouchableOpacity style={styles.emojy} onPress={() => setIsOpen(true)}>
-          <Emojy />
-        </TouchableOpacity> */}
       </View>
-      {discription &&
-        <View style={{ marginTop: 10 }}>
-          <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 10 }]}>Выберите шрифт и цвет для описания о себе</Text>
-          <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>
-            {fontFamily.map((elm, i) => {
-              return <Text onPress={() => {
-                ChnageData(localValue, elm, activeColor)
-                setActicveFont(elm)
-              }} key={i} style={{ fontSize: 10, fontFamily: elm }}>{elm}</Text>
-            })}
-          </ScrollView>
-          <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', height: 20 }}>
-            {color.map((elm, i) => {
-              return <TouchableOpacity onPress={() => {
-                ChnageData(localValue, activeFont, elm)
-                setActiveColor(elm)
-              }} key={i} style={{ width: 20, height: 20, backgroundColor: elm.title, borderRadius: 20, }} />
-            })}
-          </ScrollView>
-        </View>
-      }
+      <View style={{ marginTop: 10 }}>
+        <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 10 }]}>Выберите шрифт и цвет для описания о себе</Text>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>
+          {fontFamily.map((elm, i) => {
+            return <Text onPress={() => {
+              ChnageData(localValue, elm, activeColor)
+              setActicveFont(elm)
+            }} key={i} style={{ fontSize: 10, fontFamily: elm }}>{elm}</Text>
+          })}
+        </ScrollView>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', height: 20 }}>
+          {color.map((elm, i) => {
+            return <TouchableOpacity onPress={() => {
+              ChnageData(localValue, activeFont, elm)
+              setActiveColor(elm)
+            }} key={i} style={{ width: 20, height: 20, backgroundColor: elm.title, borderRadius: 20, }} />
+          })}
+        </ScrollView>
+      </View>
+
     </View>
   }
 
@@ -143,8 +139,9 @@ const styles = StyleSheet.create({
   textWrapper: {
     paddingHorizontal: 15,
     paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-    borderBottomColor: AppColors.Solitude_Color,
+    borderColor: AppColors.Solitude_Color,
     borderBottomWidth: 1,
+    borderTopWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
     height: 'auto',

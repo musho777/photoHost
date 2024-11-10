@@ -39,7 +39,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
   useEffect(() => {
     const backAction = () => {
-      console.log(showPhoto, 'show')
       if (showAllPhoto) {
         bottomSheetRef3.current?.close()
 
@@ -201,11 +200,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
         bottomSheetRef3.current?.present()
       }, 300);
       setImageData(item.photo_array)
-      // setSelectedName(item.)
-      // setBgPhoto(item.photo)
-      // setBg("")
-      // dispatch(UpdateBackroundPhoto("", staticdata.token, item.photo));
-      // bottomSheetRef1.current?.close()
       setSelectedName(item.name)
     }} style={{ width: '100%', paddingHorizontal: 0 }}>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>

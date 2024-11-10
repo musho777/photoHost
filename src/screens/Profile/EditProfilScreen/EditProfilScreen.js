@@ -21,6 +21,63 @@ import EmojiPicker from 'rn-emoji-keyboard';
 
 export const EditProfilScreen = ({ navigation }) => {
 
+
+
+  const fontFamily = [
+    "Montserrat-Regular",
+    "PlaywriteGBS-Regular",
+    'RussoOne-Regular',
+    'Agdasima-Regular',
+    'Caveat-Regular',
+    'Comfortaa-Regular',
+    'CormorantGaramond-Regular',
+    'Jost-Regular',
+    'Lobster-Regular',
+    'NotoSansHK-Regular',
+    'Pacifico-Regular',
+    'Tiny5-Regular',
+    "AdventPro_Expanded-Regular",
+    "Alice-Regular",
+    "AmaticSC-Regular",
+    "BadScript-Regular",
+    "DelaGothicOne-Regular",
+    "Geologica_Auto-Regular",
+    "PlayfairDisplaySC-Regular",
+    "PressStart2P-Regular",
+    "RubikMonoOne-Regular",
+    "Unbounded-Regular",
+    "YanoneKaffeesatz-Regular",
+    "AlegreyaSansSC-Regular",
+    "BalsamiqSans-Regular",
+    "CormorantInfant-Regular",
+    "DaysOne-Regular",
+    "MarckScript-Regular",
+    "Pattaya-Regular",
+    "ProstoOne-Regular",
+    "RubikSprayPaint-Regular",
+    "SofiaSansExtraCondensed-Regular"
+  ]
+
+  const color = [
+    { title: '#000000', id: 1 },
+    { title: '#808080', id: 3 },
+    { title: '#FF5733', id: 4 },
+    { title: '#1E90FF', id: 6 },
+    { title: '#4682B4', id: 7 },
+    { title: '#4CAF50', id: 8 },
+    { title: '#FFD700', id: 9 },
+    { title: '#FF69B4', id: 10 },
+    { title: '#800080', id: 11 },
+    { title: '#8B0000', id: 12 },
+
+    { title: '#FFA500', id: 13 },
+    { title: '#87CEEB', id: 14 },
+    { title: '#FF4500', id: 16 },
+    { title: '#32CD32', id: 17 },
+    { title: '#DA70D6', id: 18 },
+    { title: '#708090', id: 19 },
+  ]
+
   const mountDate = [
     { name: 'Январь', id: 0 },
     { name: 'Февраль', id: 1 },
@@ -37,7 +94,7 @@ export const EditProfilScreen = ({ navigation }) => {
   ]
 
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState({ text: '', color: '', font: '' });
   const [discription, setDiscription] = useState('');
   const mainData = useSelector(st => st.mainData);
   const updateUserInfo = useSelector((st) => st.updateUserInfo)
@@ -79,7 +136,13 @@ export const EditProfilScreen = ({ navigation }) => {
   );
 
   useEffect(() => {
-    setName(user.data.name);
+    try {
+      setName(JSON.parse(user.data.name));
+    }
+    catch {
+      console.log(user.data.name)
+      setName({ ...name, name: user.data.name });
+    }
     setDiscription(user.description);
   }, [user.data])
 
@@ -133,9 +196,8 @@ export const EditProfilScreen = ({ navigation }) => {
     else {
       setError('');
     }
-
     dispatch(chnageUserProfil({
-      name: name,
+      name: JSON.stringify(name),
       nickname: '#',
       description: discription,
     }, staticdata.token
@@ -178,8 +240,6 @@ export const EditProfilScreen = ({ navigation }) => {
   const handlePick = (e) => {
     let item = JSON.parse(discription)
     item.text = `${item.text}${e.emoji}`
-    // item.text = `${item.text} + ${e.emoji}`
-    // console.log(item.text)
     setDiscription(JSON.stringify(item))
   }
 
@@ -202,11 +262,29 @@ export const EditProfilScreen = ({ navigation }) => {
             <View style={styles.textWrapper}>
               <TextInput
                 multiline
-                value={name}
+                value={name.name}
                 maxLength={30}
-                onChangeText={e => setName(e)}
-                style={[Styles.darkMedium14]}
+                onChangeText={e => setName({ ...name, name: e })}
+                style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: name?.color?.title, fontFamily: name?.font }]}
               />
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>
+                {fontFamily.map((elm, i) => {
+                  return <Text onPress={() => {
+                    setName({ ...name, font: elm })
+                  }} key={i} style={{ fontSize: 10, fontFamily: elm }}>{elm}</Text>
+                })}
+              </ScrollView>
+              <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', height: 20 }}>
+                {color.map((elm, i) => {
+                  return <TouchableOpacity onPress={() => {
+                    // ChnageData(localValue, activeFont, elm)
+                    // setActiveColor(elm)
+                    setName({ ...name, color: elm })
+                  }} key={i} style={{ width: 20, height: 20, backgroundColor: elm.title, borderRadius: 20, }} />
+                })}
+              </ScrollView>
             </View>
 
             <Fild setIsOpen={(e) => setIsOpen(e)} discription multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />

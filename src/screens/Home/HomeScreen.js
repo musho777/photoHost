@@ -50,18 +50,6 @@ export const HomeScreen = () => {
 
 
 
-  // useEffect(() => {
-  //   console.log(isFocused)
-  //   const timer = setTimeout(() => {
-  //     if (userData.data.show_category_pop_up == 1 && isFocused) {
-
-  //       setShowModal(true);
-  //     }
-  //   }, 20000);
-
-  //   return () => clearTimeout(timer);
-  // }, [userData.data.show_category_pop_up]);
-
   useFocusEffect(
     useCallback(() => {
       const timer = setTimeout(() => {

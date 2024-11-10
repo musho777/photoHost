@@ -14,22 +14,34 @@ export const SearchItem = ({ data }) => {
   const navigation = useNavigation()
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let item = data?.follow_status_sender.findIndex((elm) => elm.sender_id == userData.data.id)
-    setIsFollow(item >= 0)
-  }, [data])
+  // useEffect(() => {
+  //   let item = data?.follow_status_sender.findIndex((elm) => elm.sender_id == userData.data.id)
+  //   setIsFollow(item >= 0)
+  // }, [data])
 
 
-  const addFollow = () => {
-    dispatch(AddDeleteFollowAction({ user_id: data.id }, staticdata.token));
-    setIsFollow(!isFollow)
-    if (isFollow) {
-      dispatch(AddDeletFollowAction('remove'))
+  // const addFollow = () => {
+  //   dispatch(AddDeleteFollowAction({ user_id: data.id }, staticdata.token));
+  //   setIsFollow(!isFollow)
+  //   if (isFollow) {
+  //     dispatch(AddDeletFollowAction('remove'))
+  //   }
+  //   else {
+  //     dispatch(AddDeletFollowAction('add'))
+  //   }
+  // };
+
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.balihaiRegular12]}>{JSON.parse(data?.name)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={Styles.balihaiRegular12}>{data.name}</Text>
     }
-    else {
-      dispatch(AddDeletFollowAction('add'))
-    }
-  };
+  }
+
+
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data.id } })}
       style={[{ marginBottom: 20 }, Styles.flexSpaceBetween]}>
@@ -38,7 +50,8 @@ export const SearchItem = ({ data }) => {
           style={styles.img}
           source={{ uri: `https://chambaonline.pro/uploads/${data.avatar}` }}
         />
-        <Text style={Styles.balihaiRegular12}>{data.name}</Text>
+        {canParseJSON(data.name)}
+        {/* <Text style={Styles.balihaiRegular12}>{data.name}</Text> */}
       </View>
       {/* <TouchableOpacity
         onPress={() => addFollow()}

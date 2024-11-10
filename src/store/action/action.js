@@ -361,6 +361,7 @@ export const getUserInfoAction = (token) => {
 };
 
 export const chnageUserProfil = (data, token) => {
+  console.log(data)
   return dispatch => {
     dispatch(StartChangeData());
     dispatch(changeUserData(data));
@@ -369,6 +370,7 @@ export const chnageUserProfil = (data, token) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(r => {
+        console.log(r)
         if (r.data.status) {
           dispatch(SuccessChangeProfil(r.data));
         } else {
@@ -376,6 +378,7 @@ export const chnageUserProfil = (data, token) => {
         }
       })
       .catch(error => {
+        console.log(error)
         dispatch(ErrorChangeProfile(''));
       });
   };

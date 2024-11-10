@@ -9,6 +9,17 @@ export const HeaderInfo = ({ user, data }) => {
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [day, setDay] = useState('')
 
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.whiteSemiBold14]}>{JSON.parse(user?.name)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={[Styles.whiteSemiBold14,]}>{user?.name}</Text>
+    }
+  }
+
+
   useEffect(() => {
     const currentDate = new Date(data?.created_at);
     let dayOfMonth = currentDate.getDate();
@@ -39,7 +50,8 @@ export const HeaderInfo = ({ user, data }) => {
     </View>
     <View style={{ gap: 2, width: '75%' }}>
       <View style={[Styles.flexAlignItems, { width: '100%', gap: 8 }]}>
-        <Text Text style={[Styles.whiteSemiBold14,]}>{data?.user.name}</Text>
+        {canParseJSON(user.name)}
+        {/* <Text style={[Styles.whiteSemiBold14, { color: JSON.parse(user?.name)?.color?.title ? JSON.parse(user?.name)?.color?.title : "black", fontFamily: JSON.parse(user?.name)?.font }]}>{JSON.parse(user?.name)?.name}</Text> */}
         {data?.user.star > 0 && <CheckMarkUserSvg />}
       </View>
       <Text style={[Styles.whiteMedium9]}>{day} </Text>
