@@ -140,7 +140,6 @@ export const EditProfilScreen = ({ navigation }) => {
       setName(JSON.parse(user.data.name));
     }
     catch {
-      console.log(user.data.name)
       setName({ ...name, name: user.data.name });
     }
     setDiscription(user.description);

@@ -361,7 +361,6 @@ export const getUserInfoAction = (token) => {
 };
 
 export const chnageUserProfil = (data, token) => {
-  console.log(data)
   return dispatch => {
     dispatch(StartChangeData());
     dispatch(changeUserData(data));
@@ -370,7 +369,6 @@ export const chnageUserProfil = (data, token) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(r => {
-        console.log(r)
         if (r.data.status) {
           dispatch(SuccessChangeProfil(r.data));
         } else {
@@ -378,7 +376,6 @@ export const chnageUserProfil = (data, token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErrorChangeProfile(''));
       });
   };
@@ -1855,7 +1852,6 @@ export const GetMusic = (id, token) => {
     formdata.append('category_id[]', elm.id)
   })
 
-  console.log(id)
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
@@ -1867,7 +1863,6 @@ export const GetMusic = (id, token) => {
     fetch(`${Api}/get_category_sounds`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessGetSound(r.data))
         }
@@ -1876,7 +1871,6 @@ export const GetMusic = (id, token) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch(ErroGetSound())
       });
   };

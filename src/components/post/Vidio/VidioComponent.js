@@ -106,7 +106,6 @@ export const VidioComponent = forwardRef(({
   };
 
   const startAnimation = (show) => {
-    console.log(show)
     setIsExpanded(show)
     setShowText(!showText)
     // setIsExpanded()
@@ -127,7 +126,6 @@ export const VidioComponent = forwardRef(({
     return desc;
   }, [description]);
 
-  console.log(Description[index])
 
   return (
     <View style={{ position: 'relative', height: 570 }}>

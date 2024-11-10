@@ -22,7 +22,6 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
   }, [description]);
 
   const startAnimation = (show) => {
-    console.log(show)
     setIsExpanded(show)
     setShowText(!showText)
     // setIsExpanded()

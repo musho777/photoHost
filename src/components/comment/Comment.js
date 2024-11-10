@@ -13,7 +13,6 @@ import { t } from '../lang';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddCommentAction, DelateCommentLocal, DeletComment, GelPostCommentsAction, GetMusic } from '../../store/action/action';
 import { ClearSinglpAgeComment } from '../../store/action/clearAction';
-import { useNavigation } from '@react-navigation/native';
 import { InputComponent } from './component/input';
 import Main from '../GIf/main';
 import { Emojy, Nota, Sticker } from '../../assets/svg/Svgs';
@@ -23,7 +22,7 @@ import { MusicPlay } from './component/musicPlay';
 
 
 
-export const Comments = ({ commentData, }) => {
+export const Comments = ({ commentData, CommentCount = () => { } }) => {
   let { parentId } = commentData
   let { categoryId } = commentData
   const [sendComment, setSendCommet] = useState('');
@@ -59,6 +58,7 @@ export const Comments = ({ commentData, }) => {
 
 
   const deletComment = (id, parent_id) => {
+    CommentCount(false)
     dispatch(DelateCommentLocal({ id: parentId, comment_id: id, parent_id: parent_id, }))
     dispatch(DeletComment({ comment_id: id }, staticdata.token))
   }
@@ -133,6 +133,7 @@ export const Comments = ({ commentData, }) => {
     }
     bottomSheetRef1.current?.close()
     if (send) {
+      CommentCount(true)
       dispatch(
         AddCommentAction(
           {

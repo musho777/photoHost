@@ -19,9 +19,7 @@ export const Post = React.memo(({
   data,
   setShowLike,
   setShowShare,
-  setSelectedVidioId,
   setHoriznotal,
-  big = false,
   setShowComment,
   setCommentData
 }) => {
@@ -184,7 +182,6 @@ export const Post = React.memo(({
             postCount={user.postCount}
             commentCount={data?.comment_count}
             setSelectidId={(id) => {
-              setSelectedVidioId(data?.photo[activePhoto])
               setSelectidId(id)
             }}
             setCommentData={(e) => setCommentData(e)}
@@ -207,6 +204,7 @@ export const Post = React.memo(({
   );
 }, (prevProps, nextProps) => {
   return (
+    prevProps.data?.comment_count === nextProps.data?.comment_count &&
     prevProps.data?.id === nextProps.data?.id
   )
 });

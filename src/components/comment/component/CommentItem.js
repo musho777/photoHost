@@ -320,14 +320,15 @@ export const CommentItem = ({
   const TextType = (text) => {
     if (text.includes('https://media')) {
       return <View style={{ gap: 5 }}>
-        <Text style={Styles.darkMedium13}>{user?.name}</Text>
+        <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
         <FastImage source={{ uri: text }} style={styles.image} />
       </View>
     }
     else if (checkIfEmoji(text)) {
       return <View style={{ gap: 5 }}>
-        <Text style={Styles.darkMedium13}>{user?.name}</Text>
-        <Text style={[Styles.darkSemiBold12, { marginTop: -5, fontSize: 40 }]}>
+        <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
+
+        <Text style={[Styles.darkMedium13]}>
           {text}
         </Text>
       </View>
@@ -354,7 +355,6 @@ export const CommentItem = ({
         </View>
       }
       else {
-        console.log(user.name.name)
         return <View style={{ gap: 5 }}>
           <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
 

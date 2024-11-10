@@ -78,7 +78,6 @@ export const ChatUsersScreen = () => {
       name = item?.sender.name
       otherUserId = item.sender?.id
     }
-    console.log(avatar, '2000')
     if (avatar)
       return (
         <ChatUser

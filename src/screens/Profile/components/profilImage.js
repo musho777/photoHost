@@ -94,33 +94,12 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
           itemData = r.data
           setMainImageData(r.data)
 
-          // console.log(r.data[1])
-          // data = r.data
-          // r.data.map((elm, i) => {
-          //   console.log(elm)
-          //   elm.photo_array.map((el, i) => {
-          //     console.log(el)
-          //     itemData.data.push(el)
-          //   })
-          // })
         }
 
       })
       .catch(error => {
       });
 
-    // data?.map((elm, i) => {
-    //   elm.photo_array.map((el) => {
-    //     item.push(el)
-    //   })
-    // })
-    // itemData.map((elm, i) => {
-    //   elm.photo_array.map((el, i) => {
-    //     item.push(el)
-    //   })
-    // })
-    // console.log(itemData, 'itemData')
-    // setMainImageData(imageData)
     setImageData(item)
   }
 
