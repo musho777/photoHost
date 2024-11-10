@@ -38,7 +38,7 @@ export const ProfilInfo = ({ id, user, postCount, loading }) => {
 }
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 15,
+    marginVertical: 8,
     paddingHorizontal: 15,
   }
 });

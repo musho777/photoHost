@@ -35,6 +35,17 @@ export const FollowingsBlock = ({
     }
     deletClick();
   };
+
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.balihaiRegular12, { color: JSON.parse(name)?.color?.title, fontFamily: JSON.parse(name)?.font }]}>{JSON.parse(name)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={Styles.balihaiRegular12}> {name}</Text >
+    }
+  }
+
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -46,7 +57,8 @@ export const FollowingsBlock = ({
           source={{ uri: `https://chambaonline.pro/uploads/${img}` }}
         />
         <View>
-          <Text style={Styles.balihaiRegular12}>{name}</Text>
+          {canParseJSON(name)}
+          {/* <Text style={Styles.balihaiRegular12}>{name}</Text> */}
         </View>
       </View>
       {type2 ? (

@@ -81,9 +81,12 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
           <CheckMarkUserSvg />
         </View>}
       </View>
-      {user?.description && <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(user?.description)?.color.title, fontFamily: JSON.parse(user?.description)?.font }]}>{
+      {user?.description ? <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(user?.description)?.color.title, fontFamily: JSON.parse(user?.description)?.font }]}>{
         JSON.parse(user?.description)?.text
-      }</Text>}
+      }</Text> :
+        <Text>
+        </Text>
+      }
     </View>
   </View>
 })

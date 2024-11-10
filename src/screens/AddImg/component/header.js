@@ -40,9 +40,6 @@ export const Header = ({
     bottomSheetRef.current?.present();
   }, []);
 
-  const handlePresentModalClose = useCallback(() => {
-    bottomSheetRef.current?.close();
-  }, []);
 
   const Camera = async () => {
     const cameraPermission = Platform.OS === 'android' && PERMISSIONS.ANDROID.CAMERA
@@ -138,9 +135,6 @@ export const Header = ({
     // handlePresentModalClose()
     setErrorCatalog('')
 
-    // else {
-    //   Alert.alert("Вы можете выбрать максимум 4 рубрики")
-    // }
   }
 
   return <View>
@@ -153,15 +147,8 @@ export const Header = ({
           Close()
           navigation.goBack()
         }}>
-        {/* <CloseSvg1 /> */}
       </TouchableOpacity>
       <TouchableOpacity activeOpacity={1} onPress={() => handlePresentModalPress()} style={[styles.category, { borderColor: errorCatalog ? 'red' : 'white' }]}>
-        {/* <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white', textAlign: 'center' }]}>
-          {selectedCatalog ?
-            selectedCatalogName :
-            t(mainData.lang).Choosecatalog
-          }
-        </Text> */}
         {selectedCatalogName?.length == 0 &&
           <Text style={[Styles.whiteMedium12, { color: errorCatalog ? 'red' : 'white', textAlign: 'center' }]}>
             {

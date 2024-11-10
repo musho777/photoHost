@@ -854,7 +854,7 @@ export const CreatPostAction = (data, token) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          // dispatch(GetLentsAction(token));
+          dispatch(GetLentsAction(token));
           dispatch(SuccessCreatePost(r));
           dispatch(getUserInfoAction(token))
 
