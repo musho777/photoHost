@@ -22,6 +22,8 @@ export const PostBody = ({
   likeClose,
   showShare,
   categoryId,
+  setShowComment,
+  setCommentData,
   setSelectidId = () => { }
 }) => {
   const navigation = useNavigation()
@@ -82,7 +84,9 @@ export const PostBody = ({
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => {
-        navigation.navigate('coment', { parentId: id, categoryId: categoryId })
+        setShowComment(true)
+        setCommentData({ parentId: id, categoryId: categoryId })
+        // navigation.navigate('coment', { parentId: id, categoryId: categoryId })
       }} style={styles.hover}>
         <View style={styles.hoverItem}>
           <CommentWhite />

@@ -1846,18 +1846,13 @@ export const ClearFollowrs = () => {
 
 export const GetMusic = (id, token) => {
   var myHeaders = new Headers();
-  // myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   const formdata = new FormData();
-  // formdata.append("photo_ids[]", id);
-
-  // let ids = []
-  id.map((elm, i) => {
-    // ids.push(elm.id)
+  id?.map((elm, i) => {
     formdata.append('category_id[]', elm.id)
   })
 
-  // console.log(ids)
+  console.log(id)
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,

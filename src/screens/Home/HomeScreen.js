@@ -18,6 +18,7 @@ import { t } from '../../components/lang';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { CommmentModal } from '../../components/comment/CommmentModal';
 
 
 
@@ -34,6 +35,7 @@ export const HomeScreen = () => {
   const [viewableItems, setViewableItems] = useState([])
   const createPost = useSelector(st => st.createPost);
   const [selecteidId, setSelectidId] = useState(null)
+  const [commentData, setCommentData] = useState({ parentId: "", categoryId: "" })
 
   const [selectedVidioId, setSelectedVidioId] = useState(null)
 
@@ -41,6 +43,9 @@ export const HomeScreen = () => {
   const [likeClose, setLikeClose] = useState(false)
   const [showShare, setShowShare] = useState(false)
   const [isFetching, setIsFetching] = useState(false);
+
+  const [showComment, setShowComment] = useState(false)
+
   const mainData = useSelector(st => st.mainData);
 
 
@@ -83,8 +88,6 @@ export const HomeScreen = () => {
   const AddToBack = useCallback((e) => {
     setBlackList(prev => [...prev, e]);
   }, []);
-
-  console.log(staticdata.token)
 
 
   useEffect(() => {
@@ -181,10 +184,12 @@ export const HomeScreen = () => {
             setShowLike={() => setLikeClose(true)}
             setShowView={() => setShowView(true)}
             addToblack={(e) => AddToBack(e)}
+            setShowComment={() => setShowComment(true)}
             deletData={(e) => deletData(e)}
             setSelectidId={(id) => setSelectidId(id)}
             setShowShare={(e) => setShowShare(e)}
             setSelectedVidioId={(e) => setSelectedVidioId(e)}
+            setCommentData={(e) => setCommentData(e)}
           />
         );
       }
@@ -280,6 +285,19 @@ export const HomeScreen = () => {
         close={() => setShowShare(false)}
         postId={selecteidId}
         open={showShare}
+        user_id={userData?.allData.data?.id}
+      />}
+      {showShare && <Share
+        close={() => setShowShare(false)}
+        postId={selecteidId}
+        open={showShare}
+        user_id={userData?.allData.data?.id}
+      />}
+      {showComment && <CommmentModal
+        close={() => setShowComment(false)}
+        postId={selecteidId}
+        open={showShare}
+        commentData={commentData}
         user_id={userData?.allData.data?.id}
       />}
     </SafeAreaView>

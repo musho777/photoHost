@@ -24,9 +24,10 @@ import { MusicPlay } from './component/musicPlay';
 
 
 
-export const Comments = ({ route, }) => {
-  let parentId = route?.params?.parentId
-  let categoryID = route?.params?.categoryId
+export const Comments = ({ commentData, }) => {
+  let { parentId } = commentData
+  let { categoryId } = commentData
+  console.log(commentData)
   const [sendComment, setSendCommet] = useState('');
   const [parenId, setParentId] = useState(null);
   const staticdata = useSelector(st => st.static);
@@ -48,8 +49,9 @@ export const Comments = ({ route, }) => {
 
 
   useEffect(() => {
-    dispatch(GetMusic(categoryID, staticdata.token))
-  }, [staticdata.token])
+    console.log(categoryId, 'categoryID')
+    dispatch(GetMusic(categoryId, staticdata.token))
+  }, [staticdata.token, categoryId])
 
 
   useEffect(() => {
@@ -161,7 +163,7 @@ export const Comments = ({ route, }) => {
         <CommentBlock
           key={index}
           text={item.comment}
-          categoryID={categoryID}
+          categoryID={categoryId}
           replay={item.replay}
           user={item.user}
           like_count={item.likes_count}
@@ -179,9 +181,7 @@ export const Comments = ({ route, }) => {
   };
 
   return (
-    <SafeAreaView style={styles.body}>
-
-      <HeaderWhiteTitle onPress={() => navigation.goBack()} title={t(mainData.lang).comments} />
+    <View style={styles.body}>
       <View style={{ flex: 1, paddingHorizontal: 15 }}>
 
         <FlatList
@@ -225,14 +225,14 @@ export const Comments = ({ route, }) => {
         </View>
         <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
       </View>
-      <MusicPlay categoryID={categoryID} ref={bottomSheetRef1} onSend={(e) => sendCommentFunction(e)} />
-    </SafeAreaView >
+      <MusicPlay categoryID={categoryId} ref={bottomSheetRef1} onSend={(e) => sendCommentFunction(e)} />
+    </View >
   );
 };
 
 const styles = StyleSheet.create({
   body: {
-    height: '100%',
+    height: '90%',
   },
   keyboardAvoidingView: {
     flex: 1,

@@ -87,7 +87,6 @@ export const StatisticList = ({ id, token, vidio }) => {
     getRandomNumberAccaunt(25, 40, 'max')
   }, [])
 
-  console.log(getStatistic1.data.city_data)
   function getMaxCountItem(data) {
     return data.map((item) => {
       const maxStatistic = item.statistics.reduce((max, current) =>

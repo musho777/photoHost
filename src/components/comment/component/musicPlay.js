@@ -127,13 +127,9 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
   const [emojy, setEmojy] = useState([])
 
   useEffect(() => {
-    // let item = [...waveformData]
     let temp = []
-    let item = categoryID.reverse()
-    // console.log(categoryID)
     const uniqueCategoryIds = [...new Set(getSound.data.map(item => item.category_id))];
     let emojys = []
-    console.log(uniqueCategoryIds);
     uniqueCategoryIds.map((elm, i) => {
       if (elm == 138) {
         // [...array1, ...array2];
@@ -319,8 +315,6 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
   //   }
   // }, [getSound.data]);
 
-  // console.log(getSound.data)
-  console.log(emojy)
   return <BootomModal
     ref={ref}
     snapPoints={snapPoints}

@@ -22,7 +22,8 @@ export const Post = React.memo(({
   setSelectedVidioId,
   setHoriznotal,
   big = false,
-  horiznotal
+  setShowComment,
+  setCommentData
 }) => {
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
@@ -197,10 +198,12 @@ export const Post = React.memo(({
               setSelectedVidioId(data?.photo[activePhoto])
               setSelectidId(id)
             }}
+            setCommentData={(e) => setCommentData(e)}
             liked={data?.like_auth_user.findIndex((elm, i) => elm.user_id == user.data.id) >= 0}
             setShowView={(e) => setShowView(e)}
             setShowLike={(e) => setShowLike(e)}
             setShowShare={(e) => setShowShare(e)}
+            setShowComment={(e) => setShowComment(e)}
             view={data?.view_count}
             my={user?.data.id != data?.user.id ? false : true}
             userId={data?.user.id}
