@@ -132,24 +132,11 @@ export const Post = React.memo(({
   ]
 
   const [isExpanded, setIsExpanded] = useState(false);
-  const MAX_LENGTH = windowWidth / 8;
-  const toggleExpanded = () => {
-    setShowFullText(!showFullText)
-    setIsExpanded(!isExpanded);
-  };
-  const Description = useMemo(() => {
-    let desc = "";
-    try {
-      desc = JSON.parse(data?.description);
-    } catch (error) { }
-    return desc;
-  }, [data?.description]);
 
-  const [showFullText, setShowFullText] = useState(false)
 
 
   return (
-    <View>
+    <View style={{ marginVertical: 5 }}>
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
@@ -168,7 +155,6 @@ export const Post = React.memo(({
         </View>
         {!data?.background ? <Slider
           viewableItems={viewableItems}
-
           long={long}
           setActiveImage={(e) => setActiveImage(e)}
           onPressOut={() => onPressOut()}
@@ -177,8 +163,11 @@ export const Post = React.memo(({
           setOpenModal={setOpenModal}
           setActivePhoto={(e) => setActivePhoto(e)}
           data={data}
+          description={data?.description}
           setHoriznotal={setHoriznotal}
           user={user}
+          setIsExpanded={(e) => setIsExpanded(e)}
+          isExpanded={isExpanded}
         /> :
           <View style={{ marginBottom: 10, height: 570, position: 'relative' }}>
             <Image
@@ -190,7 +179,7 @@ export const Post = React.memo(({
             </View>
           </View>
         }
-        <View style={styles.PostBody}>
+        {!isExpanded && <View style={styles.PostBody}>
           <PostBody
             postCount={user.postCount}
             commentCount={data?.comment_count}
@@ -212,30 +201,7 @@ export const Post = React.memo(({
             user={user}
             categoryId={data?.many_category}
           />
-        </View>
-        {(!data?.background && Description && Description[activeImage]) ?
-          <View style={[styles.textWrapper1, { paddingHorizontal: 10, }]}>
-            <View>
-              {Description[activeImage] &&
-                <View>
-                  <Text style={[Styles.darkMedium13, big && { color: 'white' }]}>
-                    {isExpanded ? Description[activeImage] : `${Description[activeImage].slice(0, MAX_LENGTH)}`}
-                  </Text>
-                </View>
-              }
-              {Description[activeImage] && Description[activeImage].length >= 31 && <TouchableOpacity
-                onPress={toggleExpanded}
-              >
-                <Text style={[Styles.balihaiMedium13, big && { color: 'white', marginBottom: (windowWidth - 300 / 2) }]}>
-                  {isExpanded ? 'Показать меньше' : 'Показать больше'}
-                </Text>
-              </TouchableOpacity>}
-            </View>
-          </View>
-          : <View style={{ marginVertical: 5 }}>
-
-          </View>
-        }
+        </View>}
       </View>
     </View >
   );

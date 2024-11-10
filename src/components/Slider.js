@@ -19,7 +19,7 @@ import LottieView from 'lottie-react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data, setActivePhoto, setHoriznotal = () => { } }) => {
+export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data, setActivePhoto, setHoriznotal = () => { }, description, setIsExpanded, isExpanded }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [showLikeIcone, setShowLikeICone] = useState(false)
@@ -42,7 +42,6 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
     setCurrentTime(item)
     videoRef?.current?.seek(value);
   };
-
 
   const LikePost = useCallback(() => {
     dispatch(LikePostAction({ post_id: data?.id }, staticdata.token, user.data?.id));
@@ -141,10 +140,12 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
           :
           <SliderImage
             long={long}
-            description={data.description}
+            description={description}
             index={index}
             item={item}
             height={height}
+            isExpanded={isExpanded}
+            setIsExpanded={(e) => setIsExpanded(e)}
           />
         }
 
