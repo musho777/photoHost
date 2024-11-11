@@ -2,6 +2,7 @@ PODS:
   - boost (1.76.0)
   - BVLinearGradient (2.8.3):
     - React-Core
+  - CropViewController (2.6.1)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.72.2)
   - FBReactNativeSpec (0.72.2):
@@ -147,6 +148,11 @@ PODS:
   - libwebp/sharpyuv (1.3.2)
   - libwebp/webp (1.3.2):
     - libwebp/sharpyuv
+  - lottie-ios (4.5.0)
+  - lottie-react-native (7.0.0):
+    - lottie-ios (= 4.5.0)
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -464,11 +470,23 @@ PODS:
   - React-jsinspector (0.72.2)
   - React-logger (0.72.2):
     - glog
+  - react-native-audio-waveform (2.1.1):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
   - react-native-contacts (7.0.8):
     - React-Core
   - react-native-image-picker (7.1.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
+  - react-native-multiple-image-picker (1.1.9):
+    - CropViewController (= 2.6.1)
+    - React-Core
+    - react-native-multiple-image-picker/Viewer (= 1.1.9)
+    - TLPhotoPicker (= 2.1.9)
+  - react-native-multiple-image-picker/Viewer (1.1.9):
+    - CropViewController (= 2.6.1)
+    - React-Core
+    - TLPhotoPicker (= 2.1.9)
   - react-native-pager-view (6.2.0):
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -613,15 +631,15 @@ PODS:
     - RNFBApp
   - RNGestureHandler (2.12.1):
     - React-Core
-  - RNImageCropPicker (0.40.0):
+  - RNImageCropPicker (0.41.2):
     - React-Core
     - React-RCTImage
-    - RNImageCropPicker/QBImagePickerController (= 0.40.0)
-    - TOCropViewController
-  - RNImageCropPicker/QBImagePickerController (0.40.0):
+    - RNImageCropPicker/QBImagePickerController (= 0.41.2)
+    - TOCropViewController (~> 2.7.4)
+  - RNImageCropPicker/QBImagePickerController (0.41.2):
     - React-Core
     - React-RCTImage
-    - TOCropViewController
+    - TOCropViewController (~> 2.7.4)
   - RNPermissions (3.8.4):
     - React-Core
   - RNReanimated (3.15.0):
@@ -648,7 +666,7 @@ PODS:
     - React-Core
   - RNSVG (12.1.1):
     - React
-  - RNVectorIcons (10.1.0):
+  - RNVectorIcons (10.2.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - SDWebImage (5.11.1):
@@ -658,6 +676,7 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
+  - TLPhotoPicker (2.1.9)
   - TOCropViewController (2.7.4)
   - TweetNacl (1.0.2)
   - Yoga (1.14.0)
@@ -675,6 +694,7 @@ DEPENDENCIES:
   - GoogleUtilities
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
   - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts`)
   - "pusher-websocket-react-native (from `../node_modules/@pusher/pusher-websocket-react-native`)"
@@ -694,8 +714,10 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - "react-native-audio-waveform (from `../node_modules/@simform_solutions/react-native-audio-waveform`)"
   - react-native-contacts (from `../node_modules/react-native-contacts`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - "react-native-multiple-image-picker (from `../node_modules/@baronha/react-native-multiple-image-picker`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
@@ -736,6 +758,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - CropViewController
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -749,6 +772,7 @@ SPEC REPOS:
     - GoogleUtilities
     - libevent
     - libwebp
+    - lottie-ios
     - nanopb
     - NWWebSocket
     - PromisesObjC
@@ -756,6 +780,7 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - SocketRocket
+    - TLPhotoPicker
     - TOCropViewController
     - TweetNacl
 
@@ -775,6 +800,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2023-03-20-RNv0.72.0-49794cfc7c81fb8f69fd60c3bbf85a7480cc5a77
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
   Permission-Camera:
     :path: "../node_modules/react-native-permissions/ios/Camera"
   Permission-Contacts:
@@ -811,10 +838,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-audio-waveform:
+    :path: "../node_modules/@simform_solutions/react-native-audio-waveform"
   react-native-contacts:
     :path: "../node_modules/react-native-contacts"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-multiple-image-picker:
+    :path: "../node_modules/@baronha/react-native-multiple-image-picker"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -893,6 +924,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
+  CropViewController: 58fb440f30dac788b129d2a1f24cffdcb102669c
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 565cdf5e3d0dd4b12a9c842f6a4bb5082b5aaa5b
   FBReactNativeSpec: 052fc96c48292cac6ca729d58200ac77890573ab
@@ -911,6 +943,8 @@ SPEC CHECKSUMS:
   hermes-engine: 3f42310d66bcbc814b3771b79ad8d5a3f8df3df1
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
+  lottie-ios: a881093fab623c467d3bce374367755c272bdd59
+  lottie-react-native: e6eaef58ea15552314c42d7abb51b6160324333d
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   NWWebSocket: 040d22f23438cc09aaeabf537beff67699c3c76d
   Permission-Camera: 7ec9ee99704766ff9b90198183387a7f5d82b0c1
@@ -933,8 +967,10 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 2c53849838b096599bd04cbbf11a6b67a1781e7b
   React-jsinspector: 36bb3067723df92b7ea564a28ee61a2282a696bc
   React-logger: 48a3629a61899735cbfa9f0b8c5cd44cb1561952
+  react-native-audio-waveform: 351a96a6b413c70b096347c880910dc35b6367b7
   react-native-contacts: cb4f3b823550adbce0802901b9e63bf1526ec0af
   react-native-image-picker: 5e076db26cd81660cfb6db5bcf517cfa12054d45
+  react-native-multiple-image-picker: bfbdaa54e18ba98ca205f5fa7f141976d89247a9
   react-native-pager-view: 0ccb8bf60e2ebd38b1f3669fa3650ecce81db2df
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-slider: 593253eb5fbc6ea519290e812bd477fc6abafd5a
@@ -964,16 +1000,17 @@ SPEC CHECKSUMS:
   RNFBApp: 147c3274daa84d7410d457510548d5fb3b317e37
   RNFBMessaging: 0e98a1452a60e6828fcd7139b1ad45ebf4452aa8
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
-  RNImageCropPicker: 486e2f7e2b0461ce24321f751410dce1b3b49e6d
+  RNImageCropPicker: 771e2ca319d2cf92e04ebf334ece892ee9a6728f
   RNPermissions: f1b49dd05fa9b83993cd05a9ee115247944d8f1a
   RNReanimated: 99dc2f42f156229421838b9ea612590f08acca6b
   RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
-  RNVectorIcons: bfb663f3f7b37340cd90120151b720641523dc84
+  RNVectorIcons: 084d874504f21a5452744e400537eb96b45060b6
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  TLPhotoPicker: 939c40eaad130b69f9571e61e021e8120fa76329
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   TweetNacl: 3abf4d1d2082b0114e7a67410e300892448951e6
   Yoga: c79810ea24a2a73b7f39174e78d60f4e28261f33

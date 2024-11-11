@@ -10,11 +10,9 @@ export const NotificationBlock = ({ description, avatar, name, photo, id }) => {
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
-      console.log(JSON.parse(name).name)
       return <Text style={[Styles.darkMedium13, { color: JSON.parse(name)?.color?.title, fontFamily: JSON.parse(name)?.font }]}>{JSON.parse(name)?.name}:</Text>
 
     } catch (error) {
-      console.log(error)
       return <Text style={[Styles.darkMedium13]}> {name}:</Text >
     }
   }

@@ -50,7 +50,6 @@ export const ViewList = ({ id, token, navigation }) => {
       })}
     </View>
   }
-  console.log(getPostView.data)
   return (
     <BottomSheetScrollView
       onScroll={({ nativeEvent }) => {

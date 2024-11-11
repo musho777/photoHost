@@ -167,7 +167,7 @@ export const Post = React.memo(({
           setIsExpanded={(e) => setIsExpanded(e)}
           isExpanded={isExpanded}
         /> :
-          <View style={{ marginBottom: 10, height: 570, position: 'relative' }}>
+          <View style={{ height: 570, position: 'relative' }}>
             <Image
               source={fone[data?.background - 1]}
               style={[{ height: 570 }, styles.img]}

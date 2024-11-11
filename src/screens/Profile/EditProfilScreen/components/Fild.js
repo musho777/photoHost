@@ -92,6 +92,7 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
           placeholderTextColor={'#8C9CAB'}
           multiline={multiline}
           value={localValue}
+          maxLength={100}
           onChangeText={e => ChnageData(e, activeFont, activeColor)}
           style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: activeColor.title, fontFamily: activeFont }]}
         />

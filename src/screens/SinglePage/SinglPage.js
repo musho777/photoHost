@@ -7,10 +7,10 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
-import { Api, } from '../../store/action/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
+import { AddPostViewCount, Api, DelatePostAction, } from '../../store/action/action';
 import { ViewComponent } from '../../components/statistic/ViewComponent';
 import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
@@ -33,11 +33,12 @@ export const SinglPageScreen = ({ route }) => {
   const [horiznotal, setHoriznotal] = useState(false)
   const [showComment, setShowComment] = useState(false)
   const [commentData, setCommentData] = useState({ parentId: "", categoryId: "" })
-
+  const dispatch = useDispatch()
 
   const [showShare, setShowShare] = useState(false)
 
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation()
 
   useFocusEffect(
     useCallback(() => {
@@ -48,10 +49,19 @@ export const SinglPageScreen = ({ route }) => {
         StatusBar.setTranslucent = true;
         StatusBar.setBackgroundColor("white");
       };
-    }, [])
+    }, [data?.id])
   );
 
-  console.log(data?.comment_count)
+
+  useEffect(() => {
+    dispatch(AddPostViewCount({ post_id: data?.id }, staticdata.token))
+  }, [staticdata.token, data])
+
+
+  const deletData = useCallback((post_id) => {
+    dispatch(DelatePostAction({ post_id }, staticdata.token))
+    navigation.goBack()
+  }, [dispatch, staticdata.token]);
 
 
 

@@ -230,7 +230,7 @@ export const VidioComponent = forwardRef(({
             }
             {Description && Description[index] && <TouchableOpacity onPress={() => startAnimation(false)}>
               <Text style={[Styles.balihaiMedium13]}>
-                Показать меньше
+                Cвернуть
               </Text>
             </TouchableOpacity>}
           </TouchableOpacity>
