@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const HeadlessTask = async (message) => {
   let notSound = await AsyncStorage.getItem("notification")
   if (notSound == 'standart') {
+    console.log(message.data.title, ' message.data.title,')
     PushNotification.localNotification({
       channelId: "sms-channel",
       title: message.data.title,
@@ -23,6 +24,7 @@ const HeadlessTask = async (message) => {
     });
   }
   else if (notSound == 'bell') {
+    console.log(message.data.title, 'message.data.title')
     PushNotification.localNotification({
       channelId: "sms2-channel",
       title: message.data.title,
@@ -33,6 +35,7 @@ const HeadlessTask = async (message) => {
     });
   }
   else if (notSound == 'funy') {
+    console.log(message.data.title, 'message.data.title')
     PushNotification.localNotification({
       channelId: "sms-channel",
       title: message.data.title,
@@ -42,9 +45,6 @@ const HeadlessTask = async (message) => {
       priority: "high",
     });
   }
-
-  // You can process the message similarly here
-
 };
 
 

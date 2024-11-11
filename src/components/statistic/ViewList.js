@@ -30,6 +30,19 @@ export const ViewList = ({ id, token, navigation }) => {
 
 
 
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.darkMedium13, { marginHorizontal: 10, color: JSON.parse(jsonString)?.color?.title, fontFamily: JSON.parse(jsonString)?.font }]}>{JSON.parse(jsonString)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}> {jsonString}</Text >
+    }
+  }
+
+
+
+
   if (getPostView.loading) {
     return <View style={{ flex: 1 }}>
       {loadingData.map((elm, i) => {
@@ -37,6 +50,7 @@ export const ViewList = ({ id, token, navigation }) => {
       })}
     </View>
   }
+  console.log(getPostView.data)
   return (
     <BottomSheetScrollView
       onScroll={({ nativeEvent }) => {
@@ -69,9 +83,10 @@ export const ViewList = ({ id, token, navigation }) => {
                   uri: `https://chambaonline.pro/uploads/${elm.user.avatar}`,
                 }}
               />
-              <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
+              {canParseJSON(elm.user.name)}
+              {/* <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
                 {elm.user.name}
-              </Text>
+              </Text> */}
             </View>
             <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>{elm.count}</Text>
           </TouchableOpacity>

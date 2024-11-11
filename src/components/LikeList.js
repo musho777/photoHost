@@ -25,6 +25,17 @@ export const LikeList = forwardRef(
       dispatch(HidenTabNavigation())
     }, [])
 
+    function canParseJSON(jsonString) {
+      try {
+        JSON.parse(jsonString);
+        return <Text style={[Styles.darkMedium13, { marginHorizontal: 10, color: JSON.parse(jsonString)?.color?.title ? JSON.parse(jsonString)?.color?.title : "black", fontFamily: JSON.parse(jsonString)?.font }]}>{JSON.parse(jsonString)?.name}</Text>
+
+      } catch (error) {
+        return <Text style={[Styles.darkMedium13, { marginHorizontal: 10, }]}> {jsonString}</Text >
+      }
+    }
+
+
     const renderBackdrop = useCallback(
       props => (
         <BottomSheetBackdrop
@@ -109,9 +120,10 @@ export const LikeList = forwardRef(
                       uri: `https://chambaonline.pro/uploads/${elm.user.avatar}`,
                     }}
                   />
-                  <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
+                  {canParseJSON(elm.user.name)}
+                  {/* <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
                     {elm.user.name}
-                  </Text>
+                  </Text> */}
                 </TouchableOpacity>
               );
             })}
