@@ -93,9 +93,9 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
 
 const styles = StyleSheet.create({
   img: {
-    width: 110,
-    height: 110,
-    borderRadius: 110,
+    width: 105,
+    height: 105,
+    borderRadius: 105,
   },
   shadow: {
     alignItems: 'center',
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     height: 250,
   },
   avatar: {
-    width: 120,
-    height: 120,
+    width: 115,
+    height: 115,
     backgroundColor: 'white',
     borderRadius: 100,
     justifyContent: 'center',

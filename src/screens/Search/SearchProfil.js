@@ -234,16 +234,10 @@ export const SearchProfil = ({ navigation, route }) => {
                   </View>}
                 </View>
                 {data?.data.description &&
-                  <View >
-                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'center', }}>
-                      {user.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
-                        <CheckMarkUserSvg />
-                      </View>}
-                    </View>
-                    <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(data?.data.description).color.title, fontFamily: JSON.parse(data?.data.description).font }]}>{
-                      JSON.parse(data?.data.description).text
-                    }</Text>
-                  </View>}
+                  <Text style={[Styles.darkMedium14, { width: '100%', textAlign: 'center', color: JSON.parse(data?.data.description).color.title, fontFamily: JSON.parse(data?.data.description).font }]}>{
+                    JSON.parse(data?.data.description).text
+                  }</Text>
+                }
               </View>
             </View>
 
