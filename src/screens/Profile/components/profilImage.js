@@ -172,7 +172,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   }
 
 
-  const renderItem1 = ({ item }) => {
+  const renderItem1 = ({ item, index }) => {
     return <TouchableOpacity activeOpacity={1} onPress={() => {
       bottomSheetRef.current?.close()
       setTimeout(() => {
@@ -181,7 +181,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       }, 300);
       setImageData(item.photo_array)
       setSelectedName(item.name)
-    }} style={{ width: '100%', paddingHorizontal: 0 }}>
+    }} style={[{ width: '100%', paddingHorizontal: 0 }, index == mainImageData.length - 1 && { marginBottom: 10 }]}>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <Text style={[Styles.darkSemiBold14, { marginTop: 5, marginBottom: 2 }]}>{item.name}</Text>
         <Image
@@ -220,7 +220,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
     <BootomModal close={() => setShowAllPhoto(false)} ref={bottomSheetRef} snapPoints={snapPoints}>
       <View style={{ paddingHorizontal: 20 }}>
-        <Text style={Styles.darkSemiBold14}>Фото на фон</Text>
+        <Text style={Styles.darkSemiBold14}>Добавить фото на фон</Text>
       </View>
       <View style={{ width: '100%', borderWidth: 0.5, marginTop: 10, borderColor: AppColors.Solitude_Color }}></View>
       <View style={{ paddingHorizontal: 20 }}>
@@ -232,14 +232,14 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
             bottomSheetRef1.current?.present();
           }, 300);
         }} style={{ marginBottom: 20, marginTop: 10 }} >
-          <Text style={Styles.darkRegular14}>Добавить фото из библиотеки</Text>
+          <Text style={Styles.darkRegular14}>Из библиотеки</Text>
 
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
           changeBg()
           bottomSheetRef.current?.close()
         }} style={{ marginBottom: 20 }}>
-          <Text style={Styles.darkRegular14}>Добавить фото из телефона</Text>
+          <Text style={Styles.darkRegular14}>Из телефона</Text>
         </TouchableOpacity>
       </View>
     </BootomModal>
