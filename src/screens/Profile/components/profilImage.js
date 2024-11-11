@@ -10,6 +10,7 @@ import { BootomModal } from '../../../components/BootomSheet';
 import { FlatList, } from 'react-native-gesture-handler';
 import { BigBgImage } from './bigBgImage';
 import { BackArrow } from '../../../assets/svg/Svgs';
+import { AppColors } from '../../../styles/AppColors';
 
 const { width } = Dimensions.get('window');
 
@@ -219,6 +220,10 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
     <BootomModal close={() => setShowAllPhoto(false)} ref={bottomSheetRef} snapPoints={snapPoints}>
       <View style={{ paddingHorizontal: 20 }}>
+        <Text style={Styles.darkSemiBold14}>Фото на фон</Text>
+      </View>
+      <View style={{ width: '100%', borderWidth: 0.5, marginTop: 10, borderColor: AppColors.Solitude_Color }}></View>
+      <View style={{ paddingHorizontal: 20 }}>
         <TouchableOpacity onPress={() => {
           GetPhoto()
           bottomSheetRef.current?.close()
@@ -226,8 +231,8 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
             setShowPhoto(true)
             bottomSheetRef1.current?.present();
           }, 300);
-        }} style={{ marginBottom: 20, marginTop: 20 }} >
-          <Text style={Styles.darkRegular14}>Добавить фото</Text>
+        }} style={{ marginBottom: 20, marginTop: 10 }} >
+          <Text style={Styles.darkRegular14}>Добавить фото из библиотеки</Text>
 
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {

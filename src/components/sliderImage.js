@@ -61,7 +61,7 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
                 </Text>
               </View>
             }
-            {Description[index] > MAX_Height && <TouchableOpacity
+            {Description[index].length > MAX_Height && <TouchableOpacity
               onPress={() => startAnimation(true)}
             >
               <Text style={[Styles.balihaiMedium13, { color: 'white' }]}>Показать больше</Text>
@@ -71,7 +71,7 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
       }
     </View>
 
-    <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', width: '100%' }, { height: heightAnim }]}>
+    <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'white', width: '100%', borderTopRightRadius: 10, borderTopLeftRadius: 10 }, { height: heightAnim }]}>
       <ScrollView
         nestedScrollEnabled={true}
         scrollEventThrottle={16}
@@ -80,13 +80,13 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
         <TouchableOpacity style={{ padding: 10 }} activeOpacity={1}>
           {Description && Description[index] &&
             <View>
-              <Text style={[Styles.darkMedium13, { color: 'white' }]}>
+              <Text style={[Styles.darkMedium13]}>
                 {Description[index]}
               </Text>
             </View>
           }
           {Description && Description[index] && <TouchableOpacity onPress={() => startAnimation(false)}>
-            <Text style={[Styles.balihaiMedium13, { color: 'white' }]}>
+            <Text style={[Styles.balihaiMedium13]}>
               Показать меньше
             </Text>
           </TouchableOpacity>}

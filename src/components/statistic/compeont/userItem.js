@@ -9,6 +9,19 @@ export const UserItem = ({ data }) => {
   const user = useSelector((st) => st.userData)
 
 
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.darkMedium13, { marginHorizontal: 10, color: JSON.parse(jsonString)?.color?.title, fontFamily: JSON.parse(jsonString)?.font }]}>{JSON.parse(jsonString)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}> {jsonString}</Text >
+    }
+  }
+
+
+
+
   const isCloseToBottom = ({
     layoutMeasurement,
     contentOffset,
@@ -56,9 +69,7 @@ export const UserItem = ({ data }) => {
                 uri: `https://chambaonline.pro/uploads/${elm.user.avatar}`,
               }}
             />
-            <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}>
-              {elm.user.name}
-            </Text>
+            {canParseJSON(elm.user.name)}
           </View>
         </TouchableOpacity>
       );

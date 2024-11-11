@@ -214,7 +214,7 @@ export const VidioComponent = forwardRef(({
         }
       </View>
 
-      <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', width: '100%' }, { height: heightAnim }]}>
+      <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'white', width: '100%' }, { height: heightAnim }]}>
         <ScrollView
           nestedScrollEnabled={true}
           scrollEventThrottle={16}
@@ -229,7 +229,7 @@ export const VidioComponent = forwardRef(({
               </View>
             }
             {Description && Description[index] && <TouchableOpacity onPress={() => startAnimation(false)}>
-              <Text style={[Styles.balihaiMedium13, { color: 'white' }]}>
+              <Text style={[Styles.balihaiMedium13]}>
                 Показать меньше
               </Text>
             </TouchableOpacity>}

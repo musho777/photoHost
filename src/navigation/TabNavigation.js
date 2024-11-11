@@ -70,7 +70,9 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                         navigation.navigate('AddPhoto')
                       }
                       }
-                      style={[Styles.darkMedium16, { paddingBottom: 4 }]}>{t(mainData.lang).Addphoto}</Text>
+                      style={[Styles.darkMedium16, { paddingBottom: 4 }]}>{t(mainData.lang).Addphoto}
+                      <Text style={{ fontSize: 10 }}>  (не более 1-й минуты)</Text>
+                    </Text>
                   </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>

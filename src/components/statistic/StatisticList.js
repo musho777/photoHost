@@ -147,7 +147,9 @@ export const StatisticList = ({ id, token, vidio }) => {
 
             <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации в закладки - {getStatistic1.data.get_book_count} </Text>
-
+            {getStatistic1.data?.city_data?.length > 1 &&
+              <Text style={Styles.darkSemiBold14}>Просмотры по городам</Text>
+            }
             {getStatistic1.data?.city_data?.map((elm, i) => {
               return <Text style={Styles.darkSemiBold14} t>{elm.city} - {elm.count} </Text>
             })}
