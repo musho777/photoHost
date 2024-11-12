@@ -4,7 +4,7 @@ import { AppColors } from "../../../../styles/AppColors";
 import { useEffect, useState } from "react";
 import { Emojy } from "../../../../assets/svg/Svgs";
 
-export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discription, setIsOpen }) => {
+export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline, discription, setIsOpen }) => {
   const fontFamily = [
     "Montserrat-Regular",
     "PlaywriteGBS-Regular",
@@ -83,7 +83,7 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
 
   if (discription) {
     return <View >
-      <View style={styles.textWrapper}>
+      <View style={[styles.textWrapper, { borderBottomWidth: 1 }]}>
         {svg && <View style={{ width: 20, marginRight: 10 }}>
           {svg}
         </View>}
@@ -121,7 +121,7 @@ export const Fild = ({ placeholder, value, hadnelChange, svg, multiline, discrip
   }
 
   return <View >
-    <View style={styles.textWrapper}>
+    <View style={[styles.textWrapper, { borderBottomWidth: bB }]}>
       {svg && <View style={{ width: 20, marginRight: 10 }}>
         {svg}
       </View>}
@@ -141,11 +141,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: Platform.OS === 'ios' ? 20 : 0,
     borderColor: AppColors.Solitude_Color,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderTopWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    height: 'auto',
+    height: 50,
   },
   emojy: {
     position: 'absolute',

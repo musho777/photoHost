@@ -301,7 +301,7 @@ export const EditProfilScreen = ({ navigation }) => {
               <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
               <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
               <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
-              {accauntType && <Fild value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
+              {accauntType && <Fild bB={0} value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
 
               <Fild multiline={true} value={ooo} hadnelChange={(e) => setOoo(e)} svg={<WorkLocationSvg />} placeholder={!accauntType ? `Адрес компании` : 'Адрес предприятия'} />
 

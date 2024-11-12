@@ -35,11 +35,10 @@ const styles = StyleSheet.create({
   },
   textWrapper2: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
     borderBottomColor: AppColors.Solitude_Color,
-    borderBottomWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    height: 50,
   },
 });
 
