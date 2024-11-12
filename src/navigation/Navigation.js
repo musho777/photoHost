@@ -120,6 +120,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           }
         }
         else if (JSON.parse(event.data).message.type == 'delete_chat') {
+          console.log("-000")
           dispatch(
             DeleteChatPusherAction({
               reseiver_id: JSON.parse(event.data)?.message?.receiver_id,

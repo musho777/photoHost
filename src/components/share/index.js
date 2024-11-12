@@ -41,6 +41,20 @@ export const Share = ({ postId, close, open, user_id }) => {
   }, [])
 
 
+
+
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.balihaiMedium13, { color: JSON.parse(jsonString)?.color?.title, fontFamily: JSON.parse(jsonString)?.font }]}>{JSON.parse(jsonString)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={[Styles.balihaiMedium13,]}> {jsonString}</Text >
+    }
+  }
+
+
+
   const ShareFunction = () => {
     if (select.length) {
       select.map((elm, i) => {
@@ -111,7 +125,7 @@ export const Share = ({ postId, close, open, user_id }) => {
               <Image
                 source={{ uri: `https://chambaonline.pro/uploads/${elm.follower.avatar}` }}
                 style={{ width: 50, height: 50, borderRadius: 50 }} />
-              <Text style={Styles.balihaiMedium13}>{elm.follower.name}</Text>
+              <Text style={Styles.balihaiMedium13}>{canParseJSON(elm.follower.name)}</Text>
             </View>
             {select.findIndex((el) => el == elm.follower.id) >= 0 ?
               <SelectedSvg /> :

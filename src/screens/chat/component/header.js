@@ -13,7 +13,7 @@ import { t } from '../../../components/lang';
 
 
 
-export const Header = ({ data, route, user }) => {
+export const Header = ({ data, route, user, askdelateModal }) => {
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const navigation = useNavigation()
   const bottomSheetRef = useRef(null);
@@ -36,6 +36,12 @@ export const Header = ({ data, route, user }) => {
     bottomSheetRef.current?.present();
   }, []);
 
+
+  useEffect(() => {
+    if (askdelateModal) {
+      setShow(true)
+    }
+  }, [askdelateModal])
 
   useEffect(() => {
     let a = addBlackPusher.addBlackListPusher?.reseiver_id == user.data.id && addBlackPusher.addBlackListPusher?.sender_id == route.params.id
@@ -66,7 +72,7 @@ export const Header = ({ data, route, user }) => {
 
   const Confirm = () => {
     setShow(false)
-    dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token))
+    dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token, route.params.chatId))
     navigation.goBack()
   }
 
@@ -85,6 +91,9 @@ export const Header = ({ data, route, user }) => {
       return <Text style={[Styles.darkMedium16, { textAlign: 'center', }]}> {getSinglePageChat.resiverUser.name}</Text >
     }
   }
+
+
+
 
 
   return <View style={[Styles.flexSpaceBetween, styles.header]}>
@@ -127,7 +136,6 @@ export const Header = ({ data, route, user }) => {
         {data.length > 0 && <TouchableOpacity
           onPress={() => {
             setShow(true)
-
           }}
           style={{ marginBottom: 20, marginTop: 20 }}>
           <Text style={Styles.darkRegular14}>Удалить переписку</Text>

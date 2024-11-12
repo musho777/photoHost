@@ -1332,7 +1332,7 @@ export const DeviceIdAction = (data, token) => {
   };
 }
 
-export const DelateChatAction = (data, token) => {
+export const DelateChatAction = (data, token, room) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -1348,7 +1348,7 @@ export const DelateChatAction = (data, token) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(SuccessDelateChat(data))
+          dispatch(SuccessDelateChat(room))
         }
         else {
           dispatch(ErrorDelateChat('server error'))
@@ -2003,7 +2003,6 @@ export const DelateMesageAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Authorization', `Bearer ${token}`);
   let formdata = new FormData();
-  console.log(data)
   data.map((elm, i) => {
     formdata.append("message_ids[]", elm);
   })
@@ -2022,7 +2021,6 @@ export const DelateMesageAction = (data, token) => {
 }
 
 export const DelateMessageLocal = (data) => {
-  console.log(data)
   return {
     type: 'DelateMessageLocal',
     data

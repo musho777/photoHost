@@ -4,7 +4,6 @@ import {
   FlatList,
   Text,
   View,
-  StatusBar,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChatUser } from '../../components/ChatUser';

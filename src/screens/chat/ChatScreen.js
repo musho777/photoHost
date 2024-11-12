@@ -18,6 +18,7 @@ import Sound from 'react-native-sound';
 import { Styles } from '../../styles/Styles';
 
 
+
 export const ChatScreen = ({ route }) => {
   const bottomSheetRef = useRef(null);
   const dispatch = useDispatch();
@@ -28,8 +29,10 @@ export const ChatScreen = ({ route }) => {
   const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
   const staticdata = useSelector(st => st.static);
   const [seleted, setSelected] = useState([])
+  const [askdelateModal, setAskDelateModal] = useState(false)
 
 
+  console.log(route.params.chatId)
   useEffect(() => {
     dispatch(SinglChatPageId(route.params.id, user.data.id))
     dispatch(ClearDeletChat())
@@ -49,12 +52,25 @@ export const ChatScreen = ({ route }) => {
   const DelateMessage = () => {
     setSelected([])
     dispatch(DelateMesageAction(seleted, staticdata.token))
+    if (getSinglePageChat.message.length - seleted.length == 0) {
+      setAskDelateModal(true)
+    }
+    else {
+      setAskDelateModal(false)
+    }
   }
+
+  // useEffect(() => {
+  //   console.log(getSinglePageChat.message)
+  //   if(getSinglePageChat.message.length){
+
+  //   }
+  // }, [getSinglePageChat])
 
   return (
     <SafeAreaView style={[styles.body, Styles.statusBar]}>
       {!seleted.length ?
-        <Header user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} /> :
+        <Header askdelateModal={askdelateModal} user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} /> :
         <View style={{ height: 30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 10, }}>
           <TouchableOpacity onPress={() => DelateMessage()} >
             <Text style={[Styles.darkMedium12, { color: 'red' }]}>Удалить</Text>

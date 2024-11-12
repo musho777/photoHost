@@ -64,7 +64,6 @@ export const Messages = ({ route, id, setSelected, seleted }) => {
       }
     }}
     renderItem={({ item }) => {
-      console.log(item, '20000')
       if (item.post) {
         let from = item.sender_id != user.data.id
         return <TouchableOpacity activeOpacity={openSelet ? 1 : 0.3} onPress={() => SelectMsg(item.id)} onLongPress={() => onLongPress()}>
