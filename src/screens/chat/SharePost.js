@@ -3,7 +3,6 @@ import { Styles } from "../../styles/Styles";
 import { useNavigation } from "@react-navigation/native";
 
 export const SharePost = ({ from, avatar, post, name, id, my }) => {
-  console.log("====")
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);

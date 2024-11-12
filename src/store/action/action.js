@@ -1999,10 +1999,11 @@ export const UpdateBackroundPhoto = (url, token, img) => {
   };
 }
 
-export const DelaateMesage = (data, token) => {
+export const DelateMesageAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Authorization', `Bearer ${token}`);
   let formdata = new FormData();
+  console.log(data)
   data.map((elm, i) => {
     formdata.append("message_ids[]", elm);
   })
@@ -2018,4 +2019,12 @@ export const DelaateMesage = (data, token) => {
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
   };
+}
+
+export const DelateMessageLocal = (data) => {
+  console.log(data)
+  return {
+    type: 'DelateMessageLocal',
+    data
+  }
 }

@@ -41,6 +41,7 @@ const GetMyChatRoomReducer = (state = initialState, action) => {
           item.data.splice(i, 1);
         }
       });
+      console.log(action.data)
       item.data.unshift(action.data.data);
       break;
     case 'ClearSinglChatNumber':

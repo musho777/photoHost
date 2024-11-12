@@ -13,6 +13,7 @@ import {
   AddMessageCount,
   AddMsgAction,
   ChnageLanguage,
+  DelateMessageLocal,
   DeleteChatPusherAction,
   DeviceIdAction,
   getUserInfoAction,
@@ -86,6 +87,7 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             dispatch(MsgCountAction(JSON.parse(event.data)?.message.all_message_count))
           }
           if (JSON.parse(event.data).message.receiver_id == id || JSON.parse(event.data).message.sender_id == id) {
+            // console.log(JSON.parse(event.data).message)
             dispatch(
               NewMsgAction({
                 data: JSON.parse(event.data)?.message,
@@ -98,7 +100,8 @@ export default Navigation = ({ token, initialRouteName, id }) => {
                 message: JSON.parse(event.data)?.message?.message,
                 sender_id: id,
                 receiver_id: JSON.parse(event.data)?.message?.sender_id,
-                created_at: today
+                created_at: today,
+                id: JSON.parse(event.data)?.message.id
               }),
             );
           }
@@ -139,6 +142,10 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               sender_id: 'black_list_delete'
             })
           )
+        }
+        else if (JSON.parse(event.data).message.type == 'delete_message') {
+          console.log(JSON.parse(event.data).message)
+          dispatch(DelateMessageLocal(JSON.parse(event.data)?.message?.message_id))
         }
       },
     });

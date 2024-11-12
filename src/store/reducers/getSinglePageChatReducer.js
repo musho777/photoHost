@@ -71,6 +71,12 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
       item.delateChatStatus = false
       item.dleateChatLoading = false
       break
+    case "DelateMessageLocal":
+      let indexForDelate = item.message.findIndex((elm) => elm.id == action.data)
+      if (indexForDelate >= 0) {
+        item.message.splice(indexForDelate, 1)
+      }
+      break
     default:
       break;
   }

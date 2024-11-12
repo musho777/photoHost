@@ -45,10 +45,8 @@ export const Messages = ({ route, id, setSelected, seleted }) => {
         item.splice(index, 1)
       }
       else {
-        // setSelected(true)
         item.push(id)
       }
-      console.log(id)
     }
     setSelected(item)
     setSelectedData(item)
@@ -66,9 +64,8 @@ export const Messages = ({ route, id, setSelected, seleted }) => {
       }
     }}
     renderItem={({ item }) => {
-      console.log(item.post)
+      console.log(item, '20000')
       if (item.post) {
-        console.log(item.post.photo, '22')
         let from = item.sender_id != user.data.id
         return <TouchableOpacity activeOpacity={openSelet ? 1 : 0.3} onPress={() => SelectMsg(item.id)} onLongPress={() => onLongPress()}>
           {openSelet && <View style={styles.message}>

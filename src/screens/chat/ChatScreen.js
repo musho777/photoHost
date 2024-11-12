@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { DelaateMesage, newMessageAction, SinglChatPageId, } from '../../store/action/action';
+import { DelateMesageAction, newMessageAction, SinglChatPageId, } from '../../store/action/action';
 import { ClearChat, ClearDeletChat } from '../../store/action/clearAction';
 import { Header } from './component/header';
 import Main from '../../components/GIf/main';
@@ -47,8 +47,8 @@ export const ChatScreen = ({ route }) => {
   }
 
   const DelateMessage = () => {
-    console.log("-----")
-    dispatch(DelaateMesage(seleted, staticdata.token))
+    setSelected([])
+    dispatch(DelateMesageAction(seleted, staticdata.token))
   }
 
   return (
