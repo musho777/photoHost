@@ -79,7 +79,7 @@ export const Header = ({ data, route, user }) => {
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
-      return <Text style={[Styles.darkMedium16, { textAlign: 'center', color: JSON.parse(user?.name)?.color?.title ? JSON.parse(getSinglePageChat.resiverUser?.name)?.color?.title : "black", fontFamily: JSON.parse(getSinglePageChat.resiverUser?.name)?.font }]}>{JSON.parse(getSinglePageChat.resiverUser.name)?.name}</Text>
+      return <Text style={[Styles.darkMedium16, { textAlign: 'center', color: JSON.parse(getSinglePageChat.resiverUser?.name)?.color?.title ? JSON.parse(getSinglePageChat.resiverUser?.name)?.color?.title : "black", fontFamily: JSON.parse(getSinglePageChat.resiverUser?.name)?.font }]}>{JSON.parse(getSinglePageChat.resiverUser.name)?.name}</Text>
 
     } catch (error) {
       return <Text style={[Styles.darkMedium16, { textAlign: 'center', }]}> {getSinglePageChat.resiverUser.name}</Text >

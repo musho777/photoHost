@@ -1992,8 +1992,29 @@ export const UpdateBackroundPhoto = (url, token, img) => {
     body: body,
   };
   return dispatch => {
-    fetch("https://chambaonline.pro/api/update_backround_photo", requestOptions)
+    fetch(`${Api}/update_backround_photo`, requestOptions)
       .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  };
+}
+
+export const DelaateMesage = (data, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Authorization', `Bearer ${token}`);
+  let formdata = new FormData();
+  data.map((elm, i) => {
+    formdata.append("message_ids[]", elm);
+  })
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: formdata,
+  };
+  return dispatch => {
+    fetch(`${Api}/delete_message`, requestOptions)
+      .then(response => response.json())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
   };

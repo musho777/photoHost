@@ -1,17 +1,20 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { MsgBlock } from "../../../components/MsgBlock";
 import { SharePost } from "../SharePost";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { ClearSinglChatNumber, GetSinglePageChatAction } from "../../../store/action/action";
+import { ChecboxUnchekedForMsgSvg, CheckedChexboxForMSg } from "../../../assets/svg/Svgs";
 
-export const Messages = ({ route, id }) => {
+export const Messages = ({ route, id, setSelected, seleted }) => {
 
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const user = useSelector(st => st.userData);
+  const [openSelet, setOpenSelect] = useState(false)
+  const [selectedData, setSelectedData] = useState([])
 
   useEffect(() => {
     dispatch(GetSinglePageChatAction({ receiver_id: route.params.id }, staticdata.token, page,),);
@@ -20,6 +23,36 @@ export const Messages = ({ route, id }) => {
   useEffect(() => {
     dispatch(ClearSinglChatNumber(id))
   }, [getSinglePageChat.message.length])
+
+  useEffect(() => {
+    if (!seleted?.length) {
+      setSelectedData([])
+      setOpenSelect(false)
+    }
+  }, [seleted])
+
+  const onLongPress = () => {
+    setOpenSelect(true)
+  }
+
+
+
+  const SelectMsg = (id) => {
+    let item = [...selectedData]
+    if (openSelet) {
+      let index = item.findIndex((elm) => elm == id)
+      if (index >= 0) {
+        item.splice(index, 1)
+      }
+      else {
+        // setSelected(true)
+        item.push(id)
+      }
+      console.log(id)
+    }
+    setSelected(item)
+    setSelectedData(item)
+  }
 
   return <FlatList
     snapToEnd
@@ -33,16 +66,34 @@ export const Messages = ({ route, id }) => {
       }
     }}
     renderItem={({ item }) => {
+      console.log(item.post)
       if (item.post) {
+        console.log(item.post.photo, '22')
         let from = item.sender_id != user.data.id
-        return <SharePost my id={item.post.user.id} postData={item.post} name={item.post.user.name} from={from} avatar={item.post.user.avatar} post={item.post.photo[0].photo} />
+        return <TouchableOpacity activeOpacity={openSelet ? 1 : 0.3} onPress={() => SelectMsg(item.id)} onLongPress={() => onLongPress()}>
+          {openSelet && <View style={styles.message}>
+            {selectedData?.findIndex(elm => elm == item.id) > -1 ?
+              <CheckedChexboxForMSg /> :
+              <ChecboxUnchekedForMsgSvg />
+            }
+          </View>}
+          <SharePost my id={item.post.user.id} postData={item.post} name={item.post.user.name} from={from} avatar={item.post.user.avatar} post={item.post.photo[0]?.photo} />
+        </TouchableOpacity>
       }
       return (
-        <MsgBlock
-          timestamp={item.created_at}
-          msg={item.message}
-          from={item.sender_id != user.data.id}
-        />
+        <TouchableOpacity activeOpacity={openSelet ? 1 : 0.3} onPress={() => SelectMsg(item.id)} onLongPress={() => onLongPress()}>
+          {openSelet && <View style={styles.message}>
+            {selectedData?.findIndex(elm => elm == item.id) > -1 ?
+              <CheckedChexboxForMSg /> :
+              <ChecboxUnchekedForMsgSvg />
+            }
+          </View>}
+          <MsgBlock
+            timestamp={item.created_at}
+            msg={item.message}
+            from={item.sender_id != user.data.id}
+          />
+        </TouchableOpacity>
       );
     }}
   />
@@ -52,6 +103,14 @@ export const Messages = ({ route, id }) => {
 const styles = StyleSheet.create({
   body: {
     height: '100%',
+  },
+  message: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 3,
+    justifyContent: 'center'
+    // flexDirection: 'row'
   },
   keyboardAvoidingView: {
     flex: 1,

@@ -81,7 +81,7 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
     return (
       <View
         style={[
-          styles.block2, from ? { alignSelf: 'flex-start' } : { alignSelf: 'flex-end', },
+          styles.block2, from ? { alignSelf: 'flex-start' } : { alignSelf: 'flex-end' },
         ]}>
         {msg?.includes('https://media') ?
           <FastImage source={{ uri: msg }} style={styles.image} /> :

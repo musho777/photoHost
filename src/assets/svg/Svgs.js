@@ -760,6 +760,45 @@ export const ChecboxUNchekedSvg = () => {
   </Svg>
 }
 
+export const ChecboxUnchekedForMsgSvg = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20px"
+    height="20px"
+    viewBox="0 0 24 24"
+  >
+    <Path
+      d="M5.75 3h12.5A2.75 2.75 0 0121 5.75v12.5A2.75 2.75 0 0118.25 21H5.75A2.75 2.75 0 013 18.25V5.75A2.75 2.75 0 015.75 3zm0 1.5c-.69 0-1.25.56-1.25 1.25v12.5c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25V5.75c0-.69-.56-1.25-1.25-1.25H5.75z"
+      fill="#FFD953"
+      fillRule="nonzero"
+      stroke="none"
+      strokeWidth={1}
+    />
+  </Svg>
+}
+
+export const CheckedChexboxForMSg = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="#FFD953"
+    width="20px"
+    height="20px"
+    viewBox="0 0 32 32"
+    id="icon"
+  >
+    <G id="SVGRepo_iconCarrier">
+      <Path d="M26 4H6a2 2 0 00-2 2v20a2 2 0 002 2h20a2 2 0 002-2V6a2 2 0 00-2-2zM6 26V6h20v20z" />
+      <Path d="M14 21.5L9 16.54 10.59 15 14 18.35 21.41 11 23 12.58 14 21.5z" />
+      <Path
+        id="_Transparent_Rectangle_"
+        data-name="&lt;Transparent Rectangle&gt;"
+        d="M0 0H32V32H0z"
+        fill="none"
+      />
+    </G>
+  </Svg>
+}
+
 export const CheckedChexbox = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"

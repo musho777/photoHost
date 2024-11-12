@@ -3,6 +3,18 @@ import { Styles } from "../../styles/Styles";
 import { useNavigation } from "@react-navigation/native";
 
 export const SharePost = ({ from, avatar, post, name, id, my }) => {
+  console.log("====")
+  function canParseJSON(jsonString) {
+    try {
+      JSON.parse(jsonString);
+      return <Text style={[Styles.balihaiMedium14, { color: JSON.parse(name)?.color?.title, fontFamily: JSON.parse(name)?.font }]}>{JSON.parse(name)?.name}</Text>
+
+    } catch (error) {
+      return <Text style={[Styles.balihaiMedium14]}> {getSinglePageChat.resiverUser.name}</Text >
+    }
+  }
+
+
   const navigation = useNavigation()
   return <TouchableOpacity activeOpacity={1} onPress={() => my ?
     navigation.navigate('ProfileNavigation') :
@@ -11,7 +23,7 @@ export const SharePost = ({ from, avatar, post, name, id, my }) => {
     style={[styles.body, from ? { alignSelf: 'flex-start' } : { alignSelf: 'flex-end' }]}>
     <View style={styles.postHeader}>
       <Image style={styles.avatar} source={{ uri: `https://chambaonline.pro/uploads/${avatar}` }} />
-      <Text style={[Styles.balihaiMedium14, { color: 'white' }]}>{name}</Text>
+      {canParseJSON(name)}
     </View>
     <Image style={styles.post} source={{ uri: `https://chambaonline.pro/uploads/${post}` }} />
   </TouchableOpacity>
