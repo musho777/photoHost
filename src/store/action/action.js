@@ -1347,8 +1347,9 @@ export const DelateChatAction = (data, token, room) => {
     fetch(`${Api}/delete_chat`, requestOptions)
       .then(response => response.json())
       .then(r => {
+        console.log(r)
         if (r.status) {
-          dispatch(SuccessDelateChat(room))
+          dispatch(SuccessDelateChat(data.receiver_id))
         }
         else {
           dispatch(ErrorDelateChat('server error'))

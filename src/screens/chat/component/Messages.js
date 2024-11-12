@@ -6,14 +6,14 @@ import { useEffect, useState } from "react";
 import { ClearSinglChatNumber, GetSinglePageChatAction } from "../../../store/action/action";
 import { ChecboxUnchekedForMsgSvg, CheckedChexboxForMSg } from "../../../assets/svg/Svgs";
 
-export const Messages = ({ route, id, setSelected, seleted }) => {
+export const Messages = ({ route, id, setSelected, seleted, setOpenSelect, openSelet }) => {
 
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const user = useSelector(st => st.userData);
-  const [openSelet, setOpenSelect] = useState(false)
+  // const [openSelet, setOpenSelect] = useState(false)
   const [selectedData, setSelectedData] = useState([])
 
   useEffect(() => {
@@ -84,11 +84,13 @@ export const Messages = ({ route, id, setSelected, seleted }) => {
               <ChecboxUnchekedForMsgSvg />
             }
           </View>}
-          <MsgBlock
-            timestamp={item.created_at}
-            msg={item.message}
-            from={item.sender_id != user.data.id}
-          />
+          <View style={{ marginRight: openSelet ? 10 : 0 }}>
+            <MsgBlock
+              timestamp={item.created_at}
+              msg={item.message}
+              from={item.sender_id != user.data.id}
+            />
+          </View>
         </TouchableOpacity>
       );
     }}
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    left: 3,
+    right: 3,
     justifyContent: 'center'
     // flexDirection: 'row'
   },

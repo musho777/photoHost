@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -30,9 +29,14 @@ export const ChatScreen = ({ route }) => {
   const staticdata = useSelector(st => st.static);
   const [seleted, setSelected] = useState([])
   const [askdelateModal, setAskDelateModal] = useState(false)
+  const [openSelet, setOpenSelect] = useState(false)
+  // const [chatId,setChatId] = useState()
+  // const []
 
 
-  console.log(route.params.chatId)
+
+
+
   useEffect(() => {
     dispatch(SinglChatPageId(route.params.id, user.data.id))
     dispatch(ClearDeletChat())
@@ -50,6 +54,7 @@ export const ChatScreen = ({ route }) => {
   }
 
   const DelateMessage = () => {
+    console.log("-2")
     setSelected([])
     dispatch(DelateMesageAction(seleted, staticdata.token))
     if (getSinglePageChat.message.length - seleted.length == 0) {
@@ -66,22 +71,23 @@ export const ChatScreen = ({ route }) => {
 
   //   }
   // }, [getSinglePageChat])
+  console.log(route.params.id)
 
   return (
-    <SafeAreaView style={[styles.body, Styles.statusBar]}>
-      {!seleted.length ?
+    <TouchableOpacity activeOpacity={1} style={[styles.body, Styles.statusBar]}>
+      {!openSelet ?
         <Header askdelateModal={askdelateModal} user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} /> :
         <View style={{ height: 30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 10, }}>
-          <TouchableOpacity onPress={() => DelateMessage()} >
-            <Text style={[Styles.darkMedium12, { color: 'red' }]}>Удалить</Text>
-          </TouchableOpacity>
           <Text onPress={() => setSelected(false)} style={Styles.darkMedium12}>Отменить</Text>
+          <TouchableOpacity disabled={!seleted.length} onPress={() => DelateMessage()} >
+            <Text style={[Styles.darkMedium12, { color: seleted.length > 0 ? 'red' : '#adadad', }]}>Удалить</Text>
+          </TouchableOpacity>
         </View>
       }
-      <Messages seleted={seleted} setSelected={(e) => setSelected(e)} id={route.params.chatId} route={route} />
+      <Messages setOpenSelect={(e) => setOpenSelect(e)} openSelet={openSelet} seleted={seleted} setSelected={(e) => setSelected(e)} id={route.params.chatId} route={route} />
       <BottomWrapper ref={bottomSheetRef} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
       <Main SendSticker={(e) => SendSticker(e)} route={route} ref={bottomSheetRef} />
-    </SafeAreaView >
+    </TouchableOpacity >
   );
 };
 

@@ -50,7 +50,7 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
             setLoadBgImage(false)
           }}
           style={[styles.bgImage1, loadBgImage && { opacity: 0 }]}
-          source={{ uri: bg ? bg : `https://chambaonline.pro/uploads/${bgPhoto}`, }}
+          source={{ uri: bg ? bg : `https://chambaonline.pro/uploads/${bgPhoto}` }}
         />
       </TouchableOpacity>
       <TouchableOpacity

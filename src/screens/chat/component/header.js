@@ -39,7 +39,7 @@ export const Header = ({ data, route, user, askdelateModal }) => {
 
   useEffect(() => {
     if (askdelateModal) {
-      setShow(true)
+      Confirm()
     }
   }, [askdelateModal])
 
@@ -72,7 +72,7 @@ export const Header = ({ data, route, user, askdelateModal }) => {
 
   const Confirm = () => {
     setShow(false)
-    dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token, route.params.chatId))
+    dispatch(DelateChatAction({ receiver_id: route.params.id, }, staticdata.token))
     navigation.goBack()
   }
 
@@ -122,9 +122,6 @@ export const Header = ({ data, route, user, askdelateModal }) => {
         />
         <View style={{ marginHorizontal: 15 }}>
           {canParseJSON(getSinglePageChat.resiverUser.name)}
-          {/* <Text style={Styles.darkMedium14}>
-            {getSinglePageChat.resiverUser.name}
-          </Text> */}
         </View>
       </TouchableOpacity>
     </View>
