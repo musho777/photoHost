@@ -19,10 +19,10 @@ export const ChatUser = ({
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
-      return <Text style={[Styles.darkMedium16, { color: JSON.parse(name)?.color?.title ? JSON.parse(name)?.color?.title : "black", fontFamily: JSON.parse(name)?.font }]}>{JSON.parse(name)?.name}</Text>
+      return <Text style={[Styles.darkSemiBold14, { color: JSON.parse(name)?.color?.title ? JSON.parse(name)?.color?.title : "black", fontFamily: JSON.parse(name)?.font }]}>{JSON.parse(name)?.name}</Text>
 
     } catch (error) {
-      return <Text style={[Styles.darkMedium16,]}> {name}</Text >
+      return <Text style={[Styles.darkSemiBold14]}> {name}</Text >
     }
   }
 
@@ -43,11 +43,9 @@ export const ChatUser = ({
             </View>
           )}
         </View>
-        <View style={{ marginHorizontal: 10 }}>
+        <View style={{ marginHorizontal: 5 }}>
           {canParseJSON(name)}
-          {/* <Text style={Styles.darkSemiBold14}>{name}</Text> */}
           {sendr_id != user_id &&
-            // <Text style={Styles.balihaiMedium13} numberOfLines={1}>{text}</Text>
             <Text>{((text)?.length > 30) ?
               (((text).substring(0, 30 - 3)) + '...') :
               text}

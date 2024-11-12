@@ -73,7 +73,9 @@ export const Messages = ({ route, id, setSelected, seleted, setOpenSelect, openS
               <ChecboxUnchekedForMsgSvg />
             }
           </View>}
-          <SharePost my id={item.post.user.id} postData={item.post} name={item.post.user.name} from={from} avatar={item.post.user.avatar} post={item.post.photo[0]?.photo} />
+          <View style={{ marginRight: openSelet ? 20 : 0 }}>
+            <SharePost openSelet={openSelet} onLongPress={() => onLongPress()} my id={item.post.user.id} postData={item.post} name={item.post.user.name} from={from} avatar={item.post.user.avatar} post={item.post.photo[0]?.photo} />
+          </View>
         </TouchableOpacity>
       }
       return (

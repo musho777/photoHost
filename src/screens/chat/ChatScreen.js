@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -30,8 +29,8 @@ export const ChatScreen = ({ route }) => {
   const [seleted, setSelected] = useState([])
   const [askdelateModal, setAskDelateModal] = useState(false)
   const [openSelet, setOpenSelect] = useState(false)
-  // const [chatId,setChatId] = useState()
-  // const []
+
+
 
 
 
@@ -54,7 +53,6 @@ export const ChatScreen = ({ route }) => {
   }
 
   const DelateMessage = () => {
-    console.log("-2")
     setSelected([])
     dispatch(DelateMesageAction(seleted, staticdata.token))
     if (getSinglePageChat.message.length - seleted.length == 0) {
@@ -65,13 +63,6 @@ export const ChatScreen = ({ route }) => {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(getSinglePageChat.message)
-  //   if(getSinglePageChat.message.length){
-
-  //   }
-  // }, [getSinglePageChat])
-  console.log(route.params.id)
 
   return (
     <TouchableOpacity activeOpacity={1} style={[styles.body, Styles.statusBar]}>

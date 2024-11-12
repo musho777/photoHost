@@ -87,7 +87,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             dispatch(MsgCountAction(JSON.parse(event.data)?.message.all_message_count))
           }
           if (JSON.parse(event.data).message.receiver_id == id || JSON.parse(event.data).message.sender_id == id) {
-            // console.log(JSON.parse(event.data).message)
             dispatch(
               NewMsgAction({
                 data: JSON.parse(event.data)?.message,
@@ -120,7 +119,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           }
         }
         else if (JSON.parse(event.data).message.type == 'delete_chat') {
-          console.log("-000")
           dispatch(
             DeleteChatPusherAction({
               reseiver_id: JSON.parse(event.data)?.message?.receiver_id,
@@ -145,7 +143,6 @@ export default Navigation = ({ token, initialRouteName, id }) => {
           )
         }
         else if (JSON.parse(event.data).message.type == 'delete_message') {
-          console.log(JSON.parse(event.data).message)
           dispatch(DelateMessageLocal(JSON.parse(event.data)?.message?.message_id))
         }
       },

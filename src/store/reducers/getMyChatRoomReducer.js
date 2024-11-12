@@ -27,8 +27,6 @@ const GetMyChatRoomReducer = (state = initialState, action) => {
       item.loading = false;
       break;
     case 'SuccessDelateChat':
-      console.log(item.data, action.data)
-
       let i = item.data.findIndex((elm) => (elm.receiver_id == action.data) || (elm.sender_id == action.data))
       if (i >= 0) {
         item.data.splice(i, 1);

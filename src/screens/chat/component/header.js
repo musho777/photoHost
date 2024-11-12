@@ -85,10 +85,10 @@ export const Header = ({ data, route, user, askdelateModal }) => {
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
-      return <Text style={[Styles.darkMedium16, { textAlign: 'center', color: JSON.parse(getSinglePageChat.resiverUser?.name)?.color?.title ? JSON.parse(getSinglePageChat.resiverUser?.name)?.color?.title : "black", fontFamily: JSON.parse(getSinglePageChat.resiverUser?.name)?.font }]}>{JSON.parse(getSinglePageChat.resiverUser.name)?.name}</Text>
+      return <Text style={[Styles.darkSemiBold14, { textAlign: 'center', color: JSON.parse(getSinglePageChat.resiverUser?.name)?.color?.title ? JSON.parse(getSinglePageChat.resiverUser?.name)?.color?.title : "black", fontFamily: JSON.parse(getSinglePageChat.resiverUser?.name)?.font }]}>{JSON.parse(getSinglePageChat.resiverUser.name)?.name}</Text>
 
     } catch (error) {
-      return <Text style={[Styles.darkMedium16, { textAlign: 'center', }]}> {getSinglePageChat.resiverUser.name}</Text >
+      return <Text style={[Styles.darkSemiBold14, { textAlign: 'center', }]}> {getSinglePageChat.resiverUser.name}</Text >
     }
   }
 
@@ -120,7 +120,7 @@ export const Header = ({ data, route, user, askdelateModal }) => {
             uri: `https://chambaonline.pro/uploads/${getSinglePageChat.resiverUser.avatar}`,
           }}
         />
-        <View style={{ marginHorizontal: 15 }}>
+        <View style={{ marginHorizontal: 5 }}>
           {canParseJSON(getSinglePageChat.resiverUser.name)}
         </View>
       </TouchableOpacity>
