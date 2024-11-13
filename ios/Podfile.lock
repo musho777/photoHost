@@ -2,7 +2,6 @@ PODS:
   - boost (1.76.0)
   - BVLinearGradient (2.8.3):
     - React-Core
-  - CropViewController (2.6.1)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.72.2)
   - FBReactNativeSpec (0.72.2):
@@ -478,15 +477,6 @@ PODS:
   - react-native-image-picker (7.1.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - react-native-multiple-image-picker (1.1.9):
-    - CropViewController (= 2.6.1)
-    - React-Core
-    - react-native-multiple-image-picker/Viewer (= 1.1.9)
-    - TLPhotoPicker (= 2.1.9)
-  - react-native-multiple-image-picker/Viewer (1.1.9):
-    - CropViewController (= 2.6.1)
-    - React-Core
-    - TLPhotoPicker (= 2.1.9)
   - react-native-pager-view (6.2.0):
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -613,6 +603,8 @@ PODS:
     - React-perflogger (= 0.72.2)
   - RNCAsyncStorage (1.19.1):
     - React-Core
+  - RNCPushNotificationIOS (1.11.0):
+    - React-Core
   - RNDateTimePicker (7.5.0):
     - React-Core
   - RNDeviceInfo (10.8.0):
@@ -676,7 +668,6 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
-  - TLPhotoPicker (2.1.9)
   - TOCropViewController (2.7.4)
   - TweetNacl (1.0.2)
   - Yoga (1.14.0)
@@ -717,7 +708,6 @@ DEPENDENCIES:
   - "react-native-audio-waveform (from `../node_modules/@simform_solutions/react-native-audio-waveform`)"
   - react-native-contacts (from `../node_modules/react-native-contacts`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
-  - "react-native-multiple-image-picker (from `../node_modules/@baronha/react-native-multiple-image-picker`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
@@ -741,6 +731,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
@@ -758,7 +749,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - CropViewController
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -780,7 +770,6 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - SocketRocket
-    - TLPhotoPicker
     - TOCropViewController
     - TweetNacl
 
@@ -844,8 +833,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-contacts"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
-  react-native-multiple-image-picker:
-    :path: "../node_modules/@baronha/react-native-multiple-image-picker"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -892,6 +879,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
@@ -924,7 +913,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
-  CropViewController: 58fb440f30dac788b129d2a1f24cffdcb102669c
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 565cdf5e3d0dd4b12a9c842f6a4bb5082b5aaa5b
   FBReactNativeSpec: 052fc96c48292cac6ca729d58200ac77890573ab
@@ -970,7 +958,6 @@ SPEC CHECKSUMS:
   react-native-audio-waveform: 351a96a6b413c70b096347c880910dc35b6367b7
   react-native-contacts: cb4f3b823550adbce0802901b9e63bf1526ec0af
   react-native-image-picker: 5e076db26cd81660cfb6db5bcf517cfa12054d45
-  react-native-multiple-image-picker: bfbdaa54e18ba98ca205f5fa7f141976d89247a9
   react-native-pager-view: 0ccb8bf60e2ebd38b1f3669fa3650ecce81db2df
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-slider: 593253eb5fbc6ea519290e812bd477fc6abafd5a
@@ -994,6 +981,7 @@ SPEC CHECKSUMS:
   React-utils: ec05233cf7ee1d7014d41aaa17ec65ceeba8948d
   ReactCommon: 77382645a088a81de55c24bde19c5a2805d891c3
   RNCAsyncStorage: f47fe18526970a69c34b548883e1aeceb115e3e1
+  RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNDateTimePicker: b722c23030b744763cf51d80fc22f354653f65e0
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
@@ -1010,11 +998,10 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  TLPhotoPicker: 939c40eaad130b69f9571e61e021e8120fa76329
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   TweetNacl: 3abf4d1d2082b0114e7a67410e300892448951e6
   Yoga: c79810ea24a2a73b7f39174e78d60f4e28261f33
 
 PODFILE CHECKSUM: b4c80cac9e6869ad60d1805527010c4aa264232c
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

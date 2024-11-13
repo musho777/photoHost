@@ -215,14 +215,6 @@ export const SearchProfil = ({ navigation, route }) => {
                     source={{ uri: `https://chambaonline.pro/uploads/${data?.data.backround_photo}`, }}
                   />
                 </TouchableOpacity>
-                <View style={styles.avatarWrapper1} activeOpacity={1} >
-                  <TouchableOpacity activeOpacity={1} onPress={() => setOpenSlider(true)} style={[styles.shadow, styles.avatar]}>
-                    <Image
-                      style={styles.img}
-                      source={{ uri: `https://chambaonline.pro/uploads/${data?.data.avatar}`, }}
-                    />
-                  </TouchableOpacity>
-                </View>
               </View>
 
 
@@ -238,6 +230,14 @@ export const SearchProfil = ({ navigation, route }) => {
                     JSON.parse(data?.data.description).text
                   }</Text>
                 }
+                <View style={styles.avatarWrapper1} activeOpacity={1} >
+                  <TouchableOpacity activeOpacity={1} onPress={() => setOpenSlider(true)} style={[styles.shadow, styles.avatar]}>
+                    <Image
+                      style={styles.img}
+                      source={{ uri: `https://chambaonline.pro/uploads/${data?.data.avatar}` }}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
 
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     left: 0,
-    bottom: 0,
+    bottom: 85,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 999999,

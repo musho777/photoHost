@@ -64,17 +64,17 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
       </TouchableOpacity>
 
 
+
+    </View>
+    <View style={styles.bgImage}>
       <View style={styles.avatarWrapper1} activeOpacity={1} >
         <TouchableOpacity onPress={() => setChangeAvatar(!changeAvatar)} style={[styles.shadow, styles.avatar]}>
           <Image
             style={styles.img}
-            source={{ uri: imgUrl ? imgUrl : `https://chambaonline.pro/uploads/${user.avatar}`, }}
+            source={{ uri: imgUrl ? imgUrl : `https://chambaonline.pro/uploads/${user.avatar}` }}
           />
         </TouchableOpacity>
       </View>
-
-    </View>
-    <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
         {canParseJSON(user.name)}
         {user.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
@@ -126,15 +126,25 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     left: 0,
-    bottom: -8,
+    bottom: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 999999,
+    zIndex: 9999999999,
   },
   editIcon1: {
     position: 'absolute',
     bottom: 70,
     zIndex: 9999999,
     right: 15,
+  },
+  bgImage: {
+    marginTop: -50,
+    backgroundColor: 'white',
+    width: width,
+    borderTopLeftRadius: 30,
+    borderTopEndRadius: 30,
+    minHeight: 100,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   }
 });

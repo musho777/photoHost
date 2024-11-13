@@ -66,62 +66,62 @@ export const ProfileScreen = () => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={() => setChangeAvatar(false)}
-      >
-        <StatusBar
+    // <SafeAreaView style={{ flex: 1, backgroundColor: 'red' }}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => setChangeAvatar(false)}
+    >
+      {/* <StatusBar
           translucent
           backgroundColor="transparent"
           barStyle={'dark-content'}
-        />
-        <FlatList
-          data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          refreshing={user?.loading}
-          contentContainerStyle={{ paddingHorizontal: 15 }}
-          renderItem={seletedScreen ? renderItem1 : renderItem2}
-          numColumns={2}
-          ListEmptyComponent={ListEmptyComponent}
-          scrollEventThrottle={16}
-          onEndReached={debounce(handleEndReached, 300)}
-          initialNumToRender={5}
-          maxToRenderPerBatch={windowSize}
-          onEndReachedThreshold={0.5}
-          onRefresh={() => {
-            if (!getPosts.loading) {
-              setPage(1);
-              dispatch(getUserInfoAction(staticdata.token));
-            }
-          }}
-
-          ListHeaderComponent={
-            <>
-              <ProfilImage
-                user={user}
-                changeAvatar={changeAvatar}
-                setChangeAvatar={(e) => setChangeAvatar(e)}
-                backroundPhoto={user.data.backround_photo}
-              />
-              <ProfilInfo
-                id={user?.allData?.data?.id}
-                loading={getPosts.loading}
-                postCount={user.postCount}
-                user={user}
-              />
-              <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
-            </>
+        /> */}
+      <FlatList
+        data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
+        keyExtractor={(item) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+        refreshing={user?.loading}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        renderItem={seletedScreen ? renderItem1 : renderItem2}
+        numColumns={2}
+        ListEmptyComponent={ListEmptyComponent}
+        scrollEventThrottle={16}
+        onEndReached={debounce(handleEndReached, 300)}
+        initialNumToRender={5}
+        maxToRenderPerBatch={windowSize}
+        onEndReachedThreshold={0.5}
+        onRefresh={() => {
+          if (!getPosts.loading) {
+            setPage(1);
+            dispatch(getUserInfoAction(staticdata.token));
           }
-          ListFooterComponent={
-            getPosts.secondLoading && (
-              <ActivityIndicator style={styles.loading} size="small" color="#FFC24B" />
-            )}
-        />
+        }}
 
-      </TouchableOpacity>
-    </SafeAreaView >
+        ListHeaderComponent={
+          <>
+            <ProfilImage
+              user={user}
+              changeAvatar={changeAvatar}
+              setChangeAvatar={(e) => setChangeAvatar(e)}
+              backroundPhoto={user.data.backround_photo}
+            />
+            <ProfilInfo
+              id={user?.allData?.data?.id}
+              loading={getPosts.loading}
+              postCount={user.postCount}
+              user={user}
+            />
+            <AlbomAndInfo setSelectedScreen={(e) => setSelectedScreen(e)} seletedScreen={seletedScreen} />
+          </>
+        }
+        ListFooterComponent={
+          getPosts.secondLoading && (
+            <ActivityIndicator style={styles.loading} size="small" color="#FFC24B" />
+          )}
+      />
+
+    </TouchableOpacity>
+    // </SafeAreaView >
   );
 };
 
