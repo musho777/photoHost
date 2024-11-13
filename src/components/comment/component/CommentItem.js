@@ -437,7 +437,7 @@ export const CommentItem = ({
     <View
       style={[
         Styles.flexAlignItems,
-        { alignItems: 'flex-start', marginTop: 15, borderWidth: 1 },
+        { alignItems: 'flex-start', marginTop: 15 },
       ]}>
       <View style={{ flexDirection: 'row' }}>
         <Image
