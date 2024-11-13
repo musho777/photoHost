@@ -19,7 +19,7 @@ import { GetCatalogAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import { t } from '../../components/lang';
 import { ClearCreatPost } from '../../store/action/clearAction';
-import { AddImage, RubbishSvg } from '../../assets/svg/Svgs';
+import { AddImage, CloseSvg1 } from '../../assets/svg/Svgs';
 import { Status } from './component/status';
 import { AppColors } from '../../styles/AppColors';
 import { CommonActions, useFocusEffect } from '@react-navigation/native';
@@ -176,6 +176,9 @@ export const AddImg = ({ navigation }) => {
     else if (index > 0) {
       newIndex = index - 1;
     }
+    if (item.length == 0) {
+      addPhoto([], 0)
+    }
     if (flatListRef.current) {
       flatListRef.current.scrollToIndex({ index: newIndex, animated: true });
     }
@@ -216,8 +219,9 @@ export const AddImg = ({ navigation }) => {
             setLocalHeight(item)
           }}
         />
-        <TouchableOpacity onPress={() => delateFoto(index)} style={{ position: 'absolute', top: 10, right: 10 }}>
-          <RubbishSvg />
+        <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 10, right: 10 }}>
+          {/* <RubbishSvg /> */}
+          <CloseSvg1 />
         </TouchableOpacity>
       </ScrollView>
       <View style={keyboardVisible ? { justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 80, width: '100%' } : { justifyContent: 'center', alignItems: 'center' }}>
@@ -281,7 +285,7 @@ export const AddImg = ({ navigation }) => {
             {"\n"}
             Куда выложить?
             {"\n"}
-            Мы предлагаем такой контент выложить в несколько рубрик (не более 4), где Ваше искусство увидят любители разного.
+            Мы предлагаем такой контент выложить в несколько рубрик (не более 4 - x), где Ваше искусство увидят любители разного.
           </Text>
           <View style={{ alignItems: 'center' }}>
             <TouchableOpacity onPress={() => addPhoto(uri, 1)}>

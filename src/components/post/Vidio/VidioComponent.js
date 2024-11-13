@@ -193,7 +193,7 @@ export const VidioComponent = forwardRef(({
           }}
         />
       </TouchableOpacity>
-      <View style={{ marginVertical: 10, position: 'absolute', bottom: 40, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
+      <View style={{ marginVertical: 10, position: 'absolute', top: 40, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
         {(Description && Description[index]) && !showText &&
           <View style={[{ paddingHorizontal: 10 }]}>
             <View>
@@ -223,7 +223,7 @@ export const VidioComponent = forwardRef(({
           <TouchableOpacity style={{ padding: 10 }} activeOpacity={1}>
             {Description && Description[index] &&
               <View>
-                <Text style={[Styles.darkMedium13, { color: 'white' }]}>
+                <Text style={[Styles.darkMedium13]}>
                   {Description[index]}
                 </Text>
               </View>

@@ -33,10 +33,10 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
       47, 29, 36, 45, 32, 26, 11, 30, 24, 41, 18, 27, 13, 22, 46, 16],
     [17, 42, 23, 35, 11, 30, 49, 14, 27, 45, 32, 19,
       21, 46, 38, 13, 25, 40, 31, 12, 48, 26, 20, 15],
-    [33, 15, 27, 41, 18, 12, 49, 35, 21, 47, 30, 13,
-      44, 26, 19, 50, 23, 37, 11, 40, 29, 16, 32, 22,
-      17, 45, 14, 25, 48, 28, 39, 20, 34, 31, 46, 24,
-      42, 36, 43, 38],
+    // [33, 15, 27, 41, 18, 12, 49, 35, 21, 47, 30, 13,
+    //   44, 26, 19, 50, 23, 37, 11, 40, 29, 16, 32, 22,
+    //   17, 45, 14, 25, 48, 28, 39, 20, 34, 31, 46, 24,
+    //   42, 36, 43, 38],
     [27, 14, 39, 42],
     [12, 29, 46, 34, 22, 18],
     [25, 41]
@@ -112,7 +112,7 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
   ];
 
   const stroyibag = [
-    [1, 2],
+    [10, 15],
     [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
     [15, 16, 17, 18],
     [19, 20, 21, 22, 23, 24, 25, 26],
@@ -123,6 +123,19 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
     [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55]
   ]
 
+  const Anticvar = [
+    [22, 21, 2, 23, 19, 13, 18, 8, 30, 6, 5, 2, 24, 1, 18, 11, 10, 19, 8, 19,
+      11, 28, 1, 22, 15, 19, 29, 7, 9, 19, 30, 25, 1, 30, 1, 25, 18, 14, 3, 5,
+      18, 9],
+    [30, 25, 23, 6, 11, 5, 4, 22, 1, 18, 16, 13, 20, 12, 8, 12, 26, 22, 24, 28,
+      19, 19, 27, 26, 4, 21, 9, 27, 25, 27, 3, 25, 12, 24, 10, 25, 18, 10, 12,
+      26, 27, 24, 30, 27, 13, 24, 18, 20],
+    [19, 2, 14, 16, 10, 7, 27, 5, 22, 9, 21, 7, 20, 12, 22, 18, 1, 2, 21, 7,
+      8, 25, 5, 21, 12, 11, 10, 2, 5, 4, 14, 1, 12, 14, 5, 18, 8, 26, 6, 22,
+      6, 22, 16, 6, 7, 9, 18, 5, 7, 8, 7, 9, 2, 6, 12, 16, 23, 21],
+    [5, 9, 10, 12, 20, 3, 13],
+  ]
+
   const transport = [[48, 31, 23, 36, 35, 42, 38, 11, 44, 39, 28, 39, 10, 32, 41, 40, 39, 26, 27, 41, 46, 29, 42, 21, 34, 39, 31, 41, 34, 12, 42, 34, 41, 38, 44, 32, 41, 41], [26, 36, 34, 45, 50, 14, 43, 37, 39, 29], [47, 16, 10, 17, 18, 14, 12, 28, 19, 25, 45, 10, 20, 22], [18, 17], [10, 10], [33, 18, 18, 49, 41, 14, 28, 30, 16, 28, 24, 21, 15, 39, 24, 23, 32, 12, 28, 24, 24, 17, 32, 40, 25, 44, 40, 18], [47, 16, 19, 16], [13, 39, 39, 49, 32, 16], [13, 16, 47, 15, 22, 15, 49, 20], [18, 45, 47, 44, 50, 39, 23, 32, 15, 31, 26, 20, 13, 21, 26, 47, 16, 25, 42, 33], [50, 46], [33, 35, 35, 50, 23, 39, 31, 48, 14, 36, 37, 17, 31, 36, 46, 50, 17, 10, 17, 16, 15, 49, 13, 39, 42, 17, 48, 26], [20, 39, 24, 36, 13, 45, 29, 38, 30, 21, 34, 30, 29, 16, 49, 41, 25, 19, 10, 14, 30, 15], [12, 48, 17, 49, 13, 34, 12, 23, 35, 45, 50, 30, 43, 22, 11, 38], [10, 13, 41, 48, 34, 36, 43, 35, 15, 35, 12, 48, 38, 35, 22, 20, 42, 38, 29, 47, 15, 30, 30, 30, 20, 18, 50, 11, 29, 42, 43, 21, 15, 29, 14, 31, 50, 19], [34, 13, 24, 29, 49, 15, 13, 23, 34, 32, 38, 47, 40, 38, 17, 32, 17, 37, 38, 34, 23, 43, 30, 46]]
   const [emojy, setEmojy] = useState([])
 
@@ -131,50 +144,37 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
     const uniqueCategoryIds = [...new Set(getSound.data.map(item => item.category_id))];
     let emojys = []
     uniqueCategoryIds.map((elm, i) => {
+      console.log(elm)
       if (elm == 138) {
-        // [...array1, ...array2];
-        // temp = temp.concat(Eda)
-        Eda.map((elm, i) => {
-          emojys.push("")
+        let emojy1 = ["🍎", "🍕", '🥕', '🍏', '🥤', '🥛', '🤩']
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
         })
         temp = [...temp, ...Eda]
-        // setWaveformData(temp)
       }
       else if (elm == 170) {
-        // temp = temp.concat(musInst)
-        musInst.map((elm, i) => {
-          emojys.push("")
+        let emojy1 = ["🎹", "🎶", '🎸', '🎷', '🎸', '🪇', "🎼", '🎹', '🎸',]
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
         })
-        temp = [...temp, ...musInst]
 
-        // setWaveformData(temp)
-        // setWaveformData([...item, ...musInst])
-        // setWaveformData(musInst)
+        temp = [...temp, ...musInst]
       }
       else if (elm == 164) {
-        // setWaveformData(animals)
-        // setWaveformData([...item, ...animals])
-        // temp = temp.concat(animals)
-
         temp = [...temp, ...animals]
 
-        // setWaveformData(temp)
         let emojy1 = ["🐥", "🐦", '🐈', '🦆', '🐔', '🐶', '🐕', '🦮', '🐺', '🐅', '🐄', '🐎', '🐯']
         emojy1.map((elm, i) => {
           emojys.push(elm)
         })
-        // setEmojy(["🐥", "🐦", '🐈', '🦆', '🐔', '🐶', '🐕', '🦮', '🐺', '🐅', '🐄', '🐎', '🐯'])
       }
       else if (elm == 160) {
-        // temp = temp.concat(PrirodaYavlenia)
         temp = [...temp, ...PrirodaYavlenia]
-        PrirodaYavlenia.map((elm, i) => {
-          emojys.push("")
-        })
+        let emojy1 = ["🌧", "☔", '🚰', '⛈️', '⚡', '⛈️']
 
-        // setWaveformData(temp)
-        // setWaveformData([...item, ...PrirodaYavlenia])
-        // setWaveformData(PrirodaYavlenia)
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
+        })
       }
       else if (elm == 159) {
         // setWaveformData(Priroda)
@@ -182,11 +182,6 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
         Priroda.map((elm, i) => {
           emojys.push("")
         })
-
-        // temp = temp.concat(Priroda)
-
-        // setWaveformData([...item, ...Priroda])
-
       }
       else if (elm == 156) {
         temp = [...temp, ...fest]
@@ -194,52 +189,45 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
           emojys.push("")
         })
 
-        // setWaveformData(fest)
-        // temp = temp.concat(fest)
-
-        // setWaveformData([...item, ...fest])
-
       }
       else if (elm == 154) {
         temp = [...temp, ...sport]
-        sport.map((elm, i) => {
-          emojys.push("")
+
+        let emojy1 = ["🏁", "🏀", '🥋', '🏆', '🥳', '🏃']
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
         })
 
-        // temp = temp.concat(sport)
-
-        // setWaveformData([...item, ...sport])
-        // setWaveformData(sport)
       }
       else if (elm == 142) {
-        stroyInst.map((elm, i) => {
-          emojys.push("")
+        let emojy1 = ['🛠', '🛠', require('../../../assets/img/drill2-min.png'), require('../../../assets/img/vacuu.png')]
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
         })
         temp = [...temp, ...stroyInst]
-
-        // temp = temp.concat(stroyInst)
-
-        // setWaveformData([...item, ...stroyInst])
-        // setWaveformData(stroyInst)
       }
       else if (elm == 141) {
-        stroyibag.map((elm, i) => {
-          emojys.push("")
+        let emojy1 = [require('../../../assets/img/drill.png'), require('../../../assets/img/drill-min.png'), '🔨', require('../../../assets/img/drill-satire-min.png'), '🪚', require('../../../assets/img/bosch-drill-min.png'), require('../../../assets/img/welding-helmet--min.png'), '🔧', require('../../../assets/img/drilln.png')]
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
         })
         temp = [...temp, ...stroyibag]
-        // temp = temp.concat(stroyibag)
-
-        // setWaveformData([...item, ...stroyibag])
-        // setWaveformData(stroyibag)
       }
       else if (elm == 136) {
-        transport.map((elm, i) => {
-          emojys.push("")
+        let emojy1 = ["🏎️", "🏍️", require('../../../assets/img/red-sport-car-min.png'), '🚗', '🚖', '🛻', '🚚', require('../../../assets/img/sport-car-min.png'), require('../../../assets/img/sport-car.png'), require('../../../assets/img/sport-car2.png'), '🚍', '🚘', '🚜', '🚜', '🚁', '🚆']
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
         })
         temp = temp.concat(transport)
 
-        // setWaveformData([...item, ...transport])
-        // setWaveformData(transport)
+      }
+      else if (elm == 166) {
+        let emojy1 = ['🎥', '🕰', '📺', '🗝']
+
+        emojy1.map((elm, i) => {
+          emojys.push(elm)
+        })
+        temp = temp.concat(Anticvar)
       }
     })
     setEmojy(emojys)
@@ -315,6 +303,13 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
   //   }
   // }, [getSound.data]);
 
+  function isEmoji(char) {
+    if (char > 0 && char < 1400) {
+      return true
+    }
+    return false
+  }
+
   return <BootomModal
     ref={ref}
     snapPoints={snapPoints}
@@ -347,9 +342,16 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
                 }
               </TouchableOpacity>}
             <View>
-              {<Text style={{ fontSize: 25 }}>
-                {emojy[index]}
-              </Text>}
+              {!isEmoji(emojy[index]) ?
+                <Text style={{ fontSize: 25 }}>
+                  {emojy[index]}
+                </Text> :
+                <View>
+                  {emojy[index] &&
+                    <Image style={{ width: 35, height: 35, objectFit: 'contain' }} source={emojy[index]} />
+                  }
+                </View>
+              }
             </View>
           </View>
           <Waveform
