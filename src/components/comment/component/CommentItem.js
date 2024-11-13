@@ -363,10 +363,10 @@ export const CommentItem = ({
         <FastImage source={{ uri: text }} style={styles.image} />
       </View>
     }
+
     else if (checkIfEmoji(text)) {
       return <View >
         <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
-
         <Text style={[Styles.darkMedium13]}>
           {text}
         </Text>
@@ -439,30 +439,29 @@ export const CommentItem = ({
         Styles.flexAlignItems,
         { alignItems: 'flex-start', marginTop: 15 },
       ]}>
-      <View >
+      <View style={{ flexDirection: 'row' }}>
         <Image
           style={ansswer ? styles.answerImg : styles.img}
           source={{ uri: `https://chambaonline.pro/uploads/${user?.avatar}` }}
         />
-      </View>
-      <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>
-        {TextType(text)}
-        <View style={Styles.flexAlignItems}></View>
-        <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-          <Text style={Styles.balihaiMedium13}>{daysAgo}</Text>
-          {(!owner && !ansswer) && <TouchableOpacity
-            onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
-            <Text>ответить</Text>
-          </TouchableOpacity>}
-          {myuser.allData?.data?.id == user?.id &&
-            <TouchableOpacity
-              style={{ marginBottom: 2 }}
-              onPress={() => {
-                StopSound()
-                onDeletComment(id, parent_id)
-              }}>
-              <Text style={Styles.balihaiMedium13}>удалить</Text>
+        <View style={[{ marginLeft: 10, marginTop: -3 }, owner ? { width: '80%' } : { width: '75%' }]}>
+          {TextType(text)}
+          <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
+            <Text style={Styles.balihaiMedium13}>{daysAgo}</Text>
+            {(!owner && !ansswer) && <TouchableOpacity
+              onPress={() => onPressAnsswer({ name: user?.name, id: id })}>
+              <Text>ответить</Text>
             </TouchableOpacity>}
+            {myuser.allData?.data?.id == user?.id &&
+              <TouchableOpacity
+                style={{ marginBottom: 2 }}
+                onPress={() => {
+                  StopSound()
+                  onDeletComment(id, parent_id)
+                }}>
+                <Text style={Styles.balihaiMedium13}>удалить</Text>
+              </TouchableOpacity>}
+          </View>
         </View>
       </View>
       <View style={styles.like}>
