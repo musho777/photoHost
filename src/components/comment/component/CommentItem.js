@@ -9,6 +9,9 @@ import { CommentLikeSvg } from '../../../assets/svg/Svgs';
 import { AppColors } from '../../../styles/AppColors';
 import Sound from 'react-native-sound';
 import { Waveform } from './Waveform';
+import { DelateModal } from '../../DelateModel';
+import { t } from '../../lang';
+
 
 export const CommentItem = ({
   text,
@@ -37,9 +40,12 @@ export const CommentItem = ({
   const [intervalId, setIntervalId] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [endReach, setEndReach] = useState(false)
+  const mainData = useSelector(st => st.mainData);
+
 
   const getSound = useSelector((st) => st.getSound)
 
+  const [show, setShow] = useState(false)
 
 
 
@@ -439,6 +445,19 @@ export const CommentItem = ({
         Styles.flexAlignItems,
         { alignItems: 'flex-start', marginTop: 15 },
       ]}>
+
+      <DelateModal
+        Confirm={() => {
+          StopSound()
+          onDeletComment(id, parent_id)
+        }}
+        confirmText={t(mainData.lang).Delete}
+        title={"Удалить комментарий ?"}
+
+        show={show}
+        setModalVisible={(e) => setShow(e)}
+      />
+
       <View style={{ flexDirection: 'row' }}>
         <Image
           style={ansswer ? styles.answerImg : styles.img}
@@ -456,9 +475,11 @@ export const CommentItem = ({
               <TouchableOpacity
                 style={{ marginBottom: 2 }}
                 onPress={() => {
-                  StopSound()
-                  onDeletComment(id, parent_id)
-                }}>
+                  // StopSound()
+                  setShow(true)
+                  // onDeletComment(id, parent_id)
+                }}
+              >
                 <Text style={Styles.balihaiMedium13}>удалить</Text>
               </TouchableOpacity>}
           </View>

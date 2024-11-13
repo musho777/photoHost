@@ -111,7 +111,7 @@ export const t = (lang = 'ru') => {
             Contacts: "Контакты",
             Edit: "Редактировать",
             Confirmpassword: "Подтвердите пароль",
-            Deletepost: "Удалить пост",
+            Deletepost: "Удалить публикацию",
             Companyname: 'Название компании',
             search: "Поиск",
             Notfound: "Не найдено",

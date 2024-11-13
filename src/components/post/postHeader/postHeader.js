@@ -55,8 +55,7 @@ export const PostHeader = ({
         setShow(false)
       }}
       confirmText={t(mainData.lang).Delete}
-      title={t(mainData.lang).Areyousureyouwanttodelete}
-
+      title={"Удалить публикацию ?"}
       show={show}
       setModalVisible={(e) => setShow(e)}
     />

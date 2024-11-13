@@ -11272,6 +11272,7 @@ __metadata:
     react-native-multiple-select: ^0.5.12
     react-native-pager-view: ^6.2.0
     react-native-permissions: ^3.8.4
+    react-native-progress: ^5.0.1
     react-native-push-notification: ^8.1.1
     react-native-reanimated: ^3.15.0
     react-native-safe-area-context: 3.3.2
@@ -11958,6 +11959,17 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: 8eb1b2c472d7f9934baeed68830b3b92569a4cc47f3ef5319b462bf84a7dedf16cbb873a33b2e3efc2fc40c640c454b2d2e0b7a26351e858e367906226d06e8e
+  languageName: node
+  linkType: hard
+
+"react-native-progress@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "react-native-progress@npm:5.0.1"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react-native-svg: "*"
+  checksum: fc9b68f1ca381b011859f8900c89595d62461cfa5b4faf65527639e8d8247d494cc75d5eb86e6dd393bca8dec18996b451775670d7ef2ae70247fa4079c9a8cf
   languageName: node
   linkType: hard
 

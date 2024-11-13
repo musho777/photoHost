@@ -1,11 +1,29 @@
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import { Styles } from '../../styles/Styles'
+import * as Progress from 'react-native-progress';
+import { useEffect, useState } from 'react';
 
 export const AddImageLoading = ({ uri }) => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        const newProgress = prev + 0.02;
+        if (newProgress >= 0.9) { // Stop at 90%
+          clearInterval(interval);
+          return 0.9;
+        }
+        return newProgress;
+      });
+    }, 5); // 10 ms interval for a smooth animation over 1 second
+
+    return () => clearInterval(interval);
+  }, []);
   return <SafeAreaView style={styles.wrapper}>
     <View style={styles.loadingVidio}>
       {uri && <Image source={{ uri: uri }} style={styles.image} />}
-      <Text style={Styles.homeTitle}>Загрузка</Text>
+      {/* <Text style={Styles.homeTitle}>Загрузка</Text> */}
+      <Progress.Pie color='#fbd433' progress={progress} width={40} />
     </View>
   </SafeAreaView>
 }

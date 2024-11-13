@@ -17,10 +17,10 @@ export const DelateModal = ({ show, Confirm, setModalVisible, title, confirmText
         <Text style={styles.modalText}>{title}</Text>
         <View style={styles.buttonWrapper}>
           <TouchableOpacity onPress={() => Confirm()} >
-            <Text style={[Styles.darkSemiBold14, { color: 'red' }]}>{confirmText}</Text>
+            <Text style={[Styles.darkSemiBold14, { color: 'red' }]}>Да</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setModalVisible(false)}>
-            <Text style={[Styles.darkSemiBold14]}>{t(mainData.lang).Cancel}</Text>
+            <Text style={[Styles.darkSemiBold14]}>Нет</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -49,10 +49,12 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
-    color: 'black'
+    color: 'black',
+    textAlign: 'center'
   },
   buttonWrapper: {
     gap: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 });
