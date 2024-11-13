@@ -834,7 +834,7 @@ export async function DeleteTokenSorage() {
   await AsyncStorage.removeItem('token');
 }
 
-export const CreatPostAction = (data, token) => {
+export const CreatPostAction = (data, token, id) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'multipart/form-data');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -851,6 +851,7 @@ export const CreatPostAction = (data, token) => {
       .then(r => {
         if (r.status) {
           dispatch(GetLentsAction(token));
+          dispatch(GetPostsAction({ user_id: id }, token, 1));
           dispatch(SuccessCreatePost(r));
           dispatch(getUserInfoAction(token))
 

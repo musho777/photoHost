@@ -268,7 +268,7 @@ export const EditProfilScreen = ({ navigation }) => {
               />
             </View>
             <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 10 }]}>
-              Выберите цвет и шрифт для имени и фамилии или названия канала.
+              Выберите шрифт и цвет для имени и фамилии или названия канала.
             </Text>
             <View style={{ marginBottom: 10 }}>
               <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>

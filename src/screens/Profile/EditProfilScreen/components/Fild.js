@@ -83,7 +83,7 @@ export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline,
 
   if (discription) {
     return <View >
-      <View style={[styles.textWrapper, { borderBottomWidth: 1 }]}>
+      <View style={[styles.textWrapper, { borderBottomWidth: 1, height: 'auto' }]}>
         {svg && <View style={{ width: 20, marginRight: 10 }}>
           {svg}
         </View>}

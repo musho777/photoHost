@@ -31,6 +31,8 @@ export const Header = ({
   const navigation = useNavigation()
   const [selectedCatalogName, setSelectedCatalogName] = useState([])
   const getCatalog = useSelector((st) => st.getCatalog)
+  const userData = useSelector(st => st.userData);
+
 
 
 
@@ -88,7 +90,8 @@ export const Header = ({
         params: { param: 'add_image' },
       });
       setFirst(false)
-      dispatch(CreatPostAction(form, staticData.token));
+
+      dispatch(CreatPostAction(form, staticData.token, userData.data?.id));
     }
     else if (selectedCatalog == '') {
       setErrorCatalog(true)
