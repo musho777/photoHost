@@ -91,13 +91,12 @@ export const StatisticList = ({ id, token, vidio }) => {
     return data.map((item) => {
       const maxStatistic = item.statistics.reduce((max, current) =>
         current.count > max.count ? current : max, item.statistics[0]);
-
       const gender = maxStatistic.gender === "men" ? "M" : "Ж";
       let date = new Date(item.date)
-      const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if necessary
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = String(date.getFullYear()).slice(2);
-      if (maxStatistic.count > 0)
+      if (maxStatistic.count)
         return [`${day}.${month}.${year}`, item.hour_range, gender, maxStatistic.year, maxStatistic.count];
     });
   }
@@ -113,8 +112,10 @@ export const StatisticList = ({ id, token, vidio }) => {
   useEffect(() => {
     let result = []
     if (getStatistic2.data.length >= 0) {
+      console.log(getStatistic2.data)
       result = getMaxCountItem(getStatistic2.data);
     }
+    console.log(getStatistic2.data.length)
     setTableDat(result)
   }, [getStatistic2.data])
 
