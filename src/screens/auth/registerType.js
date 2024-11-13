@@ -6,7 +6,6 @@ import { t } from '../../components/lang';
 import { useRef, useState } from "react";
 import { TypeBlock } from "./component/typeblock";
 import { useNavigation } from "@react-navigation/native";
-import Accordion from "@gapur/react-native-accordion";
 import { DownSvg, TopArrow } from "../../assets/svg/Svgs";
 
 export const RegisterType = () => {

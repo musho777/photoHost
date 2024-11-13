@@ -258,7 +258,7 @@ export const EditProfilScreen = ({ navigation }) => {
                 title={t(mainData.lang).Editprofile}
               />
             </View>
-            <View style={styles.textWrapper}>
+            <View style={[styles.textWrapper]}>
               <TextInput
                 multiline
                 value={name.name}
@@ -267,8 +267,8 @@ export const EditProfilScreen = ({ navigation }) => {
                 style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: name?.color?.title, fontFamily: name?.font }]}
               />
             </View>
-            <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 10 }]}>
-              Выберите шрифт и цвет для имени и фамилии или названия канала.
+            <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 10, marginTop: 10 }]}>
+              Выбрать другое шрифт и цвет для имени и фамилии или названия канала
             </Text>
             <View style={{ marginBottom: 10 }}>
               <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>

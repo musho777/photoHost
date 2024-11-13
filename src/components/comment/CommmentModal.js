@@ -39,7 +39,7 @@ export const CommmentModal = ({ close, commentData, CommentCount = () => { } }) 
   return (
     <BottomSheet
       index={0}
-      snapPoints={['80%']}
+      snapPoints={['65%']}
       onClose={() => {
         dispatch(ShowTabNavigation())
         close()

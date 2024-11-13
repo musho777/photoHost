@@ -252,7 +252,7 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
 
 const styles = StyleSheet.create({
   body: {
-    height: '90%',
+    height: '88%',
   },
   keyboardAvoidingView: {
     flex: 1,

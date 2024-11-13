@@ -1,12 +1,11 @@
-import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, FlatList, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Text, Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppColors } from '../../styles/AppColors';
 import { Slider } from '../Slider';
 import { PostHeader } from './postHeader/postHeader';
 import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
-import { Styles } from '../../styles/Styles';
 
 const windowWidth = Dimensions.get('window').width;
 

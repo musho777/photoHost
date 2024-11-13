@@ -437,16 +437,16 @@ export const CommentItem = ({
     <View
       style={[
         Styles.flexAlignItems,
-        { alignItems: 'flex-start', marginTop: 15 },
+        { alignItems: 'flex-start', marginTop: 15, borderWidth: 1 },
       ]}>
       <View style={{ flexDirection: 'row' }}>
         <Image
           style={ansswer ? styles.answerImg : styles.img}
           source={{ uri: `https://chambaonline.pro/uploads/${user?.avatar}` }}
         />
-        <View style={[{ marginLeft: 10, marginTop: -3 }, owner ? { width: '80%' } : { width: '75%' }]}>
+        <View style={[{ marginLeft: 10, marginTop: -10 }, owner ? { width: '80%' } : { width: '75%' }]}>
           {TextType(text)}
-          <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', gap: 20, marginTop: 2, alignItems: 'center' }}>
             <Text style={Styles.balihaiMedium13}>{daysAgo}</Text>
             {(!owner && !ansswer) && <TouchableOpacity
               onPress={() => onPressAnsswer({ name: user?.name, id: id })}>

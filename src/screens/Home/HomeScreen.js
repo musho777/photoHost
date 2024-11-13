@@ -274,12 +274,6 @@ export const HomeScreen = () => {
         open={showShare}
         user_id={userData?.allData.data?.id}
       />}
-      {showShare && <Share
-        close={() => setShowShare(false)}
-        postId={selecteidId}
-        open={showShare}
-        user_id={userData?.allData.data?.id}
-      />}
       {showComment && <CommmentModal
         close={() => setShowComment(false)}
         postId={selecteidId}

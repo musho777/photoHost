@@ -26,7 +26,7 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
     setShowText(!showText)
     // setIsExpanded()
     Animated.timing(heightAnim, {
-      toValue: show ? 300 : 0,
+      toValue: show ? 400 : 0,
       duration: 400,
       easing: Easing.linear,
       useNativeDriver: false,
