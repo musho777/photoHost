@@ -202,14 +202,12 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
 
   return (
     <View style={styles.body}>
-      <View style={{ flex: 1, paddingHorizontal: 15 }}>
-
+      <View style={{ paddingHorizontal: 15 }}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={getComments.data}
           contentContainerStyle={styles.scrollViewContent}
           onEndReached={() => { onEndReached() }}
-          ListEmptyComponent={() => Empty()}
           renderItem={renderItem}
           refreshControl={
             <RefreshControl
@@ -222,7 +220,7 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
             />
           }
         />
-        <View style={[styles.bottom, isKeyboardVisible && { marginBottom: 25 }]}>
+        <View style={styles.bottom}>
           <InputComponent
             sendCommentFunction={() => sendCommentFunction()}
             sendComment={sendComment}
@@ -252,10 +250,8 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
 
 const styles = StyleSheet.create({
   body: {
-    height: '88%',
-  },
-  keyboardAvoidingView: {
-    flex: 1,
+    height: '100%',
+    paddingTop: 30,
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -270,6 +266,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    marginBottom: 5,
+    marginBottom: 10,
   }
 });

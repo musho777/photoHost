@@ -47,15 +47,12 @@ export const CommmentModal = ({ close, commentData, CommentCount = () => { } }) 
       enablePanDownToClose={true}
       backdropComponent={renderBackdrop}>
       <View
-        style={[
-          Styles.flexAlignItems,
-          { justifyContent: 'center', marginVertical: 20 },
-        ]}>
-        <Text style={[Styles.darkMedium16, { marginHorizontal: 10 }]}>
+        style={{ alignItems: 'center', justifyContent: 'space-between', }}>
+        <Text style={[Styles.darkMedium16, { marginHorizontal: 10, position: 'absolute' }]}>
           {t(mainData.lang).comments}
         </Text>
+        <Comments CommentCount={(e) => CommentCount(e)} commentData={commentData} />
       </View>
-      <Comments CommentCount={(e) => CommentCount(e)} commentData={commentData} />
     </BottomSheet>
   );
 }
