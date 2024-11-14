@@ -14,11 +14,11 @@ import { DonwSvg } from '../../assets/svg/Svgs';
 import { UserItem } from './compeont/userItem';
 
 export const StatisticList = ({ id, token, vidio }) => {
-  const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'Кол во просмотров ']
+  const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'Кол во Пользователей']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
-  const widthArr = [70, 50, 40, 70, 90]
+  const widthArr = [70, 50, 40, 60, 120]
   const getPostView = useSelector(st => st.getPostView);
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
@@ -28,8 +28,9 @@ export const StatisticList = ({ id, token, vidio }) => {
   const [getMinView, setGetMinView] = useState(null)
 
   const [datau, setDatau] = useState([])
-
   const [datay, setDatay] = useState([])
+  const [datayg, setDatayg] = useState([])
+
 
   const getVidioStatistic = useSelector((st) => st.getVidioStatistic)
 
@@ -93,7 +94,6 @@ export const StatisticList = ({ id, token, vidio }) => {
 
   function getMaxCountItem(data) {
     return data.map((item) => {
-      console.log(item.statistics)
       const maxStatistic = item.statistics.reduce((max, current) =>
         current.count > max.count ? current : max, item.statistics[0]);
       const gender = maxStatistic.gender === "men" ? "M" : "Ж";
@@ -124,6 +124,23 @@ export const StatisticList = ({ id, token, vidio }) => {
 
   function getMaxCountItemUnY(data) {
     return data.map((item) => {
+      const maxStatistic = item.statistics_unknown_year.reduce((max, current) =>
+        current.count > max.count ? current : max, item.statistics_unknown_year[0]);
+      // const gender = 'U';
+      const gender = maxStatistic.gender === "men" ? "M" : "Ж";
+      let date = new Date(item.date)
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = String(date.getFullYear()).slice(2);
+      setDatay(data)
+      if (maxStatistic.count) {
+        return [`${day}.${month}.${year}`, item.hour_range, gender, "не указан", maxStatistic.count];
+      }
+    });
+  }
+
+  function getMaxCountItemUnYG(data) {
+    return data.map((item) => {
       const maxStatistic = item.statistics_unknown.reduce((max, current) =>
         current.count > max.count ? current : max, item.statistics_unknown[0]);
       // const gender = 'U';
@@ -151,14 +168,18 @@ export const StatisticList = ({ id, token, vidio }) => {
     let result = []
     let resut1 = []
     let resut2 = []
+    let resut3 = []
     if (getStatistic2.data.length >= 0) {
+      console.log(getStatistic2.data)
       result = getMaxCountItem(getStatistic2.data);
       resut1 = getMaxCountItemUnG(getStatistic2.data)
       resut2 = getMaxCountItemUnY(getStatistic2.data)
+      resut3 = getMaxCountItemUnYG(getStatistic2.data)
     }
     setTableDat(result)
     setDatau(resut1)
     setDatay(resut2)
+    setDatayg(resut3)
   }, [getStatistic2.data])
 
 
@@ -263,7 +284,7 @@ export const StatisticList = ({ id, token, vidio }) => {
             </View>
           </ScrollView>
 
-          <Text style={[{ marginTop: 20, marginBottom: 10, paddingHorizontal: 15 }, Styles.balihaiMedium13]}>Пол не указан</Text>
+          <Text style={[{ marginTop: 20, marginBottom: 10, paddingHorizontal: 15 }, Styles.balihaiMedium13]}>Не указан пол</Text>
           <ScrollView contentContainerStyle={{ justifyContent: 'center', width: '100%' }} horizontal={true}>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Table >
@@ -273,6 +294,30 @@ export const StatisticList = ({ id, token, vidio }) => {
                 <Table>
                   {
                     datay?.map((rowData, index) => {
+                      return <Row
+                        key={index}
+                        data={rowData}
+                        widthArr={widthArr}
+                        style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
+                        textStyle={styles.textStyle}
+                      />
+                    })
+                  }
+                </Table>
+              </ScrollView>
+            </View>
+          </ScrollView>
+
+          <Text style={[{ marginTop: 20, marginBottom: 10, paddingHorizontal: 15 }, Styles.balihaiMedium13]}>Не указан возраст и пол</Text>
+          <ScrollView contentContainerStyle={{ justifyContent: 'center', width: '100%' }} horizontal={true}>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Table >
+                <Row data={tableHead} widthArr={widthArr} style={styles.header} textStyle={styles.textStyle} />
+              </Table>
+              <ScrollView style={styles.dataWrapper}>
+                <Table>
+                  {
+                    datayg?.map((rowData, index) => {
                       return <Row
                         key={index}
                         data={rowData}
@@ -310,6 +355,7 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: 'rgba(255,194,75,0.8)',
     borderRadius: 10,
+    borderBottomWidth: 1,
   },
   row: {
     height: 40,

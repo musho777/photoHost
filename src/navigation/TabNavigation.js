@@ -15,6 +15,7 @@ import { Styles } from '../styles/Styles';
 import { t } from '../components/lang';
 import { BootomModal } from '../components/BootomSheet';
 import { AddPhotoSvg, NoteSvg } from '../assets/svg/Svgs';
+import DeviceInfo from 'react-native-device-info';
 
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
@@ -185,7 +186,8 @@ export const TabNavigation = () => {
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
   const LogOut = async () => {
-    dispatch(LogoutAction(staticdata.token))
+    const deviceId = await DeviceInfo.getUniqueId();
+    dispatch(LogoutAction(staticdata.token, deviceId))
     dispatch(ClearLoginAction())
     dispatch(ClearUser())
     navigation.reset({

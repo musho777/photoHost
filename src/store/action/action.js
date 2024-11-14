@@ -804,7 +804,7 @@ export const NewMsgAction = data => {
   };
 };
 
-export const LogoutAction = token => {
+export const LogoutAction = (token, deviceId) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -813,6 +813,7 @@ export const LogoutAction = token => {
     fetch(`${Api}/logout`, {
       method: 'POST',
       headers: myHeaders,
+      body: JSON.stringify({ phone_id: deviceId }),
     })
       .then(response => response.json())
       .then(r => {
@@ -1348,7 +1349,6 @@ export const DelateChatAction = (data, token, room) => {
     fetch(`${Api}/delete_chat`, requestOptions)
       .then(response => response.json())
       .then(r => {
-        console.log(r)
         if (r.status) {
           dispatch(SuccessDelateChat(data.receiver_id))
         }

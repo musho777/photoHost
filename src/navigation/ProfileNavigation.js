@@ -18,6 +18,7 @@ import { SettingsNavigation } from './SettingsNavigation';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import { useEffect, useState } from 'react';
 import { DelateModal } from '../components/DelateModel';
+import DeviceInfo from 'react-native-device-info';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
@@ -28,7 +29,8 @@ function CustomDrawerContent(props) {
   const LogOut = async () => {
     setShowModal(false)
     dispatch(ShowTabNavigation())
-    dispatch(LogoutAction(staticdata.token))
+    const deviceId = await DeviceInfo.getUniqueId();
+    dispatch(LogoutAction(staticdata.token, deviceId))
     dispatch(ClearLoginAction())
     dispatch(ClearUser())
     props.navigation.reset({

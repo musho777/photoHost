@@ -144,7 +144,6 @@ export const MusicPlay = forwardRef(({ categoryID, onSend }, ref) => {
     const uniqueCategoryIds = [...new Set(getSound.data.map(item => item.category_id))];
     let emojys = []
     uniqueCategoryIds.map((elm, i) => {
-      console.log(elm)
       if (elm == 138) {
         let emojy1 = ["🍎", "🍕", '🥕', '🍏', '🥤', '🥛', '🤩']
         emojy1.map((elm, i) => {
