@@ -14,7 +14,7 @@ import { DonwSvg } from '../../assets/svg/Svgs';
 import { UserItem } from './compeont/userItem';
 
 export const StatisticList = ({ id, token, vidio }) => {
-  const tableHead = ['Дата', 'Время', 'Пол', 'Возраст', 'Кол во Пользователей']
+  const tableHead = ['Дата \n', 'Время \n', 'Пол \n', 'Возраст \n', 'Кол во Пользователей']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
@@ -170,7 +170,6 @@ export const StatisticList = ({ id, token, vidio }) => {
     let resut2 = []
     let resut3 = []
     if (getStatistic2.data.length >= 0) {
-      console.log(getStatistic2.data)
       result = getMaxCountItem(getStatistic2.data);
       resut1 = getMaxCountItemUnG(getStatistic2.data)
       resut2 = getMaxCountItemUnY(getStatistic2.data)
@@ -342,7 +341,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 10,
     color: AppColors.Charcoal_Color,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   line: {
     borderBottomWidth: 0.5,

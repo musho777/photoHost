@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   buttonWrapper: {
-    gap: 10,
+    gap: 30,
     alignItems: 'center',
     flexDirection: 'row'
   }
