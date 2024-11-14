@@ -2083,6 +2083,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@baronha/react-native-multiple-image-picker@npm:^1.1.9":
+  version: 1.1.9
+  resolution: "@baronha/react-native-multiple-image-picker@npm:1.1.9"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 309d0842967673a97687f34107dce627e91a200c69e898970a854f3c76ced273f4835ac69d82e3e84f5a8fcbe6c8d9ae0c25bf0bd3fccf42da2b3c54aef08d3d
+  languageName: node
+  linkType: hard
+
 "@bcoe/v8-coverage@npm:^0.2.3":
   version: 0.2.3
   resolution: "@bcoe/v8-coverage@npm:0.2.3"
@@ -3793,18 +3803,6 @@ __metadata:
   dependencies:
     invariant: ^2.2.4
   checksum: 579a32a7e8efa489ff2fbbb918429b55164a49585aaa46ce6ef49f5bbdfe6bea4ad354da82f437d54e0ffd38ccd85a32b744d61f1bfe79cc9ed6de0c737ae307
-  languageName: node
-  linkType: hard
-
-"@react-native-community/push-notification-ios@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "@react-native-community/push-notification-ios@npm:1.11.0"
-  dependencies:
-    invariant: ^2.2.4
-  peerDependencies:
-    react: ">=16.6.3"
-    react-native: ">=0.58.4"
-  checksum: d8c8cdd0d4e8112752a13bf2c426618ec8edd91eacadf03f05375648b5f12ffa761e8676e9d6ac9e5bc5ded73c991ab2219c67fe02e110dfaf38f4cb59695868
   languageName: node
   linkType: hard
 
@@ -11210,6 +11208,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
+    "@baronha/react-native-multiple-image-picker": ^1.1.9
     "@gapur/react-native-accordion": ^1.0.7
     "@gorhom/bottom-sheet": ^4.6.3
     "@miblanchard/react-native-slider": ^2.6.0
@@ -11217,7 +11216,6 @@ __metadata:
     "@pusher/pusher-websocket-react-native": ^1.3.0
     "@react-native-async-storage/async-storage": ^1.19.1
     "@react-native-community/datetimepicker": ^7.5.0
-    "@react-native-community/push-notification-ios": ^1.11.0
     "@react-native-community/slider": ^4.5.2
     "@react-native-firebase/app": ^18.3.0
     "@react-native-firebase/messaging": ^18.3.0

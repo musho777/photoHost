@@ -99,7 +99,6 @@ export const t = (lang = 'ru') => {
             bell: "bell",
             Doyoureallywanttoexit: "Do you really want to exit?",
             Nosoundsavailable: "No sounds available",
-            // Addphoto: "Add photo",
             Addtext: "Note",
             ChangeBackgroundStyle: "Change Background Style"
         }
@@ -204,7 +203,6 @@ export const t = (lang = 'ru') => {
             bell: "Колокол",
             Doyoureallywanttoexit: "Вы действительно хотите выйти?",
             Nosoundsavailable: "Нет доступных звуков",
-            // Addphoto: "Добавить фото",
             Addtext: "Запись",
             ChangeBackgroundStyle: "Изменить стиль фона"
         }

@@ -27,6 +27,10 @@ export const StatisticList = ({ id, token, vidio }) => {
   const [getMaxView, setGetMaxView] = useState(null)
   const [getMinView, setGetMinView] = useState(null)
 
+  const [datau, setDatau] = useState([])
+
+  const [datay, setDatay] = useState([])
+
   const getVidioStatistic = useSelector((st) => st.getVidioStatistic)
 
   function getTimezoneOffset() {
@@ -89,6 +93,7 @@ export const StatisticList = ({ id, token, vidio }) => {
 
   function getMaxCountItem(data) {
     return data.map((item) => {
+      console.log(item.statistics)
       const maxStatistic = item.statistics.reduce((max, current) =>
         current.count > max.count ? current : max, item.statistics[0]);
       const gender = maxStatistic.gender === "men" ? "M" : "Ж";
@@ -98,6 +103,39 @@ export const StatisticList = ({ id, token, vidio }) => {
       const year = String(date.getFullYear()).slice(2);
       if (maxStatistic.count)
         return [`${day}.${month}.${year}`, item.hour_range, gender, maxStatistic.year, maxStatistic.count];
+    });
+  }
+
+  function getMaxCountItemUnG(data) {
+    return data.map((item) => {
+      const maxStatistic = item.statistics_unknown_gender.reduce((max, current) =>
+        current.count > max.count ? current : max, item.statistics_unknown_gender[0]);
+      const gender = 'U';
+      let date = new Date(item.date)
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = String(date.getFullYear()).slice(2);
+      if (maxStatistic.count)
+        return [`${day}.${month}.${year}`, item.hour_range, gender, maxStatistic.year, maxStatistic.count];
+    });
+  }
+
+
+
+  function getMaxCountItemUnY(data) {
+    return data.map((item) => {
+      const maxStatistic = item.statistics_unknown.reduce((max, current) =>
+        current.count > max.count ? current : max, item.statistics_unknown[0]);
+      // const gender = 'U';
+      const gender = maxStatistic.gender === "men" ? "M" : "Ж";
+      let date = new Date(item.date)
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = String(date.getFullYear()).slice(2);
+      setDatay(data)
+      if (maxStatistic.count) {
+        return [`${day}.${month}.${year}`, item.hour_range, gender, "не указан", maxStatistic.count];
+      }
     });
   }
 
@@ -111,12 +149,16 @@ export const StatisticList = ({ id, token, vidio }) => {
 
   useEffect(() => {
     let result = []
+    let resut1 = []
+    let resut2 = []
     if (getStatistic2.data.length >= 0) {
-      console.log(getStatistic2.data)
       result = getMaxCountItem(getStatistic2.data);
+      resut1 = getMaxCountItemUnG(getStatistic2.data)
+      resut2 = getMaxCountItemUnY(getStatistic2.data)
     }
-    console.log(getStatistic2.data.length)
     setTableDat(result)
+    setDatau(resut1)
+    setDatay(resut2)
   }, [getStatistic2.data])
 
 
@@ -135,7 +177,6 @@ export const StatisticList = ({ id, token, vidio }) => {
                 <Text style={Styles.darkSemiBold14}>Минимальное время просмотра - {getMinView}  </Text>
                 <Text style={Styles.darkSemiBold14}>Среднее время просмотра - {getView} </Text>
                 <Text style={Styles.darkSemiBold14}>Максимальное время просмотра - {getMaxView} </Text>
-
               </View>
             }
 
@@ -156,7 +197,6 @@ export const StatisticList = ({ id, token, vidio }) => {
               {getStatistic1.data?.city_data?.map((elm, i) => {
                 return <Text style={Styles.darkSemiBold14} t>{elm.city} - {elm.count} </Text>
               })}
-
             </View>
           </View>
           <View style={styles.line}></View>
@@ -186,6 +226,53 @@ export const StatisticList = ({ id, token, vidio }) => {
                 <Table>
                   {
                     tableData.map((rowData, index) => {
+                      return <Row
+                        key={index}
+                        data={rowData}
+                        widthArr={widthArr}
+                        style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
+                        textStyle={styles.textStyle}
+                      />
+                    })
+                  }
+                </Table>
+              </ScrollView>
+            </View>
+          </ScrollView>
+          <Text style={[{ marginTop: 20, marginBottom: 10, paddingHorizontal: 15 }, Styles.balihaiMedium13]}>Не указан возраст</Text>
+          <ScrollView contentContainerStyle={{ justifyContent: 'center', width: '100%' }} horizontal={true}>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Table >
+                <Row data={tableHead} widthArr={widthArr} style={styles.header} textStyle={styles.textStyle} />
+              </Table>
+              <ScrollView style={styles.dataWrapper}>
+                <Table>
+                  {
+                    datau?.map((rowData, index) => {
+                      return <Row
+                        key={index}
+                        data={rowData}
+                        widthArr={widthArr}
+                        style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
+                        textStyle={styles.textStyle}
+                      />
+                    })
+                  }
+                </Table>
+              </ScrollView>
+            </View>
+          </ScrollView>
+
+          <Text style={[{ marginTop: 20, marginBottom: 10, paddingHorizontal: 15 }, Styles.balihaiMedium13]}>Пол не указан</Text>
+          <ScrollView contentContainerStyle={{ justifyContent: 'center', width: '100%' }} horizontal={true}>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Table >
+                <Row data={tableHead} widthArr={widthArr} style={styles.header} textStyle={styles.textStyle} />
+              </Table>
+              <ScrollView style={styles.dataWrapper}>
+                <Table>
+                  {
+                    datay?.map((rowData, index) => {
                       return <Row
                         key={index}
                         data={rowData}
