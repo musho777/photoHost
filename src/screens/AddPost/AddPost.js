@@ -22,12 +22,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FlatList } from 'react-native-gesture-handler';
 import { t } from '../../components/lang';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 const windowWidth = Dimensions.get('window').width;
 
 
 export const AddPost = () => {
+  const insets = useSafeAreaInsets();
   const mainData = useSelector(st => st.mainData);
   const [uri, setUri] = useState([]);
   const [selectedCatalog, setSelectedCatalog] = useState([])
@@ -196,7 +198,7 @@ export const AddPost = () => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'black', marginTop: 40 }}>
+    <View style={[{ flex: 1, backgroundColor: 'black' }, insets.top ? { marginTop: insets.top } : Styles.statusBar]}>
       <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
       <Header
         uri={uri}
@@ -315,7 +317,7 @@ export const AddPost = () => {
 
 
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

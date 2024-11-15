@@ -26,10 +26,15 @@ import { CommonActions, useFocusEffect } from '@react-navigation/native';
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
 import FastImage from 'react-native-fast-image';
 import { Header } from './component/header';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+
+
 const windowWidth = Dimensions.get('window').width;
 
 
 export const AddImg = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const ref = useRef()
@@ -245,7 +250,7 @@ export const AddImg = ({ navigation }) => {
 
   if (first)
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'black', marginTop: 40 }}>
+      <View style={[{ flex: 1, backgroundColor: 'black' }, insets.top ? { marginTop: insets.top } : Styles.statusBar]}>
         <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
         <Header
           uri={uri}
@@ -294,7 +299,7 @@ export const AddImg = ({ navigation }) => {
           </View>
 
         </View>}
-      </SafeAreaView>
+      </View>
     );
   else {
     return
