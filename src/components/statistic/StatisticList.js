@@ -14,7 +14,7 @@ import { DonwSvg } from '../../assets/svg/Svgs';
 import { UserItem } from './compeont/userItem';
 
 export const StatisticList = ({ id, token, vidio }) => {
-  const tableHead = ['Дата \n', 'Время \n', 'Пол \n', 'Возраст \n', 'Кол во Пользователей']
+  const tableHead = ['Дата \n', 'Время \n', 'Пол \n', 'Возраст \n', 'Кол-во Пользователей']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])

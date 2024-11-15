@@ -267,18 +267,18 @@ export const EditProfilScreen = ({ navigation }) => {
                 style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: name?.color?.title, fontFamily: name?.font }]}
               />
             </View>
-            <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 10, marginTop: 10 }]}>
+            <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 15, marginTop: 10 }]}>
               Выбрать шрифт и цвет для имени и фамилии или названия канала
             </Text>
             <View style={{ marginBottom: 10 }}>
-              <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>
+              <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 15, alignItems: 'center', marginVertical: 10 }}>
                 {fontFamily.map((elm, i) => {
                   return <Text onPress={() => {
                     setName({ ...name, font: elm })
                   }} key={i} style={{ fontSize: 10, fontFamily: elm }}>{elm}</Text>
                 })}
               </ScrollView>
-              <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', height: 20 }}>
+              <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 15, alignItems: 'center', height: 20 }}>
                 {color.map((elm, i) => {
                   return <TouchableOpacity onPress={() => {
                     // ChnageData(localValue, activeFont, elm)

@@ -98,8 +98,8 @@ export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline,
         />
       </View>
       <View style={{ marginTop: 10 }}>
-        <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 10 }]}>Выбрать шрифт и цвет для описания о себе</Text>
-        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>
+        <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 15 }]}>Выбрать шрифт и цвет для описания о себе</Text>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 15, alignItems: 'center', marginVertical: 10 }}>
           {fontFamily.map((elm, i) => {
             return <Text onPress={() => {
               ChnageData(localValue, elm, activeColor)
@@ -107,7 +107,7 @@ export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline,
             }} key={i} style={{ fontSize: 10, fontFamily: elm }}>{elm}</Text>
           })}
         </ScrollView>
-        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, alignItems: 'center', height: 20 }}>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 15, alignItems: 'center', height: 20 }}>
           {color.map((elm, i) => {
             return <TouchableOpacity onPress={() => {
               ChnageData(localValue, activeFont, elm)
