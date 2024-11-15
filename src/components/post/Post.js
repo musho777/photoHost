@@ -20,14 +20,14 @@ export const Post = React.memo(({
   setShowShare,
   setHoriznotal,
   setShowComment,
-  setCommentData
+  setCommentData,
+  big = false
 }) => {
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
   const [showSave, setShowSave] = useState(false)
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [long, setLong] = useState(false)
-  const [activePhoto, setActivePhoto] = useState(0)
   const [activeImage, setActiveImage] = useState(0)
   const onLongClikc = () => {
     setLong(true)
@@ -139,6 +139,7 @@ export const Post = React.memo(({
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
           <PostHeader
             data={data}
+            big={big}
             user={user}
             setShowSave={(e) => setShowSave(true)}
             setSaveType={(e) => setSaveType(e)}
@@ -158,7 +159,6 @@ export const Post = React.memo(({
           onLongClikc={() => onLongClikc()}
           photo={data?.photo ? data?.photo : []}
           setOpenModal={setOpenModal}
-          setActivePhoto={(e) => setActivePhoto(e)}
           data={data}
           description={data?.description}
           setHoriznotal={setHoriznotal}
@@ -204,7 +204,9 @@ export const Post = React.memo(({
 }, (prevProps, nextProps) => {
   return (
     prevProps.data?.comment_count === nextProps.data?.comment_count &&
-    prevProps.data?.id === nextProps.data?.id
+    prevProps.data?.id === nextProps.data?.id &&
+    prevProps.data?.description === nextProps.data?.description
+
   )
 });
 

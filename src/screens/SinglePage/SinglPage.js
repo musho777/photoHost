@@ -64,33 +64,38 @@ export const SinglPageScreen = ({ route }) => {
   }, [dispatch, staticdata.token]);
 
 
+  useEffect(() => {
+    if (route.params?.description?.length) {
+      setData({ ...data, description: route.params.description })
+    }
+  }, [route.params.description])
 
-  useFocusEffect(
-    useCallback(() => {
-      var myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-      myHeaders.append('Authorization', `Bearer ${staticdata.token}`);
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: JSON.stringify({ post_id: route.params.id }),
-        redirect: 'follow',
-      };
-      setLoading(true)
-      fetch(`${Api}/single_page_post`, requestOptions)
-        .then(response => response.json())
-        .then(r => {
-          setLoading(false)
-          setData(r.data)
-        })
-        .catch(error => {
-          setLoading(false)
-        });
-      return () => {
-        setData(null)
-      };
-    }, [])
-  );
+
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${staticdata.token}`);
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify({ post_id: route.params.id }),
+      redirect: 'follow',
+    };
+    setLoading(true)
+    fetch(`${Api}/single_page_post`, requestOptions)
+      .then(response => response.json())
+      .then(r => {
+        setLoading(false)
+        setData(r.data)
+      })
+      .catch(error => {
+        setLoading(false)
+      });
+    return () => {
+      setData(null)
+    };
+  }, [route.params.id])
+
   if (loading) {
     return <View style={{ flex: 1, backgroundColor: 'black', paddingTop: 40 }}>
       <ActivityIndicator color="#FFC24B" />

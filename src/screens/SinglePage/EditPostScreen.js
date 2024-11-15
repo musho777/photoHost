@@ -41,19 +41,33 @@ export const EditPostScreen = ({ route, navigation }) => {
       description: description
     },
       staticdata.token))
-    navigation.goBack()
-  }
-  useEffect(() => {
-    if (editPost.status) {
-      dispatch(EditLentPhot({
-        post_id: route.params.id,
-        description: description
-      },
-        staticdata.token))
-
-      dispatch(ClearEditPost())
+    dispatch(EditLentPhot({
+      post_id: route.params.id,
+      description: description
+    }))
+    dispatch(ClearEditPost())
+    if (route.params.big) {
+      navigation.navigate('SinglPageScreen', { id: route.params.id, description: description })
+      // navigation.navigation()
     }
-  }, [editPost.status])
+    else {
+      navigation.goBack()
+    }
+  }
+
+
+
+
+  // useEffect(() => {
+  //   if (editPost.status) {
+  //     dispatch(EditLentPhot({
+  //       post_id: route.params.id,
+  //       description: description
+  //     }))
+
+  //     dispatch(ClearEditPost())
+  //   }
+  // }, [editPost.status])
 
 
 

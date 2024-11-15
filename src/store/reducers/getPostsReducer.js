@@ -51,12 +51,6 @@ const GetPostsReducer = (state = initialState, action) => {
       data.splice(index, 1)
       item.data = data
       break
-    case 'EditLentPhot':
-      let i = item.data.findIndex(elm => elm.id === action.data.post_id)
-      if (i != -1) {
-        item.data[i].description = action.data.description
-      }
-      break
     case 'DelatePhotofromPost':
       let delatePhotoIndex = item.data.findIndex((elm) => elm.id == action.post_id)
       if (delatePhotoIndex >= 0) {

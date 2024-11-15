@@ -11,7 +11,8 @@ export const Settings = ({
   id,
   activeImage,
   setShow,
-  data
+  data,
+  big
 }) => {
 
   const mainData = useSelector(st => st.mainData);
@@ -26,7 +27,8 @@ export const Settings = ({
             description: description,
             id: id,
             index: activeImage,
-            data: data
+            data: data,
+            big
           });
         }}>
         <Text style={Styles.darkRegular14}>

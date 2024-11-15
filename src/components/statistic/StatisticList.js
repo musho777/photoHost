@@ -317,7 +317,6 @@ export const StatisticList = ({ id, token, vidio }) => {
                 <Table>
                   {
                     datayg?.map((rowData, index) => {
-                      console.log(index)
                       return <Row
                         key={index}
                         data={rowData}

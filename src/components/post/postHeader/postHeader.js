@@ -17,6 +17,7 @@ export const PostHeader = ({
   deletData,
   addToblack,
   activeImage,
+  big,
   data,
 }
 ) => {
@@ -84,6 +85,7 @@ export const PostHeader = ({
         setShow={(e) => setShow(e)}
         setOpenModal={(e) => setOpenModal(e)}
         activeImage={activeImage}
+        big={big}
       />
     }
     {
