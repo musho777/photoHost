@@ -9,6 +9,7 @@ import {
   FlatList,
   ActivityIndicator,
   Dimensions,
+  StatusBar,
 } from 'react-native';
 import { Styles } from '../../styles/Styles';
 import { BackArrow, BackArrowWhite, CheckMarkUserSvg } from '../../assets/svg/Svgs';
@@ -178,6 +179,18 @@ export const SearchProfil = ({ navigation, route }) => {
   const ListEmptyComponent = () => {
     return <EmptyFlatlist loading={postLoading} text={t(mainData.lang).Thefeedisempty} />
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setTranslucent = true
+      StatusBar.setBackgroundColor("transparent")
+      StatusBar.setBarStyle('dark-content');
+      return () => {
+        StatusBar.setBarStyle('dark-content');
+      };
+    }, [])
+  );
+
 
 
   return (

@@ -25,7 +25,6 @@ export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline,
     "DelaGothicOne-Regular",
     "Geologica_Auto-Regular",
     "PlayfairDisplaySC-Regular",
-    "PressStart2P-Regular",
     "RubikMonoOne-Regular",
     "Unbounded-Regular",
     "YanoneKaffeesatz-Regular",
@@ -138,7 +137,7 @@ export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline,
 }
 const styles = StyleSheet.create({
   textWrapper: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 13,
     paddingVertical: Platform.OS === 'ios' ? 20 : 0,
     borderColor: AppColors.Solitude_Color,
     // borderBottomWidth: 1,

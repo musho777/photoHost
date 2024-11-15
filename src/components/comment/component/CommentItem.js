@@ -389,14 +389,12 @@ export const CommentItem = ({
 
       if (loading) {
         return <View>
-
           <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
           <View style={styles.voice}>
             <View style={{ width: 20 }}>
               <ActivityIndicator color={"#141c3b"} />
             </View>
             <View style={{ width: '60%', alignItems: 'flex-start' }}>
-
               <Waveform currentTime={true} waveformData={wave} />
             </View>
           </View>
@@ -413,14 +411,14 @@ export const CommentItem = ({
               }
             </TouchableOpacity>
             <View style={{ width: '82%', alignItems: 'flex-start', flexDirection: 'row', alignContent: 'center' }}>
-              <View>
+              <View style={{ alignItems: 'center' }}>
                 {!isEmoji(emojys) ?
-                  <Text style={{ fontSize: 25, marginTop: 2 }}>
+                  <Text style={{ fontSize: 25, marginTop: 8 }}>
                     {emojys}
                   </Text> :
                   <View>
                     {emojys &&
-                      <Image style={{ width: 35, height: 35, objectFit: 'contain' }} source={emojy[index]} />
+                      <Image style={{ width: 35, height: 35, objectFit: 'contain' }} source={emojys} />
                     }
                   </View>
                 }

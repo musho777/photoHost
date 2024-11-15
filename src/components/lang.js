@@ -159,7 +159,7 @@ export const t = (lang = 'ru') => {
             Female: 'Женский',
             Changepassword: 'Изменить пароль',
             Changemail: 'Изменить почту',
-            ChangePhoto: 'Изменить фото',
+            ChangePhoto: 'Добавить фото',
             Catalog: "Рубрики",
             OldPassword: 'Старый пароль',
             NewPassword: "Новый пароль",

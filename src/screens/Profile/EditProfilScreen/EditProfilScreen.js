@@ -43,7 +43,6 @@ export const EditProfilScreen = ({ navigation }) => {
     "DelaGothicOne-Regular",
     "Geologica_Auto-Regular",
     "PlayfairDisplaySC-Regular",
-    "PressStart2P-Regular",
     "RubikMonoOne-Regular",
     "Unbounded-Regular",
     "YanoneKaffeesatz-Regular",
