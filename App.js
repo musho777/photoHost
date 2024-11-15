@@ -60,18 +60,30 @@ export default App = () => {
     firebase.initializeApp(firebaseConfig);
   }
 
-  const CheckToken = async () => {
-    const token = await messaging().getToken();
-  }
-
 
   const PushNot = async (remoteMessage) => {
+    let body = remoteMessage.data.body
+    try {
+      JSON.parse(remoteMessage.data.body);
+      body = JSON.parse(remoteMessage.data.body).name
+    } catch (error) {
+      body = remoteMessage.data.body
+    }
+    if (remoteMessage.data.title == 'Подписка') {
+      body = body + " Подписан(а) на Вас"
+    }
+    else if (remoteMessage.data.title == 'Отметка нравитса') {
+      body = body + " поставил(а) нравится вашей публикации"
+    }
+    else if (remoteMessage.data.title == 'Новый коментарий') {
+      body = body + " Оставил комментарий к вашей публикации"
+    }
     let notSound = await AsyncStorage.getItem("notification")
     if (notSound == "standart") {
       PushNotification.localNotification({
         channelId: "sms1-channel",
         title: remoteMessage.data.title,
-        message: remoteMessage.data.body,
+        message: body,
         playSound: true,
         sound: "default",
         priority: "high",
@@ -81,7 +93,7 @@ export default App = () => {
       PushNotification.localNotification({
         channelId: "sms2-channel",
         title: remoteMessage.data.title,
-        message: remoteMessage.data.body,
+        message: body,
         playSound: true,
         sound: "bell.mp3",
         priority: "high",
@@ -91,7 +103,7 @@ export default App = () => {
       PushNotification.localNotification({
         channelId: "sms-channel",
         title: remoteMessage.data.title,
-        message: remoteMessage.data.body,
+        message: body,
         playSound: true,
         sound: "sms.mp3",
         priority: "high",
@@ -107,10 +119,10 @@ export default App = () => {
   });
 
   useEffect(() => {
-    CheckToken()
     getData()
     if (firebase.app()) {
       const unsubscribe = messaging().onMessage(async remoteMessage => {
+        console.log(remoteMessage, 'remoteMessage')
         PushNot(remoteMessage)
       });
 
