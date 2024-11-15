@@ -250,7 +250,7 @@ export const StatisticList = ({ id, token, vidio }) => {
                         key={index}
                         data={rowData}
                         widthArr={widthArr}
-                        style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
+                        style={[styles.row]}
                         textStyle={styles.textStyle}
                       />
                     })
@@ -273,7 +273,7 @@ export const StatisticList = ({ id, token, vidio }) => {
                         key={index}
                         data={rowData}
                         widthArr={widthArr}
-                        style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
+                        style={[styles.row, index % 2 == 0 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
                         textStyle={styles.textStyle}
                       />
                     })
@@ -297,7 +297,7 @@ export const StatisticList = ({ id, token, vidio }) => {
                         key={index}
                         data={rowData}
                         widthArr={widthArr}
-                        style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
+                        style={styles.row}
                         textStyle={styles.textStyle}
                       />
                     })
@@ -317,11 +317,12 @@ export const StatisticList = ({ id, token, vidio }) => {
                 <Table>
                   {
                     datayg?.map((rowData, index) => {
+                      console.log(index)
                       return <Row
                         key={index}
                         data={rowData}
                         widthArr={widthArr}
-                        style={[styles.row, index % 2 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
+                        style={styles.row}
                         textStyle={styles.textStyle}
                       />
                     })
