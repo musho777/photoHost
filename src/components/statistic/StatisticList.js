@@ -191,6 +191,7 @@ export const StatisticList = ({ id, token, vidio }) => {
           <View style={{ gap: 10, marginTop: 20, }}>
             <Text style={Styles.darkSemiBold14}>Лайков - {getStatistic1.data.get_like_count}</Text>
             <Text style={Styles.darkSemiBold14}>Комментариев - {getStatistic1.data.get_comment_count}</Text>
+            <Text style={[Styles.darkSemiBold14]}>Поделились аккаунтом - 0</Text>
             <Text style={Styles.darkSemiBold14}>Просмотров - {getStatistic1.data.get_view_count}</Text>
             {!vidio &&
               <View style={{ gap: 10 }}>
@@ -206,9 +207,20 @@ export const StatisticList = ({ id, token, vidio }) => {
               <Text style={Styles.darkSemiBold14}>Максимальное время просмотра видео - {getVidioStatistic.data.max} </Text>
             </View>
             }
-
-            <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации в закладки - {getStatistic1.data.get_book_count} </Text>
+            <TouchableOpacity onPress={() => setShow(!show)} activeOpacity={1} style={{ position: 'relative', width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={Styles.darkSemiBold14}>Просмотрели предыдущие публикации</Text>
+              <View>
+                <DonwSvg />
+              </View>
+            </TouchableOpacity>
+            {show &&
+              <UserItem data={getPostView.data} />
+            }
+            <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
+            <View style={{ gap: 10 }}>
+              <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getViewInAccaunt}</Text>
+            </View>
             <View>
               <View style={styles.line}></View>
               {getStatistic1.data?.city_data?.length > 0 &&
@@ -220,19 +232,8 @@ export const StatisticList = ({ id, token, vidio }) => {
             </View>
           </View>
           <View style={styles.line}></View>
-          <TouchableOpacity onPress={() => setShow(!show)} activeOpacity={1} style={{ position: 'relative', width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={Styles.darkSemiBold14}>Просмотрели предыдущие публикации</Text>
-            <View>
-              <DonwSvg />
-            </View>
-          </TouchableOpacity>
-          {show &&
-            <UserItem data={getPostView.data} />
-          }
-          <View style={{ gap: 10 }}>
-            <Text style={[Styles.darkSemiBold14, { marginTop: 10 }]}>Поделились аккаунтом - {getStatistic1.data.get_comment_count}</Text>
-            <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getViewInAccaunt}</Text>
-          </View>
+
+
 
 
         </Accordion>
