@@ -17,7 +17,6 @@ import { EmptyFlatlist } from '../../components/emptyFlatlist';
 import { t } from '../../components/lang';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { CommmentModal } from '../../components/comment/CommmentModal';
 
 
@@ -156,7 +155,7 @@ export const HomeScreen = () => {
       return <ActivityIndicator size="large" color='#FFC24B' />
     }
     else if ((!getLents?.nextPage && getLents.data.length > 5 && !getLents.secondLoading)) {
-      return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 55 }]}>Больше нет публикаций</Text>
+      return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 55 }]}>Другие публикации просмотрены</Text>
     }
   };
 

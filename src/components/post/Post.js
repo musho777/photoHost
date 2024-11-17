@@ -133,7 +133,7 @@ export const Post = React.memo(({
 
 
   return (
-    <View style={{ marginVertical: 5, height: height, backgroundColor: 'black' }}>
+    <View style={{ marginVertical: 5, height: height }}>
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
