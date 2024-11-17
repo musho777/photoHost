@@ -208,6 +208,7 @@ export const StatisticList = ({ id, token, vidio }) => {
             </View>
             }
             <Text style={Styles.darkSemiBold14} t>Сохранение публикации в закладки - {getStatistic1.data.get_book_count} </Text>
+            <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
             <TouchableOpacity onPress={() => setShow(!show)} activeOpacity={1} style={{ position: 'relative', width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Styles.darkSemiBold14}>Просмотрели предыдущие публикации</Text>
               <View>
@@ -217,7 +218,6 @@ export const StatisticList = ({ id, token, vidio }) => {
             {show &&
               <UserItem data={getPostView.data} />
             }
-            <Text style={Styles.darkSemiBold14}>Переход с ленты на Ваш аккаунт - {getStatistic1.data.get_post_page_count} </Text>
             <View style={{ gap: 10 }}>
               <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getViewInAccaunt}</Text>
             </View>
@@ -231,7 +231,7 @@ export const StatisticList = ({ id, token, vidio }) => {
               })}
             </View>
           </View>
-          <View style={styles.line}></View>
+          {/* <View style={styles.line}></View> */}
 
 
 

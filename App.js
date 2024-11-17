@@ -122,7 +122,6 @@ export default App = () => {
     getData()
     if (firebase.app()) {
       const unsubscribe = messaging().onMessage(async remoteMessage => {
-        console.log(remoteMessage, 'remoteMessage')
         PushNot(remoteMessage)
       });
 

@@ -225,7 +225,6 @@ export const AddImg = ({ navigation }) => {
           }}
         />
         <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 10, right: 10 }}>
-          {/* <RubbishSvg /> */}
           <CloseSvg1 />
         </TouchableOpacity>
       </ScrollView>

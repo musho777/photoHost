@@ -29,6 +29,7 @@ export const Post = React.memo(({
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [long, setLong] = useState(false)
   const [activeImage, setActiveImage] = useState(0)
+  const [height, setHeight] = useState(570)
   const onLongClikc = () => {
     setLong(true)
   }
@@ -131,9 +132,8 @@ export const Post = React.memo(({
   const [isExpanded, setIsExpanded] = useState(false);
 
 
-
   return (
-    <View style={{ marginVertical: 5 }}>
+    <View style={{ marginVertical: 5, height: height, backgroundColor: 'black' }}>
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
         <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
@@ -163,6 +163,7 @@ export const Post = React.memo(({
           description={data?.description}
           setHoriznotal={setHoriznotal}
           user={user}
+          setHeight={(e) => setHeight(e)}
           setIsExpanded={(e) => setIsExpanded(e)}
           isExpanded={isExpanded}
         /> :

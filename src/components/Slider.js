@@ -19,7 +19,7 @@ import LottieView from 'lottie-react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data, setHoriznotal = () => { }, description, setIsExpanded, isExpanded }) => {
+export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data, setHoriznotal = () => { }, description, setIsExpanded, isExpanded, setHeight }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [showLikeIcone, setShowLikeICone] = useState(false)
@@ -103,10 +103,16 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
     if (item.height - 200 > item.width) {
       height = 570
       setHoriznotal(false)
+      if (active == index) {
+        setHeight(570)
+      }
     }
     else {
       height = 393
       setHoriznotal(true)
+      if (active == index) {
+        setHeight(393)
+      }
     }
     return (
       <TouchableOpacity
@@ -114,7 +120,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         activeOpacity={1}
         onPressOut={() => onPressOut()}
         onPress={(e) => handleClick(e, item)}
-        style={styles.img}>
+        style={[styles.img, { height: height }]}>
         {item.video ?
           <View>
             <VidioComponent
