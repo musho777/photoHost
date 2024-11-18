@@ -79,8 +79,6 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (createPost.loading) {
-      // dispatch(GetLentsAction(staticdata.token));
-      // dispatch(GetPostsAction({ user_id: userData.data?.id }, staticdata.token, 1));
       goTop()
     }
   }, [createPost.loading])
@@ -148,7 +146,10 @@ export const HomeScreen = () => {
         setIsFetching(false);
       }, 1000);
     }
-  }, [getLents, page, isFetching]);
+    else if (!getLents?.nextPage) {
+      dispatch(AddPostViewCount({ post_id: getLents?.data[getLents?.data?.length - 1].id }, staticdata.token))
+    }
+  }, [getLents, page, isFetching, staticdata.token]);
 
   const ListEndLoader = () => {
     if (getLents.secondLoading && getLents?.nextPage) {
@@ -200,7 +201,7 @@ export const HomeScreen = () => {
   };
 
   const ListEmptyComponent = () => {
-    return <EmptyFlatlist loading={getLents.loading} text={t(mainData.lang).Thefeedisempty} />
+    // return <EmptyFlatlist loading={getLents.loading} text={t(mainData.lang).Thefeedisempty} />
   }
   useFocusEffect(
     useCallback(() => {

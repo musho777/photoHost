@@ -171,6 +171,7 @@ export const RegisterAction = data => {
     })
       .then(response => response.json())
       .then(r => {
+        console.log(r, '0000')
         if (r.status) {
           dispatch(SuccessRegister(r));
         } else {

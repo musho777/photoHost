@@ -52,9 +52,6 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
         bottomSheetRef1.current?.close()
         bottomSheetRef2.current?.close()
       }
-
-
-
     };
 
     const backHandler = BackHandler.addEventListener(
@@ -138,9 +135,9 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const renderItem = ({ item }) => {
     return <TouchableOpacity activeOpacity={1} onPress={() => {
       bottomSheetRef.current?.close()
-      setTimeout(() => {
-        bottomSheetRef1.current?.present();
-      }, 300);
+      // setTimeout(() => {
+      //   bottomSheetRef1.current?.present();
+      // }, 300);
 
       setBgPhoto(item.photo)
       setBg("")
