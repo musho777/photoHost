@@ -404,27 +404,25 @@ export const CommentItem = ({
         return <View >
           <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
           <View style={styles.voice}>
-            <TouchableOpacity onPress={() => handleButtonClick(text)}>
+            <TouchableOpacity style={{}} onPress={() => handleButtonClick(text)}>
               {!isPlaying ?
                 <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/play.png')} /> :
                 <Image style={{ width: 20, height: 20 }} source={require('../../../assets/img/pause.png')} />
               }
             </TouchableOpacity>
-            <View style={{ width: '82%', alignItems: 'flex-start', flexDirection: 'row', alignContent: 'center' }}>
-              <View style={{ alignItems: 'center' }}>
-                {!isEmoji(emojys) ?
-                  <Text style={{ fontSize: 25, marginTop: 8 }}>
-                    {emojys}
-                  </Text> :
-                  <View>
-                    {emojys &&
-                      <Image style={{ width: 35, height: 35, objectFit: 'contain' }} source={emojys} />
-                    }
-                  </View>
-                }
-              </View>
-              <Waveform endReach={endReach} soundInstance={soundInstance} currentTime={currentTime} waveformData={wave} />
+            <View style={{ flexDirection: 'row', }}>
+              {!isEmoji(emojys) ?
+                <Text style={{ fontSize: 25, marginTop: -3 }}>
+                  {emojys}
+                </Text> :
+                <View>
+                  {emojys &&
+                    <Image style={{ width: 35, height: 35, objectFit: 'contain' }} source={emojys} />
+                  }
+                </View>
+              }
             </View>
+            <Waveform endReach={endReach} soundInstance={soundInstance} currentTime={currentTime} waveformData={wave} />
           </View>
         </View>
       }
@@ -539,6 +537,6 @@ const styles = StyleSheet.create({
   voice: {
     flexDirection: 'row',
     gap: 5,
-    alignItems: 'center'
+    alignItems: 'center',
   }
 });
