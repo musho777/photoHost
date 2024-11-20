@@ -6,13 +6,11 @@ import {
   Text,
   TouchableOpacity,
   Platform,
-  SafeAreaView,
   Dimensions,
   FlatList,
   ScrollView,
   StatusBar,
   Keyboard,
-  KeyboardAvoidingView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetCatalogAction } from '../../store/action/action';
