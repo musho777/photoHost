@@ -62,7 +62,7 @@ export const AboutApplication = () => {
         <Text style={[styles.line, { borderBottomWidth: 0 }]}>
           Локальный контент:{"\n"}
         </Text>
-        Получайте контент в первую очередь со своего города! Фестивали, события, интересные места, природные явления и многое другое - все это в Вашей ленте!
+        Получайте контент в первую очередь со своего города! интересные места, природные явления и многое другое - все это в Вашей ленте!
       </Text>
 
       <Text style={Styles.balihaiMedium13}>
@@ -82,7 +82,7 @@ export const AboutApplication = () => {
         <Text style={[styles.line, { borderBottomWidth: 0 }]}>
           Уникальный контент:{"\n"}
         </Text>
-        Мы покажем Вам все самое свежее и интересное, и никаких повторов!
+        Мы покажем Вам все самое свежее и интересное, и никаких групп сообществ и повторяющегося контента!
       </Text>
       <Text style={Styles.balihaiMedium13}>
         <Text style={[styles.line, { borderBottomWidth: 0 }]}>

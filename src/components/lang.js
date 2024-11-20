@@ -190,7 +190,7 @@ export const t = (lang = 'ru') => {
             Women: 'Женщины',
             Men: "Mужчины",
             Unspecifiedgender: 'Неуказанные гендере',
-            AboutProgram: "Кто мы?",
+            AboutProgram: "Кто мы",
             Like: 'Лайк',
             Subscribed: "Подписано",
             Off: "Выкл.",
