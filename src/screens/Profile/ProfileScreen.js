@@ -56,7 +56,6 @@ export const ProfileScreen = () => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setTranslucent = true
-      StatusBar.setBackgroundColor("transparent")
       StatusBar.setBarStyle('dark-content');
       return () => {
         StatusBar.setBarStyle('dark-content');
@@ -66,7 +65,7 @@ export const ProfileScreen = () => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => setChangeAvatar(false)}
@@ -121,7 +120,7 @@ export const ProfileScreen = () => {
         />
 
       </TouchableOpacity>
-    </SafeAreaView >
+    </View>
   );
 };
 

@@ -92,10 +92,8 @@ export const AddImg = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setTranslucent = true
-      StatusBar.setBackgroundColor("black")
       StatusBar.setBarStyle('light-content');
       return () => {
-        StatusBar.setBackgroundColor("white")
         StatusBar.setBarStyle('dark-content');
       };
     }, [])

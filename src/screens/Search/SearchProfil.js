@@ -183,7 +183,6 @@ export const SearchProfil = ({ navigation, route }) => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setTranslucent = true
-      StatusBar.setBackgroundColor("transparent")
       StatusBar.setBarStyle('dark-content');
       return () => {
         StatusBar.setBarStyle('dark-content');
@@ -194,7 +193,7 @@ export const SearchProfil = ({ navigation, route }) => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={seletedScreen ? postData : [{ id: 1 }]}
         keyExtractor={(item) => item.id.toString()}
@@ -228,7 +227,12 @@ export const SearchProfil = ({ navigation, route }) => {
                     source={{ uri: `https://chambaonline.pro/uploads/${data?.data.backround_photo}`, }}
                   />
                 </TouchableOpacity>
-                <View style={styles.avatarWrapper1} activeOpacity={1} >
+
+              </View>
+
+
+              <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, justifyContent: 'flex-end', alignItems: 'center' }}>
+                <View style={styles.avatarWrapper1} >
                   <TouchableOpacity activeOpacity={1} onPress={() => setOpenSlider(true)} style={[styles.shadow, styles.avatar]}>
                     <Image
                       style={styles.img}
@@ -236,10 +240,6 @@ export const SearchProfil = ({ navigation, route }) => {
                     />
                   </TouchableOpacity>
                 </View>
-              </View>
-
-
-              <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, justifyContent: 'flex-end', alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
                   {canParseJSON(data?.data?.name)}
                   {data?.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
@@ -285,7 +285,7 @@ export const SearchProfil = ({ navigation, route }) => {
         <SliderModal
           modalVisible={openBg} photo={[{ photo: data?.data.backround_photo }]} close={() => setOpenBg(false)} />
       }
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -335,7 +335,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     left: 0,
-    bottom: 0,
+    top: -60,
+    // bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 999999,

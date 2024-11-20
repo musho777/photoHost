@@ -244,7 +244,7 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
         <Main SendSticker={(e) => sendCommentFunction(e)} ref={bottomSheetRef} />
       </View>
       <MusicPlay categoryID={categoryId} ref={bottomSheetRef1} onSend={(e) => sendCommentFunction(e)} />
-    </View >
+    </View>
   );
 };
 

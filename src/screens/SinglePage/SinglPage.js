@@ -43,11 +43,9 @@ export const SinglPageScreen = ({ route }) => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#000000');
       StatusBar.setTranslucent = true;
       return () => {
         StatusBar.setTranslucent = true;
-        StatusBar.setBackgroundColor("white");
       };
     }, [data?.id])
   );

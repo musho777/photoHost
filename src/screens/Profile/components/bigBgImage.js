@@ -64,7 +64,12 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
       </TouchableOpacity>
 
 
-      <View style={styles.avatarWrapper1} activeOpacity={1} >
+
+
+    </View>
+
+    <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
+      <View style={styles.avatarWrapper1}>
         <TouchableOpacity onPress={() => setChangeAvatar(!changeAvatar)} style={[styles.shadow, styles.avatar]}>
           <Image
             style={styles.img}
@@ -72,9 +77,6 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
           />
         </TouchableOpacity>
       </View>
-
-    </View>
-    <View style={{ marginTop: -50, backgroundColor: 'white', width: width, borderTopLeftRadius: 30, borderTopEndRadius: 30, minHeight: 100, justifyContent: 'flex-end', alignItems: 'center' }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
         {canParseJSON(user.name)}
         {user.data.star > 0 && <View style={{ marginTop: 3, left: 5 }}>
@@ -104,9 +106,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.15,
     padding: 20,
   },
   bgImage1: {
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     left: 0,
-    bottom: -8,
+    // bottom: -8,
+    top: -60,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 999999,

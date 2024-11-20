@@ -205,7 +205,6 @@ export const HomeScreen = () => {
   }
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBackgroundColor("white")
       StatusBar.setBarStyle('dark-content');
       return () => {
         StatusBar.setBarStyle('dark-content');
