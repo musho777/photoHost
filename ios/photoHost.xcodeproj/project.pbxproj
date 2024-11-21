@@ -64,7 +64,6 @@
 		FB716B5AB467415D86D4CF73 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7551839B8A894E1798EA579A /* Montserrat-Light.ttf */; };
 		FD42EA99214541508D3A3ADF /* RubikSprayPaint-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 020E99D23D8A41B38661878D /* RubikSprayPaint-Regular.ttf */; };
 		FD79744A2CA1CD030044DF4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD7974492CA1CD030044DF4D /* GoogleService-Info.plist */; };
-		FDFC0B492CEF09E200A35123 /* imageCropPicker.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = FDFC0B3A2CEF09D200A35123 /* imageCropPicker.xcodeproj */; };
 		FE1F6FA03202420399DCAADC /* PressStart2P-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75FCD6E6BB5F4D4DA5608787 /* PressStart2P-Regular.ttf */; };
 /* End PBXBuildFile section */
 
@@ -233,7 +232,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				93FA27884221F18A7D618C32 /* libPods-photoHost.a in Frameworks */,
-				FDFC0B492CEF09E200A35123 /* imageCropPicker.xcodeproj in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

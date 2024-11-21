@@ -4,21 +4,20 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Keyboard,
 } from 'react-native';
-import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { Styles } from '../../styles/Styles';
 import { CommentBlock } from './component/CommentBlock';
 import { t } from '../lang';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddCommentAction, DelateCommentLocal, DeletComment, GelPostCommentsAction, GetMusic } from '../../store/action/action';
 import { ClearSinglpAgeComment } from '../../store/action/clearAction';
-import { InputComponent } from './component/input';
 import Main from '../GIf/main';
-import { Emojy, Nota, Sticker } from '../../assets/svg/Svgs';
+import { Emojy, Nota, SendMsgSvg, Sticker } from '../../assets/svg/Svgs';
 import EmojiPicker from 'rn-emoji-keyboard';
 import { FlatList, RefreshControl } from 'react-native-gesture-handler';
 import { MusicPlay } from './component/musicPlay';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { AppColors } from '../../styles/AppColors';
 
 
 
@@ -32,8 +31,6 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
   const bottomSheetRef = useRef(null);
   const bottomSheetRef1 = useRef(null);
   const getSound = useSelector((st) => st.getSound)
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
 
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   const [senderName, setSenderNAme] = useState('')
@@ -74,44 +71,12 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
   }
 
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setKeyboardVisible(true);
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setKeyboardVisible(false);
-      }
-    );
-
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
-
 
   const onEndReached = () => {
     if (getComments?.nextPage) {
       let p = page + 1;
       dispatch(GelPostCommentsAction({ post_id: parentId }, staticdata.token, p));
       setPage(p);
-    }
-  }
-
-  const Empty = () => {
-    if (!getComments?.loading) {
-      return <Text
-        style={[
-          Styles.darkMedium16,
-          { marginTop: 40, textAlign: 'center' },
-        ]}>
-        {t(mainData.lang).Nocomments}
-      </Text>
     }
   }
 
@@ -206,9 +171,11 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={getComments.data}
+          keyboardShouldPersistTaps={'always'}
           contentContainerStyle={styles.scrollViewContent}
           onEndReached={() => { onEndReached() }}
           renderItem={renderItem}
+          accessible={false}
           refreshControl={
             <RefreshControl
               refreshing={getComments?.loading}
@@ -221,13 +188,23 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
           }
         />
         <View style={styles.bottom}>
-          <InputComponent
-            sendCommentFunction={() => sendCommentFunction()}
-            sendComment={sendComment}
-            setSendCommet={(e) => setSendCommet(e)}
-            user={user}
-            width={getSound.data.length}
-          />
+          <View style={{ width: getSound.data.length ? "70%" : "80%" }}>
+            <BottomSheetTextInput
+              style={styles.Input}
+              placeholder={t(mainData.lang).Leaveacomment}
+              placeholderTextColor={AppColors.BaliHai_Color}
+              value={sendComment}
+              ref={textInputRef}
+              onChangeText={e => setSendCommet(e)}
+              multiline
+            />
+            <View style={[Styles.flexAlignItems, styles.eye, { height: '100%' }]}>
+              <TouchableOpacity onPress={() => sendCommentFunction()}>
+                <SendMsgSvg />
+              </TouchableOpacity>
+            </View>
+
+          </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
             <TouchableOpacity onPress={() => setIsOpen(true)}>
               <Emojy />
@@ -267,5 +244,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
     marginBottom: 10,
-  }
+  },
+  Input: {
+    backgroundColor: AppColors.AliceBlue_Color,
+    borderRadius: 50,
+    paddingHorizontal: 20,
+    paddingRight: 45,
+    color: AppColors.Blcak_Color,
+    position: 'relative',
+    height: 40,
+    width: '100%',
+    paddingTop: 12
+  },
+  eye: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 20,
+    height: '70%',
+  },
 });

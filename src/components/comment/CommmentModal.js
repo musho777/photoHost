@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Keyboard } from 'react-native';
 import {
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
@@ -15,6 +15,7 @@ import { t } from '../lang';
 
 export const CommmentModal = ({ close, commentData, CommentCount = () => { } }) => {
   const mainData = useSelector(st => st.mainData);
+
 
   const dispatch = useDispatch();
   const renderBackdrop = useCallback(
@@ -39,7 +40,7 @@ export const CommmentModal = ({ close, commentData, CommentCount = () => { } }) 
   return (
     <BottomSheet
       index={0}
-      snapPoints={['65%']}
+      snapPoints={['55%']}
       onClose={() => {
         dispatch(ShowTabNavigation())
         close()
@@ -47,7 +48,7 @@ export const CommmentModal = ({ close, commentData, CommentCount = () => { } }) 
       enablePanDownToClose={true}
       backdropComponent={renderBackdrop}>
       <View
-        style={{ alignItems: 'center', justifyContent: 'space-between', }}>
+        style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 10 }}>
         <Text style={[Styles.darkMedium16, { marginHorizontal: 10, position: 'absolute' }]}>
           {t(mainData.lang).comments}
         </Text>

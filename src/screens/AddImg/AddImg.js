@@ -123,22 +123,10 @@ export const AddImg = ({ navigation }) => {
   }, [createPost.status]);
 
   const addPhoto = async (data, i) => {
-    const options = {
-      compressVideo: true,
-      maxVideoDuration: 60,
-      maxSelectedAssets: 10,
-      doneTitle: "Добавить",
-      usedCameraButton: false,
-      isPreview: false,
-    }
     try {
-
-
       launchImageLibrary({
-        cropping: false,          // Enables cropping
-        width: 300,              // Set the width of the cropped image
-        height: 400,             // Set the height of the cropped image
-        compressImageQuality: 0.8, // Compress the image quality (0 to 1)
+        cropping: false,
+        compressImageQuality: 1,
       })
         .then((response) => {
           console.log(response)
