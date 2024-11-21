@@ -36,9 +36,22 @@ export const VidioComponent = forwardRef(({
   const [loading, setLoading] = useState(true)
   const heightAnim = useRef(new Animated.Value(0)).current;
   const [showText, setShowText] = useState(false)
-
-
+  const [isBuffering, setIsBuffering] = useState(false);
   const [start, setStart] = useState(null)
+
+  const handleBuffer = ({ isBuffering }) => {
+    setIsBuffering(isBuffering);
+    if (isBuffering) {
+      setLoading(true)
+      console.log("---------1388888")
+      // setPaused(true);
+    }
+    else {
+      setLoading(false)
+    }
+  };
+
+
 
   useEffect(() => {
     setPaused(true)
@@ -71,12 +84,14 @@ export const VidioComponent = forwardRef(({
   }, [paused, showStartButton]);
 
   const ChangeCurentTime = () => {
-    if (currentTime <= duration) {
-      setCurrentTime(currentTime + 0.251);
-    } else {
-      setCurrentTime(0);
-      setPaused(false);
-      ref.current.seek(0);
+    if (!isBuffering) {
+      if (currentTime <= duration) {
+        setCurrentTime(currentTime + 0.251);
+      } else {
+        setCurrentTime(0);
+        setPaused(false);
+        ref.current.seek(0);
+      }
     }
   };
 
@@ -84,11 +99,12 @@ export const VidioComponent = forwardRef(({
 
 
 
-  const handleLoad = useCallback((data) => {
+  const handleLoad = (data) => {
     setDuration(data.duration);
     setVolume(1)
     setLoading(false)
-  }, []);
+    ref.current.seek(currentTime)
+  };
 
 
   useEffect(() => {
@@ -146,7 +162,11 @@ export const VidioComponent = forwardRef(({
             setStart={(e) => setStart(e)}
             start={start}
             volume={volume}
-            setFullScreen={(e) => setFullScreen(e)}
+            setFullScreen={(e) => {
+              // setPaused(true)
+              ref.current.seek(currentTime);
+              setFullScreen(e)
+            }}
             duration={duration}
             setVolume={(e) => setVolume(e)}
             showStartButton={showStartButton}
@@ -172,26 +192,34 @@ export const VidioComponent = forwardRef(({
             resizeMode={FastImage.resizeMode.cover}
           />
         }
-        <Video
+        {!fullScreen && <Video
           ref={ref}
           paused={paused}
           repeat={false}
-          fullscreen={fullScreen}
+          // fullscreen={fullScreen}
           volume={volume}
           style={[styles.Vidio, { height: height }, first && { opacity: 0 }]}
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
           resizeMode={'cover'}
-          onFullscreenPlayerWillPresent={() => setFullScreen(true)} // Set fullscreen state
-          onFullscreenPlayerWillDismiss={() => setFullScreen(false)} // Reset fullscreen state
+          onFullscreenPlayerWillPresent={() => {
+            setFullScreen(true)
+            // ref.current.seek(currentTime)
+            // setPaused(true)
+          }}
+          onFullscreenPlayerWillDismiss={() => {
+            setFullScreen(false)
+            setPaused(true)
+          }} // Reset fullscreen state
           onProgress={(data) => ChangeCurentTime(data)}
           useTextureView={false}
           onLoad={(data) => handleLoad(data)}
+          onBuffer={handleBuffer}
           onEnd={() => {
             setCurrentTime(0);
-            setPaused(false);
+            setPaused(true);
             ref.current?.seek(0);
           }}
-        />
+        />}
       </TouchableOpacity>
       <View style={{ marginVertical: 10, position: 'absolute', top: 40, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
         {(Description && Description[index]) && !showText &&
@@ -237,7 +265,7 @@ export const VidioComponent = forwardRef(({
         </ScrollView>
       </Animated.View>
 
-      <Modal
+      {fullScreen && <Modal
         onRequestClose={() => setFullScreen(false)}
         visible={fullScreen}
         supportedOrientations={['portrait', 'landscape']}
@@ -258,7 +286,11 @@ export const VidioComponent = forwardRef(({
                 ref={ref}
                 currentTime={currentTime}
                 setStart={(e) => setStart(e)}
-                setFullScreen={(e) => setFullScreen(e)}
+                setFullScreen={(e) => {
+                  setFullScreen(e)
+                  // setPaused(true)
+                  ref.current.seek(currentTime)
+                }}
                 duration={duration}
                 setVolume={(e) => setVolume(e)}
                 volume={volume}
@@ -289,11 +321,18 @@ export const VidioComponent = forwardRef(({
               style={[styles.Vidio, { height: height }, first && { opacity: 0 }]}
               source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
               resizeMode={'cover'}
-              onFullscreenPlayerWillPresent={() => setFullScreen(true)}
-              onFullscreenPlayerWillDismiss={() => setFullScreen(false)}
+              onFullscreenPlayerWillPresent={() => {
+                setFullScreen(true)
+                setPaused(true)
+              }}
+              onFullscreenPlayerWillDismiss={() => {
+                setFullScreen(false)
+                setPaused(true)
+              }}
               onProgress={(data) => ChangeCurentTime(data)}
               useTextureView={false}
               onLoad={(data) => handleLoad(data)}
+              onBuffer={handleBuffer}
               onEnd={() => {
                 setCurrentTime(0);
                 setPaused(true);
@@ -319,7 +358,7 @@ export const VidioComponent = forwardRef(({
 
           </TouchableOpacity>
         </View>
-      </Modal>
+      </Modal>}
     </View>
   );
 })
