@@ -307,10 +307,7 @@ export const AddPost = () => {
             <Text style={styles.textStyle}>Эмодзи</Text>
           </TouchableOpacity>
         </ScrollView>
-
         <EmojiPicker onEmojiSelected={handlePick} open={emojy} onClose={() => setEmojy(false)} />
-
-
       </View>
     </View>
   );

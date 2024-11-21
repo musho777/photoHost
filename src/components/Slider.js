@@ -18,8 +18,10 @@ import Sliders from '@react-native-community/slider';
 import LottieView from 'lottie-react-native';
 
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
-export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data, setHoriznotal = () => { }, description, setIsExpanded, isExpanded, setHeight }) => {
+
+export const Slider = React.memo(({ id, photo, viewableItems, setOpenModal, user, onLongClikc, long, onPressOut, setActiveImage, data, setHoriznotal = () => { }, description, setIsExpanded, isExpanded, setHeight }) => {
   const [active, setActive] = useState(0);
   const [openSlider, setOpenSlider] = useState(false);
   const [showLikeIcone, setShowLikeICone] = useState(false)
@@ -122,7 +124,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         activeOpacity={1}
         onPressOut={() => onPressOut()}
         onPress={(e) => handleClick(e, item)}
-        style={[styles.img, { height: !fullScreen ? height : 800, borderWidth: 1 }]}>
+        style={[styles.img, { height: !fullScreen ? height : windowHeight }]}>
         {item.video ?
           <VidioComponent
             active={active == index}
@@ -130,6 +132,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
             music={data.music_name}
             item={item}
             index={index}
+            id={id}
             currentTime={currentTime[active]}
             setCurrentTime={(e) => CurrentTimeSet(index, e)}
             setDuration={(e) => setDuration(e)}

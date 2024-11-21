@@ -66,7 +66,7 @@ export const Controler = forwardRef(({
       setShowStartButton(false);
     }
   };
-
+  console.log(big, 'big')
 
   if (!full) {
     return <View style={styles.wrapper}>
@@ -167,13 +167,9 @@ const styles = StyleSheet.create({
   wrapper1: {
     width: '100%',
     zIndex: 99999,
-    // position: 'absolute',
-    borderWidth: 1,
-    height: 33,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    bottom: 60,
     paddingHorizontal: 10,
   },
   voice: {

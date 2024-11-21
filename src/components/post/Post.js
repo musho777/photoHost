@@ -8,6 +8,7 @@ import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
 
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export const Post = React.memo(({
   viewableItems,
@@ -30,7 +31,7 @@ export const Post = React.memo(({
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [long, setLong] = useState(false)
   const [activeImage, setActiveImage] = useState(0)
-  const { fullScreen } = useSelector((st) => st.fullScreenData)
+  const { fullScreen, indexData } = useSelector((st) => st.fullScreenData)
   const [height, setHeight] = useState(570)
   const onLongClikc = () => {
     setLong(true)
@@ -131,10 +132,11 @@ export const Post = React.memo(({
 
   ]
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  console.log(indexData, index,)
 
+  const [isExpanded, setIsExpanded] = useState(false);
   return (
-    <View style={[{ marginVertical: 5, height: height }, index == 0 && fullScreen && { height: 800, justifyContent: 'center' }]}>
+    <View style={[{ marginVertical: 5, height: height }, (index == indexData && fullScreen) && styles.fullScreen, (index != indexData && fullScreen) && { display: 'none' }]}>
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
         {!fullScreen && <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
@@ -167,6 +169,7 @@ export const Post = React.memo(({
           setHeight={(e) => setHeight(e)}
           setIsExpanded={(e) => setIsExpanded(e)}
           isExpanded={isExpanded}
+          id={index}
         /> :
           <View style={{ height: 570, position: 'relative' }}>
             <Image
@@ -228,6 +231,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 570,
+  },
+  fullScreen: {
+    height: 800,
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 9999,
   },
   PostBody: {
     zIndex: 999,

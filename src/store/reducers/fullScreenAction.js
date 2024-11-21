@@ -1,5 +1,6 @@
 const initialState = {
   fullScreen: false,
+  indexData: null
 };
 const FullScreenReducer = (state = initialState, action) => {
   let item = { ...state };
@@ -7,6 +8,7 @@ const FullScreenReducer = (state = initialState, action) => {
     case 'fullScreenAction':
       console.log(action.value, '----')
       item.fullScreen = action.value;
+      item.indexData = action.index
       break;
     default:
       break;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, RefreshControl, Text, SafeAreaView, ActivityIndicator, BackHandler, StatusBar } from 'react-native';
+import { View, FlatList, RefreshControl, Text, ActivityIndicator, BackHandler, StatusBar, Dimensions } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, GetLentsAction, GetPostsAction, getUserInfoAction, ShowTabNavigation } from '../../store/action/action';
+import { AddPostViewCount, DelatePostAction, FullScreenAction, GetLentsAction, getUserInfoAction, ShowTabNavigation } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,11 +13,10 @@ import { LikeList } from '../../components/LikeList';
 import { Share } from '../../components/share';
 import debounce from 'lodash/debounce';
 import { AddImageLoading } from '../../components/addImageLoading';
-import { EmptyFlatlist } from '../../components/emptyFlatlist';
-import { t } from '../../components/lang';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CommmentModal } from '../../components/comment/CommmentModal';
+const windowHeight = Dimensions.get('window').height;
 
 
 
@@ -88,13 +87,17 @@ export const HomeScreen = () => {
   }
 
 
+  console.log(fullScreen)
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (showShare || likeClose || showView) {
+
+      if (showShare || likeClose || showView || fullScreen) {
         setShowShare(false)
         setLikeClose(false)
         setShowView(false)
         dispatch(ShowTabNavigation())
+        dispatch(FullScreenAction(false, null))
         return true;
       }
       else {
@@ -105,7 +108,7 @@ export const HomeScreen = () => {
     return () => {
       backHandler.remove();
     };
-  }, [showShare, likeClose, showView]);
+  }, [showShare, likeClose, showView, fullScreen]);
 
 
 
@@ -206,9 +209,8 @@ export const HomeScreen = () => {
       };
     }, [])
   );
-
   return (
-    <View style={[{ flex: 1 }, insets.top ? { paddingTop: insets.top } : Styles.statusBar]}>
+    <View style={[{ flex: 1 }, insets.top ? { paddingTop: insets.top } : Styles.statusBar, fullScreen && { backgroundColor: 'black' }]}>
       {/* <StatusBar
         backgroundColor="white"
         barStyle={'dark-content'}
