@@ -4,3 +4,10 @@
 <string>We need access to your location to provide personalized content.</string>
 <key>NSContactsUsageDescription</key>
 <string>We need access to your contacts to show contact information</string>
+<string>We need access to your camera to take photos.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>We need access to your microphone for recording audio.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to upload and edit photos.</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>We need access to save cropped or edited photos to your library.</string>

@@ -25,8 +25,10 @@ import { openPicker } from '@baronha/react-native-multiple-image-picker';
 import FastImage from 'react-native-fast-image';
 import { Header } from './component/header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ImagePicker from 'react-native-image-crop-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 
-
+import { PERMISSIONS, request, check, RESULTS } from 'react-native-permissions';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -70,7 +72,18 @@ export const AddImg = ({ navigation }) => {
   const dispatch = useDispatch();
 
 
+  const requestPhotoPermission = async () => {
+    const result = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
+    if (result === RESULTS.GRANTED) {
+      console.log('Photo library access granted.');
+    } else {
+      console.log('Photo library access denied.');
+    }
+  };
+
+
   useEffect(() => {
+    requestPhotoPermission()
     dispatch(GetCatalogAction(staticData.token))
   }, []);
 
@@ -119,41 +132,96 @@ export const AddImg = ({ navigation }) => {
       isPreview: false,
     }
     try {
-      const response = await openPicker(options);
-      let item = [...data]
-      if (response.didCancel) {
-        if (uri.length == 0) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: 'TabNavigation' }],
+
+
+      launchImageLibrary({
+        cropping: false,          // Enables cropping
+        width: 300,              // Set the width of the cropped image
+        height: 400,             // Set the height of the cropped image
+        compressImageQuality: 0.8, // Compress the image quality (0 to 1)
+      })
+        .then((response) => {
+          console.log(response)
+          let item = [...data]
+          if (response.assets.didCancel) {
+            if (uri.length == 0) {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: 'TabNavigation' }],
+                })
+              );
+              setFirst(false)
+            }
+          }
+          else if (!response.assets.didCancel && !response.assets.error) {
+            if (response.assets.length) {
+              setFirst(true)
+            }
+            response?.assets?.map((elm, i) => {
+              console.log(elm)
+              if (elm?.type != 'image/jpg') {
+                if (elm.duration <= 60883) {
+                  item.push({ uri: elm.path, mime: elm?.type })
+                }
+                else {
+                  setError('видео должен быть меньше чем 60 с')
+                  setShowError(true)
+                }
+              }
+              else {
+                if (item.length <= 10) {
+                  console.log(elm)
+                  item.push({ uri: elm.uri, mime: elm?.type });
+                }
+              }
             })
-          );
-          setFirst(false)
-        }
-      }
-      else if (!response.didCancel && !response.error) {
-        if (response.length) {
-          setFirst(true)
-        }
-        response?.map((elm, i) => {
-          if (elm?.mime.startsWith('video')) {
-            if (elm.duration <= 60883) {
-              item.push({ uri: elm.path, mime: elm.mime })
-            }
-            else {
-              setError('видео должен быть меньше чем 60 с')
-              setShowError(true)
-            }
+            setUri(item);
           }
-          else {
-            if (item.length <= 10) {
-              item.push({ uri: elm.path, mime: elm.mime });
-            }
-          }
+          // setImageUri(image.path); // The cropped image's URI
         })
-        setUri(item);
-      }
+        .catch((error) => {
+          console.log('Error: ', error);
+        });
+      // const response = await openPicker(options);
+      // launchCamera(options, callback);
+
+      // You can also use as a promise without 'callback':
+      // const response = await launchCamera(options);
+      // let item = [...data]
+      // if (response.didCancel) {
+      //   if (uri.length == 0) {
+      //     navigation.dispatch(
+      //       CommonActions.reset({
+      //         index: 0,
+      //         routes: [{ name: 'TabNavigation' }],
+      //       })
+      //     );
+      //     setFirst(false)
+      //   }
+      // }
+      // else if (!response.didCancel && !response.error) {
+      //   if (response.length) {
+      //     setFirst(true)
+      //   }
+      //   response?.map((elm, i) => {
+      //     if (elm?.mime.startsWith('video')) {
+      //       if (elm.duration <= 60883) {
+      //         item.push({ uri: elm.path, mime: elm.mime })
+      //       }
+      //       else {
+      //         setError('видео должен быть меньше чем 60 с')
+      //         setShowError(true)
+      //       }
+      //     }
+      //     else {
+      //       if (item.length <= 10) {
+      //         item.push({ uri: elm.path, mime: elm.mime });
+      //       }
+      //     }
+      //   })
+      //   setUri(item);
+      // }
     }
     catch (error) {
       Close()

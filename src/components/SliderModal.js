@@ -15,11 +15,15 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
             visible={modalVisible}
             onRequestClose={() => close()}
         >
-            <View style={styles.centeredView}>
-                <View style={styles.modalView}>
+            <TouchableOpacity activeOpacity={1} onPress={() => close()} style={styles.centeredView}>
+                <TouchableOpacity activeOpacity={1} onPress={(e) => {
+                    e.stopPropagation()
+                    e.preventDefault()
+                }
+                } style={styles.modalView}>
                     <ModalSliderImg photo={photo} activePhoto={activePhoto} />
-                </View>
-            </View>
+                </TouchableOpacity>
+            </TouchableOpacity>
         </Modal >
     </View >
 }

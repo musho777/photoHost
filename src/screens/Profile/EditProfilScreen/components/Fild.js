@@ -93,7 +93,7 @@ export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline,
           value={localValue}
           maxLength={100}
           onChangeText={e => ChnageData(e, activeFont, activeColor)}
-          style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: activeColor.title, fontFamily: activeFont }]}
+          style={[Styles.balihaiMedium14, { paddingVertical: 5, minHeight: 40, height: 'auto', width: '90%', color: activeColor.title, fontFamily: activeFont }]}
         />
       </View>
       <View style={{ marginTop: 10 }}>
@@ -138,9 +138,8 @@ export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline,
 const styles = StyleSheet.create({
   textWrapper: {
     paddingHorizontal: 15,
-    paddingVertical: Platform.OS === 'ios' ? 20 : 0,
+    // paddingVertical: ,
     borderColor: AppColors.Solitude_Color,
-    // borderBottomWidth: 1,
     borderTopWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',

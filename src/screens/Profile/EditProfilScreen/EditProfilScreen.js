@@ -259,11 +259,11 @@ export const EditProfilScreen = ({ navigation }) => {
             </View>
             <View style={[styles.textWrapper]}>
               <TextInput
-                multiline
+                // multiline
                 value={name.name}
                 maxLength={30}
                 onChangeText={e => setName({ ...name, name: e })}
-                style={[Styles.balihaiMedium14, { height: 'auto', width: '90%', color: name?.color?.title, fontFamily: name?.font }]}
+                style={[Styles.balihaiMedium14, { minHeight: 40, height: 'auto', width: '90%', color: name?.color?.title, fontFamily: name?.font }]}
               />
             </View>
             <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 17, marginTop: 10 }]}>
