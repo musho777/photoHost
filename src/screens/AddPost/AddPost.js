@@ -185,7 +185,6 @@ export const AddPost = () => {
 
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setTranslucent = true
       StatusBar.setBarStyle('light-content');
       return () => {
         StatusBar.setBarStyle('dark-content');
@@ -195,13 +194,12 @@ export const AddPost = () => {
 
 
   return (
-    <View style={[{ flex: 1, backgroundColor: 'black' }, insets.top ? { marginTop: insets.top } : Styles.statusBar]}>
+    <View style={[{ flex: 1, backgroundColor: 'black' }, insets.top ? { paddingTop: insets.top } : Styles.statusBar]}>
       <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
       <Header
         uri={uri}
         selectedCatalog={selectedCatalog}
         description={[text]}
-
         color={color}
         font_family={activeFont}
         background={fone.findIndex((elm) => elm == activefon) + 1}
@@ -217,7 +215,7 @@ export const AddPost = () => {
           <Image style={{ height: 550, resizeMode: "cover" }} source={activefon} />
         </View>
       </ScrollView>
-      {showType == 2 && <View style={{ width: 150, height: 150, position: 'absolute', bottom: 70, justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+      {showType == 2 && <View style={{ width: 150, height: 150, position: 'absolute', bottom: 100, justifyContent: 'center', alignItems: 'center', width: '100%' }}>
         <ColorPicker
           style={styles.colorPicker}
           onColorSelected={color => setColor(color)}
@@ -272,11 +270,11 @@ export const AddPost = () => {
             placeholder='Текст'
             multiline
             value={text}
-            style={{ backgroundColor: 'white', width: '90%', borderRadius: 10, paddingHorizontal: 10, marginVertical: 10, }}
+            style={{ paddingTop: 9, backgroundColor: 'white', width: '90%', borderRadius: 10, paddingHorizontal: 10, marginVertical: 10, height: 35, }}
           />
         </View>}
       </View>
-      <View style={{ marginBottom: 10 }}>
+      <View style={{ marginBottom: 30 }}>
         <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10 }}>
           <TouchableOpacity onPress={() => setShowType(1)} style={styles.editItem}>
             <Image source={activefon} style={{ width: 30, height: 30 }} />

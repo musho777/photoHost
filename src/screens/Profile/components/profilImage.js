@@ -113,6 +113,8 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
       multiple: false
     }).then(image => {
       bottomSheetRef.current?.close()
+      bottomSheetRef1.current?.close()
+      bottomSheetRef2.current?.close()
       if (image.path) {
         setBg(image.path);
         dispatch(UpdateBackroundPhoto(image.path, staticdata.token));

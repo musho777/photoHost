@@ -53,15 +53,6 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
           source={{ uri: bg ? bg : `https://chambaonline.pro/uploads/${bgPhoto}` }}
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          ref.current?.present()
-        }}
-        style={styles.editIcon1}>
-        <EditSvg />
-      </TouchableOpacity>
 
 
 
@@ -75,6 +66,15 @@ export const BigBgImage = forwardRef(({ changeAvatar, setChangeAvatar, user, bg,
             style={styles.img}
             source={{ uri: imgUrl ? imgUrl : `https://chambaonline.pro/uploads/${user.avatar}`, }}
           />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            ref.current?.present()
+          }}
+          style={styles.editIcon1}>
+          <EditSvg />
         </TouchableOpacity>
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 45, width: '100%', justifyContent: 'center', }}>
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.15,
     padding: 20,
+
   },
   bgImage1: {
     objectFit: 'cover',
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   avatarWrapper1: {
     position: "absolute",
@@ -131,6 +133,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 999999,
+    // width: 115,
+    // height: 115,
   },
   editIcon1: {
     position: 'absolute',

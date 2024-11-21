@@ -283,7 +283,7 @@ export const AddImg = ({ navigation }) => {
 
   if (first)
     return (
-      <View style={[{ flex: 1, backgroundColor: 'black' }, insets.top ? { marginTop: insets.top } : Styles.statusBar]}>
+      <View style={[{ flex: 1, backgroundColor: 'black' }, insets.top ? { paddingTop: insets.top } : Styles.statusBar]}>
         <Status setShowError={(e) => setShowError(e)} showError={showError} error={error} />
         <Header
           uri={uri}
