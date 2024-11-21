@@ -26,6 +26,7 @@ export const PostBody = ({
   setCommentData,
   setSelectidId = () => { }
 }) => {
+
   const navigation = useNavigation()
   const [showViewText, setShowViewText] = useState(false)
   const staticdata = useSelector(st => st.static);

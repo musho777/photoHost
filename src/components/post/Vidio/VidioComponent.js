@@ -22,11 +22,11 @@ export const VidioComponent = forwardRef(({
   onSeek,
   description,
   index,
-  setIsExpanded
+  setIsExpanded,
+  height
 }, ref) => {
   const [first, setFirst] = useState(true);
   const MAX_Height = 40;
-  console.log(item)
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
   const [paused, setPaused] = useState(true);
@@ -41,11 +41,13 @@ export const VidioComponent = forwardRef(({
   const [start, setStart] = useState(null)
 
   useEffect(() => {
+    console.log("22")
     setPaused(true)
   }, [active])
 
 
   useEffect(() => {
+    console.log("1q")
     if (viewableItems?.length) {
       if (currentId === viewableItems[0]?.item.id && !viewableItems[0]?.isViewable) {
         setFirst(true);
@@ -75,10 +77,11 @@ export const VidioComponent = forwardRef(({
       setCurrentTime(currentTime + 0.251);
     } else {
       setCurrentTime(0);
-      setPaused(true);
+      setPaused(false);
       ref.current.seek(0);
     }
   };
+
 
 
 
@@ -126,9 +129,8 @@ export const VidioComponent = forwardRef(({
     return desc;
   }, [description]);
 
-
   return (
-    <View style={{ position: 'relative', height: 570 }}>
+    <View style={{ position: 'relative', height: height }}>
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
@@ -162,7 +164,7 @@ export const VidioComponent = forwardRef(({
         }
         {(first && paused) &&
           <FastImage
-            style={styles.Vidio}
+            style={[styles.Vidio, { height: height }]}
             source={{
               uri: `https://chambaonline.pro/uploads/${item.photo}`,
               priority: FastImage.priority.high,
@@ -178,7 +180,7 @@ export const VidioComponent = forwardRef(({
           repeat={false}
           fullscreen={fullScreen}
           volume={volume}
-          style={[styles.Vidio, first && { opacity: 0 }]}
+          style={[styles.Vidio, { height: height }, first && { opacity: 0 }]}
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
           resizeMode={'cover'}
           onFullscreenPlayerWillPresent={() => setFullScreen(true)} // Set fullscreen state
@@ -188,8 +190,8 @@ export const VidioComponent = forwardRef(({
           onLoad={(data) => handleLoad(data)}
           onEnd={() => {
             setCurrentTime(0);
-            setPaused(true);
-            ref.current.seek(0);
+            setPaused(false);
+            ref.current?.seek(0);
           }}
         />
       </TouchableOpacity>
