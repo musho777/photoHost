@@ -97,6 +97,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   };
 
 
+  const { fullScreen } = useSelector((st) => st.fullScreenData)
 
   const renderItem = ({ item, index }) => {
     let height = 570
@@ -114,33 +115,32 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         setHeight(393)
       }
     }
+    console.log(fullScreen, 'fullScreen')
     return (
       <TouchableOpacity
         onLongPress={() => onLongClikc()}
         activeOpacity={1}
         onPressOut={() => onPressOut()}
         onPress={(e) => handleClick(e, item)}
-        style={[styles.img, { height: height }]}>
+        style={[styles.img, { height: !fullScreen ? height : 800, borderWidth: 1 }]}>
         {item.video ?
-          <View>
-            <VidioComponent
-              active={active == index}
-              viewableItems={viewableItems}
-              music={data.music_name}
-              item={item}
-              index={index}
-              currentTime={currentTime[active]}
-              setCurrentTime={(e) => CurrentTimeSet(index, e)}
-              setDuration={(e) => setDuration(e)}
-              duration={duration}
-              ref={videoRef}
-              height={height}
-              isExpanded={isExpanded}
-              description={description}
-              onSeek={onSeek}
-              setIsExpanded={(e) => setIsExpanded(e)}
-            />
-          </View>
+          <VidioComponent
+            active={active == index}
+            viewableItems={viewableItems}
+            music={data.music_name}
+            item={item}
+            index={index}
+            currentTime={currentTime[active]}
+            setCurrentTime={(e) => CurrentTimeSet(index, e)}
+            setDuration={(e) => setDuration(e)}
+            duration={duration}
+            ref={videoRef}
+            height={height}
+            isExpanded={isExpanded}
+            description={description}
+            onSeek={onSeek}
+            setIsExpanded={(e) => setIsExpanded(e)}
+          />
           :
           <SliderImage
             long={long}
@@ -179,7 +179,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
   }, [photo?.length])
 
   return (
-    <View style={{ position: 'relative' }}>
+    <View style={[{ position: 'relative' }]}>
       <FlatList
         horizontal
         ref={flatListRef}
@@ -198,12 +198,12 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
         }}
         renderItem={renderItem}
       />
-      {photo?.length > 1 && <View style={styles.paginationWrapper}>
+      {photo?.length > 1 && !fullScreen && <View style={styles.paginationWrapper}>
         {photo?.map((elm, i) => (
           <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
         ))}
       </View>}
-      <View>
+      {!fullScreen && <View>
         {(photo[active]?.video && showSlider) && !isExpanded &&
           <View style={styles.slider}>
             <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime[active])}</Text>
@@ -220,7 +220,7 @@ export const Slider = React.memo(({ photo, viewableItems, setOpenModal, user, on
             <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(duration)}</Text>
           </View>
         }
-      </View>
+      </View>}
       {openSlider && (
         <SliderModal
           modalVisible={openSlider}

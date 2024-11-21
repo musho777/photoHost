@@ -44,10 +44,7 @@ export const HomeScreen = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const [showComment, setShowComment] = useState(false)
-
-  const mainData = useSelector(st => st.mainData);
-
-
+  const { fullScreen } = useSelector((st) => st.fullScreenData)
 
   useFocusEffect(
     useCallback(() => {
@@ -167,6 +164,7 @@ export const HomeScreen = () => {
         return (
           <Post
             data={item}
+            index={index}
             viewableItems={viewableItems}
             setShowLike={() => setLikeClose(true)}
             setShowView={() => setShowView(true)}
@@ -182,7 +180,7 @@ export const HomeScreen = () => {
       }
       return null;
     },
-    [blackList, getLents.data.length, viewableItems]
+    [blackList, getLents.data.length, viewableItems, fullScreen]
   );
   const keyExtractor = React.useCallback((item) => item.id.toString(), []);
 
@@ -200,9 +198,6 @@ export const HomeScreen = () => {
     minimumViewTime: 300,
   };
 
-  const ListEmptyComponent = () => {
-    // return <EmptyFlatlist loading={getLents.loading} text={t(mainData.lang).Thefeedisempty} />
-  }
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle('dark-content');
@@ -212,14 +207,13 @@ export const HomeScreen = () => {
     }, [])
   );
 
-
   return (
-    <View style={[{ flex: 1 }, insets.top ? { marginTop: insets.top } : Styles.statusBar]}>
+    <View style={[{ flex: 1 }, insets.top ? { paddingTop: insets.top } : Styles.statusBar]}>
       {/* <StatusBar
         backgroundColor="white"
         barStyle={'dark-content'}
       /> */}
-      <HomeHeader onPress={() => goTop()} />
+      {!fullScreen && <HomeHeader onPress={() => goTop()} />}
       {showModal && <ModalComponent
         showModal={showModal}
         close={() => setShowModal(false)}
@@ -233,9 +227,10 @@ export const HomeScreen = () => {
           data={getLents.data}
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
-          ListEmptyComponent={ListEmptyComponent}
           onEndReached={debounce(handleEndReached, 300)}
           onEndReachedThreshold={0.5}
+          scrollEnabled={!fullScreen}
+          // contentContainerStyle={fullScreen && { justifyContent: 'center', alignItems: 'center' }}
           initialNumToRender={5}
           maxToRenderPerBatch={5}
           windowSize={10}
@@ -244,7 +239,7 @@ export const HomeScreen = () => {
           viewabilityConfig={viewabilityConfig.current}
           // getItemLayout={getItemLayout}
 
-          onViewableItemsChanged={onViewableItemsChanged}
+          // onViewableItemsChanged={onViewableItemsChanged}
           refreshControl={refreshControl}
         />
         :

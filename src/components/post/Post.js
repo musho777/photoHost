@@ -21,7 +21,8 @@ export const Post = React.memo(({
   setHoriznotal,
   setShowComment,
   setCommentData,
-  big = false
+  big = false,
+  index
 }) => {
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
@@ -29,6 +30,7 @@ export const Post = React.memo(({
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [long, setLong] = useState(false)
   const [activeImage, setActiveImage] = useState(0)
+  const { fullScreen } = useSelector((st) => st.fullScreenData)
   const [height, setHeight] = useState(570)
   const onLongClikc = () => {
     setLong(true)
@@ -131,12 +133,11 @@ export const Post = React.memo(({
 
   const [isExpanded, setIsExpanded] = useState(false);
 
-
   return (
-    <View style={{ marginVertical: 5, height: height }}>
+    <View style={[{ marginVertical: 5, height: height }, index == 0 && fullScreen && { height: 800, justifyContent: 'center' }]}>
       {showSave && <ShowSave saveType={saveType} />}
       <View style={styles.block}>
-        <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
+        {!fullScreen && <View style={{ position: 'absolute', zIndex: 111, width: '100%' }}>
           <PostHeader
             data={data}
             big={big}
@@ -150,7 +151,7 @@ export const Post = React.memo(({
             addToblack={addToblack}
             activeImage={activeImage}
           />
-        </View>
+        </View>}
         {!data?.background ? <Slider
           viewableItems={viewableItems}
           long={long}
@@ -177,7 +178,7 @@ export const Post = React.memo(({
             </View>
           </View>
         }
-        {!isExpanded && <View style={styles.PostBody}>
+        {!isExpanded && !fullScreen && <View style={styles.PostBody}>
           <PostBody
             postCount={user.postCount}
             commentCount={data?.comment_count}

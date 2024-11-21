@@ -7,6 +7,8 @@ import { Controler } from './component/Controler';
 import Slider from 'react-native-slider'
 import { Styles } from '../../../styles/Styles';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
+import { FullScreenAction } from '../../../store/action/action';
 
 
 
@@ -27,23 +29,24 @@ export const VidioComponent = forwardRef(({
 }, ref) => {
   const [first, setFirst] = useState(true);
   const MAX_Height = 40;
+  const dispatch = useDispatch()
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
   const [paused, setPaused] = useState(true);
   const [volume, setVolume] = useState(0);
-  const [fullScreen, setFullScreen] = useState(false)
   const navigation = useNavigation()
   const [loading, setLoading] = useState(true)
   const heightAnim = useRef(new Animated.Value(0)).current;
   const [showText, setShowText] = useState(false)
   const [isBuffering, setIsBuffering] = useState(false);
   const [start, setStart] = useState(null)
+  const [full, setFull] = useState(false)
+  const { fullScreen } = useSelector((st) => st.fullScreenData)
 
   const handleBuffer = ({ isBuffering }) => {
     setIsBuffering(isBuffering);
     if (isBuffering) {
       setLoading(true)
-      console.log("---------1388888")
       // setPaused(true);
     }
     else {
@@ -143,43 +146,141 @@ export const VidioComponent = forwardRef(({
     return desc;
   }, [description]);
 
+  return <View style={{ height: !fullScreen ? height : 700, backgroundColor: 'black', justifyContent: 'center' }}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPressIn={() => {
+        setCurrentId(item.id);
+        setShowStartButton(true);
+      }}
+
+      style={{ height: height }}
+    >
+
+      {(first && paused) &&
+        <FastImage
+          style={[styles.Vidio, { height: height }]}
+          source={{
+            uri: `https://chambaonline.pro/uploads/${item.photo}`,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable
+          }}
+          fallback={false}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      }
+      <Video
+        ref={ref}
+        paused={paused}
+        repeat={false}
+        // fullscreen={fullScreen}
+        volume={volume}
+        style={[styles.Vidio, { height: height }, first && { opacity: 0 }]}
+        source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
+        resizeMode={'cover'}
+        onFullscreenPlayerWillPresent={() => {
+          // setFullScreen(true)
+          // ref.current.seek(currentTime)
+          // setPaused(true)
+        }}
+        onFullscreenPlayerWillDismiss={() => {
+          // setFullScreen(false)
+          setPaused(true)
+        }} // Reset fullscreen state
+        onProgress={(data) => ChangeCurentTime(data)}
+        useTextureView={false}
+        onLoad={(data) => handleLoad(data)}
+        onBuffer={handleBuffer}
+        onEnd={() => {
+          setCurrentTime(0);
+          setPaused(true);
+          ref.current?.seek(0);
+        }}
+      />
+    </TouchableOpacity>
+    {((showStartButton || first)) &&
+      <Controler
+        setShowStartButton={(e) => setShowStartButton(e)}
+        setCurrentTime={(e) => setCurrentTime(e)}
+        ref={ref}
+        currentTime={currentTime}
+        setStart={(e) => setStart(e)}
+        full={fullScreen}
+        start={start}
+        volume={volume}
+        setFullScreen={(e) => {
+          setFull(!full)
+          // setPaused(true)
+          dispatch(FullScreenAction(!full))
+          // ref.current.seek(currentTime);
+          // setFullScreen(e)
+        }}
+        duration={duration}
+        setVolume={(e) => setVolume(e)}
+        showStartButton={showStartButton}
+        paused={paused}
+        setPaused={(e) => setPaused(e)}
+        setFirst={(e) => setFirst(e)}
+        loading={loading}
+        id={item.id}
+      />
+    }
+    <View style={{ marginVertical: 10, position: 'absolute', top: 40, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
+      {(Description && Description[index]) && !showText &&
+        <View style={[{ paddingHorizontal: 10 }]}>
+          <View>
+            {Description[index] &&
+              <View>
+                <Text style={[Styles.darkMedium13, { color: 'white' }]}>
+                  {`${Description[index].slice(0, MAX_Height)}`}
+                </Text>
+              </View>
+            }
+            {Description[index].length > MAX_Height && <TouchableOpacity
+              onPress={() => startAnimation(true)}
+            >
+              <Text style={[Styles.balihaiMedium13, { color: 'white' }]}>Показать больше</Text>
+            </TouchableOpacity>}
+          </View>
+        </View>
+      }
+    </View>
+
+    <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'white', width: '100%' }, { height: heightAnim }]}>
+      <ScrollView
+        nestedScrollEnabled={true}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        style={styles.textScrollContainer}>
+        <TouchableOpacity style={{ padding: 10 }} activeOpacity={1}>
+          {Description && Description[index] &&
+            <View>
+              <Text style={[Styles.darkMedium13]}>
+                {Description[index]}
+              </Text>
+            </View>
+          }
+          {Description && Description[index] && <TouchableOpacity onPress={() => startAnimation(false)}>
+            <Text style={[Styles.balihaiMedium13]}>
+              Cвернуть
+            </Text>
+          </TouchableOpacity>}
+        </TouchableOpacity>
+      </ScrollView>
+    </Animated.View>
+  </View>
   return (
-    <View style={{ position: 'relative', height: height }}>
+    <View style={[{ position: 'relative', height: !fullScreen ? height : 700, backgroundColor: 'black', borderWidth: 1, borderColor: 'white' }]}>
       <TouchableOpacity
         activeOpacity={1}
         onPressIn={() => {
           setCurrentId(item.id);
           setShowStartButton(true);
         }}
-        style={{ position: 'absolute', width: '100%', height: '100%' }}
-      >
-        {((showStartButton || first)) &&
-          <Controler
-            setShowStartButton={(e) => setShowStartButton(e)}
-            setCurrentTime={(e) => setCurrentTime(e)}
-            ref={ref}
-            currentTime={currentTime}
-            setStart={(e) => setStart(e)}
-            start={start}
-            volume={volume}
-            setFullScreen={(e) => {
-              // setPaused(true)
-              ref.current.seek(currentTime);
-              setFullScreen(e)
-            }}
-            duration={duration}
-            setVolume={(e) => setVolume(e)}
-            showStartButton={showStartButton}
-            paused={paused}
-            setPaused={(e) => setPaused(e)}
-            setFirst={(e) => setFirst(e)}
-            full={fullScreen}
-            big={big}
-            loading={loading}
-            id={item.id}
-          />
 
-        }
+        style={{ justifyContent: 'center', alignItems: 'center' }}
+      >
+
         {(first && paused) &&
           <FastImage
             style={[styles.Vidio, { height: height }]}
@@ -192,7 +293,7 @@ export const VidioComponent = forwardRef(({
             resizeMode={FastImage.resizeMode.cover}
           />
         }
-        {!fullScreen && <Video
+        <Video
           ref={ref}
           paused={paused}
           repeat={false}
@@ -202,12 +303,12 @@ export const VidioComponent = forwardRef(({
           source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
           resizeMode={'cover'}
           onFullscreenPlayerWillPresent={() => {
-            setFullScreen(true)
+            // setFullScreen(true)
             // ref.current.seek(currentTime)
             // setPaused(true)
           }}
           onFullscreenPlayerWillDismiss={() => {
-            setFullScreen(false)
+            // setFullScreen(false)
             setPaused(true)
           }} // Reset fullscreen state
           onProgress={(data) => ChangeCurentTime(data)}
@@ -219,9 +320,36 @@ export const VidioComponent = forwardRef(({
             setPaused(true);
             ref.current?.seek(0);
           }}
-        />}
+        />
       </TouchableOpacity>
-      <View style={{ marginVertical: 10, position: 'absolute', top: 40, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
+      {/* {((showStartButton || first)) &&
+        <Controler
+          setShowStartButton={(e) => setShowStartButton(e)}
+          setCurrentTime={(e) => setCurrentTime(e)}
+          ref={ref}
+          currentTime={currentTime}
+          setStart={(e) => setStart(e)}
+          full={fullScreen}
+          start={start}
+          volume={volume}
+          setFullScreen={(e) => {
+            setFull(!full)
+            // setPaused(true)
+            dispatch(FullScreenAction(!full))
+            // ref.current.seek(currentTime);
+            // setFullScreen(e)
+          }}
+          duration={duration}
+          setVolume={(e) => setVolume(e)}
+          showStartButton={showStartButton}
+          paused={paused}
+          setPaused={(e) => setPaused(e)}
+          setFirst={(e) => setFirst(e)}
+          loading={loading}
+          id={item.id}
+        />
+      } */}
+      {/* <View style={{ marginVertical: 10, position: 'absolute', top: 40, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
         {(Description && Description[index]) && !showText &&
           <View style={[{ paddingHorizontal: 10 }]}>
             <View>
@@ -263,102 +391,7 @@ export const VidioComponent = forwardRef(({
             </TouchableOpacity>}
           </TouchableOpacity>
         </ScrollView>
-      </Animated.View>
-
-      {fullScreen && <Modal
-        onRequestClose={() => setFullScreen(false)}
-        visible={fullScreen}
-        supportedOrientations={['portrait', 'landscape']}
-      >
-        <View style={{ backgroundColor: 'black', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPressIn={() => {
-              setCurrentId(item.id);
-              setShowStartButton(true);
-            }}
-            style={{ width: '100%', height: 570 }}
-          >
-            {((showStartButton || first || fullScreen)) &&
-              <Controler
-                setShowStartButton={(e) => setShowStartButton(e)}
-                setCurrentTime={(e) => setCurrentTime(e)}
-                ref={ref}
-                currentTime={currentTime}
-                setStart={(e) => setStart(e)}
-                setFullScreen={(e) => {
-                  setFullScreen(e)
-                  // setPaused(true)
-                  ref.current.seek(currentTime)
-                }}
-                duration={duration}
-                setVolume={(e) => setVolume(e)}
-                volume={volume}
-                paused={paused}
-                setPaused={(e) => setPaused(e)}
-                setFirst={(e) => setFirst(e)}
-                full={fullScreen}
-                id={item.id}
-              />}
-            {(first && paused) &&
-              <FastImage
-                style={styles.Vidio}
-                source={{
-                  uri: `https://chambaonline.pro/uploads/${item.photo}`,
-                  priority: FastImage.priority.high,
-                  cache: FastImage.cacheControl.immutable
-                }}
-                fallback={false}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            }
-            <Video
-              ref={ref}
-              paused={paused}
-              repeat={false}
-              fullscreen={fullScreen}
-              volume={volume}
-              style={[styles.Vidio, { height: height }, first && { opacity: 0 }]}
-              source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
-              resizeMode={'cover'}
-              onFullscreenPlayerWillPresent={() => {
-                setFullScreen(true)
-                setPaused(true)
-              }}
-              onFullscreenPlayerWillDismiss={() => {
-                setFullScreen(false)
-                setPaused(true)
-              }}
-              onProgress={(data) => ChangeCurentTime(data)}
-              useTextureView={false}
-              onLoad={(data) => handleLoad(data)}
-              onBuffer={handleBuffer}
-              onEnd={() => {
-                setCurrentTime(0);
-                setPaused(true);
-                ref.current.seek(0);
-              }}
-            />
-            <View style={styles.slider}>
-              <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(currentTime)}</Text>
-              <Slider
-                value={currentTime}
-                minimumValue={0}
-                maximumValue={duration}
-                style={styles.seekSlider}
-                minimumTrackTintColor="#FFFF"
-                maximumTrackTintColor="#ababab"
-                thumbTintColor="#FFC24B"
-                onValueChange={onSeek}
-                thumbStyle={{ width: 13, height: 13 }}
-                trackStyle={{ height: 2 }}
-              />
-              <Text style={[Styles.whiteSemiBold13, { textAlign: 'center' }]}>{formatTime(duration)}</Text>
-            </View>
-
-          </TouchableOpacity>
-        </View>
-      </Modal>}
+      </Animated.View> */}
     </View>
   );
 })
@@ -384,5 +417,9 @@ const styles = StyleSheet.create({
     // bottom: -25,
     // position: 'absolute',
     zIndex: 999999999,
+  },
+  full: {
+    // position: 'absolute',
+    height: 100,
   }
 });

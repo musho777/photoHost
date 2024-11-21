@@ -26,6 +26,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   const mainData = useSelector(st => st.mainData);
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['25%'], [],);
+  const { fullScreen } = useSelector((st) => st.fullScreenData)
 
 
   const AddPostShow = () => {
@@ -53,7 +54,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
     };
   }, []);
   if (!isKeyboardVisible) {
-    if (currentRouteName != "AddImg" && show) {
+    if (currentRouteName != "AddImg" && show && !fullScreen) {
       return (
         <View style={styles.tabWrapper}>
           <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>

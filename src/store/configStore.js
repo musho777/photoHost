@@ -47,6 +47,7 @@ import LocalSinglPageReducer from './reducers/LocalSinglPageReducer';
 import GetSoundReducer from './reducers/getSoundReducer';
 import showTabNavigatiorReducer from './reducers/showTabNavigatiorReducer';
 import GetVidioStatisticReducer from './reducers/getVidioStatisticReducer';
+import FullScreenReducer from './reducers/fullScreenAction';
 
 const rootReducer = combineReducers({
     register: RegisterReducer,
@@ -95,7 +96,8 @@ const rootReducer = combineReducers({
     localSinglPage: LocalSinglPageReducer,
     getSound: GetSoundReducer,
     showTabNavigatior: showTabNavigatiorReducer,
-    getVidioStatistic: GetVidioStatisticReducer
+    getVidioStatistic: GetVidioStatisticReducer,
+    fullScreenData: FullScreenReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

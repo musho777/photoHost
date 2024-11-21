@@ -2028,3 +2028,10 @@ export const DelateMessageLocal = (data) => {
     data
   }
 }
+
+export const FullScreenAction = (value) => {
+  return {
+    type: 'fullScreenAction',
+    value
+  }
+}
