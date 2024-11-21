@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
@@ -30,6 +30,9 @@ export const StatisticList = ({ id, token, vidio }) => {
   const [datay, setDatay] = useState([])
   const [datayg, setDatayg] = useState([])
 
+  const getPosts = useSelector(st => st.getPosts);
+
+  console.log(getPosts.data.length, 'getPosts')
 
   const getVidioStatistic = useSelector((st) => st.getVidioStatistic)
 
@@ -220,7 +223,7 @@ export const StatisticList = ({ id, token, vidio }) => {
             <View style={{ gap: 10 }}>
               <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getViewInAccaunt}</Text>
             </View>
-            <View>
+            {getPosts.data.length >= 2 && <View>
               <View style={styles.line}></View>
               {getStatistic1.data?.city_data?.length > 0 &&
                 <Text style={[Styles.darkSemiBold14, { marginBottom: 5 }]}>Просмотры с городов</Text>
@@ -228,7 +231,7 @@ export const StatisticList = ({ id, token, vidio }) => {
               {getStatistic1.data?.city_data?.map((elm, i) => {
                 return <Text style={Styles.darkSemiBold14} t>{elm.city} - {elm.count} </Text>
               })}
-            </View>
+            </View>}
           </View>
           {/* <View style={styles.line}></View> */}
 

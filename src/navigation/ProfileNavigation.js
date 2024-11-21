@@ -74,11 +74,11 @@ function CustomDrawerContent(props) {
           label={t(mainData.lang).Bookmarks}
           onPress={() => props.navigation.navigate('SavedPostScreen')}
         />
-        <DrawerItem
+        {/* <DrawerItem
           labelStyle={[Styles.darkRegular16]}
           label={t(mainData.lang).Contacts}
           onPress={() => props.navigation.navigate('Contacts')}
-        />
+        /> */}
         <DrawerItem
           labelStyle={[Styles.darkRegular16]}
           label={t(mainData.lang).Editprofile}

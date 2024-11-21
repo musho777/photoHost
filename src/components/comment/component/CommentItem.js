@@ -170,10 +170,10 @@ export const CommentItem = ({
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
-      return <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15, color: JSON.parse(user?.name)?.color?.title ? JSON.parse(user?.name)?.color?.title : "black", fontFamily: JSON.parse(user?.name)?.font }]}>{JSON.parse(user?.name)?.name}</Text>
+      return <Text style={[Styles.darkMedium16, { paddingTop: 15, color: JSON.parse(user?.name)?.color?.title ? JSON.parse(user?.name)?.color?.title : "black", fontFamily: JSON.parse(user?.name)?.font }]}>{JSON.parse(user?.name)?.name}</Text>
 
     } catch (error) {
-      return <Text style={[Styles.darkMedium16, { textAlign: 'center', paddingTop: 15, }]}> {user?.name}</Text >
+      return <Text style={[Styles.darkMedium16, { paddingTop: 15, }]}> {user?.name}</Text >
     }
   }
 
@@ -429,7 +429,7 @@ export const CommentItem = ({
     }
     else {
 
-      return <View>
+      return <View >
         <Text style={Styles.darkMedium13}>{canParseJSON(user?.name)}</Text>
         <Text style={[Styles.darkMedium12, { fontSize: 13 }]}>{text}</Text>
       </View>
@@ -459,7 +459,7 @@ export const CommentItem = ({
           style={ansswer ? styles.answerImg : styles.img}
           source={{ uri: `https://chambaonline.pro/uploads/${user?.avatar}` }}
         />
-        <View style={[{ marginLeft: 10, marginTop: -10 }, owner ? { width: '80%' } : { width: '75%' }]}>
+        <View style={[{ marginLeft: 10 }, owner ? { width: '80%' } : { width: '75%' }]}>
           {TextType(text)}
           <View style={{ flexDirection: 'row', gap: 20, marginTop: 2, alignItems: 'center' }}>
             <Text style={Styles.balihaiMedium13}>{daysAgo}</Text>

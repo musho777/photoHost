@@ -41,13 +41,11 @@ export const VidioComponent = forwardRef(({
   const [start, setStart] = useState(null)
 
   useEffect(() => {
-    console.log("22")
     setPaused(true)
   }, [active])
 
 
   useEffect(() => {
-    console.log("1q")
     if (viewableItems?.length) {
       if (currentId === viewableItems[0]?.item.id && !viewableItems[0]?.isViewable) {
         setFirst(true);
@@ -259,6 +257,7 @@ export const VidioComponent = forwardRef(({
                 setCurrentTime={(e) => setCurrentTime(e)}
                 ref={ref}
                 currentTime={currentTime}
+                setStart={(e) => setStart(e)}
                 setFullScreen={(e) => setFullScreen(e)}
                 duration={duration}
                 setVolume={(e) => setVolume(e)}
@@ -287,11 +286,11 @@ export const VidioComponent = forwardRef(({
               repeat={false}
               fullscreen={fullScreen}
               volume={volume}
-              style={[styles.Vidio, first && { opacity: 0 }]}
+              style={[styles.Vidio, { height: height }, first && { opacity: 0 }]}
               source={{ uri: `https://chambaonline.pro/uploads/${item.video}`, cache: true }}
               resizeMode={'cover'}
-              onFullscreenPlayerWillPresent={() => setFullScreen(true)} // Set fullscreen state
-              onFullscreenPlayerWillDismiss={() => setFullScreen(false)} // Reset fullscreen state
+              onFullscreenPlayerWillPresent={() => setFullScreen(true)}
+              onFullscreenPlayerWillDismiss={() => setFullScreen(false)}
               onProgress={(data) => ChangeCurentTime(data)}
               useTextureView={false}
               onLoad={(data) => handleLoad(data)}
@@ -328,7 +327,7 @@ export const VidioComponent = forwardRef(({
 const styles = StyleSheet.create({
   Vidio: {
     width: '100%',
-    height: 570,
+    // height: 570,
     position: 'relative',
   },
   slider: {
