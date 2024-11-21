@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 export const UserItem = ({ data }) => {
   const user = useSelector((st) => st.userData)
 
-
+  const getPostView = useSelector(st => st.getPostView);
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
@@ -18,6 +18,7 @@ export const UserItem = ({ data }) => {
       return <Text style={[Styles.darkMedium13, { marginHorizontal: 10 }]}> {jsonString}</Text >
     }
   }
+
 
 
 
@@ -40,7 +41,7 @@ export const UserItem = ({ data }) => {
   return <ScrollView
     onScroll={({ nativeEvent }) => {
       if (isCloseToBottom(nativeEvent)) {
-        if (getPosts.nextPage) {
+        if (getPostView.nextPage) {
           let pages = page + 1;
           dispatch(GetPostViewAction({ post_id: id }, token, page));
           setPage(pages);
@@ -48,7 +49,7 @@ export const UserItem = ({ data }) => {
       }
     }}
   >
-    {data.map((elm, i) => {
+    {getPostView.data.map((elm, i) => {
       return (
         <TouchableOpacity
           activeOpacity={1}

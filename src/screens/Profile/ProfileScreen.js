@@ -56,7 +56,7 @@ export const ProfileScreen = () => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setTranslucent = true
-      StatusBar.setBarStyle('dark-content');
+      StatusBar.setBarStyle('light-content');
       return () => {
         StatusBar.setBarStyle('dark-content');
       };
@@ -73,7 +73,7 @@ export const ProfileScreen = () => {
         <StatusBar
           translucent
           backgroundColor="transparent"
-          barStyle={'dark-content'}
+          barStyle={'light-content'}
         />
         <FlatList
           data={seletedScreen ? getPosts?.data : [{ id: 1 }]}

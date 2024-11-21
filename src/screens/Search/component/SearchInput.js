@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
     paddingRight: 35,
+    height: 40,
   },
   header: {
     backgroundColor: '#fff',

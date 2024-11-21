@@ -81,7 +81,7 @@ export const ViewComponent = ({ id, token, close, big = false, selectedVidioId }
           <StatisticList vidio={vidio} token={token} id={id} />
         }
 
-        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: big ? 100 : 50, alignItems: 'center' }}>
+        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: 100, alignItems: 'center' }}>
           <TouchableOpacity style={[{ padding: 10, borderRadius: 10, }, statistic == false && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(false)}>
             <ViewListSwg active={!statistic} />
           </TouchableOpacity>

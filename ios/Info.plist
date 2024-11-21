@@ -3,8 +3,7 @@
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>We need access to your location to provide personalized content.</string>
 <key>NSContactsUsageDescription</key>
-<string>We need access to your contacts to show contact information</string>
-<string>We need access to your camera to take photos.</string>
+<string>We need access to your contacts to show contact information.</string>
 <key>NSMicrophoneUsageDescription</key>
 <string>We need access to your microphone for recording audio.</string>
 <key>NSPhotoLibraryUsageDescription</key>

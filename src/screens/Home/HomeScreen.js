@@ -214,7 +214,7 @@ export const HomeScreen = () => {
 
 
   return (
-    <SafeAreaView style={[{ flex: 1 }, insets.top ? { marginTop: insets.top } : Styles.statusBar]}>
+    <View style={[{ flex: 1 }, insets.top ? { marginTop: insets.top } : Styles.statusBar]}>
       {/* <StatusBar
         backgroundColor="white"
         barStyle={'dark-content'}
@@ -279,6 +279,6 @@ export const HomeScreen = () => {
         open={showShare}
         commentData={commentData}
       />}
-    </SafeAreaView>
+    </View>
   );
 };

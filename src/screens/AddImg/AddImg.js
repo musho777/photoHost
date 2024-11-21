@@ -25,8 +25,10 @@ import { openPicker } from '@baronha/react-native-multiple-image-picker';
 import FastImage from 'react-native-fast-image';
 import { Header } from './component/header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ImagePicker from 'react-native-image-crop-picker';
 import { launchImageLibrary } from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
+import Video from 'react-native-video';
+
 
 import { PERMISSIONS, request, check, RESULTS } from 'react-native-permissions';
 
@@ -38,6 +40,10 @@ export const AddImg = ({ navigation }) => {
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const ref = useRef()
+
+
+
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardVisible(true);
@@ -72,31 +78,22 @@ export const AddImg = ({ navigation }) => {
   const dispatch = useDispatch();
 
 
-  const requestPhotoPermission = async () => {
-    const result = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
-    if (result === RESULTS.GRANTED) {
-      console.log('Photo library access granted.');
-    } else {
-      console.log('Photo library access denied.');
-    }
-  };
 
 
   useEffect(() => {
-    requestPhotoPermission()
     dispatch(GetCatalogAction(staticData.token))
   }, []);
 
 
   useFocusEffect(
     useCallback(() => {
-
+      setFirst(true)
       setError('')
       setShowError(false)
       dispatch(ClearCreatPost())
       setSelectedCatalog([])
       setUri([])
-      addPhoto([], 0)
+      // addPhoto([], 0)
       setActive(0)
     }, [])
   );
@@ -123,15 +120,36 @@ export const AddImg = ({ navigation }) => {
   }, [createPost.status]);
 
   const addPhoto = async (data, i) => {
+    setFirst(true)
+
+
     try {
-      launchImageLibrary({
+      // ImagePicker.openPicker({
+      //   multiple: true,
+      //   waitAnimationEnd: false,
+      //   includeExif: true,
+      //   forceJpg: true,
+      //   maxFiles: 10,
+      //   mediaType: 'any',
+      //   includeBase64: true,
+      // }).then(image => {
+
+      // });
+      ImagePicker.openPicker({
         cropping: false,
         compressImageQuality: 1,
+        multiple: true,
+        mediaType: "mixed",
+        videoQuality: "low",
+        durationLimit: 60,
+        storageOptions: {
+          skipBackup: true,
+          path: 'images'
+        }
       })
         .then((response) => {
-          console.log(response)
           let item = [...data]
-          if (response.assets.didCancel) {
+          if (response.didCancel) {
             if (uri.length == 0) {
               navigation.dispatch(
                 CommonActions.reset({
@@ -142,15 +160,14 @@ export const AddImg = ({ navigation }) => {
               setFirst(false)
             }
           }
-          else if (!response.assets.didCancel && !response.assets.error) {
-            if (response.assets.length) {
+          else {
+            if (response.length) {
               setFirst(true)
             }
-            response?.assets?.map((elm, i) => {
-              console.log(elm)
-              if (elm?.type != 'image/jpg') {
+            response?.map((elm, i) => {
+              if (elm?.mime != 'image/jpg') {
                 if (elm.duration <= 60883) {
-                  item.push({ uri: elm.path, mime: elm?.type })
+                  item.push({ uri: elm.sourceURL, mime: elm?.mime })
                 }
                 else {
                   setError('видео должен быть меньше чем 60 с')
@@ -159,64 +176,21 @@ export const AddImg = ({ navigation }) => {
               }
               else {
                 if (item.length <= 10) {
-                  console.log(elm)
-                  item.push({ uri: elm.uri, mime: elm?.type });
+                  item.push({ uri: elm.path, mime: elm?.type });
                 }
               }
             })
             setUri(item);
           }
-          // setImageUri(image.path); // The cropped image's URI
         })
         .catch((error) => {
-          console.log('Error: ', error);
         });
-      // const response = await openPicker(options);
-      // launchCamera(options, callback);
-
-      // You can also use as a promise without 'callback':
-      // const response = await launchCamera(options);
-      // let item = [...data]
-      // if (response.didCancel) {
-      //   if (uri.length == 0) {
-      //     navigation.dispatch(
-      //       CommonActions.reset({
-      //         index: 0,
-      //         routes: [{ name: 'TabNavigation' }],
-      //       })
-      //     );
-      //     setFirst(false)
-      //   }
-      // }
-      // else if (!response.didCancel && !response.error) {
-      //   if (response.length) {
-      //     setFirst(true)
-      //   }
-      //   response?.map((elm, i) => {
-      //     if (elm?.mime.startsWith('video')) {
-      //       if (elm.duration <= 60883) {
-      //         item.push({ uri: elm.path, mime: elm.mime })
-      //       }
-      //       else {
-      //         setError('видео должен быть меньше чем 60 с')
-      //         setShowError(true)
-      //       }
-      //     }
-      //     else {
-      //       if (item.length <= 10) {
-      //         item.push({ uri: elm.path, mime: elm.mime });
-      //       }
-      //     }
-      //   })
-      //   setUri(item);
-      // }
     }
     catch (error) {
       Close()
       setFirst(false)
       navigation.navigate('TabNavigation')
     }
-
   }
 
 
@@ -264,23 +238,31 @@ export const AddImg = ({ navigation }) => {
     setUri([])
   }
   const renderItem = ({ item, index }) => {
-    return <View behavior={Platform.OS === 'ios' ? 'padding' : "position"}>
+
+    return <View >
       <ScrollView style={{ height: 550 }}>
-        <FastImage
-          style={[styles.img, localheight[index]?.height + 50 >= localheight[index]?.width ? { maxHeight: 550 } : { maxHeight: 393 }]}
-          source={{ uri: item.uri }}
-          onLoad={(event) => {
-            const { width, height } = event.nativeEvent;
-            let item = [...localheight]
-            item.push({ width: width, height: height })
-            setLocalHeight(item)
-          }}
-        />
+        {item.mime == 'image/jpeg' ?
+          <FastImage
+            style={[styles.img, localheight[index]?.height + 50 >= localheight[index]?.width ? { maxHeight: 550 } : { maxHeight: 393 }]}
+            source={{ uri: item.uri }}
+            onLoad={(event) => {
+              const { width, height } = event.nativeEvent;
+              let item = [...localheight]
+              item.push({ width: width, height: height })
+              setLocalHeight(item)
+            }}
+          /> :
+          <Video
+            style={[styles.Vidio]}
+            source={{ uri: item.uri }}
+          ></Video>
+        }
+
         <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 10, right: 10 }}>
           <CloseSvg1 />
         </TouchableOpacity>
       </ScrollView>
-      <View style={keyboardVisible ? { justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 80, width: '100%' } : { justifyContent: 'center', alignItems: 'center' }}>
+      <View style={keyboardVisible ? { justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 150, width: '100%' } : { justifyContent: 'center', alignItems: 'center' }}>
         <TextInput
           placeholderTextColor="white"
           placeholder={t(mainData.lang).adddescription}
@@ -388,6 +370,11 @@ const styles = StyleSheet.create({
     borderColor: 'red'
   },
   img: {
+    height: 550,
+    width: windowWidth,
+    borderRadius: 11,
+  },
+  Vidio: {
     height: 550,
     width: windowWidth,
     borderRadius: 11,

@@ -26,7 +26,7 @@ export const VidioComponent = forwardRef(({
 }, ref) => {
   const [first, setFirst] = useState(true);
   const MAX_Height = 40;
-
+  console.log(item)
   const [showStartButton, setShowStartButton] = useState(false);
   const [currentId, setCurrentId] = useState();
   const [paused, setPaused] = useState(true);

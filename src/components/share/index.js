@@ -111,7 +111,7 @@ export const Share = ({ postId, close, open, user_id }) => {
       <BottomSheetScrollView
         onScroll={({ nativeEvent }) => {
           if (isCloseToBottom(nativeEvent)) {
-            if (getPosts.nextPage) {
+            if (getFollowers.nextPage) {
               let pages = page + 1;
               dispatch(GetFollowerAction({ search: "", user_id: user_id }, staticdata.token, 1));
               // dispatch(GetPostLikeAction({ post_id: id }, token, page));

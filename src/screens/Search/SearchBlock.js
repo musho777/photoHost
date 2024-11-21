@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ActivityIndicator, StatusBar } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ActivityIndicator, StatusBar, TouchableOpacity, Keyboard } from 'react-native';
 import { FlatList, RefreshControl } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchAction } from '../../store/action/action';
@@ -54,9 +54,13 @@ export const SearchBlock = () => {
     );
   };
 
-
   return (
-    <SafeAreaView style={insets.top ? { marginTop: insets.top } : Styles.statusBar}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => {
+        Keyboard.dismiss()
+      }}
+      style={insets.top ? { marginTop: insets.top, flex: 1 } : Styles.statusBar}>
       <View style={styles.centeredView}>
         <SearchInput
           data={data}
@@ -85,7 +89,7 @@ export const SearchBlock = () => {
           }}
         />
       </View>
-    </SafeAreaView>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

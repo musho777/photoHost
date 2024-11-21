@@ -19,7 +19,6 @@ export const StatisticList = ({ id, token, vidio }) => {
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
   const widthArr = [70, 50, 40, 60, 120]
-  const getPostView = useSelector(st => st.getPostView);
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
   const [getView, setGetView] = useState(null)
@@ -216,7 +215,7 @@ export const StatisticList = ({ id, token, vidio }) => {
               </View>
             </TouchableOpacity>
             {show &&
-              <UserItem data={getPostView.data} />
+              <UserItem />
             }
             <View style={{ gap: 10 }}>
               <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getViewInAccaunt}</Text>
