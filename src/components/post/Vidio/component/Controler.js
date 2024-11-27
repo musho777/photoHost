@@ -66,8 +66,6 @@ export const Controler = forwardRef(({
       setShowStartButton(false);
     }
   };
-  console.log(big, 'big')
-
   if (!full) {
     return <View style={styles.wrapper}>
       {!big && <TouchableOpacity

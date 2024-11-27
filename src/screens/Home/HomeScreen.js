@@ -87,8 +87,6 @@ export const HomeScreen = () => {
   }
 
 
-  console.log(fullScreen)
-
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
 
@@ -241,7 +239,7 @@ export const HomeScreen = () => {
           viewabilityConfig={viewabilityConfig.current}
           // getItemLayout={getItemLayout}
 
-          // onViewableItemsChanged={onViewableItemsChanged}
+          onViewableItemsChanged={onViewableItemsChanged}
           refreshControl={refreshControl}
         />
         :

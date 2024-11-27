@@ -132,8 +132,6 @@ export const Post = React.memo(({
 
   ]
 
-  console.log(indexData, index,)
-
   const [isExpanded, setIsExpanded] = useState(false);
   return (
     <View style={[{ marginVertical: 5, height: height }, (index == indexData && fullScreen) && styles.fullScreen, (index != indexData && fullScreen) && { display: 'none' }]}>

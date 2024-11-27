@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
@@ -14,11 +14,11 @@ import { DonwSvg } from '../../assets/svg/Svgs';
 import { UserItem } from './compeont/userItem';
 
 export const StatisticList = ({ id, token, vidio }) => {
-  const tableHead = ['Дата \n', 'Время \n', 'Пол \n', 'Возраст \n', 'Кол-во пользователей']
+  const tableHead = ['Дата ', 'Время', 'Пол ', 'Возраст', 'Кол-во пользователей']
   const getStatistic1 = useSelector((st) => st.getStatistic1)
   const getStatistic2 = useSelector((st) => st.getStatistic2)
   const [tableData, setTableDat] = useState([])
-  const widthArr = [70, 50, 40, 60, 120]
+  const widthArr = [60, 40, 30, 60, 120]
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
   const [getView, setGetView] = useState(null)
@@ -31,8 +31,6 @@ export const StatisticList = ({ id, token, vidio }) => {
   const [datayg, setDatayg] = useState([])
 
   const getPosts = useSelector(st => st.getPosts);
-
-  console.log(getPosts.data.length, 'getPosts')
 
   const getVidioStatistic = useSelector((st) => st.getVidioStatistic)
 
@@ -95,67 +93,74 @@ export const StatisticList = ({ id, token, vidio }) => {
   }, [])
 
   function getMaxCountItem(data) {
-    return data.map((item) => {
-      const maxStatistic = item.statistics.reduce((max, current) =>
-        current.count > max.count ? current : max, item.statistics[0]);
-      const gender = maxStatistic.gender === "men" ? "M" : "Ж";
+    let temp = []
+    data.map((item) => {
       let date = new Date(item.date)
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = String(date.getFullYear()).slice(2);
-      if (maxStatistic.count)
-        return [`${day}.${month}.${year}`, item.hour_range, gender, maxStatistic.year, maxStatistic.count];
+      item.statistics.map((elm, i) => {
+        const gender = elm.gender === "men" ? "M" : "Ж";
+        if (elm.count > 0)
+          temp.push(
+            [`${day}.${month}.${year}`, item.hour_range, gender, elm.year, elm.count]
+          )
+      })
     });
+    return temp
   }
 
   function getMaxCountItemUnG(data) {
-    return data.map((item) => {
-      const maxStatistic = item.statistics_unknown_gender.reduce((max, current) =>
-        current.count > max.count ? current : max, item.statistics_unknown_gender[0]);
-      const gender = 'U';
+    let temp = []
+    data.map((item) => {
       let date = new Date(item.date)
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = String(date.getFullYear()).slice(2);
-      if (maxStatistic.count)
-        return [`${day}.${month}.${year}`, item.hour_range, gender, maxStatistic.year, maxStatistic.count];
+      item.statistics_unknown_gender.map((elm, i) => {
+        const gender = elm.gender === "men" ? "M" : "Ж";
+        if (elm.count > 0)
+          temp.push([`${day}.${month}.${year}`, item.hour_range, gender, "", elm.count])
+      })
     });
+    return temp
   }
 
 
 
   function getMaxCountItemUnY(data) {
-    return data.map((item) => {
-      const maxStatistic = item.statistics_unknown_year.reduce((max, current) =>
-        current.count > max.count ? current : max, item.statistics_unknown_year[0]);
-      // const gender = 'U';
-      const gender = maxStatistic.gender === "men" ? "M" : "Ж";
+    let temp = []
+    data.map((item) => {
       let date = new Date(item.date)
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = String(date.getFullYear()).slice(2);
-      setDatay(data)
-      if (maxStatistic.count) {
-        return [`${day}.${month}.${year}`, item.hour_range, gender, "не указан", maxStatistic.count];
-      }
+      item.statistics_unknown_year.map((elm, i) => {
+        const gender = elm.gender === "men" ? "M" : "Ж";
+        if (elm.count > 0)
+          temp.push(
+            [`${day}.${month}.${year}`, item.hour_range, "", elm.year, elm.count]
+          )
+      })
     });
+    return temp
   }
 
   function getMaxCountItemUnYG(data) {
-    return data.map((item) => {
-      const maxStatistic = item.statistics_unknown.reduce((max, current) =>
-        current.count > max.count ? current : max, item.statistics_unknown[0]);
-      // const gender = 'U';
-      const gender = maxStatistic.gender === "men" ? "M" : "Ж";
+    let temp = []
+    data.map((item) => {
       let date = new Date(item.date)
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = String(date.getFullYear()).slice(2);
-      setDatay(data)
-      if (maxStatistic.count) {
-        return [`${day}.${month}.${year}`, item.hour_range, gender, "не указан", maxStatistic.count];
-      }
+      item.statistics_unknown.map((elm, i) => {
+        if (elm.count > 0)
+          temp.push(
+            [`${day}.${month}.${year}`, item.hour_range, "", "", elm.count]
+          )
+      })
     });
+    return temp
   }
 
 
@@ -217,9 +222,7 @@ export const StatisticList = ({ id, token, vidio }) => {
                 <DonwSvg />
               </View>
             </TouchableOpacity>
-            {show &&
-              <UserItem />
-            }
+            {show && <UserItem />}
             <View style={{ gap: 10 }}>
               <Text style={Styles.darkSemiBold14}>Среднее время проведенное на аккаунте - {getViewInAccaunt}</Text>
             </View>
@@ -276,7 +279,7 @@ export const StatisticList = ({ id, token, vidio }) => {
                         key={index}
                         data={rowData}
                         widthArr={widthArr}
-                        style={[styles.row, index % 2 == 0 && { backgroundColor: 'rgba(255,194,75,0.8)' }]}
+                        style={[styles.row]}
                         textStyle={styles.textStyle}
                       />
                     })

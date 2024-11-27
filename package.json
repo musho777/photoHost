@@ -31,6 +31,7 @@
     "@unimodules/core": "^7.1.2",
     "axios": "^1.4.0",
     "emoji-regex": "^10.3.0",
+    "hermes-engine": "latest",
     "i": "^0.3.7",
     "install": "^0.13.0",
     "lottie-react-native": "^7.0.0",

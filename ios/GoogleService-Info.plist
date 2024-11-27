@@ -3,28 +3,28 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCaGItSzVLqHKq12s0SpId0Fc3BhGtKYNk</string>
+	<string>AIzaSyCQ0QKcm4r8-WfDJsKaHYifM5OmEeRgPGc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>40528962487</string>
+	<string>484321306703</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.musho.chamba</string>
-	<key>STORAGE_BUCKET</key>
-	<string>chamba-11bf5.appspot.com</string>
+	<string>com.mush.chamba</string>
 	<key>PROJECT_ID</key>
-	<string>chamba-11bf5</string>
+	<string>chamba-4e77c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chamba-4e77c.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:40528962487:ios:0d3ca045bbb1bfefbdbe32</string>
+	<string>1:484321306703:ios:cea4f7d7fa04cabae8a23a</string>
 </dict>
 </plist>

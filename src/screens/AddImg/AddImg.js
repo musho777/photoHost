@@ -93,7 +93,7 @@ export const AddImg = ({ navigation }) => {
       dispatch(ClearCreatPost())
       setSelectedCatalog([])
       setUri([])
-      // addPhoto([], 0)
+      addPhoto([], 0)
       setActive(0)
     }, [])
   );
@@ -261,6 +261,9 @@ export const AddImg = ({ navigation }) => {
         <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 10, right: 10 }}>
           <CloseSvg1 />
         </TouchableOpacity>
+        <TouchableOpacity style={{ position: 'absolute', top: 40, right: 10 }} onPress={() => addPhoto(uri, 1)}>
+          <AddImage />
+        </TouchableOpacity>
       </ScrollView>
       <View style={keyboardVisible ? { justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 150, width: '100%' } : { justifyContent: 'center', alignItems: 'center' }}>
         <TextInput
@@ -318,18 +321,18 @@ export const AddImg = ({ navigation }) => {
           </View>}
         </View>
         {!keyboardVisible && <View style={{ marginTop: uri?.length > 1 ? 20 : 10, gap: 15 }}>
-          <Text style={{ color: 'white', fontSize: 10, paddingHorizontal: 20, }}>
+          <Text style={{ color: 'white', fontSize: 12, paddingHorizontal: 20, }}>
             Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном посте может быть запечатлен красивый автомобиль, милая собачка, нежное море и белоснежная яхта.
             {"\n"}
             Куда выложить?
             {"\n"}
             Мы предлагаем такой контент выложить в несколько рубрик (не более 4 - x), где Ваше искусство увидят любители разного.
           </Text>
-          <View style={{ alignItems: 'center' }}>
+          {/* <View style={{ alignItems: 'center' }}>
             <TouchableOpacity onPress={() => addPhoto(uri, 1)}>
               <AddImage />
             </TouchableOpacity>
-          </View>
+          </View> */}
 
         </View>}
       </View>

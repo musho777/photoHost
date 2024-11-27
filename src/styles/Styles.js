@@ -139,12 +139,12 @@ export const Styles = StyleSheet.create({
     },
     balihaiMedium9: {
         fontFamily: 'Montserrat-Medium',
-        fontSize: 9,
+        fontSize: 11,
         color: AppColors.BaliHai_Color,
     },
     whiteMedium9: {
         fontFamily: 'Montserrat-Medium',
-        fontSize: 9,
+        fontSize: 11,
         color: "#fff",
     },
     balihaiMedium10: {
@@ -154,7 +154,7 @@ export const Styles = StyleSheet.create({
     },
     balihaiMedium8: {
         fontFamily: 'Montserrat-Medium',
-        fontSize: 8,
+        fontSize: 11,
         color: AppColors.BaliHai_Color,
     },
     eslipesMedium13: {
@@ -164,12 +164,12 @@ export const Styles = StyleSheet.create({
     },
     eslipesMedium10: {
         fontFamily: 'Montserrat-Medium',
-        fontSize: 10,
+        fontSize: 11,
         color: AppColors.Eclipse_Color,
     },
     whiteSemiBold10: {
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 10,
+        fontSize: 11,
         color: '#fff',
     },
     whiteMedium12: {
