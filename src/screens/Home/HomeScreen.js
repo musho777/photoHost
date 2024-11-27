@@ -16,6 +16,7 @@ import { AddImageLoading } from '../../components/addImageLoading';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CommmentModal } from '../../components/comment/CommmentModal';
+import { SpamModal } from '../../components/spamModal';
 const windowHeight = Dimensions.get('window').height;
 
 
@@ -40,6 +41,7 @@ export const HomeScreen = () => {
   const [showView, setShowView] = useState(false)
   const [likeClose, setLikeClose] = useState(false)
   const [showShare, setShowShare] = useState(false)
+  const [showInfo, setShowInfo] = useState(false)
   const [isFetching, setIsFetching] = useState(false);
 
   const [showComment, setShowComment] = useState(false)
@@ -145,7 +147,7 @@ export const HomeScreen = () => {
       }, 1000);
     }
     else if (!getLents?.nextPage) {
-      dispatch(AddPostViewCount({ post_id: getLents?.data[getLents?.data?.length - 1].id }, staticdata.token))
+      dispatch(AddPostViewCount({ post_id: getLents?.data[getLents?.data?.length - 1]?.id }, staticdata.token))
     }
   }, [getLents, page, isFetching, staticdata.token]);
 
@@ -172,6 +174,7 @@ export const HomeScreen = () => {
             addToblack={(e) => AddToBack(e)}
             setShowComment={() => setShowComment(true)}
             deletData={(e) => deletData(e)}
+            setShowInfo={(e) => setShowInfo(e)}
             setSelectidId={(id) => setSelectidId(id)}
             setShowShare={(e) => setShowShare(e)}
             setSelectedVidioId={(e) => setSelectedVidioId(e)}
@@ -272,6 +275,12 @@ export const HomeScreen = () => {
         close={() => setShowComment(false)}
         postId={selecteidId}
         open={showShare}
+        commentData={commentData}
+      />}
+      {showInfo && <SpamModal
+        close={() => setShowInfo(false)}
+        postId={selecteidId}
+        open={showInfo}
         commentData={commentData}
       />}
     </View>

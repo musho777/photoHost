@@ -19,6 +19,7 @@ export const PostHeader = ({
   activeImage,
   big,
   data,
+  setShowInfo
 }
 ) => {
   const [follow, setFollow] = useState(data?.user.follow_status_sender.length)
@@ -113,6 +114,13 @@ export const PostHeader = ({
         }}>
           <Text style={Styles.darkRegular14}>В чёрный список</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => {
+          setOpenModal(false)
+          setShowInfo(true)
+        }}>
+          <Text style={Styles.darkRegular14}>Пожаловаться</Text>
+        </TouchableOpacity>
+
       </View>
     }
   </View >
@@ -128,7 +136,6 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingHorizontal: 10,
     borderRadius: 10,
-    zIndex: 1
   },
   hover: {
     padding: 5,

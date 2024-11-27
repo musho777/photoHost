@@ -12,8 +12,7 @@ export const HeaderInfo = ({ user, data }) => {
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
-      return <Text style={[Styles.whiteSemiBold14]}>{JSON.parse(jsonString).name}</Text>
-
+      return <Text style={[Styles.whiteSemiBold14, { color: JSON.parse(jsonString)?.color?.title ? JSON.parse(jsonString)?.color?.title : "black", fontFamily: JSON.parse(jsonString)?.font }]}>{JSON.parse(jsonString).name}</Text>
     } catch (error) {
       return <Text style={[Styles.whiteSemiBold14,]}>{jsonString}</Text>
     }

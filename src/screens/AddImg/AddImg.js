@@ -261,7 +261,7 @@ export const AddImg = ({ navigation }) => {
         <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 10, right: 10 }}>
           <CloseSvg1 />
         </TouchableOpacity>
-        <TouchableOpacity style={{ position: 'absolute', top: 40, right: 10 }} onPress={() => addPhoto(uri, 1)}>
+        <TouchableOpacity style={{ position: 'absolute', top: 50, right: 10 }} onPress={() => addPhoto(uri, 1)}>
           <AddImage />
         </TouchableOpacity>
       </ScrollView>

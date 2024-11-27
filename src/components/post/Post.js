@@ -23,7 +23,8 @@ export const Post = React.memo(({
   setShowComment,
   setCommentData,
   big = false,
-  index
+  index,
+  setShowInfo
 }) => {
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
@@ -150,6 +151,7 @@ export const Post = React.memo(({
             deletData={deletData}
             addToblack={addToblack}
             activeImage={activeImage}
+            setShowInfo={(e) => setShowInfo(e)}
           />
         </View>}
         {!data?.background ? <Slider
@@ -242,7 +244,8 @@ const styles = StyleSheet.create({
   PostBody: {
     zIndex: 999,
     bottom: 40,
-    width: '100%'
+    width: '100%',
+    zIndex: 1
   },
   img: {
     width: windowWidth,
