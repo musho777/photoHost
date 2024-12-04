@@ -92,7 +92,7 @@ export const HomeScreen = () => {
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
 
-      if (showShare || likeClose || showView || fullScreen) {
+      if (showShare || likeClose || showView) {
         setShowShare(false)
         setLikeClose(false)
         setShowView(false)
@@ -108,7 +108,7 @@ export const HomeScreen = () => {
     return () => {
       backHandler.remove();
     };
-  }, [showShare, likeClose, showView, fullScreen]);
+  }, [showShare, likeClose, showView]);
 
 
 

@@ -595,6 +595,12 @@ export const ProfesionsModal = ({ visible, close, onPress }) => {
                 showsVerticalScrollIndicator={false}
                 scrollEventThrottle={400}
               >
+                <Text
+                  onPress={() => {
+                    onPress("");
+                    close();
+                  }}
+                  style={styles.modalText}>удалить</Text>
                 {profesions.map((elm, i) => (
                   <Text
                     onPress={() => {

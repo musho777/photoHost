@@ -12,7 +12,7 @@ export const ChnageGender = ({ value, setValue }) => {
   const mainData = useSelector(st => st.mainData);
   const handlePresentModalPress = useCallback(() => { bottomSheetRef.current?.present(); }, []);
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ['16%'], []);
+  const snapPoints = useMemo(() => ['25%'], []);
 
   return <View>
     <TouchableOpacity onPress={() => handlePresentModalPress()} style={[styles.textWrapper2]}>
@@ -27,6 +27,12 @@ export const ChnageGender = ({ value, setValue }) => {
     <View style={{ position: 'absolute' }}>
       <BootomModal ref={bottomSheetRef} snapPoints={snapPoints}>
         <View style={{ paddingHorizontal: 20 }}>
+          <TouchableOpacity onPress={() => {
+            setValue('')
+            bottomSheetRef.current?.close()
+          }} style={{ marginTop: 20 }} >
+            <Text style={Styles.darkRegular14}>{t(mainData.lang).Delete}</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             setValue('Мужской')
             bottomSheetRef.current?.close()

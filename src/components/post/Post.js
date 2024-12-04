@@ -8,7 +8,6 @@ import { PostBody } from '../postBody';
 import { ShowSave } from './showSave';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 export const Post = React.memo(({
   viewableItems,

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, SafeAreaView, KeyboardAvoidingView, StatusBar, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { EmailSvg, Emojy, NetWorkSvg, PhoneSvg, WatchSvg, WorkLocation, WorkLocationSvg } from '../../../assets/svg/Svgs';
+import { EmailSvg, NetWorkSvg, PhoneSvg, WatchSvg, WorkLocation, WorkLocationSvg } from '../../../assets/svg/Svgs';
 import { AppColors } from '../../../styles/AppColors';
 import { Styles } from '../../../styles/Styles';
 import React, { useEffect } from 'react';
@@ -119,15 +119,6 @@ export const EditProfilScreen = ({ navigation }) => {
   const [ooo, setOoo] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
-
-
-  useEffect(() => {
-    if (day || mount?.id || year) {
-      const newDateFormat = `${year}-${mount?.id + 1}-${day}`;
-      setDate(newDateFormat)
-    }
-  }, [day, mount, year])
-
   useFocusEffect(
     useCallback(() => {
       SetData()
@@ -181,19 +172,32 @@ export const EditProfilScreen = ({ navigation }) => {
   const chnageProfil = () => {
     if (name === '') {
       setError('Введите корректный  имя');
-    }
-    else if (day == '' && (mount != '' || year != '')) {
-      setError('Введите корректный дата');
-    }
-    else if (mount == '' && (day != '' || year != '')) {
-      setError('Введите корректный дата');
-    }
-    else if (year == '' && (day != '' || mount != '')) {
-      setError('Введите корректный дата');
+      return
     }
     else {
       setError('');
     }
+
+
+    let newDateFormat = ""
+    console.log(year, mount, day == "")
+    if (year && mount?.id && day) {
+      newDateFormat = `${year}-${mount?.id + 1}-${day}`;
+      setError('');
+    }
+    else if (year == '' && (mount == '' || !mount) && day == "") {
+      newDateFormat = ""
+      setError('');
+    }
+    else {
+      newDateFormat = ""
+      setError('Введите корректный дата');
+      return
+    }
+
+    setDate(newDateFormat)
+
+
     dispatch(chnageUserProfil({
       name: JSON.stringify(name),
       nickname: '#',
@@ -202,7 +206,7 @@ export const EditProfilScreen = ({ navigation }) => {
     ));
     dispatch(UpdateIkInfoAction({
       city_id: loaction.id,
-      date_of_birth: date,
+      date_of_birth: newDateFormat,
       gender: gender,
       mgu: profation,
       work_type: workLocation,
@@ -294,7 +298,7 @@ export const EditProfilScreen = ({ navigation }) => {
               Чем больше заполните информацию о себе, тем точнее будет предлагаться контент. Помимо выбранных Вами рубрик будет предлагаться контент с Вашего города.
             </Text>
             <View>
-              {accauntType && <DateComponent mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
+              {accauntType && <DateComponent error={error} mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
               {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
               {!accauntType && <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />}
               <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />

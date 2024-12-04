@@ -5,9 +5,10 @@ import { AppColors } from "../../../../styles/AppColors";
 import { useSelector } from "react-redux";
 import { MountWrapper } from "../../../../components/MountWrapper";
 import { useState } from "react";
+import { Styles } from "../../../../styles/Styles";
 
 
-export const DateComponent = ({ setDay, day, mount, setMount, year, setYera }) => {
+export const DateComponent = ({ setDay, day, mount, setMount, year, setYera, error }) => {
   const mainData = useSelector(st => st.mainData);
   const [openMount, setOpenMout] = useState(false)
   return <View>
@@ -44,6 +45,17 @@ export const DateComponent = ({ setDay, day, mount, setMount, year, setYera }) =
           style={styles.calendarInput} />
       </View>
     </View>
+    {error && <View>
+      <Text style={{ color: 'red', fontSize: 12, textAlign: 'center', marginTop: 5 }}>{error}</Text>
+    </View>}
+
+    <TouchableOpacity onPress={() => {
+      setMount("")
+      setYera("")
+      setDay("")
+    }} style={{ alignItems: 'flex-end', paddingHorizontal: 15, marginVertical: 5 }}>
+      <Text style={Styles.balihaiMedium10}>Удалить дату</Text>
+    </TouchableOpacity>
     <View style={{ position: 'absolute' }}>
       {openMount && <MountWrapper onPress={(e) =>
         setMount(e)} close={() => setOpenMout(false)}
