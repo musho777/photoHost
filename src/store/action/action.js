@@ -172,6 +172,7 @@ export const RegisterAction = data => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
+          console.log(r)
           dispatch(SuccessRegister(r));
         } else {
           dispatch(
@@ -1771,7 +1772,6 @@ export const EndViewPost = (data, token) => {
 }
 
 export const GetStatisitc2 = (id, token, data) => {
-  console.log(id, token)
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);

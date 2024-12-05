@@ -4,7 +4,7 @@ import { AppColors } from './AppColors';
 export const Styles = StyleSheet.create({
     authScreen: {
         flex: 1,
-        marginTop: 20,
+        // marginTop: 20,
         alignItems: 'center',
         paddingHorizontal: 45
     },
