@@ -19,7 +19,8 @@ export const PostHeader = ({
   activeImage,
   big,
   data,
-  setShowInfo
+  setShowInfo,
+  setPostUserId
 }
 ) => {
   const [follow, setFollow] = useState(data?.user.follow_status_sender.length)
@@ -117,6 +118,7 @@ export const PostHeader = ({
         <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => {
           setOpenModal(false)
           setShowInfo(true)
+          setPostUserId(data?.user.id)
         }}>
           <Text style={Styles.darkRegular14}>Пожаловаться</Text>
         </TouchableOpacity>

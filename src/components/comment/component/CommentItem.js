@@ -173,7 +173,7 @@ export const CommentItem = ({
       return <Text style={[Styles.darkMedium16, { paddingTop: 15, color: JSON.parse(user?.name)?.color?.title ? JSON.parse(user?.name)?.color?.title : "black", fontFamily: JSON.parse(user?.name)?.font }]}>{JSON.parse(user?.name)?.name}</Text>
 
     } catch (error) {
-      return <Text style={[Styles.darkMedium16, { paddingTop: 15, }]}> {user?.name}</Text >
+      return <Text style={[Styles.darkMedium16, { paddingTop: 15, }]}>{user?.name}</Text >
     }
   }
 

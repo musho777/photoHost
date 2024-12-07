@@ -12,9 +12,9 @@ export const HeaderInfo = ({ user, data }) => {
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
-      return <Text style={[Styles.whiteSemiBold14, { color: JSON.parse(jsonString)?.color?.title ? JSON.parse(jsonString)?.color?.title : "black", fontFamily: JSON.parse(jsonString)?.font }]}>{JSON.parse(jsonString).name}</Text>
+      return <Text style={[Styles.whiteSemiBold14, { color: JSON.parse(jsonString)?.color?.title ? JSON.parse(jsonString)?.color?.title : "black", fontFamily: JSON.parse(jsonString)?.font, marginTop: -2 }]}>{JSON.parse(jsonString).name}</Text>
     } catch (error) {
-      return <Text style={[Styles.whiteSemiBold14,]}>{jsonString}</Text>
+      return <Text style={[Styles.whiteSemiBold14, { marginTop: -2 }]}>{jsonString}</Text>
     }
   }
 
@@ -42,15 +42,14 @@ export const HeaderInfo = ({ user, data }) => {
     onPress={() =>
       user?.data?.id != data?.user.id ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data.user.id, post_id: data.id } }) :
         navigation.navigate('TabNavigation', { screen: "ProfileNavigation" })
-    } style={Styles.flexAlignItems}>
+    } style={[Styles.flexAlignItems]}>
     <View>
       <Image style={styles.userImg}
         source={{ uri: `https://chambaonline.pro/uploads/${data?.user.avatar}` }} />
     </View>
-    <View style={{ gap: 2, width: '75%' }}>
+    <View style={styles.nameBlock}>
       <View style={[Styles.flexAlignItems, { width: '100%', gap: 8 }]}>
         {canParseJSON(data?.user?.name)}
-        {/* <Text style={[Styles.whiteSemiBold14, { color: JSON.parse(user?.name)?.color?.title ? JSON.parse(user?.name)?.color?.title : "black", fontFamily: JSON.parse(user?.name)?.font }]}>{JSON.parse(user?.name)?.name}</Text> */}
         {data?.user.star > 0 && <CheckMarkUserSvg />}
       </View>
       <Text style={[Styles.whiteMedium9]}>{day} </Text>
@@ -60,10 +59,17 @@ export const HeaderInfo = ({ user, data }) => {
 
 const styles = StyleSheet.create({
   userImg: {
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
     marginRight: 10,
     borderRadius: 50,
+  },
+  nameBlock: {
+    // gap: 2,
+    width: '75%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 40
   },
   infoBlock: {
     position: 'absolute',

@@ -1,12 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { View, Dimensions, StyleSheet, ActivityIndicator, Text, Animated, TouchableOpacity, Easing } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Styles } from '../styles/Styles';
+import { InReview } from './InReview'
+
+
 
 const windowWidth = Dimensions.get('window').width;
 
-const SliderImage = React.memo(({ item, height, description, index, setIsExpanded }) => {
+const SliderImage = React.memo(({ adminStatus, item, height, description, index, setIsExpanded }) => {
 
   const [loading, setLoading] = useState(true)
   const heightAnim = useRef(new Animated.Value(0)).current;
@@ -37,19 +40,24 @@ const SliderImage = React.memo(({ item, height, description, index, setIsExpande
     {loading && <View style={[styles.loading, { height: height }]}>
       <ActivityIndicator color='#FFC24B' size={"large"} />
     </View>}
-    <FastImage
-      style={[{ height: height }, styles.img]}
-      source={{
-        uri: `https://chambaonline.pro/uploads/${item.photo}`,
-        priority: FastImage.priority.high,
-        cache: FastImage.cacheControl.immutable
-      }}
-      fallback={false}
-      onLoad={() => {
-        setLoading(false)
-      }}
-      resizeMode={FastImage.resizeMode.cover}
-    />
+    <View>
+      {adminStatus == 0 &&
+        <InReview borderRadius={0} height={height} />
+      }
+      <FastImage
+        style={[{ height: height }, styles.img]}
+        source={{
+          uri: `https://chambaonline.pro/uploads/${item.photo}`,
+          priority: FastImage.priority.high,
+          cache: FastImage.cacheControl.immutable
+        }}
+        fallback={false}
+        onLoad={() => {
+          setLoading(false)
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
+    </View>
     <View style={{ marginVertical: 10, position: 'absolute', top: 45, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
       {(Description && Description[index]) && !showText &&
         <View style={[{ paddingHorizontal: 10 }]}>

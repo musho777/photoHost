@@ -17,6 +17,7 @@ import { Share } from '../../components/share';
 import { Post } from '../../components/post/Post';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CommmentModal } from '../../components/comment/CommmentModal';
+import { SpamModal } from '../../components/spamModal';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -34,7 +35,7 @@ export const SinglPageScreen = ({ route }) => {
   const [showComment, setShowComment] = useState(false)
   const [commentData, setCommentData] = useState({ parentId: "", categoryId: "" })
   const dispatch = useDispatch()
-
+  const [showInfo, setShowInfo] = useState(false)
   const [showShare, setShowShare] = useState(false)
 
   const insets = useSafeAreaInsets();
@@ -94,6 +95,10 @@ export const SinglPageScreen = ({ route }) => {
     };
   }, [route.params.id])
 
+  const AddToBack = () => {
+    navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
+  }
+
   if (loading) {
     return <View style={{ flex: 1, backgroundColor: 'black', paddingTop: 40 }}>
       <ActivityIndicator color="#FFC24B" />
@@ -109,12 +114,14 @@ export const SinglPageScreen = ({ route }) => {
           setShowView={() => setShowView(true)}
           addToblack={(e) => AddToBack(e)}
           deletData={(e) => deletData(e)}
+          setShowInfo={(e) => setShowInfo(e)}
           setSelectidId={(id) => console.log(id)}
           setShowShare={(e) => setShowShare(e)}
           setCommentData={(e) => setCommentData(e)}
           setShowComment={() => setShowComment(true)}
           big={true}
           horiznotal={horiznotal}
+          setPostUserId={(e) => { }}
         />
       </ScrollView>
       {showView && <ViewComponent
@@ -135,6 +142,11 @@ export const SinglPageScreen = ({ route }) => {
         open={showShare}
         big={true}
         user_id={user?.allData.data?.id}
+      />}
+      {showInfo && <SpamModal
+        close={() => setShowInfo(false)}
+        postUserId={data?.user.id}
+        addToblack={(e) => AddToBack(e)}
       />}
       {showComment && <CommmentModal
         CommentCount={(add) => {

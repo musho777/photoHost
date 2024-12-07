@@ -17,7 +17,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CommmentModal } from '../../components/comment/CommmentModal';
 import { SpamModal } from '../../components/spamModal';
-const windowHeight = Dimensions.get('window').height;
 
 
 
@@ -46,6 +45,7 @@ export const HomeScreen = () => {
 
   const [showComment, setShowComment] = useState(false)
   const { fullScreen } = useSelector((st) => st.fullScreenData)
+  const [postUserId, setPostUserId] = useState(null)
 
   useFocusEffect(
     useCallback(() => {
@@ -159,7 +159,6 @@ export const HomeScreen = () => {
       return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 55 }]}>Другие публикации просмотрены</Text>
     }
   };
-
   const loadingData = ['', '']
   const renderItem = useMemo(
     () => ({ item, index }) => {
@@ -167,6 +166,7 @@ export const HomeScreen = () => {
         return (
           <Post
             data={item}
+            adminStatus={item.admin_status}
             index={index}
             viewableItems={viewableItems}
             setShowLike={() => setLikeClose(true)}
@@ -179,6 +179,7 @@ export const HomeScreen = () => {
             setShowShare={(e) => setShowShare(e)}
             setSelectedVidioId={(e) => setSelectedVidioId(e)}
             setCommentData={(e) => setCommentData(e)}
+            setPostUserId={(e) => setPostUserId(e)}
           />
         );
       }
@@ -279,9 +280,8 @@ export const HomeScreen = () => {
       />}
       {showInfo && <SpamModal
         close={() => setShowInfo(false)}
-        postId={selecteidId}
-        open={showInfo}
-        commentData={commentData}
+        postUserId={postUserId}
+        addToblack={(e) => AddToBack(e)}
       />}
     </View>
   );

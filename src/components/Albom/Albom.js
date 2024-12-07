@@ -7,10 +7,10 @@ import { useNavigation } from '@react-navigation/native';
 export const Albom = ({ id, data, seved, my = false, elm, lastItem, index }) => {
   const navigation = useNavigation()
   return (
-    <View activeOpacity={1} style={[styles.block, lastItem && { marginBottom: 55 },
-    index % 2 != 0 && { marginLeft: 5 }
+    <View activeOpacity={1} style={[styles.block, lastItem && { marginBottom: 55 }, index % 2 != 0 && { marginLeft: 5 }
     ]}>
       <ImageComponent
+        adminStatus={elm.admin_status}
         onPress={() => {
           my ?
             navigation.navigate('SinglPageScreen', { id: id }) :
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   albom: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-  }
+  },
+
 });
 
 

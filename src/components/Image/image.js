@@ -3,10 +3,11 @@ import { StartSvg } from "../../assets/svg/Svgs"
 import React, { useCallback, useState } from "react";
 import FastImage from "react-native-fast-image";
 import { useFocusEffect } from "@react-navigation/native";
+import { InReview } from "../InReview";
 
 const windowWidth = Dimensions.get('window').width;
 
-export const ImageComponent = React.memo(({ background, video, photo, onPress, color, text, fontFamily }) => {
+export const ImageComponent = React.memo(({ adminStatus, background, video, photo, onPress, color, text, fontFamily }) => {
 
   const fone = [
     require('../../assets/img/fon/1.jpg'),
@@ -122,6 +123,9 @@ export const ImageComponent = React.memo(({ background, video, photo, onPress, c
     onPress()
     setDisabled(true)
   }}>
+    {adminStatus == 0 &&
+      <InReview borderRadius={15} height={windowWidth / 2 - 19} />
+    }
     {video &&
       <View style={styles.playerIcone}>
         <StartSvg />

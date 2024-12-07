@@ -1776,3 +1776,81 @@ export const EditSvg = () => {
     </G>
   </Svg>
 }
+
+export const InReviewSvg = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="30px"
+    height="30px"
+    viewBox="0 0 8.4666669 8.4666669"
+    fill="#9b1717"
+    stroke="#9b1717"
+  >
+    <Path
+      d="M15.996 1.004c-8.272 0-15 6.727-15 15 0 8.272 6.728 15 15 15 8.273 0 15-6.728 15-15 0-8.273-6.727-15-15-15zm-.014 3.978A1 1 0 0117 6.002V15h6.998a1 1 0 110 2h-8.002a1 1 0 01-.996-.996V6.002a1 1 0 01.982-1.02z"
+      style={{
+        lineHeight: "normal",
+        fontVariantLigatures: "normal",
+        fontVariantPosition: "normal",
+        fontVariantCaps: "normal",
+        fontVariantNumeric: "normal",
+        fontVariantAlternates: "normal",
+        fontFeatureSettings: "normal",
+        textIndent: 0,
+        textAlign: "start",
+        textDecorationLine: "none",
+        textDecorationStyle: "solid",
+        textDecorationColor: "#fff",
+        textTransform: "none",
+        textOrientation: "mixed",
+        whiteSpace: "normal",
+        shapePadding: 0,
+        isolation: "auto",
+        mixBlendMode: "normal",
+        solidColor: "#fff",
+        solidOpacity: 1
+      }}
+      transform="translate(0 -288.533) matrix(.26458 0 0 .26458 0 288.533)"
+      color="#fff"
+      fontStyle="normal"
+      fontVariant="normal"
+      fontWeight={400}
+      fontStretch="normal"
+      fontSize="medium"
+      fontFamily="sans-serif"
+      textDecoration="none"
+      letterSpacing="normal"
+      wordSpacing="normal"
+      writingMode="lr-tb"
+      direction="ltr"
+      dominantBaseline="auto"
+      baselineShift="baseline"
+      textAnchor="start"
+      clipRule="nonzero"
+      display="inline"
+      overflow="visible"
+      visibility="visible"
+      opacity={1}
+      colorInterpolation="sRGB"
+      colorInterpolationFilters="linearRGB"
+      vectorEffect="none"
+      fill="#fff"
+      fillOpacity={1}
+      fillRule="nonzero"
+      stroke="none"
+      strokeWidth={1.99999988}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeMiterlimit={4}
+      strokeDasharray="none"
+      strokeDashoffset={0}
+      strokeOpacity={1}
+      paintOrder="stroke fill markers"
+      colorRendering="auto"
+      imageRendering="auto"
+      shapeRendering="auto"
+      textRendering="auto"
+      enableBackground="accumulate"
+    />
+  </Svg>
+}

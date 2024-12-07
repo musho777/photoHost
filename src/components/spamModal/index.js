@@ -1,18 +1,20 @@
 import React, { useCallback } from 'react';
-import { View, Text, Keyboard, StyleSheet } from 'react-native';
+import { View, Text, Keyboard, StyleSheet, Touchable } from 'react-native';
 import {
   BottomSheetBackdrop,
+  TouchableOpacity,
 } from '@gorhom/bottom-sheet';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Styles } from '../../styles/Styles';
-import { HidenTabNavigation, ShowTabNavigation } from '../../store/action/action';
+import { AddBlackListAction, HidenTabNavigation, ShowTabNavigation } from '../../store/action/action';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-export const SpamModal = ({ close }) => {
+export const SpamModal = ({ close, postUserId, addToblack }) => {
+  const staticdata = useSelector(st => st.static);
   const arr = [
     {
       mainTitle: "Травля или нежелательный контакт",
@@ -59,6 +61,15 @@ export const SpamModal = ({ close }) => {
   }, [])
 
 
+  const addToBlackList = () => {
+    addToblack(postUserId)
+    dispatch(AddBlackListAction({ 'user_id': postUserId }, staticdata.token))
+  }
+
+
+
+
+
 
   return (
     <BottomSheet
@@ -87,9 +98,13 @@ export const SpamModal = ({ close }) => {
             </Text>
           </View>
           {arr.map((elm, i) => {
-            return <View style={[styles.item, i == arr.length - 1 && { borderBottomWidth: 0.5 }]}>
+            return <TouchableOpacity activeOpacity={1} onPress={() => {
+              addToBlackList()
+              close()
+              dispatch(ShowTabNavigation())
+            }} style={[styles.item, i == arr.length - 1 && { borderBottomWidth: 0.5 }]}>
               <Text style={Styles.balihaiMedium12}>{elm.mainTitle}</Text>
-            </View>
+            </TouchableOpacity>
           })}
 
         </View>
