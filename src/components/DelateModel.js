@@ -1,10 +1,7 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { t } from './lang';
-import { useSelector } from "react-redux";
 import { Styles } from "../styles/Styles";
 
-export const DelateModal = ({ show, Confirm, setModalVisible, title, confirmText }) => {
-  const mainData = useSelector(st => st.mainData);
+export const DelateModal = ({ show, Confirm, setModalVisible, title }) => {
 
   return <Modal
     animationType="slide"
@@ -53,7 +50,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   buttonWrapper: {
-    gap: 30,
+    gap: 50,
     alignItems: 'center',
     flexDirection: 'row'
   }

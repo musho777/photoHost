@@ -1505,7 +1505,7 @@ export const AddImage = () => {
     height="30px"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="#fff"
+    stroke="red"
   >
     <G strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
       <Path d="M13 4H8.8c-1.68 0-2.52 0-3.162.327a3 3 0 00-1.311 1.311C4 6.28 4 7.12 4 8.8v6.4c0 1.68 0 2.52.327 3.162a3 3 0 001.311 1.311C6.28 20 7.12 20 8.8 20h6.4c1.68 0 2.52 0 3.162-.327a3 3 0 001.311-1.311C20 17.72 20 16.88 20 15.2V11" />
