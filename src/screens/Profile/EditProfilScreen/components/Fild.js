@@ -97,7 +97,7 @@ export const Fild = ({ bB = 1, placeholder, value, hadnelChange, svg, multiline,
         />
       </View>
       <View style={{ marginTop: 10 }}>
-        <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 17 }]}>Выбрать шрифт и цвет для описания о себе</Text>
+        <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 17 }]}>Выбери шрифт цвет для описания о себе</Text>
         <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', marginVertical: 10 }}>
           {fontFamily.map((elm, i) => {
             return <Text onPress={() => {

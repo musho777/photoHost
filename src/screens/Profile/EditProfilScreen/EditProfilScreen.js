@@ -271,7 +271,7 @@ export const EditProfilScreen = ({ navigation }) => {
               />
             </View>
             <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 17, marginTop: 10 }]}>
-              Выбрать шрифт и цвет для имени и фамилии или названия канала
+              Выбери шрифт и цвет для имени и фамилии или названия канала
             </Text>
             <View style={{ marginBottom: 10 }}>
               <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', marginVertical: 10 }}>
@@ -295,7 +295,8 @@ export const EditProfilScreen = ({ navigation }) => {
             <Fild setIsOpen={(e) => setIsOpen(e)} discription multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             <View style={{ width: '100%', borderWidth: 1, marginTop: 10, borderColor: AppColors.Solitude_Color, }} />
             <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 17, marginTop: 5, color: 'red' }]}>
-              Чем больше заполните информацию о себе, тем точнее будет предлагаться контент. Помимо выбранных Вами рубрик будет предлагаться контент с Вашего города.
+              Чем больше заполнишь информацию о себе, тем точнее будет предлагаться контент.
+              Помимо выбранных рубрик будет предлагаться контент с твоего города.
             </Text>
             <View>
               {accauntType && <DateComponent error={error} mount={mount} setMount={(e) => setMount(e)} day={day} setDay={(e) => setDay(e)} year={year} setYera={(e) => setYear(e)} />}
@@ -363,8 +364,8 @@ export const EditProfilScreen = ({ navigation }) => {
 
             <Fild setIsOpen={(e) => setIsOpen(e)} multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 17, marginTop: 5 }]}>
-              (Чем больше заполните информацию о компании, тем более точный контент будет предлагаться)
-              Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города)
+              Чем больше заполните информацию о компании, тем более точный контент будет предлагаться
+              Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города
             </Text>
             <View>
               <Location setLocation={(e) => setLocation(e)} loaction={loaction} />

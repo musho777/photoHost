@@ -159,6 +159,13 @@ export const HomeScreen = () => {
       return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 55 }]}>Другие публикации просмотрены</Text>
     }
   };
+
+
+
+  const Scroll = async (e, index) => { }
+
+
+
   const loadingData = ['', '']
   const renderItem = useMemo(
     () => ({ item, index }) => {
@@ -168,6 +175,7 @@ export const HomeScreen = () => {
             data={item}
             adminStatus={item.admin_status}
             index={index}
+            scroll={(e) => Scroll(e, index)}
             viewableItems={viewableItems}
             setShowLike={() => setLikeClose(true)}
             setShowView={() => setShowView(true)}

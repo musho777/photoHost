@@ -46,6 +46,7 @@
     "react-native-contacts": "^7.0.8",
     "react-native-device-info": "^10.8.0",
     "react-native-eject": "^0.2.0",
+    "react-native-emoji-input": "^1.1.10",
     "react-native-emoji-selector": "^0.2.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.12.1",

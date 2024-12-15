@@ -82,7 +82,7 @@ export const Controler = forwardRef(({
         {!volume ?
 
           <MuteSvg /> :
-          <Image style={{ width: 25, height: 25 }} source={require('../../../../assets/img/Sound.png')} />}
+          <Image style={{ width: 25, height: 25, marginTop: 30 }} source={require('../../../../assets/img/Sound.png')} />}
       </TouchableOpacity>
       <View style={styles.playButton}>
         {(showStartButton && !paused) && <TouchableOpacity style={{ transform: [{ rotate: '360deg' }] }} onPress={() => LakeCurrentTime()}>

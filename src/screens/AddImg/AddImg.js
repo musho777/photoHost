@@ -243,7 +243,7 @@ export const AddImg = ({ navigation }) => {
       <ScrollView style={{ height: 550 }}>
         {item.mime == 'image/jpeg' ?
           <FastImage
-            style={[styles.img, localheight[index]?.height + 50 >= localheight[index]?.width ? { maxHeight: 550 } : { maxHeight: 393 }]}
+            style={[styles.img, localheight[index]?.height - 200 > localheight[index]?.width ? { maxHeight: 570 } : { maxHeight: 393 }]}
             source={{ uri: item.uri }}
             onLoad={(event) => {
               const { width, height } = event.nativeEvent;
@@ -326,7 +326,7 @@ export const AddImg = ({ navigation }) => {
             {"\n"}
             Куда выложить?
             {"\n"}
-            Мы предлагаем такой контент выложить в несколько рубрик (не более 4 - x), где Ваше искусство увидят любители разного.
+            Мы предлагаем такой контент выложить в несколько рубрик (не более 4 - x), где твое искусство увидят любители разного.
           </Text>
           {/* <View style={{ alignItems: 'center' }}>
             <TouchableOpacity onPress={() => addPhoto(uri, 1)}>

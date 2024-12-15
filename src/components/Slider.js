@@ -249,7 +249,7 @@ export const Slider = React.memo(({ adminStatus, scroll, id, photo, viewableItem
       />
       {photo?.length > 1 && !fullScreen && <View style={styles.paginationWrapper}>
         {photo?.map((elm, i) => (
-          <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
+          <View key={i} style={[styles.pagination, i === active && { backgroundColor: "#000a40", borderRadius: 50 }]}></View>
         ))}
       </View>}
       {!fullScreen && <View>

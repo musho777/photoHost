@@ -955,8 +955,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = VB325VV56K;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = K48WDX7THW;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = photoHost/Info.plist;
@@ -973,7 +973,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mushhh.chamba;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mush.chamba;
 				PRODUCT_NAME = photoHost;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -987,8 +987,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = VB325VV56K;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = K48WDX7THW;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = photoHost/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = chamba;
@@ -1004,7 +1004,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mushhh.chamba;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mush.chamba;
 				PRODUCT_NAME = photoHost;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

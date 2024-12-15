@@ -6,10 +6,16 @@ export const AboutApplication = () => {
 
   return <ScrollView contentContainerStyle={{ paddingHorizontal: 15 }} showsVerticalScrollIndicator={false}>
     <View style={{ gap: 15, marginBottom: 10, }}>
-      <Text style={Styles.balihaiMedium13}>Chamba – это приложение для любителей снимать крутые фото и короткие видео событий,
+
+      <Text style={Styles.balihaiMedium13}>
+        Взрывная энергия в фото и видео формате!
+      </Text>
+
+      <Text style={Styles.balihaiMedium13}>
+        Chamba – это приложение для любителей снимать крутые фото и короткие видео событий,
         <View>
           <Text style={styles.line}>
-            происходящих не с нами, а вокруг нас!
+            происходящих не с тобой, а вокруг тебя!
           </Text>
         </View>
       </Text>
