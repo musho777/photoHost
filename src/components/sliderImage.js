@@ -11,7 +11,7 @@ const windowWidth = Dimensions.get('window').width;
 
 const SliderImage = React.memo(({ adminStatus, item, height, description, index, setIsExpanded }) => {
 
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const heightAnim = useRef(new Animated.Value(0)).current;
   // const [isExpanded, setIsExpanded] = useState(false);
   const [showText, setShowText] = useState(false)
@@ -37,9 +37,9 @@ const SliderImage = React.memo(({ adminStatus, item, height, description, index,
   };
 
   return <View >
-    {loading && <View style={[styles.loading, { height: height }]}>
+    {/* {loading && <View style={[styles.loading, { height: height }]}>
       <ActivityIndicator color='#FFC24B' size={"large"} />
-    </View>}
+    </View>} */}
     <View>
       {adminStatus == 0 &&
         <InReview borderRadius={0} height={height} />
@@ -52,9 +52,9 @@ const SliderImage = React.memo(({ adminStatus, item, height, description, index,
           cache: FastImage.cacheControl.immutable
         }}
         fallback={false}
-        onLoad={() => {
-          setLoading(false)
-        }}
+        // onLoad={() => {
+        //   setLoading(false)
+        // }}
         resizeMode={FastImage.resizeMode.cover}
       />
     </View>

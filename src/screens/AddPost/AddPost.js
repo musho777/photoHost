@@ -208,7 +208,7 @@ export const AddPost = () => {
         error={error}
         Close={() => Close()}
       />
-      <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
+      <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999, color: 'red' }]}>{t(mainData.lang).Yourcontent}</Text>
       <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }} >
         <View style={styles.selectImage}>
           <Text style={{ fontFamily: activeFont, color: color, position: 'absolute', zIndex: 9999, fontSize: fontSize, textAlign: 'center' }}>{text}</Text>

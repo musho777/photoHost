@@ -99,7 +99,7 @@ function CustomDrawerContent(props) {
           DelateAccaunt()
         }}
         confirmText={t(mainData.lang).Delete}
-        title={"Удалить аккаунт ?"}
+        title={"Удаление вашего аккаунта приведет к удалению всех данных, связанных с этим аккаунтом, включая [специфичные данные, если необходимо]. Это действие невозможно отменить. Вы уверены, что хотите продолжить?"}
         show={show}
         setModalVisible={(e) => setShow(e)}
       />
@@ -243,10 +243,12 @@ export const ProfileNavigation = () => {
         component={AboutApplication}
         options={{
           header: ({ navigation }) => {
-            return <HeaderWhiteTitle onPress={() => {
-              navigation.goBack()
-            }} title={t(mainData.lang).AboutProgram} />
           }
+          // header: ({navigation}) => {
+          //   return <HeaderWhiteTitle onPress={() => {
+          //     navigation.goBack()
+          //   }} title={t(mainData.lang).AboutProgram} />
+          // }
         }}
       />
     </Drawer.Navigator>

@@ -155,9 +155,9 @@ export const HomeScreen = () => {
     if (getLents.secondLoading && getLents?.nextPage) {
       return <ActivityIndicator size="large" color='#FFC24B' />
     }
-    else if ((!getLents?.nextPage && getLents.data.length > 5 && !getLents.secondLoading)) {
-      return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 55 }]}>Другие публикации просмотрены</Text>
-    }
+    // else if ((!getLents?.nextPage && getLents.data.length > 5 && !getLents.secondLoading)) {
+    //   return <Text style={[Styles.homeTitle, { textAlign: 'center', marginBottom: 55 }]}>Другие публикации просмотрены</Text>
+    // }
   };
 
 

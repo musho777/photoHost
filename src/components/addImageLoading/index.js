@@ -1,6 +1,7 @@
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import * as Progress from 'react-native-progress';
 import { useEffect, useState } from 'react';
+import { Styles } from '../../styles/Styles';
 
 export const AddImageLoading = ({ uri }) => {
   const [progress, setProgress] = useState(0);
@@ -22,8 +23,8 @@ export const AddImageLoading = ({ uri }) => {
   return <SafeAreaView style={styles.wrapper}>
     <View style={styles.loadingVidio}>
       {uri && <Image source={{ uri: uri }} style={styles.image} />}
-      {/* <Text style={Styles.homeTitle}>Загрузка</Text> */}
-      <Progress.Pie color='#fbd433' progress={progress} width={40} />
+      <Text style={Styles.homeTitle}>Загрузка</Text>
+      {/* <Progress.Pie color='#fbd433' progress={progress} width={40} /> */}
     </View>
   </SafeAreaView>
 }

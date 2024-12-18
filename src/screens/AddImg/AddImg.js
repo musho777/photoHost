@@ -297,7 +297,7 @@ export const AddImg = ({ navigation }) => {
           setFirst={(e) => setFirst(e)}
           Close={() => Close()}
         />
-        <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999 }]}>{t(mainData.lang).Yourcontent}</Text>
+        <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999, color: 'red' }]}>{t(mainData.lang).Yourcontent}</Text>
         <View style={styles.centeredView}>
           <View style={styles.selectImage}>
             <FlatList
@@ -321,7 +321,7 @@ export const AddImg = ({ navigation }) => {
           </View>}
         </View>
         {!keyboardVisible && <View style={{ marginTop: uri?.length > 1 ? 20 : 10, gap: 15 }}>
-          <Text style={{ color: 'white', fontSize: 12, paddingHorizontal: 20, }}>
+          <Text style={{ color: 'white', fontSize: 12, paddingHorizontal: 20, color: 'red' }}>
             Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном посте может быть запечатлен красивый автомобиль, милая собачка, нежное море и белоснежная яхта.
             {"\n"}
             Куда выложить?
