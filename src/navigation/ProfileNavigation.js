@@ -53,7 +53,6 @@ function CustomDrawerContent(props) {
         }
       })
       .catch(error => {
-        console.log(error, '200000000------')
         setLoading(false)
       });
   }
@@ -238,7 +237,7 @@ export const ProfileNavigation = () => {
           }
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="AboutApplication"
         component={AboutApplication}
         options={{
@@ -250,7 +249,7 @@ export const ProfileNavigation = () => {
           //   }} title={t(mainData.lang).AboutProgram} />
           // }
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };

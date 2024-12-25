@@ -36,15 +36,15 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>APPNAME requires access to your phone’s camera.</string>
+	<string>We need access to your camera to allow you to take photos and upload them for use in your profile and posts.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>We need access to your contacts to allow you to share content with your friends.</string>
+	<string>We need access to your contacts so you can invite your friends and share content with them.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>We need access to your location to provide personalized content and show nearby places relevant to you.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to your microphone to record audio for your videos.</string>
+	<string>We need access to your microphone to record audio for your videos or voice messages.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to upload and edit photos.</string>
+	<string>We need access to your photo library to let you upload photos to your profile, edit images, and share them with others in the app.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Agdasima-Regular.ttf</string>

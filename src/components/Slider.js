@@ -133,12 +133,12 @@ export const Slider = React.memo(({ adminStatus, scroll, id, photo, viewableItem
   const { fullScreen } = useSelector((st) => st.fullScreenData)
 
   const renderItem = ({ item, index }) => {
-    let height = 570
+    let height = 580
     if (item.height - 200 > item.width) {
-      height = 570
+      height = 580
       setHoriznotal(false)
       if (active == index) {
-        setHeight(570)
+        setHeight(580)
       }
     }
     else {
@@ -249,7 +249,7 @@ export const Slider = React.memo(({ adminStatus, scroll, id, photo, viewableItem
       />
       {photo?.length > 1 && !fullScreen && <View style={styles.paginationWrapper}>
         {photo?.map((elm, i) => (
-          <View key={i} style={[styles.pagination, i === active && { backgroundColor: "#000a40", borderRadius: 50 }]}></View>
+          <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]}></View>
         ))}
       </View>}
       {!fullScreen && <View>

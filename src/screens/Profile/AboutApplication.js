@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Styles } from '../../styles/Styles';
+import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
+import { t } from '../../components/lang';
+import { useSelector } from 'react-redux';
+import { BackArrow, BackArrowWhite } from '../../assets/svg/Svgs';
 
 
 const { width, height } = Dimensions.get('window');
 
-export const AboutApplication = () => {
-
+export const AboutApplication = ({ navigation }) => {
+  const mainData = useSelector(st => st.mainData);
   const [active, setActive] = useState(0);
   const sliderData = [
     {
@@ -36,7 +40,7 @@ export const AboutApplication = () => {
     {
       id: '5',
       title: "Попутный контент:",
-      description: "Любишь путешествовать? Выбрав эту рубрику, к красочному контенту будут предложены такие рубрики как фрукты, овощи, еда и напитки, города и страны, активный отдых, экстрим, развлечения, природа, времена года, охота и рыбалка, и релакс.",
+      description: "Любишь путешествовать? Выбрав эту рубрику, к красочному контенту будут предложены такие рубрики как фрукты, овощи, еда и напитки, города и страны, активный отдых, экстрим, развлечения, природа, времена года, охота и рыбалка и т.д., и релакс.",
       image: require('../../assets/img/info4.jpg'),
     },
     {
@@ -48,7 +52,7 @@ export const AboutApplication = () => {
     {
       id: '7',
       title: "Локальный контент:",
-      description: "Получай контент в первую очередь со своего города! интересные места, природные явления и многое другое - все это в твоей ленте!",
+      description: "Получай контент в первую очередь со своего города! Интересные места, природные явления и многое другое - все это в твоей ленте!",
       image: require('../../assets/img/info6.jpg'),
     },
     {
@@ -99,6 +103,14 @@ export const AboutApplication = () => {
 
   return (
     <View>
+      <View style={{ position: 'absolute', top: 55, width: '100%', height: 30, zIndex: 9999 }}>
+        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15 }} onPress={() => navigation.goBack()}>
+          <BackArrowWhite />
+          <Text style={[Styles.darkSemiBold16, { marginHorizontal: 15, color: 'white' }]}>
+            {t(mainData.lang).AboutProgram}
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.paginationWrapper}>
         {sliderData.map((elm, i) => {
           return <View key={i} style={[styles.pagination, active == i && { backgroundColor: '#FFC24B' }]} />
@@ -149,18 +161,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 999,
     gap: 5,
-    top: 60,
+    top: 100,
     paddingHorizontal: 10,
     width: '100%',
     justifyContent: 'center'
   },
   textWrapper: {
     position: 'absolute',
-    marginTop: 100,
+    marginTop: 120,
     gap: 20,
     paddingHorizontal: 10,
     backgroundColor: 'rgba(0,0,0,0.5)',
     paddingVertical: 10,
-    borderRadius: 10
+    marginHorizontal: 10,
+    borderRadius: 10,
   }
 });

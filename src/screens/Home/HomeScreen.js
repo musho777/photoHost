@@ -65,7 +65,6 @@ export const HomeScreen = () => {
     }
   }, [staticdata.token, dispatch]);
 
-
   const deletData = useCallback((post_id) => {
     dispatch(DelatePostAction({ post_id }, staticdata.token))
   }, [dispatch, staticdata.token]);

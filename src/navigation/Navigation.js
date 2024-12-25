@@ -35,6 +35,7 @@ import { OtherUserScreenNavigation } from './OtherUserScreenNavigation';
 import { PermissionsAndroid, Platform } from 'react-native';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { AddPost } from '../screens/AddPost/AddPost';
+import { AboutApplication } from '../screens/Profile/AboutApplication';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
@@ -273,7 +274,18 @@ export default Navigation = ({ token, initialRouteName, id }) => {
               headerShown: false,
             }}
           />
-
+          <Stack.Screen
+            name="AboutApplication"
+            component={AboutApplication}
+            options={{
+              header: ({ navigation }) => {
+                // return <HeaderWhiteTitle onPress={() => {
+                //   navigation.goBack()
+                // }} title={t(mainData.lang).AboutProgram} />
+              }
+              // headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </BottomSheetModalProvider>

@@ -238,12 +238,11 @@ export const AddImg = ({ navigation }) => {
     setUri([])
   }
   const renderItem = ({ item, index }) => {
-
-    return <View >
-      <ScrollView style={{ height: 550 }}>
+    return <View>
+      <ScrollView style={(localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 580 } : { maxHeight: 393 }}>
         {item.mime == 'image/jpeg' ?
           <FastImage
-            style={[styles.img, localheight[index]?.height - 200 > localheight[index]?.width ? { maxHeight: 570 } : { maxHeight: 393 }]}
+            style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 580 } : { maxHeight: 393 }]}
             source={{ uri: item.uri }}
             onLoad={(event) => {
               const { width, height } = event.nativeEvent;
@@ -278,7 +277,7 @@ export const AddImg = ({ navigation }) => {
           onChangeText={(e) => addDescription(e, active)}
         />
       </View>
-    </View>
+    </View >
   }
 
 
@@ -297,7 +296,7 @@ export const AddImg = ({ navigation }) => {
           setFirst={(e) => setFirst(e)}
           Close={() => Close()}
         />
-        <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999, color: 'red' }]}>{t(mainData.lang).Yourcontent}</Text>
+        <Text style={[Styles.whiteMedium9, { textAlign: 'center', marginTop: 10, zIndex: 99999, color: '#FFC24B' }]}>{t(mainData.lang).Yourcontent}</Text>
         <View style={styles.centeredView}>
           <View style={styles.selectImage}>
             <FlatList
@@ -321,19 +320,13 @@ export const AddImg = ({ navigation }) => {
           </View>}
         </View>
         {!keyboardVisible && <View style={{ marginTop: uri?.length > 1 ? 20 : 10, gap: 15 }}>
-          <Text style={{ color: 'white', fontSize: 12, paddingHorizontal: 20, color: 'red' }}>
-            Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном посте может быть запечатлен красивый автомобиль, милая собачка, нежное море и белоснежная яхта.
+          <Text style={{ color: 'white', fontSize: 12, paddingHorizontal: 20, color: '#FFC24B' }}>
+            Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном публикации может быть запечатлен красивый автомобиль, милая собачка, красивые пальмы и нежное море.
             {"\n"}
             Куда выложить?
             {"\n"}
-            Мы предлагаем такой контент выложить в несколько рубрик (не более 4 - x), где твое искусство увидят любители разного.
+            Мы предлагаем такой контент выложить в несколько рубрик (не более 4-x), где твое искусство увидят любители разного.
           </Text>
-          {/* <View style={{ alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => addPhoto(uri, 1)}>
-              <AddImage />
-            </TouchableOpacity>
-          </View> */}
-
         </View>}
       </View>
     );

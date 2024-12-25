@@ -294,7 +294,7 @@ export const EditProfilScreen = ({ navigation }) => {
 
             <Fild setIsOpen={(e) => setIsOpen(e)} discription multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             <View style={{ width: '100%', borderWidth: 1, marginTop: 10, borderColor: AppColors.Solitude_Color, }} />
-            <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 17, marginTop: 5, color: 'red' }]}>
+            <Text style={[Styles.balihaiMedium10, { paddingHorizontal: 17, marginTop: 5, color: '#FFC24B' }]}>
               Чем больше заполнишь информацию о себе, тем точнее будет предлагаться контент. Помимо выбранных тобой рубрик будет предлагаться контент с твоего города.
             </Text>
             <View>
