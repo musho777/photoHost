@@ -225,7 +225,7 @@ export const VidioComponent = forwardRef(({
       />
     }
 
-    <View style={{ marginVertical: 10, position: 'absolute', top: 40, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
+    <View style={{ marginVertical: 10, position: 'absolute', top: 45, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5 }}>
       {(Description && Description[active]) && !showText &&
         <View style={[{ paddingHorizontal: 10 }]}>
           <View>

@@ -29,7 +29,7 @@ export const PostLoading = () => {
         </View>
         <Skeleton
           width={'100%'}
-          height={580}
+          height={600}
         />
         <View style={styles.bostBody}>
           <TouchableOpacity

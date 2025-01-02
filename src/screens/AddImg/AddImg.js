@@ -124,17 +124,6 @@ export const AddImg = ({ navigation }) => {
 
 
     try {
-      // ImagePicker.openPicker({
-      //   multiple: true,
-      //   waitAnimationEnd: false,
-      //   includeExif: true,
-      //   forceJpg: true,
-      //   maxFiles: 10,
-      //   mediaType: 'any',
-      //   includeBase64: true,
-      // }).then(image => {
-
-      // });
       ImagePicker.openPicker({
         cropping: false,
         compressImageQuality: 1,
@@ -239,10 +228,10 @@ export const AddImg = ({ navigation }) => {
   }
   const renderItem = ({ item, index }) => {
     return <View>
-      <ScrollView style={(localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 580 } : { maxHeight: 393 }}>
+      <ScrollView style={(localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 600 } : { maxHeight: 393 }}>
         {item.mime == 'image/jpeg' ?
           <FastImage
-            style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 580 } : { maxHeight: 393 }]}
+            style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 600 } : { maxHeight: 393 }]}
             source={{ uri: item.uri }}
             onLoad={(event) => {
               const { width, height } = event.nativeEvent;
@@ -312,6 +301,15 @@ export const AddImg = ({ navigation }) => {
               maxToRenderPerBatch={10}
               renderItem={renderItem}
             />
+            {!keyboardVisible && <View style={{ marginTop: uri?.length > 1 ? 20 : 10, gap: 15 }}>
+              <Text style={{ color: 'white', fontSize: 12, paddingHorizontal: 20, color: '#FFC24B' }}>
+                Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном публикации может быть запечатлен красивый автомобиль, милая собачка, красивые пальмы и нежное море.
+                {"\n"}
+                Куда выложить?
+                {"\n"}
+                Мы предлагаем такой контент выложить в несколько рубрик (не более 4-x), где твое искусство увидят любители разного.
+              </Text>
+            </View>}
           </View>
           {uri?.length > 1 && <View style={styles.paginationWrapper}>
             {uri?.length > 1 && uri?.map((elm, i) => (
@@ -319,15 +317,7 @@ export const AddImg = ({ navigation }) => {
             ))}
           </View>}
         </View>
-        {!keyboardVisible && <View style={{ marginTop: uri?.length > 1 ? 20 : 10, gap: 15 }}>
-          <Text style={{ color: 'white', fontSize: 12, paddingHorizontal: 20, color: '#FFC24B' }}>
-            Иногда мы затрудняемся в вопросе, в какую рубрику выложить контент, так как в одном публикации может быть запечатлен красивый автомобиль, милая собачка, красивые пальмы и нежное море.
-            {"\n"}
-            Куда выложить?
-            {"\n"}
-            Мы предлагаем такой контент выложить в несколько рубрик (не более 4-x), где твое искусство увидят любители разного.
-          </Text>
-        </View>}
+
       </View>
     );
   else {

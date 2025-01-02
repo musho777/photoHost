@@ -133,12 +133,12 @@ export const Slider = React.memo(({ adminStatus, scroll, id, photo, viewableItem
   const { fullScreen } = useSelector((st) => st.fullScreenData)
 
   const renderItem = ({ item, index }) => {
-    let height = 580
+    let height = 600
     if (item.height - 200 > item.width) {
-      height = 580
+      height = 600
       setHoriznotal(false)
       if (active == index) {
-        setHeight(580)
+        setHeight(600)
       }
     }
     else {

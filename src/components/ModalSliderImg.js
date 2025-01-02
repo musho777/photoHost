@@ -22,7 +22,7 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                         resolve(400);
                     }
                     else {
-                        resolve(580);
+                        resolve(600);
                     }
                 },
                 (error) => {
@@ -45,9 +45,9 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                 index0={active > 0 ? active - 1 : 0}
                 data={photo}
                 renderItem={({ item, index }) => {
-                    let height = 580
+                    let height = 600
                     if (item.height - 200 > item.width) {
-                        height = 580
+                        height = 600
                     }
                     else if (item.height) {
                         height = 393
