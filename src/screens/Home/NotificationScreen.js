@@ -40,7 +40,7 @@ export const NotificationScreen = ({ navigation }) => {
       photo={item.photo}
     />
   }
-  return <View style={[{ paddingHorizontal: 15 }]}>
+  return <View style={[{ paddingHorizontal: 15, flex: 1 }]}>
     <FlatList
       showsVerticalScrollIndicator={false}
       refreshControl={

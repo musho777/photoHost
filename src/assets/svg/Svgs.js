@@ -296,6 +296,19 @@ export const ArrowSvg = () => {
   </Svg>
 }
 
+export const ArrowSvg1 = () => {
+  return <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="#FFDF6C"
+    height="20px"
+    width="20px"
+    viewBox="0 0 297.5 297.5"
+    xmlSpace="preserve"
+  >
+    <Path d="M297.5 148.25L148 33.25 148 100.25 0 100.25 0 199.25 148 199.25 148 264.25z" />
+  </Svg>
+}
+
 export const CommentLikeSvg = ({ liked }) => {
   if (liked) {
     return <Svg
@@ -350,8 +363,8 @@ export const SendSvg = () => {
 }
 export const SendMsgSvg = () => {
   return <Svg
-    width={26}
-    height={24}
+    width={20}
+    height={18}
     viewBox="0 0 26 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

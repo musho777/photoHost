@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
-import { StatisticSvg, ViewListSwg } from '../../assets/svg/Svgs';
+import { ArrowSvg1, StatisticSvg, ViewListSwg } from '../../assets/svg/Svgs';
 import { ViewList } from './ViewList';
 import { StatisticList } from './StatisticList';
 import { GetPostViewAction, GetVidioStatistic, HidenTabNavigation, ShowTabNavigation } from '../../store/action/action';
@@ -81,10 +81,17 @@ export const ViewComponent = ({ id, token, close, big = false, selectedVidioId }
           <StatisticList vidio={vidio} token={token} id={id} />
         }
 
-        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 30, height: 100, alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 15, height: 100, alignItems: 'center' }}>
           <TouchableOpacity style={[{ padding: 10, borderRadius: 10, }, statistic == false && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(false)}>
             <ViewListSwg active={!statistic} />
           </TouchableOpacity>
+          <View
+            style={statistic && {
+              transform: [{ rotate: '180deg' }],
+            }}
+          >
+            <ArrowSvg1 />
+          </View>
           <TouchableOpacity style={[{ padding: 10, borderRadius: 10 }, statistic && { backgroundColor: '#FFC24B', }]} onPress={() => setStatistic(true)}>
             <StatisticSvg active={!statistic} />
           </TouchableOpacity>

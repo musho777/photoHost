@@ -101,9 +101,6 @@ export const Messages = ({ route, id, setSelected, seleted, setOpenSelect, openS
 
 
 const styles = StyleSheet.create({
-  body: {
-    height: '100%',
-  },
   message: {
     position: 'absolute',
     top: 0,

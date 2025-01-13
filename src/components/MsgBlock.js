@@ -38,10 +38,10 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
       <FastImage source={{ uri: msg }} style={styles.image} />
       <View style={from ?
         [styles.msgDate,
-        JSON.stringify(getData()).length > 7 ? { right: -35 } : { right: -20 }
+        JSON.stringify(getData()).length > 7 ? { right: 5, bottom: -15, } : { right: 5, bottom: -15, }
         ] :
         [styles.msgDate,
-        JSON.stringify(getData()).length > 7 ? { left: -35 } : { left: -20 }
+        JSON.stringify(getData()).length > 7 ? { left: -35, bottom: -15, } : { left: 5, bottom: -15, }
         ]
       }
       >
@@ -66,10 +66,10 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
         }
         <View style={from ?
           [styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { right: -35 } : { right: -20 }
+          JSON.stringify(getData()).length > 7 ? { right: 5, bottom: -15, } : { right: 5, bottom: -15, }
           ] :
           [styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { left: -35 } : { left: -20 }
+          JSON.stringify(getData()).length > 7 ? { left: 5, bottom: -15, } : { left: 5, bottom: -15, }
           ]
         }
         >
@@ -89,10 +89,10 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
         }
         <View style={from ?
           [styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { right: -35 } : { right: -20 }
+          JSON.stringify(getData()).length > 7 ? { right: 5, bottom: -15, } : { right: 5, bottom: -15, }
           ] :
           [styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { left: -35 } : { left: -20 }
+          JSON.stringify(getData()).length > 7 ? { left: 5, bottom: -15, } : { left: 5, bottom: -15, }
           ]
         }
         >
@@ -105,7 +105,8 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
 const styles = StyleSheet.create({
   block: {
     backgroundColor: AppColors.AliceBlue_Color,
-    marginVertical: 10,
+    marginTop: 10,
+    marginBottom: 20,
     padding: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

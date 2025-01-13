@@ -16,11 +16,11 @@ export const BottomWrapper = forwardRef(({ addToblackList, setAddToBlackList, ro
   return <View style={[styles.input]}>
     <InputComponent sendMSg={sendMSg} setSendMsg={(e) => setSendMsg(e)} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
     <View style={{ flexDirection: 'row', gap: 5 }}>
-      <TouchableOpacity onPress={() => ref.current?.present()}>
-        <Sticker />
-      </TouchableOpacity>
       <TouchableOpacity onPress={() => setIsOpen(true)}>
         <Emojy />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => ref.current?.present()}>
+        <Sticker />
       </TouchableOpacity>
     </View>
     <EmojiPicker onEmojiSelected={handlePick} open={isOpen} onClose={() => setIsOpen(false)} />

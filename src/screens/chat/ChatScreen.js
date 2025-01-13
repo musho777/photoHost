@@ -90,6 +90,7 @@ export const ChatScreen = ({ route }) => {
 const styles = StyleSheet.create({
   body: {
     height: '100%',
+    paddingBottom: 20,
   },
   keyboardAvoidingView: {
     flex: 1,

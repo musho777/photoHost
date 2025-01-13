@@ -27,11 +27,9 @@ function CustomDrawerContent(props) {
   const dispatch = useDispatch()
 
 
-  const [loading, setLoading] = useState(false)
   const [show, setShow] = useState(false)
   const DelateAccaunt = async () => {
     setShow(false)
-    setLoading(true)
     let api = `${Api}/delete_account`
     var myHeaders = new Headers();
     // myHeaders.append('Content-Type', 'application/json');
@@ -44,7 +42,6 @@ function CustomDrawerContent(props) {
     await fetch(api, requestOptions)
       .then(response => response.json())
       .then(r => {
-        setLoading(false)
         if (r.status) {
           navigation.reset({
             index: 0,
@@ -53,7 +50,6 @@ function CustomDrawerContent(props) {
         }
       })
       .catch(error => {
-        setLoading(false)
       });
   }
 
@@ -154,8 +150,8 @@ function CustomDrawerContent(props) {
       </DrawerContentScrollView>
       <TouchableOpacity
         onPress={() => props.navigation.navigate('AboutApplication')}
-        style={[{ marginBottom: 20, height: 40, paddingLeft: 10, justifyContent: 'center', borderColor: "#FFC24B", width: 90, marginLeft: 15 }]}>
-        <Text style={Styles.darkRegular16}>{t(mainData.lang).AboutProgram}</Text>
+        style={[{ marginBottom: 20, height: 40, paddingLeft: 10, justifyContent: 'center', borderColor: "#FFC24B", width: 90, marginLeft: 15, borderWidth: 1, }]}>
+        <Text style={Styles.darkSemiBold16}>{t(mainData.lang).AboutProgram}</Text>
       </TouchableOpacity>
     </View>);
 }
