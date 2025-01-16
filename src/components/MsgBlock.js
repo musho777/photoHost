@@ -4,8 +4,6 @@ import { Styles } from '../styles/Styles';
 import FastImage from 'react-native-fast-image';
 export const MsgBlock = ({ msg, from, timestamp }) => {
   const date = new Date(timestamp);
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
   const minut = date.getMinutes()
 
   const today = new Date()
@@ -14,21 +12,13 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
     return emojiRegex.test(char);
   }
 
-  const tmonth = today.getMonth() + 1;
-  const tday = today.getDate();
   const thour = today.getHours();
   const getData = () => {
     let m = minut
     if (m < 10) {
       m = '0' + m
     }
-    if (month == tmonth && tday == day) {
-
-      return `${thour}:${m}`
-    }
-    else {
-      return `${day}. ${thour}:${m}`
-    }
+    return `${thour}:${m}`
   }
 
   if (msg?.includes('https://media')) {
@@ -36,14 +26,7 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
       style={[styles.block1, from ? { alignSelf: 'flex-start' } : { alignSelf: 'flex-end' },
       ]}>
       <FastImage source={{ uri: msg }} style={styles.image} />
-      <View style={from ?
-        [styles.msgDate,
-        JSON.stringify(getData()).length > 7 ? { right: 5, bottom: -15, } : { right: 5, bottom: -15, }
-        ] :
-        [styles.msgDate,
-        JSON.stringify(getData()).length > 7 ? { left: -35, bottom: -15, } : { left: 5, bottom: -15, }
-        ]
-      }
+      <View style={[styles.msgDate, { right: 5, bottom: -15, }]}
       >
         <Text style={Styles.balihaiMedium10}>{getData()}</Text>
       </View>
@@ -64,14 +47,7 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
           <FastImage source={{ uri: msg }} style={styles.image} /> :
           <Text style={Styles.CharcoalMedium14}>{msg}</Text>
         }
-        <View style={from ?
-          [styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { right: 5, bottom: -15, } : { right: 5, bottom: -15, }
-          ] :
-          [styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { left: 5, bottom: -15, } : { left: 5, bottom: -15, }
-          ]
-        }
+        <View style={[styles.msgDate, { right: 5, bottom: -15, }]}
         >
           <Text style={Styles.balihaiMedium10}>{getData()}</Text>
         </View>
@@ -87,14 +63,7 @@ export const MsgBlock = ({ msg, from, timestamp }) => {
           <FastImage source={{ uri: msg }} style={styles.image} /> :
           <Text style={{ fontSize: 35 }}>{msg}</Text>
         }
-        <View style={from ?
-          [styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { right: 5, bottom: -15, } : { right: 5, bottom: -15, }
-          ] :
-          [styles.msgDate,
-          JSON.stringify(getData()).length > 7 ? { left: 5, bottom: -15, } : { left: 5, bottom: -15, }
-          ]
-        }
+        <View style={[styles.msgDate, { right: 5, bottom: -15, }]}
         >
           <Text style={Styles.balihaiMedium10}>{getData()}</Text>
         </View>

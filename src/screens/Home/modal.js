@@ -106,7 +106,7 @@ export const ModalComponent = ({ showModal, token, close }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{ gap: 20 }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
-                <Text style={Styles.darkMedium13}>Попутный контент – это контент, который косвенно имеет отношение к выбранным Вами рубриками и будет предлагаться в ленте событий.
+                <Text style={Styles.darkMedium13}>Попутный контент – это контент, который косвенно имеет отношение к выбранным Вами рубрикам и будет предлагаться в ленте событий.
                 </Text>
               </View>
               <View style={{ gap: 10 }}>

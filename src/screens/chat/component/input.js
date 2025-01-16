@@ -1,9 +1,7 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
-import { Input } from "../../../ui/Input"
 import { useEffect, useState } from "react"
-import Sound from "react-native-sound"
 import { useDispatch, useSelector } from "react-redux"
-import { newMessageAction } from "../../../store/action/action"
+import { AddMsgAction, newMessageAction } from "../../../store/action/action"
 import { t } from '../../../components/lang';
 import { Styles } from "../../../styles/Styles"
 import { AppColors } from "../../../styles/AppColors"
@@ -11,7 +9,6 @@ import { SendMsgSvg } from "../../../assets/svg/Svgs"
 
 
 export const InputComponent = ({ sendMSg, setSendMsg, setAddToBlackList, addToblackList, route }) => {
-  const music = new Sound('send.mp3', Sound.MAIN_BUNDLE, (error) => { });
   const dispatch = useDispatch()
   const [showInput, setShopwINput] = useState()
   let getSinglePageChat = useSelector(st => st.getSinglePageChat);
@@ -55,14 +52,20 @@ export const InputComponent = ({ sendMSg, setSendMsg, setAddToBlackList, addTobl
 
 
   const sendMsgFunction = () => {
-    music.play()
-    setTimeout(() => {
-      music.stop()
-    }, 2000);
     dispatch(
       newMessageAction(
         { message: sendMSg, receiver_id: route.params.id, },
         staticdata.token));
+    const today = new Date()
+    dispatch(
+      AddMsgAction({
+        message: sendMSg,
+        sender_id: user.data.id,
+        receiver_id: route.params.id,
+        created_at: today,
+        // id: JSON.parse(event.data)?.message.id
+      }),
+    );
     setSendMsg('')
   };
 

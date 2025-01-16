@@ -2,19 +2,30 @@ import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { MsgBlock } from "../../../components/MsgBlock";
 import { SharePost } from "../SharePost";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ClearSinglChatNumber, GetSinglePageChatAction } from "../../../store/action/action";
 import { ChecboxUnchekedForMsgSvg, CheckedChexboxForMSg } from "../../../assets/svg/Svgs";
 
-export const Messages = ({ route, id, setSelected, seleted, setOpenSelect, openSelet }) => {
+export const Messages = ({ setLastImte, route, id, setSelected, seleted, setOpenSelect, openSelet }) => {
 
   const getSinglePageChat = useSelector(st => st.getSinglePageChat);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const user = useSelector(st => st.userData);
-  // const [openSelet, setOpenSelect] = useState(false)
+  const viewableItemsRef = useRef({});
   const [selectedData, setSelectedData] = useState([])
+
+  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      const firstVisibleItem = viewableItems[0]?.item;
+      const lastVisibleItem = viewableItems[viewableItems.length - 1]?.item;
+
+      viewableItemsRef.current = { firstVisibleItem, lastVisibleItem };
+      setLastImte(firstVisibleItem);
+    }
+  }, []);
+
 
   useEffect(() => {
     dispatch(GetSinglePageChatAction({ receiver_id: route.params.id }, staticdata.token, page,),);
@@ -52,11 +63,16 @@ export const Messages = ({ route, id, setSelected, seleted, setOpenSelect, openS
     setSelectedData(item)
   }
 
+
   return <FlatList
     snapToEnd
     inverted={true}
     showsVerticalScrollIndicator={false}
     data={getSinglePageChat?.message}
+    onViewableItemsChanged={onViewableItemsChanged}
+    viewabilityConfig={{
+      itemVisiblePercentThreshold: 50,
+    }}
     contentContainerStyle={styles.scrollViewContent}
     onEndReached={() => {
       if (getSinglePageChat.nextPage && !getSinglePageChat.loading) {

@@ -95,15 +95,15 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             );
           }
           if (JSON.parse(event.data)?.message?.receiver_id == id) {
-            dispatch(
-              AddMsgAction({
-                message: JSON.parse(event.data)?.message?.message,
-                sender_id: id,
-                receiver_id: JSON.parse(event.data)?.message?.sender_id,
-                created_at: today,
-                id: JSON.parse(event.data)?.message.id
-              }),
-            );
+            // dispatch(
+            //   AddMsgAction({
+            //     message: JSON.parse(event.data)?.message?.message,
+            //     sender_id: id,
+            //     receiver_id: JSON.parse(event.data)?.message?.sender_id,
+            //     created_at: today,
+            //     id: JSON.parse(event.data)?.message.id
+            //   }),
+            // );
           }
           else {
             if (JSON.parse(event.data).message.receiver_user.id == id) {

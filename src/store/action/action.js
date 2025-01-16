@@ -732,7 +732,7 @@ export const GetSinglePageChatAction = (data, token, page) => {
   };
 };
 
-export const newMessageAction = (data, token, send) => {
+export const newMessageAction = (data, token) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -764,12 +764,6 @@ export const AddMsgAction = data => {
   };
 };
 
-export const AddMyMSgAction = (data) => {
-  return {
-    type: 'AddMyMSgAction',
-    data
-  }
-}
 
 export const GetMyChatRoom = (data, token, page) => {
   var myHeaders = new Headers();

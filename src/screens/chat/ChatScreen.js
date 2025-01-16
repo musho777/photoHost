@@ -30,11 +30,34 @@ export const ChatScreen = ({ route }) => {
   const [seleted, setSelected] = useState([])
   const [askdelateModal, setAskDelateModal] = useState(false)
   const [openSelet, setOpenSelect] = useState(false)
+  const [date, setDate] = useState(undefined)
+
+  const monthsInRussian = [
+    "Январь",   // January
+    "Февраль",  // February
+    "Март",     // March
+    "Апрель",   // April
+    "Май",      // May
+    "Июнь",     // June
+    "Июль",     // July
+    "Август",   // August
+    "Сентябрь", // September
+    "Октябрь",  // October
+    "Ноябрь",   // November
+    "Декабрь"   // December
+  ];
 
 
+  const [lastItem, setLastImte] = useState({})
 
-
-
+  useEffect(() => {
+    console.log(lastItem.updated_at)
+    const date = new Date(lastItem.updated_at);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    if (day && month)
+      setDate(`${day} ${monthsInRussian[month]}`)
+  }, [lastItem])
 
 
   useEffect(() => {
@@ -70,6 +93,9 @@ export const ChatScreen = ({ route }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}>
       <TouchableOpacity activeOpacity={1} style={[styles.body, Styles.statusBar]}>
+        {date && <View style={styles.date}>
+          <Text style={Styles.darkMedium12}>{date}</Text>
+        </View>}
         {!openSelet ?
           <Header askdelateModal={askdelateModal} user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} /> :
           <View style={{ height: 30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 10, }}>
@@ -79,7 +105,14 @@ export const ChatScreen = ({ route }) => {
             </TouchableOpacity>
           </View>
         }
-        <Messages setOpenSelect={(e) => setOpenSelect(e)} openSelet={openSelet} seleted={seleted} setSelected={(e) => setSelected(e)} id={route.params.chatId} route={route} />
+        <Messages
+          setLastImte={(e) => setLastImte(e)}
+          setOpenSelect={(e) => setOpenSelect(e)}
+          openSelet={openSelet} seleted={seleted}
+          setSelected={(e) => setSelected(e)}
+          id={route.params.chatId}
+          route={route}
+        />
         <BottomWrapper ref={bottomSheetRef} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
         <Main SendSticker={(e) => SendSticker(e)} route={route} ref={bottomSheetRef} />
       </TouchableOpacity >
@@ -100,4 +133,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  date: {
+    position: 'absolute',
+    backgroundColor: 'red',
+    top: 50,
+    maxWidth: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(201,201,201,0.5)',
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    left: '40%',
+    margin: 'auto',
+    display: 'flex',
+    zIndex: 999999999999,
+  }
 });

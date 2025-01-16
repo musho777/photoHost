@@ -128,7 +128,7 @@ export const AddImg = ({ navigation }) => {
         cropping: false,
         compressImageQuality: 1,
         multiple: true,
-        mediaType: "mixed",
+        mediaType: "photo",
         videoQuality: "low",
         durationLimit: 60,
         storageOptions: {

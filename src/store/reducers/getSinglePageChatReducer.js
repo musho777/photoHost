@@ -56,9 +56,6 @@ const GetSinglePageChatReducer = (state = initialState, action) => {
         item.message.unshift(action.data)
       }
       break
-    case 'AddMyMSgAction':
-      item.message.push(action.data)
-      break
     case 'StartDelateChat':
       item.delateChatStatus = false
       item.dleateChatLoading = true
