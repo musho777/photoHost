@@ -58,9 +58,9 @@ export const Slider = React.memo(({ adminStatus, scroll, id, photo, viewableItem
     reff[active]?.current?.seek(value);
   };
 
-  useEffect(() => {
-    setPaused([true, true, true, true, true, true, true, true, true, true])
-  }, [active])
+  // useEffect(() => {
+  //   setPaused([true, true, true, true, true, true, true, true, true, true])
+  // }, [active])
 
   const LikePost = useCallback(() => {
     dispatch(LikePostAction({ post_id: data?.id }, staticdata.token, user.data?.id));
@@ -133,12 +133,12 @@ export const Slider = React.memo(({ adminStatus, scroll, id, photo, viewableItem
   const { fullScreen } = useSelector((st) => st.fullScreenData)
 
   const renderItem = ({ item, index }) => {
-    let height = 600
+    let height = 525
     if (item.height - 200 > item.width) {
-      height = 600
+      height = 525
       setHoriznotal(false)
       if (active == index) {
-        setHeight(600)
+        setHeight(525)
       }
     }
     else {
