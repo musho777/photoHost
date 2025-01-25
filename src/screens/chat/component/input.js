@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: 20,
     paddingRight: 40,
-    paddingTop: 15,
+    paddingTop: 12,
     // paddingBottom: 20,
     color: AppColors.Blcak_Color,
     position: 'relative',

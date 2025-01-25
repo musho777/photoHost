@@ -47,17 +47,23 @@ export const HomeScreen = () => {
   const { fullScreen } = useSelector((st) => st.fullScreenData)
   const [postUserId, setPostUserId] = useState(null)
 
-  useFocusEffect(
-    useCallback(() => {
-      const timer = setTimeout(() => {
-        if (userData.data.show_category_pop_up == 1) {
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const timer = setTimeout(() => {
+  //       if (userData.data.show_category_pop_up == 1) {
 
-          setShowModal(true);
-        }
-      }, 20000);
-      return () => clearTimeout(timer);
-    }, [userData.data.show_category_pop_up])
-  );
+  //         setShowModal(true);
+  //       }
+  //     }, 20000);
+  //     return () => clearTimeout(timer);
+  //   }, [userData.data.show_category_pop_up])
+  // );
+
+  useEffect(() => {
+    if (userData.data.show_category_pop_up == 1) {
+      setShowModal(true);
+    }
+  }, [userData.data.show_category_pop_up])
 
   useEffect(() => {
     if (staticdata.token && !getLents?.data.length) {
@@ -161,7 +167,7 @@ export const HomeScreen = () => {
 
 
 
-  const Scroll = async (e, index) => { }
+  // const Scroll = async (e, index) => { }
 
 
 
@@ -174,7 +180,7 @@ export const HomeScreen = () => {
             data={item}
             adminStatus={item.admin_status}
             index={index}
-            scroll={(e) => Scroll(e, index)}
+            // scroll={(e) => Scroll(e, index)}
             viewableItems={viewableItems}
             setShowLike={() => setLikeClose(true)}
             setShowView={() => setShowView(true)}

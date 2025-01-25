@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import {
+  Dimensions,
   KeyboardAvoidingView,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,7 +17,7 @@ import { BottomWrapper } from './component/bottomWrapper';
 import { Messages } from './component/Messages';
 import Sound from 'react-native-sound';
 import { Styles } from '../../styles/Styles';
-
+const { height, width } = Dimensions.get('window');
 
 
 export const ChatScreen = ({ route }) => {
@@ -51,7 +53,6 @@ export const ChatScreen = ({ route }) => {
   const [lastItem, setLastImte] = useState({})
 
   useEffect(() => {
-    console.log(lastItem.updated_at)
     const date = new Date(lastItem.updated_at);
     const month = date.getMonth() + 1;
     const day = date.getDate();
@@ -89,41 +90,44 @@ export const ChatScreen = ({ route }) => {
 
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}>
-      <TouchableOpacity activeOpacity={1} style={[styles.body, Styles.statusBar]}>
-        {date && <View style={styles.date}>
-          <Text style={Styles.darkMedium12}>{date}</Text>
-        </View>}
-        {!openSelet ?
-          <Header askdelateModal={askdelateModal} user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} /> :
-          <View style={{ height: 30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 10, }}>
-            <Text onPress={() => setSelected(false)} style={Styles.darkMedium12}>Отменить</Text>
-            <TouchableOpacity disabled={!seleted.length} onPress={() => DelateMessage()} >
-              <Text style={[Styles.darkMedium12, { color: seleted.length > 0 ? 'red' : '#adadad', }]}>Удалить</Text>
-            </TouchableOpacity>
-          </View>
-        }
-        <Messages
-          setLastImte={(e) => setLastImte(e)}
-          setOpenSelect={(e) => setOpenSelect(e)}
-          openSelet={openSelet} seleted={seleted}
-          setSelected={(e) => setSelected(e)}
-          id={route.params.chatId}
-          route={route}
-        />
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 30 : 0}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}>
+        <TouchableOpacity activeOpacity={1} style={[styles.body]}>
+          {date && <View style={styles.date}>
+            <Text style={Styles.darkMedium12}>{date}</Text>
+          </View>}
+          {!openSelet ?
+            <Header askdelateModal={askdelateModal} user={user} route={route} setAddToBlackList={(e) => setAddToBlackList(e)} data={getSinglePageChat?.message} /> :
+            <View style={{ height: 30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 10, }}>
+              <Text onPress={() => setSelected(false)} style={Styles.darkMedium12}>Отменить</Text>
+              <TouchableOpacity disabled={!seleted.length} onPress={() => DelateMessage()} >
+                <Text style={[Styles.darkMedium12, { color: seleted.length > 0 ? 'red' : '#adadad', }]}>Удалить</Text>
+              </TouchableOpacity>
+            </View>
+          }
+          <Messages
+            setLastImte={(e) => setLastImte(e)}
+            setOpenSelect={(e) => setOpenSelect(e)}
+            openSelet={openSelet} seleted={seleted}
+            setSelected={(e) => setSelected(e)}
+            id={route.params.chatId}
+            route={route}
+          />
+        </TouchableOpacity >
         <BottomWrapper ref={bottomSheetRef} setAddToBlackList={(e) => setAddToBlackList(e)} addToblackList={addToblackList} route={route} />
         <Main SendSticker={(e) => SendSticker(e)} route={route} ref={bottomSheetRef} />
-      </TouchableOpacity >
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
-    height: '100%',
-    paddingBottom: 20,
+    height: "95%"
+    // paddingBottom: 20,
   },
   keyboardAvoidingView: {
     flex: 1,

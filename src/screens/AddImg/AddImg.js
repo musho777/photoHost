@@ -137,6 +137,7 @@ export const AddImg = ({ navigation }) => {
         }
       })
         .then((response) => {
+          console.log(response, 'response')
           let item = [...data]
           if (response.didCancel) {
             if (uri.length == 0) {
@@ -154,20 +155,20 @@ export const AddImg = ({ navigation }) => {
               setFirst(true)
             }
             response?.map((elm, i) => {
-              if (elm?.mime != 'image/jpg') {
-                if (elm.duration <= 60883) {
-                  item.push({ uri: elm.sourceURL, mime: elm?.mime })
-                }
-                else {
-                  setError('видео должен быть меньше чем 60 с')
-                  setShowError(true)
-                }
+              // if (elm?.mime != 'image/jpg') {
+              // if (elm.duration <= 60883) {
+              //   item.push({ uri: elm.sourceURL, mime: elm?.mime })
+              // }
+              // else {
+              //   setError('видео должен быть меньше чем 60 с')
+              //   setShowError(true)
+              // }
+              // }
+              // else {
+              if (item.length <= 10) {
+                item.push({ uri: elm.path, mime: elm?.type });
               }
-              else {
-                if (item.length <= 10) {
-                  item.push({ uri: elm.path, mime: elm?.type });
-                }
-              }
+              // }
             })
             setUri(item);
           }
@@ -229,22 +230,23 @@ export const AddImg = ({ navigation }) => {
   const renderItem = ({ item, index }) => {
     return <View>
       <ScrollView style={(localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }}>
-        {item.mime == 'image/jpeg' ?
-          <FastImage
-            style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }]}
-            source={{ uri: item.uri }}
-            onLoad={(event) => {
-              const { width, height } = event.nativeEvent;
-              let item = [...localheight]
-              item.push({ width: width, height: height })
-              setLocalHeight(item)
-            }}
-          /> :
+        <FastImage
+          style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }]}
+          source={{ uri: item.uri }}
+          onLoad={(event) => {
+            const { width, height } = event.nativeEvent;
+            let item = [...localheight]
+            item.push({ width: width, height: height })
+            setLocalHeight(item)
+          }}
+        />
+        {/* {item.mime == 'image/jpeg' ?
+           :
           <Video
             style={[styles.Vidio]}
             source={{ uri: item.uri }}
           ></Video>
-        }
+        } */}
 
         <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 10, right: 10 }}>
           <CloseSvg1 />

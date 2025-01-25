@@ -19,6 +19,23 @@ const GetUserDataReducer = (state = initialState, action) => {
   let item = { ...state };
   switch (action.type) {
     case 'StartGetUserData':
+      // item.status = false
+      // item.error = ''
+      // item.message = ''
+      item.loading = true
+      // item.data = {}
+      // item.username = ''
+      // item.name = ''
+      // item.description = ''
+      // item.email = ''
+      // item.avatar = ''
+      // item.followerCount = 0
+      // item.followersCount = 0
+      // item.postCount = 0
+      // item.allData = {}
+      break
+
+    case 'SuccessLogout':
       item.status = false
       item.error = ''
       item.message = ''
@@ -34,6 +51,8 @@ const GetUserDataReducer = (state = initialState, action) => {
       item.postCount = 0
       item.allData = {}
       break
+
+
     case 'SuccessGetUserData':
       item.status = true
       item.error = ''
@@ -126,12 +145,11 @@ const GetUserDataReducer = (state = initialState, action) => {
     case 'AddMessageCount':
       item.msgCount = item.msgCount + 1
       break
-    case "ShowPopUpLocal":
-      item.data.show_category_pop_up = 1
-      break
-    case "ClosePopUpLocal":
-      item.data.show_category_pop_up = 0
-      break
+    // case "ShowPopUpLocal":
+    //   item.data.show_category_pop_up = 1
+    //   break
+    // case "ClosePopUpLocal":
+    //   item.data.show_category_pop_up = 0
     default:
       break;
   }

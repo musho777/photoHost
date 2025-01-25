@@ -175,7 +175,7 @@ export const Post = React.memo(({
           setIsExpanded={(e) => setIsExpanded(e)}
           isExpanded={isExpanded}
           id={index}
-          scroll={scroll}
+          // scroll={scroll}
           adminStatus={adminStatus}
         /> :
           <View style={{ height: 525, position: 'relative' }}>
