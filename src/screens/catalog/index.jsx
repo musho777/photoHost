@@ -107,7 +107,7 @@ export const Catalog = () => {
 
   return <SafeAreaView >
     <View style={[style.page, { marginTop: insets.top ? insets.top : 50 }]}>
-      <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выберите интересующие Вас рубрики</Text>
+      <Text style={[Styles.darkRegular16, { textAlign: 'center' }]}>Выбери интересующие тебя рубрики</Text>
       {(getCatalog.loading && page == 1) ?
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', }}>
           {dataLoading.map((elm, i) => {

@@ -109,6 +109,11 @@ android {
         }
     }
 }
+configurations.all {
+    resolutionStrategy {
+        force 'com.google.errorprone:error_prone_annotations:2.5.1' // Try a different version
+    }
+}
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
