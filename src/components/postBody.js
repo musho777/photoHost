@@ -16,7 +16,6 @@ export const PostBody = ({
   user,
   my,
   setShowView,
-  postCount,
   setShowLike,
   setShowShare,
   likeClose,
@@ -24,6 +23,8 @@ export const PostBody = ({
   categoryId,
   setShowComment,
   setCommentData,
+  showStatisitc,
+  setShowStatistic = () => { },
   setSelectidId = () => { }
 }) => {
 
@@ -55,11 +56,6 @@ export const PostBody = ({
     ))
   }
 
-  useEffect(() => {
-    if (postCount <= 3 && my) {
-      setShowViewText(true)
-    }
-  }, [postCount])
 
   return <View style={styles.bostBody}>
     {(!likeClose && !showShare) && <View style={{ gap: 5, position: 'absolute', bottom: 0, right: 5, }}>
@@ -113,10 +109,11 @@ export const PostBody = ({
         <ShearSvg />
       </TouchableOpacity>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 1, right: 0 }}>
-        {(showViewText && view > 0) &&
+        {(showStatisitc == 1 && my && view > 0) &&
           <TouchableOpacity onPress={() => {
             setShowView(true)
             setSelectidId(id)
+            setShowStatistic(0)
           }} style={[styles.hover, { position: 'absolute', right: 50, height: 36 }]}>
             <Text style={[Styles.whiteRegular12]}>Посмотреть статистику?</Text>
           </TouchableOpacity>
@@ -125,6 +122,7 @@ export const PostBody = ({
           activeOpacity={my ? 0 : 1}
           onPress={() => {
             if (my && view > 0) {
+              setShowStatistic(0)
               setShowView(true)
               setSelectidId(id)
             }

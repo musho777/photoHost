@@ -48,6 +48,8 @@ const GetLentsReducer = (state = initialState, action) => {
       let index = item.data.findIndex(elm => elm.id === action.data.post_id)
       if (index != -1) {
         item.data[index].description = action.data.description
+        item.data[index].color = action.data.color
+        item.data[index].font_family = action.data.font_family
       }
       break
 

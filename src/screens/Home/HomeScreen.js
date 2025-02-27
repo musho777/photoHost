@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { View, FlatList, RefreshControl, Text, ActivityIndicator, BackHandler, StatusBar, Dimensions } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../components/post/Post';
-import { AddPostViewCount, DelatePostAction, FullScreenAction, GetLentsAction, getUserInfoAction, ShowTabNavigation } from '../../store/action/action';
+import { AddPostViewCount, Api, DelatePostAction, FullScreenAction, GetLentsAction, getUserInfoAction, ShowTabNavigation } from '../../store/action/action';
 import { ModalComponent } from './modal';
 import { PostLoading } from '../../components/post/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,6 +36,7 @@ export const HomeScreen = () => {
   const [commentData, setCommentData] = useState({ parentId: "", categoryId: "" })
 
   const [selectedVidioId, setSelectedVidioId] = useState(null)
+  const [showStatisitc, setShowStatistic] = useState(0)
 
   const [showView, setShowView] = useState(false)
   const [likeClose, setLikeClose] = useState(false)
@@ -63,7 +64,9 @@ export const HomeScreen = () => {
     if (userData.data.show_category_pop_up == 1) {
       setShowModal(true);
     }
-  }, [userData.data.show_category_pop_up])
+    /// addsetShowModal
+    setShowStatistic(userData.allData.data?.view_statistics_open_text)
+  }, [userData.data])
 
   useEffect(() => {
     if (staticdata.token && !getLents?.data.length) {
@@ -115,6 +118,27 @@ export const HomeScreen = () => {
     };
   }, [showShare, likeClose, showView]);
 
+
+  // console.log(userData.allData.data?.view_statistics_open_text)
+
+  const ChangeViewStatisticsOpenText = () => {
+    setShowStatistic(0)
+    console.log(showStatisitc, 'showStatisitc')
+    if (showStatisitc) {
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Authorization', `Bearer ${staticdata.token}`);
+      fetch(`${Api}/view_statistics_open_text`, {
+        method: 'POST',
+        headers: myHeaders,
+      })
+        .then(response => response.json())
+        .then(r => {
+        })
+        .catch(error => {
+        });
+    }
+  }
 
 
   // const End = async (id) => {
@@ -180,6 +204,8 @@ export const HomeScreen = () => {
             data={item}
             adminStatus={item.admin_status}
             index={index}
+            setShowStatistic={() => ChangeViewStatisticsOpenText()}
+            showStatisitc={showStatisitc}
             // scroll={(e) => Scroll(e, index)}
             viewableItems={viewableItems}
             setShowLike={() => setLikeClose(true)}

@@ -27,7 +27,9 @@ export const Post = React.memo(({
   setShowInfo,
   adminStatus,
   setPostUserId = () => { },
-  AddToBack
+  AddToBack,
+  showStatisitc = 0,
+  setShowStatistic = () => { },
 }) => {
   const user = useSelector((st) => st.userData)
   const [openModal, setOpenModal] = useState(false)
@@ -168,6 +170,8 @@ export const Post = React.memo(({
           photo={data?.photo ? data?.photo : []}
           setOpenModal={setOpenModal}
           data={data}
+          font={data.font_family}
+          color={data.color}
           description={data?.description}
           setHoriznotal={setHoriznotal}
           user={user}
@@ -205,8 +209,10 @@ export const Post = React.memo(({
             my={user?.data.id != data?.user.id ? false : true}
             userId={data?.user.id}
             like={data?.like_count}
+            setShowStatistic={() => setShowStatistic()}
             id={data?.id}
             user={user}
+            showStatisitc={showStatisitc}
             categoryId={data?.many_category}
           />
         </View>}
@@ -217,8 +223,10 @@ export const Post = React.memo(({
   return (
     prevProps.data?.comment_count === nextProps.data?.comment_count &&
     prevProps.data?.id === nextProps.data?.id &&
-    prevProps.data?.description === nextProps.data?.description
-
+    prevProps.data?.description === nextProps.data?.description &&
+    prevProps.data?.showStatisitc === nextProps.data?.showStatisitc &&
+    prevProps.data?.color === nextProps.data?.color &&
+    prevProps.data?.font_family === nextProps.data?.font_family
   )
 });
 

@@ -284,8 +284,6 @@ export const EditProfilScreen = ({ navigation }) => {
               <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', height: 20 }}>
                 {color.map((elm, i) => {
                   return <TouchableOpacity onPress={() => {
-                    // ChnageData(localValue, activeFont, elm)
-                    // setActiveColor(elm)
                     setName({ ...name, color: elm })
                   }} key={i} style={{ width: 20, height: 20, backgroundColor: elm.title, borderRadius: 20, }} />
                 })}

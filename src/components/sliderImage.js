@@ -9,7 +9,7 @@ import { InReview } from './InReview'
 
 const windowWidth = Dimensions.get('window').width;
 
-const SliderImage = React.memo(({ adminStatus, item, height, description, index, setIsExpanded }) => {
+const SliderImage = React.memo(({ adminStatus, item, height, description, index, setIsExpanded, color, font }) => {
 
   // const [loading, setLoading] = useState(true)
   const heightAnim = useRef(new Animated.Value(0)).current;
@@ -64,7 +64,7 @@ const SliderImage = React.memo(({ adminStatus, item, height, description, index,
           <View>
             {Description[index] &&
               <View>
-                <Text style={[Styles.darkMedium13, { color: 'white' }]}>
+                <Text style={[Styles.darkMedium13, { color: color ?? "white", fontFamily: font }]}>
                   {`${Description[index].slice(0, MAX_Height)}`}
                 </Text>
               </View>
@@ -108,7 +108,10 @@ const SliderImage = React.memo(({ adminStatus, item, height, description, index,
   return (
     prevProps.long === nextProps.long &&
     prevProps.index === nextProps.index &&
-    prevProps.description === nextProps.description
+    prevProps.description === nextProps.description &&
+    prevProps.color === nextProps.color &&
+    prevProps.font === nextProps.font
+
   )
 });
 

@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Styles } from '../../styles/Styles';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
@@ -8,9 +8,11 @@ import { ClearEditPost } from '../../store/action/clearAction';
 import { t } from '../../components/lang';
 import FastImage from 'react-native-fast-image';
 import { CloseSvg1 } from '../../assets/svg/Svgs';
+import { useNavigation } from '@react-navigation/native';
 
 
-export const EditPostScreen = ({ route, navigation }) => {
+export const EditPostScreen = ({ route }) => {
+  const navigation = useNavigation()
   const [description, setDescription] = useState(route.params.description);
   // const index = route.params.index
   const [index, setIndex] = useState(route.params.index)
@@ -22,8 +24,15 @@ export const EditPostScreen = ({ route, navigation }) => {
   const editPost = useSelector((st) => st.editPost)
   const [photos, setPhotos] = useState([])
 
+  const [activecolor, setActiveColor] = useState("black")
+  const [activeFont, setActiveFont] = useState("Montserrat-Medium")
+
+
   useEffect(() => {
     setPhotos(data.photo)
+    console.log(data.color)
+    setActiveColor(data.color)
+    setActiveFont(data.font_family)
   }, [data.photo])
 
   useEffect(() => {
@@ -34,21 +43,28 @@ export const EditPostScreen = ({ route, navigation }) => {
 
 
 
-
   const EditPost = () => {
+    let newDescripit
+    if (description[0] == '[') {
+      item = JSON.parse(description)
+      newDescripit = JSON.stringify(item)
+    }
     dispatch(EditPostAction({
       post_id: route.params.id,
-      description: description
+      description: description,
+      color: activecolor,
+      font_family: activeFont
     },
       staticdata.token))
     dispatch(EditLentPhot({
       post_id: route.params.id,
-      description: description
+      description: description,
+      color: activecolor,
+      font_family: activeFont
     }))
     dispatch(ClearEditPost())
     if (route.params.big) {
-      navigation.navigate('SinglPageScreen', { id: route.params.id, description: description })
-      // navigation.navigation()
+      navigation.navigate('SinglPageScreen', { id: route.params.id, description: newDescripit })
     }
     else {
       navigation.goBack()
@@ -58,16 +74,60 @@ export const EditPostScreen = ({ route, navigation }) => {
 
 
 
-  // useEffect(() => {
-  //   if (editPost.status) {
-  //     dispatch(EditLentPhot({
-  //       post_id: route.params.id,
-  //       description: description
-  //     }))
+  const fontFamily = [
+    "Montserrat-Regular",
+    "PlaywriteGBS-Regular",
+    'RussoOne-Regular',
+    'Agdasima-Regular',
+    'Caveat-Regular',
+    'Comfortaa-Regular',
+    'CormorantGaramond-Regular',
+    'Jost-Regular',
+    'Lobster-Regular',
+    'NotoSansHK-Regular',
+    'Pacifico-Regular',
+    'Tiny5-Regular',
+    "AdventPro_Expanded-Regular",
+    "Alice-Regular",
+    "AmaticSC-Regular",
+    "BadScript-Regular",
+    "DelaGothicOne-Regular",
+    "Geologica_Auto-Regular",
+    "PlayfairDisplaySC-Regular",
+    "RubikMonoOne-Regular",
+    "Unbounded-Regular",
+    "YanoneKaffeesatz-Regular",
+    "AlegreyaSansSC-Regular",
+    "BalsamiqSans-Regular",
+    "CormorantInfant-Regular",
+    "DaysOne-Regular",
+    "MarckScript-Regular",
+    "Pattaya-Regular",
+    "ProstoOne-Regular",
+    "RubikSprayPaint-Regular",
+    "SofiaSansExtraCondensed-Regular"
+  ]
 
-  //     dispatch(ClearEditPost())
-  //   }
-  // }, [editPost.status])
+
+  const color = [
+    { title: '#000000', id: 1 },
+    { title: '#808080', id: 3 },
+    { title: '#FF5733', id: 4 },
+    { title: '#1E90FF', id: 6 },
+    { title: '#4682B4', id: 7 },
+    { title: '#4CAF50', id: 8 },
+    { title: '#FFD700', id: 9 },
+    { title: '#FF69B4', id: 10 },
+    { title: '#800080', id: 11 },
+    { title: '#8B0000', id: 12 },
+
+    { title: '#FFA500', id: 13 },
+    { title: '#87CEEB', id: 14 },
+    { title: '#FF4500', id: 16 },
+    { title: '#32CD32', id: 17 },
+    { title: '#DA70D6', id: 18 },
+    { title: '#708090', id: 19 },
+  ]
 
 
 
@@ -136,9 +196,8 @@ export const EditPostScreen = ({ route, navigation }) => {
         autoFocus
         value={activeDescription}
         multiline
-
         onChangeText={e => changeDescription(e)}
-        style={[Styles.darkMedium14, { paddingHorizontal: 10 }]}
+        style={[Styles.darkMedium14, { padding: 10, color: activecolor, fontFamily: activeFont }]}
         placeholder={t(mainData.lang).adddescription}
         placeholderTextColor={'#8C9CAB'}
       />
@@ -168,6 +227,23 @@ export const EditPostScreen = ({ route, navigation }) => {
           })}
         </View>
       </ScrollView >
+      <View style={{ marginVertical: 20 }}>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', marginVertical: 10 }}>
+          {fontFamily.map((elm, i) => {
+            return <Text onPress={() => {
+              // setName({ ...name, font: elm })
+              setActiveFont(elm)
+            }} key={i} style={{ fontSize: 10, fontFamily: elm }}>{elm}</Text>
+          })}
+        </ScrollView>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', height: 20 }}>
+          {color.map((elm, i) => {
+            return <TouchableOpacity onPress={() => {
+              setActiveColor(elm.title)
+            }} key={i} style={{ width: 20, height: 20, backgroundColor: elm.title, borderRadius: 20, }} />
+          })}
+        </ScrollView>
+      </View>
     </View >
   );
 };

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useCallback, useMemo, useRef, useState } from "react"
 import { t } from '../../../components/lang';
 import { Styles } from "../../../styles/Styles"
-import { CreatePostLocal, CreatPostAction } from "../../../store/action/action"
+import { CreatPostAction } from "../../../store/action/action"
 import { useFocusEffect, useNavigation } from "@react-navigation/native"
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 
