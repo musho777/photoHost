@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Modal, TouchableOpacity, Image, ActivityIndicator, Alert } from "react-native";
+import { View, Text, TextInput, Button, Modal, TouchableOpacity, Image, ActivityIndicator, Alert, Keyboard } from "react-native";
 // import { pick } from "@react-native-documents/picker";
 import { useSelector } from "react-redux";
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -65,7 +65,8 @@ export const SendMail = ({ visible, onClose }) => {
 
   return (
     <Modal visible={visible} transparent animationType="slide">
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" }}>
+
+      <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()} style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" }}>
         {!succass ? <View style={{ width: 300, backgroundColor: "#fff", padding: 20, borderRadius: 10 }}>
           <Text style={{ fontSize: 14, fontWeight: "bold", marginBottom: 10, textAlign: 'center' }}>Выберите файл и оставьте комментарий</Text>
 
@@ -84,7 +85,7 @@ export const SendMail = ({ visible, onClose }) => {
           )}
 
           <TextInput
-            placeholder="Введите комментарий"
+            placeholder="Предложить мысль"
             value={comment}
             onChangeText={setComment}
             multiline
@@ -95,12 +96,17 @@ export const SendMail = ({ visible, onClose }) => {
           {loading ? (
             <ActivityIndicator size="large" color="#007bff" />
           ) : (
-            <Button title="Загрузить" onPress={uploadFile} />
+            <Button title="Oтправить" onPress={uploadFile} />
           )}
 
           {/* Кнопка закрытия */}
-          <TouchableOpacity onPress={onClose} style={{ marginTop: 10 }}>
-            <Text style={{ textAlign: "center", color: "red" }}>Закрыть</Text>
+          <TouchableOpacity onPress={onClose} style={{ marginTop: 10, position: 'absolute', right: 0 }}>
+            <TouchableOpacity onPress={() => {
+              setSuccass(false)
+              onClose()
+            }} style={{ position: 'absolute', top: 5, right: 5 }}>
+              <CloseSvg1 />
+            </TouchableOpacity>
           </TouchableOpacity>
         </View> :
           <View style={{ width: 300, backgroundColor: "#fff", padding: 20, borderRadius: 10, height: 180, justifyContent: 'center', alignItems: 'center' }}>
@@ -110,10 +116,11 @@ export const SendMail = ({ visible, onClose }) => {
             }} style={{ position: 'absolute', top: 5, right: 5 }}>
               <CloseSvg1 />
             </TouchableOpacity>
+            <Text style={{ fontSize: 14, fontWeight: "bold", marginBottom: 10, textAlign: 'center' }}>Выше сообщение отправлено.</Text>
             <Success />
           </View>
         }
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 };

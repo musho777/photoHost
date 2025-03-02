@@ -2,12 +2,10 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { CheckMarkUserSvg } from "../../../../assets/svg/Svgs"
 import { Styles } from "../../../../styles/Styles";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
 
 export const HeaderInfo = ({ user, data }) => {
   const navigation = useNavigation()
   const mounth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-  const [day, setDay] = useState('')
 
   function canParseJSON(jsonString) {
     try {
@@ -47,11 +45,10 @@ export const HeaderInfo = ({ user, data }) => {
     return `${dayOfMonth} ${month} в ${hour}:${minute}`;
   };
 
-
   return <TouchableOpacity
     activeOpacity={1}
     onPress={() =>
-      user?.data?.id != data?.user.id ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data.user.id, post_id: data.id } }) :
+      user?.data?.id != data?.user.id ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data?.user.id, post_id: data?.id } }) :
         navigation.navigate('TabNavigation', { screen: "ProfileNavigation" })
     } style={[Styles.flexAlignItems]}>
     <View>

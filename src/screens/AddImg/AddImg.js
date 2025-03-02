@@ -29,6 +29,7 @@ import { Header } from './component/header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ImagePicker from 'react-native-image-crop-picker';
 import RenderHtml from 'react-native-render-html';
+import { HeaderInfo } from '../../components/post/postHeader/component/headerInfro';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -129,6 +130,7 @@ export const AddImg = ({ navigation }) => {
 
   const mainData = useSelector(st => st.mainData);
   const [uri, setUri] = useState([]);
+  const user = useSelector((st) => st.userData)
   const [description, setDescription] = useState([]);
   const createPost = useSelector(st => st.createPost);
   const staticData = useSelector(st => st.static);
@@ -276,6 +278,26 @@ export const AddImg = ({ navigation }) => {
     setDescription(temp)
   }
 
+  const fullOptions = [
+    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+    // ['blockquote', 'code-block'],
+    // [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+
+    // [{ header: 1 }, { header: 2 }], // custom button values
+    // [{ list: 'ordered' }, { list: 'bullet' }],
+    // [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+    // [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+    // [{ direction: 'rtl' }], // text direction
+
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    // [{ font: [] }],
+    // [{ align: [] }],
+    // ['image', 'video'],
+    // ["clean"], // remove formatting button
+  ];
+
 
   const addDescription = (e, i) => {
     let item = [...description]
@@ -310,13 +332,39 @@ export const AddImg = ({ navigation }) => {
       // If color is defined, ensure all color: black is replaced with white
       modifiedContent = modifiedContent?.replace(/color:\s*(black|#000000|#000)/g, 'color: white');
     }
+
+    function canParseJSON(jsonString) {
+      try {
+        JSON.parse(jsonString);
+        return <Text style={[Styles.whiteSemiBold14, { color: JSON.parse(jsonString)?.color?.title ? JSON.parse(jsonString)?.color?.title : "black", fontFamily: JSON.parse(jsonString)?.font, marginTop: -2 }]}>{JSON.parse(jsonString).name}</Text>
+      } catch (error) {
+        return <Text style={[Styles.whiteSemiBold14, { marginTop: -2 }]}>{jsonString}</Text>
+      }
+    }
+
+
     return <View>
-      <View keyboardShouldPersistTaps='handled' style={(localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }}>
+      <View keyboardShouldPersistTaps='handled' style={(localheight[index]?.height - localheight[index]?.width) / 3 - 100 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }}>
         <TouchableOpacity activeOpacity={1} onPress={() => {
           _editor.current?.blur();
         }}>
+          <View style={styles.hover} >
+            <TouchableOpacity
+              activeOpacity={1}
+              style={[Styles.flexAlignItems]}>
+              <View>
+                <Image style={styles.userImg}
+                  source={{ uri: `https://chambaonline.pro/uploads/${user.avatar}` }} />
+              </View>
+              <View style={styles.nameBlock}>
+                <View style={[Styles.flexAlignItems, { width: '100%', gap: 8 }]}>
+                  {canParseJSON(user?.name)}
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
           <FastImage
-            style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 200 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }]}
+            style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 100 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }]}
             source={{ uri: item.uri }}
             onLoad={(event) => {
               const { width, height } = event.nativeEvent;
@@ -326,17 +374,18 @@ export const AddImg = ({ navigation }) => {
             }}
           />
         </TouchableOpacity>
-        {isHTML(description[active]) && description[active]?.length > 0 && <View style={{ position: 'absolute', top: 10, left: 10, paddingRight: 60, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, paddingHorizontal: 10 }}>
+        {isHTML(description[active]) && description[active]?.length > 0 && <View
+          style={{ position: 'absolute', top: 60, left: 10, paddingRight: 60, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 10, paddingHorizontal: 10 }}>
           <RenderHtml
-            contentWidth={10}
+            contentWidth={1}
             source={{ html: modifiedContent }}
           />
         </View>
         }
-        <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 10, right: 10 }}>
+        <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 60, right: 10 }}>
           <CloseSvg1 />
         </TouchableOpacity>
-        <TouchableOpacity style={{ position: 'absolute', top: 60, right: 10 }} onPress={() => addPhoto(uri, 1)}>
+        <TouchableOpacity style={{ position: 'absolute', top: 90, right: 10 }} onPress={() => addPhoto(uri, 1)}>
           <AddImage />
         </TouchableOpacity>
       </View>
@@ -399,7 +448,7 @@ export const AddImg = ({ navigation }) => {
           </View>
           <QuillToolbar
             editor={_editor}
-            options={'full'}
+            options={fullOptions}
             theme="light"
 
           />
@@ -637,5 +686,24 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     fontSize: 10,
     backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  hover: {
+    padding: 5,
+    paddingLeft: 7,
+    position: 'relative',
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.2)",
+    position: 'absolute',
+    zIndex: 999999,
+    height: 50,
+  },
+  userImg: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
+    borderRadius: 50,
   },
 });
