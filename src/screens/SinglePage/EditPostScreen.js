@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Styles } from '../../styles/Styles';
 import { HeaderWhiteTitle } from '../../headers/HeaderWhiteTitle.';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import { t } from '../../components/lang';
 import FastImage from 'react-native-fast-image';
 import { CloseSvg1 } from '../../assets/svg/Svgs';
 import { useNavigation } from '@react-navigation/native';
+import QuillEditor, { QuillToolbar } from 'react-native-cn-quill';
 
 
 export const EditPostScreen = ({ route }) => {
@@ -18,7 +19,7 @@ export const EditPostScreen = ({ route }) => {
   const [index, setIndex] = useState(route.params.index)
   const data = route.params.data
   const mainData = useSelector(st => st.mainData);
-  const [activeDescription, setActiveDescription] = useState()
+  const [activeDescription, setActiveDescription] = useState(["", "", "", "", "", "", "", "", "", ""])
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const editPost = useSelector((st) => st.editPost)
@@ -30,7 +31,6 @@ export const EditPostScreen = ({ route }) => {
 
   useEffect(() => {
     setPhotos(data.photo)
-    console.log(data.color)
     setActiveColor(data.color)
     setActiveFont(data.font_family)
   }, [data.photo])
@@ -105,7 +105,23 @@ export const EditPostScreen = ({ route }) => {
     "Pattaya-Regular",
     "ProstoOne-Regular",
     "RubikSprayPaint-Regular",
-    "SofiaSansExtraCondensed-Regular"
+    "SofiaSansExtraCondensed-Regular",
+
+
+    "RubikPuddles-Regular",
+    "RubikPixels-Regular",
+    "RubikMicrobe-Regular",
+    "RubikMaze-Regular",
+    "RubikMaps-Regular",
+    "RubikLines-Regular",
+    "RubikGemstones-Regular",
+    "RubikDoodleTriangles-Regular",
+    "RubikDistressed-Regular",
+    "RubikBurned-Regular",
+    "RubikBrokenFax-Regular",
+    "RubikBeastly-Regular",
+    "Oi-Regular",
+    "AlumniSansCollegiateOne-Regular",
   ]
 
 
@@ -129,35 +145,37 @@ export const EditPostScreen = ({ route }) => {
     { title: '#708090', id: 19 },
   ]
 
+  const _editor = React.createRef();
 
 
-  const changeDescription = (e) => {
+
+  const changeDescription = (e, index) => {
     let item = description
+    let temp = [...activeDescription]
+    temp[index] = e
+    setActiveDescription(temp)
     if (description) {
       if (description[0] == '[') {
         item = JSON.parse(description)
         item[index] = e
         setDescription(JSON.stringify(item))
-        setActiveDescription(e)
       }
       else {
         setDescription(e)
-        setActiveDescription(e)
       }
     }
     else {
       let temp = []
       temp[index] = e
       setDescription(JSON.stringify(temp))
-      setActiveDescription(e)
     }
   }
-
+  console.log(description)
   useEffect(() => {
     if (description) {
       if (description[0] == '[') {
         let item = JSON.parse(description)
-        setActiveDescription(item[index])
+        setActiveDescription(item)
       }
       else {
         setActiveDescription(description)
@@ -182,7 +200,7 @@ export const EditPostScreen = ({ route }) => {
     dispatch(DelatePhotoFromPost(route.params.id, id, staticdata.token))
     dispatch(DelatePhotofromPost(route.params.id, id))
   }
-
+  console.log(activeDescription[0], 'activeDescription[0]')
   return (
     <View>
       <HeaderWhiteTitle
@@ -192,7 +210,7 @@ export const EditPostScreen = ({ route }) => {
         onPress={() => navigation.goBack()}
         title={t(mainData.lang).EditPost}
       />
-      <TextInput
+      {/* <TextInput
         autoFocus
         value={activeDescription}
         multiline
@@ -200,7 +218,159 @@ export const EditPostScreen = ({ route }) => {
         style={[Styles.darkMedium14, { padding: 10, color: activecolor, fontFamily: activeFont }]}
         placeholder={t(mainData.lang).adddescription}
         placeholderTextColor={'#8C9CAB'}
-      />
+      /> */}
+
+      {activeDescription[0] && index == 0 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 0)}
+            initialHtml={activeDescription[0]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[1] && index == 1 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 1)}
+            initialHtml={activeDescription[1]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[2] && index == 2 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 2)}
+            initialHtml={activeDescription[2]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[3] && index == 3 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 3)}
+            initialHtml={activeDescription[3]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[4] && index == 4 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 4)}
+            initialHtml={activeDescription[4]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[5] && index == 5 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 5)}
+            initialHtml={activeDescription[5]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[6] && index == 6 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 6)}
+            initialHtml={activeDescription[6]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[7] && index == 7 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 7)}
+            initialHtml={activeDescription[7]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[8] && index == 8 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 8)}
+            initialHtml={activeDescription[8]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+      {activeDescription[9] && index == 9 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <QuillEditor
+            style={[styles.input]}
+            ref={_editor}
+            onHtmlChange={({ html }) => changeDescription(html, 9)}
+            initialHtml={activeDescription[9]}
+          />
+        </View>
+        <QuillToolbar
+          editor={_editor}
+          options="full"
+          theme="light"
+        />
+      </View>}
+
       <ScrollView
         keyboardShouldPersistTaps="handled"
         horizontal={true}
@@ -227,7 +397,7 @@ export const EditPostScreen = ({ route }) => {
           })}
         </View>
       </ScrollView >
-      <View style={{ marginVertical: 20 }}>
+      {/* <View style={{ marginVertical: 20 }}>
         <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', marginVertical: 10 }}>
           {fontFamily.map((elm, i) => {
             return <Text onPress={() => {
@@ -243,7 +413,7 @@ export const EditPostScreen = ({ route }) => {
             }} key={i} style={{ width: 20, height: 20, backgroundColor: elm.title, borderRadius: 20, }} />
           })}
         </ScrollView>
-      </View>
+      </View> */}
     </View >
   );
 };

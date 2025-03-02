@@ -72,7 +72,23 @@ export const AddPost = () => {
     "Pattaya-Regular",
     "ProstoOne-Regular",
     "RubikSprayPaint-Regular",
-    "SofiaSansExtraCondensed-Regular"
+    "SofiaSansExtraCondensed-Regular",
+
+
+    "RubikPuddles-Regular",
+    "RubikPixels-Regular",
+    "RubikMicrobe-Regular",
+    "RubikMaze-Regular",
+    "RubikMaps-Regular",
+    "RubikLines-Regular",
+    "RubikGemstones-Regular",
+    "RubikDoodleTriangles-Regular",
+    "RubikDistressed-Regular",
+    "RubikBurned-Regular",
+    "RubikBrokenFax-Regular",
+    "RubikBeastly-Regular",
+    "Oi-Regular",
+    "AlumniSansCollegiateOne-Regular",
   ]
   const [emojy, setEmojy] = useState(false)
   const [activeFont, setActiveFont] = useState("Montserrat-Regular")

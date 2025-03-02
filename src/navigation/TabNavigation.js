@@ -194,11 +194,11 @@ export const TabNavigation = () => {
     });
   }
 
-  useEffect(() => {
-    if (userData.error == 'no_token') {
-      LogOut()
-    }
-  }, [userData.error])
+  // useEffect(() => {
+  //   if (userData.error == 'no_token') {
+  //     LogOut()
+  //   }
+  // }, [userData.error])
 
 
   return (

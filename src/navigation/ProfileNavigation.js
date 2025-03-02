@@ -13,18 +13,19 @@ import { CloseSvg } from '../assets/svg/Svgs';
 import AccauntParametrNavigation from './AccauntParametrNavigation';
 import MyPageNavigation from './MyPageNavigation';
 import { ContactsPage } from '../screens/contacts';
-import { AboutApplication } from '../screens/Profile/AboutApplication';
 import { SettingsNavigation } from './SettingsNavigation';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import { useEffect, useState } from 'react';
 import { DelateModal } from '../components/DelateModel';
 import DeviceInfo from 'react-native-device-info';
+import { SendMail } from '../components/SendMail';
 
 function CustomDrawerContent(props) {
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
   const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
+  const [showCommentModal, setShowCommentModal] = useState(false)
 
 
   const [show, setShow] = useState(false)
@@ -98,6 +99,10 @@ function CustomDrawerContent(props) {
         show={show}
         setModalVisible={(e) => setShow(e)}
       />
+      <SendMail
+        visible={showCommentModal}
+        onClose={(e) => setShowCommentModal(false)}
+      />
       <DrawerContentScrollView style={{ paddingTop: 40 }} {...props}>
         <TouchableOpacity style={{ paddingLeft: 15, width: 70, height: 30 }} onPress={() => props.navigation.closeDrawer()}>
           <CloseSvg />
@@ -136,6 +141,11 @@ function CustomDrawerContent(props) {
           labelStyle={[Styles.darkRegular16]}
           label={t(mainData.lang).Blacklist}
           onPress={() => props.navigation.navigate('BlackListScreen')}
+        />
+        <DrawerItem
+          labelStyle={[Styles.darkRegular14]}
+          label={"Помогите нам стать лучше"}
+          onPress={() => setShowCommentModal(true)}
         />
         <DrawerItem
           labelStyle={[Styles.darkRegular16]}
