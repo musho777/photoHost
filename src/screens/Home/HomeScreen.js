@@ -17,6 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CommmentModal } from '../../components/comment/CommmentModal';
 import { SpamModal } from '../../components/spamModal';
+import { Posts } from '../../components/Posts';
 
 
 
@@ -48,23 +49,10 @@ export const HomeScreen = () => {
   const { fullScreen } = useSelector((st) => st.fullScreenData)
   const [postUserId, setPostUserId] = useState(null)
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     const timer = setTimeout(() => {
-  //       if (userData.data.show_category_pop_up == 1) {
-
-  //         setShowModal(true);
-  //       }
-  //     }, 20000);
-  //     return () => clearTimeout(timer);
-  //   }, [userData.data.show_category_pop_up])
-  // );
-
   useEffect(() => {
     if (userData.data.show_category_pop_up == 1) {
       setShowModal(true);
     }
-    /// addsetShowModal
     setShowStatistic(userData.allData.data?.view_statistics_open_text)
   }, [userData.data])
 
@@ -119,11 +107,8 @@ export const HomeScreen = () => {
   }, [showShare, likeClose, showView]);
 
 
-  // console.log(userData.allData.data?.view_statistics_open_text)
-
   const ChangeViewStatisticsOpenText = () => {
     setShowStatistic(0)
-    console.log(showStatisitc, 'showStatisitc')
     if (showStatisitc) {
       var myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
@@ -141,15 +126,6 @@ export const HomeScreen = () => {
   }
 
 
-  // const End = async (id) => {
-  //   let token = await AsyncStorage.getItem('token')
-  //   if (id) {
-  //     dispatch(EndViewPost({ post_id: id }, token))
-  //   }
-  //   else {
-  //     dispatch(EndViewPost({ post_id: currentPost?.id }, token))
-  //   }
-  // }
 
   const onViewableItemsChanged = useCallback(async ({ viewableItems, changed }) => {
     // if (changed[0].index) {
@@ -191,35 +167,66 @@ export const HomeScreen = () => {
 
 
 
-  // const Scroll = async (e, index) => { }
-
 
 
   const loadingData = ['', '']
   const renderItem = useMemo(
-    () => ({ item, index }) => {
+    () => ({ item }) => {
       if (!blackList.includes(item.user.id)) {
         return (
-          <Post
-            data={item}
-            adminStatus={item.admin_status}
-            index={index}
-            setShowStatistic={() => ChangeViewStatisticsOpenText()}
-            showStatisitc={showStatisitc}
-            // scroll={(e) => Scroll(e, index)}
-            viewableItems={viewableItems}
-            setShowLike={() => setLikeClose(true)}
-            setShowView={() => setShowView(true)}
-            addToblack={(e) => AddToBack(e)}
-            setShowComment={() => setShowComment(true)}
+          <Posts
+            photos={item?.photo}
+            surname={item?.user.surname}
+            avatar={item?.user.avatar}
+            auth_user_book={item.auth_user_book}
+            created_at={item?.created_at}
+            name={item?.user.name}
+            description={JSON.parse(item.description)}
+            id={item?.id}
+            userID={item?.user.id}
+            liked={item?.like_auth_user.findIndex((elm, i) => elm.user_id == userData.data.id) >= 0}
+            comment_count={item?.comment_count}
+            like_count={item?.like_count}
+            view_count={item?.view_count}
+            color={item.color}
+            podcherknuti={item.podcherknuti}
+            font_family={item.font_family}
             deletData={(e) => deletData(e)}
-            setShowInfo={(e) => setShowInfo(e)}
-            setSelectidId={(id) => setSelectidId(id)}
             setShowShare={(e) => setShowShare(e)}
-            setSelectedVidioId={(e) => setSelectedVidioId(e)}
+            setShowLike={() => setLikeClose(true)}
+            setSelectidId={(id) => setSelectidId(id)}
+            setShowView={() => setShowView(true)}
+            setShowComment={() => setShowComment(true)}
+            setShowStatistic={() => ChangeViewStatisticsOpenText()}
             setCommentData={(e) => setCommentData(e)}
+            many_category={item?.many_category}
+            font_size={item.font_size}
+            addToblack={(e) => AddToBack(e)}
+            setShowInfo={(e) => setShowInfo(e)}
             setPostUserId={(e) => setPostUserId(e)}
+            background={item.background}
+            my={userData?.data.id != item?.user.id ? false : true}
+            showStatisitc={showStatisitc}
           />
+          // <Post
+          //   data={item}
+          //   adminStatus={item.admin_status}
+          //   index={index}
+          //   setShowStatistic={() => ChangeViewStatisticsOpenText()}
+          //   showStatisitc={showStatisitc}
+          //   // scroll={(e) => Scroll(e, index)}
+          //   viewableItems={viewableItems}
+          //   setShowLike={() => setLikeClose(true)}
+          //   setShowView={() => setShowView(true)}
+          //   addToblack={(e) => AddToBack(e)}
+          //   setShowComment={() => setShowComment(true)}
+          //   deletData={(e) => deletData(e)}
+          //   setShowInfo={(e) => setShowInfo(e)}
+          //   setSelectidId={(id) => setSelectidId(id)}
+          //   setShowShare={(e) => setShowShare(e)}
+          //   setCommentData={(e) => setCommentData(e)}
+          //   setPostUserId={(e) => setPostUserId(e)}
+          // />
         );
       }
       return null;
@@ -252,10 +259,6 @@ export const HomeScreen = () => {
   );
   return (
     <View style={[{ flex: 1 }, insets.top ? { paddingTop: insets.top } : Styles.statusBar, fullScreen && { backgroundColor: 'black' }]}>
-      {/* <StatusBar
-        backgroundColor="white"
-        barStyle={'dark-content'}
-      /> */}
       {!fullScreen && <HomeHeader onPress={() => goTop()} />}
       {showModal && <ModalComponent
         showModal={showModal}

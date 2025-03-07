@@ -22,6 +22,7 @@ export const Header = ({
   Close,
   color,
   font_family,
+  background
 }) => {
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['50%'], [],);
@@ -81,6 +82,8 @@ export const Header = ({
 
     color && form.append('color', color);
     font_family && form.append("font_family", font_family)
+    background && form.append("podcherknuti", background)
+
     description && form.append('description', JSON.stringify(description));
     selectedCatalog.forEach(id => form.append('category_ids[]', id));
 

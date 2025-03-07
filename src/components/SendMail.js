@@ -49,7 +49,6 @@ export const SendMail = ({ visible, onClose }) => {
       });
 
       const result = await response.json();
-      console.log("Ответ сервера:", result);
       // Сброс полей после успешной загрузки
       setFile(null);
       setComment("");

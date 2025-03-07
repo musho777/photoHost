@@ -297,7 +297,7 @@ export const AddPost = () => {
             <Text style={styles.textStyle}>Фон</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setShowType(5)} style={styles.editItem}>
-            <TextSvg2 source={activefon} style={{ width: 30, height: 30 }} />
+            <TextSvg2 style={{ width: 30, height: 30 }} />
             <Text style={styles.textStyle}>Текст</Text>
           </TouchableOpacity>
 

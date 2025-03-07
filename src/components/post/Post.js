@@ -192,7 +192,7 @@ export const Post = React.memo(({
             </View>
           </View>
         }
-        {!isExpanded && !fullScreen && adminStatus != 0 && < View style={styles.PostBody}>
+        {!fullScreen && < View style={styles.PostBody}>
           <PostBody
             postCount={user.postCount}
             commentCount={data?.comment_count}

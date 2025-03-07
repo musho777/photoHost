@@ -63,9 +63,6 @@ const SliderImage = React.memo(({ adminStatus, item, height, description, index,
       <ActivityIndicator color='#FFC24B' size={"large"} />
     </View>} */}
     <View>
-      {adminStatus == 0 &&
-        <InReview borderRadius={0} height={height} />
-      }
       <FastImage
         style={[{ height: height }, styles.img]}
         source={{

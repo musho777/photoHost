@@ -25,11 +25,9 @@ export const PostBody = ({
   setCommentData,
   showStatisitc,
   setShowStatistic = () => { },
-  setSelectidId = () => { }
+  setSelectidId = () => { },
 }) => {
 
-  const navigation = useNavigation()
-  const [showViewText, setShowViewText] = useState(false)
   const staticdata = useSelector(st => st.static);
   const dispatch = useDispatch()
   const [isliked, setIsliked] = useState(null)
@@ -72,20 +70,11 @@ export const PostBody = ({
             setShowLike(true)
           }
           }
-          // onPress={() => LikePost()} 
           style={styles.hoverItem}>
           <View >
             {isliked ? <WhiteHeart /> : <NotLineSvgWhite />}
           </View>
-          {/* <TouchableOpacity 
-          onPress={(e) => {
-            e.preventDefault()
-            dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
-            setShowLike(true)
-          }
-          }> */}
           <Text style={[Styles.darkMedium14, { color: 'white' }]}>{likeCount}</Text>
-          {/* </TouchableOpacity> */}
         </TouchableOpacity>
       </TouchableOpacity>
 

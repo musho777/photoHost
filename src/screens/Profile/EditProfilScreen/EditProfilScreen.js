@@ -196,7 +196,6 @@ export const EditProfilScreen = ({ navigation }) => {
 
 
     let newDateFormat = ""
-    console.log(year, mount, day == "")
     if (year && mount?.id && day) {
       newDateFormat = `${year}-${mount?.id + 1}-${day}`;
       setError('');

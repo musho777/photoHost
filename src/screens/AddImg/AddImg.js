@@ -15,7 +15,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import QuillEditor, { QuillToolbar } from 'react-native-cn-quill';
 import { GetCatalogAction } from '../../store/action/action';
 import { Styles } from '../../styles/Styles';
 import { t } from '../../components/lang';
@@ -41,6 +40,7 @@ export const AddImg = ({ navigation }) => {
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const ref = useRef()
+  const [activeTab, setActiveTab] = useState(1)
 
   const fontFamily = [
     "Montserrat-Regular",
@@ -93,7 +93,6 @@ export const AddImg = ({ navigation }) => {
   ]
 
   const color = [
-    // { title: '#000000', id: 1 },
     { title: '#808080', id: 3 },
     { title: '#FF5733', id: 4 },
     { title: '#1E90FF', id: 6 },
@@ -110,6 +109,27 @@ export const AddImg = ({ navigation }) => {
     { title: '#32CD32', id: 17 },
     { title: '#DA70D6', id: 18 },
     { title: '#708090', id: 19 },
+  ]
+
+  const color2 = [
+
+    { title: '#8B0000', id: 12 },
+
+    { title: '#FFA500', id: 13 },
+    { title: '#DA70D6', id: 18 },
+    { title: '#708090', id: 19 },
+    { title: '#FF5733', id: 4 },
+    { title: '#1E90FF', id: 6 },
+    { title: '#32CD32', id: 17 },
+    { title: '#808080', id: 3 },
+    { title: '#FF4500', id: 16 },
+    { title: '#4682B4', id: 7 },
+    { title: '#4CAF50', id: 8 },
+    { title: '#87CEEB', id: 14 },
+
+    { title: '#FFD700', id: 9 },
+    { title: '#FF69B4', id: 10 },
+    { title: '#800080', id: 11 },
   ]
 
   useEffect(() => {
@@ -138,7 +158,12 @@ export const AddImg = ({ navigation }) => {
   const [active, setActive] = useState(0)
   const flatListRef = useRef(null);
 
-  const _editor = React.createRef();
+  const [font, setFont] = useState("", "", "", "", "", "", "", "", "", "")
+  const [activecolor, setActiveColor] = useState("white", "white", "white", "white", "white", "white", "white", "white")
+  const [begraund, setBegraund] = useState("", "", "", "", "", "", "", "", "", "")
+
+
+
   const [localheight, setLocalHeight] = useState([])
 
   const [showError, setShowError] = useState(false)
@@ -190,7 +215,6 @@ export const AddImg = ({ navigation }) => {
 
   const addPhoto = async (data, i) => {
     setFirst(true)
-    _editor?.current?.setPlaceholder(t(mainData.lang).adddescription);
 
     try {
       ImagePicker.openPicker({
@@ -223,20 +247,9 @@ export const AddImg = ({ navigation }) => {
               setFirst(true)
             }
             response?.map((elm, i) => {
-              // if (elm?.mime != 'image/jpg') {
-              // if (elm.duration <= 60883) {
-              //   item.push({ uri: elm.sourceURL, mime: elm?.mime })
-              // }
-              // else {
-              //   setError('видео должен быть меньше чем 60 с')
-              //   setShowError(true)
-              // }
-              // }
-              // else {
               if (item.length <= 10) {
                 item.push({ uri: elm.path, mime: elm?.type });
               }
-              // }
             })
             setUri(item);
           }
@@ -250,11 +263,6 @@ export const AddImg = ({ navigation }) => {
       navigation.navigate('TabNavigation')
     }
   }
-
-  const isHTML = (str) => {
-    const htmlPattern = /<\/?[a-z][\s\S]*>/i;
-    return htmlPattern.test(str);
-  };
 
   const delateFoto = index => {
     let item = [...uri];
@@ -278,31 +286,29 @@ export const AddImg = ({ navigation }) => {
     setDescription(temp)
   }
 
-  const fullOptions = [
-    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-    // ['blockquote', 'code-block'],
-    // [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
 
-    // [{ header: 1 }, { header: 2 }], // custom button values
-    // [{ list: 'ordered' }, { list: 'bullet' }],
-    // [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
-    // [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-    // [{ direction: 'rtl' }], // text direction
-
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    // [{ font: [] }],
-    // [{ align: [] }],
-    // ['image', 'video'],
-    // ["clean"], // remove formatting button
-  ];
 
 
   const addDescription = (e, i) => {
     let item = [...description]
     item[i] = e
     setDescription(item)
+  }
+
+  const changeColor = (e, i) => {
+    let item = [...activecolor]
+    item[i] = e
+    setActiveColor(item)
+  }
+  const changeFont = (e, i) => {
+    let item = [...font]
+    item[i] = e
+    setFont(item)
+  }
+  const chnageBegraund = (e, i) => {
+    let item = [...begraund]
+    item[i] = e
+    setBegraund(item)
   }
 
   const handleMomentumScrollEnd = (event) => {
@@ -324,15 +330,6 @@ export const AddImg = ({ navigation }) => {
     setUri([])
   }
   const renderItem = ({ item, index }) => {
-    let modifiedContent = description[active];
-    if (!modifiedContent?.includes('color:')) {
-      // Add a default white color to the body if no color is specified
-      modifiedContent = `<div style="color: white;">${modifiedContent}</div>`;
-    } else {
-      // If color is defined, ensure all color: black is replaced with white
-      modifiedContent = modifiedContent?.replace(/color:\s*(black|#000000|#000)/g, 'color: white');
-    }
-
     function canParseJSON(jsonString) {
       try {
         JSON.parse(jsonString);
@@ -345,9 +342,7 @@ export const AddImg = ({ navigation }) => {
 
     return <View>
       <View keyboardShouldPersistTaps='handled' style={(localheight[index]?.height - localheight[index]?.width) / 3 - 100 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }}>
-        <TouchableOpacity activeOpacity={1} onPress={() => {
-          _editor.current?.blur();
-        }}>
+        <TouchableOpacity activeOpacity={1}>
           <View style={styles.hover} >
             <TouchableOpacity
               activeOpacity={1}
@@ -374,13 +369,13 @@ export const AddImg = ({ navigation }) => {
             }}
           />
         </TouchableOpacity>
-        {isHTML(description[active]) && description[active]?.length > 0 && <View
-          style={{ position: 'absolute', top: 60, left: 10, paddingRight: 60, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 10, paddingHorizontal: 10 }}>
-          <RenderHtml
-            contentWidth={1}
-            source={{ html: modifiedContent }}
-          />
-        </View>
+        {description[active]?.length > 0 &&
+          <View
+            style={{ position: 'absolute', top: 60, left: 10, paddingVertical: 5, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 10, paddingHorizontal: 10 }}>
+            <Text style={{ color: activecolor[active], fontFamily: font[active], backgroundColor: begraund[active] }}>
+              {description[active]}
+            </Text>
+          </View>
         }
         <TouchableOpacity onPress={() => { delateFoto(index) }} style={{ position: 'absolute', top: 60, right: 10 }}>
           <CloseSvg1 />
@@ -405,8 +400,9 @@ export const AddImg = ({ navigation }) => {
             uri={uri}
             selectedCatalog={selectedCatalog}
             description={description}
-            color={descriptionColor}
-            font_family={descriptionFontFamily}
+            color={JSON.stringify(activecolor)}
+            background={JSON.stringify(begraund)}
+            font_family={JSON.stringify(font)}
             setSelectedCatalog={(e) => setSelectedCatalog(e)}
             error={error}
             setFirst={(e) => setFirst(e)}
@@ -437,161 +433,67 @@ export const AddImg = ({ navigation }) => {
             </View>}
           </View>
         </ScrollView >
-        {active == 0 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 0)}
-              initialHtml={description[0]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options={fullOptions}
-            theme="light"
 
-          />
-        </View>}
-        {active == 1 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 1)}
-              initialHtml={description[1]}
+        <View style={{ width: '100%', marginBottom: 20 }}>
+          {activeTab == 1 && <View style={{ height: 60, width: '100%' }}>
+            <TextInput
+              style={styles.input}
+              placeholder={t(mainData.lang).adddescription}
+              placeholderTextColor={"black"}
+              // value={}
+              onChangeText={e => addDescription(e, active)}
             />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options={'full'}
-            theme="light"
-          />
-        </View>}
-        {active == 2 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 2)}
-              initialHtml={description[2]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options="full"
-            theme="light"
-          />
-        </View>}
-        {active == 3 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 3)}
-              initialHtml={description[2]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options="full"
-            theme="light"
-          />
-        </View>}
-        {active == 4 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 4)}
-              initialHtml={description[2]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options="full"
-            theme="light"
-          />
-        </View>}
-        {active == 5 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 5)}
-              initialHtml={description[2]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options="full"
-            theme="light"
-          />
-        </View>}
-        {active == 6 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 6)}
+          </View>}
+          {activeTab == 2 && <View >
+            <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
+              {fontFamily.map((elm, i) => {
+                return <Text onPress={() => changeFont(elm, active)} key={i} style={[Styles.darkMedium12, { color: 'white', fontFamily: elm }]}>{elm}</Text>
+              })}
+            </ScrollView>
+          </View>}
+          {activeTab == 3 && <View >
+            <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
+              {color.map((elm, i) => {
+                return <TouchableOpacity onPress={() => changeColor(elm.title, active)} key={i} style={{ width: 20, height: 20, borderRadius: 30, backgroundColor: elm.title }} />
+              })}
+            </ScrollView>
+          </View>}
+          {activeTab == 4 && <View >
+            <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
+              {color2.map((elm, i) => {
+                return <TouchableOpacity onPress={() => chnageBegraund(elm.title, active)} key={i} style={{ width: 20, height: 20, borderRadius: 30, backgroundColor: elm.title }} />
+              })}
+            </ScrollView>
+          </View>}
 
-              initialHtml={description[2]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options="full"
-            theme="light"
-          />
-        </View>}
-        {active == 7 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 7)}
+          <ScrollView showsHorizontalScrollIndicator={false}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, gap: 10, flexDirection: 'row' }}>
+              <TouchableOpacity onPress={() => setActiveTab(1)} style={[styles.editItem, activeTab == 1 && { backgroundColor: "#FFC24B" }]}>
+                <TextSvg2 style={{ width: 30, height: 30 }} />
+                <Text style={styles.textStyle}>Текст</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab(2)} style={[styles.editItem, activeTab == 2 && { backgroundColor: "#FFC24B" }]}>
+                <View style={{ width: 30, alignItems: 'center' }}>
+                  <FontFemalySvg />
+                </View>
+                <Text style={styles.textStyle}>Шрифт</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab(3)} style={[styles.editItem, activeTab == 3 && { backgroundColor: "#FFC24B" }]}>
+                <View style={{ width: 30, alignItems: 'center' }}>
+                  <SelectColor />
+                </View>
+                <Text style={styles.textStyle}>Размер</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setActiveTab(4)} style={[styles.editItem, activeTab == 4 && { backgroundColor: "#FFC24B" }]}>
+                <View style={{ width: 30, }}>
+                  <SelectColor />
+                </View>
+                <Text style={styles.textStyle}>Цвет</Text>
+              </TouchableOpacity>
+            </View>
 
-              initialHtml={description[2]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options="full"
-            theme="light"
-          />
-        </View>}
-        {active == 8 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 8)}
-
-              initialHtml={description[2]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options="full"
-            theme="light"
-          />
-        </View>}
-        {active == 9 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-          <View style={{ height: 60, width: '100%' }}>
-            <QuillEditor
-              style={[styles.input, { color: descriptionColor, fontFamily: descriptionFontFamily }]}
-              ref={_editor}
-              onHtmlChange={({ html }) => addDescription(html, 9)}
-              initialHtml={description[2]}
-            />
-          </View>
-          <QuillToolbar
-            editor={_editor}
-            options="full"
-            theme="light"
-          />
-
-        </View>}
+          </ScrollView>
+        </View>
       </KeyboardAvoidingView >
     );
   else {
@@ -630,12 +532,13 @@ const styles = StyleSheet.create({
     borderColor: 'red'
   },
   editItem: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: 'white',
     width: 60,
     height: 60,
     justifyContent: 'flex-end',
     alignItems: 'center',
     gap: 5,
+    borderRadius: 10,
   },
   img: {
     height: 550,
@@ -647,11 +550,18 @@ const styles = StyleSheet.create({
     width: windowWidth,
     borderRadius: 11,
   },
+  textStyle: {
+    fontSize: 10,
+    textAlign: 'center',
+    color: 'black',
+    marginBottom: 3
+  },
   input: {
     borderColor: 'red',
     width: '100%',
     height: 40,
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    // backgroundColor: 'rgba(0,0,0,0.7)',
+    backgroundColor: 'rgba(225,225,225,1)',
     position: 'absolute',
     bottom: 10,
     alignItems: 'center',

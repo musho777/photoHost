@@ -50,6 +50,7 @@ const GetLentsReducer = (state = initialState, action) => {
         item.data[index].description = action.data.description
         item.data[index].color = action.data.color
         item.data[index].font_family = action.data.font_family
+        item.data[index].podcherknuti = action.data.podcherknuti
       }
       break
 
@@ -68,6 +69,7 @@ const GetLentsReducer = (state = initialState, action) => {
 
     case 'LocalLike':
       let data = item.data.find((elm) => elm.id == action.data.post_id)
+      // console.log(data, 'dasljfhsdjfds')
       if (data) {
         let iid = item.data.findIndex((elm) => elm.id == action.data.post_id)
         let indx = item.data[iid]?.like_auth_user.findIndex((elm) => elm.user_id == action.id)

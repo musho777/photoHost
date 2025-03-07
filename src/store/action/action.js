@@ -954,7 +954,6 @@ export const GetLentsActionRec = (token, page) => {
 };
 
 export const LikePostAction = (data, token, id) => {
-
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);

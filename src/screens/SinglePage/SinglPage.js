@@ -18,6 +18,7 @@ import { Post } from '../../components/post/Post';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CommmentModal } from '../../components/comment/CommmentModal';
 import { SpamModal } from '../../components/spamModal';
+import { Posts } from '../../components/Posts';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -37,6 +38,7 @@ export const SinglPageScreen = ({ route }) => {
   const dispatch = useDispatch()
   const [showInfo, setShowInfo] = useState(false)
   const [showShare, setShowShare] = useState(false)
+  const [showStatisitc, setShowStatistic] = useState(0)
 
   const insets = useSafeAreaInsets();
   const navigation = useNavigation()
@@ -106,8 +108,8 @@ export const SinglPageScreen = ({ route }) => {
   }
   return (
     <SafeAreaView style={[{ backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', height: '100%', }]}>
-      <ScrollView contentContainerStyle={{ marginTop: 30 }}>
-        <Post
+      <View contentContainerStyle={{ marginTop: 30 }}>
+        {/* <Post
           data={data}
           setHoriznotal={(e) => setHoriznotal(e)}
           setShowLike={() => setLikeClose(true)}
@@ -122,8 +124,49 @@ export const SinglPageScreen = ({ route }) => {
           big={true}
           horiznotal={horiznotal}
           setPostUserId={(e) => { }}
-        />
-      </ScrollView>
+        /> */}
+        {
+          console.log(data?.photo, 'sads')
+        }
+        <View >
+          {data && <Posts
+            photos={data?.photo}
+            surname={data?.user.surname}
+            avatar={data?.user.avatar}
+            auth_user_book={data?.auth_user_book}
+            created_at={data?.created_at}
+            name={data?.user.name}
+            description={data?.description && JSON.parse(data?.description)}
+            id={data?.id}
+            background={data.background}
+            font_size={data.font_size}
+            userID={data?.user.id}
+            podcherknuti={data?.podcherknuti}
+            liked={data?.like_auth_user.findIndex((elm, i) => elm.user_id == user.data.id) >= 0}
+            comment_count={data?.comment_count}
+            like_count={data?.like_count}
+            view_count={data?.view_count}
+            color={data?.color}
+            font_family={data?.font_family}
+            deletData={(e) => deletData(e)}
+            setShowShare={(e) => setShowShare(e)}
+            setShowLike={() => setLikeClose(true)}
+            setSelectidId={(id) => setSelectidId(id)}
+            setShowView={() => setShowView(true)}
+            setShowComment={() => setShowComment(true)}
+            setShowStatistic={() => ChangeViewStatisticsOpenText()}
+            setCommentData={(e) => setCommentData(e)}
+            many_category={data?.many_category}
+
+            addToblack={(e) => AddToBack(e)}
+            setShowInfo={(e) => setShowInfo(e)}
+            setPostUserId={(e) => setPostUserId(e)}
+
+            my={user?.data.id != data?.user.id ? false : true}
+            showStatisitc={showStatisitc}
+          />}
+        </View>
+      </View>
       {showView && <ViewComponent
         id={data?.id}
         big={true}

@@ -37,7 +37,6 @@ export const Settings = () => {
         }
       })
       .catch(error => {
-        console.log(error, '200000000------')
         setLoading(false)
       });
   }

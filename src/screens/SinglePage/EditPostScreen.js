@@ -7,23 +7,26 @@ import { DelatePhotoFromPost, DelatePhotofromPost, DeletLocalPhoto, EditLentPhot
 import { ClearEditPost } from '../../store/action/clearAction';
 import { t } from '../../components/lang';
 import FastImage from 'react-native-fast-image';
-import { CloseSvg1 } from '../../assets/svg/Svgs';
+import { CloseSvg1, FontFemalySvg, SelectColor, TextSvg2 } from '../../assets/svg/Svgs';
 import { useNavigation } from '@react-navigation/native';
-import QuillEditor, { QuillToolbar } from 'react-native-cn-quill';
 
 
 export const EditPostScreen = ({ route }) => {
   const navigation = useNavigation()
   const [description, setDescription] = useState(route.params.description);
-  // const index = route.params.index
   const [index, setIndex] = useState(route.params.index)
   const data = route.params.data
+
+  const [colors, setColors] = useState(route.params.data.color)
+  const [fonts, setFonts] = useState(route.params.data.font_family)
+  const [begraund, setBegraund] = useState(route.params.data.podcherknuti)
   const mainData = useSelector(st => st.mainData);
-  const [activeDescription, setActiveDescription] = useState(["", "", "", "", "", "", "", "", "", ""])
+  const [activeDescription, setActiveDescription] = useState("")
   const dispatch = useDispatch()
   const staticdata = useSelector(st => st.static);
   const editPost = useSelector((st) => st.editPost)
   const [photos, setPhotos] = useState([])
+  const [activeTab, setActiveTab] = useState(1)
 
   const [activecolor, setActiveColor] = useState("black")
   const [activeFont, setActiveFont] = useState("Montserrat-Medium")
@@ -42,25 +45,27 @@ export const EditPostScreen = ({ route }) => {
   }, [route.params.index])
 
 
-
   const EditPost = () => {
-    let newDescripit
-    if (description[0] == '[') {
-      item = JSON.parse(description)
-      newDescripit = JSON.stringify(item)
-    }
+    // let newDescripit
+    // if (description[0] == '[') {
+    //   item = JSON.parse(description)
+    //   newDescripit = JSON.stringify(item)
+    // }
+    console.log(description)
     dispatch(EditPostAction({
       post_id: route.params.id,
-      description: description,
-      color: activecolor,
-      font_family: activeFont
+      description: JSON.stringify(description),
+      color: colors,
+      font_family: fonts,
+      podcherknuti: begraund
     },
       staticdata.token))
     dispatch(EditLentPhot({
       post_id: route.params.id,
-      description: description,
-      color: activecolor,
-      font_family: activeFont
+      description: JSON.stringify(description),
+      color: colors,
+      font_family: fonts,
+      podcherknuti: begraund
     }))
     dispatch(ClearEditPost())
     if (route.params.big) {
@@ -69,6 +74,39 @@ export const EditPostScreen = ({ route }) => {
     else {
       navigation.goBack()
     }
+  }
+
+  const GetColor = (color) => {
+    if (!color) {
+      return "white"
+    }
+    else if (color[0] == '[') {
+      let newColor = JSON.parse(color)
+      return newColor[index]
+    }
+    return color
+  }
+
+  const GetFont = (font) => {
+    if (!font) {
+      return ""
+    }
+    else if (font[0] == '[') {
+      let newFont = JSON.parse(font)
+      return newFont[index]
+    }
+    return font
+  }
+
+  const GetBegraund = (bg) => {
+    if (!bg) {
+      return "transparent"
+    }
+    else if (bg[0] == '[') {
+      let newColor = JSON.parse(bg)
+      return newColor[index]
+    }
+    return bg
   }
 
 
@@ -145,15 +183,62 @@ export const EditPostScreen = ({ route }) => {
     { title: '#708090', id: 19 },
   ]
 
-  const _editor = React.createRef();
+  const color2 = [
 
+    { title: '#8B0000', id: 12 },
+
+    { title: '#FFA500', id: 13 },
+    { title: '#DA70D6', id: 18 },
+    { title: '#708090', id: 19 },
+    { title: '#FF5733', id: 4 },
+    { title: '#1E90FF', id: 6 },
+    { title: '#32CD32', id: 17 },
+    { title: '#808080', id: 3 },
+    { title: '#FF4500', id: 16 },
+    { title: '#4682B4', id: 7 },
+    { title: '#4CAF50', id: 8 },
+    { title: '#87CEEB', id: 14 },
+
+    { title: '#FFD700', id: 9 },
+    { title: '#FF69B4', id: 10 },
+    { title: '#800080', id: 11 },
+  ]
+
+
+  const changeColor = (e, i) => {
+    if (colors && colors[0] == "[") {
+      let item = JSON.parse(colors)
+      item[i] = e
+      console.log(item, 'dsffg', e)
+      setColors(JSON.stringify(item))
+    } else {
+      setColors(e)
+    }
+  }
+  const changeFont = (e, i) => {
+    if (fonts && fonts[0] == "[") {
+      let item = JSON.parse(fonts)
+      item[i] = e
+      console.log(item, 'dsffg', e)
+      setFonts(JSON.stringify(item))
+    } else {
+      setFonts(e)
+    }
+  }
+  const chnageBegraund = (e, i) => {
+    if (begraund && begraund[0] == "[") {
+      let item = JSON.parse(begraund)
+      item[i] = e
+      setBegraund(JSON.stringify(item))
+    } else {
+      setBegraund(e)
+    }
+  }
 
 
   const changeDescription = (e, index) => {
     let item = description
-    let temp = [...activeDescription]
-    temp[index] = e
-    setActiveDescription(temp)
+    setActiveDescription(e)
     if (description) {
       if (description[0] == '[') {
         item = JSON.parse(description)
@@ -170,16 +255,9 @@ export const EditPostScreen = ({ route }) => {
       setDescription(JSON.stringify(temp))
     }
   }
-  console.log(description)
   useEffect(() => {
     if (description) {
-      if (description[0] == '[') {
-        let item = JSON.parse(description)
-        setActiveDescription(item)
-      }
-      else {
-        setActiveDescription(description)
-      }
+      setActiveDescription(description[index])
     }
   }, [index])
 
@@ -200,7 +278,9 @@ export const EditPostScreen = ({ route }) => {
     dispatch(DelatePhotoFromPost(route.params.id, id, staticdata.token))
     dispatch(DelatePhotofromPost(route.params.id, id))
   }
-  console.log(activeDescription[0], 'activeDescription[0]')
+
+  console.log(description)
+
   return (
     <View>
       <HeaderWhiteTitle
@@ -210,166 +290,17 @@ export const EditPostScreen = ({ route }) => {
         onPress={() => navigation.goBack()}
         title={t(mainData.lang).EditPost}
       />
-      {/* <TextInput
-        autoFocus
-        value={activeDescription}
-        multiline
-        onChangeText={e => changeDescription(e)}
-        style={[Styles.darkMedium14, { padding: 10, color: activecolor, fontFamily: activeFont }]}
-        placeholder={t(mainData.lang).adddescription}
-        placeholderTextColor={'#8C9CAB'}
-      /> */}
 
-      {activeDescription[0] && index == 0 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 0)}
-            initialHtml={activeDescription[0]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[1] && index == 1 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 1)}
-            initialHtml={activeDescription[1]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[2] && index == 2 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 2)}
-            initialHtml={activeDescription[2]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[3] && index == 3 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 3)}
-            initialHtml={activeDescription[3]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[4] && index == 4 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 4)}
-            initialHtml={activeDescription[4]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[5] && index == 5 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 5)}
-            initialHtml={activeDescription[5]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[6] && index == 6 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 6)}
-            initialHtml={activeDescription[6]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[7] && index == 7 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 7)}
-            initialHtml={activeDescription[7]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[8] && index == 8 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 8)}
-            initialHtml={activeDescription[8]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
-      {activeDescription[9] && index == 9 && < View style={{ width: '100%', height: 120, marginBottom: 20 }}>
-        <View style={{ height: 60, width: '100%' }}>
-          <QuillEditor
-            style={[styles.input]}
-            ref={_editor}
-            onHtmlChange={({ html }) => changeDescription(html, 9)}
-            initialHtml={activeDescription[9]}
-          />
-        </View>
-        <QuillToolbar
-          editor={_editor}
-          options="full"
-          theme="light"
-        />
-      </View>}
+      <View style={{ flexDirection: 'row' }}>
+        {activeDescription &&
+          <View style={{ marginVertical: 10, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5, paddingBottom: 3 }}>
+            <View style={[{ paddingHorizontal: 10, }]}>
+              <Text style={[Styles.darkMedium13, { color: GetColor(colors), fontFamily: GetFont(fonts), backgroundColor: GetBegraund(begraund), marginTop: 3 }]}>
+                {activeDescription}
+              </Text>
+            </View>
+          </View>}
+      </View>
 
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -397,6 +328,70 @@ export const EditPostScreen = ({ route }) => {
           })}
         </View>
       </ScrollView >
+      <View style={{ width: '100%', marginBottom: 20, marginTop: 30 }}>
+        <View style={{ height: 60, width: '100%' }}>
+          <TextInput
+            autoFocus
+            value={activeDescription}
+            multiline
+            onChangeText={e => changeDescription(e)}
+            style={[Styles.darkMedium14, { padding: 10 }]}
+            placeholder={t(mainData.lang).adddescription}
+            placeholderTextColor={'#8C9CAB'}
+          />
+        </View>
+        {activeTab == 2 && <View >
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
+            {fontFamily.map((elm, i) => {
+              return <Text onPress={() => changeFont(elm, index)} key={i} style={[Styles.darkMedium12, { color: 'black', fontFamily: elm }]}>{elm}</Text>
+            })}
+          </ScrollView>
+        </View>}
+        {activeTab == 3 && <View >
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
+            {color.map((elm, i) => {
+              return <TouchableOpacity onPress={() => changeColor(elm.title, index)} key={i} style={{ width: 20, height: 20, borderRadius: 30, backgroundColor: elm.title }} />
+            })}
+          </ScrollView>
+        </View>}
+        {activeTab == 4 && <View >
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
+            {color2.map((elm, i) => {
+              return <TouchableOpacity onPress={() => chnageBegraund(elm.title, index)} key={i} style={{ width: 20, height: 20, borderRadius: 30, backgroundColor: elm.title }} />
+            })}
+          </ScrollView>
+        </View>}
+
+        <ScrollView showsHorizontalScrollIndicator={false}>
+          <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, gap: 10, flexDirection: 'row' }}>
+            <TouchableOpacity onPress={() => setActiveTab(1)} style={[styles.editItem, activeTab == 1 && { backgroundColor: "#FFC24B" }]}>
+              <TextSvg2 style={{ width: 30, height: 30 }} />
+              <Text style={styles.textStyle}>Текст</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setActiveTab(2)} style={[styles.editItem, activeTab == 2 && { backgroundColor: "#FFC24B" }]}>
+              <View style={{ width: 30, alignItems: 'center' }}>
+                <FontFemalySvg />
+              </View>
+              <Text style={styles.textStyle}>Шрифт</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setActiveTab(3)} style={[styles.editItem, activeTab == 3 && { backgroundColor: "#FFC24B" }]}>
+              <View style={{ width: 30, alignItems: 'center' }}>
+                <SelectColor />
+              </View>
+              <Text style={styles.textStyle}>Размер</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setActiveTab(4)} style={[styles.editItem, activeTab == 4 && { backgroundColor: "#FFC24B" }]}>
+              <View style={{ width: 30, }}>
+                <SelectColor />
+              </View>
+              <Text style={styles.textStyle}>Цвет</Text>
+            </TouchableOpacity>
+          </View>
+
+        </ScrollView>
+      </View>
+
+
       {/* <View style={{ marginVertical: 20 }}>
         <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', marginVertical: 10 }}>
           {fontFamily.map((elm, i) => {
@@ -433,5 +428,14 @@ const styles = StyleSheet.create({
   activePhot: {
     borderWidth: 3,
     borderColor: 'green'
-  }
+  },
+  editItem: {
+    backgroundColor: 'white',
+    width: 60,
+    height: 60,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    gap: 5,
+    borderRadius: 10,
+  },
 });
