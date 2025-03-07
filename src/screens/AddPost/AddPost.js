@@ -303,12 +303,12 @@ export const AddPost = () => {
 
           <TouchableOpacity onPress={() => setShowType(3)} style={styles.editItem}>
             <View style={{ height: 30, width: 30, alignItems: 'center' }}>
-              <TextSvg />
+              <FontFemalySvg />
             </View>
             <Text style={styles.textStyle}>Размер</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setShowType(4)} style={styles.editItem}>
-            <FontFemalySvg />
+            <TextSvg />
             <Text style={styles.textStyle}>Шрифт</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setShowType(2)} style={styles.editItem}>

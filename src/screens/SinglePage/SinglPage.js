@@ -125,9 +125,6 @@ export const SinglPageScreen = ({ route }) => {
           horiznotal={horiznotal}
           setPostUserId={(e) => { }}
         /> */}
-        {
-          console.log(data?.photo, 'sads')
-        }
         <View >
           {data && <Posts
             photos={data?.photo}
@@ -142,6 +139,7 @@ export const SinglPageScreen = ({ route }) => {
             font_size={data.font_size}
             userID={data?.user.id}
             podcherknuti={data?.podcherknuti}
+            cveta={data?.cveta}
             liked={data?.like_auth_user.findIndex((elm, i) => elm.user_id == user.data.id) >= 0}
             comment_count={data?.comment_count}
             like_count={data?.like_count}

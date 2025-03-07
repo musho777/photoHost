@@ -39,7 +39,8 @@ export const Posts = ({
   many_category,
   podcherknuti,
   my,
-  showStatisitc
+  showStatisitc,
+  cveta
 }) => {
   const [active, setActive] = useState(0)
   const [like, setLike] = useState({ liked, like_count })
@@ -56,7 +57,7 @@ export const Posts = ({
   const MAX_Height = 40;
   const heightAnim = useRef(new Animated.Value(0)).current;
   const [showText, setShowText] = useState(false)
-
+  console.log(description)
   useEffect(() => {
     setLike({ liked, like_count })
   }, [liked, like_count])
@@ -243,6 +244,16 @@ export const Posts = ({
       }
       return bg
     }
+    const GetCveta = (bg) => {
+      if (!bg) {
+        return "rgba(0,0,0,0.5)"
+      }
+      else if (bg[0] == '[') {
+        let newCvet = JSON.parse(cveta)
+        return newCvet[active]
+      }
+      return "rgba(0,0,0,0.5)"
+    }
 
 
     return (
@@ -269,16 +280,14 @@ export const Posts = ({
             onAnimationFinish={(e) => { setShowLikeICone(false) }}
           />
         </View>}
-
-
-
-        {description &&
-          <View style={{ marginVertical: 10, position: 'absolute', top: 45, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5, }}>
+        {console.log(description.length)}
+        {description != "[]" &&
+          <View style={{ marginVertical: 10, position: 'absolute', top: 45, backgroundColor: GetCveta(cveta), borderRadius: 5, marginHorizontal: 5, }}>
             {description[active] &&
               <View style={[{ paddingHorizontal: 10, }]}>
                 <View>
                   {description[active] &&
-                    <Text style={[Styles.darkMedium13, { color: GetColor(color), fontFamily: GetFont(font_family), backgroundColor: GetBegraund(podcherknuti), marginTop: 3 }]}>
+                    <Text style={[Styles.darkMedium13, { color: GetColor(color), fontFamily: GetFont(font_family), backgroundColor: GetBegraund(podcherknuti), marginTop: 3, paddingHorizontal: 5 }]}>
                       {`${description[active].slice(0, MAX_Height)}`}
                     </Text>
                   }
@@ -319,8 +328,6 @@ export const Posts = ({
     );
   }
 
-
-
   return <View style={[styles.wrapper, { height: height }]}>
     <View style={styles.header}>
       <PostHeader
@@ -330,6 +337,7 @@ export const Posts = ({
         podcherknuti={podcherknuti}
         userID={userID}
         activeImage={active}
+        cveta={cveta}
         id={id}
         auth_user_book={auth_user_book}
         photo={photos}

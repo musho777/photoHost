@@ -1518,7 +1518,7 @@ export const AddImage = () => {
     height="30px"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="red"
+    stroke="white"
   >
     <G strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
       <Path d="M13 4H8.8c-1.68 0-2.52 0-3.162.327a3 3 0 00-1.311 1.311C4 6.28 4 7.12 4 8.8v6.4c0 1.68 0 2.52.327 3.162a3 3 0 001.311 1.311C6.28 20 7.12 20 8.8 20h6.4c1.68 0 2.52 0 3.162-.327a3 3 0 001.311-1.311C20 17.72 20 16.88 20 15.2V11" />
@@ -1686,8 +1686,8 @@ export const TextSvg = () => {
 
 export const SelectColor = () => {
   return <Svg
-    width={30}
-    height={30}
+    width={25}
+    height={25}
     viewBox="0 0 18 18"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -1698,8 +1698,8 @@ export const SelectColor = () => {
 }
 export const FontFemalySvg = () => {
   return <Svg
-    width={28}
-    height={38}
+    width={25}
+    height={25}
     viewBox="0 0 16 12"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -1714,8 +1714,8 @@ export const FontFemalySvg = () => {
 export const TextSvg2 = () => {
   return <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="30px"
-    height="32px"
+    width="25px"
+    height="25px"
     viewBox="0 0 16 16"
     fill="none"
   >

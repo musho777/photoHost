@@ -20,6 +20,7 @@ export const EditPostScreen = ({ route }) => {
   const [colors, setColors] = useState(route.params.data.color)
   const [fonts, setFonts] = useState(route.params.data.font_family)
   const [begraund, setBegraund] = useState(route.params.data.podcherknuti)
+  const [fonColor, setFonColor] = useState(route.params.data.cveta)
   const mainData = useSelector(st => st.mainData);
   const [activeDescription, setActiveDescription] = useState("")
   const dispatch = useDispatch()
@@ -30,7 +31,7 @@ export const EditPostScreen = ({ route }) => {
 
   const [activecolor, setActiveColor] = useState("black")
   const [activeFont, setActiveFont] = useState("Montserrat-Medium")
-
+  console.log(description)
 
   useEffect(() => {
     setPhotos(data.photo)
@@ -51,13 +52,13 @@ export const EditPostScreen = ({ route }) => {
     //   item = JSON.parse(description)
     //   newDescripit = JSON.stringify(item)
     // }
-    console.log(description)
     dispatch(EditPostAction({
       post_id: route.params.id,
       description: JSON.stringify(description),
       color: colors,
       font_family: fonts,
-      podcherknuti: begraund
+      podcherknuti: begraund,
+      cveta: fonColor,
     },
       staticdata.token))
     dispatch(EditLentPhot({
@@ -65,7 +66,9 @@ export const EditPostScreen = ({ route }) => {
       description: JSON.stringify(description),
       color: colors,
       font_family: fonts,
-      podcherknuti: begraund
+      podcherknuti: begraund,
+      cveta: fonColor,
+
     }))
     dispatch(ClearEditPost())
     if (route.params.big) {
@@ -107,6 +110,16 @@ export const EditPostScreen = ({ route }) => {
       return newColor[index]
     }
     return bg
+  }
+  const GetCveta = (bg) => {
+    if (!bg) {
+      return "rgba(0,0,0,0.5)"
+    }
+    else if (bg[0] == '[') {
+      let newCvet = JSON.parse(fonColor)
+      return newCvet[index]
+    }
+    return "rgba(0,0,0,0.5)"
   }
 
 
@@ -205,11 +218,30 @@ export const EditPostScreen = ({ route }) => {
   ]
 
 
+  const color3 = [
+    { title: '#FFA500', id: 13 },
+    { title: '#DA70D6', id: 18 },
+    { title: '#4682B4', id: 7 },
+    { title: '#4CAF50', id: 8 },
+    { title: '#800080', id: 11 },
+    { title: '#FFD700', id: 9 },
+    { title: '#FF69B4', id: 10 },
+    { title: '#87CEEB', id: 14 },
+
+    { title: '#708090', id: 19 },
+    { title: '#FF5733', id: 4 },
+    { title: '#8B0000', id: 12 },
+    { title: '#1E90FF', id: 6 },
+    { title: '#32CD32', id: 17 },
+    { title: '#808080', id: 3 },
+    { title: '#FF4500', id: 16 },
+
+  ]
+
   const changeColor = (e, i) => {
     if (colors && colors[0] == "[") {
       let item = JSON.parse(colors)
       item[i] = e
-      console.log(item, 'dsffg', e)
       setColors(JSON.stringify(item))
     } else {
       setColors(e)
@@ -219,7 +251,6 @@ export const EditPostScreen = ({ route }) => {
     if (fonts && fonts[0] == "[") {
       let item = JSON.parse(fonts)
       item[i] = e
-      console.log(item, 'dsffg', e)
       setFonts(JSON.stringify(item))
     } else {
       setFonts(e)
@@ -235,24 +266,28 @@ export const EditPostScreen = ({ route }) => {
     }
   }
 
+  const changeFonColor = (e, i) => {
+    if (fonColor && fonColor[0] == "[") {
+      let item = JSON.parse(fonColor)
+      item[i] = e
+      setFonColor(JSON.stringify(item))
+    } else {
+      setFonColor(e)
+    }
+  }
 
-  const changeDescription = (e, index) => {
-    let item = description
+
+  const changeDescription = (e) => {
     setActiveDescription(e)
     if (description) {
-      if (description[0] == '[') {
-        item = JSON.parse(description)
-        item[index] = e
-        setDescription(JSON.stringify(item))
-      }
-      else {
-        setDescription(e)
-      }
+      let item = [...description]
+      item[index] = e
+      setDescription(item)
     }
     else {
       let temp = []
       temp[index] = e
-      setDescription(JSON.stringify(temp))
+      setDescription(temp)
     }
   }
   useEffect(() => {
@@ -260,6 +295,7 @@ export const EditPostScreen = ({ route }) => {
       setActiveDescription(description[index])
     }
   }, [index])
+
 
   const delateFoto = (i, id) => {
     let item = [...photos]
@@ -279,7 +315,6 @@ export const EditPostScreen = ({ route }) => {
     dispatch(DelatePhotofromPost(route.params.id, id))
   }
 
-  console.log(description)
 
   return (
     <View>
@@ -293,7 +328,7 @@ export const EditPostScreen = ({ route }) => {
 
       <View style={{ flexDirection: 'row' }}>
         {activeDescription &&
-          <View style={{ marginVertical: 10, backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 5, marginHorizontal: 5, paddingBottom: 3 }}>
+          <View style={{ marginVertical: 10, backgroundColor: GetCveta(fonColor), borderRadius: 5, marginHorizontal: 5, paddingBottom: 3 }}>
             <View style={[{ paddingHorizontal: 10, }]}>
               <Text style={[Styles.darkMedium13, { color: GetColor(colors), fontFamily: GetFont(fonts), backgroundColor: GetBegraund(begraund), marginTop: 3 }]}>
                 {activeDescription}
@@ -329,13 +364,13 @@ export const EditPostScreen = ({ route }) => {
         </View>
       </ScrollView >
       <View style={{ width: '100%', marginBottom: 20, marginTop: 30 }}>
-        <View style={{ height: 60, width: '100%' }}>
+        <View style={{ height: 60, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
           <TextInput
             autoFocus
             value={activeDescription}
             multiline
             onChangeText={e => changeDescription(e)}
-            style={[Styles.darkMedium14, { padding: 10 }]}
+            style={[Styles.darkMedium14, styles.input, { padding: 10 }]}
             placeholder={t(mainData.lang).adddescription}
             placeholderTextColor={'#8C9CAB'}
           />
@@ -361,6 +396,13 @@ export const EditPostScreen = ({ route }) => {
             })}
           </ScrollView>
         </View>}
+        {activeTab == 5 && <View >
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
+            {color3.map((elm, i) => {
+              return <TouchableOpacity onPress={() => changeFonColor(elm.title, index)} key={i} style={{ width: 20, height: 20, borderRadius: 30, backgroundColor: elm.title }} />
+            })}
+          </ScrollView>
+        </View>}
 
         <ScrollView showsHorizontalScrollIndicator={false}>
           <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, gap: 10, flexDirection: 'row' }}>
@@ -375,16 +417,16 @@ export const EditPostScreen = ({ route }) => {
               <Text style={styles.textStyle}>Шрифт</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setActiveTab(3)} style={[styles.editItem, activeTab == 3 && { backgroundColor: "#FFC24B" }]}>
-              <View style={{ width: 30, alignItems: 'center' }}>
-                <SelectColor />
-              </View>
-              <Text style={styles.textStyle}>Размер</Text>
+              <SelectColor />
+              <Text style={styles.textStyle}>Цвет</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setActiveTab(4)} style={[styles.editItem, activeTab == 4 && { backgroundColor: "#FFC24B" }]}>
-              <View style={{ width: 30, }}>
-                <SelectColor />
-              </View>
-              <Text style={styles.textStyle}>Цвет</Text>
+              <SelectColor />
+              <Text style={styles.textStyle}>Подч.</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setActiveTab(5)} style={[styles.editItem, activeTab == 4 && { backgroundColor: "#FFC24B" }]}>
+              <SelectColor />
+              <Text style={styles.textStyle}>Фон</Text>
             </TouchableOpacity>
           </View>
 
@@ -430,12 +472,43 @@ const styles = StyleSheet.create({
     borderColor: 'green'
   },
   editItem: {
-    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#ebebeb',
     width: 60,
     height: 60,
     justifyContent: 'flex-end',
     alignItems: 'center',
     gap: 5,
     borderRadius: 10,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.17,
+    shadowRadius: 3.05,
+    elevation: 4
+  },
+  input: {
+    borderColor: 'red',
+    width: '90%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ebebeb',
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.17,
+    shadowRadius: 3.05,
+    elevation: 4,
+    position: 'absolute',
+    bottom: 10,
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 12,
+    color: 'black',
   },
 });

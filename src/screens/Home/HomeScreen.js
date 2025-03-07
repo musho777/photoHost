@@ -176,6 +176,7 @@ export const HomeScreen = () => {
         return (
           <Posts
             photos={item?.photo}
+            cveta={item.cveta}
             surname={item?.user.surname}
             avatar={item?.user.avatar}
             auth_user_book={item.auth_user_book}

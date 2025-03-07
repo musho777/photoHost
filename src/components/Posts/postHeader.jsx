@@ -30,6 +30,7 @@ export const PostHeader = ({
   description,
   photo,
   auth_user_book,
+  cveta
 }
 ) => {
   const [openModal, setOpenModal] = useState(false)
@@ -112,7 +113,8 @@ export const PostHeader = ({
                 photo,
                 color,
                 font_family,
-                podcherknuti
+                podcherknuti,
+                cveta
               },
               big
             });
