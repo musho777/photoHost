@@ -340,6 +340,7 @@ export const getUserInfoAction = (token) => {
     dispatch(StartGetUserData());
     axios.get(`${Api}/auth_user_info`, { headers: { Authorization: `Bearer ${token}` }, })
       .then(r => {
+        console.log(r.data)
         if (r.data.status) {
           dispatch(
             SuccessGetUserData(

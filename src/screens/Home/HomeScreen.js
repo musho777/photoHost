@@ -49,10 +49,24 @@ export const HomeScreen = () => {
   const { fullScreen } = useSelector((st) => st.fullScreenData)
   const [postUserId, setPostUserId] = useState(null)
 
+
+  const isMoreThanFiveMinutes = (dateString) => {
+    const givenDate = new Date(dateString);
+    const now = new Date();
+
+    const diffMs = now - givenDate; // Разница в миллисекундах
+    const diffMinutes = diffMs / (1000 * 60); // Переводим в минуты
+
+    return diffMinutes > 5;
+  };
+
   useEffect(() => {
     if (userData.data.show_category_pop_up == 1) {
       setShowModal(true);
     }
+    // if (userData.data.new_registred_status === 1 && isMoreThanFiveMinutes(userData.data.created_at)) {
+    //   setShowModal(true);
+    // }
     setShowStatistic(userData.allData.data?.view_statistics_open_text)
   }, [userData.data])
 

@@ -57,7 +57,6 @@ export const Posts = ({
   const MAX_Height = 40;
   const heightAnim = useRef(new Animated.Value(0)).current;
   const [showText, setShowText] = useState(false)
-  console.log(description)
   useEffect(() => {
     setLike({ liked, like_count })
   }, [liked, like_count])
@@ -280,7 +279,6 @@ export const Posts = ({
             onAnimationFinish={(e) => { setShowLikeICone(false) }}
           />
         </View>}
-        {console.log(description.length)}
         {description != "[]" &&
           <View style={{ marginVertical: 10, position: 'absolute', top: 45, backgroundColor: GetCveta(cveta), borderRadius: 5, marginHorizontal: 5, }}>
             {description[active] &&

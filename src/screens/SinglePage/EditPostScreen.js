@@ -31,7 +31,6 @@ export const EditPostScreen = ({ route }) => {
 
   const [activecolor, setActiveColor] = useState("black")
   const [activeFont, setActiveFont] = useState("Montserrat-Medium")
-  console.log(description)
 
   useEffect(() => {
     setPhotos(data.photo)
@@ -389,16 +388,19 @@ export const EditPostScreen = ({ route }) => {
             })}
           </ScrollView>
         </View>}
-        {activeTab == 4 && <View >
+        {/* {activeTab == 4 && <View >
           <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
             {color2.map((elm, i) => {
               return <TouchableOpacity onPress={() => chnageBegraund(elm.title, index)} key={i} style={{ width: 20, height: 20, borderRadius: 30, backgroundColor: elm.title }} />
             })}
           </ScrollView>
-        </View>}
+        </View>} */}
         {activeTab == 5 && <View >
           <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 10, height: 50, alignItems: 'center' }}>
             {color3.map((elm, i) => {
+              <TouchableOpacity onPress={() => changeFonColor("rgba(0,0,0,0.5)", index)}>
+                <Text style={{ color: 'white', fontSize: 16 }}>X</Text>
+              </TouchableOpacity>
               return <TouchableOpacity onPress={() => changeFonColor(elm.title, index)} key={i} style={{ width: 20, height: 20, borderRadius: 30, backgroundColor: elm.title }} />
             })}
           </ScrollView>
@@ -420,11 +422,11 @@ export const EditPostScreen = ({ route }) => {
               <SelectColor />
               <Text style={styles.textStyle}>Цвет</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setActiveTab(4)} style={[styles.editItem, activeTab == 4 && { backgroundColor: "#FFC24B" }]}>
+            {/* <TouchableOpacity onPress={() => setActiveTab(4)} style={[styles.editItem, activeTab == 4 && { backgroundColor: "#FFC24B" }]}>
               <SelectColor />
               <Text style={styles.textStyle}>Подч.</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setActiveTab(5)} style={[styles.editItem, activeTab == 4 && { backgroundColor: "#FFC24B" }]}>
+            </TouchableOpacity> */}
+            <TouchableOpacity onPress={() => setActiveTab(5)} style={[styles.editItem, activeTab == 5 && { backgroundColor: "#FFC24B" }]}>
               <SelectColor />
               <Text style={styles.textStyle}>Фон</Text>
             </TouchableOpacity>

@@ -175,7 +175,6 @@ export const VidioComponent = forwardRef(({
         onLoad={(data) => handleLoad(data)}
         onBuffer={handleBuffer}
         onEnd={() => {
-          console.log('Video has ended');
           ref.current.seek(0);
           // You can pause or reset the video here if needed
         }}
