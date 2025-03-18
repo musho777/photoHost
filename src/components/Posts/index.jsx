@@ -289,7 +289,7 @@ export const Posts = ({
                       {`${description[active].slice(0, MAX_Height)}`}
                     </Text>
                   }
-                  <View style={{ marginBottom: 3 }}>
+                  <View style={{ marginBottom: 3, paddingHorizontal: 5 }}>
                     {description[active].length > MAX_Height && <TouchableOpacity
                       onPress={() => startAnimation(true)}
                     >

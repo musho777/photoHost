@@ -119,6 +119,7 @@ export const EditProfilScreen = ({ navigation }) => {
   const staticdata = useSelector(st => st.static);
   const changeProfil = useSelector(st => st.changeUserProfil);
   const [loaction, setLocation] = useState({ name: '', id: '' })
+  const [country_id, setCountry_id] = useState("")
   const [gender, setGender] = useState('')
   const [profation, setProfation] = useState('')
   const [workLocation, setWorkLocation] = useState('')
@@ -221,6 +222,7 @@ export const EditProfilScreen = ({ navigation }) => {
     ));
     dispatch(UpdateIkInfoAction({
       city_id: loaction.id,
+      country_id: country_id,
       date_of_birth: newDateFormat,
       gender: gender,
       mgu: profation,
@@ -315,7 +317,7 @@ export const EditProfilScreen = ({ navigation }) => {
               {accauntType && <ChnageGender value={gender} setValue={(e) => setGender(e)} />}
               {!accauntType && <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />}
               <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
-              <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
+              <Location country_id={country_id} setCountry_id={(e) => setCountry_id(e)} setLocation={(e) => setLocation(e)} loaction={loaction} />
               <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
               {accauntType && <Fild bB={0} value={workLocation} hadnelChange={(e) => setWorkLocation(e)} svg={<WorkLocation />} placeholder={t(mainData.lang).Placeofwork} />}
 
@@ -380,7 +382,7 @@ export const EditProfilScreen = ({ navigation }) => {
               Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города
             </Text>
             <View>
-              <Location setLocation={(e) => setLocation(e)} loaction={loaction} />
+              <Location country_id={country_id} setCountry_id={(e) => setCountry_id(e)} setLocation={(e) => setLocation(e)} loaction={loaction} />
               <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
               <Fild multiline={true} value={ooo} hadnelChange={(e) => setOoo(e)} svg={<WorkLocationSvg />} placeholder={`Адрес компании`} />
               <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />

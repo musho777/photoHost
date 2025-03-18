@@ -7,7 +7,7 @@ import { AppColors } from "../../../../styles/AppColors"
 import { t } from '../../../../components/lang';
 import { useSelector } from "react-redux"
 
-export const Location = ({ setLocation, loaction }) => {
+export const Location = ({ setLocation, loaction, setCountry_id, country_id }) => {
   const [city, setCity] = useState(false)
   const mainData = useSelector(st => st.mainData);
 
@@ -22,7 +22,7 @@ export const Location = ({ setLocation, loaction }) => {
       <DownArrow />
     </TouchableOpacity>
     <View style={{ position: 'absolute' }}>
-      {city && <CityModal onPress={(e) => setLocation({ name: e.name, id: e.id })} close={() => setCity(false)} visible={city} />}
+      {city && <CityModal setCountry_id={(e) => setCountry_id(e)} country_id={country_id} onPress={(e) => setLocation({ name: e.name, id: e.id })} close={() => setCity(false)} visible={city} />}
     </View>
   </View>
 }

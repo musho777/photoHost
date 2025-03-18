@@ -394,7 +394,7 @@ export const AddImg = ({ navigation }) => {
         </TouchableOpacity>
         {description[active]?.length > 0 &&
           <View
-            style={{ position: 'absolute', top: 60, left: 10, paddingVertical: 5, backgroundColor: fonColor[active], borderRadius: 10, paddingHorizontal: 10 }}>
+            style={{ position: 'absolute', top: 60, left: 10, paddingVertical: 5, backgroundColor: fonColor[active], borderRadius: 10, paddingHorizontal: 10, marginRight: 59 }}>
             <Text style={{ color: activecolor[active], fontFamily: font[active], backgroundColor: begraund[active] }}>
               {description[active]}
             </Text>
@@ -603,7 +603,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 15,
     fontSize: 12,
-    color: 'white'
+    color: 'black'
   },
   selectImage: {
     height: 'auto',

@@ -296,19 +296,19 @@ export const EditPostScreen = ({ route }) => {
   }, [index])
 
 
-  const delateFoto = (i, id) => {
+  const delateFoto = (i, id, post_id) => {
     let item = [...photos]
     item.splice(i, 1)
-    let desitem = JSON.parse(description)
-    if (desitem) {
+    let desitem = [...description]
+    if (desitem[i]) {
       desitem?.splice(i, 1)
-      setDescription(JSON.stringify(desitem))
+      setDescription(desitem)
       setActiveDescription(desitem[index])
     }
     setPhotos(item)
     setIndex(0)
     if (item.length == 0) {
-      dispatch(DeletLocalPhoto({ post_id: data.id }))
+      dispatch(DeletLocalPhoto({ post_id: post_id }))
     }
     dispatch(DelatePhotoFromPost(route.params.id, id, staticdata.token))
     dispatch(DelatePhotofromPost(route.params.id, id))
@@ -344,7 +344,7 @@ export const EditPostScreen = ({ route }) => {
           {photos?.map((elm, i) => {
             return <TouchableOpacity activeOpacity={1} onPress={() => setIndex(i)} key={i} style={{ width: 80, height: 80 }}>
               <TouchableOpacity
-                onPress={() => delateFoto(i, elm.id)}
+                onPress={() => delateFoto(i, elm.id, elm.post_id)}
                 style={styles.close}>
                 <CloseSvg1 smole />
               </TouchableOpacity>
