@@ -7,6 +7,7 @@ import { Styles } from "../../../../styles/Styles";
 import { t } from '../../../../components/lang';
 import { AppColors } from "../../../../styles/AppColors";
 import axios from "axios";
+import { BackArrow2 } from "../../../../assets/svg/Svgs";
 
 export const CityModal = ({ visible, close, onPress, setCountry_id, country_id }) => {
     const [searchCitys, setSearchCitys] = useState('');
@@ -70,6 +71,12 @@ export const CityModal = ({ visible, close, onPress, setCountry_id, country_id }
                     onPress={() => close()}
                     style={styles.centeredView}>
                     <View style={styles.modalView}>
+                        <View style={{ borderBottomWidth: 1, borderColor: 'black', width: '100%', marginBottom: 10, borderColor: '#e0e0e0', justifyContent: 'center', flexDirection: 'row', alignItems: 'center' }}>
+                            <TouchableOpacity onPress={() => setCity(false)} style={{ position: 'absolute', left: 0, bottom: 9 }}>
+                                <BackArrow2 />
+                            </TouchableOpacity>
+                            <Text style={[Styles.CharcoalMedium14, { textAlign: 'center', marginBottom: 5, }]}>Города</Text>
+                        </View>
                         <Input
                             onChange={e => {
                                 setSearchCitys(e);
@@ -113,6 +120,9 @@ export const CityModal = ({ visible, close, onPress, setCountry_id, country_id }
                         onPress={() => close()}
                         style={styles.centeredView}>
                         <View style={styles.modalView}>
+                            <View style={{ borderBottomWidth: 1, borderColor: 'black', width: '100%', marginBottom: 10, borderColor: '#e0e0e0' }}>
+                                <Text style={[Styles.CharcoalMedium14, { textAlign: 'center', marginBottom: 5, }]}>Страна</Text>
+                            </View>
                             {countyLoading && page === 1 ? (
                                 <View style={Styles.loading}>
                                     <ActivityIndicator size="large" color="#FFC24B" />
@@ -160,6 +170,7 @@ const styles = StyleSheet.create({
         margin: 20,
         backgroundColor: 'white',
         borderRadius: 20,
+        paddingVertical: 15,
         padding: 35,
         alignItems: 'center',
         shadowColor: '#000',

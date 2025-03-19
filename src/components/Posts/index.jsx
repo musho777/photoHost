@@ -267,7 +267,7 @@ export const Posts = ({
             cache: FastImage.cacheControl.immutable
           }}
           fallback={false}
-          resizeMode={FastImage.resizeMode.cover}
+          resizeMode={FastImage.resizeMode.stretch}
         />
         {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
           <LottieView

@@ -35,7 +35,7 @@ import { OtherUserScreenNavigation } from './OtherUserScreenNavigation';
 import { PermissionsAndroid, Platform } from 'react-native';
 import { AddImg } from '../screens/AddImg/AddImg';
 import { AddPost } from '../screens/AddPost/AddPost';
-import { AboutApplication } from '../screens/Profile/AboutApplication';
+import { AboutUsNavigation } from './aboutUsNavigation';
 
 export default Navigation = ({ token, initialRouteName, id }) => {
   const dispatch = useDispatch();
@@ -262,8 +262,8 @@ export default Navigation = ({ token, initialRouteName, id }) => {
             }}
           />
           <Stack.Screen
-            name="AboutApplication"
-            component={AboutApplication}
+            name="AboutUsNavigation"
+            component={AboutUsNavigation}
             options={{
               header: ({ navigation }) => {
                 // return <HeaderWhiteTitle onPress={() => {

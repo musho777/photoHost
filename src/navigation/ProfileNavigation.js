@@ -159,7 +159,7 @@ function CustomDrawerContent(props) {
         />
       </DrawerContentScrollView>
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('AboutApplication')}
+        onPress={() => props.navigation.navigate('AboutUsNavigation')}
         style={[{ marginBottom: 20, height: 40, paddingLeft: 10, justifyContent: 'center', borderColor: "#FFC24B", width: 90, marginLeft: 15, borderWidth: 1, }]}>
         <Text style={Styles.darkSemiBold16}>{t(mainData.lang).AboutProgram}</Text>
       </TouchableOpacity>

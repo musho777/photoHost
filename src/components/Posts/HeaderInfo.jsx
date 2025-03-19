@@ -29,7 +29,7 @@ export const HeaderInfo = ({ avatar, name, user, userID, data, created_at }) => 
   return <TouchableOpacity
     activeOpacity={1}
     onPress={() =>
-      user?.data?.id != userID ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: data?.user.id, post_id: data?.id } }) :
+      user?.data?.id != userID ? navigation.push('SearchProfil', { screen: "SearchProfils", params: { id: userID, post_id: data?.id } }) :
         navigation.navigate('TabNavigation', { screen: "ProfileNavigation" })
     } style={[Styles.flexAlignItems]}>
     <View>
