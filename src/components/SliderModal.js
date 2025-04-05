@@ -2,7 +2,6 @@ import { Modal, StyleSheet, View, TouchableOpacity, StatusBar } from 'react-nati
 import { ModalSliderImg } from './ModalSliderImg';
 import { CloseSvg1 } from '../assets/svg/Svgs';
 export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
-
     return <View >
         <StatusBar
             translucent
@@ -15,15 +14,14 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
             visible={modalVisible}
             onRequestClose={() => close()}
         >
-            <TouchableOpacity activeOpacity={1} onPress={() => close()} style={styles.centeredView}>
-                <TouchableOpacity activeOpacity={1} onPress={(e) => {
-                    e.stopPropagation()
-                    e.preventDefault()
-                }
-                } style={styles.modalView}>
+            <View onPress={() => close()} style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <TouchableOpacity onPress={() => close()} style={{ position: 'absolute', zIndex: 9999, right: 10, top: 10 }}>
+                        <CloseSvg1 />
+                    </TouchableOpacity>
                     <ModalSliderImg photo={photo} activePhoto={activePhoto} />
-                </TouchableOpacity>
-            </TouchableOpacity>
+                </View>
+            </View>
         </Modal >
     </View >
 }

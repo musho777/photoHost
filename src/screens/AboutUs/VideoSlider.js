@@ -1,155 +1,125 @@
-import React, { useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import { Styles } from '../../styles/Styles';
-import { t } from '../../components/lang';
-import { useSelector } from 'react-redux';
-import { BackArrowWhite } from '../../assets/svg/Svgs';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
+import { BackArrowWhite, Pause, StartSvg } from '../../assets/svg/Svgs';
 import Video from 'react-native-video';
-
-
+import Slider from '@react-native-community/slider';
 
 const { width, height } = Dimensions.get('window');
 
 export const VideoSlider = ({ navigation }) => {
-  const mainData = useSelector(st => st.mainData);
-  const [active, setActive] = useState(0);
-  const sliderData = [
-    {
-      id: '2',
-      image: require('../../assets/img/2.jpg'),
-    },
-    {
-      id: '3',
-      title: '',
-      image: require('../../assets/img/3.jpg'),
-    },
-    {
-      id: '4',
-      title: "",
-      image: require('../../assets/img/4.jpg'),
-    },
-    {
-      id: '5',
-      image: require('../../assets/img/5.jpg'),
-    },
-    {
-      id: '6',
-      image: require('../../assets/img/6.jpg'),
-    },
-    {
-      id: '7',
-      image: require('../../assets/img/7.jpg'),
-    },
-    {
-      id: '8',
-      image: require('../../assets/img/8.jpg'),
-    },
-    {
-      id: '9',
-      image: require('../../assets/img/9.jpg'),
-    },
-    {
-      id: '10',
-      image: require('../../assets/img/10.jpg'),
-    },
-    {
-      id: '11',
-      image: require('../../assets/img/11.jpg'),
-    },
-    {
-      id: '12',
-      image: require('../../assets/img/12.jpg'),
-    },
-    {
-      id: '13',
-      image: require('../../assets/img/1.jpg'),
-    },
-    {
-      id: '14',
-      image: require('../../assets/img/13.jpg'),
-    },
-    {
-      id: '15',
-      image: require('../../assets/img/14.jpg'),
-    },
-  ];
+  const ref = useRef();
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [paused, setPaused] = useState(true);
+  const [showControls, setShowControls] = useState(true);
 
-
-  const handleMomentumScrollEnd = (event) => {
-    const index = Math.floor(
-      Math.floor(event.nativeEvent.contentOffset.x) /
-      Math.floor(event.nativeEvent.layoutMeasurement.width)
-    );
-    setActive(index);
+  const handleSeek = (value) => {
+    ref.current.seek(value);
+    setCurrentTime(value);
   };
 
-
-  const renderItem = ({ item }) => {
-    return <Image source={item.image} style={styles.image} />
+  const handleLoad = (data) => {
+    setDuration(data.duration);
   };
 
+  const handleProgress = (data) => {
+    setCurrentTime(data.currentTime);
+  };
+
+  const handlePlayPause = () => {
+    console.log("dsjf")
+    setPaused(!paused);
+  };
+
+  const handleShowControls = () => {
+    setShowControls(true);
+    setTimeout(() => {
+      setShowControls(false);
+    }, 3000);
+  };
 
   return (
-    <View style={{ backgroundColor: 'rgb(12,59,78)' }}>
-      <View style={{ position: 'absolute', top: 55, width: '100%', height: 30, zIndex: 9999 }}>
+    <View style={{ backgroundColor: 'rgb(12,59,78)', flex: 1 }}>
+      <TouchableOpacity onPress={handleShowControls} style={styles.overlay} />
+
+      {showControls && (
+        <TouchableOpacity onPress={handlePlayPause} style={styles.button}>
+          {paused ? <StartSvg color={"rgb(12,59,78)"} /> : <Pause color={"rgb(12,59,78)"} />}
+        </TouchableOpacity>
+      )}
+
+      <View style={styles.backButton}>
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15 }} onPress={() => navigation.goBack()}>
           <BackArrowWhite />
-          <Text style={[Styles.darkSemiBold16, { marginHorizontal: 15, color: 'white' }]}>
-            {t(mainData.lang).AboutProgram}
-          </Text>
         </TouchableOpacity>
       </View>
+
       <Video
-        style={styles.image}
+        ref={ref}
         source={require("../../assets/img/aboutUs.mp4")}
+        style={styles.video}
+        resizeMode="contain"
+        paused={paused}
+        onProgress={handleProgress}
+        onLoad={handleLoad}
       />
+
+      {showControls && (
+        <View style={styles.sliderContainer}>
+          <Slider
+            style={styles.slider}
+            minimumValue={0}
+            maximumValue={duration}
+            value={currentTime}
+            onValueChange={handleSeek}
+            minimumTrackTintColor="#1EB1FC"
+            maximumTrackTintColor="#8E8E93"
+            thumbTintColor="#1EB1FC"
+          />
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 15,
-  },
-  image: {
+  video: {
     width: width,
     height: height,
     borderRadius: 10,
-    resizeMode: 'contain',
     marginTop: 15,
   },
-  title: {
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  pagination: {
-    width: width / 18,
-    height: 3,
-    backgroundColor: '#CCD6DF',
-    borderRadius: 10,
-  },
-  paginationWrapper: {
-    flexDirection: 'row',
+  sliderContainer: {
     position: 'absolute',
-    zIndex: 999,
-    gap: 5,
-    top: 85,
-    paddingHorizontal: 10,
+    bottom: 30,
     width: '100%',
-    justifyContent: 'center'
-  },
-  textWrapper: {
-    position: 'absolute',
-    marginTop: 120,
-    gap: 20,
     paddingHorizontal: 10,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingVertical: 10,
-    marginHorizontal: 10,
-    borderRadius: 10,
-  }
+    zIndex: 4
+  },
+  slider: {
+    width: '100%',
+  },
+  button: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 3,
+    width: '100%',
+    height: '100%',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 55,
+    width: '100%',
+    height: 30,
+    zIndex: 9999,
+  },
+  overlay: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 2,
+  },
 });
+
+export default VideoSlider;

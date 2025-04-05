@@ -4,7 +4,6 @@ import {
     StyleSheet,
     Image,
     Dimensions,
-    StatusBar,
 } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import { AppColors } from '../styles/AppColors';
@@ -12,70 +11,38 @@ import { AppColors } from '../styles/AppColors';
 const windowWidth = Dimensions.get('window').width;
 
 export const ModalSliderImg = ({ photo, activePhoto }) => {
-    const [height1, setHeight] = useState(0)
-    const getImageHeight = (imageUri) => {
-        return new Promise((resolve, reject) => {
-            Image.getSize(
-                imageUri,
-                (width, height) => {
-                    if (height > width) {
-                        resolve(400);
-                    }
-                    else {
-                        resolve(525);
-                    }
-                },
-                (error) => {
-                    reject(error); // Handle the error
-                }
-            );
-        });
-    };
-
-    const [active, setActive] = useState(0);
+    const [active, setActive] = useState(activePhoto || 0);
     return (
         <View>
-            {/* <StatusBar backgroundColor={"black"} barStyle="light-content" /> */}
             <SwiperFlatList
-                index={activePhoto}
-                renderAll
-                onChangeIndex={index => {
-                    setActive(index.index);
-                }}
-                index0={active > 0 ? active - 1 : 0}
+                index={active}
+                horizontal
+                pagingEnabled
                 data={photo}
-                renderItem={({ item, index }) => {
-                    let height = 540
-                    if (item.height - 200 > item.width) {
-                        height = 540
-                    }
-                    else if (item.height) {
-                        height = 393
-                    }
-                    else {
-                        height = null
-                        getImageHeight(`https://chambaonline.pro/uploads/${item.photo}`).then((r) => {
-                            setHeight(r)
-                        })
-                    }
+                onChangeIndex={({ index }) => setActive(index)}
+                renderItem={({ item }) => {
+                    const imageUrl = `https://chambaonline.pro/uploads/${item.photo}`;
                     return (
                         <Image
-                            style={[styles.img, { height: height ? height : height1 }]}
-                            source={{ uri: `https://chambaonline.pro/uploads/${item.photo}` }}
+                            style={[styles.img, item.height - 200 > item.width ? { height: 525 } : { height: 393 }]}
+                            source={{ uri: imageUrl }}
                         />
                     );
                 }}
             />
-            <View
-                style={styles.paginationWrapper}>
-                {photo.length > 1 && photo?.map((elm, i) => (
-                    <View key={i}
-                        style={[
-                            styles.pagination,
-                            i === active && { backgroundColor: AppColors.GoldenTainoi_Color }]}>
-                    </View>
-                ))}
-            </View>
+            {photo.length > 1 && (
+                <View style={styles.paginationWrapper}>
+                    {photo.map((_, i) => (
+                        <View
+                            key={i}
+                            style={[
+                                styles.pagination,
+                                i === active && { backgroundColor: AppColors.GoldenTainoi_Color },
+                            ]}
+                        />
+                    ))}
+                </View>
+            )}
         </View>
     );
 };
@@ -100,5 +67,5 @@ const styles = StyleSheet.create({
         bottom: 10,
         left: 0,
         right: 0
-    }
+    },
 });

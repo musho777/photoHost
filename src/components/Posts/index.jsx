@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { GetFollowerAction, GetPostLikeAction, LikePostAction } from "../../store/action/action"
 import { PostHeader } from "./postHeader"
 import LottieView from "lottie-react-native"
+import { SliderModal } from "../SliderModal"
 
 const { width } = Dimensions.get('window');
 export const Posts = ({
@@ -56,6 +57,7 @@ export const Posts = ({
   const [showLikeIcone, setShowLikeICone] = useState(false)
   const MAX_Height = 40;
   const heightAnim = useRef(new Animated.Value(0)).current;
+  const [visable, setVisable] = useState(false)
   const [showText, setShowText] = useState(false)
   useEffect(() => {
     setLike({ liked, like_count })
@@ -161,14 +163,19 @@ export const Posts = ({
     if (lastClickTime.current && now - lastClickTime.current < DOUBLE_CLICK_DELAY) {
       if (clickTimeout.current) {
         clearTimeout(clickTimeout.current);
+        clickTimeout.current = null;
       }
       const { locationX, locationY } = event.nativeEvent;
       setPosition({ x: locationX - 180, y: locationY - 180 });
       setShowLikeICone(true);
       animation?.current?.play();
-      Like()
+      Like();
     } else {
       lastClickTime.current = now;
+      clickTimeout.current = setTimeout(() => {
+        setVisable(true)
+        clickTimeout.current = null;
+      }, DOUBLE_CLICK_DELAY);
     }
   };
 
@@ -211,12 +218,16 @@ export const Posts = ({
     }
 
 
-    const GetColor = (color) => {
+    const GetColor = (color, big = false) => {
+      console.log(color)
       if (!color) {
         return "white"
       }
       else if (color[0] == '[') {
         let newColor = JSON.parse(color)
+        if (big && newColor[active] == "white") {
+          return "black"
+        }
         return newColor[active]
       }
       return color
@@ -254,7 +265,6 @@ export const Posts = ({
       return "rgba(0,0,0,0.5)"
     }
 
-
     return (
       <TouchableOpacity
         onPress={(e) => handleClick(e, item)}
@@ -279,10 +289,15 @@ export const Posts = ({
             onAnimationFinish={(e) => { setShowLikeICone(false) }}
           />
         </View>}
-        {description != "[]" &&
-          <View style={{ marginVertical: 10, position: 'absolute', top: 45, backgroundColor: GetCveta(cveta), borderRadius: 5, marginHorizontal: 5, }}>
+        {description != "[]" && description[index] &&
+          <View style={{ position: "absolute", marginVertical: 10, top: 45, backgroundColor: GetCveta(cveta), borderRadius: 5, marginHorizontal: 5, }}>
             {description[active] &&
-              <View style={[{ paddingHorizontal: 10, }]}>
+              <TouchableOpacity
+                onPress={(e) => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                }}
+                style={[{ paddingHorizontal: 10, }]}>
                 <View>
                   {description[active] &&
                     <Text style={[Styles.darkMedium13, { color: GetColor(color), fontFamily: GetFont(font_family), backgroundColor: GetBegraund(podcherknuti), marginTop: 3, paddingHorizontal: 5 }]}>
@@ -297,10 +312,9 @@ export const Posts = ({
                     </TouchableOpacity>}
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             }
           </View>}
-
         <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'white', width: '100%', borderTopRightRadius: 10, borderTopLeftRadius: 10 }, { height: heightAnim }]}>
           <ScrollView
             nestedScrollEnabled={true}
@@ -309,7 +323,7 @@ export const Posts = ({
             style={styles.textScrollContainer}>
             {description && <TouchableOpacity style={{ padding: 10 }} activeOpacity={1}>
               {description[active] &&
-                <Text style={[Styles.darkMedium13, { color: GetColor(color), fontFamily: GetFont(font_family), backgroundColor: GetBegraund(podcherknuti) }]}>
+                <Text style={[Styles.darkMedium13, { color: GetColor(color, true), fontFamily: GetFont(font_family), backgroundColor: GetBegraund(podcherknuti) }]}>
                   {description[active]}
                 </Text>
               }
@@ -349,7 +363,6 @@ export const Posts = ({
     {!background ? <FlatList
       horizontal
       pagingEnabled
-      // style={{ width: '100%', height: '100%' }}
       showsHorizontalScrollIndicator={false}
       decelerationRate="normal"
       keyExtractor={(item) => item.id.toString()}
@@ -384,8 +397,7 @@ export const Posts = ({
 
     <View style={styles.bodyWrapper}>
       <TouchableOpacity
-        onPress={() => Like()}
-        onLongPress={(e) => {
+        onPress={(e) => {
           e.preventDefault()
           dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
           setShowLike(true)
@@ -445,25 +457,13 @@ export const Posts = ({
           </View>
         </TouchableOpacity>
       </View>
-
-      {/* <TouchableOpacity
-        activeOpacity={my ? 0 : 1}
-        onPress={() => {
-          if (my && view_count > 0) {
-            setShowStatistic(0)
-            setShowView(true)
-            setSelectidId(id)
-          }
-        }}
-        style={styles.hover}>
-        <View style={styles.hoverItem}>
-          <View style={{ marginTop: 1 }}>
-            <WhiteViewSvg />
-          </View>
-          <Text style={[Styles.balihaiRegular14, { color: 'white' }]}>{view_count}</Text>
-        </View>
-      </TouchableOpacity> */}
     </View>
+    <SliderModal
+      activePhoto={active}
+      modalVisible={visable}
+      close={() => setVisable(false)}
+      photo={photos}
+    />
   </View>
 }
 
