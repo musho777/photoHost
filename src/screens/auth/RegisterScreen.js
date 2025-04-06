@@ -63,15 +63,15 @@ export const RegisterScreen = ({ navigation, route }) => {
     else {
       setEmail({ ...email, error: '' })
     }
-    if (route.params.selected == 'Legal_entity') {
-      if (ooo.value == "") {
-        setOoo({ ...ooo, error: 'Введите корректный ooo' })
-        item = false
-      }
-      else {
-        setOoo({ ...ooo, error: '' })
-      }
-    }
+    // if (route.params.selected == 'Legal_entity') {
+    //   if (ooo.value == "") {
+    //     setOoo({ ...ooo, error: 'Введите корректный ooo' })
+    //     item = false
+    //   }
+    //   else {
+    //     setOoo({ ...ooo, error: '' })
+    //   }
+    // }
     if (item) {
       dispatch(RegisterAction({
         name: name.value,
@@ -97,10 +97,10 @@ export const RegisterScreen = ({ navigation, route }) => {
 
 
   useEffect(() => {
-    if (confirm.status && route.params.selected == 'Legal_entity') {
-      setShow(true)
-    }
-    else if (confirm.status) {
+    // if (confirm.status && route.params.selected == 'Legal_entity') {
+    //   setShow(true)
+    // }
+    if (confirm.status) {
       Confirm()
     }
   }, [confirm.status])
@@ -162,13 +162,13 @@ export const RegisterScreen = ({ navigation, route }) => {
           value={email.value}
           onChange={(e) => setEmail({ ...email, value: e })}
         />
-        {route.params.selected == 'Legal_entity' && <Input
+        {/* {route.params.selected == 'Legal_entity' && <Input
           placeholder={"ООО"}
           error={ooo.error}
           value={ooo.value}
           onChange={(e) => setOoo({ ...ooo, value: e })}
         />
-        }
+        } */}
         <Input
           placeholder={t(mainData.lang).Createapassword}
           error={password.error}

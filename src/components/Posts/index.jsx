@@ -53,7 +53,7 @@ export const Posts = ({
   const lastClickTime = useRef(0);
   const clickTimeout = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [height, setHeight] = useState(525)
+  const [height, setHeight] = useState(545)
   const [showLikeIcone, setShowLikeICone] = useState(false)
   const MAX_Height = 40;
   const heightAnim = useRef(new Animated.Value(0)).current;
@@ -199,7 +199,7 @@ export const Posts = ({
   const startAnimation = (show) => {
     setShowText(!showText)
     Animated.timing(heightAnim, {
-      toValue: show ? 520 - 70 : 0,
+      toValue: show ? (height == 520 ? 520 - 70 : 320) : 0,
       duration: 400,
       easing: Easing.linear,
       useNativeDriver: false,
@@ -208,18 +208,17 @@ export const Posts = ({
   const renderItem = ({ item, index }) => {
     if (item.height - 200 > item.width) {
       if (active == index) {
-        setHeight(525)
+        setHeight(545)
       }
     }
     else {
       if (active == index) {
-        setHeight(393)
+        setHeight(310)
       }
     }
 
 
     const GetColor = (color, big = false) => {
-      console.log(color)
       if (!color) {
         return "white"
       }
@@ -277,7 +276,7 @@ export const Posts = ({
             cache: FastImage.cacheControl.immutable
           }}
           fallback={false}
-          resizeMode={FastImage.resizeMode.stretch}
+          resizeMode={FastImage.resizeMode.cover}
         />
         {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
           <LottieView
@@ -289,7 +288,7 @@ export const Posts = ({
             onAnimationFinish={(e) => { setShowLikeICone(false) }}
           />
         </View>}
-        {description != "[]" && description[index] &&
+        {!showText && description != "[]" && description[index] &&
           <View style={{ position: "absolute", marginVertical: 10, top: 45, backgroundColor: GetCveta(cveta), borderRadius: 5, marginHorizontal: 5, }}>
             {description[active] &&
               <TouchableOpacity
@@ -315,7 +314,7 @@ export const Posts = ({
               </TouchableOpacity>
             }
           </View>}
-        <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'white', width: '100%', borderTopRightRadius: 10, borderTopLeftRadius: 10 }, { height: heightAnim }]}>
+        <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'white', width: '100%', borderTopRightRadius: 10, borderTopLeftRadius: 10, zIndex: 99999999 }, { height: heightAnim }]}>
           <ScrollView
             nestedScrollEnabled={true}
             scrollEventThrottle={16}
@@ -374,10 +373,10 @@ export const Posts = ({
       renderItem={renderItem}
       onMomentumScrollEnd={handleMomentumScrollEnd}
     /> :
-      <View style={{ height: 525, position: 'relative' }}>
+      <View style={{ height: 545, position: 'relative' }}>
         <Image
           source={fone[background - 1]}
-          style={[{ height: 525, width: width }]}
+          style={[{ height: 545, width: width }]}
         />
         <View style={styles.textWrapper}>
           <Text style={{ padding: 10, textAlign: 'center', color: color, fontFamily: font_family, fontSize: JSON.parse(font_size) }}>{description}</Text>
@@ -470,7 +469,7 @@ export const Posts = ({
 const styles = StyleSheet.create({
   wrapper: {
     width: "100%",
-    height: 525,
+    height: 545,
     marginBottom: 10,
   },
   image: {

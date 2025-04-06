@@ -24,7 +24,7 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                     const imageUrl = `https://chambaonline.pro/uploads/${item.photo}`;
                     return (
                         <Image
-                            style={[styles.img, item.height - 200 > item.width ? { height: 525 } : { height: 393 }]}
+                            style={[styles.img, item.height - 200 > item.width ? { height: 545 } : { height: 310 }]}
                             source={{ uri: imageUrl }}
                         />
                     );

@@ -27,7 +27,6 @@ export const VideoSlider = ({ navigation }) => {
   };
 
   const handlePlayPause = () => {
-    console.log("dsjf")
     setPaused(!paused);
   };
 

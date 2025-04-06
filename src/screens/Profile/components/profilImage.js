@@ -91,6 +91,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   const [imgUrl, setImgUrl] = useState('');
   const dispatch = useDispatch()
   const changeImg = () => {
+    bottomSheetRef2.current?.close()
     ImageCropPicker.openPicker({
       width: 5000,
       height: 5000,
@@ -126,6 +127,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
   }
 
   const DelatePhoto = () => {
+    bottomSheetRef2.current?.close()
     setChangeAvatar(false)
     setImgUrl('')
     dispatch(chnageAvatarAction('', staticdata.token));
@@ -275,10 +277,14 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
 
     <BootomModal ref={bottomSheetRef2} snapPoints={snapPoints}>
       <View style={{ gap: 20, paddingHorizontal: 10, }}>
-        <TouchableOpacity style={styles.iconWrapper} onPress={() => {
-          setChangeAvatar(false)
-          setOpenSlider(true)
-        }}>
+        <TouchableOpacity
+          accessibilityLabel="Photo3"
+          style={styles.iconWrapper}
+          onPress={() => {
+            setChangeAvatar(false)
+            setOpenSlider(true)
+            bottomSheetRef2.current?.close()
+          }}>
           <Image style={styles.icon} source={require('../../../assets/img/user1.png')} />
           <Text style={styles.text}>Открыть фото</Text>
         </TouchableOpacity>

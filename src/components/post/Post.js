@@ -182,10 +182,10 @@ export const Post = React.memo(({
           // scroll={scroll}
           adminStatus={adminStatus}
         /> :
-          <View style={{ height: 525, position: 'relative' }}>
+          <View style={{ height: 545, position: 'relative' }}>
             <Image
               source={fone[data?.background - 1]}
-              style={[{ height: 525 }, styles.img]}
+              style={[{ height: 545 }, styles.img]}
             />
             <View style={styles.textWrapper}>
               <Text style={{ padding: 10, textAlign: 'center', color: data?.color, fontFamily: data?.font_family, fontSize: JSON.parse(data?.font_size) }}>{JSON.parse(data?.description)}</Text>

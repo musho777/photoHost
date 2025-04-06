@@ -11,6 +11,7 @@ const { width, height } = Dimensions.get('window');
 export const PhotoSlider = ({ navigation }) => {
   const mainData = useSelector(st => st.mainData);
   const [active, setActive] = useState(0);
+
   const sliderData = [
     {
       id: '2',
@@ -70,16 +71,71 @@ export const PhotoSlider = ({ navigation }) => {
       id: '16',
       image: require('../../assets/img/1.jpg'),
     },
+    // {
+    //   id: '19',
+    //   image: require('../../assets/img/99.jpg'),
+    // },
+
+
     {
-      id: '17',
-      image: require('../../assets/img/13.jpg'),
+      id: '20',
+      image: require('../../assets/img/100.jpg'),
     },
+
+    {
+      id: '223',
+      image: require('../../assets/img/223.jpg'),
+    },
+
+    // {
+    //   id: '21',
+    //   image: require('../../assets/img/101.jpg'),
+    // },
+
+
+    {
+      id: '107',
+      image: require('../../assets/img/120.jpg'),
+    }, ///edit
+    {
+      id: '108',
+      image: require('../../assets/img/108.jpg'),
+    },
+    {
+      id: '109',
+      image: require('../../assets/img/109.jpg'),
+    },
+    {
+      id: '110',
+      image: require('../../assets/img/110.jpg'),
+    },
+    {
+      id: '111',
+      image: require('../../assets/img/111.jpg'),
+    },
+    {
+      id: '112',
+      image: require('../../assets/img/112.jpg'),
+    },
+    // {
+    //   id: '113',
+    //   image: require('../../assets/img/113.jpg'),
+    // },
+    {
+      id: '114',
+      image: require('../../assets/img/114.jpg'),
+    },
+    //
     {
       id: '18',
       image: require('../../assets/img/88.jpg'),
     },
-  ];
+    {
+      id: '17',
+      image: require('../../assets/img/13.jpg'),
+    },
 
+  ];
 
   const handleMomentumScrollEnd = (event) => {
     const index = Math.floor(
@@ -91,7 +147,9 @@ export const PhotoSlider = ({ navigation }) => {
 
 
   const renderItem = ({ item }) => {
-    return <Image source={item.image} style={styles.image} />
+    return <View style={{ width: width, height: height, backgroundColor: 'rgb(12,59,78)' }}>
+      <Image source={item.image} style={styles.image} />
+    </View>
   };
 
 
@@ -132,10 +190,12 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width,
-    height: height,
+    height: height - 130,
     borderRadius: 10,
     resizeMode: 'contain',
     marginTop: 15,
+    position: 'absolute',
+    bottom: 0
   },
   title: {
     fontSize: 14,
@@ -143,7 +203,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   pagination: {
-    width: width / 18,
+    width: width / 40,
     height: 3,
     backgroundColor: '#CCD6DF',
     borderRadius: 10,
@@ -153,8 +213,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 999,
     gap: 5,
-    top: 85,
-    paddingHorizontal: 10,
+    top: 60,
+    paddingHorizontal: 15,
     width: '100%',
     justifyContent: 'center'
   },

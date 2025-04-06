@@ -206,8 +206,8 @@ export const AddImg = ({ navigation }) => {
       setShowError(false)
       dispatch(ClearCreatPost())
       setSelectedCatalog([])
-      setUri([])
-      addPhoto([], 0)
+      // setUri([])
+      // addPhoto([], 0)
       setActive(0)
     }, [])
   );
@@ -364,7 +364,7 @@ export const AddImg = ({ navigation }) => {
       }
     }
     return <View>
-      <View keyboardShouldPersistTaps='handled' style={(localheight[index]?.height - localheight[index]?.width) / 3 - 100 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }}>
+      <View keyboardShouldPersistTaps='handled' style={(localheight[index]?.height - localheight[index]?.width) / 3 - 140 > 0 ? { maxHeight: 545 } : { maxHeight: 310 }}>
         <TouchableOpacity activeOpacity={1}>
           <View style={styles.hover} >
             <TouchableOpacity
@@ -382,7 +382,7 @@ export const AddImg = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <FastImage
-            style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 100 > 0 ? { maxHeight: 525 } : { maxHeight: 393 }]}
+            style={[styles.img, (localheight[index]?.height - localheight[index]?.width) / 3 - 100 > 0 ? { maxHeight: 545 } : { maxHeight: 310 }]}
             source={{ uri: item.uri }}
             onLoad={(event) => {
               const { width, height } = event.nativeEvent;

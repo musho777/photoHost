@@ -3,15 +3,11 @@ import { ModalSliderImg } from './ModalSliderImg';
 import { CloseSvg1 } from '../assets/svg/Svgs';
 export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
     return <View >
-        <StatusBar
-            translucent
-            backgroundColor="black"
-            barStyle={'dark-content'}
-        />
         <Modal
             animationType="fade"
             transparent={true}
             visible={modalVisible}
+            statusBarTranslucent={true}
             onRequestClose={() => close()}
         >
             <View onPress={() => close()} style={styles.centeredView}>
@@ -28,6 +24,8 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
 
 const styles = StyleSheet.create({
     centeredView: {
+        flex: 1,
+
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgb(0,0,0)',
