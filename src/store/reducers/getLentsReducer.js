@@ -97,6 +97,7 @@ const GetLentsReducer = (state = initialState, action) => {
       if (ind >= 0) {
         item.data.splice(ind, 1)
       }
+      console.log("fdks")
       break
     case 'DelatePhotofromPost':
       let delatePhotoIndex = item.data.findIndex((elm) => elm.id == action.post_id)
@@ -104,6 +105,7 @@ const GetLentsReducer = (state = initialState, action) => {
         let delatephotoformPostIndex = item.data[delatePhotoIndex].photo.findIndex((elm) => elm.id == action.id)
         item.data[delatePhotoIndex].photo.splice(delatephotoformPostIndex, 1)
       }
+      console.log(item.data[delatePhotoIndex])
       break
     default:
       break;
