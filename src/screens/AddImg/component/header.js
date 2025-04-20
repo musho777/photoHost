@@ -170,7 +170,7 @@ export const Header = ({
             source={{ uri: `https://chambaonline.pro/uploads/${elm}` }} />
         })}
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => creatPost()} disabled={createPost.loading || uri.length === 0} >
+      <TouchableOpacity onPress={() => creatPost()} disabled={createPost?.loading || uri.length === 0} >
         <CheckMarkSvg />
       </TouchableOpacity>
     </View>

@@ -80,7 +80,7 @@ export const Followers = React.memo(({ id }) => {
       {getFollowers.loading ?
 
         <View>
-          {loadingData.map((elm, i) => {
+          {loadingData.map((i) => {
             return <FollowerSkeleton key={i} />
           })}
         </View> :

@@ -155,7 +155,7 @@ export const PhotoSlider = ({ navigation }) => {
 
   return (
     <View style={{ backgroundColor: 'rgb(12,59,78)' }}>
-      <View style={{ position: 'absolute', top: 55, width: '100%', height: 30, zIndex: 9999 }}>
+      <View style={{ position: 'absolute', top: 85, width: '100%', height: 30, zIndex: 9999 }}>
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15 }} onPress={() => navigation.goBack()}>
           <BackArrowWhite />
           <Text style={[Styles.darkSemiBold16, { marginHorizontal: 15, color: 'white' }]}>

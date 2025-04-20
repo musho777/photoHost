@@ -206,8 +206,8 @@ export const AddImg = ({ navigation }) => {
       setShowError(false)
       dispatch(ClearCreatPost())
       setSelectedCatalog([])
-      // setUri([])
-      // addPhoto([], 0)
+      setUri([])
+      addPhoto([], 0)
       setActive(0)
     }, [])
   );
@@ -369,7 +369,7 @@ export const AddImg = ({ navigation }) => {
           <View style={styles.hover} >
             <TouchableOpacity
               activeOpacity={1}
-              style={[Styles.flexAlignItems]}>
+              style={Styles.flexAlignItems}>
               <View>
                 <Image style={styles.userImg}
                   source={{ uri: `https://chambaonline.pro/uploads/${user.avatar}` }} />
