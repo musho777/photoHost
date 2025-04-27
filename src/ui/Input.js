@@ -39,6 +39,7 @@ export const Input = forwardRef(
     pdR,
     clearText,
     clear,
+    fontSize = 15,
   }, ref) => {
     const [securyty, setSecuryty] = useState(pass);
     return (
@@ -58,6 +59,7 @@ export const Input = forwardRef(
           onBlur={onBlur}
           style={[
             styles.Input,
+            { fontSize: fontSize },
             { paddingRight: send ? 50 : 30 },
             { paddingRight: pdR },
             { paddingRight: pass ? 70 : 30 },

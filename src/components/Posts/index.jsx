@@ -49,7 +49,7 @@ export const Posts = ({
   const staticdata = useSelector(st => st.static);
   const user = useSelector(st => st.userData);
   const animation = useRef(null);
-  const DOUBLE_CLICK_DELAY = 300;
+  const DOUBLE_CLICK_DELAY = 1000;
   const lastClickTime = useRef(0);
   const clickTimeout = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -452,7 +452,7 @@ export const Posts = ({
             <View style={{ marginTop: 1 }}>
               <WhiteViewSvg />
             </View>
-            <Text style={[Styles.balihaiRegular14, { color: 'white' }]}>{view_count}</Text>
+            <Text style={[Styles.balihaiRegular14, { color: 'white' }]}>{view_count + 100}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -529,7 +529,7 @@ const styles = StyleSheet.create({
   hoverItem: {
     height: '100%',
     justifyContent: 'space-between',
-    width: 20,
+    minWidth: 20,
     alignItems: 'center'
   }
 })

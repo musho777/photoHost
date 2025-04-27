@@ -148,6 +148,7 @@ export const RegisterScreen = ({ navigation, route }) => {
       <View style={Styles.authScreen}>
         <Text style={[Styles.darkSemiBold22, { marginBottom: 30 }]}>{t(mainData.lang).Registration}</Text>
         <Input
+          fontSize={10}
           placeholder={route.params.selected == 'Individual' ?
             t(mainData.lang).FirstnameLastnameorchannelname :
             t(mainData.lang).Companyname

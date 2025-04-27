@@ -899,18 +899,18 @@ export const GetPostsAction = (data, token, page) => {
   };
 };
 
-export const GetLentsAction = (token, page) => {
+export const GetLentsAction = (token, page = "https://chambaonline.pro/api/lents?page=1") => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
   return dispatch => {
-    if (page == 1 || !page) {
+    if (page === "https://chambaonline.pro/api/lents?page=1") {
       dispatch(StartGetLents('first'));
     }
     else {
       dispatch(StartGetLents('second'));
     }
-    fetch(`${Api}/lents?page=${page}`, {
+    fetch(page, {
       method: 'GET',
       headers: myHeaders,
     })

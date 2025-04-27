@@ -53,7 +53,7 @@ export const RegisterType = () => {
 
 
   return <View style={styles.authScreen}>
-    <Text style={[Styles.darkSemiBold16, { marginBottom: 30, textAlign: 'center' }]}>Вы регистрируетесь как:</Text>
+    <Text style={[Styles.darkSemiBold16, { marginBottom: 30, textAlign: 'center' }]}>Pегистрация как</Text>
     <View style={{ gap: 30 }}>
       <TypeBlock
         selected={selected}

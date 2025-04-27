@@ -30,8 +30,10 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.3.17",
     "@rneui/themed": "^4.0.0-rc.8",
+    "@shopify/flash-list": "^1.8.0",
     "@simform_solutions/react-native-audio-waveform": "^2.1.1",
     "@unimodules/core": "^7.1.2",
+    "add": "^2.0.6",
     "axios": "^1.4.0",
     "emoji-regex": "^10.3.0",
     "hermes-engine": "latest",
@@ -100,7 +102,8 @@
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
     "rn-emoji-keyboard": "^1.7.0",
-    "rn-progressive-image": "^3.0.0"
+    "rn-progressive-image": "^3.0.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

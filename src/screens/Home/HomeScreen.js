@@ -74,7 +74,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (staticdata.token && !getLents?.data.length) {
-      dispatch(GetLentsAction(staticdata.token, 1));
+      dispatch(GetLentsAction(staticdata.token, "https://chambaonline.pro/api/lents?page=1"));
     }
   }, [staticdata.token, dispatch]);
 
@@ -182,7 +182,7 @@ export const HomeScreen = () => {
     if (getLents?.nextPage && !getLents.loading && !getLents.secondLoading && !isFetching) {
       setIsFetching(true)
       let p = page + 1;
-      dispatch(GetLentsAction(staticdata.token, p));
+      dispatch(GetLentsAction(staticdata.token, getLents?.nextPage));
       setPage(p);
 
       setTimeout(() => {
@@ -205,7 +205,7 @@ export const HomeScreen = () => {
     setShowButton(1)
     setPage(1)
     dispatch(getUserInfoAction(staticdata.token));
-    dispatch(GetLentsAction(staticdata.token, 1));
+    dispatch(GetLentsAction(staticdata.token));
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${staticdata.token}`);
 
@@ -296,7 +296,7 @@ export const HomeScreen = () => {
     onRefresh={() => {
       setPage(1)
       dispatch(getUserInfoAction(staticdata.token));
-      dispatch(GetLentsAction(staticdata.token, 1));
+      dispatch(GetLentsAction(staticdata.token));
     }}
   />
   const viewabilityConfig = {
