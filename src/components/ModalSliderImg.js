@@ -4,27 +4,43 @@ import {
     StyleSheet,
     Image,
     Dimensions,
+    Text,
+    FlatList,
 } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import { AppColors } from '../styles/AppColors';
 
 const windowWidth = Dimensions.get('window').width;
-
 export const ModalSliderImg = ({ photo, activePhoto }) => {
     const [active, setActive] = useState(activePhoto || 0);
+    const [height, setHeight] = useState(565)
+    const handleMomentumScrollEnd = ({ index }) => {
+        setActive(index);
+    };
+
     return (
-        <View>
+        <View style={{ height: height }}>
             <SwiperFlatList
                 index={active}
                 horizontal
                 pagingEnabled
                 data={photo}
-                onChangeIndex={({ index }) => setActive(index)}
-                renderItem={({ item }) => {
+                onMomentumScrollEnd={handleMomentumScrollEnd}
+                renderItem={({ item, index }) => {
+                    if (item.height - 200 > item.width) {
+                        if (active == index) {
+                            setHeight(565)
+                        }
+                    }
+                    else {
+                        if (active == index) {
+                            setHeight(330)
+                        }
+                    }
                     const imageUrl = `https://chambaonline.pro/uploads/${item.photo}`;
                     return (
                         <Image
-                            style={[styles.img, item.height - 200 > item.width ? { height: 545 } : { height: 310 }]}
+                            style={[styles.img, { height: height }]}
                             source={{ uri: imageUrl }}
                         />
                     );
