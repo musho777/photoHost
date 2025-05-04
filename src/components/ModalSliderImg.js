@@ -13,13 +13,13 @@ import { AppColors } from '../styles/AppColors';
 const windowWidth = Dimensions.get('window').width;
 export const ModalSliderImg = ({ photo, activePhoto }) => {
     const [active, setActive] = useState(activePhoto || 0);
-    const [height, setHeight] = useState(565)
+    // const [height, setHeight] = useState(565)
     const handleMomentumScrollEnd = ({ index }) => {
         setActive(index);
     };
 
     return (
-        <View style={{ height: height }}>
+        <View >
             <SwiperFlatList
                 index={active}
                 horizontal
@@ -27,21 +27,12 @@ export const ModalSliderImg = ({ photo, activePhoto }) => {
                 data={photo}
                 onMomentumScrollEnd={handleMomentumScrollEnd}
                 renderItem={({ item, index }) => {
-                    if (item.height - 200 > item.width) {
-                        if (active == index) {
-                            setHeight(565)
-                        }
-                    }
-                    else {
-                        if (active == index) {
-                            setHeight(330)
-                        }
-                    }
                     const imageUrl = `https://chambaonline.pro/uploads/${item.photo}`;
                     return (
                         <Image
-                            style={[styles.img, { height: height }]}
+                            style={[styles.img, { aspectRatio: item.width / item.height }]}
                             source={{ uri: imageUrl }}
+                            resizeMode="contain"
                         />
                     );
                 }}

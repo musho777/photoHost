@@ -12,7 +12,7 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
         >
             <View onPress={() => close()} style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <TouchableOpacity onPress={() => close()} style={{ position: 'absolute', zIndex: 9999, right: 10, top: 10 }}>
+                    <TouchableOpacity onPress={() => close()} style={{ position: 'absolute', zIndex: 9999, right: 10, top: 50 }}>
                         <CloseSvg1 />
                     </TouchableOpacity>
                     <ModalSliderImg photo={photo} activePhoto={activePhoto} />
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgb(0,0,0)',
-        height: '100%',
+        // height: '100%',
     },
     centeredView2: {
         position: 'absolute',
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
         right: 10,
     },
     modalView: {
-        borderRadius: 0,
         width: '100%',
-        height: 'auto',
+        flex:1,
+        justifyContent:'center',
     },
 });

@@ -206,16 +206,16 @@ export const Posts = ({
     }).start();
   };
   const renderItem = ({ item, index }) => {
-    if (item.height - 200 > item.width) {
-      if (active == index) {
-        setHeight(545)
-      }
-    }
-    else {
-      if (active == index) {
-        setHeight(310)
-      }
-    }
+    // if (item.height - 200 > item.width) {
+    //   if (active == index) {
+    //     setHeight(545)
+    //   }
+    // }
+    // else {
+    //   if (active == index) {
+    //     setHeight(310)
+    //   }
+    // }
 
 
     const GetColor = (color, big = false) => {
@@ -263,20 +263,27 @@ export const Posts = ({
       }
       return "rgba(0,0,0,0.5)"
     }
-
+    const aspectRatio = item.width / item.height;
+    const calculatedHeight = width / aspectRatio;
+    if (active === index) {
+      if (calculatedHeight <= 600) {
+        setHeight(calculatedHeight)
+      }
+      else {
+        setHeight(600)
+      }
+    }
     return (
       <TouchableOpacity
         onPress={(e) => handleClick(e, item)}
         activeOpacity={1}>
-        <FastImage
-          style={{ width: width, height: "100%" }}
+        <Image
+          style={{ width: width, height: calculatedHeight, objectFit: 'cover' }}
           source={{
             uri: `https://chambaonline.pro/uploads/${item.photo}`,
             priority: FastImage.priority.high,
             cache: FastImage.cacheControl.immutable
           }}
-          fallback={false}
-          resizeMode={FastImage.resizeMode.cover}
         />
         {showLikeIcone && <View style={{ position: 'absolute', left: position.x, top: position.y }}>
           <LottieView
@@ -338,7 +345,6 @@ export const Posts = ({
       </TouchableOpacity>
     );
   }
-
   return <View style={[styles.wrapper, { height: height }]}>
     <View style={styles.header}>
       <PostHeader
@@ -389,11 +395,6 @@ export const Posts = ({
           <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]} />
         ))}
       </View>}
-
-
-
-
-
     <View style={styles.bodyWrapper}>
       <TouchableOpacity
         onPress={(e) => {
@@ -469,7 +470,7 @@ export const Posts = ({
 const styles = StyleSheet.create({
   wrapper: {
     width: "100%",
-    height: 545,
+    // height: 545,
     marginBottom: 10,
   },
   image: {

@@ -107,8 +107,8 @@ export const SinglPageScreen = ({ route }) => {
     </View>
   }
   return (
-    <SafeAreaView style={[{ backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', height: '100%', }]}>
-      <View contentContainerStyle={{ marginTop: 30 }}>
+    <SafeAreaView style={[{ backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', height: "100%", }]}>
+      <ScrollView >
         {/* <Post
           data={data}
           setHoriznotal={(e) => setHoriznotal(e)}
@@ -164,7 +164,7 @@ export const SinglPageScreen = ({ route }) => {
             showStatisitc={showStatisitc}
           />}
         </View>
-      </View>
+      </ScrollView>
       {showView && <ViewComponent
         id={data?.id}
         big={true}
