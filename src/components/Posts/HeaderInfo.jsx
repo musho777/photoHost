@@ -41,7 +41,7 @@ export const HeaderInfo = ({ avatar, name, user, userID, data, created_at }) => 
         {canParseJSON(name)}
         {/* {data?.user.star > 0 && <CheckMarkUserSvg />} */}
       </View>
-      <Text style={[Styles.whiteMedium9]}>{formatDate(created_at)}</Text>
+      {/* <Text style={[Styles.whiteMedium9]}>{formatDate(created_at)}</Text> */}
     </View>
   </TouchableOpacity>
 }
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     // gap: 2,
     width: '75%',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: "center",
     // height: 40
   },
   infoBlock: {

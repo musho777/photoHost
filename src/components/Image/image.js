@@ -123,9 +123,6 @@ export const ImageComponent = React.memo(({ adminStatus, background, video, phot
     onPress()
     setDisabled(true)
   }}>
-    {adminStatus == 0 &&
-      <InReview borderRadius={15} height={windowWidth / 2 - 19} />
-    }
     {video &&
       <View style={styles.playerIcone}>
         <StartSvg />

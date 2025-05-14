@@ -453,7 +453,7 @@ export const Posts = ({
             <View style={{ marginTop: 1 }}>
               <WhiteViewSvg />
             </View>
-            <Text style={[Styles.balihaiRegular14, { color: 'white' }]}>{view_count + 100}</Text>
+            <Text style={[Styles.balihaiRegular14, { color: 'white' }]}>{view_count}</Text>
           </View>
         </TouchableOpacity>
       </View>
