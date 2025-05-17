@@ -101,6 +101,25 @@ export const SinglPageScreen = ({ route }) => {
     navigation.replace('TabNavigation', { screen: "ProfileNavigation" })
   }
 
+    const ChangeViewStatisticsOpenText = () => {
+      setShowStatistic(0)
+      if (showStatisitc) {
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        myHeaders.append('Authorization', `Bearer ${staticdata.token}`);
+        fetch(`${Api}/view_statistics_open_text`, {
+          method: 'POST',
+          headers: myHeaders,
+        })
+          .then(response => response.json())
+          .then(r => {
+          })
+          .catch(error => {
+          });
+      }
+    }
+  
+
   if (loading) {
     return <View style={{ flex: 1, backgroundColor: 'black', paddingTop: 40 }}>
       <ActivityIndicator color="#FFC24B" />
@@ -149,7 +168,7 @@ export const SinglPageScreen = ({ route }) => {
             deletData={(e) => deletData(e)}
             setShowShare={(e) => setShowShare(e)}
             setShowLike={() => setLikeClose(true)}
-            setSelectidId={(id) => setSelectidId(id)}
+            setSelectidId={(id) => console.log(id)}
             setShowView={() => setShowView(true)}
             setShowComment={() => setShowComment(true)}
             setShowStatistic={() => ChangeViewStatisticsOpenText()}

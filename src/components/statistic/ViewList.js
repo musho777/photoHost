@@ -56,7 +56,7 @@ export const ViewList = ({ id, token, navigation }) => {
         if (isCloseToBottom(nativeEvent)) {
           if (getPostView.nextPage) {
             let pages = page + 1;
-            dispatch(GetPostViewAction({ post_id: id }, token, page));
+            dispatch(GetPostViewAction({ post_id: id }, token, pages));
             setPage(pages);
           }
         }

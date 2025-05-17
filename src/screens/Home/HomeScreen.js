@@ -332,12 +332,7 @@ export const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
           onEndReached={debounce(handleEndReached, 300)}
-          // onEndReachedThreshold={0.5}
           scrollEnabled={!fullScreen}
-          // initialNumToRender={5}
-          // maxToRenderPerBatch={5}
-          // windowSize={10}
-          // removeClippedSubviews={true}
           ref={flatListRef}
           viewabilityConfig={viewabilityConfig.current}
 

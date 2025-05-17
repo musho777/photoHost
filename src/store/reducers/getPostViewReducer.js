@@ -21,7 +21,7 @@ const GetPostViewReducer = (state = initialState, action) => {
       if (action.data.data.current_page == 1) {
         item.data = action.data.data.data;
       }
-      else if (item.nextPage != action.data.data.next_page_url) {
+      else{
         item.data = [...item.data, ...action.data.data.data];
       }
       item.nextPage = action.data.data.next_page_url;
