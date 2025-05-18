@@ -47,7 +47,7 @@ export const SearchBlock = () => {
     return (
       <View style={{ marginHorizontal: 15 }}>
         <SearchItem
-          key={item.id}
+          key={item?.id}
           data={item}
         />
       </View>
@@ -67,7 +67,7 @@ export const SearchBlock = () => {
           handleSearchInput={(e) => handleSearchInput(e)}
         />
         <FlatList
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item?.id?.toString()}
           data={search.data}
           enableEmptySections={true}
           style={{ width: '100%' }}

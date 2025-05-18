@@ -179,7 +179,7 @@ export const Slider = React.memo(({ adminStatus, scroll, id, photo, viewableItem
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         decelerationRate="normal"
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item?.id?.toString()}
         data={photo}
         windowSize={5}
         initialNumToRender={5}

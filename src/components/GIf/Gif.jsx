@@ -55,7 +55,7 @@ const Gif = ({ setSelected }) => {
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item?.id}
           numColumns={2}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}

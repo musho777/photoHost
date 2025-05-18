@@ -80,7 +80,7 @@ export const ChatUsersScreen = () => {
     if (avatar)
       return (
         <ChatUser
-          id={item.id}
+          id={item?.id}
           name={name}
           img={`https://chambaonline.pro/uploads/${avatar}`}
           sendWhiteMe={item.sendWhiteMe}

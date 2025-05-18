@@ -370,7 +370,7 @@ export const Posts = ({
       pagingEnabled
       showsHorizontalScrollIndicator={false}
       decelerationRate="normal"
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item?.id?.toString()}
       data={photos}
       windowSize={5}
       initialNumToRender={5}
@@ -397,12 +397,17 @@ export const Posts = ({
       </View>}
     <View style={styles.bodyWrapper}>
       <TouchableOpacity
-        onPress={(e) => {
+        onLongPress={(e) => {
           e.preventDefault()
           dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
           setShowLike(true)
         }}
-
+        onPress={(e) => {
+          e.preventDefault()
+          Like()
+          // dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
+          // setShowLike(true)
+        }}
         style={styles.hover}>
         {like.liked ? <WhiteHeart /> : <NotLineSvgWhite />}
         <Text style={[Styles.darkMedium14, { color: 'white' }]}>{like.like_count}</Text>
@@ -471,7 +476,7 @@ const styles = StyleSheet.create({
   wrapper: {
     width: "100%",
     // height: 545,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   image: {
     width: '100%',

@@ -86,7 +86,7 @@ export const Catalog = () => {
     if (isEven)
       return <View style={style.row}>
         <View style={[{ justifyContent: 'center', alignItems: 'center', width: '48%' }]}>
-          <CatalogItem selected={selected.findIndex(temp => temp == item.id) > -1} onSelect={(e) => SelectCatalog(e)} data={item} key={index} />
+          <CatalogItem selected={selected.findIndex(temp => temp == item?.id) > -1} onSelect={(e) => SelectCatalog(e)} data={item} key={index} />
         </View >
         {nextItem && (
           <View style={[{ justifyContent: 'center', alignItems: 'center', width: '48%' }]}>

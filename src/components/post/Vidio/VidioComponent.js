@@ -62,10 +62,10 @@ export const VidioComponent = forwardRef(({
 
   useEffect(() => {
     if (viewableItems?.length) {
-      if (currentId === viewableItems[0]?.item.id && !viewableItems[0]?.isViewable) {
+      if (currentId === viewableItems[0]?.item?.id && !viewableItems[0]?.isViewable) {
         setFirst(true);
         setPaused(true, active)
-      } else if ((currentId !== viewableItems[0]?.item.id) && viewableItems[0]?.item.id && currentId) {
+      } else if ((currentId !== viewableItems[0]?.item?.id) && viewableItems[0]?.item?.id && currentId) {
         setFirst(true);
         setPaused(true, active)
       }
@@ -141,7 +141,7 @@ export const VidioComponent = forwardRef(({
     <TouchableOpacity
       activeOpacity={1}
       onPressIn={() => {
-        setCurrentId(item.id);
+        setCurrentId(item?.id);
         setShowStartButton(true);
       }}
 
@@ -220,7 +220,7 @@ export const VidioComponent = forwardRef(({
         setPaused={(e) => setPaused(e, active)}
         setFirst={(e) => setFirst(e)}
         loading={loading}
-        id={item.id}
+        id={item?.id}
       />
     }
 

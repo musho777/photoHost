@@ -888,7 +888,10 @@ export const GetPostsAction = (data, token, page) => {
       .then(response => response.json())
       .then(r => {
         if (r.status) {
-          dispatch(SuccessGetPosts(r));
+          console.log(r,'fsdfsd')
+          if(r.data.data){
+            dispatch(SuccessGetPosts(r));
+          }
         } else {
           dispatch(ErrorGetPosts('server error'));
         }

@@ -55,7 +55,7 @@ const Sticker = ({ setSelected }) => {
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item?.id}
           numColumns={3}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}

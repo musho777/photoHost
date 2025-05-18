@@ -28,7 +28,7 @@ const GetPostsReducer = (state = initialState, action) => {
       }
       else if (item.nextPage != action.data.data.next_page_url) {
         action.data.data.data.map((elm, i) => {
-          if (item.data.findIndex((el) => el.id == elm.id) == -1) {
+          if (elm.id && item.data.findIndex((el) => el.id == elm.id) == -1) {
             item.data.push(elm)
           }
         })

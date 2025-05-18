@@ -241,7 +241,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
           initialNumToRender={5}
           maxToRenderPerBatch={5}
           windowSize={10}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item?.id?.toString()}
           data={mainImageData}
           removeClippedSubviews={true}
           showsVerticalScrollIndicator={false}
@@ -264,7 +264,7 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
             initialNumToRender={5}
             maxToRenderPerBatch={5}
             windowSize={10}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item?.id?.toString()}
             data={imageData}
             removeClippedSubviews={true}
             showsVerticalScrollIndicator={false}

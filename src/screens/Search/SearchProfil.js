@@ -165,7 +165,7 @@ export const SearchProfil = ({ navigation, route }) => {
 
 
   const renderItem1 = ({ item, index }) => {
-    return <Albom id={item.id} index={index} elm={item} loading={postLoading} my={false} data={postData} />;
+    return <Albom id={item?.id} index={index} elm={item} loading={postLoading} my={false} data={postData} />;
   };
   const renderItem2 = ({ item, index }) => {
     return <InfoBlock user={data.data} />
@@ -196,7 +196,7 @@ export const SearchProfil = ({ navigation, route }) => {
     <View style={{ flex: 1 }}>
       <FlatList
         data={seletedScreen ? postData : [{ id: 1 }]}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item?.id?.toString()}
         showsVerticalScrollIndicator={false}
         refreshing={postLoading}
         contentContainerStyle={{ paddingHorizontal: 15 }}

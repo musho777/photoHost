@@ -288,7 +288,7 @@ export const HomeScreen = () => {
     },
     [blackList, getLents.data.length, viewableItems, fullScreen]
   );
-  const keyExtractor = React.useCallback((item) => item.id.toString(), []);
+  const keyExtractor = React.useCallback((item) => item?.id?.toString(), []);
 
   const refreshControl = <RefreshControl
     refreshing={getLents?.loading}

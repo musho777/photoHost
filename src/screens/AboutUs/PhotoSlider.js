@@ -174,7 +174,7 @@ export const PhotoSlider = ({ navigation }) => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item?.id}
         onScroll={handleMomentumScrollEnd}
       />
     </View>

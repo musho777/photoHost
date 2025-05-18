@@ -25,10 +25,10 @@ export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
 const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
-
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgb(0,0,0)',
+        backgroundColor:"rgba(0,0,0,0.8)"
+        // backgroundColor: 'rgb(0,0,0)',
         // height: '100%',
     },
     centeredView2: {

@@ -27,9 +27,9 @@ export const ProfileScreen = () => {
 
   useEffect(() => {
     if (user.data?.id) {
-      dispatch(GetPostsAction({ user_id: user.data?.id }, staticdata.token, page));
+      dispatch(GetPostsAction({ user_id: user.data?.id }, staticdata.token, 1));
     }
-  }, [user.data?.id, page]);
+  }, [user.data?.id]);
 
 
   const handleEndReached = useCallback(() => {
@@ -42,7 +42,8 @@ export const ProfileScreen = () => {
   }, [getPosts, page, seletedScreen]);
 
   const renderItem1 = ({ item, index }) => {
-    return <Albom id={item.id} index={index} lastItem={(index == getPosts.data.length - 1) && !getPosts.nextPage} elm={item} loading={getPosts.loading} my={true} data={getPosts.data} />;
+    if(item?.id)
+    return <Albom id={item?.id} index={index} lastItem={(index == getPosts.data.length - 1) && !getPosts.nextPage} elm={item} loading={getPosts.loading} my={true} data={getPosts.data} />;
   };
   const renderItem2 = ({ item, index }) => {
     return <InfoBlock user={user.data} />
@@ -77,7 +78,7 @@ export const ProfileScreen = () => {
         />
         <FlatList
           data={seletedScreen ? getPosts?.data : [{ id: 1 }]}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item?.id?.toString()}
           showsVerticalScrollIndicator={false}
           refreshing={user?.loading}
           contentContainerStyle={{ paddingHorizontal: 15 }}

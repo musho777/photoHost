@@ -153,7 +153,7 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
           user={item.user}
           like_count={item.likes_count}
           isLiked={item.like_auth_user?.length}
-          id={item.id}
+          id={item?.id}
           token={staticdata.token}
           owner={item.user.id == user.allData?.data?.id}
           daysAgo={daysAgo}
@@ -188,7 +188,7 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
           }
         />
         <View style={styles.bottom}>
-          <View style={{ width: getSound.data.length ? "70%" : "80%" }}>
+          <View style={{ width: getSound.data.length ? "70%" : "70%" }}>
             <BottomSheetTextInput
               style={styles.Input}
               placeholder={t(mainData.lang).Leaveacomment}
@@ -205,7 +205,7 @@ export const Comments = ({ commentData, CommentCount = () => { } }) => {
             </View>
 
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap:getSound.data.length ? 5:15 }}>
             <TouchableOpacity onPress={() => setIsOpen(true)}>
               <Emojy />
             </TouchableOpacity>

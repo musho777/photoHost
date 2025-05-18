@@ -107,7 +107,7 @@ export const ContactsPage = ({ navigation }) => {
     return (
       <View style={{ marginHorizontal: 15 }}>
         <SearchItem
-          key={item.id}
+          key={item?.id}
           data={item}
         />
       </View>
@@ -130,7 +130,7 @@ export const ContactsPage = ({ navigation }) => {
       refreshControl={
         <RefreshControl refreshing={loading} />
       }
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={item => item.id?.toString()}
       data={data}
       enableEmptySections={true}
       ListEmptyComponent={() => {
