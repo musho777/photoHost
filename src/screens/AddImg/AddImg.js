@@ -27,8 +27,6 @@ import FastImage from 'react-native-fast-image';
 import { Header } from './component/header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ImagePicker from 'react-native-image-crop-picker';
-import RenderHtml from 'react-native-render-html';
-import { HeaderInfo } from '../../components/post/postHeader/component/headerInfro';
 
 const windowWidth = Dimensions.get('window').width;
 
