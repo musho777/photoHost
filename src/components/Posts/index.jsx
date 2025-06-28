@@ -1,15 +1,17 @@
-import { Animated, Dimensions, Easing, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Animated, Dimensions, Easing, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, PixelRatio } from "react-native"
 import { NotLineSvgWhite, ShearSvg } from "../../assets/svg/Svgs"
 import { Styles } from "../../styles/Styles"
 import { CommentWhite, WhiteHeart, WhiteViewSvg } from "../../assets/svg/TabBarSvg"
 import FastImage from "react-native-fast-image"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { AppColors } from "../../styles/AppColors"
 import { useDispatch, useSelector } from "react-redux"
 import { GetFollowerAction, GetPostLikeAction, LikePostAction } from "../../store/action/action"
 import { PostHeader } from "./postHeader"
 import LottieView from "lottie-react-native"
 import { SliderModal } from "../SliderModal"
+import { useFocusEffect } from "@react-navigation/native"
+
 
 const { width } = Dimensions.get('window');
 export const Posts = ({
@@ -49,16 +51,24 @@ export const Posts = ({
   const staticdata = useSelector(st => st.static);
   const user = useSelector(st => st.userData);
   const animation = useRef(null);
-  const DOUBLE_CLICK_DELAY = 1000;
+  const DOUBLE_CLICK_DELAY = 800;
   const lastClickTime = useRef(0);
   const clickTimeout = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [height, setHeight] = useState(545)
+  const [height, setHeight] = useState(565)
   const [showLikeIcone, setShowLikeICone] = useState(false)
   const MAX_Height = 40;
   const heightAnim = useRef(new Animated.Value(0)).current;
-  const [visable, setVisable] = useState(false)
   const [showText, setShowText] = useState(false)
+  const [visable, setVisable] = useState(false)
+  const [flatListKey, setFlatListKey] = useState(Date.now());
+
+  useFocusEffect(
+    useCallback(() => {
+      setFlatListKey(Date.now());
+    }, [])
+  );
+
   useEffect(() => {
     setLike({ liked, like_count })
   }, [liked, like_count])
@@ -159,25 +169,27 @@ export const Posts = ({
     ));
   };
   const handleClick = (event, item) => {
-    const now = new Date().getTime();
-    if (lastClickTime.current && now - lastClickTime.current < DOUBLE_CLICK_DELAY) {
-      if (clickTimeout.current) {
-        clearTimeout(clickTimeout.current);
-        clickTimeout.current = null;
-      }
-      const { locationX, locationY } = event.nativeEvent;
-      setPosition({ x: locationX - 180, y: locationY - 180 });
-      setShowLikeICone(true);
-      animation?.current?.play();
-      Like();
-    } else {
-      lastClickTime.current = now;
-      clickTimeout.current = setTimeout(() => {
-        setVisable(true)
-        clickTimeout.current = null;
-      }, DOUBLE_CLICK_DELAY);
-    }
+    setVisable(true)
+    // const now = new Date().getTime();
+    // if (lastClickTime.current && now - lastClickTime.current < DOUBLE_CLICK_DELAY) {
+    //   if (clickTimeout.current) {
+    //     clearTimeout(clickTimeout.current);
+    //     clickTimeout.current = null;
+    //   }
+    //   const { locationX, locationY } = event.nativeEvent;
+    //   setPosition({ x: locationX - 180, y: locationY - 180 });
+    //   setShowLikeICone(true);
+    //   animation?.current?.play();
+    //   Like();
+    // } else {
+    //   lastClickTime.current = now;
+    //   clickTimeout.current = setTimeout(() => {
+    //     setVisable(true)
+    //     clickTimeout.current = null;
+    //   }, DOUBLE_CLICK_DELAY);
+    // }
   };
+
 
   const Like = () => {
     let item = { ...like }
@@ -199,34 +211,19 @@ export const Posts = ({
   const startAnimation = (show) => {
     setShowText(!showText)
     Animated.timing(heightAnim, {
-      toValue: show ? (height == 520 ? 520 - 70 : 320) : 0,
+      toValue: show ? (height > 500 ? 450 - 70 : 240) : 0,
       duration: 400,
       easing: Easing.linear,
       useNativeDriver: false,
     }).start();
   };
   const renderItem = ({ item, index }) => {
-    // if (item.height - 200 > item.width) {
-    //   if (active == index) {
-    //     setHeight(545)
-    //   }
-    // }
-    // else {
-    //   if (active == index) {
-    //     setHeight(310)
-    //   }
-    // }
-
-
-    const GetColor = (color, big = false) => {
+    const GetColor = (color) => {
       if (!color) {
         return "white"
       }
       else if (color[0] == '[') {
         let newColor = JSON.parse(color)
-        if (big && newColor[active] == "white") {
-          return "black"
-        }
         return newColor[active]
       }
       return color
@@ -263,14 +260,14 @@ export const Posts = ({
       }
       return "rgba(0,0,0,0.5)"
     }
-    const aspectRatio = item.width / item.height;
-    const calculatedHeight = width / aspectRatio;
-    if (active === index) {
-      if (calculatedHeight <= 600) {
-        setHeight(calculatedHeight)
+    if (item.height - 200 > item.width) {
+      if (active == index) {
+        setHeight(565)
       }
-      else {
-        setHeight(600)
+    }
+    else {
+      if (active == index) {
+        setHeight(320)
       }
     }
     return (
@@ -278,7 +275,7 @@ export const Posts = ({
         onPress={(e) => handleClick(e, item)}
         activeOpacity={1}>
         <Image
-          style={{ width: width, height: calculatedHeight, objectFit: 'cover' }}
+          style={{ width: width, height: height, }}
           source={{
             uri: `https://chambaonline.pro/uploads/${item.photo}`,
             priority: FastImage.priority.high,
@@ -295,17 +292,12 @@ export const Posts = ({
             onAnimationFinish={(e) => { setShowLikeICone(false) }}
           />
         </View>}
-        {!showText && description != "[]" && description[index] &&
-          <View style={{ position: "absolute", marginVertical: 10, top: 45, backgroundColor: GetCveta(cveta), borderRadius: 5, marginHorizontal: 5, }}>
-            {description[active] &&
-              <TouchableOpacity
-                onPress={(e) => {
-                  e.stopPropagation()
-                  e.preventDefault()
-                }}
-                style={[{ paddingHorizontal: 10, }]}>
+        {description != "[]" &&
+          <View style={{ marginVertical: 10, position: 'absolute', top: 45, backgroundColor: GetCveta(cveta), borderRadius: 5, marginHorizontal: 5, }}>
+            {description?.length > 0 && description[active] &&
+              <View style={[{ paddingHorizontal: 10, }]}>
                 <View>
-                  {description[active] &&
+                  {description?.length > 0 && description[active] &&
                     <Text style={[Styles.darkMedium13, { color: GetColor(color), fontFamily: GetFont(font_family), backgroundColor: GetBegraund(podcherknuti), marginTop: 3, paddingHorizontal: 5 }]}>
                       {`${description[active].slice(0, MAX_Height)}`}
                     </Text>
@@ -318,22 +310,23 @@ export const Posts = ({
                     </TouchableOpacity>}
                   </View>
                 </View>
-              </TouchableOpacity>
+              </View>
             }
           </View>}
-        <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'white', width: '100%', borderTopRightRadius: 10, borderTopLeftRadius: 10, zIndex: 99999999 }, { height: heightAnim }]}>
+
+        <Animated.View style={[{ position: 'absolute', bottom: 0, backgroundColor: 'white', width: '100%', borderTopRightRadius: 10, borderTopLeftRadius: 10, zIndex: 9999999 }, { height: heightAnim }]}>
           <ScrollView
             nestedScrollEnabled={true}
             scrollEventThrottle={16}
             showsVerticalScrollIndicator={false}
             style={styles.textScrollContainer}>
-            {description && <TouchableOpacity style={{ padding: 10 }} activeOpacity={1}>
+            {description?.length > 0 && description && <TouchableOpacity style={{ padding: 10 }} activeOpacity={1}>
               {description[active] &&
-                <Text style={[Styles.darkMedium13, { color: GetColor(color, true), fontFamily: GetFont(font_family), backgroundColor: GetBegraund(podcherknuti) }]}>
+                <Text style={[Styles.darkMedium13, { color: "black", fontFamily: GetFont(font_family), backgroundColor: GetBegraund(podcherknuti) }]}>
                   {description[active]}
                 </Text>
               }
-              {description[active] && <TouchableOpacity onPress={() => startAnimation(false)}>
+              {description?.length > 0 && description[active] && <TouchableOpacity onPress={() => startAnimation(false)}>
                 <Text style={[Styles.balihaiMedium13]}>
                   Cвернуть
                 </Text>
@@ -345,6 +338,7 @@ export const Posts = ({
       </TouchableOpacity>
     );
   }
+
   return <View style={[styles.wrapper, { height: height }]}>
     <View style={styles.header}>
       <PostHeader
@@ -370,7 +364,9 @@ export const Posts = ({
       pagingEnabled
       showsHorizontalScrollIndicator={false}
       decelerationRate="normal"
-      keyExtractor={(item) => item?.id?.toString()}
+      extraData={photos}
+      key={flatListKey}
+      keyExtractor={(item) => item.id}
       data={photos}
       windowSize={5}
       initialNumToRender={5}
@@ -379,10 +375,10 @@ export const Posts = ({
       renderItem={renderItem}
       onMomentumScrollEnd={handleMomentumScrollEnd}
     /> :
-      <View style={{ height: 545, position: 'relative' }}>
+      <View style={{ height: 565, position: 'relative' }}>
         <Image
           source={fone[background - 1]}
-          style={[{ height: 545, width: width }]}
+          style={[{ height: 565, width: width }]}
         />
         <View style={styles.textWrapper}>
           <Text style={{ padding: 10, textAlign: 'center', color: color, fontFamily: font_family, fontSize: JSON.parse(font_size) }}>{description}</Text>
@@ -395,7 +391,9 @@ export const Posts = ({
           <View key={i} style={[styles.pagination, i === active && { backgroundColor: AppColors.GoldenTainoi_Color, borderRadius: 50 }]} />
         ))}
       </View>}
-    <View style={styles.bodyWrapper}>
+
+
+    {!showText && <View style={styles.bodyWrapper}>
       <TouchableOpacity
         onLongPress={(e) => {
           e.preventDefault()
@@ -405,9 +403,8 @@ export const Posts = ({
         onPress={(e) => {
           e.preventDefault()
           Like()
-          // dispatch(GetPostLikeAction({ post_id: id }, staticdata.token, 1));
-          // setShowLike(true)
         }}
+
         style={styles.hover}>
         {like.liked ? <WhiteHeart /> : <NotLineSvgWhite />}
         <Text style={[Styles.darkMedium14, { color: 'white' }]}>{like.like_count}</Text>
@@ -462,7 +459,7 @@ export const Posts = ({
           </View>
         </TouchableOpacity>
       </View>
-    </View>
+    </View>}
     <SliderModal
       activePhoto={active}
       modalVisible={visable}
@@ -475,8 +472,8 @@ export const Posts = ({
 const styles = StyleSheet.create({
   wrapper: {
     width: "100%",
-    // height: 545,
-    marginBottom: 20,
+    // height: 565,
+    marginBottom: 10,
   },
   image: {
     width: '100%',
@@ -501,9 +498,9 @@ const styles = StyleSheet.create({
   },
   bodyWrapper: {
     position: 'absolute',
-    bottom: 25,
+    bottom: 10,
     right: 10,
-    gap: 10,
+    gap: 6,
   },
   paginationWrapper: {
     flexDirection: 'row',
@@ -513,7 +510,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    zIndex: '99999'
+    zIndex: 99999
   },
   pagination: {
     width: 6,

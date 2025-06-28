@@ -64,7 +64,7 @@ export const RegisterType = () => {
       <TypeBlock
         selected={selected}
         setSelected={(e) => setSelected(e)}
-        title='Юридическое лицо (Бизнес)'
+        title='Юридическое лицо (Бизнес - аккаунт)'
         type='Legal_entity'
       />
     </View>

@@ -1,45 +1,46 @@
-import { Modal, StyleSheet, View, TouchableOpacity, StatusBar } from 'react-native';
+import { Modal, StyleSheet, View } from 'react-native';
 import { ModalSliderImg } from './ModalSliderImg';
-import { CloseSvg1 } from '../assets/svg/Svgs';
-export const SliderModal = ({ modalVisible, photo, activePhoto, close }) => {
-    return <View >
+import { BlurView } from '@react-native-community/blur';
+
+export const SliderModal = ({ modalVisible, photo, activePhoto, close,avatar }) => {
+    return (
         <Modal
             animationType="fade"
             transparent={true}
             visible={modalVisible}
+            onRequestClose={close}
             statusBarTranslucent={true}
-            onRequestClose={() => close()}
         >
-            <View onPress={() => close()} style={styles.centeredView}>
+            <BlurView
+                style={styles.centeredView}
+                blurType="dark"
+                blurAmount={40}
+                reducedTransparencyFallbackColor="black"
+            >
+                <View style = {styles.wrapper}>
                 <View style={styles.modalView}>
-                    <TouchableOpacity onPress={() => close()} style={{ position: 'absolute', zIndex: 9999, right: 10, top: 50 }}>
-                        <CloseSvg1 />
-                    </TouchableOpacity>
-                    <ModalSliderImg photo={photo} activePhoto={activePhoto} />
+                    <ModalSliderImg avatar = {avatar} close = {close} photo={photo} activePhoto={activePhoto} />
                 </View>
-            </View>
-        </Modal >
-    </View >
-}
+                </View>
+            </BlurView>
+        </Modal>
+    );
+};
 
 const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:"rgba(0,0,0,0.8)"
-        // backgroundColor: 'rgb(0,0,0)',
-        // height: '100%',
-    },
-    centeredView2: {
-        position: 'absolute',
-        zIndex: 9999,
-        top: 10,
-        right: 10,
     },
     modalView: {
-        width: '100%',
-        flex:1,
-        justifyContent:'center',
+        height:"100%",
+        alignItems: 'center',
+        justifyContent: 'center',
     },
+    wrapper:{
+        width:'100%',
+        height:"100%",
+        backgroundColor:'transparent'
+    }
 });

@@ -181,7 +181,7 @@ export const RegisterScreen = ({ navigation, route }) => {
         {sendMail && (
           <View style={{ alignItems: 'center' }}>
             <Text style={[Styles.balihaiMedium13, { textAlign: 'center' }]}>
-              Мы отправили вам на почту комбинацию цифр, впишите её ниже.
+              Код отправлен на почту, при отсутствии уведомления нажмите спам и рефреш
             </Text>
             <ConfirmCode clear={confirm.error !== ''} code={(e) => setCode(e)} />
           </View>

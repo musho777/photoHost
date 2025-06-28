@@ -15,7 +15,7 @@ export const Followers = React.memo(({ id }) => {
   let getFollowers = useSelector(st => st.getFollower);
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
-  const [page, setPage] = useState('');
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const loadingData = ['', '', '', '', '', '', '', '']
   const user = useSelector(st => st.userData);
@@ -24,7 +24,7 @@ export const Followers = React.memo(({ id }) => {
   useFocusEffect(
     useCallback(() => {
       dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, page));
-    }, [data, id])
+    }, [data, id,page])
   );
 
 
@@ -85,19 +85,19 @@ export const Followers = React.memo(({ id }) => {
           })}
         </View> :
         <FlatList
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => {
-                dispatch(
-                  GetFollowerAction(
-                    { search: data, user_id: id },
-                    staticdata.token,
-                    page,
-                  ),
-                );
-              }}
-            />
-          }
+          // refreshControl={
+          //   <RefreshControl
+          //     onRefresh={() => {
+          //       dispatch(
+          //         GetFollowerAction(
+          //           { search: data, user_id: id },
+          //           staticdata.token,
+          //           page,
+          //         ),
+          //       );
+          //     }}
+          //   />
+          // }
           ListEmptyComponent={() => {
             (!getFollowers?.loading && getFollowers.data?.length == 0) &&
               <Text style={[Styles.darkMedium16, { marginTop: 40, textAlign: 'center' }]}>{data ? t(mainData.lang).Notfound : t(mainData.lang).Nosubscriptions}</Text>
@@ -107,10 +107,10 @@ export const Followers = React.memo(({ id }) => {
           enableEmptySections={true}
           renderItem={renderItem}
           onEndReached={() => {
+            console.log(page)
             if (getFollowers?.nextPage) {
-              let p = page + 1
-              setPage(p)
-              dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, p))
+              setPage(page+1)
+              // dispatch(GetFollowerAction({ search: data, user_id: id }, staticdata.token, p))
             }
           }}
         />

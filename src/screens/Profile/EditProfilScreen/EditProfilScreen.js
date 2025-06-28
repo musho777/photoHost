@@ -368,7 +368,26 @@ export const EditProfilScreen = ({ navigation }) => {
                 onChangeText={e => setName(e)}
                 style={Styles.darkMedium14}
               />
-              <View style={{ backgroundColor: 'red' }}>
+              <View style={{ marginBottom: 10 }}>
+                <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', marginVertical: 10 }}>
+                  {fontFamily.map((elm, i) => {
+                    return <Text
+                      accessibilityLabel={elm}
+                      onPress={() => {
+                        setName({ ...name, font: elm })
+                      }} key={i} style={{ fontSize: 10, fontFamily: elm }}>{elm}</Text>
+                  })}
+                </ScrollView>
+
+                <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 10, paddingHorizontal: 17, alignItems: 'center', height: 20 }}>
+                  {color.map((elm, i) => {
+                    return <TouchableOpacity
+                      accessibilityLabel={elm.title}
+                      onPress={() => {
+                        setName({ ...name, color: elm })
+                      }} key={i} style={{ width: 20, height: 20, backgroundColor: elm.title, borderRadius: 20, }} />
+                  })}
+                </ScrollView>
               </View>
 
             </View>
@@ -376,16 +395,15 @@ export const EditProfilScreen = ({ navigation }) => {
 
 
 
-            <Fild setIsOpen={(e) => setIsOpen(e)} multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
+            <Fild discription setIsOpen={(e) => setIsOpen(e)} multiline={true} value={discription} hadnelChange={(e) => setDiscription(e)} placeholder={accauntType ? t(mainData.lang).Brieflyaboutyourself : "О нас"} />
             <Text style={[Styles.balihaiMedium8, { paddingHorizontal: 17, marginTop: 5 }]}>
               Чем больше заполните информацию о компании, тем более точный контент будет предлагаться
               Помимо выбранных Вами рубрик, будет предлагаться контент от ваших конкурентов с вашего города
             </Text>
             <View>
               <Location country_id={country_id} setCountry_id={(e) => setCountry_id(e)} setLocation={(e) => setLocation(e)} loaction={loaction} />
-              <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} />
+              <Position_profession setLocation={(e) => setOtrasl(e)} loaction={otrasl} /> <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />
               <Fild multiline={true} value={ooo} hadnelChange={(e) => setOoo(e)} svg={<WorkLocationSvg />} placeholder={`Адрес компании`} />
-              <Fild value={web} hadnelChange={(e) => setWeb(e)} svg={<NetWorkSvg />} placeholder={t(mainData.lang).Website} />
               <Fild value={graf} hadnelChange={(e) => setGraf(e)} svg={<WatchSvg />} placeholder={'График работы'} />
               <Fild value={phonNumber} hadnelChange={(e) => setPhonNumber(e)} svg={<PhoneSvg />} placeholder={t(mainData.lang).Phonenumber} />
               <Fild value={email} hadnelChange={(e) => setEmail(e)} svg={<EmailSvg />} placeholder={t(mainData.lang).Mail} />

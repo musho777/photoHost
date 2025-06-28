@@ -10,12 +10,15 @@ export const HeaderInfo = ({ avatar, name, user, userID, data, created_at }) => 
   function canParseJSON(jsonString) {
     try {
       JSON.parse(jsonString);
-      return <Text style={[Styles.whiteSemiBold14, { color: JSON.parse(jsonString)?.color?.title ? JSON.parse(jsonString)?.color?.title : "black", fontFamily: JSON.parse(jsonString)?.font, marginTop: -2 }]}>{JSON.parse(jsonString).name}</Text>
+      return <Text style={[Styles.whiteSemiBold14, { color: JSON.parse(jsonString)?.color?.title ? JSON.parse(jsonString)?.color?.title : "black", fontFamily: JSON.parse(jsonString)?.font, marginTop: -2 }]}>{JSON.parse(jsonString).name}
+        {user?.allData?.data?.user_type !== "Individual" && " (Бизнес – аккаунт)"}
+      </Text>
     } catch (error) {
-      return <Text style={[Styles.whiteSemiBold14, { marginTop: -2 }]}>{jsonString}</Text>
+      return <Text style={[Styles.whiteSemiBold14, { marginTop: -2 }]}>{jsonString}
+        {user?.allData?.data?.user_type !== "Individual" && " (Бизнес – аккаунт)"}
+      </Text>
     }
   }
-
 
   const formatDate = (dateString) => {
     const currentDate = new Date(dateString);
@@ -33,7 +36,7 @@ export const HeaderInfo = ({ avatar, name, user, userID, data, created_at }) => 
         navigation.navigate('TabNavigation', { screen: "ProfileNavigation" })
     } style={[Styles.flexAlignItems]}>
     <View>
-      <Image style={styles.userImg}
+      <Image style={[styles.userImg, user?.allData?.data?.user_type !== "Individual" && styles.border]}
         source={{ uri: `https://chambaonline.pro/uploads/${avatar}` }} />
     </View>
     <View style={styles.nameBlock}>
@@ -71,4 +74,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     zIndex: 1
   },
+  border: {
+    borderWidth: 1,
+    borderColor: 'red',
+    borderRadius: 20
+  }
 });

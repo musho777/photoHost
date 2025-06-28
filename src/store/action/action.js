@@ -696,6 +696,7 @@ export const GetFollowerAction = (data, token, page) => {
     })
       .then(response => response.json())
       .then(r => {
+        console.log(r,"fldsfgjdjfghjjdhdjfcmlkfjdlgjdfk")
         if (r.status) {
           dispatch(SuccessGetFollower(r));
         } else {

@@ -287,6 +287,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '80%',
     left: '10%',
+    zIndex:1,
     right: 0,
     paddingVertical: 5,
     backgroundColor: 'white',

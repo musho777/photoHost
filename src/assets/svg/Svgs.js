@@ -397,22 +397,6 @@ export const SendMsgSvg = () => {
   </Svg>
 }
 
-export const CloseSvg = () => {
-  return <Svg
-    width={17}
-    height={17}
-    viewBox="0 0 17 17"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <Path
-      d="M16 1L1 16M1 1l15 15"
-      stroke="#404040"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-    />
-  </Svg>
-}
 
 export const ImgArrow = () => {
   return <Svg
@@ -1903,6 +1887,23 @@ export const Success = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit={10}
+    />
+  </Svg>
+}
+export const CloseSvg = ({color = "#404040"}) => {
+  return <Svg
+    width={17}
+    height={17}
+    viewBox="0 0 17 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="Close icon"
+  >
+    <Path
+      d="M16 1L1 16M1 1l15 15"
+      stroke={color}
+      strokeWidth={1.8}
+      strokeLinecap="round"
     />
   </Svg>
 }

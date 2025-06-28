@@ -24,6 +24,7 @@ const GetFollowerReducer = (state = initialState, action) => {
         item.data = action.data.data.data;
       }
       else if (item.nextPage != action.data.data.next_page_url) {
+        console.log("000384848")
         item.data = [...item.data, ...action.data.data.data];
       }
       item.nextPage = action.data.data.next_page_url;

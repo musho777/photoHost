@@ -279,6 +279,7 @@ export const SearchProfil = ({ navigation, route }) => {
       />
       {openSlider &&
         <SliderModal
+           avatar = {true}
           modalVisible={openSlider} photo={[{ photo: data?.data.avatar }]} close={() => setOpenSlider(false)} />
       }
       {openBg &&

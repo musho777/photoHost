@@ -23,8 +23,9 @@ export const ViewComponent = ({ id, token, close, big = false, selectedVidioId }
   }, [id])
 
   useEffect(() => {
+    if(!big)
     dispatch(HidenTabNavigation())
-  }, [])
+  }, [big])
 
 
   useEffect(() => {

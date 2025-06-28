@@ -191,6 +191,8 @@ export const ProfilImage = ({ user, changeAvatar, setChangeAvatar, }) => {
     />
     {openSlider &&
       <SliderModal
+           avatar = {true}
+
         modalVisible={openSlider} photo={[{ photo: user.avatar }]} close={() => setOpenSlider(false)} />
     }
 

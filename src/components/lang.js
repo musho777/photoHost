@@ -183,7 +183,7 @@ export const t = (lang = 'ru') => {
             Next: 'Далее',
             Comeupwithanicknam: 'Придумайте никнейм',
             Enteryouremail: 'Укажите почту',
-            FirstnameLastnameorchannelname: 'Имя фамилия, название канала или сообщества.',
+            FirstnameLastnameorchannelname: 'Имя фамилия или название канала.',
             comments: 'Комментарии',
             Nocomments: ' Нет комментариев',
             Leaveacomment: 'Оставьте комментарий',

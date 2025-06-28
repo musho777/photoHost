@@ -16,7 +16,7 @@ export const Followings = ({ id }) => {
   const getFollowers = useSelector((st) => st.getFollowers)
   const mainData = useSelector(st => st.mainData);
   const staticdata = useSelector(st => st.static);
-  const [page, setPage] = useState('')
+  const [page, setPage] = useState(1)
   const user = useSelector(st => st.userData);
   const dispatch = useDispatch()
   const loadingData = ['', '', '', '', '', '']
@@ -25,7 +25,7 @@ export const Followings = ({ id }) => {
   useFocusEffect(
     useCallback(() => {
       dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, page))
-    }, [data, id])
+    }, [data, id,page])
   );
 
   const renderItem = ({ item }) => {
@@ -86,9 +86,9 @@ export const Followings = ({ id }) => {
           renderItem={renderItem}
           onEndReached={() => {
             if (getFollowers?.nextPage) {
-              let p = page + 1
-              setPage(p)
-              dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, p))
+              // let p = page + 1
+              setPage(page+1)
+              // dispatch(GetFollowersAction({ search: data, user_id: id }, staticdata.token, p))
             }
           }}
         />

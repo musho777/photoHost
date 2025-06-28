@@ -1,6 +1,6 @@
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
 import { useDispatch, useSelector } from 'react-redux';
-import { AddBlackListAction, AddDeleteFollowAction, AddInBookAction } from '../../store/action/action';
+import { AddBlackListAction, AddInBookAction } from '../../store/action/action';
 
 import { useCallback, useRef, useState } from "react";
 import { WhiteMenuSvg } from "../../assets/svg/TabBarSvg";
@@ -31,12 +31,12 @@ export const PostHeader = ({
   photo,
   auth_user_book,
   cveta
+
 }
 ) => {
   const [openModal, setOpenModal] = useState(false)
   const user = useSelector(st => st.userData);
 
-  // const [follow, setFollow] = useState(data?.user.follow_status_sender.length)
   const staticdata = useSelector(st => st.static);
   const [saveType, setSaveType] = useState('Запись сохранена в закладках')
   const [showSave, setShowSave] = useState(false)
@@ -114,7 +114,7 @@ export const PostHeader = ({
                 color,
                 font_family,
                 podcherknuti,
-                cveta
+                cveta,
               },
               big
             });
@@ -143,15 +143,6 @@ export const PostHeader = ({
         }}>
           <Text style={Styles.darkRegular14}>{book ? 'Удалить из закладок' : 'В закладки'}</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          onPress={() => {
-            setOpenModal(false)
-            setFollow(!follow)
-            dispatch(AddDeleteFollowAction({ user_id: userID }, staticdata.token))
-          }}
-          style={{ marginBottom: 20 }} >
-          <Text style={Styles.darkRegular14}>{!follow ? t(mainData.lang).subscribe : t(mainData.lang).Unsubscribe}</Text>
-        </TouchableOpacity> */}
         <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => {
           setOpenModal(false)
           addToBlackList()
